@@ -1,9 +1,8 @@
-
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
 @import 'variables';
+@import 'colors';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -12,3 +11,170 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+body {
+  //font-size: .875rem;
+  font-size: .825rem;
+  font-weight: 400;
+  font-family: sans-serif;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 400;
+  color: $grey-3;
+  padding: 0.2rem 1rem;
+  //color: #333;
+}
+
+//.sidebar .nav-link .feather {
+//  margin-right: 4px;
+//  color: #999;
+//}
+
+.sidebar .nav-link.active {
+  background-color: $grey-8;
+  margin-right: 5px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: $grey-9;
+  margin-right: 5px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.mycolor {
+  color: $primary;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 48px; /* Space for fixed navbar */
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1.1rem;
+  //background-color: rgba(0, 0, 0, .25);
+  //box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  font-weight: bold;
+}
+
+a.navbar-brand:hover {
+  background-color: $indigo-3;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.navbar {
+  //justify-content: space-evenly;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+.btn {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bg-nav {
+  background-color: $indigo-4;
+}
+
+a {
+  color: $grey-7;
+}
+
+a:hover {
+  color: $grey-5;
+  text-decoration: none;
+}
+
+.form-rounded {
+  border-radius: 3px !important;
+}
+
+.action-link {
+  color: $grey-4;
+  font-size: 1rem !important;
+  font-weight: 500;
+}
+
+a.action-link:hover {
+  color: $primary;
+  text-decoration: none;
+}
+
+a.action-link.danger:hover {
+  color: $red;
+  text-decoration: none;
+}
+
+.card-header {
+  padding: 0.5rem 1.25rem;
+}
+
+.card-header h5 {
+  margin-bottom: 0;
+}
+
+
+

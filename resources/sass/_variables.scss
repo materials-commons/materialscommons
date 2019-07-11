@@ -8,13 +8,107 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66D9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+//$blue: #3490dc;
+//$indigo: #6574cd;
+//$purple: #9561e2;
+//$pink: #f66D9b;
+//$red: #e3342f;
+//$orange: #f6993f;
+//$yellow: #ffed4a;
+//$green: #38c172;
+//$teal: #4dc0b5;
+//$cyan: #6cb2eb;
+
+$blue-1: hsl(204, 96%, 27%);
+$blue-2: hsl(203, 87%, 34%);
+$blue-3: hsl(202, 83%, 41%);
+$blue-4: hsl(201, 79%, 46%);
+$blue-5: hsl(199, 84%, 55%);
+$blue-6: hsl(197, 92%, 61%);
+$blue-7: hsl(196, 94%, 67%);
+$blue-8: hsl(195, 97%, 75%);
+$blue-9: hsl(195, 100%, 85%);
+$blue-10: hsl(195, 100%, 95%);
+
+$yellow-1: hsl(15, 86%, 30%);
+$yellow-2: hsl(22, 82%, 39%);
+$yellow-3: hsl(29, 80%, 44%);
+$yellow-4: hsl(36, 77%, 49%);
+$yellow-5: hsl(42, 87%, 55%);
+$yellow-6: hsl(44, 92%, 63%);
+$yellow-7: hsl(48, 94%, 68%);
+$yellow-8: hsl(48, 95%, 76%);
+$yellow-9: hsl(48, 100%, 88%);
+$yellow-10: hsl(49, 100%, 96%);
+
+$red-1: hsl(348, 94%, 20%);
+$red-2: hsl(350, 94%, 28%);
+$red-3: hsl(352, 90%, 35%);
+$red-4: hsl(354, 85%, 44%);
+$red-5: hsl(356, 75%, 53%);
+$red-6: hsl(360, 83%, 62%);
+$red-7: hsl(360, 91%, 69%);
+$red-8: hsl(360, 100%, 80%);
+$red-9: hsl(360, 100%, 87%);
+$red-10: hsl(360, 100%, 95%);
+
+//////////////////////////////////////
+
+$indigo-1: hsl(234, 62%, 26%);
+$indigo-2: hsl(232, 51%, 36%);
+$indigo-3: hsl(230, 49%, 41%);
+$indigo-4: hsl(228, 45%, 45%);
+$indigo-5: hsl(227, 42%, 51%);
+$indigo-6: hsl(227, 50%, 59%);
+$indigo-7: hsl(225, 57%, 67%);
+$indigo-8: hsl(224, 67%, 76%);
+$indigo-9: hsl(221, 78%, 86%);
+$indigo-10: hsl(221, 68%, 93%);
+
+$grey-1: hsl(210, 24%, 16%);
+$grey-2: hsl(209, 20%, 25%);
+$grey-3: hsl(209, 18%, 30%);
+$grey-4: hsl(209, 14%, 37%);
+$grey-5: hsl(211, 12%, 43%);
+$grey-6: hsl(211, 10%, 53%);
+$grey-7: hsl(211, 13%, 65%);
+$grey-8: hsl(210, 16%, 82%);
+$grey-9: hsl(214, 15%, 91%);
+$grey-10: hsl(216, 33%, 97%);
+
+$green-1: hsl(170, 97%, 15%);
+$green-2: hsl(168, 80%, 23%);
+$green-3: hsl(166, 72%, 28%);
+$green-4: hsl(164, 71%, 34%);
+$green-5: hsl(162, 63%, 41%);
+$green-6: hsl(160, 51%, 49%);
+$green-7: hsl(158, 58%, 62%);
+$green-8: hsl(156, 73%, 74%);
+$green-9: hsl(154, 75%, 87%);
+$green-10: hsl(152, 68%, 96%);
+
+$gray-100: $grey-10;
+$gray-200: $grey-9;
+$gray-300: $grey-8;
+$gray-400: $grey-7;
+$gray-500: $grey-6;
+$gray-600: $grey-5;
+$gray-700: $grey-4;
+$gray-800: $grey-3;
+$gray-900: $grey-2;
+
+$black: $grey-1;
+
+$blue: $blue-2;
+$indigo: $indigo-4;
+$pink: $red-9;
+$red: $red-3;
+$yellow: $yellow-6;
+$green: $green-4;
+
+$primary: $indigo-4;
+//$danger: $red;
+
+//$card-border-color: $grey-8;
+$card-border-color: $indigo-9;
+$card-cap-bg: $indigo-10;

@@ -11,6 +11,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $user = factory(\App\User::class)->create([
+            'name' => 'Epistimi Admin',
+            'email' => 'admin@admin.org',
+            'password' => bcrypt('admin')
+        ]);
+
+
+        factory(\App\Project::class, 3)->create([
+            'owner_id' => $user->id,
+        ]);
+
+        $projects = \App\Project::all();
+
+        $lab = factory(\App\Lab::class)->create([
+            'name' => 'Default Lab',
+            'owner_id' => $user->id,
+            'default_lab' => true,
+        ]);
+
+        $lab->projects()->sync($projects);
+        $user->labs()->sync($lab);
+        $user->projects()->sync($projects);
     }
 }

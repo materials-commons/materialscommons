@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -27,4 +26,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getTypeAttribute($value)
+    {
+        return UserType::getKey((int)$value);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project2user', 'user_id', 'project_id');
+    }
+
+    public function labs()
+    {
+        return $this->belongsToMany(Lab::class, 'lab2user', 'user_id', 'lab_id');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team2user', 'user_id', 'team_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'owner_id');
+    }
 }
