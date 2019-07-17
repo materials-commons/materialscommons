@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1a7ff825fdc6241a2477d26c037d658",
+    "content-hash": "d8a064b87208e3b4124357fb254a92dc",
     "packages": [
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -4821,6 +4821,47 @@
                 "xunit"
             ],
             "time": "2019-06-19T12:01:51+00:00"
+        },
+        {
+            "name": "pipe-dream/laravel",
+            "version": "v0.0.75",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pipe-dream/laravel.git",
+                "reference": "f7f2fc117438b4d9594bd8907379272326331ec4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pipe-dream/laravel/zipball/f7f2fc117438b4d9594bd8907379272326331ec4",
+                "reference": "f7f2fc117438b4d9594bd8907379272326331ec4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PipeDream\\Laravel\\PipeDreamServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PipeDream\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Watch how this package DESTROYS all other generators. Boilerplate repos HATE it!",
+            "keywords": [
+                "laravel",
+                "package"
+            ],
+            "time": "2019-07-12T09:25:49+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

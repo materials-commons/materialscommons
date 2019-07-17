@@ -10053,6 +10053,7 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   font-size: 1.1rem;
+  color: #fce588 !important;
   font-weight: bold;
 }
 
@@ -10084,6 +10085,16 @@ a.navbar-brand:hover {
 
 .bg-nav {
   background-color: #3f54a6;
+}
+
+a.nav-link.action {
+  font-weight: 700;
+  font-size: 1.3em;
+  color: white;
+}
+
+.fs-11 {
+  font-size: 1.1em !important;
 }
 
 a {
