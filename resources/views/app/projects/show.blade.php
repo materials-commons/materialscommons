@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.project')
 
 @section('pageTitle', 'View Project')
 
