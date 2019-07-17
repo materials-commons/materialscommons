@@ -29,4 +29,9 @@ class Project extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function experiments()
+    {
+        return $this->hasMany(Experiment::class, 'project_id');
+    }
 }

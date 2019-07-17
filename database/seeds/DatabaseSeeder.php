@@ -1,5 +1,9 @@
 <?php
 
+use App\Experiment;
+use App\Lab;
+use App\Project;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,23 +15,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = factory(\App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Epistimi Admin',
             'email' => 'admin@admin.org',
             'password' => bcrypt('admin')
         ]);
 
 
-        factory(\App\Project::class, 3)->create([
+        factory(Project::class, 3)->create([
             'owner_id' => $user->id,
         ]);
 
-        $projects = \App\Project::all();
+        $projects = Project::all();
 
-        $lab = factory(\App\Lab::class)->create([
+        $p = $projects[0];
+
+        $lab = factory(Lab::class)->create([
             'name' => 'Default Lab',
             'owner_id' => $user->id,
             'default_lab' => true,
+        ]);
+
+        factory(Experiment::class, 3)->create([
+            'owner_id' => $user->id,
+            'project_id' => $p->id,
         ]);
 
         $lab->projects()->sync($projects);
