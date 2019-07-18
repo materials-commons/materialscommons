@@ -44,4 +44,57 @@
             </div>
         @endslot
     @endcomponent
+
+    <br>
+
+    @component('components.card')
+        @slot('header')
+            Experiments
+            <a class="float-right action-link" href="">
+                <i class="fas fa-plus mr-2"></i>Add
+            </a>
+        @endslot
+
+        @slot('body')
+
+            @if (count($project->experiments) == 0)
+                <h4>No experiments</h4>
+            @else
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Experiment</th>
+                        <th>Description</th>
+                        <th>Updated</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($project->experiments as $experiment)
+                        <tr>
+                            <td>{{$experiment->name}}</td>
+                            <td>{{$experiment->description}}</td>
+                            <td>{{$experiment->updated_at->diffForHumans()}}</td>
+                            <td class="fs-11">
+                                <a href="{{route('projects.show', ['id' => $project->id])}}"
+                                   class="">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                                <a href="{{route('projects.edit', ['id' => $project->id])}}"
+                                   class="">
+                                    <i class="fas fa-fw fa-edit"></i>
+                                </a>
+                                <a data-toggle="modal" href="#project-delete-{{$project->id}}">
+                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                </a>
+                                @component('app.projects.delete-project', ['project' => $project])
+                                @endcomponent
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @endif
+        @endslot
+    @endcomponent
 @endsection

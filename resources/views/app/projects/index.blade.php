@@ -25,7 +25,9 @@
                 <tbody>
                 @foreach($projects as $project)
                     <tr>
-                        <td>{{$project->name}}</td>
+                        <td>
+                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="linka">{{$project->name}}</a>
+                        </td>
                         <td>{{$project->description}}</td>
                         <td>{{$project->updated_at->diffForHumans()}}</td>
                         <td>
