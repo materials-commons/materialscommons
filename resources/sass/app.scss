@@ -185,6 +185,13 @@ a.action-link.danger:hover {
   text-decoration: none;
 }
 
+.linka {
+  color: $blue-2;
+  font-size: 1.0rem !important;
+  text-decoration: underline $blue-2;
+  font-weight: 600;
+}
+
 .card-header {
   padding: 0.5rem 1.25rem;
 }

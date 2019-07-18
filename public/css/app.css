@@ -10126,6 +10126,14 @@ a.action-link.danger:hover {
   text-decoration: none;
 }
 
+.linka {
+  color: #0b68a2;
+  font-size: 1rem !important;
+  -webkit-text-decoration: underline #0b68a2;
+          text-decoration: underline #0b68a2;
+  font-weight: 600;
+}
+
 .card-header {
   padding: 0.5rem 1.25rem;
 }
