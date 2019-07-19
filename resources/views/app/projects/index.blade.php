@@ -26,20 +26,18 @@
                 @foreach($projects as $project)
                     <tr>
                         <td>
-                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="linka">{{$project->name}}</a>
+                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="">{{$project->name}}</a>
                         </td>
                         <td>{{$project->description}}</td>
                         <td>{{$project->updated_at->diffForHumans()}}</td>
                         <td>
-                            <a href="{{route('projects.show', ['id' => $project->id])}}"
-                               class="">
+                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
                                 <i class="fas fa-fw fa-eye"></i>
                             </a>
-                            <a href="{{route('projects.edit', ['id' => $project->id])}}"
-                               class="">
+                            <a href="{{route('projects.edit', ['id' => $project->id])}}" class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
-                            <a data-toggle="modal" href="#project-delete-{{$project->id}}">
+                            <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
                                 <i class="fas fa-fw fa-trash-alt"></i>
                             </a>
                             @component('app.projects.delete-project', ['project' => $project])
