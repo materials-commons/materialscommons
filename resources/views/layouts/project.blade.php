@@ -55,7 +55,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column mt-3">
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('dashboard.index')}}">
+                        <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}" href="{{route('dashboard.index')}}">
                             <span data-feather="home"></span>
                             <i class="fa-fw fas fa-binoculars mr-2"></i>
                             {{$project->name}}

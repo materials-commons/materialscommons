@@ -6,5 +6,5 @@ function setActiveNav($path)
 }
 
 function setActiveNavByName($name) {
-    return Request::routeIs('app.' . $name . '*') ? 'active' : '';
+    return Request::routeIs($name . '*') ? 'active' : '';
 }
