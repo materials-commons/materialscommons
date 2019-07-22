@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Experiment;
+use App\Project;
 use Illuminate\Http\Request;
 
-class ExperimentController extends Controller
+class ProjectExperiments extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  Project  $project
+     * @return void
      */
-    public function index()
+    public function index(Project $project)
     {
-//        $experiment = auth()->user()->
+        $experiments = $project->experiments();
+        return view('app.experiments.index', ['experiments' => $experiments]);
     }
 
     /**
@@ -41,10 +43,10 @@ class ExperimentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Experiment  $experiment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Experiment $experiment)
+    public function show($id)
     {
         //
     }
@@ -52,10 +54,10 @@ class ExperimentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Experiment  $experiment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Experiment $experiment)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +66,10 @@ class ExperimentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Experiment  $experiment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Experiment $experiment)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +77,10 @@ class ExperimentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Experiment  $experiment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Experiment $experiment)
+    public function destroy($id)
     {
         //
     }

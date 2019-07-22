@@ -75,16 +75,16 @@
                             <td>{{$experiment->name}}</td>
                             <td>{{$experiment->description}}</td>
                             <td>{{$experiment->updated_at->diffForHumans()}}</td>
-                            <td class="fs-11">
+                            <td class="">
                                 <a href="{{route('projects.show', ['id' => $project->id])}}"
-                                   class="">
+                                   class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
                                 <a href="{{route('projects.edit', ['id' => $project->id])}}"
-                                   class="">
+                                   class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a data-toggle="modal" href="#project-delete-{{$project->id}}">
+                                <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
                                     <i class="fas fa-fw fa-trash-alt"></i>
                                 </a>
                                 @component('app.projects.delete-project', ['project' => $project])
