@@ -22,14 +22,16 @@
                     <textarea class="form-control" id="description" name="description">{{$project->description}}</textarea>
                 </div>
                 <div class="form-group form-check-inline">
+                    <input type="hidden" name="default_project" value="0">
                     <input type="checkbox" class="form-check-input" id="default_project"
-                           value="{{$project->default_project}}" name="default_project"
+                           value="1" name="default_project"
                             {{$project->default_project ? 'checked' : ''}}>
                     <label class="form-check-label" for="default_project">Default Project?</label>
                 </div>
                 <div class="form-group form-check-inline">
+                    <input type="hidden" name="is_active" value="0"/>
                     <input type="checkbox" class="form-check-input" id="is_active"
-                           value="{{$project->is_active}}" name="is_active" {{$project->is_active ? 'checked' : ''}}>
+                           value="1" name="is_active" {{$project->is_active ? 'checked' : ''}}>
                     <label class="form-check-label" for="is_active">Is Active?</label>
                 </div>
                 <div class="float-right">

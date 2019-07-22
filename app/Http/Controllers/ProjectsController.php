@@ -56,7 +56,9 @@ class ProjectsController extends Controller
     {
         $attrs = request()->validate([
             'name' => 'string',
-            'description' => 'string'
+            'description' => 'string',
+            'is_active' => 'boolean',
+            'default_project' => 'boolean'
         ]);
 
         $project->update($attrs);
