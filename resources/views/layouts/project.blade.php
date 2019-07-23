@@ -62,8 +62,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
-                            <i class="fa-fw fas fa-address-book mr-2 {{setActiveNav('teams')}}"></i>
+                        <a class="nav-link fs-11 {{setActiveNavByName('projects.experiments.index')}}" href="{{route('experiments.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-address-book mr-2 "></i>
                             Experiments
                         </a>
                     </li>

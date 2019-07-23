@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Http\Request;
 
-class ProjectExperiments extends Controller
+class ProjectExperimentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ProjectExperiments extends Controller
     public function index(Project $project)
     {
         $experiments = $project->experiments();
-        return view('app.experiments.index', ['experiments' => $experiments]);
+        return view('app.projects.experiments.index', ['experiments' => $experiments, 'project' => $project]);
     }
 
     /**
