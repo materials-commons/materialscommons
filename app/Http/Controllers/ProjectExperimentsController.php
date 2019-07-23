@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ExperimentStatus;
+use App\Experiment;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectExperimentsController extends Controller
 {
@@ -15,29 +18,42 @@ class ProjectExperimentsController extends Controller
      */
     public function index(Project $project)
     {
-        $experiments = $project->experiments();
-        return view('app.projects.experiments.index', ['experiments' => $experiments, 'project' => $project]);
+        return view('app.projects.experiments.index', ['project' => $project]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
-        //
+        return view('app.projects.experiments.create', compact('project'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Project  $project
+     * @return void
      */
-    public function store(Request $request)
+    public function store(Project $project)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        Experiment::create([
+            'name' => request('name'),
+            'description' => request('description'),
+            'project_id' => $project->id,
+            'owner_id' => auth()->id(),
+            'status' => ExperimentStatus::InProgress,
+        ]);
+
+        return redirect(route('experiments.index', ['project' => $project->id]));
     }
 
     /**

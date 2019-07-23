@@ -25,7 +25,9 @@ Route::get('/home2', function () {
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', 'ProjectsController');
-    Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');
+    Route::name('projects.')->group(function() {
+        Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');
+    });
     Route::resource('/tasks', 'TasksController');
 
     Route::view('/teams', 'app.teams.index')->name('teams.index');
