@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'default_lab' => true,
         ]);
 
-        factory(Experiment::class, 3)->create([
+        factory(Experiment::class, 20)->create([
             'owner_id' => $user->id,
             'project_id' => $p->id,
         ]);
