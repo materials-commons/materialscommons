@@ -42,7 +42,7 @@
             <li class="nav-item text-nowrap">
                 <form method="post" action="{{route('logout')}}" id="signout">
                     @csrf
-                    <a class="nav-link" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
+                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
                 </form>
             </li>
         </ul>
@@ -55,14 +55,14 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column mt-3">
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}" href="{{route('dashboard.index')}}">
+                        <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}" href="{{route('projects.show', ['project' => $project->id])}}">
                             <span data-feather="home"></span>
                             <i class="fa-fw fas fa-binoculars mr-2"></i>
                             {{$project->name}}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNavByName('projects.experiments.index')}}" href="{{route('experiments.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 {{setActiveNavByName('experiments.index')}}" href="{{route('experiments.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-address-book mr-2 "></i>
                             Experiments
                         </a>

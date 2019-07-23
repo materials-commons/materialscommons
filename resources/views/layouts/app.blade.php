@@ -42,7 +42,7 @@
             <li class="nav-item text-nowrap">
                 <form method="post" action="{{route('logout')}}" id="signout">
                     @csrf
-                    <a class="nav-link" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
+                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
                 </form>
             </li>
         </ul>
