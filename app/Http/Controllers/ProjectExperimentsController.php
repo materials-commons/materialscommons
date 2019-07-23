@@ -53,18 +53,19 @@ class ProjectExperimentsController extends Controller
             'status' => ExperimentStatus::InProgress,
         ]);
 
-        return redirect(route('experiments.index', ['project' => $project->id]));
+        return redirect(route('projects.experiments.index', ['project' => $project->id]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Project  $project
+     * @param  Experiment  $experiment
+     * @return void
      */
-    public function show($id)
+    public function show(Project $project, Experiment $experiment)
     {
-        //
+        return view('app.projects.experiments.show', compact('project', 'experiment'));
     }
 
     /**
