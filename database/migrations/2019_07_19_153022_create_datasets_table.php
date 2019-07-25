@@ -18,13 +18,26 @@ class CreateDatasetsTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->string('license');
-            $table->funding('text');
+            $table->text('funding');
             $table->text('description');
             $table->string('doi');
             $table->date('published_on');
             $table->date('privately_published_on');
+            $table->text('authors');
+            $table->string('institution');
 
-            $table->text('description');
+            $table->unsignedInteger('owner_id');
+            $table->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->unsignedInteger('project_id');
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
