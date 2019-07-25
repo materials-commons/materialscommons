@@ -92,8 +92,8 @@
                 <div class="links">
                     <a href="https://materialscommons.org/docs">Documentation</a>
                     <a href="{{route('published.index')}}">Published Data</a>
-                    <a href="https://github.com/materials-commons/mcapi">Python API</a>
-                    <a href="https://github.com/materials-commons/materialscommons">GitHub</a>
+                    <a href="https://github.com/materials-commons/mcapi" target="_blank">Python API</a>
+                    <a href="https://github.com/materials-commons/materialscommons" target="_blank">GitHub</a>
                 </div>
             </div>
         </div>
