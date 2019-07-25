@@ -1,3 +1,3 @@
-# epistimi2
+# MaterialsCommons
 
-V2 Of Epistimi using Bootstrap
+A data sharing, storage and collaboration application.
