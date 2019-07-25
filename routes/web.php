@@ -22,6 +22,8 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
+Route::view('/published', 'published.index')->name('published.index');
+
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', 'ProjectsController');
