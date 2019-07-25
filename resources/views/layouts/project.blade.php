@@ -80,8 +80,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('files')}}" href="{{route('files.index')}}">
-                            <i class="fa-fw fas fa-folder mr-2 {{setActiveNav('files')}}"></i>
+                        <a class="nav-link fs-11 {{setActiveNavByName('projects.files')}}" href="{{route('projects.files.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-folder mr-2"></i>
                             Files
                         </a>
                     </li>

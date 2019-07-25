@@ -27,6 +27,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::resource('/projects', 'ProjectsController');
     Route::name('projects.')->group(function() {
         Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');
+        Route::resource('/projects/{project}/files', 'ProjectFilesController');
+        Route::Post('/projects/{project}/upload', 'ProjectFileUploadController@store');
     });
     Route::resource('/tasks', 'TasksController');
 
