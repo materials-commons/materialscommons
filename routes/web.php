@@ -22,6 +22,8 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
+Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
+
 Route::view('/published', 'published.index')->name('published.index');
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
