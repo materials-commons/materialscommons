@@ -68,34 +68,34 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.new')}}" href="{{route('public.new.index')}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}" href="{{route('public.new.index')}}">
                             <i class="fa-fw fas fa-bullhorn mr-2"></i>
                             What's New
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">
                             <span data-feather="home"></span>
                             <i class="fa-fw fas fa-project-diagram mr-2"></i>
                             Projects
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
                             <i class="fa-fw fas fa-book mr-2"></i>
                             Datasets
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.authors')}}" href="{{route('public.authors.index')}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}" href="{{route('public.authors.index')}}">
                             <i class="fa-fw fas fa-user-friends mr-2"></i>
                             Authors
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.tags')}}" href="{{route('public.tags.index')}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}" href="{{route('public.tags.index')}}">
                             <i class="fa-fw fas fa-tags mr-2"></i>
                             Tags
                         </a>
