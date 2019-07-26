@@ -22,22 +22,26 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
-Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
+//Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
 
 //Route::view('/public', 'public.index')->name('public.index');
 
 Route::get('/public', 'PublicDataController@index')->name('public.index');
+Route::get('/getAllPublishedDatasets', 'PublicDataController@getAllPublishedDatasets')->name('get_all_published_datasets');
+
 Route::prefix('public')->group(function () {
     Route::name('public.')->group(function () {
         Route::get('/new', 'PublicDataNewController@index')->name('new.index');
         Route::get('/projects', 'PublicDataProjectsController@index')->name('projects.index');
         Route::get('/datasets', 'PublicDataDatasetsController@index')->name('datasets.index');
+        Route::get('/datasets/{dataset}', 'PublicDataDatasetsController@show')->name('datasets.show');
         Route::get('/authors', 'PublicDataAuthorsController@index')->name('authors.index');
         Route::get('/tags', 'PublicDataTagsController@index')->name('tags.index');
     });
 });
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
+    Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', 'ProjectsController');
     Route::name('projects.')->group(function () {

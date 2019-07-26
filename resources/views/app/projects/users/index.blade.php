@@ -22,20 +22,20 @@
     @endcomponent
 
 
-{{--    @push('scripts')--}}
-{{--        <script>--}}
-{{--            $(document).ready(function () {--}}
-{{--                $('#users').DataTable({--}}
-{{--                    serverSide: true,--}}
-{{--                    processing: true,--}}
-{{--                    responsive: true,--}}
-{{--                    ajax: "{{ route('get_users') }}",--}}
-{{--                    columns: [--}}
-{{--                        {name: 'name'},--}}
-{{--                        {name: 'email'}--}}
-{{--                    ],--}}
-{{--                });--}}
-{{--            });--}}
-{{--        </script>--}}
-{{--    @endpush--}}
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                $('#users').DataTable({
+                    serverSide: true,
+                    processing: true,
+                    responsive: true,
+                    ajax: "{{ route('get_users') }}",
+                    columns: [
+                        {name: 'name'},
+                        {name: 'email'}
+                    ],
+                });
+            });
+        </script>
+    @endpush
 @stop

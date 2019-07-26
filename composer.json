@@ -16,7 +16,8 @@
         "laravel/telescope": "^1.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-tags": "^2.4",
-        "thomaswelton/laravel-gravatar": "^1.1"
+        "thomaswelton/laravel-gravatar": "^1.1",
+        "tightenco/ziggy": "^0.7.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

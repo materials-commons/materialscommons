@@ -1,5 +1,6 @@
 <?php
 
+use App\Dataset;
 use App\Experiment;
 use App\Lab;
 use App\Project;
@@ -37,6 +38,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         factory(Experiment::class, 20)->create([
+            'owner_id' => $user->id,
+            'project_id' => $p->id,
+        ]);
+
+        factory(Dataset::class, 50)->create([
             'owner_id' => $user->id,
             'project_id' => $p->id,
         ]);

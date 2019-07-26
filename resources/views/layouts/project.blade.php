@@ -17,10 +17,15 @@
         @endif
     </title>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -31,10 +36,10 @@
 <body>
 <nav class="navbar navbar-dark fixed-top bg-nav p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">MaterialsCommons</a>
-{{--    <div class="d-flex col-sm-8 justify-content-end">--}}
-{{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Projects</a>--}}
-{{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Stuff</a>--}}
-{{--    </div>--}}
+    {{--    <div class="d-flex col-sm-8 justify-content-end">--}}
+    {{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Projects</a>--}}
+    {{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Stuff</a>--}}
+    {{--    </div>--}}
     <div class="d-flex justify-content-endx">
         <input class="form-control w-75 form-rounded" type="text" placeholder="Search" aria-label="Search">
 
@@ -42,7 +47,8 @@
             <li class="nav-item text-nowrap">
                 <form method="post" action="{{route('logout')}}" id="signout">
                     @csrf
-                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
+                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign
+                        out</a>
                 </form>
             </li>
         </ul>
@@ -55,44 +61,51 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column mt-3">
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}" href="{{route('projects.show', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}"
+                           href="{{route('projects.show', ['project' => $project->id])}}">
                             <span data-feather="home"></span>
                             <i class="fa-fw fas fa-project-diagram mr-2"></i>
                             {{$project->name}}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.experiments')}}" href="{{route('projects.experiments.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.experiments')}}"
+                           href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-flask mr-2"></i>
                             Experiments
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.samples')}}" href="{{route('projects.samples.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.samples')}}"
+                           href="{{route('projects.samples.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-cubes mr-2 "></i>
                             Samples
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.processes')}}" href="{{route('projects.processes.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.processes')}}"
+                           href="{{route('projects.processes.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-code-branch mr-2"></i>
                             Processes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.files')}}" href="{{route('projects.files.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.files')}}"
+                           href="{{route('projects.files.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-folder mr-2"></i>
                             Files
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.users')}}" href="{{route('projects.users.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.users')}}"
+                           href="{{route('projects.users.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-users-cog mr-2"></i>
                             Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.settings')}}" href="{{route('projects.settings.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.settings')}}"
+                           href="{{route('projects.settings.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-cogs mr-2"></i>
                             Settings
                         </a>
@@ -130,5 +143,6 @@
     </div>
 </div>
 
+@stack('scripts')
 </body>
 </html>

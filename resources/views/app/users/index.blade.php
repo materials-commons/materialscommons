@@ -24,7 +24,6 @@
 
     @push('scripts')
         <script>
-            console.log('here i am');
             $(document).ready(function () {
                 $('#users').DataTable({
                     serverSide: true,

@@ -17,8 +17,10 @@ $factory->define(Dataset::class, function (Faker $faker) {
         'project_id' => function () {
             return factory(App\Project::class)->create()->id;
         },
+        'license' => 'open data',
+        'doi' => $faker->url,
         'institution' => $faker->word,
         'authors' => $faker->name,
-        'published_on' => $faker->dateTime,
+        'published_at' => $faker->dateTime,
     ];
 });

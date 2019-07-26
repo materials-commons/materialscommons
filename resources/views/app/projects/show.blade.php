@@ -45,8 +45,6 @@
         @endslot
     @endcomponent
 
-    <br>
-
     @component('components.card')
         @slot('header')
             Experiments

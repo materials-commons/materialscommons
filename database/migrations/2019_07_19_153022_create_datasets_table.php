@@ -21,8 +21,8 @@ class CreateDatasetsTable extends Migration
             $table->text('funding');
             $table->text('description');
             $table->string('doi');
-            $table->date('published_on');
-            $table->date('privately_published_on');
+            $table->date('published_at')->nullable();
+            $table->date('privately_published_at')->nullable();
             $table->text('authors');
             $table->string('institution');
 
