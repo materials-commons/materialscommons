@@ -57,44 +57,51 @@
                     <li class="nav-item">
                         <a class="nav-link fs-11 {{setActiveNavByName('projects.show')}}" href="{{route('projects.show', ['project' => $project->id])}}">
                             <span data-feather="home"></span>
-                            <i class="fa-fw fas fa-binoculars mr-2"></i>
+                            <i class="fa-fw fas fa-project-diagram mr-2"></i>
                             {{$project->name}}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNavByName('projects.experiments')}}" href="{{route('projects.experiments.index', ['project' => $project->id])}}">
-                            <i class="fa-fw fas fa-address-book mr-2 "></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.experiments')}}" href="{{route('projects.experiments.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-flask mr-2"></i>
                             Experiments
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('projectsxx')}}" href="{{route('projects.index')}}">
-                            <i class="fa-fw fas fa-project-diagram mr-2 "></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.samples')}}" href="{{route('projects.samples.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-cubes mr-2 "></i>
                             Samples
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('tasks')}}" href="{{route('tasks.index')}}">
-                            <i class="fa-fw fas fa-tasks mr-2"></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.processes')}}" href="{{route('projects.processes.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-code-branch mr-2"></i>
                             Processes
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNavByName('projects.files')}}" href="{{route('projects.files.index', ['project' => $project->id])}}">
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.files')}}" href="{{route('projects.files.index', ['project' => $project->id])}}">
                             <i class="fa-fw fas fa-folder mr-2"></i>
                             Files
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('users')}}" href="{{route('users.index')}}">
-                            <i class="fa-fw fas fa-users-cog mr-2 {{setActiveNav('users')}}"></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.users')}}" href="{{route('projects.users.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-users-cog mr-2"></i>
                             Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('settings')}}" href="{{route('settings.index')}}">
-                            <i class="fa-fw fas fa-cogs mr-2 {{setActiveNav('settings')}}"></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('projects.settings')}}" href="{{route('projects.settings.index', ['project' => $project->id])}}">
+                            <i class="fa-fw fas fa-cogs mr-2"></i>
                             Settings
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 ml-2" href="{{route('public.index')}}">
+                            <i class="fa-fw fas fa-globe mr-2"></i>
+                            Public Data
                         </a>
                     </li>
                 </ul>

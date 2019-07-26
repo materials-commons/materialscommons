@@ -24,25 +24,34 @@ Route::get('/home2', function () {
 
 Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
 
-Route::view('/published', 'published.index')->name('published.index');
+Route::view('/public', 'public.index')->name('public.index');
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', 'ProjectsController');
     Route::name('projects.')->group(function() {
         Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');
-        Route::resource('/projects/{project}/files', 'ProjectFilesController');
-        Route::Post('/projects/{project}/upload', 'ProjectFileUploadController@store');
-    });
-    Route::resource('/tasks', 'TasksController');
 
-    Route::view('/teams', 'app.teams.index')->name('teams.index');
-    Route::view('/files', 'app.files.index')->name('files.index');
+        Route::resource('/projects/{project}/samples', 'ProjectSamplesController');
+
+        Route::resource('/projects/{project}/processes', 'ProjectProcessesController');
+
+        Route::resource('/projects/{project}/files', 'ProjectFilesController');
+
+        Route::Post('/projects/{project}/upload', 'ProjectFileUploadController@store');
+
+        Route::get('/projects/{project}/users', 'ProjectUsersController@index')->name('users.index');
+
+        Route::get('/projects/{project}/settings', 'ProjectSettingsController@index')->name('settings.index');
+    });
+
+    Route::resource('/tasks', 'TasksController');
     Route::view('/settings', 'app.settings.index')->name('settings.index');
     Route::view('/users', 'app.users.index')->name('users.index');
 
     //    Route::resource('/labs', 'LabsController');
     //    Route::resource('/files', 'FileController');
+    //    Route::view('/teams', 'app.teams.index')->name('teams.index');
     //    Route::resource('/teams', 'TeamController');
     //    Route::get('/settings', 'SettingsController@index')->name('settings.index');
     //    Route::get('/users', 'UsersController@index')->name('users.index');

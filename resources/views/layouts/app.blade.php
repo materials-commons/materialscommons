@@ -67,12 +67,12 @@
                             Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
-                            <i class="fa-fw fas fa-address-book mr-2 {{setActiveNav('teams')}}"></i>
-                            Teams
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">--}}
+{{--                            <i class="fa-fw fas fa-address-book mr-2 {{setActiveNav('teams')}}"></i>--}}
+{{--                            Teams--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
                         <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
                             <i class="fa-fw fas fa-project-diagram mr-2 "></i>
@@ -85,22 +85,29 @@
                             Tasks
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('files')}}" href="{{route('files.index')}}">
-                            <i class="fa-fw fas fa-folder mr-2 {{setActiveNav('files')}}"></i>
-                            Files
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('users')}}" href="{{route('users.index')}}">
-                            <i class="fa-fw fas fa-users-cog mr-2 {{setActiveNav('users')}}"></i>
-                            Users
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link fs-11 {{setActiveNav('files')}}" href="{{route('files.index')}}">--}}
+{{--                            <i class="fa-fw fas fa-folder mr-2 {{setActiveNav('files')}}"></i>--}}
+{{--                            Files--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link fs-11 {{setActiveNav('users')}}" href="{{route('users.index')}}">--}}
+{{--                            <i class="fa-fw fas fa-users-cog mr-2 {{setActiveNav('users')}}"></i>--}}
+{{--                            Users--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
                         <a class="nav-link fs-11 {{setActiveNav('settings')}}" href="{{route('settings.index')}}">
                             <i class="fa-fw fas fa-cogs mr-2 {{setActiveNav('settings')}}"></i>
                             Settings
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 ml-2" href="{{route('public.index')}}">
+                            <i class="fa-fw fas fa-globe mr-2"></i>
+                            Public Data
                         </a>
                     </li>
                 </ul>
@@ -118,32 +125,6 @@
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span class="fs-11">Quick Access</span>
                 </h6>
-                {{--<ul class="nav flex-column mb-2">--}}
-                {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#">--}}
-                {{--<span data-feather="file-text"></span>--}}
-                {{--Current month--}}
-                {{--</a>--}}
-                {{--</li>--}}
-                {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#">--}}
-                {{--<span data-feather="file-text"></span>--}}
-                {{--Last quarter--}}
-                {{--</a>--}}
-                {{--</li>--}}
-                {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#">--}}
-                {{--<span data-feather="file-text"></span>--}}
-                {{--Social engagement--}}
-                {{--</a>--}}
-                {{--</li>--}}
-                {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#">--}}
-                {{--<span data-feather="file-text"></span>--}}
-                {{--Year-end sale--}}
-                {{--</a>--}}
-                {{--</li>--}}
-                {{--</ul>--}}
             </div>
         </nav>
 
