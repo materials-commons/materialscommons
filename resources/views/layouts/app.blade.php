@@ -105,7 +105,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 ml-2" href="{{route('public.index')}}">
+                        <a class="nav-link fs-11" href="{{route('public.index')}}">
                             <i class="fa-fw fas fa-globe mr-2"></i>
                             Public Data
                         </a>

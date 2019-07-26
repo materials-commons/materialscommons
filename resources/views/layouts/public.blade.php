@@ -61,35 +61,42 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column mt-3">
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('tasks')}}" href="{{route('tasks.index')}}">
+                        <a class="nav-link fs-11 {{setActiveNavByName('public.index')}}" href="{{route('public.index')}}">
+                            <i class="fa-fw fas fa-globe mr-2"></i>
+                            Public Data
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.new')}}" href="{{route('public.new.index')}}">
                             <i class="fa-fw fas fa-bullhorn mr-2"></i>
                             What's New
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard.index')}}">
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">
                             <span data-feather="home"></span>
                             <i class="fa-fw fas fa-project-diagram mr-2"></i>
                             Projects
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
-                            <i class="fa-fw fas fa-book mr-2 {{setActiveNav('teams')}}"></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
+                            <i class="fa-fw fas fa-book mr-2"></i>
                             Datasets
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
-                            <i class="fa-fw fas fa-user-friends mr-2 "></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.authors')}}" href="{{route('public.authors.index')}}">
+                            <i class="fa-fw fas fa-user-friends mr-2"></i>
                             Authors
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fs-11 {{setActiveNav('files')}}" href="{{route('files.index')}}">
-                            <i class="fa-fw fas fa-tags mr-2 {{setActiveNav('files')}}"></i>
+                        <a class="nav-link fs-11 ml-2 {{setActiveNavByName('public.tags')}}" href="{{route('public.tags.index')}}">
+                            <i class="fa-fw fas fa-tags mr-2"></i>
                             Tags
                         </a>
                     </li>

@@ -5,7 +5,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Public Data Main Page
+            Public Data Projects
         @endslot
 
         @slot('body')
