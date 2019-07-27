@@ -2,6 +2,7 @@
 
 use App\Dataset;
 use App\Experiment;
+use App\File;
 use App\Lab;
 use App\Project;
 use App\User;
@@ -9,6 +10,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Seed the application's database.
      *
@@ -17,9 +19,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = factory(User::class)->create([
-            'name' => 'MC Admin',
-            'email' => 'admin@admin.org',
-            'password' => bcrypt('admin')
+            'name'     => 'MC Admin',
+            'email'    => 'admin@admin.org',
+            'password' => bcrypt('admin'),
         ]);
 
 
@@ -32,18 +34,22 @@ class DatabaseSeeder extends Seeder
         $p = $projects[0];
 
         $lab = factory(Lab::class)->create([
-            'name' => 'Default Lab',
-            'owner_id' => $user->id,
+            'name'        => 'Default Lab',
+            'owner_id'    => $user->id,
             'default_lab' => true,
         ]);
 
         factory(Experiment::class, 20)->create([
-            'owner_id' => $user->id,
+            'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
 
         factory(Dataset::class, 50)->create([
-            'owner_id' => $user->id,
+            'owner_id'   => $user->id,
+            'project_id' => $p->id,
+        ]);
+
+        factory(File::class, 50)->create([
             'project_id' => $p->id,
         ]);
 
