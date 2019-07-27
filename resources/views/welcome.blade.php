@@ -50,6 +50,7 @@
 
             .title {
                 font-size: 84px;
+                font-weight: bold;
                 color: hsl(48, 95%, 76%);
             }
 
