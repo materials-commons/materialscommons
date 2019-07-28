@@ -16,7 +16,7 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->default("");
             $table->text('path')->nullable();
@@ -33,16 +33,14 @@ class CreateFilesTable extends Migration
                 ->onDelete('cascade');
 
             $table->uuid('uses_uuid')->nullable();
-//            $table->foreign('uses_uuid')
-//                ->references('uuid')
-//                ->on('files')
-//                ->onDelete('cascade');
+            $table->foreign('uses_uuid')
+                ->references('uuid')
+                ->on('files');
 
-            $table->unsignedBigInteger('uses_id')->nullable();
-//            $table->foreign('uses_id')
-//                ->references('id')
-//                ->on('files')
-//                ->onDelete('cascade');
+            $table->unsignedInteger('uses_id')->nullable();
+            $table->foreign('uses_id')
+                ->references('id')
+                ->on('files');
 
             $table->tinyInteger('file_type')->unsigned()->default(FileType::File);
             $table->timestamps();
