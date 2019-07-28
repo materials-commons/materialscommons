@@ -53,6 +53,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
 
         Route::resource('/projects/{project}/files', 'ProjectFilesController');
 
+        Route::resource('/projects/{project}/directories', 'ProjectDirectoriesController');
+
         Route::Post('/projects/{project}/upload', 'ProjectFileUploadController@store');
 
         Route::get('/projects/{project}/users', 'ProjectUsersController@index')->name('users.index');
