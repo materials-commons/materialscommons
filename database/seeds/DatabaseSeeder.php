@@ -6,6 +6,7 @@ use App\File;
 use App\Lab;
 use App\Project;
 use App\User;
+use App\Directory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -49,8 +50,20 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
+        $root = factory(Directory::class)->create([
+            'project_id' => $p->id,
+            'name' => '/',
+        ]);
+
+        $d2 = factory(Directory::class)->create([
+            'project_id' => $p->id,
+            'name' => '/d1',
+            'parent_id' => $root->id,
+        ]);
+
         factory(File::class, 50)->create([
             'project_id' => $p->id,
+            'directory_id' => $d2->id,
         ]);
 
         $lab->projects()->sync($projects);

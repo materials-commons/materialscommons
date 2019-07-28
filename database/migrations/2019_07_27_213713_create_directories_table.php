@@ -15,6 +15,23 @@ class CreateDirectoriesTable extends Migration
     {
         Schema::create('directories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->unique();
+
+            $table->text('description');
+            $table->string('name')->index();
+            $table->boolean('is_shortcut')->default('false');
+
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')
+                ->references('id')
+                ->on('directories');
+
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

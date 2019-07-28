@@ -17,9 +17,9 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid')->unique();
+
             $table->string('name');
             $table->text('description')->default("");
-            $table->text('path')->nullable();
             $table->unsignedBigInteger('size')->default(0);
             $table->string('checksum')->default("");
             $table->boolean('current')->default(true);
@@ -32,6 +32,11 @@ class CreateFilesTable extends Migration
                 ->on('projects')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('directory_id');
+            $table->foreign('directory_id')
+                ->references('id')
+                ->on('directories');
+
             $table->uuid('uses_uuid')->nullable();
             $table->foreign('uses_uuid')
                 ->references('uuid')
@@ -42,7 +47,6 @@ class CreateFilesTable extends Migration
                 ->references('id')
                 ->on('files');
 
-            $table->tinyInteger('file_type')->unsigned()->default(FileType::File);
             $table->timestamps();
         });
     }
