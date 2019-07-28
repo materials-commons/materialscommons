@@ -14,6 +14,6 @@ $factory->define(App\File::class, function (Faker $faker) {
         'checksum' => $faker->md5,
         'current' => true,
         'mime_type' => $faker->mimeType,
-        'file_type' => $faker->numberBetween(0, 1)
+        'file_type' => $faker->numberBetween(0, 1),
     ];
 });
