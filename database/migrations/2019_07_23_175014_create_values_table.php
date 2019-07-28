@@ -15,7 +15,7 @@ class CreateValuesTable extends Migration
     {
         Schema::create('values', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
 
             $table->unsignedBigInteger('attribute_id');
             $table->foreign('attribute_id')

@@ -17,7 +17,7 @@ class CreateLabsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->boolean('default_lab');
             $table->timestamps();
 

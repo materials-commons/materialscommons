@@ -15,7 +15,7 @@ class CreateAttributeSetsTable extends Migration
     {
         Schema::create('attribute_sets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->boolean('current')->default(true);
             $table->timestamps();
         });
