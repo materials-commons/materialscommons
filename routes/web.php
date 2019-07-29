@@ -47,6 +47,10 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::name('projects.')->group(function () {
         Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');
 
+        Route::get('/projects/{project}/experiments/{experiment}/workflow', 'ProjectExperimentTabsController@workflow')->name('experiments.workflow.index');
+        Route::get('/projects/{project}/experiments/{experiment}/samples', 'ProjectExperimentTabsController@samples')->name('experiments.samples.index');
+        Route::get('/projects/{project}/experiments/{experiment}/processes', 'ProjectExperimentTabsController@processes')->name('experiments.processes.index');
+
         Route::resource('/projects/{project}/samples', 'ProjectSamplesController');
 
         Route::get('/projects/{project}/getRootFolder', 'ProjectFoldersDatatableController@getRootFolder')->name('get_root_folder');
