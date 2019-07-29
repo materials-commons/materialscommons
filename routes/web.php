@@ -53,7 +53,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
 
         Route::resource('/projects/{project}/files', 'ProjectFilesController');
 
-        Route::resource('/projects/{project}/directories', 'ProjectFilesListController');
+        Route::resource('/projects/{project}/folders', 'ProjectFoldersController');
 
         Route::Post('/projects/{project}/upload', 'ProjectFileUploadController@store');
 

@@ -7,7 +7,7 @@ use App\File;
 use App\Project;
 use Illuminate\Http\Request;
 
-class ProjectFilesListController extends Controller
+class ProjectFoldersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class ProjectFilesListController extends Controller
     public function index(Project $project)
     {
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
-        return view('app.projects.directories.index', compact('directory', 'project'));
+        return view('app.projects.folders.index', compact('directory', 'project'));
     }
 
     /**
@@ -46,12 +46,13 @@ class ProjectFilesListController extends Controller
      * Display the specified resource.
      *
      * @param  Project  $project
-     * @param  \App\Directory  $directory
+     * @param  \App\File  $folder
+     *
      * @return void
      */
-    public function show(Project $project, Directory $directory)
+    public function show(Project $project, File $folder)
     {
-        $dir = Directory::where('project_id', $project->id)->where('parent_id', $directory->id)->first();
+        $dir = File::where('project_id', $project->id)->where('parent_id', $folder->id)->first();
         return view('app.projects.directories.show', ['project' => $project, 'directory' => $dir]);
     }
 
