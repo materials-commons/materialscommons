@@ -6,6 +6,7 @@ use App\Directory;
 use App\File;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectFoldersController extends Controller
 {
@@ -45,15 +46,17 @@ class ProjectFoldersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Project  $project
-     * @param  \App\File  $folder
-     *
+     * @param $projectId
+     * @param $folderId
      * @return void
      */
-    public function show(Project $project, File $folder)
+    public function show($projectId, $folderId)
     {
-        $dir = File::where('project_id', $project->id)->where('parent_id', $folder->id)->first();
-        return view('app.projects.directories.show', ['project' => $project, 'directory' => $dir]);
+//        error_log("I am here", $projectId, $folderId);
+        $dir = File::where('project_id', $projectId)->where('id', $folderId)->first();
+        $project = Project::find($projectId);
+//        error_log(print_r($dir));
+        return view('app.projects.folders.show', ['project' => $project, 'directory' => $dir]);
     }
 
     /**

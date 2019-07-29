@@ -49,6 +49,9 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
 
         Route::resource('/projects/{project}/samples', 'ProjectSamplesController');
 
+        Route::get('/projects/{project}/getRootFolder', 'ProjectFoldersDatatableController@getRootFolder')->name('get_root_folder');
+        Route::get('/projects/{project}/folder/{folder}/getFolder', 'ProjectFoldersDatatableController@getFolder')->name('get_folder');
+
         Route::resource('/projects/{project}/processes', 'ProjectProcessesController');
 
         Route::resource('/projects/{project}/files', 'ProjectFilesController');

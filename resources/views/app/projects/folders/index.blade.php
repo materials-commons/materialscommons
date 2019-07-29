@@ -30,7 +30,7 @@
                     processing: true,
                     response: true,
                     stateSave: true,
-                    ajax: "{{route('get_root_files', [$project->id])}}",
+                    ajax: "{{route('projects.get_root_folder', [$project->id])}}",
                     columns: [
                         {
                             name: 'name',
@@ -41,11 +41,11 @@
                                     let r, icon;
                                     if (rowType === 'directory') {
                                         // rowType === 'directory'
-                                        r = route('app.projects.folders.show', [{{$project->id}}, objectId]).url();
+                                        r = route('projects.folders.show', [{{$project->id}}, objectId]).url();
                                         icon = `<i class="fa-fw fas mr-2 ` + `fa-folder"></i>`
                                     } else {
                                         // else type === some media type for a file
-                                        r = route('app.projects.files.show', [{{$project->id}}, objectId]).url();
+                                        r = route('projects.files.show', [{{$project->id}}, objectId]).url();
                                         icon = `<i class="fa-fw fas mr-2 ` + `fa-file"></i>`;
                                     }
                                     let ndata = `<a href="`+r+`">`+ icon + data + `</a>`;
@@ -56,7 +56,7 @@
                             }
                         },
                         {name: 'id'},
-                        {name: 'otype'},
+                        {name: 'mime_type'},
                         {name: 'size'}
                     ],
                     columnDefs: [
