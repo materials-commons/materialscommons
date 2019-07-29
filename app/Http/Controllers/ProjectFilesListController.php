@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Directory;
+use App\File;
 use App\Project;
 use Illuminate\Http\Request;
 
-class ProjectDirectoriesController extends Controller
+class ProjectFilesListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class ProjectDirectoriesController extends Controller
      */
     public function index(Project $project)
     {
-        $directory = Directory::where('project_id', $project->id)->where('name', '/')->first();
+        $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         return view('app.projects.directories.index', compact('directory', 'project'));
     }
 
@@ -50,7 +51,8 @@ class ProjectDirectoriesController extends Controller
      */
     public function show(Project $project, Directory $directory)
     {
-        //
+        $dir = Directory::where('project_id', $project->id)->where('parent_id', $directory->id)->first();
+        return view('app.projects.directories.show', ['project' => $project, 'directory' => $dir]);
     }
 
     /**

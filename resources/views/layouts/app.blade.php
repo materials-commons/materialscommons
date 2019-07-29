@@ -17,6 +17,8 @@
         @endif
     </title>
 
+    @routes
+
     <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Bootstrap core CSS -->

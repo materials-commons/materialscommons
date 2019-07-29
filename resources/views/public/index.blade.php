@@ -63,8 +63,8 @@
                             visible: false,
                         }
                     ]
-                })
-            })
+                });
+            });
         </script>
     @endpush
 @stop

@@ -19,6 +19,9 @@ class CreateFilesTable extends Migration
             $table->uuid('uuid')->unique();
 
             $table->string('name');
+
+            $table->text('path')->nullable()->index();
+
             $table->text('description')->default("");
             $table->unsignedBigInteger('size')->default(0);
             $table->string('checksum')->default("");
@@ -32,10 +35,12 @@ class CreateFilesTable extends Migration
                 ->on('projects')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('directory_id');
+            $table->boolean('is_shortcut')->default('false');
+
+            $table->unsignedBigInteger('directory_id')->nullable();
             $table->foreign('directory_id')
                 ->references('id')
-                ->on('directories');
+                ->on('files');
 
             $table->uuid('uses_uuid')->nullable();
             $table->foreign('uses_uuid')
@@ -48,6 +53,9 @@ class CreateFilesTable extends Migration
                 ->on('files');
 
             $table->timestamps();
+
+            $table->index(['project_id', 'directory_id']);
+            $table->index(['project_id', 'path']);
         });
     }
 

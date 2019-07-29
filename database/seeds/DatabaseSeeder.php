@@ -50,15 +50,19 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
-        $root = factory(Directory::class)->create([
+        $root = factory(File::class)->create([
             'project_id' => $p->id,
             'name' => '/',
+            'path' => '/',
+            'mime_type' => 'directory'
         ]);
 
-        $d2 = factory(Directory::class)->create([
+        $d2 = factory(File::class)->create([
             'project_id' => $p->id,
-            'name' => '/d1',
-            'parent_id' => $root->id,
+            'name' => 'd1',
+            'path' => '/d1',
+            'directory_id' => $root->id,
+            'mime_type' => 'directory',
         ]);
 
         factory(File::class, 50)->create([
