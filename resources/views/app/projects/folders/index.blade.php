@@ -57,7 +57,21 @@
                         },
                         {name: 'id'},
                         {name: 'mime_type'},
-                        {name: 'size'}
+                        {
+                            name: 'size',
+                            render: function(data, type, row) {
+                                if (type === 'display') {
+                                    let rowType = row["2"];
+                                    if (rowType === 'directory') {
+                                        return "N/A";
+                                    } else {
+                                        return data;
+                                    }
+                                }
+
+                                return data;
+                            }
+                        }
                     ],
                     columnDefs: [
                         {
