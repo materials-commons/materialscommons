@@ -37,7 +37,7 @@
 
 <body>
 <nav class="navbar navbar-dark fixed-top bg-nav p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">MaterialsCommons</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons</a>
     {{--    <div class="d-flex col-sm-8 justify-content-end">--}}
     {{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Projects</a>--}}
     {{--        <a class="nav-link action col-sm-3 col-md-2 mr-0" href="{{route('dashboard.index')}}">Stuff</a>--}}

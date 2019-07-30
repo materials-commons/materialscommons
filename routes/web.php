@@ -42,7 +42,7 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+//    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', 'ProjectsController');
     Route::name('projects.')->group(function () {
         Route::resource('/projects/{project}/experiments', 'ProjectExperimentsController');

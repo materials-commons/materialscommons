@@ -31,11 +31,11 @@
                     <dt class="col-sm-2">Last Updated</dt>
                     <dd class="col-sm-10">{{$project->updated_at->diffForHumans()}}</dd>
                 </dl>
-                <div class="form-group form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="default_project"
-                           {{$project->default_project ? 'checked' : ''}} readonly onclick="return false;">
-                    <label class="form-check-label" for="default_project">Default Project?</label>
-                </div>
+{{--                <div class="form-group form-check-inline">--}}
+{{--                    <input type="checkbox" class="form-check-input" id="default_project"--}}
+{{--                           {{$project->default_project ? 'checked' : ''}} readonly onclick="return false;">--}}
+{{--                    <label class="form-check-label" for="default_project">Default Project?</label>--}}
+{{--                </div>--}}
                 <div class="form-group form-check-inline">
                     <input type="checkbox" class="form-check-input" id="is_active"
                            {{$project->is_active ? 'checked' : ''}} readonly onclick="return false;">

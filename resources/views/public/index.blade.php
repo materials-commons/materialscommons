@@ -22,14 +22,14 @@
         @endslot
     @endcomponent
 
-    @component('components.card')
-        @slot('header')
-            Public Projects
-        @endslot
+{{--    @component('components.card')--}}
+{{--        @slot('header')--}}
+{{--            Public Projects--}}
+{{--        @endslot--}}
 
-        @slot('body')
-        @endslot
-    @endcomponent
+{{--        @slot('body')--}}
+{{--        @endslot--}}
+{{--    @endcomponent--}}
 
     @push('scripts')
         <script>
