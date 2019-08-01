@@ -37,6 +37,7 @@ Route::prefix('public')->group(function () {
         Route::get('/datasets/{dataset}', 'PublicDataDatasetsController@show')->name('datasets.show');
         Route::get('/authors', 'PublicDataAuthorsController@index')->name('authors.index');
         Route::get('/tags', 'PublicDataTagsController@index')->name('tags.index');
+        Route::view('/community', 'public.community.index')->name('community.index');
     });
 });
 
