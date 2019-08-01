@@ -31,6 +31,31 @@
             <div class="row ml-5">
                 <p>{{$dataset->description}}</p>
             </div>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.show')}} active" href="#">
+                        Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.workflow')}}" href="#">
+                        Workflow
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.samples')}}" href="#">
+                        Samples
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.processes')}}" href="#">
+                        Processes
+                    </a>
+                </li>
+            </ul>
+
+            <br>
         @endslot
     @endcomponent
 @stop
