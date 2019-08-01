@@ -24,17 +24,23 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+    <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
 
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+    <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+{{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>--}}
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+{{--    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>--}}
+
+{{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>--}}
+
+{{--    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>--}}
+
+{{--    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">--}}
+{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"--}}
+{{--          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">--}}
 
     <!-- Custom styles for this template -->
 </head>
