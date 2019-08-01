@@ -18,11 +18,12 @@ class CreateDatasetsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('license');
+            $table->string('license_link');
             $table->text('funding');
             $table->text('description');
             $table->string('doi');
-            $table->date('published_at')->nullable();
-            $table->date('privately_published_at')->nullable();
+            $table->datetime('published_at')->nullable();
+            $table->datetime('privately_published_at')->nullable();
             $table->text('authors');
             $table->string('institution');
 

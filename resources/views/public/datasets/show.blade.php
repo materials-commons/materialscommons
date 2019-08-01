@@ -9,7 +9,28 @@
         @endslot
 
         @slot('body')
-            Details for dataset here
+            <div class="ml-5">
+                <dl class="row">
+                    <dt class="col-sm-2">Name</dt>
+                    <dd class="col-sm-10">{{$dataset->name}}</dd>
+                    <dt class="col-sm-2">License</dt>
+                    <dd class="col-sm-10"><a href="{{$dataset->license_link}}">{{$dataset->license}}</a></dd>
+                    <dt class="col-sm-2">Authors</dt>
+                    <dd class="col-sm-10">{{$dataset->authors}}</dd>
+                    <dt class="col-sm-2">Institution</dt>
+                    <dd class="col-sm-10">{{$dataset->institution}}</dd>
+                    <dt class="col-sm-2">Funding</dt>
+                    <dd class="col-sm-10">{{$dataset->funding}}</dd>
+                    <dt class="col-sm-2">Published</dt>
+                    <dd class="col-sm-10">{{$dataset->published_at->diffForHumans()}}</dd>
+                </dl>
+            </div>
+            <div class="row ml-5">
+                <h5>Description</h5>
+            </div>
+            <div class="row ml-5">
+                <p>{{$dataset->description}}</p>
+            </div>
         @endslot
     @endcomponent
 @stop
