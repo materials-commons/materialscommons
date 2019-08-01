@@ -94,6 +94,13 @@
 {{--                    </li>--}}
                     <li class="nav-item">
                         <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
+                            <i class="fa-fw fas fa-users mr-2"></i>
+                            Communities
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
                             <i class="fa-fw fas fa-book mr-2"></i>
                             Datasets
                         </a>
