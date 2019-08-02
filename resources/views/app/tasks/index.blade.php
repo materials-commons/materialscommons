@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Tasks')
 
+@section('nav')
+    @include('layouts.navs.app')
+@stop
+
 @section('content')
     @component('components.card')
         @slot('header')

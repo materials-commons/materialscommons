@@ -1,6 +1,10 @@
-@extends('layouts.public')
+@extends('layouts.app')
 
 @section('pageTitle', 'Public Data')
+
+@section('nav')
+    @include('layouts.navs.public')
+@stop
 
 @section('content')
     @component('components.card')
@@ -22,14 +26,14 @@
         @endslot
     @endcomponent
 
-{{--    @component('components.card')--}}
-{{--        @slot('header')--}}
-{{--            Public Projects--}}
-{{--        @endslot--}}
+    {{--    @component('components.card')--}}
+    {{--        @slot('header')--}}
+    {{--            Public Projects--}}
+    {{--        @endslot--}}
 
-{{--        @slot('body')--}}
-{{--        @endslot--}}
-{{--    @endcomponent--}}
+    {{--        @slot('body')--}}
+    {{--        @endslot--}}
+    {{--    @endcomponent--}}
 
     @push('scripts')
         <script>

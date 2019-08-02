@@ -1,6 +1,10 @@
-@extends('layouts.project')
+@extends('layouts.app')
 
 @section('pageTitle', 'Experiments')
+
+@section('nav')
+    @include('layouts.navs.project')
+@stop
 
 @section('content')
     @component('components.card')

@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Labs')
 
+@section('nav')
+    @include('layouts.navs.app')
+@stop
+
 @section('content')
     <table class="table">
         <thead class="bg-primary text-white">

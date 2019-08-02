@@ -1,0 +1,53 @@
+<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10 sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column mt-3">
+            <li class="nav-item">
+                <a class="nav-link fs-11 {{setActiveNavByName('public.index')}}" href="{{route('public.index')}}">
+                    <i class="fa-fw fas fa-globe mr-2"></i>
+                    Public Data
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}" href="{{route('public.new.index')}}">
+                    <i class="fa-fw fas fa-bullhorn mr-2"></i>
+                    What's New
+                </a>
+            </li>
+
+            {{--                    <li class="nav-item">--}}
+            {{--                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">--}}
+            {{--                            <span data-feather="home"></span>--}}
+            {{--                            <i class="fa-fw fas fa-project-diagram mr-2"></i>--}}
+            {{--                            Projects--}}
+            {{--                        </a>--}}
+            {{--                    </li>--}}
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.community')}}" href="{{route('public.community.index')}}">
+                    <i class="fa-fw fas fa-users mr-2"></i>
+                    Communities
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}" href="{{route('public.datasets.index')}}">
+                    <i class="fa-fw fas fa-book mr-2"></i>
+                    Datasets
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}" href="{{route('public.authors.index')}}">
+                    <i class="fa-fw fas fa-user-friends mr-2"></i>
+                    Authors
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}" href="{{route('public.tags.index')}}">
+                    <i class="fa-fw fas fa-tags mr-2"></i>
+                    Tags
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Create Task')
 
+@section('nav')
+    @include('layouts.navs.app')
+@stop
+
 @section('content')
     @component('components.card')
         @slot('header')
