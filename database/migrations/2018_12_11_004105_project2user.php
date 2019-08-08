@@ -14,10 +14,10 @@ class Project2user extends Migration
     public function up()
     {
         Schema::create('project2user', function (Blueprint $table) {
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

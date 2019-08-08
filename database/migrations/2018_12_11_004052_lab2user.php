@@ -14,10 +14,10 @@ class Lab2user extends Migration
     public function up()
     {
         Schema::create('lab2user', function (Blueprint $table) {
-            $table->unsignedInteger('lab_id');
+            $table->unsignedBigInteger('lab_id');
             $table->foreign('lab_id')->references('id')->on('labs');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

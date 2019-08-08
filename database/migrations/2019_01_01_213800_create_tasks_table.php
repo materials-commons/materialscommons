@@ -15,11 +15,11 @@ class CreateTasksTable extends Migration
     public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description');
-            $table->unsignedInteger('owner_id');
+            $table->unsignedBigInteger('owner_id');
             $table->tinyInteger('status')->unsigned()->default(TaskStatus::Open);
 
             $table->timestamps();

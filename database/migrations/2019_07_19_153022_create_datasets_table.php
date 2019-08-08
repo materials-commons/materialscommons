@@ -27,13 +27,13 @@ class CreateDatasetsTable extends Migration
             $table->text('authors');
             $table->string('institution');
 
-            $table->unsignedInteger('owner_id');
+            $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
                 ->references('id')
                 ->on('projects')

@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateProcessesTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -18,6 +19,17 @@ class CreateProcessesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description');
+
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')
+                  ->references('id')
+                  ->on('users');
+
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')
+                  ->references('id')
+                  ->on('projects');
+
             $table->timestamps();
         });
     }

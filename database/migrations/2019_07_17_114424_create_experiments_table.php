@@ -21,13 +21,13 @@ class CreateExperimentsTable extends Migration
             $table->string('name');
             $table->text('description');
 
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
                   ->references('id')
                   ->on('projects')
                   ->onDelete('cascade');
 
-            $table->unsignedInteger('owner_id');
+            $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                   ->references('id')
                   ->on('users')

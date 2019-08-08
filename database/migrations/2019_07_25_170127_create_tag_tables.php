@@ -9,7 +9,7 @@ class CreateTagTables extends Migration
     public function up()
     {
         Schema::create('tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->json('name');
             $table->json('slug');
             $table->string('type')->nullable();
@@ -18,8 +18,8 @@ class CreateTagTables extends Migration
         });
 
         Schema::create('taggables', function (Blueprint $table) {
-            $table->integer('tag_id')->unsigned();
-            $table->integer('taggable_id')->unsigned();
+            $table->unsignedBiginteger('tag_id');
+            $table->unsignedBiginteger('taggable_id');
             $table->string('taggable_type');
 
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');

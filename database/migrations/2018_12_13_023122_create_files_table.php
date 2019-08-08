@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\FileType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +14,7 @@ class CreateFilesTable extends Migration
     public function up()
     {
         Schema::create('files', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
 
             $table->string('name');
@@ -29,7 +28,7 @@ class CreateFilesTable extends Migration
             $table->string('mime_type');
             $table->string('media_type_description')->default("unknown");
 
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
                 ->references('id')
                 ->on('projects')
@@ -47,7 +46,7 @@ class CreateFilesTable extends Migration
                 ->references('uuid')
                 ->on('files');
 
-            $table->unsignedInteger('uses_id')->nullable();
+            $table->unsignedBigInteger('uses_id')->nullable();
             $table->foreign('uses_id')
                 ->references('id')
                 ->on('files');

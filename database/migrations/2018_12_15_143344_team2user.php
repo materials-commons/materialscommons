@@ -14,10 +14,10 @@ class Team2user extends Migration
     public function up()
     {
         Schema::create('team2user', function (Blueprint $table) {
-            $table->unsignedInteger('team_id');
+            $table->unsignedBigInteger('team_id');
             $table->foreign('team_id')->references('id')->on('teams');
 
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
