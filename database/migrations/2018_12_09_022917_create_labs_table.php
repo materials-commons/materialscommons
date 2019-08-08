@@ -14,14 +14,14 @@ class CreateLabsTable extends Migration
     public function up()
     {
         Schema::create('labs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
             $table->uuid('uuid')->unique();
             $table->boolean('default_lab');
             $table->timestamps();
 
-            $table->unsignedInteger('owner_id');
+            $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users');
         });
     }

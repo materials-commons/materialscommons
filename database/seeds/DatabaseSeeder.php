@@ -5,6 +5,7 @@ use App\Experiment;
 use App\File;
 use App\Lab;
 use App\Project;
+use App\Sample;
 use App\User;
 use App\Directory;
 use Illuminate\Database\Seeder;
@@ -20,9 +21,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = factory(User::class)->create([
-            'name'     => 'MC Admin',
-            'email'    => 'admin@admin.org',
-            'password' => bcrypt('admin'),
+            'name'      => 'MC Admin',
+            'email'     => 'admin@admin.org',
+            'password'  => bcrypt('admin'),
+            'api_token' => 'admintoken',
+
         ]);
 
 
@@ -52,23 +55,30 @@ class DatabaseSeeder extends Seeder
 
         $root = factory(File::class)->create([
             'project_id' => $p->id,
-            'name' => '/',
-            'path' => '/',
-            'mime_type' => 'directory'
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
         ]);
 
         $d2 = factory(File::class)->create([
-            'project_id' => $p->id,
-            'name' => 'd1',
-            'path' => '/d1',
+            'project_id'   => $p->id,
+            'name'         => 'd1',
+            'path'         => '/d1',
             'directory_id' => $root->id,
-            'mime_type' => 'directory',
+            'mime_type'    => 'directory',
         ]);
 
-        factory(File::class, 50)->create([
+        factory(Sample::class, 20)->create([
             'project_id' => $p->id,
-            'directory_id' => $d2->id,
+            'owner_id'   => $user->id,
         ]);
+
+        for ($x = 0; $x < 10; $x++) {
+            factory(File::class, 15)->create([
+                'project_id'   => $p->id,
+                'directory_id' => $d2->id,
+            ]);
+        }
 
         $lab->projects()->sync($projects);
         $user->labs()->sync($lab);
