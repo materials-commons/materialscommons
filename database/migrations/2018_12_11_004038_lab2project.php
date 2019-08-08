@@ -14,10 +14,10 @@ class Lab2project extends Migration
     public function up()
     {
         Schema::create('lab2project', function (Blueprint $table) {
-            $table->unsignedInteger('lab_id');
+            $table->unsignedBigInteger('lab_id');
             $table->foreign('lab_id')->references('id')->on('labs')->onDelete('cascade');
 
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
