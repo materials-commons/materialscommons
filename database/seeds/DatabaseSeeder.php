@@ -7,7 +7,6 @@ use App\Lab;
 use App\Project;
 use App\Sample;
 use App\User;
-use App\Directory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -58,6 +57,7 @@ class DatabaseSeeder extends Seeder
             'name'       => '/',
             'path'       => '/',
             'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
         ]);
 
         $d2 = factory(File::class)->create([
@@ -66,6 +66,7 @@ class DatabaseSeeder extends Seeder
             'path'         => '/d1',
             'directory_id' => $root->id,
             'mime_type'    => 'directory',
+            'owner_id'     => $user->id,
         ]);
 
         factory(Sample::class, 20)->create([
@@ -77,6 +78,7 @@ class DatabaseSeeder extends Seeder
             factory(File::class, 15)->create([
                 'project_id'   => $p->id,
                 'directory_id' => $d2->id,
+                'owner_id'     => $user->id,
             ]);
         }
 
