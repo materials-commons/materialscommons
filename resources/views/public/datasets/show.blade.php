@@ -48,12 +48,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.samples')}}" href="#">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.entities')}}" href="#">
                         Samples
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.processes')}}" href="#">
+                    <a class="nav-link {{setActiveNavByName('projects.experiments.actions')}}" href="#">
                         Processes
                     </a>
                 </li>
