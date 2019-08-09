@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\File;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,7 +22,7 @@ class ProjectsAPIController extends Controller
 
         return QueryBuilder::for($query)
                            ->allowedFilters('name', Filter::exact('project_id'))
-                           ->withCount(['samples', 'processes', 'files'])
+                           ->withCount(['actions', 'entities', 'files'])
                            ->jsonPaginate();
     }
 
@@ -34,9 +35,10 @@ class ProjectsAPIController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name'        => [
+        $attrs = request()->validate([
+            'name' => [
                 'required',
+                'string',
                 function ($attribute, $value, $fail) {
                     $count = Project::where('name', $value)
                                     ->where('owner_id', auth()->id())
@@ -46,61 +48,71 @@ class ProjectsAPIController extends Controller
                     }
                 },
             ],
-            'description' => 'required',
 
-            // 'default_project' => 'required|boolean',
+            'description' => 'string',
+            'is_active'   => 'boolean',
         ]);
 
-        $project = Project::create([
-            'name'            => request('name'),
-            'description'     => request('description'),
+        $attrs['owner_id'] = auth()->id();
 
-            // 'default_project' => request('default_project'),
-            'default_project' => false,
+        $project = Project::create($attrs);
 
-            'is_active' => true,
-            'owner_id'  => auth()->id(),
+        File::create([
+            'project_id'             => $project->id,
+            'name'                   => '/',
+            'path'                   => '/',
+            'mime_type'              => 'directory',
+            'media_type_description' => 'directory',
+            'owner_id'               => auth()->id(),
         ]);
 
         auth()->user()->projects()->attach($project);
 
-        return $project;
+        return $project->fresh();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $projectId
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Project
      */
-    public function show($id)
+    public function show($projectId)
     {
-        //
+        return Project::withCount(['actions', 'entities', 'files'])
+                      ->findOrFail($projectId);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Project  $project
      *
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $projectId)
     {
-        //
+        $attrs = request()->validate([
+            'name'        => 'string',
+            'description' => 'string',
+            'is_active'   => 'boolean',
+        ]);
+
+        return tap(Project::findOrFail($projectId))->update($attrs)->fresh();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Project  $project
      *
-     * @return \Illuminate\Http\Response
+     * @return void
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
     }
 }

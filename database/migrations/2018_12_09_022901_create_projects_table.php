@@ -17,9 +17,9 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description');
-            $table->boolean('default_project');
-            $table->boolean('is_active');
+            $table->text('description')->default('');
+            $table->boolean('default_project')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

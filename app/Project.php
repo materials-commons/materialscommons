@@ -10,6 +10,23 @@ class Project extends Model
 
     protected $guarded = [];
 
+    protected $attributes = [];
+
+    protected $casts = [
+        'default_project' => 'boolean',
+        'is_active' => 'boolean',
+        'owner_id' => 'integer',
+    ];
+
+    public function setDescriptionAttribute($value)
+    {
+        if (is_null($value)) {
+            $this->attributes['description'] = '';
+        } else {
+            $this->attributes['description'] = $value;
+        }
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'project2user', 'project_id',
@@ -18,7 +35,7 @@ class Project extends Model
 
     public function labs()
     {
-        return $this->belongsToMany(Labs::class, 'lab2project', 'project_id',
+        return $this->belongsToMany(Lab::class, 'lab2project', 'project_id',
             'lab_id');
     }
 
