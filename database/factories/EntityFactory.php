@@ -2,12 +2,12 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Process;
+use App\Entity;
 use Faker\Generator as Faker;
 
-$factory->define(Process::class, function (Faker $faker) {
+$factory->define(Entity::class, function (Faker $faker) {
     return [
-        'name'        => $faker->name,
+        'name'        => $faker->word,
         'description' => $faker->sentence,
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {

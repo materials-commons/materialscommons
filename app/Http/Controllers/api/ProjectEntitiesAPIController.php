@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\api;
 
 use App\Project;
-use App\Sample;
+use App\Entity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ProjectSamplesAPIController extends Controller
+class ProjectEntitiesAPIController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class ProjectSamplesAPIController extends Controller
      */
     public function index(Project $project)
     {
-        $query = $project->samples()->getQuery();
+        $query = $project->entities()->getQuery();
 
         return QueryBuilder::for($query)
                            ->allowedFilters('name')
@@ -41,7 +41,7 @@ class ProjectSamplesAPIController extends Controller
             'description' => 'required',
         ]);
 
-        $sample = Sample::create([
+        $sample = Entity::create([
             'name'        => request('name'),
             'description' => request('description'),
             'owner_id'    => auth()->id(),

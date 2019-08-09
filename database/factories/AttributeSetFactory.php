@@ -2,10 +2,10 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\AttributeSet;
+use App\State;
 use Faker\Generator as Faker;
 
-$factory->define(AttributeSet::class, function (Faker $faker) {
+$factory->define(State::class, function (Faker $faker) {
     return [
         //
     ];

@@ -2,12 +2,12 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Sample;
+use App\Action;
 use Faker\Generator as Faker;
 
-$factory->define(Sample::class, function (Faker $faker) {
+$factory->define(Action::class, function (Faker $faker) {
     return [
-        'name'        => $faker->word,
+        'name'        => $faker->name,
         'description' => $faker->sentence,
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {

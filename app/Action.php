@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Process extends Model
+class Action extends Model
 {
     use Traits\HasUUID;
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSamplesTable extends Migration
+class CreateEntitiesTable extends Migration
 {
 
     /**
@@ -14,7 +14,7 @@ class CreateSamplesTable extends Migration
      */
     public function up()
     {
-        Schema::create('samples', function (Blueprint $table) {
+        Schema::create('entities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');

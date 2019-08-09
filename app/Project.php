@@ -37,14 +37,14 @@ class Project extends Model
         return $this->hasMany(Experiment::class, 'project_id');
     }
 
-    public function samples()
+    public function entities()
     {
-        return $this->hasMany(Sample::class, 'project_id');
+        return $this->hasMany(Entity::class, 'project_id');
     }
 
-    public function processes()
+    public function actions()
     {
-        return $this->hasMany(Process::class, 'project_id');
+        return $this->hasMany(Action::class, 'project_id');
     }
 
     public function files()

@@ -17,15 +17,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.samples')}}"
-                   href="{{route('projects.samples.index', ['project' => $project->id])}}">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.entities')}}"
+                   href="{{route('projects.entities.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>
                     Samples
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.processes')}}"
-                   href="{{route('projects.processes.index', ['project' => $project->id])}}">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.actions')}}"
+                   href="{{route('projects.actions.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-code-branch mr-2"></i>
                     Processes
                 </a>

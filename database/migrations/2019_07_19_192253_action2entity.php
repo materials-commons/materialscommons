@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Process2sample extends Migration
+class Action2entity extends Migration
 {
     /**
      * Run the migrations.
@@ -14,23 +14,23 @@ class Process2sample extends Migration
      */
     public function up()
     {
-        Schema::create('process2sample', function (Blueprint $table) {
-            $table->unsignedBigInteger('process_id');
-            $table->foreign('process_id')
+        Schema::create('action2entity', function (Blueprint $table) {
+            $table->unsignedBigInteger('action_id');
+            $table->foreign('action_id')
                 ->references('id')
-                ->on('processes')
+                ->on('actions')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('sample_id');
-            $table->foreign('sample_id')
+            $table->unsignedBigInteger('entity_id');
+            $table->foreign('entity_id')
                 ->references('id')
-                ->on('samples')
+                ->on('entities')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('attribute_set_id');
-            $table->foreign('attribute_set_id')
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')
                 ->references('id')
-                ->on('attribute_sets')
+                ->on('states')
                 ->onDelete('cascade');
 
             $table->tinyInteger('action')->unsigned()->default(ActionType::Creates);

@@ -5,7 +5,7 @@ use App\Experiment;
 use App\File;
 use App\Lab;
 use App\Project;
-use App\Sample;
+use App\Entity;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
             'owner_id'     => $user->id,
         ]);
 
-        factory(Sample::class, 20)->create([
+        factory(Entity::class, 20)->create([
             'project_id' => $p->id,
             'owner_id'   => $user->id,
         ]);

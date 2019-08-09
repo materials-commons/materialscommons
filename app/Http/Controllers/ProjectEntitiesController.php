@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Process;
 use App\Project;
+use App\Entity;
 use Illuminate\Http\Request;
 
-class ProjectProcessesController extends Controller
+class ProjectEntitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param  Project  $project
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index(Project $project)
     {
-        return view('app.projects.processes.index', ['project' => $project]);
+        return view('app.projects.samples.index', ['project' => $project]);
     }
 
     /**
@@ -43,10 +43,11 @@ class ProjectProcessesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Process  $process
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Process $process)
+    public function show(Entity $sample)
     {
         //
     }
@@ -54,10 +55,11 @@ class ProjectProcessesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Process  $process
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Process $process)
+    public function edit(Entity $sample)
     {
         //
     }
@@ -66,10 +68,11 @@ class ProjectProcessesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Process  $process
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Process $process)
+    public function update(Request $request, Entity $sample)
     {
         //
     }
@@ -77,10 +80,11 @@ class ProjectProcessesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Process  $process
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Process $process)
+    public function destroy(Entity $sample)
     {
         //
     }

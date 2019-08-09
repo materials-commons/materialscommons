@@ -52,12 +52,12 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
         Route::get('/projects/{project}/experiments/{experiment}/samples', 'ProjectExperimentTabsController@samples')->name('experiments.samples.index');
         Route::get('/projects/{project}/experiments/{experiment}/processes', 'ProjectExperimentTabsController@processes')->name('experiments.processes.index');
 
-        Route::resource('/projects/{project}/samples', 'ProjectSamplesController');
+        Route::resource('/projects/{project}/entities', 'ProjectEntitiesController');
 
         Route::get('/projects/{project}/getRootFolder', 'ProjectFoldersDatatableController@getRootFolder')->name('get_root_folder');
         Route::get('/projects/{project}/folder/{folder}/getFolder', 'ProjectFoldersDatatableController@getFolder')->name('get_folder');
 
-        Route::resource('/projects/{project}/processes', 'ProjectProcessesController');
+        Route::resource('/projects/{project}/actions', 'ProjectActionsController');
 
         Route::resource('/projects/{project}/files', 'ProjectFilesController');
 

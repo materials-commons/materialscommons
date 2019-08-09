@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Attributeset2attribute extends Migration
+class State2attribute extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class Attributeset2attribute extends Migration
      */
     public function up()
     {
-        Schema::create('attributeset2attribute', function(Blueprint $table) {
-            $table->unsignedBigInteger('attribute_set_id');
-            $table->foreign('attribute_set_id')
+        Schema::create('state2attribute', function(Blueprint $table) {
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')
                 ->references('id')
-                ->on('attributesets')
+                ->on('states')
                 ->onDelete('cascade');
 
             $table->unsignedBigInteger('attribute_id');

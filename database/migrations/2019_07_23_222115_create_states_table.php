@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttributeSetsTable extends Migration
+class CreateStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAttributeSetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('attribute_sets', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->boolean('current')->default(true);

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sample extends Model
+class Entity extends Model
 {
     use Traits\HasUUID;
 

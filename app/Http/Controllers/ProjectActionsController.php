@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Action;
 use App\Project;
-use App\Sample;
 use Illuminate\Http\Request;
 
-class ProjectSamplesController extends Controller
+class ProjectActionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param  Project  $project
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function index(Project $project)
     {
-        return view('app.projects.samples.index', ['project' => $project]);
+        return view('app.projects.processes.index', ['project' => $project]);
     }
 
     /**
@@ -43,10 +43,11 @@ class ProjectSamplesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Sample  $sample
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Sample $sample)
+    public function show(Action $process)
     {
         //
     }
@@ -54,10 +55,11 @@ class ProjectSamplesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Sample  $sample
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sample $sample)
+    public function edit(Action $process)
     {
         //
     }
@@ -66,10 +68,11 @@ class ProjectSamplesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sample  $sample
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sample $sample)
+    public function update(Request $request, Action $process)
     {
         //
     }
@@ -77,10 +80,11 @@ class ProjectSamplesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sample  $sample
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sample $sample)
+    public function destroy(Action $process)
     {
         //
     }
