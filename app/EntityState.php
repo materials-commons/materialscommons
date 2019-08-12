@@ -10,8 +10,23 @@ class EntityState extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'current' => 'boolean'
+        'current' => 'boolean',
     ];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'entity_state2file');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function actions()
+    {
+        return $this->belongsToMany(Action::class, 'action2entity_state');
+    }
 }

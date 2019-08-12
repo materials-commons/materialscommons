@@ -19,4 +19,14 @@ class Action extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'action2file');
+    }
+
+    public function entityStates()
+    {
+        return $this->belongsToMany(EntityState::class, 'action2entity_state');
+    }
 }
