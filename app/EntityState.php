@@ -12,4 +12,6 @@ class EntityState extends Model
     protected $casts = [
         'current' => 'boolean'
     ];
+
+
 }
