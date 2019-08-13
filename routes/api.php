@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function() {
     Route::resource('/projects', 'api\ProjectsAPIController');
     Route::resource('/projects/{project}/entities', 'api\ProjectEntitiesAPIController');
     Route::resource('/projects/{project}/actions', 'api\ProjectActionsAPIController');
+    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
 });
 
 //Route::middleware('auth:api')->resource('/projects', 'api\ProjectsAPIController');

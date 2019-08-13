@@ -26,27 +26,30 @@ class FileRelationshipsAPIController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
+     * @param $projectId
      * @param  \App\File  $file
+     * @param $entityStateId
      *
-     * @param  \App\EntityState  $entity_state
-     *
-     * @return void
+     * @return \App\File|null
      */
-    public function addEntityState(Request $request, Project $project, File $file, EntityState $entity_state)
+    public function addEntityState(Request $request, $projectId, File $file, $entityStateId)
     {
-        //
+        $file->entityStates()->attach($entityStateId);
+        return $file->fresh();
     }
 
     /**
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
+     * @param $projectId
      * @param  \App\File  $file
-     * @param  \App\Action  $action
+     * @param $actionId
+     *
+     * @return \App\File|null
      */
-    public function addAction(Request $request, Project $project, File $file, Action $action)
+    public function addAction(Request $request, $projectId, File $file, $actionId)
     {
-
+        $file->actions()->attach($actionId);
+        return $file->fresh();
     }
 
     /**

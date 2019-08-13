@@ -18,7 +18,7 @@ class CreateActionsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->default('');
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

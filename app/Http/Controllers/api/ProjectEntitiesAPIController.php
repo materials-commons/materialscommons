@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\EntityState;
 use App\Project;
 use App\Entity;
 use Illuminate\Http\Request;
@@ -37,18 +38,21 @@ class ProjectEntitiesAPIController extends Controller
     public function store(Request $request, $projectId)
     {
         request()->validate([
-            'name'        => 'required',
-            'description' => 'required',
+            'name'        => 'required|string',
+            'description' => 'string',
         ]);
 
-        $sample = Entity::create([
+        $entity = Entity::create([
             'name'        => request('name'),
             'description' => request('description'),
             'owner_id'    => auth()->id(),
             'project_id'  => $projectId,
         ]);
 
-        return $sample;
+        $entityState = new EntityState(['current' => true]);
+        $entity->entityStates()->save($entityState);
+
+        return $entity->fresh();
     }
 
     /**
@@ -60,7 +64,7 @@ class ProjectEntitiesAPIController extends Controller
      */
     public function show($id)
     {
-        //
+        return Entity::findOrFail($id);
     }
 
     /**
@@ -71,20 +75,26 @@ class ProjectEntitiesAPIController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $entityId)
     {
-        //
+        $attrs = request()->validate([
+            'name'        => 'string',
+            'description' => 'string',
+        ]);
+
+        return tap(Entity::findOrFail($entityId))->update($attrs)->fresh();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Entity  $entity
      *
-     * @return \Illuminate\Http\Response
+     * @return void
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Entity $entity)
     {
-        //
+        $entity->delete();
     }
 }

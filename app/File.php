@@ -10,6 +10,9 @@ class File extends Model
 
     protected $guarded = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -20,11 +23,14 @@ class File extends Model
      */
     public function entityStates()
     {
-        return $this->belongsToMany(EntityState::class, 'entity_state2file');
+        return $this->belongsToMany(EntityState::class, 'entity_state2file')->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function actions()
     {
-        return $this->belongsToMany(Action::class, 'action2file');
+        return $this->belongsToMany(Action::class, 'action2file')->withTimestamps();
     }
 }
