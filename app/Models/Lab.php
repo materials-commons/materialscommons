@@ -9,6 +9,8 @@ class Lab extends Model
 {
     use HasUUID;
 
+    protected $guarded = ['id', 'uuid'];
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'lab2user', 'lab_id', 'user_id');

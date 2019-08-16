@@ -9,6 +9,8 @@ class Dataset extends Model
 {
     use HasUUID;
 
+    protected $guarded = ['id', 'uuid'];
+
     //
     protected $dates = [
         'published_at',

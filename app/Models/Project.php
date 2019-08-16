@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasUUID;
 
-    protected $guarded = [];
+    protected $guarded = ['id', 'uuid'];
 
     protected $attributes = [];
 

@@ -9,4 +9,6 @@ class Directory extends Model
 {
     use HasUUID;
     //
+    protected $guarded = ['id', 'uuid'];
+
 }

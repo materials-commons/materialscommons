@@ -9,6 +9,7 @@ class Value extends Model
 {
     use HasUUID;
 
+    protected $guarded = ['id', 'uuid'];
     protected $casts = [
         'value' => 'array'
     ];

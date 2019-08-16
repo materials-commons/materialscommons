@@ -10,7 +10,7 @@ class EntityState extends Model
     use HasUUID;
 
     protected $table = 'entity_states';
-    protected $guarded = [];
+    protected $guarded = ['id', 'uuid'];
     protected $casts = [
         'current' => 'boolean',
     ];
