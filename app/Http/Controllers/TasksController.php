@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TaskStatus;
-use App\Task;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller

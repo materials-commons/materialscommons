@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dataset;
+use App\Models\Dataset;
 use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Http\Request;
 

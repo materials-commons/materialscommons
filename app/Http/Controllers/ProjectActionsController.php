@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Action;
-use App\Project;
+use App\Models\Action;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectActionsController extends Controller

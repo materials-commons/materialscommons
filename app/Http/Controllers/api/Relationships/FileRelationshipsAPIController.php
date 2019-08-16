@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api\Relationships;
 
-use App\Action;
-use App\EntityState;
-use App\File;
-use App\Project;
+use App\Models\Action;
+use App\Models\EntityState;
+use App\Models\File;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

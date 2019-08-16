@@ -1,12 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 
-class Entity extends Model
+class Action extends Model
 {
-    use Traits\HasUUID;
+    use HasUUID;
 
     protected $guarded = [];
 
@@ -36,14 +37,26 @@ class Entity extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'action2file')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function entityStates()
     {
-        return $this->hasMany(EntityState::class);
+        return $this->belongsToMany(EntityState::class, 'action2entity_state')->withTimestamps();
     }
 
-//    public function files() {
-//        return $this->hasMany()
-//    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function entities()
+    {
+        return $this->hasManyThrough(Entity::class, EntityState::class);
+    }
 }

@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Directory;
+use App\Models\Directory;
 use Faker\Generator as Faker;
 
 $factory->define(Directory::class, function (Faker $faker) {
@@ -11,7 +11,7 @@ $factory->define(Directory::class, function (Faker $faker) {
         'description' => $faker->sentence,
         'uuid' => $faker->uuid,
         'project_id' => function () {
-            return factory(App\Project::class)->create()->id;
+            return factory(App\Models\Project::class)->create()->id;
         }
     ];
 });

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Action;
-use App\Project;
+use App\Models\Action;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;

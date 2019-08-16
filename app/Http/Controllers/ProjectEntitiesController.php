@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
-use App\Entity;
+use App\Models\Project;
+use App\Models\Entity;
 use Illuminate\Http\Request;
 
 class ProjectEntitiesController extends Controller

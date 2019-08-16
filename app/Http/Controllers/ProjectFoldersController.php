@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Directory;
-use App\File;
+use App\Models\Directory;
+use App\Models\File;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

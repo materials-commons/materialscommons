@@ -15,6 +15,8 @@ class UserCanAccessProject
      */
     public function handle($request, Closure $next)
     {
+        $count = auth()->user()->projects()->where('project_id', 1)->count();
+        error_log($count);
         return $next($request);
     }
 }

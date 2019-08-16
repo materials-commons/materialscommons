@@ -1,12 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 
 class Lab extends Model
 {
-    use Traits\HasUUID;
+    use HasUUID;
 
     public function users()
     {

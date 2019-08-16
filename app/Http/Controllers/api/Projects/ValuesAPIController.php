@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\Projects;
 
-use App\Value;
-use App\Project;
+use App\Models\Value;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

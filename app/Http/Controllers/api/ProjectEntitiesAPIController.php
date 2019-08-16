@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
-use App\EntityState;
-use App\Project;
-use App\Entity;
+use App\Models\EntityState;
+use App\Models\Project;
+use App\Models\Entity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;

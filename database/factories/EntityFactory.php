@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Entity;
+use App\Models\Entity;
 use Faker\Generator as Faker;
 
 $factory->define(Entity::class, function (Faker $faker) {
@@ -11,10 +11,10 @@ $factory->define(Entity::class, function (Faker $faker) {
         'description' => $faker->sentence,
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\Models\User::class)->create()->id;
         },
         'project_id'  => function () {
-            return factory(App\Project::class)->create()->id;
+            return factory(App\Models\Project::class)->create()->id;
         },
     ];
 });

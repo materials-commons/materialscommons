@@ -1,12 +1,12 @@
 <?php
 
-use App\Dataset;
-use App\Experiment;
-use App\File;
-use App\Lab;
-use App\Project;
-use App\Entity;
-use App\User;
+use App\Models\Dataset;
+use App\Models\Experiment;
+use App\Models\File;
+use App\Models\Lab;
+use App\Models\Project;
+use App\Models\Entity;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

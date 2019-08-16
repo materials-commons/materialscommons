@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\Relationships;
 
-use App\Entity;
-use App\Project;
+use App\Models\Entity;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

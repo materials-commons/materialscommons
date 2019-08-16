@@ -1,12 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 
 class EntityState extends Model
 {
-    use Traits\HasUUID;
+    use HasUUID;
 
     protected $table = 'entity_states';
     protected $guarded = [];

@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Experiment;
+use App\Models\Experiment;
 use Faker\Generator as Faker;
 
 $factory->define(Experiment::class, function (Faker $faker) {
@@ -10,11 +10,11 @@ $factory->define(Experiment::class, function (Faker $faker) {
         'name' => $faker->word,
         'description' => $faker->sentence,
         'owner_id' => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\Models\User::class)->create()->id;
         },
         'uuid' => $faker->uuid,
         'project_id' => function () {
-            return factory(App\Project::class)->create()->id;
+            return factory(App\Models\Project::class)->create()->id;
         }
     ];
 });

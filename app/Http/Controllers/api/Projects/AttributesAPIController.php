@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\Projects;
 
-use App\Attribute;
-use App\Project;
+use App\Models\Attribute;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

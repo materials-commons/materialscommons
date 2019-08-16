@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api;
 
-use App\File;
-use App\Project;
+use App\Models\File;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\Filter;

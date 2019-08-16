@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dataset;
+use App\Models\Dataset;
 use Illuminate\Http\Request;
 
 class PublicDataDatasetsController extends Controller

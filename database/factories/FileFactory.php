@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\File::class, function (Faker $faker) {
+$factory->define(App\Models\File::class, function (Faker $faker) {
     $fileName = $faker->word.'.'.$faker->fileExtension;
 
     return [
@@ -14,10 +14,10 @@ $factory->define(App\File::class, function (Faker $faker) {
         'checksum'    => $faker->md5,
         'mime_type'   => $faker->mimeType,
         'owner_id'    => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\Models\User::class)->create()->id;
         },
         'project_id'  => function () {
-            return factory(App\Project::class)->create()->id;
+            return factory(App\Models\Project::class)->create()->id;
         },
     ];
 });

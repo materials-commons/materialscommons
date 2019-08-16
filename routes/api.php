@@ -10,6 +10,7 @@ use App\Http\Controllers\api\Projects\EntityStateAttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateFilesAPIController;
 use App\Http\Controllers\api\Projects\ValuesAPIController;
 use App\Http\Controllers\api\ProjectsAPIController;
+use App\Http\Middleware\UserCanAccessProject;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function () {
-    Route::apiResource('/projects', ProjectsAPIController::class);
+    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
     Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
 
     Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);

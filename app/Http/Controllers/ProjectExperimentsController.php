@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ExperimentStatus;
-use App\Experiment;
-use App\Project;
+use App\Models\Experiment;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
