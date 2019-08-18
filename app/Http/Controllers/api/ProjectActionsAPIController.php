@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\Action;
+use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +19,7 @@ class ProjectActionsAPIController extends Controller
      */
     public function index(Project $project)
     {
-        $query = $project->actions()->getQuery();
+        $query = $project->activities()->getQuery();
 
         return QueryBuilder::for($query)
                            ->allowedFilters('name')
@@ -42,7 +42,7 @@ class ProjectActionsAPIController extends Controller
             'description' => 'string',
         ]);
 
-        $action = Action::create([
+        $action = Activity::create([
             'name' => request('name'),
             'description' => request('description'),
             'owner_id' => auth()->id(),
@@ -61,7 +61,7 @@ class ProjectActionsAPIController extends Controller
      */
     public function show($id)
     {
-        return Action::findOrFail($id);
+        return Activity::findOrFail($id);
     }
 
     /**
@@ -79,7 +79,7 @@ class ProjectActionsAPIController extends Controller
             'description' => 'string',
         ]);
 
-        return tap(Action::findOrFail($actionId))->update($attrs)->fresh();
+        return tap(Activity::findOrFail($actionId))->update($attrs)->fresh();
     }
 
     /**
@@ -90,7 +90,7 @@ class ProjectActionsAPIController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function destroy(Action $action)
+    public function destroy(Activity $action)
     {
         $action->delete();
     }

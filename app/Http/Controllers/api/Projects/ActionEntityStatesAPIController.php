@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api\Projects;
 
-use App\Models\Action;
+use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,7 @@ class ActionEntityStatesAPIController extends Controller
      * @param  \App\Action  $action
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project, Action $action)
+    public function show(Project $project, Activity $action)
     {
         //
     }
@@ -52,7 +52,7 @@ class ActionEntityStatesAPIController extends Controller
      * @param  \App\Action  $action
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project, Action $action)
+    public function update(Request $request, Project $project, Activity $action)
     {
         //
     }
@@ -64,7 +64,7 @@ class ActionEntityStatesAPIController extends Controller
      * @param  \App\Action  $action
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project, Action $action)
+    public function destroy(Project $project, Activity $action)
     {
         //
     }

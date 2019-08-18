@@ -30,8 +30,8 @@ class File extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function actions()
+    public function activities()
     {
-        return $this->belongsToMany(Action::class, 'action2file')->withTimestamps();
+        return $this->belongsToMany(Activity::class, 'activity2file')->withTimestamps();
     }
 }

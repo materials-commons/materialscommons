@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api\Relationships;
 
-use App\Models\Action;
+use App\Models\Activity;
 use App\Models\EntityState;
 use App\Models\File;
 use App\Models\Project;
@@ -48,7 +48,7 @@ class FileRelationshipsAPIController extends Controller
      */
     public function addAction(Request $request, $projectId, File $file, $actionId)
     {
-        $file->actions()->attach($actionId);
+        $file->activities()->attach($actionId);
         return $file->fresh();
     }
 
@@ -85,7 +85,7 @@ class FileRelationshipsAPIController extends Controller
      * @param  \App\File  $file
      * @param  \App\Action  $action
      */
-    public function deleteAction(Request $request, Project $project, File $file, Action $action) {
+    public function deleteAction(Request $request, Project $project, File $file, Activity $action) {
 
     }
 

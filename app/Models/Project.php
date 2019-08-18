@@ -60,9 +60,9 @@ class Project extends Model
         return $this->hasMany(Entity::class, 'project_id');
     }
 
-    public function actions()
+    public function activities()
     {
-        return $this->hasMany(Action::class, 'project_id');
+        return $this->hasMany(Activity::class, 'project_id');
     }
 
     public function files()

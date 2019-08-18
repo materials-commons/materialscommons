@@ -27,9 +27,9 @@ class EntityState extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function actions()
+    public function activities()
     {
-        return $this->belongsToMany(Action::class, 'action2entity_state')->withTimestamps();
+        return $this->belongsToMany(Activity::class, 'activity2entity_state')->withTimestamps();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Action;
+use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -47,7 +47,7 @@ class ProjectActionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Action $process)
+    public function show(Activity $process)
     {
         //
     }
@@ -59,7 +59,7 @@ class ProjectActionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Action $process)
+    public function edit(Activity $process)
     {
         //
     }
@@ -72,7 +72,7 @@ class ProjectActionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Action $process)
+    public function update(Request $request, Activity $process)
     {
         //
     }
@@ -84,7 +84,7 @@ class ProjectActionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Action $process)
+    public function destroy(Activity $process)
     {
         //
     }
