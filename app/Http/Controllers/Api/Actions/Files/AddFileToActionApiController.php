@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\Actions\Files;
+namespace App\Http\Controllers\Api\Actions\Files;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AddFileToActionController extends Controller
+class AddFileToActionApiController extends Controller
 {
     /**
      * Handle the incoming request.
