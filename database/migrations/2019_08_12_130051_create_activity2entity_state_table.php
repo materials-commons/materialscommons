@@ -16,7 +16,7 @@ class CreateActivity2entityStateTable extends Migration
         Schema::create('activity2entity_state', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('action_id');
+            $table->unsignedBigInteger('activity_id');
             $table->foreign('activity_id')
                   ->references('id')
                   ->on('activities');
