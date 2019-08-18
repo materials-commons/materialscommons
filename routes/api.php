@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Activities\CreateActivityApiController;
+use App\Http\Controllers\Api\Activities\UpdateActivityApiController;
 use App\Http\Controllers\api\ProjectActionsAPIController;
 use App\Http\Controllers\api\ProjectEntitiesAPIController;
 use App\Http\Controllers\api\Projects\ActionAttributesAPIController;
@@ -39,6 +41,9 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('/projects/{project}/attributes', AttributesAPIController::class);
 
     Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
+
+    Route::post('/activities', CreateActivityApiController::class);
+    Route::put('/activities/{activity}', UpdateActivityApiController::class);
 
 
     //    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
