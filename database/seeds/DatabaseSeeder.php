@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
             'owner_id'   => $user->id,
         ]);
 
-        for ($x = 0; $x < 10; $x++) {
+        for ($x = 0; $x < 1; $x++) {
             factory(File::class, 15)->create([
                 'project_id'   => $p->id,
                 'directory_id' => $d2->id,
