@@ -36,12 +36,66 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('/projects/{project}/actions/{action}/attributes', ActionAttributesAPIController::class);
 
     Route::apiResource('/projects/{project}/entity-state/{entity_state}/files', EntityStateFilesAPIController::class);
-    Route::apiResource('/projects/{project}/entity-state/{entity_state}/attributes', EntityStateAttributesAPIController::class);
+    Route::apiResource('/projects/{project}/entity-state/{entity_state}/attributes',
+        EntityStateAttributesAPIController::class);
 
     Route::apiResource('/projects/{project}/attributes', AttributesAPIController::class);
 
     Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
 
+    /**
+     * @apiDefine AuthenticationError
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 401 Unauthorized
+     * {
+     *      "message": "Unauthenticated."
+     * }
+     */
+
+    /**
+     * @apiDefine ValidationError
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 422 Unprocessable Entity
+     * {
+     *      "errors": {
+     *          "project_id": [
+     *              "The project id field is required."
+     *          ]
+     *      },
+     *      "message": "The given data was invalid."
+     * }
+     */
+
+    /**
+     *
+     */
+
+
+    /**
+     * @api {post} /activities Create a new activity
+     * @apiDescription Creates a new activity in a project
+     * @apiParam {String} name Mandatory name of activity
+     * @apiParam {Integer} project_id Mandatory id of project that Activity should belong to
+     * @apiParam {String} [description] Optional description for activity
+     *
+     * @apiUse AuthenticationError
+     * @apiUse ValidationError
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 201 Created
+     * {
+     *      "created_at": "2019-08-19 15:00:56",
+     *       "id": 1,
+     *       "name": "activity1",
+     *       "owner_id": 1,
+     *       "project_id": "1",
+     *       "updated_at": "2019-08-19 15:00:56",
+     *       "uuid": "2eab0d89-bc15-408e-b0fb-772c8bf216dd"
+     * }
+     * @apiVersion 0.1.0
+     * @apiName CreateActivity
+     * @apiGroup Activities
+     */
     Route::post('/activities', CreateActivityApiController::class);
     Route::put('/activities/{activity}', UpdateActivityApiController::class);
 
