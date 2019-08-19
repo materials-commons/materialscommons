@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Entity;
 use Illuminate\Http\Request;
 
-class ProjectFilesController extends Controller
+class ProjectEntitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param  Project  $project
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index(Project $project)
     {
-        return view('app.projects.files.index', ['project' => $project]);
+        return view('app.projects.samples.index', ['project' => $project]);
     }
 
     /**
@@ -32,22 +34,21 @@ class ProjectFilesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Project  $project
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Project $project)
+    public function store(Request $request)
     {
-        $request->file->storeAs('files/01/02', $request->file->getClientOriginalName());
-        return redirect(route('projects.files.index', compact('project')));
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Entity $sample)
     {
         //
     }
@@ -55,10 +56,11 @@ class ProjectFilesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Entity $sample)
     {
         //
     }
@@ -67,10 +69,11 @@ class ProjectFilesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Entity $sample)
     {
         //
     }
@@ -78,10 +81,11 @@ class ProjectFilesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Entity  $sample
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Entity $sample)
     {
         //
     }

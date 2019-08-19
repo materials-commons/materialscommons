@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Models\Project;
-use App\Models\Entity;
+use App\Http\Controllers\Controller;
+use App\Models\Directory;
+use App\Models\File;
+use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
-class ProjectEntitiesController extends Controller
+class ProjectFoldersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +19,8 @@ class ProjectEntitiesController extends Controller
      */
     public function index(Project $project)
     {
-        return view('app.projects.samples.index', ['project' => $project]);
+        $directory = File::where('project_id', $project->id)->where('name', '/')->first();
+        return view('app.projects.folders.index', compact('directory', 'project'));
     }
 
     /**
@@ -43,23 +47,26 @@ class ProjectEntitiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entity  $sample
-     *
-     * @return \Illuminate\Http\Response
+     * @param $projectId
+     * @param $folderId
+     * @return void
      */
-    public function show(Entity $sample)
+    public function show($projectId, $folderId)
     {
-        //
+//        error_log("I am here", $projectId, $folderId);
+        $dir = File::where('project_id', $projectId)->where('id', $folderId)->first();
+        $project = Project::find($projectId);
+//        error_log(print_r($dir));
+        return view('app.projects.folders.show', ['project' => $project, 'directory' => $dir]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Entity  $sample
-     *
+     * @param  \App\Directory  $directory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entity $sample)
+    public function edit(Directory $directory)
     {
         //
     }
@@ -68,11 +75,10 @@ class ProjectEntitiesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entity  $sample
-     *
+     * @param  \App\Directory  $directory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entity $sample)
+    public function update(Request $request, Directory $directory)
     {
         //
     }
@@ -80,11 +86,10 @@ class ProjectEntitiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entity  $sample
-     *
+     * @param  \App\Directory  $directory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entity $sample)
+    public function destroy(Directory $directory)
     {
         //
     }

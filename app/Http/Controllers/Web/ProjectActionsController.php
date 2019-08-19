@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Models\Directory;
-use App\Models\File;
-use App\Project;
+use App\Http\Controllers\Controller;
+use App\Models\Activity;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
-class ProjectFoldersController extends Controller
+class ProjectActionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param  Project  $project
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function index(Project $project)
     {
-        $directory = File::where('project_id', $project->id)->where('name', '/')->first();
-        return view('app.projects.folders.index', compact('directory', 'project'));
+        return view('app.projects.processes.index', ['project' => $project]);
     }
 
     /**
@@ -46,26 +44,23 @@ class ProjectFoldersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $projectId
-     * @param $folderId
-     * @return void
+     * @param  \App\Action  $process
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function show($projectId, $folderId)
+    public function show(Activity $process)
     {
-//        error_log("I am here", $projectId, $folderId);
-        $dir = File::where('project_id', $projectId)->where('id', $folderId)->first();
-        $project = Project::find($projectId);
-//        error_log(print_r($dir));
-        return view('app.projects.folders.show', ['project' => $project, 'directory' => $dir]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Directory  $directory
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Directory $directory)
+    public function edit(Activity $process)
     {
         //
     }
@@ -74,10 +69,11 @@ class ProjectFoldersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Directory  $directory
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Directory $directory)
+    public function update(Request $request, Activity $process)
     {
         //
     }
@@ -85,10 +81,11 @@ class ProjectFoldersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Directory  $directory
+     * @param  \App\Action  $process
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Directory $directory)
+    public function destroy(Activity $process)
     {
         //
     }

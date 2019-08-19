@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
-use App\Models\Activity;
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
-class ProjectActionsController extends Controller
+class ProjectFilesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ProjectActionsController extends Controller
      */
     public function index(Project $project)
     {
-        return view('app.projects.processes.index', ['project' => $project]);
+        return view('app.projects.files.index', ['project' => $project]);
     }
 
     /**
@@ -33,21 +33,22 @@ class ProjectActionsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Project  $project
+     * @return void
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
-        //
+        $request->file->storeAs('files/01/02', $request->file->getClientOriginalName());
+        return redirect(route('projects.files.index', compact('project')));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $process)
+    public function show($id)
     {
         //
     }
@@ -55,11 +56,10 @@ class ProjectActionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $process)
+    public function edit($id)
     {
         //
     }
@@ -68,11 +68,10 @@ class ProjectActionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Action  $process
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $process)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -80,11 +79,10 @@ class ProjectActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $process)
+    public function destroy($id)
     {
         //
     }

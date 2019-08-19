@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Http\Request;
