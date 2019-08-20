@@ -3,26 +3,36 @@
     "type": "post",
     "url": "/activities",
     "title": "Create a new activity",
+    "name": "CreateActivity",
     "description": "<p>Creates a new activity in a project</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "URL Parameters": [
           {
-            "group": "Parameter",
+            "group": "URL Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "api_token",
+            "description": "<p>Mandatory API token</p>"
+          }
+        ],
+        "Body Parameters": [
+          {
+            "group": "Body Parameters",
             "type": "String",
             "optional": false,
             "field": "name",
             "description": "<p>Mandatory name of activity</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Body Parameters",
             "type": "Integer",
             "optional": false,
             "field": "project_id",
             "description": "<p>Mandatory id of project that Activity should belong to</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Body Parameters",
             "type": "String",
             "optional": true,
             "field": "description",
@@ -41,7 +51,6 @@
       ]
     },
     "version": "0.1.0",
-    "name": "CreateActivity",
     "group": "Activities",
     "filename": "routes/api.php",
     "groupTitle": "Activities",

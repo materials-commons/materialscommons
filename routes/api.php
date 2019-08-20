@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\Api\Activities\CreateActivityApiController;
+use App\Http\Controllers\Api\Activities\DeleteActivityApiController;
+use App\Http\Controllers\Api\Activities\ShowActivityApiController;
 use App\Http\Controllers\Api\Activities\UpdateActivityApiController;
 use App\Http\Controllers\api\ProjectActionsAPIController;
 use App\Http\Controllers\api\ProjectEntitiesAPIController;
 use App\Http\Controllers\api\Projects\ActionAttributesAPIController;
 use App\Http\Controllers\api\Projects\ActionEntityStatesAPIController;
 use App\Http\Controllers\api\Projects\ActionFilesAPIController;
+use App\Http\Controllers\Api\Projects\Activities\IndexProjectActivitiesApiController;
 use App\Http\Controllers\api\Projects\AttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateAttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateFilesAPIController;
@@ -73,10 +76,12 @@ Route::middleware('auth:api')->group(function () {
 
     /**
      * @api {post} /activities Create a new activity
+     * @apiName CreateActivity
      * @apiDescription Creates a new activity in a project
-     * @apiParam {String} name Mandatory name of activity
-     * @apiParam {Integer} project_id Mandatory id of project that Activity should belong to
-     * @apiParam {String} [description] Optional description for activity
+     * @apiParam (URL Parameters) {String} api_token Mandatory API token
+     * @apiParam (Body Parameters) {String} name Mandatory name of activity
+     * @apiParam (Body Parameters) {Integer} project_id Mandatory id of project that Activity should belong to
+     * @apiParam (Body Parameters) {String} [description] Optional description for activity
      *
      * @apiUse AuthenticationError
      * @apiUse ValidationError
@@ -97,8 +102,11 @@ Route::middleware('auth:api')->group(function () {
      * @apiGroup Activities
      */
     Route::post('/activities', CreateActivityApiController::class);
-    Route::put('/activities/{activity}', UpdateActivityApiController::class);
 
+    Route::put('/activities/{activity}', UpdateActivityApiController::class);
+    Route::delete('/activities/{activity}', DeleteActivityApiController::class);
+    Route::get('/activities/{activity}', ShowActivityApiController::class);
+    Route::get('/projects/{project}/activities', IndexProjectActivitiesApiController::class);
 
     //    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
 });
