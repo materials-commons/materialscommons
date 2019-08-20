@@ -13,7 +13,7 @@ class ProjectActionsAPIController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Project  $project
+     * @param  \App\Models\Project  $project
      *
      * @return void
      */
