@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0247bd31b61cb9aa28b1fbf8f82fc8a6",
+    "content-hash": "31fb52580245c6d330e661f63b0b5f8d",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -70,6 +70,59 @@
                 "validation"
             ],
             "time": "2019-08-11T11:09:21+00:00"
+        },
+        {
+            "name": "calebporzio/livewire",
+            "version": "v0.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calebporzio/livewire.git",
+                "reference": "3c912fb5fbe2f14a376be56f86829dbc4872bfe0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calebporzio/livewire/zipball/3c912fb5fbe2f14a376be56f86829dbc4872bfe0",
+                "reference": "3c912fb5fbe2f14a376be56f86829dbc4872bfe0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.7|^6.0",
+                "illuminate/validation": "^5.7|^6.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^5.7|^6.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "^7.5",
+                "psy/psysh": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Livewire\\LivewireServiceProvider"
+                    ],
+                    "aliases": {
+                        "Livewire": "Livewire\\Livewire"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Livewire\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Caleb Porzio",
+                    "email": "calebporzio@gmail.com"
+                }
+            ],
+            "description": "Build and test rich client-side functionality: with only backend code.",
+            "time": "2019-08-19T19:00:36+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

@@ -65,6 +65,8 @@
     </div>
 </div>
 
+@livewireAssets
+
 @stack('scripts')
 </body>
 </html>
