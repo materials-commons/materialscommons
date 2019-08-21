@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\Projects;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Projects\ProjectResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -12,8 +14,8 @@ class IndexProjectsApiController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return AnonymousResourceCollection
      */
     public function __invoke(Request $request)
     {
@@ -24,6 +26,6 @@ class IndexProjectsApiController extends Controller
             ->withCount(['activities', 'entities', 'files'])
             ->jsonPaginate();
 
-        return $data;
+        return ProjectResource::collection($data);
     }
 }
