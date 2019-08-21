@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Entities;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DestroyEntityApiController extends Controller
+class DeleteEntityApiController extends Controller
 {
     /**
      * Handle the incoming request.

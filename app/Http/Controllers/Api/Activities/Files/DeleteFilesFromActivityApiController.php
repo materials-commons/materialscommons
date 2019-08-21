@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Activities\Files;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DeleteFilesFromApiActivityController extends Controller
+class DeleteFilesFromActivityApiController extends Controller
 {
     /**
      * Handle the incoming request.

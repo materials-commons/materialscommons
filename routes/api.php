@@ -1,9 +1,5 @@
-<?php
+<?php /** @noinspection PhpIncludeInspection */
 
-use App\Http\Controllers\Api\Activities\CreateActivityApiController;
-use App\Http\Controllers\Api\Activities\DeleteActivityApiController;
-use App\Http\Controllers\Api\Activities\ShowActivityApiController;
-use App\Http\Controllers\Api\Activities\UpdateActivityApiController;
 use App\Http\Controllers\api\ProjectActionsAPIController;
 use App\Http\Controllers\api\ProjectEntitiesAPIController;
 use App\Http\Controllers\api\Projects\ActionAttributesAPIController;
@@ -46,70 +42,19 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
 
-    /**
-     * @apiDefine AuthenticationError
-     * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 401 Unauthorized
-     * {
-     *      "message": "Unauthenticated."
-     * }
-     */
-
-    /**
-     * @apiDefine ValidationError
-     * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 422 Unprocessable Entity
-     * {
-     *      "errors": {
-     *          "project_id": [
-     *              "The project id field is required."
-     *          ]
-     *      },
-     *      "message": "The given data was invalid."
-     * }
-     */
-
-    /**
-     *
-     */
-
-
-    /**
-     * @api {post} /activities Create a new activity
-     * @apiName CreateActivity
-     * @apiDescription Creates a new activity in a project
-     * @apiParam (URL Parameters) {String} api_token Mandatory API token
-     * @apiParam (Body Parameters) {String} name Mandatory name of activity
-     * @apiParam (Body Parameters) {Integer} project_id Mandatory id of project that Activity should belong to
-     * @apiParam (Body Parameters) {String} [description] Optional description for activity
-     *
-     * @apiUse AuthenticationError
-     * @apiUse ValidationError
-     *
-     * @apiSuccessExample {json} Success-Response:
-     * HTTP/1.1 201 Created
-     * {
-     *      "created_at": "2019-08-19 15:00:56",
-     *       "id": 1,
-     *       "name": "activity1",
-     *       "owner_id": 1,
-     *       "project_id": "1",
-     *       "updated_at": "2019-08-19 15:00:56",
-     *       "uuid": "2eab0d89-bc15-408e-b0fb-772c8bf216dd"
-     * }
-     * @apiVersion 0.1.0
-     * @apiName CreateActivity
-     * @apiGroup Activities
-     */
-    Route::post('/activities', CreateActivityApiController::class);
-
-    Route::put('/activities/{activity}', UpdateActivityApiController::class);
-    Route::delete('/activities/{activity}', DeleteActivityApiController::class);
-    Route::get('/activities/{activity}', ShowActivityApiController::class);
     Route::get('/projects/{project}/activities', IndexProjectActivitiesApiController::class);
 
     //    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
 });
+
+Route::group(['middleware' => 'auth:api'], function() {
+    require_once base_path('routes/api_routes/activities/activities_api.php');
+    require_once base_path('routes/api_routes/activities/activities_files_api.php');
+    require_once base_path('routes/api_routes/activities/activities_attributes_api.php');
+    require_once base_path('routes/api_routes/activities/activities_entity_states_api.php');
+});
+
+//Route::middleware('auth:api')->group([base_path('routes/api_routes/activities_api.php')]);
 
 //Route::middleware('auth:api')->resource('/projects', 'api\ProjectsAPIController');
 
