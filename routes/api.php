@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function () {
-    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
+//    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
     Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
 
     Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);
@@ -48,10 +48,23 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::group(['middleware' => 'auth:api'], function() {
-    require_once base_path('routes/api_routes/activities/activities_api.php');
-    require_once base_path('routes/api_routes/activities/activities_files_api.php');
-    require_once base_path('routes/api_routes/activities/activities_attributes_api.php');
-    require_once base_path('routes/api_routes/activities/activities_entity_states_api.php');
+    // Activities
+    require base_path('routes/api_routes/activities/activities_api.php');
+    require base_path('routes/api_routes/activities/activities_files_api.php');
+    require base_path('routes/api_routes/activities/activities_attributes_api.php');
+    require base_path('routes/api_routes/activities/activities_entity_states_api.php');
+
+    // Entities
+    require base_path('routes/api_routes/entities/entities_api.php');
+
+    // Files
+    require base_path('routes/api_routes/files/files_api.php');
+
+    // Projects
+    require base_path('routes/api_routes/projects/projects_api.php');
+
+//    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
+
 });
 
 //Route::middleware('auth:api')->group([base_path('routes/api_routes/activities_api.php')]);
