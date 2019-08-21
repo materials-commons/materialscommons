@@ -6,7 +6,7 @@ use App\Models\File;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\QueryBuilder\Filter;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ProjectsAPIController extends Controller
@@ -21,8 +21,8 @@ class ProjectsAPIController extends Controller
         $query = auth()->user()->projects()->getQuery();
 
         return QueryBuilder::for($query)
-                           ->allowedFilters('name', Filter::exact('project_id'))
-                           ->withCount(['actions', 'entities', 'files'])
+                           ->allowedFilters('name', AllowedFilter::exact('project_id'))
+                           ->withCount(['activities', 'entities', 'files'])
                            ->jsonPaginate();
     }
 
