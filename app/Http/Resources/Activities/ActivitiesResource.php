@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Http\Resources\Projects;
+namespace App\Http\Resources\Activities;
 
 use App\Http\Resources\JsonResource;
 
-class ProjectResource extends JsonResource
+class ActivitiesResource extends JsonResource
 {
+    protected $fields = ['id', 'uuid', 'name', 'description'];
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-
-    protected $fields = [
-        'id', 'uuid', 'name', 'description', 'owner_id', 'is_active',
-        'created_at', 'updated_at', 'files_count', 'activities_count', 'entities_count'
-    ];
-
     public function toArray($request)
     {
         $data = $this->loadFromFields();
