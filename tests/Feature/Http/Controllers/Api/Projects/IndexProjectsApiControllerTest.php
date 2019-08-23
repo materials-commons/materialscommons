@@ -1,13 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers\Api\Projects;
 
-use Illuminate\Support\Facades\DB;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class ProjectsTest extends TestCase
+class IndexProjectsApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
