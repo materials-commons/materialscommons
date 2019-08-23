@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ShowProjectApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Show details for a specific project.
      *
      * @param  Request  $request
      * @param  SingleProjectForUserQuery  $query

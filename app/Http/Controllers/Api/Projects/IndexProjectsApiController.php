@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class IndexProjectsApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * List all projects the user has access to.
      *
      * @param  Request  $request
      * @param  AllProjectsForUserQuery  $query
