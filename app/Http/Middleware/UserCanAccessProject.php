@@ -2,21 +2,35 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Closure;
 
 class UserCanAccessProject
 {
     /**
-     * Handle an incoming request.
+     * Make sure user has access to the project. $next is called if no project route, or project_id parameter
+     * is found.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        $count = auth()->user()->projects()->where('project_id', 1)->count();
-        error_log($count);
+        $projectId = $this->getProjectId($request);
+        if ($projectId != '') {
+            $count = auth()->user()->projects()->where('project_id', $projectId)->count();
+            abort_unless($count == 1, 'No such project');
+        }
         return $next($request);
+    }
+
+    private function getProjectId(Request $request)
+    {
+        $projectId = $request->route('project');
+        if ($projectId == '') {
+            $projectId = $request->get('project_id');
+        }
+        return $projectId;
     }
 }
