@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\Projects;
 
 use App\Http\Controllers\Controller;
+use App\Http\Queries\Projects\SingleProjectForUserQuery;
 use App\Http\Resources\Projects\ProjectResource;
-use App\Models\Project;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class ShowProjectApiController extends Controller
 {
@@ -14,15 +13,12 @@ class ShowProjectApiController extends Controller
      * Handle the incoming request.
      *
      * @param  Request  $request
-     * @param $projectId
+     * @param  SingleProjectForUserQuery  $query
      * @return ProjectResource
      */
-    public function __invoke(Request $request, $projectId)
+    public function __invoke(Request $request, SingleProjectForUserQuery $query)
     {
-        $query = Project::findOrFail($projectId)->query();
-        $data = QueryBuilder::for($query)
-            ->allowedFields(['name', 'id', 'uuid', 'description'])
-            ->allowedIncludes(['activities', 'entities', 'files'])->get();
+        $data = $query->get();
         return new ProjectResource($data[0]);
     }
 }
