@@ -13,7 +13,6 @@ class UpdateProjectAction
      */
     public function __invoke($data, Project $project)
     {
-        $project->update($data);
-        return $project->fresh();
+        return tap($project)->update($data)->fresh();
     }
 }
