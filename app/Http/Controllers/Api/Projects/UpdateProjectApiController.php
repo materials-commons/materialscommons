@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers\Api\Projects;
 
-use Illuminate\Http\Request;
+use App\Actions\Projects\UpdateProjectAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Projects\UpdateProjectRequest;
+use App\Http\Resources\Projects\ProjectResource;
+use App\Models\Project;
 
 class UpdateProjectApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Update a project.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  UpdateProjectRequest  $request
+     * @param  UpdateProjectAction  $updateProjectAction
+     * @param  Project  $project
+     * @return ProjectResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateProjectRequest $request, UpdateProjectAction $updateProjectAction, Project $project)
     {
-        //
+        $validated = $request->validated();
+        $project = $updateProjectAction($validated, $project);
+        return new ProjectResource($project);
     }
 }

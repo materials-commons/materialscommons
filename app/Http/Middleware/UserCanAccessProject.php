@@ -20,7 +20,7 @@ class UserCanAccessProject
         $projectId = $this->getProjectId($request);
         if ($projectId != '') {
             $count = auth()->user()->projects()->where('project_id', $projectId)->count();
-            abort_unless($count == 1, 'No such project');
+            abort_unless($count == 1, 404, 'No such project');
         }
         return $next($request);
     }
@@ -28,7 +28,9 @@ class UserCanAccessProject
     private function getProjectId(Request $request)
     {
         $projectId = $request->route('project');
-        if ($projectId == '') {
+        if (gettype($projectId) == "object") {
+            $projectId = $projectId->id;
+        } elseif ($projectId == '') {
             $projectId = $request->get('project_id');
         }
         return $projectId;

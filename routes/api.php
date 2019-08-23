@@ -42,7 +42,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
 
-    Route::get('/projects/{project}/activities', IndexProjectActivitiesApiController::class);
+//    Route::get('/projects/{project}/activities', IndexProjectActivitiesApiController::class);
 
     //    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
 });

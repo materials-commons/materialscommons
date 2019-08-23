@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Api\Activities;
 
 use App\Actions\Activities\CreateActivityAction;
-use App\Http\Requests\Activities\CreateActivityRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activities\CreateActivityRequest;
 
 class CreateActivityApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Create an activity in a project
      *
-     * @param  \App\Http\Requests\Activities\CreateActivityRequest  $request
-     * @param  \App\Actions\Activities\CreateActivityAction  $createActivityAction
+     * @param  CreateActivityRequest  $request
+     * @param  CreateActivityAction  $createActivityAction
      *
      * @return void
      */
