@@ -5,13 +5,10 @@ use App\Http\Controllers\api\ProjectEntitiesAPIController;
 use App\Http\Controllers\api\Projects\ActionAttributesAPIController;
 use App\Http\Controllers\api\Projects\ActionEntityStatesAPIController;
 use App\Http\Controllers\api\Projects\ActionFilesAPIController;
-use App\Http\Controllers\Api\Projects\Activities\IndexProjectActivitiesApiController;
 use App\Http\Controllers\api\Projects\AttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateAttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateFilesAPIController;
 use App\Http\Controllers\api\Projects\ValuesAPIController;
-use App\Http\Controllers\api\ProjectsAPIController;
-use App\Http\Middleware\UserCanAccessProject;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function () {
-//    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
     Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
-
     Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);
     Route::apiResource('/projects/{project}/actions/{action}/entity-state', ActionEntityStatesAPIController::class);
     Route::apiResource('/projects/{project}/actions/{action}/files', ActionFilesAPIController::class);
@@ -41,10 +36,6 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('/projects/{project}/attributes', AttributesAPIController::class);
 
     Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
-
-//    Route::get('/projects/{project}/activities', IndexProjectActivitiesApiController::class);
-
-    //    Route::post('/projects/{project}/relationships/files/{file}/add_action/{action}', 'api\Relationships\FileRelationshipsAPIController@addAction');
 });
 
 Route::group(['middleware' => 'auth:api'], function() {
