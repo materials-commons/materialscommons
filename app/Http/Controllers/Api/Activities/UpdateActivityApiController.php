@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\Activities;
 
 use App\Actions\Activities\UpdateActivityAction;
-use App\Http\Requests\Activities\UpdateActivityRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activities\UpdateActivityRequest;
+use App\Http\Resources\Activities\ActivityResource;
+use App\Models\Activity;
 
 class UpdateActivityApiController extends Controller
 {
@@ -15,13 +16,14 @@ class UpdateActivityApiController extends Controller
      * @param  \App\Http\Requests\Activities\UpdateActivityRequest  $request
      * @param  \App\Actions\Activities\UpdateActivityAction  $updateActivityAction
      *
-     * @param $activityId
+     * @param  \App\Models\Activity  $activity
      *
-     * @return void
+     * @return \App\Http\Resources\Activities\ActivityResource
      */
-    public function __invoke(UpdateActivityRequest $request, UpdateActivityAction $updateActivityAction, $activityId)
+    public function __invoke(UpdateActivityRequest $request, UpdateActivityAction $updateActivityAction, Activity $activity)
     {
         $validated = $request->validated();
-        return $updateActivityAction($activityId, $validated);
+        $activity = $updateActivityAction($validated, $activity);
+        return new ActivityResource($activity);
     }
 }
