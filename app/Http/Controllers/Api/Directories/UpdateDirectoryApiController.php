@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Files;
+namespace App\Http\Controllers\Api\Directories;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ShowDirectoryApiController extends Controller
+class UpdateDirectoryApiController extends Controller
 {
     /**
      * Handle the incoming request.
