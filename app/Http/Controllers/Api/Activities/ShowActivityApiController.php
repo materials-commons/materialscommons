@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Api\Activities;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Queries\Activities\SingleActivityQuery;
+use App\Http\Resources\Activities\ActivityResource;
 
 class ShowActivityApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Queries\Activities\SingleActivityQuery  $query
+     *
+     * @return \App\Http\Resources\Activities\ActivityResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(SingleActivityQuery $query)
     {
-        //
+        $data = $query->get();
+        return new ActivityResource($data[0]);
     }
 }
