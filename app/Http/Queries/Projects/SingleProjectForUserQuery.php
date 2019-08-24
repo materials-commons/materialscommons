@@ -3,13 +3,16 @@
 namespace App\Http\Queries\Projects;
 
 use App\Models\Project;
+use App\Traits\GetRequestParameterId;
 use Illuminate\Http\Request;
 
 class SingleProjectForUserQuery extends ProjectsQueryBuilder
 {
+    use GetRequestParameterId;
+
     public function __construct(?Request $request = null)
     {
-        $projectId = $request->route('project');
+        $projectId = $this->getParameterId('project');
         $query = Project::where('id', $projectId);
         parent::__construct($query, $request);
     }
