@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Api\Projects;
 
-use Illuminate\Http\Request;
+use App\Actions\Projects\DeleteProjectAction;
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 
 class DeleteProjectApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Actions\Projects\DeleteProjectAction  $deleteProjectAction
+     * @param  \App\Models\Project  $project
+     *
+     * @return void
      */
-    public function __invoke(Request $request)
+    public function __invoke(DeleteProjectAction $deleteProjectAction, Project $project)
     {
-        //
+        $deleteProjectAction($project);
     }
 }
