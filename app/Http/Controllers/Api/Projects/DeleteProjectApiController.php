@@ -15,6 +15,7 @@ class DeleteProjectApiController extends Controller
      * @param  \App\Models\Project  $project
      *
      * @return void
+     * @throws \Exception
      */
     public function __invoke(DeleteProjectAction $deleteProjectAction, Project $project)
     {
