@@ -6,8 +6,8 @@ use App\Models\Activity;
 
 class UpdateActivityAction
 {
-    public function __invoke($activityId, $attrs)
+    public function __invoke($attrs, Activity $activity)
     {
-        return tap(Activity::findOrFail($activityId))->update($attrs)->fresh();
+        return tap($activity)->update($attrs)->fresh();
     }
 }
