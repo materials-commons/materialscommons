@@ -6,7 +6,7 @@ use App\Models\Project;
 use App\Traits\GetRequestParameterId;
 use Illuminate\Http\Request;
 
-class SingleProjectForUserQuery extends ProjectsQueryBuilder
+class SingleProjectQuery extends ProjectsQueryBuilder
 {
     use GetRequestParameterId;
 
