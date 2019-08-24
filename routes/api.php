@@ -51,16 +51,12 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Files
     require base_path('routes/api_routes/files/files_api.php');
 
+    // Directories
+    require base_path('routes/api_routes/directories/directories_api.php');
+
     // Projects
     require base_path('routes/api_routes/projects/projects_api.php');
-
-//    Route::apiResource('/projects', ProjectsAPIController::class)->middleware(UserCanAccessProject::class);
-
 });
-
-//Route::middleware('auth:api')->group([base_path('routes/api_routes/activities_api.php')]);
-
-//Route::middleware('auth:api')->resource('/projects', 'api\ProjectsAPIController');
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
