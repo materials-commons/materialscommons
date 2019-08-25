@@ -16,23 +16,26 @@ class UpdateEntityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      *  Validation rules to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'string:80',
+            'description' => 'string:2048'
+        ];
     }
 
     /**
      *  Filters to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function filters()
     {

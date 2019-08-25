@@ -13,12 +13,12 @@ class UpdateActivityApiController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \App\Http\Requests\Activities\UpdateActivityRequest  $request
-     * @param  \App\Actions\Activities\UpdateActivityAction  $updateActivityAction
+     * @param  UpdateActivityRequest  $request
+     * @param  UpdateActivityAction  $updateActivityAction
      *
-     * @param  \App\Models\Activity  $activity
+     * @param  Activity  $activity
      *
-     * @return \App\Http\Resources\Activities\ActivityResource
+     * @return ActivityResource
      */
     public function __invoke(UpdateActivityRequest $request, UpdateActivityAction $updateActivityAction, Activity $activity)
     {

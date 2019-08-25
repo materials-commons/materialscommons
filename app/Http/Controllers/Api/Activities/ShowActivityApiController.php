@@ -11,9 +11,9 @@ class ShowActivityApiController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \App\Http\Queries\Activities\SingleActivityQuery  $query
+     * @param  SingleActivityQuery  $query
      *
-     * @return \App\Http\Resources\Activities\ActivityResource
+     * @return ActivityResource
      */
     public function __invoke(SingleActivityQuery $query)
     {

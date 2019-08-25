@@ -7,7 +7,7 @@ use App\Models\Activity;
 class DeleteActivityAction
 {
     /**
-     * @param  \App\Models\Activity  $activity
+     * @param  Activity  $activity
      *
      * @throws \Exception
      */

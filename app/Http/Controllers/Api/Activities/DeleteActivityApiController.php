@@ -11,8 +11,8 @@ class DeleteActivityApiController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \App\Actions\Activities\DeleteActivityAction  $deleteActivityAction
-     * @param  \App\Models\Activity  $activity
+     * @param  DeleteActivityAction  $deleteActivityAction
+     * @param  Activity  $activity
      *
      * @return void
      * @throws \Exception

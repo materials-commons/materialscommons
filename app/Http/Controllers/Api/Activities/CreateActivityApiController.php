@@ -15,7 +15,7 @@ class CreateActivityApiController extends Controller
      * @param  CreateActivityRequest  $request
      * @param  CreateActivityAction  $createActivityAction
      *
-     * @return \App\Http\Resources\Activities\ActivityResource
+     * @return ActivityResource
      */
     public function __invoke(CreateActivityRequest $request, CreateActivityAction $createActivityAction)
     {

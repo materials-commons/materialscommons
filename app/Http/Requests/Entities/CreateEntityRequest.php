@@ -16,23 +16,27 @@ class CreateEntityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      *  Validation rules to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required|string:80',
+            'description' => 'string:2048',
+            'project_id' => 'required|integer'
+        ];
     }
 
     /**
      *  Filters to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function filters()
     {
