@@ -27,7 +27,7 @@ class CreateDirectoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string:2048',
+            'name'       => 'required|string:2048',
             'project_id' => 'required:integer',
         ];
     }

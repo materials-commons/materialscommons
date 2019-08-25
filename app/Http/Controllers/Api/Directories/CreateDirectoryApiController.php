@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api\Directories;
 
 use App\Actions\Directories\CreateDirectoryAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Directories\CreateDirectoryRequest;
 use App\Http\Resources\Directories\DirectoryResource;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class CreateDirectoryApiController extends Controller
 {
