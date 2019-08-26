@@ -14,7 +14,7 @@ class CreateDirectoryApiController extends Controller
      *
      * @param  CreateDirectoryRequest  $request
      * @param  CreateDirectoryAction  $createDirectoryAction
-     * @return void
+     * @return DirectoryResource
      */
     public function __invoke(CreateDirectoryRequest $request, CreateDirectoryAction $createDirectoryAction)
     {
