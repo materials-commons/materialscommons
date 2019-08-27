@@ -48,22 +48,33 @@ class MoveDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir2subDir = factory(File::class)->create([
+        $dir21 = factory(File::class)->create([
             'project_id'   => $project->id,
-            'name'         => 'dir2subDir',
-            'path'         => '/dir2/dir2subDir',
+            'name'         => 'dir21',
+            'path'         => '/dir2/dir21',
             'mime_type'    => 'directory',
             'directory_id' => $dir2->id,
             'owner_id'     => $user->id,
         ]);
 
+        $dir211 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'dir211',
+            'path'         => '/dir2/dir21/dir211',
+            'mime_type'    => 'directory',
+            'directory_id' => $dir21->id,
+            'owner_id'     => $user->id,
+        ]);
+        
         $moveDirectoryAction = new MoveDirectoryAction();
         $moveDirectoryAction($dir2->id, $dir1->id);
         $dir2->refresh();
-        $dir2subDir->refresh();
+        $dir21->refresh();
+        $dir211->refresh();
         $this->assertEquals($dir2->directory_id, $dir1->id);
-        $this->assertEquals($dir2->path, "/dir1/dir2");
-        $this->assertEquals($dir2subDir->path, "/dir1/dir2/dir2subDir");
-        $this->assertEquals($dir2subDir->directory_id, $dir2->id);
+        $this->assertEquals("/dir1/dir2", $dir2->path);
+        $this->assertEquals("/dir1/dir2/dir21", $dir21->path);
+        $this->assertEquals("/dir1/dir2/dir21/dir211", $dir211->path);
+        $this->assertEquals($dir21->directory_id, $dir2->id);
     }
 }
