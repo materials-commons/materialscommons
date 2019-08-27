@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Directories;
 
-use Illuminate\Http\Request;
+use App\Actions\Directories\DeleteDirectoryAction;
 use App\Http\Controllers\Controller;
 
 class DeleteDirectoryApiController extends Controller
@@ -10,11 +10,13 @@ class DeleteDirectoryApiController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  DeleteDirectoryAction  $deleteDirectoryAction
+     * @param $directoryId
+     * @return void
      */
-    public function __invoke(Request $request)
+    public function __invoke(DeleteDirectoryAction $deleteDirectoryAction, $directoryId)
     {
-        //
+        $directory = File::findOrFail($directoryId);
+        $deleteDirectoryAction($directory);
     }
 }

@@ -16,23 +16,25 @@ class UpdateDirectoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      *  Validation rules to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function rules()
     {
-        return [];
+        return [
+            'description' => 'string:2048'
+        ];
     }
 
     /**
      *  Filters to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function filters()
     {

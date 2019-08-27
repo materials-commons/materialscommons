@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Api\Directories;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Queries\Directories\SingleDirectoryQuery;
+use App\Http\Resources\Directories\DirectoryResource;
 
 class ShowDirectoryApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Show the directory
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  SingleDirectoryQuery  $query
+     * @return DirectoryResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(SingleDirectoryQuery $query)
     {
-        //
+        $data = $query->get();
+        return new DirectoryResource($data[0]);
     }
 }

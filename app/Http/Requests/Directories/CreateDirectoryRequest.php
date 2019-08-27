@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Directories;
 
+use App\Rules\Directories\IsValidDirectoryPath;
 use Illuminate\Foundation\Http\FormRequest;
 use Waavi\Sanitizer\Laravel\SanitizesInput;
 
@@ -27,8 +28,10 @@ class CreateDirectoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required|string:2048',
-            'project_id' => 'required:integer',
+            'name'         => ['required', 'string:2048', new IsValidDirectoryPath()],
+            'description'  => 'string:2048',
+            'project_id'   => 'required:integer',
+            'directory_id' => 'required|integer',
         ];
     }
 
@@ -39,6 +42,8 @@ class CreateDirectoryRequest extends FormRequest
      */
     public function filters()
     {
-        return [];
+        return [
+            'name' => 'normalizePath'
+        ];
     }
 }
