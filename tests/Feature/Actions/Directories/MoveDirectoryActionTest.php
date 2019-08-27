@@ -1,0 +1,69 @@
+<?php
+
+namespace Tests\Feature\Actions\Directories;
+
+use App\Actions\Directories\MoveDirectoryAction;
+use App\Models\File;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class MoveDirectoryActionTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /** @test */
+    public function it_should_move_the_directory()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+
+        $rootDir = factory(File::class)->create([
+            'project_id' => $project->id,
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
+        ]);
+
+        $dir1 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'dir1',
+            'path'         => '/dir1',
+            'mime_type'    => 'directory',
+            'directory_id' => $rootDir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $dir2 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'dir2',
+            'path'         => '/dir2',
+            'mime_type'    => 'directory',
+            'directory_id' => $rootDir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $dir2subDir = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'dir2subDir',
+            'path'         => '/dir2/dir2subDir',
+            'mime_type'    => 'directory',
+            'directory_id' => $dir2->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $moveDirectoryAction = new MoveDirectoryAction();
+        $moveDirectoryAction($dir2->id, $dir1->id);
+        $dir2->refresh();
+        $dir2subDir->refresh();
+        $this->assertEquals($dir2->directory_id, $dir1->id);
+        $this->assertEquals($dir2->path, "/dir1/dir2");
+        $this->assertEquals($dir2subDir->path, "/dir1/dir2/dir2subDir");
+        $this->assertEquals($dir2subDir->directory_id, $dir2->id);
+    }
+}
