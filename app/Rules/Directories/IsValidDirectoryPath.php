@@ -31,6 +31,10 @@ class IsValidDirectoryPath implements Rule
 
     private function isValidDirectoryPath($directoryPath)
     {
+        if ($directoryPath == '/') {
+            return false;
+        }
+
         return preg_match('#^([-\.\w/ ]+)$#', $directoryPath) > 0;
     }
 
