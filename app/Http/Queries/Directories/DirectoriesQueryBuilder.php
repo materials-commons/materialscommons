@@ -12,6 +12,6 @@ class DirectoriesQueryBuilder extends QueryBuilder
     {
         parent::__construct($builder, $request);
         $this->allowedFields(['name', 'id', 'uuid', 'description'])
-            ->allowedIncludes(['entities', 'activities', 'projects']);
+             ->allowedIncludes(['entities', 'activities', 'projects']);
     }
 }
