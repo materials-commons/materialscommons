@@ -2,6 +2,7 @@
 
 namespace App\Actions\Directories;
 
+use App\Helpers\PathHelpers;
 use App\Models\File;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,12 @@ class RenameDirectoryAction
         $directory = File::findOrFail($directoryId);
         $parentDir = File::findOrFail($directory->directory_id);
 
-        $replaceWith = "{$parentDir->path}/{$newDirName}";
+        // Normalize the directory name to use because the parentDir might be root
+        // in which case its path is "/", and without normalization the replaceWith
+        // path we build would start with '//'. For example if newDirName = mynewdir
+        // and $parentDir->path == "/", then without normalization we end up with
+        // //mynewdir. The call to normalizePath fixes this.
+        $replaceWith = PathHelpers::normalizePath("{$parentDir->path}/{$newDirName}");
         $oldPathLen  = strlen($directory->path);
 
         $directoriesToUpdate = $this->getDirectoriesToUpdate($directory, $replaceWith, 0, $oldPathLen);
