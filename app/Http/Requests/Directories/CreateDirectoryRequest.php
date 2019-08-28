@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Directories;
 
-use App\Rules\Directories\IsValidDirectoryPath;
+use App\Rules\Files\IsValidFileName;
 use Illuminate\Foundation\Http\FormRequest;
 use Waavi\Sanitizer\Laravel\SanitizesInput;
 
@@ -28,7 +28,9 @@ class CreateDirectoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => ['required', 'string:2048', new IsValidDirectoryPath()],
+            // IsValidFileName because name cannot contain slashes, we only create one level
+            // and not multiple levels. So a valid directory name is also a valid file name.
+            'name'         => ['required', 'string:2048', new IsValidFileName()],
             'description'  => 'string:2048',
             'project_id'   => 'required:integer',
             'directory_id' => 'required|integer',
@@ -43,7 +45,7 @@ class CreateDirectoryRequest extends FormRequest
     public function filters()
     {
         return [
-            'name' => 'normalizePath'
+            //            'name' => 'normalizePath'
         ];
     }
 }

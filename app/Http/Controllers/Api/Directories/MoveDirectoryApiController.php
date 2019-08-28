@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers\Api\Directories;
 
+use App\Actions\Directories\MoveDirectoryAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Directories\MoveDirectoryRequest;
+use App\Http\Resources\Directories\DirectoryResource;
 
 class MoveDirectoryApiController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Move a directory and recursively all its children
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Directories\MoveDirectoryRequest  $request
+     *
+     * @param  \App\Actions\Directories\MoveDirectoryAction  $moveDirectoryAction
+     * @param $directoryId
+     *
+     * @return \App\Http\Resources\Directories\DirectoryResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(MoveDirectoryRequest $request, MoveDirectoryAction $moveDirectoryAction, $directoryId)
     {
-        //
+        $directory = $moveDirectoryAction($directoryId, $request->input('to_directory_id'));
+
+        return new DirectoryResource($directory);
     }
 }
