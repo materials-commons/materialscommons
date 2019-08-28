@@ -12,7 +12,9 @@ class DeleteDirectoryApiController extends Controller
      *
      * @param  DeleteDirectoryAction  $deleteDirectoryAction
      * @param $directoryId
+     *
      * @return void
+     * @throws \Exception
      */
     public function __invoke(DeleteDirectoryAction $deleteDirectoryAction, $directoryId)
     {
