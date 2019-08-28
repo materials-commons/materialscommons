@@ -14,7 +14,7 @@ class MoveDirectoryActionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_move_the_directory()
+    public function it_should_move_the_directory_and_recursive_subdirs_including_updating_path()
     {
         $this->withoutExceptionHandling();
 
