@@ -9,7 +9,7 @@ class File extends Model
 {
     use HasUUID;
 
-    protected $guarded = ['id', 'uuid'];
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

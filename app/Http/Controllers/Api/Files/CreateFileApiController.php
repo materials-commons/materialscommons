@@ -14,11 +14,14 @@ class CreateFileApiController extends Controller
      * @param  \App\Http\Requests\Files\CreateFileRequest  $request
      * @param  \App\Actions\Files\CreateFileAction  $createFileAction
      *
-     * @return void
+     * @return \App\Http\Resources\Files\FileResource
      */
     public function __invoke(CreateFileRequest $request, CreateFileAction $createFileAction)
     {
         $validated = $request->validated();
-        $createFileAction($request);
+        $request->file->save("bob");
+
+        //        $file = $createFileAction($validated["project_id"], $validated["directory_id"], $validated["file"]);
+        //        return new FileResource($file);
     }
 }
