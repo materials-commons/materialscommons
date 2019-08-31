@@ -30,9 +30,9 @@ class CreateDirectoryRequest extends FormRequest
         return [
             // IsValidFileName because name cannot contain slashes, we only create one level
             // and not multiple levels. So a valid directory name is also a valid file name.
-            'name'         => ['required', 'string:2048', new IsValidFileName()],
-            'description'  => 'string:2048',
-            'project_id'   => 'required:integer',
+            'name'         => ['required', 'string', 'max:80', new IsValidFileName()],
+            'description'  => 'string|max:2048',
+            'project_id'   => 'required|integer',
             'directory_id' => 'required|integer',
         ];
     }

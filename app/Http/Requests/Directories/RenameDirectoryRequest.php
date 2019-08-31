@@ -14,7 +14,7 @@ class RenameDirectoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class RenameDirectoryRequest extends FormRequest
         return [
             // IsValidFileName because name cannot contain slashes
             // and a valid file name is a valid directory name.
-            'name' => ['required', 'string:2048', new IsValidFileName()],
+            'name' => ['required', 'string', 'max:80', new IsValidFileName()],
         ];
     }
 }

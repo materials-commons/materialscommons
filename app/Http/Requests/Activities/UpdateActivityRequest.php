@@ -27,8 +27,8 @@ class UpdateActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string:80',
-            'description' => 'string:2048'
+            'name'        => 'string|max:80',
+            'description' => 'string|max:2048',
         ];
     }
 

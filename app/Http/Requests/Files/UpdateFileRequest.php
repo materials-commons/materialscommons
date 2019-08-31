@@ -16,13 +16,13 @@ class UpdateFileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      *  Validation rules to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function rules()
     {
@@ -32,7 +32,7 @@ class UpdateFileRequest extends FormRequest
     /**
      *  Filters to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function filters()
     {

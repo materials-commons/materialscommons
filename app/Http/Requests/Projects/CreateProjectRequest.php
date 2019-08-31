@@ -27,7 +27,7 @@ class CreateProjectRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string:80',
+                'string|max:80',
                 function ($attribute, $value, $fail) {
                     $count = Project::where('name', $value)
                         ->where('owner_id', auth()->id())
@@ -38,7 +38,7 @@ class CreateProjectRequest extends FormRequest
                 },
             ],
 
-            'description' => 'string:2048',
+            'description' => 'string|max:2048',
             'is_active'   => 'boolean',
         ];
     }

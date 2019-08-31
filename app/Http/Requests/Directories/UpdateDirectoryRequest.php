@@ -27,7 +27,7 @@ class UpdateDirectoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'string:2048'
+            'description' => 'string|max:2048',
         ];
     }
 

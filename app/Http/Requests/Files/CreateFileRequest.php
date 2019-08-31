@@ -16,23 +16,27 @@ class CreateFileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
      *  Validation rules to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function rules()
     {
-        return [];
+        return [
+            'file'         => 'required|file',
+            'directory_id' => 'required|integer',
+            'project_id'   => 'required|integer',
+        ];
     }
 
     /**
      *  Filters to be applied to the input.
      *
-     *  @return void
+     * @return array
      */
     public function filters()
     {
