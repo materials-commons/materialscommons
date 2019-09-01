@@ -2,13 +2,14 @@
 
 namespace App\Actions\Files;
 
+use Illuminate\Support\Facades\Storage;
+
 trait SaveFile
 {
     public function saveFile($file, $uuid)
     {
         $dir = $this->dirPathFromUuid($uuid);
-        $file->save("hello");
-        //        $file->save($dir, $uuid);
+        Storage::putFileAs($dir, $file, $uuid);
     }
 
     private function dirPathFromUuid($uuid)

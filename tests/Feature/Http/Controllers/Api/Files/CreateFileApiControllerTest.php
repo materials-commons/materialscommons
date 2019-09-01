@@ -31,12 +31,38 @@ class CreateFileApiControllerTest extends TestCase
 
         $this->actingAs($user, 'api');
         Storage::fake('public');
-        $this->json('post', '/api/files', [
+        $file = $this->json('post', '/api/files', [
             'file'         => UploadedFile::fake()->image('random.jpg'),
             'project_id'   => $project->id,
             'directory_id' => $rootDir->id,
             'bad_param'    => 'do_not_include',
-        ]);
+        ])
+                     ->assertStatus(201)
+                     ->assertJsonFragment(['name' => 'random.jpg'])
+                     ->decodeResponseJson();
+
+        $fileUuid   = $file["data"]["uuid"];
+        $topFileDir = $this->topDirFromUuid($fileUuid);
+        $fileDir    = $this->dirFromUuid($fileUuid);
+
+        Storage::disk('local')->assertExists("{$fileDir}/{$fileUuid}");
+        Storage::deleteDirectory($topFileDir);
+    }
+
+    private function topDirFromUuid($uuid)
+    {
+        $entries = explode('-', $uuid);
+        $entry1  = $entries[0];
+
+        return "{$entry1[0]}{$entry1[1]}";
+    }
+
+    private function dirFromUuid($uuid)
+    {
+        $entries = explode('-', $uuid);
+        $entry1  = $entries[0];
+
+        return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
     }
 }
 

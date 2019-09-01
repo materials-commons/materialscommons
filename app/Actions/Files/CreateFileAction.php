@@ -38,7 +38,7 @@ class CreateFileAction
 
         if ( ! empty($existing)) {
             // Existing files to mark as not current
-            $existing->update(['current' => false]);
+            File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
         }
 
         return $fileEntry;

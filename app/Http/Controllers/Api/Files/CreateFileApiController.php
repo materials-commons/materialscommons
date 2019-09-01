@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Files;
 use App\Actions\Files\CreateFileAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Files\CreateFileRequest;
+use App\Http\Resources\Files\FileResource;
 
 class CreateFileApiController extends Controller
 {
@@ -19,9 +20,8 @@ class CreateFileApiController extends Controller
     public function __invoke(CreateFileRequest $request, CreateFileAction $createFileAction)
     {
         $validated = $request->validated();
-        $request->file->save("bob");
+        $file      = $createFileAction($validated["project_id"], $validated["directory_id"], $validated["file"]);
 
-        //        $file = $createFileAction($validated["project_id"], $validated["directory_id"], $validated["file"]);
-        //        return new FileResource($file);
+        return new FileResource($file);
     }
 }
