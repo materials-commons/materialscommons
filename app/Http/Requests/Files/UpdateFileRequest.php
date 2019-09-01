@@ -26,7 +26,9 @@ class UpdateFileRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'description' => 'string|max:2048',
+        ];
     }
 
     /**
