@@ -24,7 +24,7 @@ class MoveFileRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'directory_id' => 'required|integer',
         ];
     }
 }

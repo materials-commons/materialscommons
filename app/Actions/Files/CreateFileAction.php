@@ -26,17 +26,18 @@ class CreateFileAction
         $existing             = File::where('directory_id', $directoryId)->where('name', $fileEntry->name)->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
 
-        if ( ! $matchingFileChecksum) {
+        if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             $this->saveFile($file, $fileEntry->uuid);
         } else {
+            // Matching file found, so point at it.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id   = $matchingFileChecksum->id;
         }
 
         $fileEntry->save();
 
-        if ( ! empty($existing)) {
+        if ($existing->isNotEmpty()) {
             // Existing files to mark as not current
             File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
         }

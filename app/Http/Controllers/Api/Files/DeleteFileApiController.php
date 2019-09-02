@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Api\Files;
 
-use Illuminate\Http\Request;
+use App\Actions\Files\DeleteFileAction;
 use App\Http\Controllers\Controller;
+use App\Models\File;
 
 class DeleteFileApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Actions\Files\DeleteFileAction  $deleteFileAction
+     * @param  \App\Models\File  $file
+     * @return void
      */
-    public function __invoke(Request $request)
+    public function __invoke(DeleteFileAction $deleteFileAction, File $file)
     {
-        //
+        $deleteFileAction($file);
     }
 }
