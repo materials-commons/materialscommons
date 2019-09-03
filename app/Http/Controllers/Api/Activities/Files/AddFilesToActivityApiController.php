@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Api\Activities\Files;
 
-use Illuminate\Http\Request;
+use App\Actions\Activities\Files\AddFilesToActivityAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activies\Files\AddFilesToActivityRequest;
+use App\Http\Resources\Activities\ActivityResource;
+use App\Models\Activity;
 
 class AddFilesToActivityApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        //
+    public function __invoke(
+        AddFilesToActivityRequest $request,
+        AddFilesToActivityAction $addFilesToActivityAction,
+        Activity $activity
+    ) {
+        $files    = $request->input('files');
+        $activity = $addFilesToActivityAction($activity, $files);
+        return new ActivityResource($activity);
     }
 }

@@ -13,7 +13,7 @@ class AddFilesToActivityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class AddFilesToActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'files'   => 'required|array',
+            'files.*' => 'integer',
         ];
     }
 }
