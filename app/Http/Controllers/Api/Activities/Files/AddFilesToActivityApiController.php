@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Activities\Files;
 
 use App\Actions\Activities\Files\AddFilesToActivityAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Activies\Files\AddFilesToActivityRequest;
+use App\Http\Requests\Activities\Files\AddFilesToActivityRequest;
 use App\Http\Resources\Activities\ActivityResource;
 use App\Models\Activity;
 
