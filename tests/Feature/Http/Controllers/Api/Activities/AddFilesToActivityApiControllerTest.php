@@ -44,9 +44,10 @@ class AddFilesToActivityApiControllerTest extends TestCase
         $this->actingAs($user, 'api');
 
         $this->json('post', "/api/activities/{$activity->id}/add-files", [
-            'files' => [$file->id],
+            'files' => [['id' => $file->id, 'direction' => 'in']],
         ])->assertStatus(200);
 
-        $this->assertDatabaseHas('activity2file', ['activity_id' => $activity->id, 'file_id' => $file->id]);
+        $this->assertDatabaseHas('activity2file',
+            ['activity_id' => $activity->id, 'file_id' => $file->id, 'direction' => 'in']);
     }
 }

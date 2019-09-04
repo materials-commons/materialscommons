@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Activities\Files;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddFilesToActivityRequest extends FormRequest
 {
@@ -24,8 +25,9 @@ class AddFilesToActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'files'   => 'required|array',
-            'files.*' => 'integer',
+            'files'             => 'required|array',
+            'files.*.id'        => 'required|integer',
+            'files.*.direction' => ['required', Rule::in(['in', 'out'])],
         ];
     }
 }

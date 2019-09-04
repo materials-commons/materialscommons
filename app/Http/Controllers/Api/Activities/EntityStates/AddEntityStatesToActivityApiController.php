@@ -25,7 +25,7 @@ class AddEntityStatesToActivityApiController extends Controller
     )
     {
         $entityStates = $request->input('entity_states');
-        $actitity     = $addEntityStatesToActivityAction($activity, $entityStates);
+        $activity     = $addEntityStatesToActivityAction($activity, $entityStates);
         return new ActivityResource($activity);
     }
 }

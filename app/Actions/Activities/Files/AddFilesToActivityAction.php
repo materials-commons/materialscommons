@@ -16,8 +16,13 @@ class AddFilesToActivityAction
      */
     public function __invoke(Activity $activity, $files)
     {
-        DB::transaction(function () use ($activity, $files) {
-            $activity->files()->attach($files);
+        $entries = collect();
+        foreach ($files as $fileEntry) {
+            $entries->put($fileEntry["id"], ["direction" => $fileEntry["direction"]]);
+        }
+
+        DB::transaction(function () use ($activity, $entries) {
+            $activity->files()->attach($entries);
         });
 
         return $activity;
