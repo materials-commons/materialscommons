@@ -41,7 +41,9 @@ class Activity extends Model
      */
     public function files()
     {
-        return $this->belongsToMany(File::class, 'activity2file')->withTimestamps();
+        return $this->belongsToMany(File::class, 'activity2file')
+                    ->withPivot('direction')
+                    ->withTimestamps();
     }
 
     /**
@@ -49,7 +51,9 @@ class Activity extends Model
      */
     public function entityStates()
     {
-        return $this->belongsToMany(EntityState::class, 'activity2entity_state')->withTimestamps();
+        return $this->belongsToMany(EntityState::class, 'activity2entity_state')
+                    ->withPivot('direction')
+                    ->withTimestamps();
     }
 
     /**
