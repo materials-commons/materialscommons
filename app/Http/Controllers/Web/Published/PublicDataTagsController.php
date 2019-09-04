@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Published;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-class PublicDataNewController extends Controller
+class PublicDataTagsController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        return view('public.new.index');
+        return view('public.tags.index');
     }
 }

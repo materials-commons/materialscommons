@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Published;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use Freshbitsweb\Laratables\Laratables;
-use Illuminate\Http\Request;
 
 class PublicDataController extends Controller
 {

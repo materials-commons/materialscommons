@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Experiments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectExperimentTabsController extends Controller
 {

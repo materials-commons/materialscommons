@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Folders;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use Freshbitsweb\Laratables\Laratables;
-use Illuminate\Http\Request;
 
 class ProjectFoldersDatatableController extends Controller
 {

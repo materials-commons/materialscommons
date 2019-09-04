@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Users;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
-class ProjectSettingsController extends Controller
+class ProjectUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +15,6 @@ class ProjectSettingsController extends Controller
      */
     public function index(Project $project)
     {
-        return view('app.projects.settings.index', ['project' => $project]);
+        return view('app.projects.users.index', ['project' => $project]);
     }
 }

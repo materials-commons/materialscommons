@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Datasets;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity;
-use App\Models\Project;
+use App\Models\Dataset;
 use Illuminate\Http\Request;
 
-class ProjectActionsController extends Controller
+class ProjectDatasetsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param  Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $project)
+    public function index()
     {
-        return view('app.projects.processes.index', ['project' => $project]);
+        //
     }
 
     /**
@@ -44,11 +42,10 @@ class ProjectActionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  \App\Models\Dataset  $dataset
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $process)
+    public function show(Dataset $dataset)
     {
         //
     }
@@ -56,11 +53,10 @@ class ProjectActionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  \App\Models\Dataset  $dataset
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $process)
+    public function edit(Dataset $dataset)
     {
         //
     }
@@ -69,11 +65,10 @@ class ProjectActionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Action  $process
-     *
+     * @param  \App\Models\Dataset  $dataset
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $process)
+    public function update(Request $request, Dataset $dataset)
     {
         //
     }
@@ -81,11 +76,10 @@ class ProjectActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Action  $process
-     *
+     * @param  \App\Models\Dataset  $dataset
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $process)
+    public function destroy(Dataset $dataset)
     {
         //
     }

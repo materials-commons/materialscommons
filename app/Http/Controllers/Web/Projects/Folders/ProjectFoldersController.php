@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Folders;
 
 use App\Http\Controllers\Controller;
 use App\Models\Directory;
 use App\Models\File;
-use App\Project;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class ProjectFoldersController extends Controller
 {

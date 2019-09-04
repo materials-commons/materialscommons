@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Projects\Activities;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Project;
-use App\Models\Entity;
 use Illuminate\Http\Request;
 
-class ProjectEntitiesController extends Controller
+class ProjectActionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param  Project  $project
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function index(Project $project)
     {
-        return view('app.projects.samples.index', ['project' => $project]);
+        return view('app.projects.processes.index', ['project' => $project]);
     }
 
     /**
@@ -44,11 +44,11 @@ class ProjectEntitiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entity  $sample
+     * @param  \App\Action  $process
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Entity $sample)
+    public function show(Activity $process)
     {
         //
     }
@@ -56,11 +56,11 @@ class ProjectEntitiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Entity  $sample
+     * @param  \App\Action  $process
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entity $sample)
+    public function edit(Activity $process)
     {
         //
     }
@@ -69,11 +69,11 @@ class ProjectEntitiesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entity  $sample
+     * @param  \App\Action  $process
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entity $sample)
+    public function update(Request $request, Activity $process)
     {
         //
     }
@@ -81,11 +81,11 @@ class ProjectEntitiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entity  $sample
+     * @param  \App\Action  $process
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entity $sample)
+    public function destroy(Activity $process)
     {
         //
     }

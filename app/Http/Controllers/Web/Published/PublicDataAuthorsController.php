@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Web\Published;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class PublicDataAuthorsController extends Controller
 {

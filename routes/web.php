@@ -16,23 +16,24 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Web\ProjectActionsController;
-use App\Http\Controllers\Web\ProjectEntitiesController;
-use App\Http\Controllers\Web\ProjectExperimentsController;
-use App\Http\Controllers\Web\ProjectExperimentTabsController;
-use App\Http\Controllers\Web\ProjectFilesController;
-use App\Http\Controllers\Web\ProjectFileUploadController;
-use App\Http\Controllers\Web\ProjectFoldersController;
-use App\Http\Controllers\Web\ProjectFoldersDatatableController;
-use App\Http\Controllers\Web\ProjectsController;
-use App\Http\Controllers\Web\ProjectSettingsController;
-use App\Http\Controllers\Web\ProjectUsersController;
-use App\Http\Controllers\Web\PublicDataAuthorsController;
-use App\Http\Controllers\Web\PublicDataController;
-use App\Http\Controllers\Web\PublicDataDatasetsController;
-use App\Http\Controllers\Web\PublicDataNewController;
-use App\Http\Controllers\Web\PublicDataProjectsController;
-use App\Http\Controllers\Web\PublicDataTagsController;
+use App\Http\Controllers\Web\Projects\Activities\ProjectActionsController;
+use App\Http\Controllers\Web\Projects\Datasets\ProjectDatasetsController;
+use App\Http\Controllers\Web\Projects\Entities\ProjectEntitiesController;
+use App\Http\Controllers\Web\Projects\Experiments\ProjectExperimentsController;
+use App\Http\Controllers\Web\Projects\Experiments\ProjectExperimentTabsController;
+use App\Http\Controllers\Web\Projects\Folders\ProjectFilesController;
+use App\Http\Controllers\Web\Projects\Folders\ProjectFileUploadController;
+use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersController;
+use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersDatatableController;
+use App\Http\Controllers\Web\Projects\ProjectsController;
+use App\Http\Controllers\Web\Projects\Settings\ProjectSettingsController;
+use App\Http\Controllers\Web\Projects\Users\ProjectUsersController;
+use App\Http\Controllers\Web\Published\PublicDataAuthorsController;
+use App\Http\Controllers\Web\Published\PublicDataController;
+use App\Http\Controllers\Web\Published\PublicDataDatasetsController;
+use App\Http\Controllers\Web\Published\PublicDataNewController;
+use App\Http\Controllers\Web\Published\PublicDataProjectsController;
+use App\Http\Controllers\Web\Published\PublicDataTagsController;
 use App\Http\Controllers\Web\TasksController;
 use App\Http\Controllers\Web\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -97,6 +98,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
         Route::resource('/projects/{project}/actions', ProjectActionsController::class);
 
         Route::resource('/projects/{project}/files', ProjectFilesController::class);
+
+        Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
 
         Route::resource('/projects/{project}/folders', ProjectFoldersController::class);
 
