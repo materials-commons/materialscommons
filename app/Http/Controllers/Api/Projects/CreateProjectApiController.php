@@ -15,7 +15,7 @@ class CreateProjectApiController extends Controller
 {
     /**
      * CreateProject
-     * 
+     *
      * Create a new project for the given user.
      * @bodyParam name string required The name of the project - must be unique for the user
      * @bodyParam description string A description of the project
