@@ -15,7 +15,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.experiments.actions')}}" href="{{route('projects.experiments.actions.index', [$project, $experiment])}}">
+        <a class="nav-link {{setActiveNavByName('projects.experiments.activities')}}"
+           href="{{route('projects.experiments.activities.index', [$project, $experiment])}}">
             Processes
         </a>
     </li>

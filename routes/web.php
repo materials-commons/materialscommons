@@ -87,8 +87,10 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
         Route::resource('/projects/{project}/experiments', ProjectExperimentsController::class);
 
         Route::get('/projects/{project}/experiments/{experiment}/workflow', [ProjectExperimentTabsController::class, 'workflow'])->name('experiments.workflow.index');
-        Route::get('/projects/{project}/experiments/{experiment}/samples', [ProjectExperimentTabsController::class, 'samples'])->name('experiments.samples.index');
-        Route::get('/projects/{project}/experiments/{experiment}/processes', [ProjectExperimentTabsController::class, 'processes'])->name('experiments.processes.index');
+        Route::get('/projects/{project}/experiments/{experiment}/entities', [ProjectExperimentTabsController::class, 'entities'])
+             ->name('experiments.entities.index');
+        Route::get('/projects/{project}/experiments/{experiment}/processes', [ProjectExperimentTabsController::class, 'activities'])
+             ->name('experiments.activities.index');
 
         Route::resource('/projects/{project}/entities', ProjectEntitiesController::class);
 

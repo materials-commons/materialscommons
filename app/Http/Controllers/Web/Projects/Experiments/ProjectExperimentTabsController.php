@@ -23,7 +23,7 @@ class ProjectExperimentTabsController extends Controller
      * @param  Experiment  $experiment
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function samples(Project $project, Experiment $experiment)
+    public function entities(Project $project, Experiment $experiment)
     {
         return view('app.projects.experiments.samples.index', compact('project', 'experiment'));
     }
@@ -33,7 +33,7 @@ class ProjectExperimentTabsController extends Controller
      * @param  Experiment  $experiment
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function processes(Project $project, Experiment $experiment)
+    public function activities(Project $project, Experiment $experiment)
     {
         return view('app.projects.experiments.processes.index', compact('project', 'experiment'));
     }
