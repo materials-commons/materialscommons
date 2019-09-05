@@ -17,7 +17,15 @@
             @endcomponent
 
             <div class="ml-2">
-                Workflow here
+                Workflow here {{$experiment->workflows()->count()}}
+                {{--                text:--}}
+                {{--                @if ($experiment->workflows()->count() != 0)--}}
+                {{--                    <pre>--}}
+                {{--{{$experiment->workflows[0]->workflow}}--}}
+                {{--</pre>--}}
+                {{--                @else--}}
+                {{--                    No workflow--}}
+                {{--                @endif--}}
                 <div id="workflow"></div>
             </div>
         @endslot
@@ -28,29 +36,8 @@
 
             window.onload = function () {
                 let chart;
-                let code = `
-        st=>start: Receive Samples
-        e=>end: Finished
-        sand_sample=>operation: Sand Sample
-        ht?=>condition: Heat Treat?
-        sem=>operation: SEM
-        ht_op=>operation: Heat Treatment 400c/2h
-        ht_op2=>operation: Heat Treatment 400c/2h
-        ht_op3=>operation: Heat Treatment 600c/1h
-        ht_op4=>operation: Heat Treatment 600c/4h
-        ht_op5=>operation: Heat Treatment 200c/3h
-        ht_op6=>operation: Heat Treatment
-        ht_op7=>operation: Heat Treatment
-        ht_op8=>operation: Heat Treatment
-        ht_op9=>operation: Heat Treatment
-        ht_op10=>operation: Heat Treatment
-
-        st->sand_sample(right)->ht?
-        ht?(yes, right)->ht_op(right)->ht_op2(right)->ht_op3(right)->ht_op4(right)->ht_op5
-        ht_op5->sem
-        ht?(no)->sem
-        sem->e
-        `;
+                        @if ($experiment->workflows()->count() != 0)
+                let code = `{!! $experiment->workflows[0]->workflow !!}`;
                 chart = flowchart.parse(code);
                 chart.drawSVG('workflow', {
                     // 'x': 30,
@@ -91,6 +78,7 @@
                         'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED'}
                     }
                 });
+                @endif
                 $('[id^=sub1]').click(function () {
                     alert('info here');
                 });
