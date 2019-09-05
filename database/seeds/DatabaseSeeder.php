@@ -1,12 +1,13 @@
 <?php
 
 use App\Models\Dataset;
+use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Lab;
 use App\Models\Project;
-use App\Models\Entity;
 use App\Models\User;
+use App\Models\Workflow;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -42,10 +43,13 @@ class DatabaseSeeder extends Seeder
             'default_lab' => true,
         ]);
 
-        factory(Experiment::class, 20)->create([
+        $experiments = factory(Experiment::class, 20)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+
+        $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
+        $experiments[0]->workflows()->attach($workflow);
 
         factory(Dataset::class, 50)->create([
             'owner_id'   => $user->id,
