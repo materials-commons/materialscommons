@@ -4,6 +4,7 @@
 /public/files
 /public/css
 /public/js
+public/js/app.js
 /public/packages
 /storage/*.key
 /vendor
