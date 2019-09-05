@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.5.21"
     },
     "dependencies": {
+        "flowchart.js": "^1.12.2",
         "laravel-mix-purgecss": "^4.0.0"
     }
 }
