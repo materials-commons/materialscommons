@@ -22,7 +22,10 @@ class CreateProjectsTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('owner_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
             $table->unique(['name', 'owner_id']);
         });
     }
