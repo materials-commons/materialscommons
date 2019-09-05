@@ -20,4 +20,9 @@ class Experiment extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function workflows()
+    {
+        return $this->belongsToMany(Workflow::class, 'experiment2workflow', 'experiment_id', 'workflow_id');
+    }
 }

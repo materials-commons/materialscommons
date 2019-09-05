@@ -15,8 +15,8 @@ class Project extends Model
 
     protected $casts = [
         'default_project' => 'boolean',
-        'is_active' => 'boolean',
-        'owner_id' => 'integer',
+        'is_active'       => 'boolean',
+        'owner_id'        => 'integer',
     ];
 
     public function setDescriptionAttribute($value)
@@ -36,8 +36,12 @@ class Project extends Model
 
     public function labs()
     {
-        return $this->belongsToMany(Lab::class, 'lab2project', 'project_id',
-            'lab_id');
+        return $this->belongsToMany(Lab::class, 'lab2project', 'project_id', 'lab_id');
+    }
+
+    public function workflows()
+    {
+        return $this->belongsToMany(Workflow::class, 'project2workflow', 'project_id', 'workflow_id');
     }
 
     public function owner()
