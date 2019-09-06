@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAttributesTable extends Migration
 {
@@ -22,11 +22,11 @@ class CreateAttributesTable extends Migration
             $table->unsignedInteger('attributable_id');
             $table->string('attributable_type');
 
-            $table->unsignedBigInteger('best_value_id');
+            $table->unsignedBigInteger('best_value_id')->nullable();
             $table->foreign('best_value_id')
-                ->references('id')
-                ->on('values')
-                ->onDelete('cascade');
+                  ->references('id')
+                  ->on('attribute_values')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });

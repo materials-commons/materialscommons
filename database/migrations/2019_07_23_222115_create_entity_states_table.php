@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEntityStatesTable extends Migration
 {
@@ -16,7 +16,14 @@ class CreateEntityStatesTable extends Migration
         Schema::create('entity_states', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->boolean('current')->default(true);
+
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')
+                  ->references('id')
+                  ->on('users');
 
             $table->unsignedBigInteger('entity_id');
             $table->foreign('entity_id')

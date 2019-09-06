@@ -39,4 +39,9 @@ class EntityState extends Model
     {
         return $this->belongsTo(Entity::class);
     }
+
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
+    }
 }

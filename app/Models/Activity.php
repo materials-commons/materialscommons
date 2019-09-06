@@ -63,4 +63,9 @@ class Activity extends Model
     {
         return $this->hasManyThrough(Entity::class, EntityState::class);
     }
+
+    public function experiments()
+    {
+        return $this->belongsToMany(Experiment::class, 'experiment2activity', 'activity_id', 'experiment_id');
+    }
 }

@@ -44,6 +44,11 @@ class Entity extends Model
         return $this->hasMany(EntityState::class);
     }
 
+    public function experiments()
+    {
+        return $this->belongsToMany(Experiment::class, 'experiment2entity', 'entity_id', 'experiment_id');
+    }
+
 //    public function files() {
 //        return $this->hasMany()
 //    }

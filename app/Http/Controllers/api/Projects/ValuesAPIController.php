@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api\Projects;
 
-use App\Models\Value;
+use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ValuesAPIController extends Controller
 {
@@ -39,7 +39,7 @@ class ValuesAPIController extends Controller
      * @param  \App\Value  $value
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project, Value $value)
+    public function show(Project $project, AttributeValue $value)
     {
         //
     }
@@ -52,7 +52,7 @@ class ValuesAPIController extends Controller
      * @param  \App\Value  $value
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project, Value $value)
+    public function update(Request $request, Project $project, AttributeValue $value)
     {
         //
     }
@@ -64,7 +64,7 @@ class ValuesAPIController extends Controller
      * @param  \App\Value  $value
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project, Value $value)
+    public function destroy(Project $project, AttributeValue $value)
     {
         //
     }

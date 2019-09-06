@@ -25,4 +25,14 @@ class Experiment extends Model
     {
         return $this->belongsToMany(Workflow::class, 'experiment2workflow', 'experiment_id', 'workflow_id');
     }
+
+    public function entities()
+    {
+        return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id');
+    }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'experiment2entity', 'experiment_id', 'activity_id');
+    }
 }

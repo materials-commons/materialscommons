@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Activity;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\Experiment;
@@ -47,14 +50,30 @@ class DatabaseSeeder extends Seeder
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+        $exp1 = $experiments[0];
 
         $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
-        $experiments[0]->workflows()->attach($workflow);
+        $exp1->workflows()->attach($workflow);
 
         factory(Dataset::class, 50)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+
+        $activity = factory(Activity::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $p->id,
+        ]);
+
+        $attribute = factory(Attribute::class)->create([
+            'attributable_id'   => $activity->id,
+            'attributable_type' => Activity::class,
+        ]);
+
+        factory(AttributeValue::class)->create([
+            'attribute_id' => $attribute->id,
+        ]);
+
 
         $root = factory(File::class)->create([
             'project_id' => $p->id,

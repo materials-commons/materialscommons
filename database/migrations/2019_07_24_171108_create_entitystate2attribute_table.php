@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class State2attribute extends Migration
+class CreateEntityState2attributeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class State2attribute extends Migration
      */
     public function up()
     {
-        Schema::create('state2attribute', function(Blueprint $table) {
-            $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')
-                ->references('id')
-                ->on('states')
-                ->onDelete('cascade');
+        Schema::create('entity_state2attribute', function (Blueprint $table) {
+            $table->unsignedBigInteger('entity_state_id');
+            $table->foreign('entity_state_id')
+                  ->references('id')
+                  ->on('entity_states')
+                  ->onDelete('cascade');
 
             $table->unsignedBigInteger('attribute_id');
             $table->foreign('attribute_id')
