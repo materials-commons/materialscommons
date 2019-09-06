@@ -11,6 +11,7 @@ window.Vue = require('vue');
 
 require('raphael');
 require('flowchart.js');
+window.moment = require('moment');
 
 
 /**
