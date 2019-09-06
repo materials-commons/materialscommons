@@ -17,7 +17,7 @@
             @endcomponent
 
             <div class="ml-2">
-                Processes here
+                Processes here {{$experiment->activities()->count()}}
             </div>
         @endslot
     @endcomponent

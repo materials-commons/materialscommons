@@ -74,6 +74,14 @@ class DatabaseSeeder extends Seeder
             'attribute_id' => $attribute->id,
         ]);
 
+        $exp1->activities()->attach($activity);
+
+        $entity = factory(Entity::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $p->id,
+        ]);
+
+        $exp1->entities()->attach($entity);
 
         $root = factory(File::class)->create([
             'project_id' => $p->id,

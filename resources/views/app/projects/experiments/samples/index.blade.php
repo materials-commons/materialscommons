@@ -17,7 +17,7 @@
             @endcomponent
 
             <div class="ml-2">
-                Samples here
+                Samples here {{$experiment->entities()->count()}}
             </div>
         @endslot
     @endcomponent

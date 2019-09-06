@@ -20,18 +20,4 @@ class AttributeValue extends Model
     {
         return $this->belongsTo(Attribute::class);
     }
-
-    //    public function setValAttribute($value)
-    //    {
-    //        $this->attributes['val'] = json_encode($value);
-    //    }
-    //
-    //    public function getValAttribute($value)
-    //    {
-    //        error_log($value);
-    //        $v = json_decode($value, true);
-    //        error_log($v);
-    //        return $v;
-    //    }
-
 }

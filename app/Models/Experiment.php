@@ -33,6 +33,6 @@ class Experiment extends Model
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class, 'experiment2entity', 'experiment_id', 'activity_id');
+        return $this->belongsToMany(Activity::class, 'experiment2activity', 'experiment_id', 'activity_id');
     }
 }
