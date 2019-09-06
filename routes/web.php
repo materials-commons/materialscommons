@@ -26,6 +26,7 @@ use App\Http\Controllers\Web\Projects\Folders\ProjectFileUploadController;
 use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersController;
 use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersDatatableController;
 use App\Http\Controllers\Web\Projects\ProjectsController;
+use App\Http\Controllers\Web\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web\Projects\Settings\ProjectSettingsController;
 use App\Http\Controllers\Web\Projects\Users\ProjectUsersController;
 use App\Http\Controllers\Web\Published\PublicDataAuthorsController;
@@ -83,6 +84,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 //    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('/projects', ProjectsController::class);
+    Route::get('/projects/{project}/getProjectExperiments',
+        [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
     Route::name('projects.')->group(function () {
         Route::resource('/projects/{project}/experiments', ProjectExperimentsController::class);
 

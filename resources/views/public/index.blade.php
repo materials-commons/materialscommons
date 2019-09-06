@@ -37,7 +37,7 @@
 
     @push('scripts')
         <script>
-            $(document).ready(function () {
+            $(document).ready(() => {
                 $('#datasets').DataTable({
                     serverSide: true,
                     processing: true,

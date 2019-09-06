@@ -59,44 +59,99 @@
 
         @slot('body')
 
-            @if (count($project->experiments) == 0)
-                <h4>No experiments</h4>
-            @else
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Experiment</th>
-                        <th>Description</th>
-                        <th>Updated</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($project->experiments as $experiment)
-                        <tr>
-                            <td>{{$experiment->name}}</td>
-                            <td>{{$experiment->description}}</td>
-                            <td>{{$experiment->updated_at->diffForHumans()}}</td>
-                            <td class="">
-                                <a href="{{route('projects.show', ['id' => $project->id])}}"
-                                   class="action-link">
-                                    <i class="fas fa-fw fa-eye"></i>
-                                </a>
-                                <a href="{{route('projects.edit', ['id' => $project->id])}}"
-                                   class="action-link">
-                                    <i class="fas fa-fw fa-edit"></i>
-                                </a>
-                                <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
-                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                </a>
-                                @component('app.projects.delete-project', ['project' => $project])
-                                @endcomponent
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            @endif
+            <table id="experiments" class="table" style="width:100%">
+                <thead>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Updated</th>
+                </thead>
+            </table>
+
+            {{--            @if (count($project->experiments) == 0)--}}
+            {{--                <h4>No experiments</h4>--}}
+            {{--            @else--}}
+            {{--                <table class="table">--}}
+            {{--                    <thead>--}}
+            {{--                    <tr>--}}
+            {{--                        <th>Experiment</th>--}}
+            {{--                        <th>Description</th>--}}
+            {{--                        <th>Updated</th>--}}
+            {{--                        <th></th>--}}
+            {{--                    </tr>--}}
+            {{--                    </thead>--}}
+            {{--                    <tbody>--}}
+            {{--                    @foreach($project->experiments as $experiment)--}}
+            {{--                        <tr>--}}
+            {{--                            <td>{{$experiment->name}}</td>--}}
+            {{--                            <td>{{$experiment->description}}</td>--}}
+            {{--                            <td>{{$experiment->updated_at->diffForHumans()}}</td>--}}
+            {{--                            <td class="">--}}
+            {{--                                <a href="{{route('projects.show', ['id' => $project->id])}}"--}}
+            {{--                                   class="action-link">--}}
+            {{--                                    <i class="fas fa-fw fa-eye"></i>--}}
+            {{--                                </a>--}}
+            {{--                                <a href="{{route('projects.edit', ['id' => $project->id])}}"--}}
+            {{--                                   class="action-link">--}}
+            {{--                                    <i class="fas fa-fw fa-edit"></i>--}}
+            {{--                                </a>--}}
+            {{--                                <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">--}}
+            {{--                                    <i class="fas fa-fw fa-trash-alt"></i>--}}
+            {{--                                </a>--}}
+            {{--                                @component('app.projects.delete-project', ['project' => $project])--}}
+            {{--                                @endcomponent--}}
+            {{--                            </td>--}}
+            {{--                        </tr>--}}
+            {{--                    @endforeach--}}
+            {{--                    </tbody>--}}
+            {{--                </table>--}}
+            {{--            @endif--}}
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(() => {
+                $('#experiments').DataTable({
+                    serverSide: true,
+                    processing: true,
+                    response: true,
+                    stateSave: true,
+                    ajax: "{{route('get_project_experiments', [$project->id])}}",
+                    columns: [
+                        {
+                            name: 'name',
+                            render: (data, type, row) => {
+                                if (type === 'display') {
+                                    let r = route('projects.experiments.show', {
+                                        project: "{{$project->id}}",
+                                        experiment: row["1"]
+                                    }).url();
+                                    return `<a href="` + r + `">` + data + `</a>`;
+                                }
+                                return data;
+                            }
+                        },
+                        {name: 'id'},
+                        {name: 'description'},
+                        {
+                            name: 'updated_at',
+                            render: (data, type, row) => {
+                                if (type === 'display') {
+                                    return moment(data + "+0000", "YYYY-MM-DD HH:mm:ss Z").fromNow();
+                                }
+                                return data;
+                            }
+                        }
+                    ],
+                    columnDefs: [
+                        {
+                            targets: [1],
+                            visible: false,
+                        }
+                    ]
+                });
+            });
+        </script>
+    @endpush
 @endsection
