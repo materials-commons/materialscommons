@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpIncludeInspection */
 
 /*
 |--------------------------------------------------------------------------
@@ -15,28 +15,27 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Web\Projects\Activities\ProjectActionsController;
-use App\Http\Controllers\Web\Projects\Datasets\ProjectDatasetsController;
-use App\Http\Controllers\Web\Projects\Entities\ProjectEntitiesController;
-use App\Http\Controllers\Web\Projects\Experiments\ProjectExperimentsController;
-use App\Http\Controllers\Web\Projects\Experiments\ProjectExperimentTabsController;
-use App\Http\Controllers\Web\Projects\Folders\ProjectFilesController;
-use App\Http\Controllers\Web\Projects\Folders\ProjectFileUploadController;
-use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersController;
-use App\Http\Controllers\Web\Projects\Folders\ProjectFoldersDatatableController;
-use App\Http\Controllers\Web\Projects\ProjectsController;
-use App\Http\Controllers\Web\Projects\ProjectsDatatableController;
-use App\Http\Controllers\Web\Projects\Settings\ProjectSettingsController;
-use App\Http\Controllers\Web\Projects\Users\ProjectUsersController;
-use App\Http\Controllers\Web\Published\PublicDataAuthorsController;
-use App\Http\Controllers\Web\Published\PublicDataController;
-use App\Http\Controllers\Web\Published\PublicDataDatasetsController;
-use App\Http\Controllers\Web\Published\PublicDataNewController;
-use App\Http\Controllers\Web\Published\PublicDataProjectsController;
-use App\Http\Controllers\Web\Published\PublicDataTagsController;
-use App\Http\Controllers\Web\TasksController;
-use App\Http\Controllers\Web\UsersController;
+use App\Http\Controllers\Web2\HomeController;
+use App\Http\Controllers\Web2\Projects\Activities\ProjectActionsController;
+use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
+use App\Http\Controllers\Web2\Projects\Entities\ProjectEntitiesController;
+use App\Http\Controllers\Web2\Projects\Experiments\ProjectExperimentsController;
+use App\Http\Controllers\Web2\Projects\Experiments\ProjectExperimentTabsController;
+use App\Http\Controllers\Web2\Projects\Folders\ProjectFilesController;
+use App\Http\Controllers\Web2\Projects\Folders\ProjectFileUploadController;
+use App\Http\Controllers\Web2\Projects\Folders\ProjectFoldersController;
+use App\Http\Controllers\Web2\Projects\Folders\ProjectFoldersDatatableController;
+use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
+use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
+use App\Http\Controllers\Web2\Projects\Users\ProjectUsersController;
+use App\Http\Controllers\Web2\Published\PublicDataAuthorsController;
+use App\Http\Controllers\Web2\Published\PublicDataController;
+use App\Http\Controllers\Web2\Published\PublicDataDatasetsController;
+use App\Http\Controllers\Web2\Published\PublicDataNewController;
+use App\Http\Controllers\Web2\Published\PublicDataProjectsController;
+use App\Http\Controllers\Web2\Published\PublicDataTagsController;
+use App\Http\Controllers\Web2\TasksController;
+use App\Http\Controllers\Web2\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,7 +82,10 @@ Route::prefix('public')->group(function () {
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 //    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
-    Route::resource('/projects', ProjectsController::class);
+
+    require base_path('routes/web_routes/projects/projects_web.php');
+
+    //    Route::resource('/projects', ProjectsController::class);
     Route::get('/projects/{project}/getProjectExperiments',
         [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
     Route::name('projects.')->group(function () {
