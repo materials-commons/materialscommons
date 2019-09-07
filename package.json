@@ -12,6 +12,7 @@
     "devDependencies": {
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
+      "bootstrap-select": "^1.13.10",
         "cross-env": "^5.1",
         "datatables": "^1.10.18",
         "jquery": "^3.2",

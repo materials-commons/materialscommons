@@ -11,6 +11,7 @@ window.Vue = require('vue');
 
 require('raphael');
 require('flowchart.js');
+require('bootstrap-select');
 window.moment = require('moment');
 
 
