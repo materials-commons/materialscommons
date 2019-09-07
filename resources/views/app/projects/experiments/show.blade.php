@@ -21,6 +21,7 @@
             </div>
         </div>
     </div>
+
     @component('components.card')
         @slot('header')
             Experiment {{$experiment->name}}
