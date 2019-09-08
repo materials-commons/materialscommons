@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers\Web\Projects;
 
+use App\Actions\Projects\UpdateProjectAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Projects\UpdateProjectRequest;
 use App\Models\Project;
 
 class UpdateProjectWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \App\Models\Project  $project
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Project $project)
+    public function __invoke(UpdateProjectRequest $request, UpdateProjectAction $updateProjectAction, Project $project)
     {
-        $attrs = request()->validate([
-            'name'            => 'string',
-            'description'     => 'string',
-            'is_active'       => 'boolean',
-            'default_project' => 'boolean',
-        ]);
-
-        $project->update($attrs);
+        $validated = $request->validated();
+        $updateProjectAction($validated, $project);
 
         return redirect(route('projects.index'));
     }

@@ -2,37 +2,16 @@
 
 namespace App\Http\Controllers\Web\Projects;
 
+use App\Actions\Projects\CreateProjectAction;
 use App\Http\Controllers\Controller;
-use App\Models\Project;
+use App\Http\Requests\Projects\CreateProjectRequest;
 
 class StoreProjectWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke()
+    public function __invoke(CreateProjectRequest $request, CreateProjectAction $createProjectAction)
     {
-        request()->validate([
-            'name'        => 'required',
-            'description' => 'required',
-
-            // 'default_project' => 'required|boolean',
-        ]);
-
-        $project = Project::create([
-            'name'            => request('name'),
-            'description'     => request('description'),
-
-            // 'default_project' => request('default_project'),
-            'default_project' => false,
-
-            'is_active' => true,
-            'owner_id'  => auth()->id(),
-        ]);
-
-        auth()->user()->projects()->attach($project);
+        $validated = $request->validated();
+        $createProjectAction($validated);
 
         return redirect(route('projects.index'));
     }
