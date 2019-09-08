@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Api\Experiments;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Queries\Experiments\SingleExperimentQuery;
+use App\Http\Resources\Experiments\ExperimentResource;
 
 class ShowExperimentApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Queries\Experiments\SingleExperimentQuery  $query
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\Experiments\ExperimentResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(SingleExperimentQuery $query)
     {
-        //
+        $data = $query->get();
+
+        return new ExperimentResource($data[0]);
     }
 }

@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers\Api\Experiments;
 
+use App\Actions\Experiments\UpdateExperimentAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Experiments\UpdateExperimentRequest;
+use App\Http\Resources\Experiments\ExperimentResource;
+use App\Models\Experiment;
 
 class UpdateExperimentApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Experiments\UpdateExperimentRequest  $request
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Actions\Experiments\UpdateExperimentAction  $updateExperimentAction
+     * @param  \App\Models\Experiment  $experiment
+     *
+     * @return \App\Http\Resources\Experiments\ExperimentResource
      */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateExperimentRequest $request, UpdateExperimentAction $updateExperimentAction, Experiment $experiment)
     {
-        //
+        $validated = $request->validated();
+        $experiment = $updateExperimentAction($validated, $experiment);
+
+        return new ExperimentResource($experiment);
     }
 }

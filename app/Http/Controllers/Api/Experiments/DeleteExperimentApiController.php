@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Api\Experiments;
 
+use App\Actions\Experiments\DeleteExperimentAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Experiment;
 
 class DeleteExperimentApiController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Actions\Experiments\DeleteExperimentAction  $deleteExperimentAction
+     * @param  \App\Models\Experiment  $experiment
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function __invoke(Request $request)
+    public function __invoke(DeleteExperimentAction $deleteExperimentAction, Experiment $experiment)
     {
-        //
+        $deleteExperimentAction($experiment);
     }
 }
