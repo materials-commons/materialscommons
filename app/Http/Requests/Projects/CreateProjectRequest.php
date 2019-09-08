@@ -26,12 +26,11 @@ class CreateProjectRequest extends FormRequest
     {
         return [
             'name' => [
-                'required',
-                'string|max:80',
+                'required', 'string', 'max:80',
                 function ($attribute, $value, $fail) {
                     $count = Project::where('name', $value)
-                        ->where('owner_id', auth()->id())
-                        ->count();
+                                    ->where('owner_id', auth()->id())
+                                    ->count();
                     if ($count != 0) {
                         $fail('User already has a project named '.$value);
                     }
