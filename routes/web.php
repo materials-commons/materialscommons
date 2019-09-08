@@ -81,8 +81,6 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
-//    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
-
     require base_path('routes/web_routes/projects/projects_web.php');
 
     //    Route::resource('/projects', ProjectsController::class);
