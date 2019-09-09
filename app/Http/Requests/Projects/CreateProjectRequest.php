@@ -37,7 +37,7 @@ class CreateProjectRequest extends FormRequest
                 },
             ],
 
-            'description' => 'string|max:2048',
+            'description' => 'nullable|string|max:2048',
             'is_active'   => 'boolean',
         ];
     }
