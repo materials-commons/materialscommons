@@ -13,7 +13,8 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('experiments.store', ['project' => $project->id])}}" id="experiment-create">
+            <form method="post" action="{{route('projects.experiments.store', ['project' => $project->id])}}"
+                  id="experiment-create">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -21,11 +22,12 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" type="text"
+                    <textarea class="form-control" id="description" name="description" type="text" value=""
                               placeholder="Description..."></textarea>
                 </div>
+                <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <div class="float-right">
-                    <a href="{{route('experiments.index', ['project' => $project->id])}}" class="action-link danger mr-3">
+                    <a href="{{route('projects.show', ['project' => $project->id])}}" class="action-link danger mr-3">
                         Cancel
                     </a>
 
