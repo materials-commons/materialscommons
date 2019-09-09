@@ -13,6 +13,7 @@ require('raphael');
 require('flowchart.js');
 require('bootstrap-select');
 window.moment = require('moment');
+window.mcfl = require('./flowchart.js');
 
 
 /**
