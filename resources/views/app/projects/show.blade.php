@@ -52,8 +52,8 @@
     @component('components.card')
         @slot('header')
             Experiments
-            <a class="float-right action-link" href="">
-                <i class="fas fa-plus mr-2"></i>Add
+            <a class="float-right action-link" href="{{route('projects.experiments.create', ['project' => $project])}}">
+                <i class="fas fa-plus mr-2"></i>Create Experiment
             </a>
         @endslot
 
