@@ -16,4 +16,9 @@ class Dataset extends Model
         'published_at',
         'privately_published_at'
     ];
+
+    public function workflows()
+    {
+        return $this->belongsToMany(Workflow::class, 'dataset2workflow', 'dataset_id', 'workflow_id');
+    }
 }

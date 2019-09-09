@@ -53,12 +53,17 @@ class DatabaseSeeder extends Seeder
         $exp1 = $experiments[0];
 
         $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
-        $exp1->workflows()->attach($workflow);
+        foreach ($experiments as $exp) {
+            $exp->workflows()->attach($workflow);
+        }
 
-        factory(Dataset::class, 50)->create([
+        $datasets = factory(Dataset::class, 50)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+        foreach ($datasets as $ds) {
+            $ds->workflows()->attach($workflow);
+        }
 
         $activity = factory(Activity::class)->create([
             'owner_id'   => $user->id,
