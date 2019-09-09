@@ -19,7 +19,6 @@ use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\Activities\ProjectActionsController;
 use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
 use App\Http\Controllers\Web2\Projects\Entities\ProjectEntitiesController;
-use App\Http\Controllers\Web2\Projects\Experiments\ProjectExperimentsController;
 use App\Http\Controllers\Web2\Projects\Experiments\ProjectExperimentTabsController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFilesController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFileUploadController;
@@ -84,12 +83,13 @@ Route::prefix('public')->group(function () {
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
     require base_path('routes/web_routes/projects/projects_web.php');
+    require base_path('routes/web_routes/experiments/experiments_web.php');
 
     //    Route::resource('/projects', ProjectsController::class);
     Route::get('/projects/{project}/getProjectExperiments',
         [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
     Route::name('projects.')->group(function () {
-        Route::resource('/projects/{project}/experiments', ProjectExperimentsController::class);
+//        Route::resource('/projects/{project}/experiments', ProjectExperimentsController::class);
 
         Route::get('/projects/{project}/experiments/{experiment}/workflow', [ProjectExperimentTabsController::class, 'workflow'])->name('experiments.workflow.index');
         Route::get('/projects/{project}/experiments/{experiment}/entities', [ProjectExperimentTabsController::class, 'entities'])
