@@ -4,7 +4,7 @@ function drawFlowchart(id, code) {
         // 'x': 30,
         // 'y': 50,
         'line-width': 3,
-        'maxWidth': 3,//ensures the flowcharts fits within a certian width
+        'maxWidth': 3,//ensures the flowcharts fits within a certain width
         'line-length': 50,
         'text-margin': 10,
         'font-size': 14,
