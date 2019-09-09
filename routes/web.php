@@ -76,6 +76,8 @@ Route::prefix('public')->group(function () {
         Route::get('/authors', [PublicDataAuthorsController::class, 'index'])->name('authors.index');
         Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
         Route::view('/community', 'public.community.index')->name('community.index');
+
+        require base_path('routes/web_routes/published/datasets/datasets_web.php');
     });
 });
 

@@ -36,30 +36,18 @@
                 <p>{{$dataset->description}}</p>
             </div>
 
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.show')}} active" href="#">
-                        Details
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.workflow')}}" href="#">
-                        Workflow
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.entities')}}" href="#">
-                        Samples
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{setActiveNavByName('projects.experiments.actions')}}" href="#">
-                        Processes
-                    </a>
-                </li>
-            </ul>
-
             <br>
+
+            @include('public.datasets.datasets-tabs')
+
+            @if (Request::routeIs('public.datasets.show*'))
+                @include('public.datasets.workflows')
+            @elseif (Request::routeIs('public.datasets.entities*'))
+                @include('public.datasets.entities')
+            @elseif (Request::routeIs('public.datasets.activities*'))
+                @include('public.datasets.activities')
+            @endif
+
         @endslot
     @endcomponent
 @stop
