@@ -12,7 +12,6 @@ class StoreProjectWebController extends Controller
     {
         $validated = $request->validated();
         $createProjectAction($validated);
-
         return redirect(route('projects.index'));
     }
 
