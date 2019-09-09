@@ -1,9 +1,9 @@
 <?php
 
 use App\Enums\ExperimentStatus;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateExperimentsTable extends Migration
 {
@@ -19,7 +19,7 @@ class CreateExperimentsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
