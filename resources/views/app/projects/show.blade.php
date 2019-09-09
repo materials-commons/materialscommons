@@ -65,7 +65,7 @@
                 <th>ID</th>
                 <th>Description</th>
                 <th>Updated</th>
-                <th>Controls</th>
+                <th></th>
                 </thead>
             </table>
 
@@ -76,6 +76,7 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
+                let projectId = "{{$project->id}}";
                 $('#experiments').DataTable({
                     serverSide: true,
                     processing: true,
@@ -110,7 +111,19 @@
                         {
                             data: null,
                             render: (data, type, row) => {
-                                return '<a href="#">Hello</a>';
+                                let showRoute = route('projects.experiments.show', {
+                                    project: projectId,
+                                    experiment: row["1"]
+                                }).url();
+                                let editRoute = route('projects.experiments.edit', {
+                                    project: projectId,
+                                    experiment: row["1"]
+                                }).url();
+                                let deleteRef = `#experiment-delete-${row["1"]}`;
+                                return `
+                                   <a href="${showRoute}" class="action-link"><i class="fas fa-fw fa-eye"></i></a>
+                                   <a href="${editRoute}" class="action-link"><i class="fas fa-fw fa-edit"></i></a>
+                                   <a data-toggle="modal" href="${deleteRef}" class="action-link"><i class="fas fa-fw fa-trash-alt"></i></a>`;
                             }
                         }
                     ],
