@@ -26,8 +26,9 @@
         <script>
             $(document).ready(() => {
                 let count = {!! $experiment->workflows()->count() !!};
+                let workflows = {!! $experiment->workflows !!};
                 if (count !== 0) {
-                    let code = `{!! $experiment->workflows[0]->workflow !!}`;
+                    let code = workflows[0].workflow;
                     mcfl.drawFlowchart('workflow', code);
                 }
                 $('[id^=sub1]').click(function () {
