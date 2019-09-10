@@ -17,7 +17,7 @@
         @endslot
 
         @slot('body')
-            <table class="table">
+            <table id="projects" class="table" width="100%">
                 <thead>
                 <tr>
                     <th>Project</th>
@@ -35,15 +35,17 @@
                         <td>{{$project->description}}</td>
                         <td>{{$project->updated_at->diffForHumans()}}</td>
                         <td>
-                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
-                                <i class="fas fa-fw fa-eye"></i>
-                            </a>
-                            <a href="{{route('projects.edit', ['id' => $project->id])}}" class="action-link">
-                                <i class="fas fa-fw fa-edit"></i>
-                            </a>
-                            <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
-                                <i class="fas fa-fw fa-trash-alt"></i>
-                            </a>
+                            <div class="float-right">
+                                <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                                <a href="{{route('projects.edit', ['id' => $project->id])}}" class="action-link">
+                                    <i class="fas fa-fw fa-edit"></i>
+                                </a>
+                                <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
+                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                </a>
+                            </div>
                             @component('app.projects.delete-project', ['project' => $project])
                             @endcomponent
                         </td>
@@ -53,4 +55,14 @@
             </table>
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(() => {
+                $('#projects').DataTable({
+                    stateSave: true,
+                });
+            });
+        </script>
+    @endpush
 @stop
