@@ -38,6 +38,6 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::get('/experiments/{experiment}/datables/entities', GetExperimentEntitiesDatatableWebController::class)
          ->name('dt_get_experiment_entities');
 
-    Route::get('/experiments/{experiment}/datables/entities', GetExperimentActivitiesDatatableWebController::class)
+    Route::get('/experiments/{experiment}/datables/activities', GetExperimentActivitiesDatatableWebController::class)
          ->name('dt_get_experiment_activities');
 });
