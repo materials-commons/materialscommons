@@ -6,8 +6,9 @@
     <script>
         $(document).ready(() => {
             let count = {!! $dataset->workflows()->count() !!};
+            let workflows = {!! $dataset->workflows !!};
             if (count !== 0) {
-                let code = `{!! $dataset->workflows[0]->workflow !!}`;
+                let code = workflows[0].workflow;
                 mcfl.drawFlowchart('workflow', code);
             }
         });

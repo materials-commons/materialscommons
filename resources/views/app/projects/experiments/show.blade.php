@@ -28,11 +28,7 @@
         @endslot
 
         @slot('body')
-
-            @component('components.experiment-tabs', ['project' => $project, 'experiment' => $experiment])
-            @endcomponent
-
-            <div class="ml-2">
+            <div class="ml-5">
                 <dl class="row">
                     <dt class="col-sm-2">Name</dt>
                     <dd class="col-sm-10">{{$experiment->name}}</dd>
@@ -44,6 +40,25 @@
                     <dd class="col-sm-10">{{$experiment->updated_at->diffForHumans()}}</dd>
                 </dl>
             </div>
+            <div class="row ml-5">
+                <h5>Description</h5>
+            </div>
+            <div class="row ml-5">
+                <p>{{$experiment->description}}</p>
+            </div>
+
+            <br>
+
+            @include('app.projects.experiments.tabs.experiment-tabs')
+
+            @if (Request::routeIs('projects.experiments.show*'))
+                @include('app.projects.experiments.tabs.workflows-tab')
+            @elseif (Request::routeIs('projects.experiments.entities-tab'))
+                @include('app.projects.experiments.tabs.entities-tab')
+            @elseif (Request::routeIs('projects.experiments.activities-tab'))
+                @include('app.projects.experiments.tabs.activities-tab')
+            @endif
+
         @endslot
     @endcomponent
 

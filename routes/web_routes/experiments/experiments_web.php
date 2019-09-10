@@ -7,6 +7,8 @@ use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
 use App\Http\Controllers\Web\Experiments\StoreExperimentWebController;
 use App\Http\Controllers\Web\Experiments\UpdateExperimentWebController;
+use App\Models\Experiment;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/projects/{project}')->group(function () {
@@ -22,4 +24,12 @@ Route::prefix('/projects/{project}')->group(function () {
 
     Route::delete('/experiments/{experiment}',
         DeleteExperimentWebController::class)->name('projects.experiments.destroy');
+
+    Route::get('/experiments/{experiment}/entities-tab', function (Project $project, Experiment $experiment) {
+        return view('app.projects.experiments.show', compact('project', 'experiment'));
+    })->name('projects.experiments.entities-tab');
+
+    Route::get('/experiments/{experiment}/activities-tab', function (Project $project, Experiment $experiment) {
+        return view('app.projects.experiments.show', compact('project', 'experiment'));
+    })->name('projects.experiments.activities-tab');
 });
