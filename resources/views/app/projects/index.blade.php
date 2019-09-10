@@ -17,7 +17,7 @@
         @endslot
 
         @slot('body')
-            <table id="projects" class="table" width="100%">
+            <table id="projects" class="table" style="width:100%">
                 <thead>
                 <tr>
                     <th>Project</th>
