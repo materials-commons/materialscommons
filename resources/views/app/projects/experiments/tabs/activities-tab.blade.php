@@ -1,3 +1,8 @@
+<a class="action-link float-right"
+   href="{{route('projects.create')}}">
+    <i class="fas fa-plus mr-2"></i>Create Process
+</a>
+
 <table id="activities" class="table" width="100%">
     <thead>
     <th>Name</th>

@@ -10,6 +10,9 @@
     @component('components.card')
         @slot('header')
             Samples
+            <a class="action-link float-right" href="#">
+                <i class="fas fa-plus mr-2"></i>Create Sample
+            </a>
         @endslot
 
         @slot('body')

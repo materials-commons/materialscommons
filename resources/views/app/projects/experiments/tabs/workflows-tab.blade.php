@@ -1,4 +1,15 @@
 <div class="ml-2">
+    <div class="float-right">
+        <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
+            <i class="fas fa-fw fa-plus"></i>
+        </a>
+        <a href="{{route('projects.edit', ['id' => $project->id])}}" class="action-link">
+            <i class="fas fa-fw fa-edit"></i>
+        </a>
+        <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
+            <i class="fas fa-fw fa-trash-alt"></i>
+        </a>
+    </div>
     <div id="workflow"></div>
 </div>
 
