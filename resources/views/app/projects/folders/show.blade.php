@@ -38,7 +38,7 @@
                     columns: [
                         {
                             name: 'name',
-                            render: function(data, type, row) {
+                            render: function (data, type, row) {
                                 if (type === 'display') {
                                     let rowType = row["2"];
                                     let objectId = row["1"];
@@ -46,13 +46,13 @@
                                     if (rowType === 'directory') {
                                         // rowType === 'directory'
                                         r = route('projects.folders.show', [{{$project->id}}, objectId]).url();
-                                        icon = `<i class="fa-fw fas mr-2 ` + `fa-folder"></i>`
+                                        icon = `<i class="fa-fw fas mr-2 ` + `fa-folder"></i>`;
                                     } else {
                                         // else type === some media type for a file
                                         r = route('projects.files.show', [{{$project->id}}, objectId]).url();
                                         icon = `<i class="fa-fw fas mr-2 ` + `fa-file"></i>`;
                                     }
-                                    let ndata = `<a href="`+r+`">`+ icon + data + `</a>`;
+                                    let ndata = `<a href="` + r + `">` + icon + data + `</a>`;
                                     return ndata;
                                 }
 
@@ -63,13 +63,13 @@
                         {name: 'mime_type'},
                         {
                             name: 'size',
-                            render: function(data, type, row) {
+                            render: function (data, type, row) {
                                 if (type === 'display') {
                                     let rowType = row["2"];
                                     if (rowType === 'directory') {
                                         return "N/A";
                                     } else {
-                                        return data;
+                                        return formatters.humanFileSize(data);
                                     }
                                 }
 

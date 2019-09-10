@@ -69,7 +69,7 @@
                                     if (rowType === 'directory') {
                                         return "N/A";
                                     } else {
-                                        return data;
+                                        return formatters.humanFileSize(data);
                                     }
                                 }
 

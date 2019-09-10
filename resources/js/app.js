@@ -14,6 +14,7 @@ require('flowchart.js');
 require('bootstrap-select');
 window.moment = require('moment');
 window.mcfl = require('./flowchart.js');
+window.formatters = require('./formatters');
 
 
 /**
