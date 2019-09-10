@@ -6,10 +6,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Lab::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'name'        => $faker->sentence(6, true),
         'description' => $faker->sentence,
         'default_lab' => false,
-        'owner_id' => function () {
+        'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;
         },
     ];

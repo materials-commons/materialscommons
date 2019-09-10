@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(EntityState::class, function (Faker $faker) {
     return [
-        'name'        => $faker->name,
+        'name'        => $faker->sentence(6, true),
         'description' => $faker->sentence,
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {

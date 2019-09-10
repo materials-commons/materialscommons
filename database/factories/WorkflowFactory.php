@@ -27,7 +27,7 @@ sem->e
 WORKFLOW;
 
     return [
-        'name'        => $faker->name,
+        'name'        => $faker->sentence(6, true),
         'description' => $faker->sentence,
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {

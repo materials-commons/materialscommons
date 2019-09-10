@@ -7,13 +7,13 @@ use Faker\Generator as Faker;
 
 $factory->define(Experiment::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'name'        => $faker->sentence(6, true),
         'description' => $faker->sentence,
-        'owner_id' => function () {
+        'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;
         },
-        'uuid' => $faker->uuid,
-        'project_id' => function () {
+        'uuid'        => $faker->uuid,
+        'project_id'  => function () {
             return factory(App\Models\Project::class)->create()->id;
         }
     ];

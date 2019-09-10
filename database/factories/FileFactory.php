@@ -19,5 +19,6 @@ $factory->define(App\Models\File::class, function (Faker $faker) {
         'project_id'  => function () {
             return factory(App\Models\Project::class)->create()->id;
         },
+        'size'        => $faker->randomNumber(),
     ];
 });

@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Attribute::class, function (Faker $faker) {
     return [
-        'name'              => $faker->name,
+        'name'              => $faker->sentence(6, true),
         'description'       => $faker->sentence,
         'uuid'              => $faker->uuid,
         'attributable_id'   => function () {
