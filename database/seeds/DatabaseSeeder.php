@@ -58,10 +58,6 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
-        foreach ($datasets as $ds) {
-            $ds->workflows()->attach($workflow);
-        }
-
         $activity = factory(Activity::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
@@ -81,11 +77,18 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
-        // Attach all experiment items
+        // Attach to all experiments
         foreach ($experiments as $exp) {
             $exp->workflows()->attach($workflow);
             $exp->entities()->attach($entity);
             $exp->activities()->attach($activity);
+        }
+
+        // Attach to all datasets
+        foreach ($datasets as $ds) {
+            $ds->workflows()->attach($workflow);
+            $ds->entities()->attach($entity);
+            $ds->activities()->attach($activity);
         }
 
         $root = factory(File::class)->create([
