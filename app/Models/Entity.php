@@ -20,28 +20,24 @@ class Entity extends Model
         }
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
     public function attributes()
     {
         return $this->morphMany(Attribute::class, 'attributable');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function entityStates()
     {
         return $this->hasMany(EntityState::class);
+    }
+
+    public function datasets()
+    {
+        return $this->belongsToMany(Dataset::class, 'dataset2entity', 'entity_id', 'dataset_id');
     }
 
     public function experiments()

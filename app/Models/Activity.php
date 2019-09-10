@@ -20,25 +20,16 @@ class Activity extends Model
         }
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
     public function attributes()
     {
         return $this->morphMany(Attribute::class, 'attributable');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function files()
     {
         return $this->belongsToMany(File::class, 'activity2file')
@@ -46,9 +37,11 @@ class Activity extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+    public function datasets()
+    {
+        return $this->belongsToMany(Dataset::class, 'dataset2activity', 'activity_id', 'dataset_id');
+    }
+
     public function entityStates()
     {
         return $this->belongsToMany(EntityState::class, 'activity2entity_state')
@@ -56,9 +49,6 @@ class Activity extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
-     */
     public function entities()
     {
         return $this->hasManyThrough(Entity::class, EntityState::class);

@@ -11,25 +11,16 @@ class File extends Model
 
     protected $guarded = ['id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function entityStates()
     {
         return $this->belongsToMany(EntityState::class, 'entity_state2file')->withTimestamps();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function activities()
     {
         return $this->belongsToMany(Activity::class, 'activity2file')->withTimestamps();
@@ -38,5 +29,10 @@ class File extends Model
     public function previousVersions()
     {
         File::where('directory_id', $this->directory_id)->where('name', $this->name);
+    }
+
+    public function datasets()
+    {
+        return $this->belongsToMany(Dataset::class, 'dataset2file', 'file_id', 'dataset_id');
     }
 }
