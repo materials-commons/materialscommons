@@ -35,6 +35,6 @@ class CreateExperiment2activityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('experiment2process');
+        Schema::dropIfExists('experiment2activity');
     }
 }

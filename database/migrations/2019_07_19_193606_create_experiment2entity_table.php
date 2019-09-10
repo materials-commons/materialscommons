@@ -35,6 +35,6 @@ class CreateExperiment2entityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('experiment2sample');
+        Schema::dropIfExists('experiment2entity');
     }
 }
