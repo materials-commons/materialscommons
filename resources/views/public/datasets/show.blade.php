@@ -38,14 +38,16 @@
 
             <br>
 
-            @include('public.datasets.datasets-tabs')
+            @include('public.datasets.tabs.datasets-tabs')
+
+            <br>
 
             @if (Request::routeIs('public.datasets.show*'))
-                @include('public.datasets.workflows')
+                @include('public.datasets.tabs.workflows-tab')
             @elseif (Request::routeIs('public.datasets.entities*'))
-                @include('public.datasets.entities')
+                @include('public.datasets.tabs.entities-tab')
             @elseif (Request::routeIs('public.datasets.activities*'))
-                @include('public.datasets.activities')
+                @include('public.datasets.tabs.activities-tab')
             @endif
 
         @endslot
