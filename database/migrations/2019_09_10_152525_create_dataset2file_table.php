@@ -13,7 +13,7 @@ class CreateDataset2fileTable extends Migration
      */
     public function up()
     {
-        Schema::create('dataset2activity', function (Blueprint $table) {
+        Schema::create('dataset2file', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('dataset_id');
