@@ -13,7 +13,7 @@ class UpdateExperimentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class UpdateExperimentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'string|max:80',
-            'description' => 'string|max:2048',
+            'name'        => 'nullable|string|max:80',
+            'description' => 'nullable|string|max:2048',
         ];
     }
 }
