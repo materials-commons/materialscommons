@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Web\Experiments;
 
+use App\Actions\Experiments\UpdateExperimentAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Experiments\UpdateExperimentRequest;
+use App\Models\Experiment;
+use App\Models\Project;
 
 class UpdateExperimentWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        //
+    public function __invoke(
+        UpdateExperimentRequest $request,
+        UpdateExperimentAction $updateExperimentAction,
+        Project $project,
+        Experiment $experiment
+    ) {
+        $validated = $request->validated();
+        $updateExperimentAction($validated, $experiment);
+        return redirect(route('projects.show', compact('project')));
     }
 }
