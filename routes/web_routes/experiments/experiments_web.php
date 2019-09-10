@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Web\Experiments\CreateExperimentWebController;
+use App\Http\Controllers\Web\Experiments\Datatables\GetExperimentActivitiesDatatableWebController;
+use App\Http\Controllers\Web\Experiments\Datatables\GetExperimentEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Experiments\DeleteExperimentWebController;
 use App\Http\Controllers\Web\Experiments\EditExperimentWebController;
 use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
@@ -32,4 +34,10 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::get('/experiments/{experiment}/activities-tab', function (Project $project, Experiment $experiment) {
         return view('app.projects.experiments.show', compact('project', 'experiment'));
     })->name('projects.experiments.activities-tab');
+
+    Route::get('/experiments/{experiment}/datables/entities', GetExperimentEntitiesDatatableWebController::class)
+         ->name('dt_get_experiment_entities');
+
+    Route::get('/experiments/{experiment}/datables/entities', GetExperimentActivitiesDatatableWebController::class)
+         ->name('dt_get_experiment_activities');
 });
