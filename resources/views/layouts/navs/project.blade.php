@@ -24,8 +24,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.actions')}}"
-                   href="{{route('projects.actions.index', ['project' => $project->id])}}">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.activities')}}"
+                   href="{{route('projects.activities.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-code-branch mr-2"></i>
                     Processes
                 </a>

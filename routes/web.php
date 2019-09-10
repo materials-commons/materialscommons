@@ -16,9 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web2\HomeController;
-use App\Http\Controllers\Web2\Projects\Activities\ProjectActionsController;
 use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
-use App\Http\Controllers\Web2\Projects\Entities\ProjectEntitiesController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFilesController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFileUploadController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFoldersController;
@@ -83,25 +81,17 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
     require base_path('routes/web_routes/projects/projects_web.php');
     require base_path('routes/web_routes/experiments/experiments_web.php');
+    require base_path('routes/web_routes/entities/entities_web.php');
+    require base_path('routes/web_routes/activities/activities_web.php');
 
     //    Route::resource('/projects', ProjectsController::class);
     Route::get('/projects/{project}/getProjectExperiments',
         [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
     Route::name('projects.')->group(function () {
-//        Route::resource('/projects/{project}/experiments', ProjectExperimentsController::class);
-
-//        Route::get('/projects/{project}/experiments/{experiment}/workflow', [ProjectExperimentTabsController::class, 'workflow'])->name('experiments.workflow.index');
-//        Route::get('/projects/{project}/experiments/{experiment}/entities', [ProjectExperimentTabsController::class, 'entities'])
-//             ->name('experiments.entities.index');
-//        Route::get('/projects/{project}/experiments/{experiment}/activities', [ProjectExperimentTabsController::class, 'activities'])
-//             ->name('experiments.activities.index');
-
-        Route::resource('/projects/{project}/entities', ProjectEntitiesController::class);
-
         Route::get('/projects/{project}/getRootFolder', [ProjectFoldersDatatableController::class, 'getRootFolder'])->name('get_root_folder');
         Route::get('/projects/{project}/folder/{folder}/getFolder', [ProjectFoldersDatatableController::class, 'getFolder'])->name('get_folder');
 
-        Route::resource('/projects/{project}/actions', ProjectActionsController::class);
+//        Route::resource('/projects/{project}/actions', ProjectActionsController::class);
 
         Route::resource('/projects/{project}/files', ProjectFilesController::class);
 
@@ -119,11 +109,4 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::resource('/tasks', TasksController::class);
     Route::view('/settings', 'app.settings.index')->name('settings.index');
     Route::view('/users', 'app.users.index')->name('users.index');
-
-    //    Route::resource('/labs', 'LabsController');
-    //    Route::resource('/files', 'FileController');
-    //    Route::view('/teams', 'app.teams.index')->name('teams.index');
-    //    Route::resource('/teams', 'TeamController');
-    //    Route::get('/settings', 'SettingsController@index')->name('settings.index');
-    //    Route::get('/users', 'UsersController@index')->name('users.index');
 });
