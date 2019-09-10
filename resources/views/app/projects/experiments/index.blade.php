@@ -16,7 +16,7 @@
         @endslot
 
         @slot('body')
-            <table class="table">
+            <table id="experiments" class="table" style="width:100%">
                 <thead>
                 <tr>
                     <th>Experiment</th>
@@ -54,4 +54,14 @@
             </table>
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(() => {
+                $('#experiments').DataTable({
+                    stateSave: true,
+                });
+            });
+        </script>
+    @endpush
 @stop
