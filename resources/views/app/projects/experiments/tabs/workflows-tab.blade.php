@@ -11,7 +11,7 @@
         </a>
     </div>
     <div id="workflow"></div>
-    <div id="codearea" class="col-lg-10">
+    <div id="codearea" class="col-lg-10" hidden>
         <br>
         <form method="post"
               action="{{route('projects.experiments.workflows.update', [$project->id, $experiment->id, $experiment->workflows[0]->id])}}"
