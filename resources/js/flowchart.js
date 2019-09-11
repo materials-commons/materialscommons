@@ -39,6 +39,8 @@ function drawFlowchart(id, code) {
             'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED'}
         }
     });
+
+    return chart;
 }
 
 module.exports = {

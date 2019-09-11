@@ -83,6 +83,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/experiments/experiments_web.php');
     require base_path('routes/web_routes/entities/entities_web.php');
     require base_path('routes/web_routes/activities/activities_web.php');
+    require base_path('routes/web_routes/workflows/workflows_web.php');
 
     //    Route::resource('/projects', ProjectsController::class);
     Route::get('/projects/{project}/getProjectExperiments',
