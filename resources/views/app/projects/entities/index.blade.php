@@ -45,8 +45,9 @@
                                 if (type !== 'display') {
                                     return data;
                                 }
-
-                                return `<a href="#">${data}</a>`;
+                                let r = route('projects.entities.show',
+                                    {project: "{{$project->id}}", entity: row["1"]}).url();
+                                return `<a href="${r}">${data}</a>`;
                             }
                         },
                         {name: 'id'},

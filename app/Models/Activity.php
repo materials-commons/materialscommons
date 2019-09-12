@@ -49,9 +49,14 @@ class Activity extends Model
                     ->withTimestamps();
     }
 
+//    public function entities()
+//    {
+//        return $this->hasManyThrough(Entity::class, EntityState::class);
+//    }
+
     public function entities()
     {
-        return $this->hasManyThrough(Entity::class, EntityState::class);
+        return $this->belongsToMany(Entity::class, 'activity2entity');
     }
 
     public function experiments()

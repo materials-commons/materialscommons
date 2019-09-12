@@ -1,31 +1,73 @@
-@component('components.card')
-    @slot('header')
-        File: {{$file->name}}
-        <a class="float-right action-link" href="#">
-            <i class="fas fa-edit mr-2"></i>Edit
-        </a>
+@extends('layouts.app')
 
-        <a class="float-right action-link mr-4" href="#">
-            <i class="fas fa-trash-alt mr-2"></i>Delete
-        </a>
-    @endslot
+@section('pageTitle', 'View Sample')
 
-    @slot('body')
-        <div class="ml-5">
-            <dl class="row">
-                <dt class="col-sm-2">Name</dt>
-                <dd class="col-sm-10">{{$file->name}}</dd>
-                <dt class="col-sm-2">Owner</dt>
-                <dd class="col-sm-10">{{$file->owner->name}}</dd>
-                <dt class="col-sm-2">Last Updated</dt>
-                <dd class="col-sm-10">{{$file->updated_at->diffForHumans()}}</dd>
-            </dl>
-        </div>
-        <div class="row ml-5">
-            <h5>Description</h5>
-        </div>
-        <div class="row ml-5">
-            <p>{{$file->description}}</p>
-        </div>
-    @endslot
-@endcomponent
+@section('nav')
+    @include('layouts.navs.project')
+@stop
+
+@section('content')
+    @component('components.card')
+        @slot('header')
+            Sample: {{$entity->name}}
+            <a class="float-right action-link" href="#">
+                <i class="fas fa-edit mr-2"></i>Edit
+            </a>
+
+            <a class="float-right action-link mr-4" href="#">
+                <i class="fas fa-trash-alt mr-2"></i>Delete
+            </a>
+        @endslot
+
+        @slot('body')
+            <div class="ml-5">
+                <dl class="row">
+                    <dt class="col-sm-2">Name</dt>
+                    <dd class="col-sm-10">{{$entity->name}}</dd>
+                    <dt class="col-sm-2">Owner</dt>
+                    <dd class="col-sm-10">{{$entity->owner->name}}</dd>
+                    <dt class="col-sm-2">Last Updated</dt>
+                    <dd class="col-sm-10">{{$entity->updated_at->diffForHumans()}}</dd>
+                </dl>
+            </div>
+            <div class="row ml-5">
+                <h5>Description</h5>
+            </div>
+            <div class="row ml-5">
+                <p>{{$entity->description}}</p>
+            </div>
+
+            <br>
+            @if (Request::routeIs('projects.experiments.entities*'))
+                @include('app.entities.tabs.tabs', [
+                    'showRouteName' => 'projects.experiments.entities.show',
+                    'showRoute' => route('projects.experiments.entities.show', [$project, $experiment, $entity]),
+                    'filesRouteName' => 'projects.experiments.entities.files',
+                    'filesRoute' => route('projects.experiments.entities.files', [$project, $experiment, $entity])
+                ])
+            @elseif (Request::routeIs('projects.entities*'))
+                @include('app.entities.tabs.tabs', [
+                    'showRouteName' => 'projects.entities.show',
+                    'showRoute' => route('projects.entities.show', [$project, $entity]),
+                    'filesRouteName' => 'projects.entities.files',
+                    'filesRoute' => route('projects.entities.files', [$project, $entity])
+                ])
+            @endif
+            <br>
+            @if (Request::routeIs('projects.experiments.entities*'))
+                @if (Request::routeIs('projects.experiments.entities.show*'))
+                    @include('app.entities.tabs.activities-tab')
+                @elseif (Request::routeIs('projects.experiments.entities.files*'))
+                    @include('app.entities.tabs.files-tab')
+                @endif
+            @elseif (Request::routeIs('projects.entities*'))
+                @if (Request::routeIs('projects.entities.show*'))
+                    @include('app.entities.tabs.activities-tab')
+                @elseif (Request::routeIs('projects.entities.files*'))
+                    @include('app.entities.tabs.files-tab')
+                @endif
+            @endif
+
+        @endslot
+    @endcomponent
+@endsection

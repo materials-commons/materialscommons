@@ -20,6 +20,11 @@ class Entity extends Model
         }
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function attributes()
     {
         return $this->morphMany(Attribute::class, 'attributable');
@@ -45,7 +50,13 @@ class Entity extends Model
         return $this->belongsToMany(Experiment::class, 'experiment2entity', 'entity_id', 'experiment_id');
     }
 
-//    public function files() {
-//        return $this->hasMany()
-//    }
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'entity2file', 'entity_id', 'file_id');
+    }
+
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity2entity', 'entity_id', 'activity_id');
+    }
 }

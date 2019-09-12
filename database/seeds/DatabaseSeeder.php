@@ -5,6 +5,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Dataset;
 use App\Models\Entity;
+use App\Models\EntityState;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Lab;
@@ -46,7 +47,7 @@ class DatabaseSeeder extends Seeder
             'default_lab' => true,
         ]);
 
-        $experiments = factory(Experiment::class, 20)->create([
+        $experiments = factory(Experiment::class, 5)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
@@ -108,18 +109,25 @@ class DatabaseSeeder extends Seeder
             'owner_id'     => $user->id,
         ]);
 
-        factory(Entity::class, 20)->create([
+        factory(Entity::class, 2)->create([
             'project_id' => $p->id,
             'owner_id'   => $user->id,
         ]);
 
-        for ($x = 0; $x < 1; $x++) {
-            factory(File::class, 15)->create([
-                'project_id'   => $p->id,
-                'directory_id' => $d2->id,
-                'owner_id'     => $user->id,
-            ]);
-        }
+        $files = factory(File::class, 5)->create([
+            'project_id'   => $p->id,
+            'directory_id' => $d2->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $entityState = factory(EntityState::class)->create([
+            'entity_id' => $entity->id,
+        ]);
+
+        $entityState->files()->attach($files[0]);
+
+        $entity->files()->attach($files[0]);
+        $activity->entities()->attach($entity);
 
         $lab->projects()->sync($projects);
         $user->labs()->sync($lab);

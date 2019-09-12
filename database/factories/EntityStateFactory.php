@@ -2,6 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
+use App\Models\Entity;
 use App\Models\EntityState;
 use Faker\Generator as Faker;
 
@@ -12,6 +13,9 @@ $factory->define(EntityState::class, function (Faker $faker) {
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;
+        },
+        'entity_id'   => function () {
+            return factory(Entity::class)->create()->id;
         },
     ];
 });

@@ -26,6 +26,11 @@ class File extends Model
         return $this->belongsToMany(Activity::class, 'activity2file')->withTimestamps();
     }
 
+    public function entities()
+    {
+        return $this->belongsToMany(Entity::class, 'entity2file');
+    }
+
     public function previousVersions()
     {
         File::where('directory_id', $this->directory_id)->where('name', $this->name);
