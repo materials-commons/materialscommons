@@ -6,6 +6,8 @@
     @include('layouts.navs.project')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.experiments.show', $project, $experiment))
+
 @section('content')
     <div class="container">
         <div class="row">

@@ -6,6 +6,8 @@
     @include('layouts.navs.app')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.index'))
+
 @section('content')
     @component('components.card')
         @slot('header')

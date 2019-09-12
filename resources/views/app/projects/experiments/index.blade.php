@@ -6,10 +6,12 @@
     @include('layouts.navs.project')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.experiments.index', $project))
+
 @section('content')
     @component('components.card')
         @slot('header')
-            {{$project->name}} Experiments
+            Experiments for {{$project->name}}
             <a class="action-link float-right" href="{{route('projects.experiments.create', ['project' => $project->id])}}">
                 <i class="fas fa-plus mr-2"></i>Create Experiment
             </a>

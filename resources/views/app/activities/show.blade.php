@@ -6,6 +6,12 @@
     @include('layouts.navs.project')
 @stop
 
+@if (Request::routeIs('projects.experiments*'))
+    @section('breadcrumbs', Breadcrumbs::render('projects.experiments.activities.show', $project, $experiment, $activity))
+@else
+    @section('breadcrumbs', Breadcrumbs::render('projects.activities.show', $project, $activity))
+@endif
+
 @section('content')
     @component('components.card')
         @slot('header')
