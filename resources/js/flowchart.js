@@ -14,7 +14,7 @@ function drawFlowchart(id, code) {
         'font-color': 'black',
         'line-color': 'black',
         'element-color': 'black',
-        'fill': 'white',
+        'fill': 'yellow',
         'yes-text': 'yes',
         'no-text': 'no',
         'arrow-end': 'block',

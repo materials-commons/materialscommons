@@ -3,7 +3,7 @@
         <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
             <i class="fas fa-fw fa-plus"></i>
         </a>
-        <a href="#" onclick="toggleCodearea()" class="action-link">
+        <a href="#" onclick="toggleCodeArea()" class="action-link">
             <i class="fas fa-fw fa-edit"></i>
         </a>
         <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
@@ -32,7 +32,7 @@
                 <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>
                 <button class="btn btn-success">Save
                 </button>
-                <button type="button" onclick="" class="btn btn-warning">Cancel</button>
+                <button type="button" onclick="resetAndClose()" class="btn btn-warning">Cancel</button>
             </div>
         </form>
     </div>
@@ -40,12 +40,13 @@
 
 @push('scripts')
     <script>
-        let chart;
+        let chart, savedCode;
         $(document).ready(() => {
             let count = {!! $experiment->workflows()->count() !!};
             if (count !== 0) {
                 drawWorkflow();
             }
+            savedCode = document.getElementById('code').value;
         });
 
         function drawWorkflow() {
@@ -56,13 +57,19 @@
             chart = mcfl.drawFlowchart('workflow', code);
         }
 
-        function toggleCodearea() {
+        function toggleCodeArea() {
             let el = document.getElementById('codearea');
             if (el.getAttribute('hidden') !== null) {
                 el.removeAttribute('hidden');
             } else {
                 el.setAttribute('hidden', '');
             }
+        }
+
+        function resetAndClose() {
+            document.getElementById('code').value = savedCode;
+            drawWorkflow();
+            toggleCodeArea();
         }
     </script>
 @endpush
