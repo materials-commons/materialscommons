@@ -14,7 +14,7 @@
 
         @slot('body')
 
-            <table id="users" class="table" style="width:100%">
+            <table id="users" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Name</th>

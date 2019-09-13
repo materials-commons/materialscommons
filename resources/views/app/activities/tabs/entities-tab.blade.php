@@ -1,4 +1,4 @@
-<table id="entities" class="table" style="width:100%">
+<table id="entities" class="table table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Process</th>

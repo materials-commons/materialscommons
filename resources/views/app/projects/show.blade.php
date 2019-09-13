@@ -61,7 +61,7 @@
 
         @slot('body')
 
-            <table id="experiments" class="table" style="width:100%">
+            <table id="experiments" class="table table-hover" style="width:100%">
                 <thead>
                 <th>Name</th>
                 <th>ID</th>

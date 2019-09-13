@@ -3,7 +3,7 @@
     <i class="fas fa-plus mr-2"></i>Create Process
 </a>
 
-<table id="activities" class="table" width="100%">
+<table id="activities" class="table table-hover" width="100%">
     <thead>
     <th>Name</th>
     <th>ID</th>

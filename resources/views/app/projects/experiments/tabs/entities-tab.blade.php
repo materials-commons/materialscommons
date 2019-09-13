@@ -3,7 +3,7 @@
     <i class="fas fa-plus mr-2"></i>Create Sample
 </a>
 
-<table id="entities" class="table" style="width:100%">
+<table id="entities" class="table table-hover" style="width:100%">
     <thead>
     <th>Name</th>
     <th>ID</th>
