@@ -8,7 +8,7 @@ use App\Models\Experiment;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
-class ShowActivityWebController extends Controller
+class ShowActivityEntitiesWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
@@ -16,7 +16,7 @@ class ShowActivityWebController extends Controller
         $experiment   = null;
 
         $activityId = $request->route('activity');
-        $activity   = Activity::with('attributes.values')->where('id', $activityId)->first();
+        $activity   = Activity::with('entities')->where('id', $activityId)->first();
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);

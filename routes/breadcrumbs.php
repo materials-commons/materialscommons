@@ -24,13 +24,13 @@ Breadcrumbs::for('projects.experiments.show', function ($trail, $project, $exper
 Breadcrumbs::for('projects.experiments.activities.show', function ($trail, $project, $experiment, $activity) {
     $trail->parent('projects.experiments.index', $project, $experiment);
     $trail->push('Process: '.$activity->name,
-        route('project.experiments.activities.show', [$project, $experiment, $activity]));
+        route('projects.experiments.activities.show', [$project, $experiment, $activity]));
 });
 
 Breadcrumbs::for('projects.experiments.entities.show', function ($trail, $project, $experiment, $entity) {
     $trail->parent('projects.experiments.index', $project, $experiment);
     $trail->push('Sample: '.$entity->name,
-        route('project.experiments.entities.show', [$project, $experiment, $entity]));
+        route('projects.experiments.entities.show', [$project, $experiment, $entity]));
 });
 
 Breadcrumbs::for('projects.activities.index', function ($trail, $project) {

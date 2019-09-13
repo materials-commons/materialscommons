@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'View Sample')
+@section('pageTitle', 'View Process')
 
 @section('nav')
     @include('layouts.navs.project')
@@ -15,7 +15,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Sample: {{$activity->name}}
+            Process: {{$activity->name}}
             <a class="float-right action-link" href="#">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
@@ -48,6 +48,8 @@
                 @include('app.activities.tabs.tabs', [
                     'showRouteName' => 'projects.experiments.activities.show',
                     'showRoute' => route('projects.experiments.activities.show', [$project, $experiment, $activity]),
+                    'entitiesRouteName' => 'projects.experiments.activities.entities',
+                    'entitiesRoute' => route('projects.experiments.activities.entities', [$project, $experiment, $activity]),
                     'filesRouteName' => 'projects.experiments.activities.files',
                     'filesRoute' => route('projects.experiments.activities.files', [$project, $experiment, $activity])
                 ])
@@ -55,6 +57,8 @@
                 @include('app.activities.tabs.tabs', [
                     'showRouteName' => 'projects.activities.show',
                     'showRoute' => route('projects.activities.show', [$project, $activity]),
+                    'entitiesRouteName' => 'projects.activities.entities',
+                    'entitiesRoute' => route('projects.activities.entities', [$project, $activity]),
                     'filesRouteName' => 'projects.activities.files',
                     'filesRoute' => route('projects.activities.files', [$project, $activity])
                 ])
@@ -62,12 +66,16 @@
             <br>
             @if (Request::routeIs('projects.experiments.activities*'))
                 @if (Request::routeIs('projects.experiments.activities.show*'))
+                    @include('app.activities.tabs.attributes-tab')
+                @elseif (Request::routeIs('projects.experiments.activities.entities'))
                     @include('app.activities.tabs.entities-tab')
                 @elseif (Request::routeIs('projects.experiments.activities.files*'))
                     @include('app.activities.tabs.files-tab')
                 @endif
             @elseif (Request::routeIs('projects.activities*'))
                 @if (Request::routeIs('projects.activities.show*'))
+                    @include('app.activities.tabs.attributes-tab')
+                @elseif (Request::routeIs('projects.activities.entities'))
                     @include('app.activities.tabs.entities-tab')
                 @elseif (Request::routeIs('projects.activities.files*'))
                     @include('app.activities.tabs.files-tab')

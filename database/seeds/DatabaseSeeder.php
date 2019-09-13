@@ -72,6 +72,14 @@ class DatabaseSeeder extends Seeder
         factory(AttributeValue::class)->create([
             'attribute_id' => $attribute->id,
         ]);
+        factory(AttributeValue::class)->create([
+            'attribute_id' => $attribute->id,
+            'val'          => ['value' => ['gradient' => 4, 'slope' => 5]],
+        ]);
+        factory(AttributeValue::class)->create([
+            'attribute_id' => $attribute->id,
+            'val'          => ['value' => ['temperature' => 5, 'time' => 6]],
+        ]);
 
         $entity = factory(Entity::class)->create([
             'owner_id'   => $user->id,
