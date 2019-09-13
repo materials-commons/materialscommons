@@ -18,7 +18,7 @@ class Dataset extends Model
 
     public function workflows()
     {
-        return $this->belongsToMany(Workflow::class, 'dataset2workflow', 'dataset_id', 'workflow_id');
+        return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
     public function entities()

@@ -23,7 +23,7 @@ class Experiment extends Model
 
     public function workflows()
     {
-        return $this->belongsToMany(Workflow::class, 'experiment2workflow', 'experiment_id', 'workflow_id');
+        return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
     public function entities()

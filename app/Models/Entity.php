@@ -59,4 +59,9 @@ class Entity extends Model
     {
         return $this->belongsToMany(Activity::class, 'activity2entity', 'entity_id', 'activity_id');
     }
+
+    public function workflows()
+    {
+        return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
+    }
 }

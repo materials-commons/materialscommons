@@ -64,6 +64,8 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
+        $activity->workflows()->attach($workflow);
+
         $attribute = factory(Attribute::class)->create([
             'attributable_id'   => $activity->id,
             'attributable_type' => Activity::class,
@@ -85,6 +87,8 @@ class DatabaseSeeder extends Seeder
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+
+        $entity->workflows()->attach($workflow);
 
         // Attach to all experiments
         foreach ($experiments as $exp) {

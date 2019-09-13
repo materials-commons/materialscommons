@@ -18,16 +18,26 @@ class Workflow extends Model
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project2workflow', 'workflow_id', 'project_id');
+        return $this->morphedByMany(Project::class, 'item', 'item2workflow');
     }
 
     public function experiments()
     {
-        return $this->belongsToMany(Experiment::class, 'experiment2workflow', 'workflow_id', 'experiment_id');
+        return $this->morphedByMany(Experiment::class, 'item', 'item2workflow');
     }
 
     public function datasets()
     {
-        return $this->belongsToMany(Dataset::class, 'dataset2workflow', 'workflow_id', 'dataset_id');
+        return $this->morphedByMany(Dataset::class, 'item', 'item2workflow');
+    }
+
+    public function activities()
+    {
+        return $this->morphedByMany(Activity::class, 'item', 'item2workflow');
+    }
+
+    public function entities()
+    {
+        return $this->morphedByMany(Entity::class, 'item', 'item2workflow');
     }
 }
