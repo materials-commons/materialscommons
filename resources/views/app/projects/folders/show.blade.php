@@ -10,6 +10,10 @@
     @component('components.card')
         @slot('header')
             {{$directory->path}}
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.edit', $project->id)}}">
+                <i class="fas fa-plus mr-2"></i>Add Files
+            </a>
         @endslot
 
         @slot('body')
