@@ -19,7 +19,8 @@ class ProjectFoldersController extends Controller
     public function index(Project $project)
     {
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
-        return view('app.projects.folders.index', compact('directory', 'project'));
+
+        return view('app.projects.folders.show', compact('directory', 'project'));
     }
 
     /**
@@ -52,10 +53,8 @@ class ProjectFoldersController extends Controller
      */
     public function show($projectId, $folderId)
     {
-//        error_log("I am here", $projectId, $folderId);
         $dir = File::where('project_id', $projectId)->where('id', $folderId)->first();
         $project = Project::find($projectId);
-//        error_log(print_r($dir));
         return view('app.projects.folders.show', ['project' => $project, 'directory' => $dir]);
     }
 

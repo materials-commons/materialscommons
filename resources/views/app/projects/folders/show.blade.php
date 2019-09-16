@@ -9,7 +9,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            {{$directory->path}}
+            @if (Request::routeIs('project.folders.index'))
+                {{$directory->name}}
+            @else
+                {{$directory->path}}
+            @endif
             <a class="float-right action-link mr-4"
                href="{{route('projects.edit', $project->id)}}">
                 <i class="fas fa-plus mr-2"></i>Add Files
@@ -33,12 +37,18 @@
     @push('scripts')
         <script>
             $(document).ready(function () {
+                let ajaxRoute;
+                @if (Request::routeIs('projects.folder.index'))
+                    ajaxRoute = "{{route('projects.get_root_folder', [$project->id])}}";
+                @else
+                    ajaxRoute = "{{route('projects.get_folder', [$project->id, $directory->id])}}";
+                @endif
                 $('#files').DataTable({
                     serverSide: true,
                     processing: true,
                     response: true,
                     stateSave: true,
-                    ajax: "{{route('projects.get_folder', [$project->id, $directory->id])}}",
+                    ajax: ajaxRoute,
                     columns: [
                         {
                             name: 'name',
