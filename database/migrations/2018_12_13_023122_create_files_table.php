@@ -28,6 +28,8 @@ class CreateFilesTable extends Migration
             $table->string('mime_type');
             $table->string('media_type_description')->default("unknown");
 
+            $table->string('disk')->nullable()->default('local');
+
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                   ->references('id')
