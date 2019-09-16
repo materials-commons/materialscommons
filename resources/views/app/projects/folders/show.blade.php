@@ -14,9 +14,14 @@
             @else
                 {{$directory->path}}
             @endif
-            <a class="float-right action-link mr-4"
+            <a class="float-right action-link"
                href="{{route('projects.edit', $project->id)}}">
                 <i class="fas fa-plus mr-2"></i>Add Files
+            </a>
+
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.edit', $project->id)}}">
+                <i class="fas fa-plus mr-2"></i>Create Directory
             </a>
         @endslot
 
