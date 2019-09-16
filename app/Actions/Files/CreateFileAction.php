@@ -9,7 +9,7 @@ class CreateFileAction
 {
     use SaveFile;
 
-    public function __invoke($projectId, $directoryId, $file)
+    public function __invoke($projectId, $directoryId, $description, $file)
     {
         $fileEntry = new File([
             'uuid'         => Uuid::uuid4()->toString(),
@@ -19,6 +19,7 @@ class CreateFileAction
             'name'         => $file->getClientOriginalName(),
             'owner_id'     => auth()->id(),
             'current'      => true,
+            'description'  => $description,
             'project_id'   => $projectId,
             'directory_id' => $directoryId,
         ]);

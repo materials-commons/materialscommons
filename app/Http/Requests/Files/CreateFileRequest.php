@@ -30,6 +30,7 @@ class CreateFileRequest extends FormRequest
             'file'         => 'required|file',
             'directory_id' => 'required|integer',
             'project_id'   => 'required|integer',
+            'description'  => 'nullable|string|max:2048',
         ];
     }
 
