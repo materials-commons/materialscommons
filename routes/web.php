@@ -73,18 +73,18 @@ Route::prefix('public')->group(function () {
         Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
         Route::view('/community', 'public.community.index')->name('community.index');
 
-        require base_path('routes/web_routes/published/datasets/datasets_web.php');
+        require base_path('routes/web_routes/published_datasets_web.php');
     });
 });
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
-    require base_path('routes/web_routes/projects/projects_web.php');
-    require base_path('routes/web_routes/experiments/experiments_web.php');
-    require base_path('routes/web_routes/entities/entities_web.php');
-    require base_path('routes/web_routes/activities/activities_web.php');
-    require base_path('routes/web_routes/workflows/workflows_web.php');
-    require base_path('routes/web_routes/files/files_web.php');
+    require base_path('routes/web_routes/projects_web.php');
+    require base_path('routes/web_routes/experiments_web.php');
+    require base_path('routes/web_routes/entities_web.php');
+    require base_path('routes/web_routes/activities_web.php');
+    require base_path('routes/web_routes/workflows_web.php');
+    require base_path('routes/web_routes/files_web.php');
 
     //    Route::resource('/projects', ProjectsController::class);
     Route::get('/projects/{project}/getProjectExperiments',
