@@ -18,9 +18,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
 use App\Http\Controllers\Web2\Projects\Folders\ProjectFilesController;
-use App\Http\Controllers\Web2\Projects\Folders\ProjectFileUploadController;
-use App\Http\Controllers\Web2\Projects\Folders\ProjectFoldersController;
-use App\Http\Controllers\Web2\Projects\Folders\ProjectFoldersDatatableController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
 use App\Http\Controllers\Web2\Projects\Users\ProjectUsersController;
@@ -61,7 +58,8 @@ Route::get('/home2', function () {
 //Route::view('/public', 'public.index')->name('public.index');
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
-Route::get('/getAllPublishedDatasets', [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
+Route::get('/getAllPublishedDatasets',
+    [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
 
 Route::prefix('public')->group(function () {
     Route::name('public.')->group(function () {
@@ -78,34 +76,37 @@ Route::prefix('public')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
-    Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
     require base_path('routes/web_routes/projects_web.php');
     require base_path('routes/web_routes/experiments_web.php');
     require base_path('routes/web_routes/entities_web.php');
     require base_path('routes/web_routes/activities_web.php');
     require base_path('routes/web_routes/workflows_web.php');
     require base_path('routes/web_routes/files_web.php');
+    require base_path('routes/web_routes/folders_web.php');
 
-    //    Route::resource('/projects', ProjectsController::class);
+    Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
+
     Route::get('/projects/{project}/getProjectExperiments',
         [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
-    Route::name('projects.')->group(function () {
-        Route::get('/projects/{project}/getRootFolder', [ProjectFoldersDatatableController::class, 'getRootFolder'])->name('get_root_folder');
-        Route::get('/projects/{project}/folder/{folder}/getFolder', [ProjectFoldersDatatableController::class, 'getFolder'])->name('get_folder');
 
-//        Route::resource('/projects/{project}/actions', ProjectActionsController::class);
+    Route::name('projects.')->group(function () {
+
 
         Route::resource('/projects/{project}/files', ProjectFilesController::class);
 
         Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
 
-        Route::resource('/projects/{project}/folders', ProjectFoldersController::class);
-
-        Route::Post('/projects/{project}/upload', [ProjectFileUploadController::class, 'store']);
+//        Route::resource('/projects/{project}/folders', ProjectFoldersController::class);
 
         Route::get('/projects/{project}/users', [ProjectUsersController::class, 'index'])->name('users.index');
 
         Route::get('/projects/{project}/settings', [ProjectSettingsController::class, 'index'])->name('settings.index');
+
+        // Route::resource('/projects', ProjectsController::class);
+        // Route::get('/projects/{project}/getRootFolder', [ProjectFoldersDatatableController::class, 'getRootFolder'])->name('get_root_folder');
+        // Route::get('/projects/{project}/folder/{folder}/getFolder', [ProjectFoldersDatatableController::class, 'getFolder'])->name('get_folder');
+        // Route::resource('/projects/{project}/actions', ProjectActionsController::class);
+        // Route::Post('/projects/{project}/upload', [ProjectFileUploadController::class, 'store']);
     });
 
     Route::resource('/tasks', TasksController::class);
