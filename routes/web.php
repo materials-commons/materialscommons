@@ -17,7 +17,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
-use App\Http\Controllers\Web2\Projects\Folders\ProjectFilesController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
 use App\Http\Controllers\Web2\Projects\Users\ProjectUsersController;
@@ -92,11 +91,9 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::name('projects.')->group(function () {
 
 
-        Route::resource('/projects/{project}/files', ProjectFilesController::class);
+
 
         Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
-
-//        Route::resource('/projects/{project}/folders', ProjectFoldersController::class);
 
         Route::get('/projects/{project}/users', [ProjectUsersController::class, 'index'])->name('users.index');
 
@@ -107,6 +104,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
         // Route::get('/projects/{project}/folder/{folder}/getFolder', [ProjectFoldersDatatableController::class, 'getFolder'])->name('get_folder');
         // Route::resource('/projects/{project}/actions', ProjectActionsController::class);
         // Route::Post('/projects/{project}/upload', [ProjectFileUploadController::class, 'store']);
+        // Route::resource('/projects/{project}/folders', ProjectFoldersController::class);
+        // Route::resource('/projects/{project}/files', ProjectFilesController::class);
     });
 
     Route::resource('/tasks', TasksController::class);
