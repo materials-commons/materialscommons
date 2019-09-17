@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -15,6 +14,14 @@ require('bootstrap-select');
 window.moment = require('moment');
 window.mcfl = require('./flowchart.js');
 window.formatters = require('./formatters');
+
+window.Uppy = require('@uppy/core');
+window.UppyXHRUpload = require('@uppy/xhr-upload');
+window.UppyDashboard = require('@uppy/dashboard');
+
+// Uppy styles for dashboard
+require('@uppy/core/dist/style.css');
+require('@uppy/dashboard/dist/style.css');
 
 
 /**

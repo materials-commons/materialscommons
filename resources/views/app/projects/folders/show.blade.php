@@ -15,7 +15,7 @@
                 {{$directory->path}}
             @endif
             <a class="float-right action-link"
-               href="{{route('projects.edit', $project->id)}}">
+               href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
                 <i class="fas fa-plus mr-2"></i>Add Files
             </a>
 
