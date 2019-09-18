@@ -16,6 +16,11 @@ class File extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function entityStates()
     {
         return $this->belongsToMany(EntityState::class, 'entity_state2file')->withTimestamps();
