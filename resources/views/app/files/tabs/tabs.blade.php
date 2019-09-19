@@ -18,12 +18,12 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName($attributesRouteName)}}"
-           href="{{$attributesRoute}}">
-            Attributes
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName($attributesRouteName)}}"--}}
+    {{--           href="{{$attributesRoute}}">--}}
+    {{--            Attributes--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($experimentsRouteName)}}"

@@ -90,13 +90,6 @@ class DatabaseSeeder extends Seeder
 
         $entity->workflows()->attach($workflow);
 
-        // Attach to all experiments
-        foreach ($experiments as $exp) {
-            $exp->workflows()->attach($workflow);
-            $exp->entities()->attach($entity);
-            $exp->activities()->attach($activity);
-        }
-
         // Attach to all datasets
         foreach ($datasets as $ds) {
             $ds->workflows()->attach($workflow);
@@ -136,10 +129,19 @@ class DatabaseSeeder extends Seeder
             'entity_id' => $entity->id,
         ]);
 
+        // Attach to all experiments
+        foreach ($experiments as $exp) {
+            $exp->workflows()->attach($workflow);
+            $exp->entities()->attach($entity);
+            $exp->activities()->attach($activity);
+            $exp->files()->attach($files[0]);
+        }
+
         $entityState->files()->attach($files[0]);
 
         $entity->files()->attach($files[0]);
         $activity->entities()->attach($entity);
+        $activity->files()->attach($files[0]);
 
         $lab->projects()->sync($projects);
         $user->labs()->sync($lab);

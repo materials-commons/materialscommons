@@ -1,7 +1,7 @@
 <table id="entities" class="table table-hover" style="width:100%">
     <thead>
     <tr>
-        <th>Process</th>
+        <th>Sample</th>
         <th>Description</th>
         <th>Updated</th>
     </tr>

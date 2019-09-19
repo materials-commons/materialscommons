@@ -57,13 +57,13 @@
             @if(Request::routeIs('projects.files.show'))
                 @include('app.files.tabs.display-file')
             @elseif (Request::routeIs('projects.files.entities'))
-                @include('app.files.tabs.entities')
+                @include('app.files.tabs.entities', ['object' => $file])
             @elseif (Request::routeIs('projects.files.activities'))
-                @include('app.files.tabs.activities')
+                @include('app.files.tabs.activities', ['object' => $file])
             @elseif (Request::routeIs('projects.files.attributes'))
                 @include('app.files.tabs.attributes')
             @elseif (Request::routeIs('projects.files.experiments'))
-                @include('app.files.tabs.experiments')
+                @include('app.files.tabs.experiments', ['object' => $file])
             @endif
 
         @endslot

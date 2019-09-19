@@ -11,7 +11,7 @@ class ShowFileWebController extends Controller
 {
     public function __invoke(Project $project, File $file)
     {
-        $showViewModel = new ShowFileViewModel($file, $project);
-        return view('app.files.show', $showViewModel);
+        $viewModel = new ShowFileViewModel($file, $project);
+        return view('app.files.show', $viewModel);
     }
 }

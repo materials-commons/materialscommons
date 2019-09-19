@@ -10,12 +10,12 @@
     @break
 
     @case("text")
-    <div>
+    <div class="ml-3">
         <pre>{{$fileContents}}</pre>
     </div>
     @break
 
     @default
-    <span>Unable to display files of type {{$fileExtension}}</span>
+    <span class="ml-3">Unable to display files of type {{$fileExtension}}</span>
 @endswitch
 

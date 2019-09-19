@@ -3,13 +3,24 @@
 namespace App\Http\Controllers\Web\Files;
 
 use App\Http\Controllers\Controller;
+use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
+use Illuminate\Http\Request;
 
 class ShowFileActivitiesWebController extends Controller
 {
-    public function __invoke(Project $project, File $file)
+    public function __invoke(Request $request, Project $project)
     {
-        return view('app.files.show', compact('project', 'file'));
+        $experimentId = $request->route('experiment');
+        $experiment = null;
+
+        $fileId = $request->route('file');
+        $file = File::with('activities')->where('id', $fileId)->first();
+
+        if ($experimentId !== null) {
+            $experiment = Experiment::find($experimentId);
+        }
+        return view('app.files.show', compact('project', 'file', 'experiment'));
     }
 }

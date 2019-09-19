@@ -35,4 +35,9 @@ class Experiment extends Model
     {
         return $this->belongsToMany(Activity::class, 'experiment2activity', 'experiment_id', 'activity_id');
     }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'experiment2file', 'experiment_id', 'file_id');
+    }
 }

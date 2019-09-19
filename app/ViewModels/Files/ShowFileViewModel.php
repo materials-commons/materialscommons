@@ -4,6 +4,7 @@ namespace App\ViewModels\Files;
 
 use App\Models\File;
 use App\Models\Project;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ViewModels\ViewModel;
 
@@ -82,9 +83,18 @@ class ShowFileViewModel extends ViewModel
 
     public function fileContents()
     {
-        $entries = explode('-', $this->file->uuid);
+        $uuid = $this->file->uuid;
+        if ($this->file->uses_uuid !== null) {
+            $uuid = $this->file->uses_uuid;
+        }
+
+        $entries = explode('-', $uuid);
         $entry1  = $entries[1];
-        return Storage::disk('local')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$this->file->uuid}");
+        try {
+            return Storage::disk('local')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
+        } catch (FileNotFoundException $e) {
+            return 'No file';
+        }
     }
 
     public function fileExtension()
