@@ -23,7 +23,6 @@
     "spatie/laravel-query-builder": "^2.0",
     "spatie/laravel-tags": "^2.4",
     "spatie/laravel-view-models": "^1.1",
-    "thomaswelton/laravel-gravatar": "^1.1",
     "tightenco/ziggy": "^0.8",
     "waavi/sanitizer": "~1.0"
   },
