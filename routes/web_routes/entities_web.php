@@ -1,10 +1,12 @@
 <?php
 
+use App\Exports\EntitiesExport;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityWebController;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/projects/{project}/entities', IndexEntitiesWebController::class)
      ->name('projects.entities.index');
@@ -20,5 +22,9 @@ Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}', Sho
      ->name('projects.experiments.entities.show');
 Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.experiments.entities.files');
+
+Route::get('/projects/{project}/export-entities', function ($projectId) {
+    return Excel::download(new EntitiesExport($projectId), 'entities.xlsx');
+})->name('projects.entities-export');
 
 
