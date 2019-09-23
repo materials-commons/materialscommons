@@ -8,8 +8,12 @@ class CreateEntityAction
 {
     public function __invoke($data)
     {
-        $data['owner_id'] = auth()->id();
-        $entity = Entity::create($data);
-        return $entity;
+        $entitiesData = collect($data)->except('experiment_id').toArray();
+        $entitiesData['owner_id'] = auth()->id();
+        $entity = Entity::create($entitiesData);
+        if (array_key_exists('experiment_id', $data)) {
+            $entity->experiments()->attach($data['experiment_id']);
+        }
+        return $entity->fresh();
     }
 }

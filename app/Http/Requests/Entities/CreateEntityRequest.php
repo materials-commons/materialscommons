@@ -27,9 +27,10 @@ class CreateEntityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string|max:80',
-            'description' => 'string|max:2048',
-            'project_id'  => 'required|integer',
+            'name'          => 'required|string|max:80',
+            'description'   => 'string|max:2048',
+            'project_id'    => 'required|integer',
+            'experiment_id' => 'integer',
         ];
     }
 
