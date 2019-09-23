@@ -24,6 +24,6 @@ class CreateExperimentApiController extends Controller
         $validated = $request->validated();
         $experiment = $createExperimentAction($validated);
 
-        return new ExperimentResource($experiment);
+        return (new ExperimentResource($experiment))->response()->setStatusCode(201);
     }
 }

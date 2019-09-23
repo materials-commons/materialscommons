@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Experiments;
+namespace App\Http\Requests\Etl;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateExperimentRequest extends FormRequest
+class GetFileByPathRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class CreateExperimentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string|max:80',
-            'description' => 'nullable|string|max:2048',
-            'project_id'  => 'required|integer',
-            'loading'     => 'boolean',
+            'project_id' => 'required',
+            'path'       => 'required|string|max:2048',
         ];
     }
 }

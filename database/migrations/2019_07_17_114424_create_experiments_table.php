@@ -33,6 +33,8 @@ class CreateExperimentsTable extends Migration
                   ->on('users')
                   ->onDelete('cascade');
 
+            $table->boolean('loading')->default(false);
+
             $table->tinyInteger('status')->unsigned()
                   ->default(ExperimentStatus::InProgress);
 

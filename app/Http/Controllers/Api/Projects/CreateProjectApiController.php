@@ -29,6 +29,6 @@ class CreateProjectApiController extends Controller
     {
         $validated = $request->validated();
         $project = $createProjectAction($validated);
-        return new ProjectResource($project);
+        return (new ProjectResource($project))->response()->setStatusCode(201);
     }
 }

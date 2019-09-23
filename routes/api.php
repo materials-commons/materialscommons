@@ -40,22 +40,25 @@ Route::middleware('auth:api')->group(function () {
 
 Route::group(['middleware' => 'auth:api'], function() {
     // Activities
-    require base_path('routes/api_routes/activities/activities_api.php');
-    require base_path('routes/api_routes/activities/activities_files_api.php');
-    require base_path('routes/api_routes/activities/activities_attributes_api.php');
-    require base_path('routes/api_routes/activities/activities_entity_states_api.php');
+    require base_path('routes/api_routes/activities_api.php');
+    require base_path('routes/api_routes/activities_files_api.php');
+    require base_path('routes/api_routes/activities_attributes_api.php');
+    require base_path('routes/api_routes/activities_entity_states_api.php');
 
     // Entities
-    require base_path('routes/api_routes/entities/entities_api.php');
+    require base_path('routes/api_routes/entities_api.php');
 
     // Files
-    require base_path('routes/api_routes/files/files_api.php');
+    require base_path('routes/api_routes/files_api.php');
 
     // Directories
-    require base_path('routes/api_routes/directories/directories_api.php');
+    require base_path('routes/api_routes/directories_api.php');
 
     // Projects
-    require base_path('routes/api_routes/projects/projects_api.php');
+    require base_path('routes/api_routes/projects_api.php');
+
+    // ETL
+    require base_path('routes/api_routes/etl_api.php');
 });
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {

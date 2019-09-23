@@ -2,21 +2,23 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Projects;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CreateProjectApiControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
+    use RefreshDatabase;
 
-        $response->assertStatus(200);
+    /** @test */
+    public function it_should_create_a_project()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory('App\Models\User')->create();
+        $this->actingAs($user, 'api');
+        $this->json('post', '/api/projects', [
+            'name' => 'p1',
+        ])
+             ->assertStatus(201)
+             ->assertJsonFragment(['name' => 'p1']);
     }
 }
