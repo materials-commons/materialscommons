@@ -9,12 +9,13 @@ $factory->define(Experiment::class, function (Faker $faker) {
     return [
         'name'        => $faker->sentence(6, true),
         'description' => $faker->sentence,
+        'loading'     => false,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;
         },
         'uuid'        => $faker->uuid,
         'project_id'  => function () {
             return factory(App\Models\Project::class)->create()->id;
-        }
+        },
     ];
 });

@@ -16,7 +16,7 @@ class CreateFileApiControllerTest extends TestCase
     public function it_should_create_a_file_when_uploading()
     {
         $this->withoutExceptionHandling();
-        $user    = factory('App\Models\User')->create();
+        $user = factory('App\Models\User')->create();
         $project = factory('App\Models\Project')->create([
             'owner_id' => $user->id,
         ]);
@@ -41,9 +41,9 @@ class CreateFileApiControllerTest extends TestCase
                      ->assertJsonFragment(['name' => 'random.jpg'])
                      ->decodeResponseJson();
 
-        $fileUuid   = $file["data"]["uuid"];
+        $fileUuid = $file["data"]["uuid"];
         $topFileDir = $this->topDirFromUuid($fileUuid);
-        $fileDir    = $this->dirFromUuid($fileUuid);
+        $fileDir = $this->dirFromUuid($fileUuid);
 
         Storage::disk('local')->assertExists("{$fileDir}/{$fileUuid}");
         Storage::deleteDirectory($topFileDir);
@@ -65,26 +65,3 @@ class CreateFileApiControllerTest extends TestCase
         return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
     }
 }
-
-/*
- * use App\Upload;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
-
-class UploadTest extends TestCase
-{
-function upload_file_test()
-{
-    Storage::fake('public');
-
-    $this->json('post', '/upload', [
-        'file' => $file = UploadedFile::fake()->image('random.jpg')
-    ]);
-
-    $this->assertEquals('file/' . $file->hashName(), Upload::latest()->first()->file);
-
-    Storage::disk('public')->assertExists('file/' . $file->hashName());
-}
-}
- */
