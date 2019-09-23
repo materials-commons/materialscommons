@@ -57,6 +57,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Projects
     require base_path('routes/api_routes/projects_api.php');
 
+    // Experiments
+    require base_path('routes/api_routes/experiments_api.php');
+
     // ETL
     require base_path('routes/api_routes/etl_api.php');
 });
