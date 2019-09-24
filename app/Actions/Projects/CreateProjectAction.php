@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class CreateProjectAction
 {
-    /**
-     * @param $data
-     * @return Project|null
-     */
     public function __invoke($data)
     {
         $ownerId = auth()->id();

@@ -21,6 +21,6 @@ class CreateActivityApiController extends Controller
     {
         $validated = $request->validated();
         $activity = $createActivityAction($validated);
-        return new ActivityResource($activity);
+        return (new ActivityResource($activity))->response()->setStatusCode(201);
     }
 }
