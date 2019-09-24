@@ -16,19 +16,23 @@ class CreateProjectApiController extends Controller
     /**
      * CreateProject
      *
-     * Create a new project for the given user.
+     * Create a new project for the given user. If user already has a project with that name
+     * return it instead.
+     *
      * @bodyParam name string required The name of the project - must be unique for the user
      * @bodyParam description string A description of the project
      * @bodyParam is_active bool Whether this is an active project (default is true)
      *
      * @param  CreateProjectRequest  $request
      * @param  CreateProjectAction  $createProjectAction
-     * @return ProjectResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(CreateProjectRequest $request, CreateProjectAction $createProjectAction)
     {
         $validated = $request->validated();
-        $project = $createProjectAction($validated);
-        return (new ProjectResource($project))->response()->setStatusCode(201);
+        $data = $createProjectAction($validated);
+        $project = $data['project'];
+        $statusCode = $data['created'] ? 201 : 200;
+        return (new ProjectResource($project))->response()->setStatusCode($statusCode);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Projects;
 
-use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateProjectRequest extends FormRequest
@@ -25,18 +24,7 @@ class CreateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required', 'string', 'max:80',
-                function ($attribute, $value, $fail) {
-                    $count = Project::where('name', $value)
-                                    ->where('owner_id', auth()->id())
-                                    ->count();
-                    if ($count != 0) {
-                        $fail('User already has a project named '.$value);
-                    }
-                },
-            ],
-
+            'name'        => 'required|string|max:80',
             'description' => 'nullable|string|max:2048',
             'is_active'   => 'boolean',
         ];

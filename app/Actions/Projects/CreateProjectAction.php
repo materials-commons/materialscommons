@@ -14,22 +14,28 @@ class CreateProjectAction
      */
     public function __invoke($data)
     {
-        $project = new Project($data);
-        $project->owner_id = auth()->id();
+        $ownerId = auth()->id();
+        $project = Project::where('name', $data['name'])->where('owner_id', $ownerId)->first();
+        if ($project !== null) {
+            return ['project' => $project, 'created' => false];
+        }
 
-        DB::transaction(function () use ($project) {
+        $project = new Project($data);
+        $project->owner_id = $ownerId;
+
+        DB::transaction(function () use ($project, $ownerId) {
             $project->save();
             File::create([
-                'project_id' => $project->id,
-                'name' => '/',
-                'path' => '/',
-                'mime_type' => 'directory',
+                'project_id'             => $project->id,
+                'name'                   => '/',
+                'path'                   => '/',
+                'mime_type'              => 'directory',
                 'media_type_description' => 'directory',
-                'owner_id' => auth()->id(),
+                'owner_id'               => $ownerId,
             ]);
             auth()->user()->projects()->attach($project);
         });
 
-        return $project->fresh();
+        return ['project' => $project->fresh(), 'created' => true];
     }
 }
