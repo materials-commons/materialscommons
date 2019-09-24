@@ -17,7 +17,7 @@ class CreateAttributesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->unsignedInteger('attributable_id');
             $table->string('attributable_type');
