@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Etl;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AddSampleToProcessApiController extends Controller
+class AddSamplesToProcessApiController extends Controller
 {
     /**
      * Handle the incoming request.
