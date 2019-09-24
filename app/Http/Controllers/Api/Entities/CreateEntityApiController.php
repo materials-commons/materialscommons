@@ -9,17 +9,10 @@ use App\Http\Resources\Entities\EntityResource;
 
 class CreateEntityApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  CreateEntityRequest  $request
-     * @param  CreateEntityAction  $createEntityAction
-     * @return EntityResource
-     */
     public function __invoke(CreateEntityRequest $request, CreateEntityAction $createEntityAction)
     {
         $validated = $request->validated();
         $entity = $createEntityAction($validated);
-        return new EntityResource($entity);
+        return (new EntityResource($entity))->response()->setStatusCode(201);
     }
 }

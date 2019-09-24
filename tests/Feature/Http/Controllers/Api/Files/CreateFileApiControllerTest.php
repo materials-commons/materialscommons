@@ -30,6 +30,7 @@ class CreateFileApiControllerTest extends TestCase
         $user->projects()->sync($project);
 
         $this->actingAs($user, 'api');
+
         Storage::fake('public');
         $file = $this->json('post', '/api/files', [
             'file'         => UploadedFile::fake()->image('random.jpg'),

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Etl\CreateSampleApiController;
 use App\Http\Controllers\Api\Etl\GetFileByPathInProjectApiController;
 use App\Http\Controllers\Api\Etl\UpdateExperimentProgressStatusApiController;
 use App\Http\Controllers\Api\Experiments\CreateExperimentApiController;
@@ -18,3 +19,6 @@ Route::post('/etl/createExperimentInProject',
 
 Route::post('/etl/updateExperimentProgressStatus',
     UpdateExperimentProgressStatusApiController::class)->name('api.etl.updateExperimentProgressStatus');
+
+// Add a second path to create an entity that matches the expected path for the ETL api
+Route::post('/etl/createSample', CreateSampleApiController::class)->name('api.etl.createSample');
