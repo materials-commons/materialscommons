@@ -55,7 +55,7 @@ class AddSampleAndFilesToProcessApiControllerTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $entity = $this->json('post', '/api/etl/addSampleAndFilesToProcess', [
+        $this->json('post', '/api/etl/addSampleAndFilesToProcess', [
             'project_id'      => $project->id,
             'experiment_id'   => 1,
             'process_id'      => $activity->id,
@@ -64,11 +64,14 @@ class AddSampleAndFilesToProcessApiControllerTest extends TestCase
             'transform'       => true,
             'files_by_name'   => [['path' => 'p1/test.txt', 'direction' => 'in']],
         ])
-                       ->assertStatus(200)
-                       ->assertJsonFragment(['name' => 's1'])
-                       ->decodeResponseJson();
+             ->assertStatus(200)
+             ->assertJsonFragment(['name' => 's1'])
+             ->decodeResponseJson();
 
         $this->assertDatabaseHas('activity2entity', ['activity_id' => $activity->id, 'entity_id' => $e->id]);
         $this->assertDatabaseHas('activity2file', ['activity_id' => $activity->id, 'file_id' => $file->id]);
+        $this->assertDatabaseHas('activity2entity_state', ['activity_id' => $activity->id, 'direction' => 'in']);
+        $this->assertDatabaseHas('activity2entity_state', ['activity_id' => $activity->id, 'direction' => 'out']);
+        $this->assertDatabaseHas('entity2file', ['entity_id' => $e->id, 'file_id' => $file->id]);
     }
 }
