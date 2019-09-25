@@ -37,5 +37,6 @@ class CreateEntityApiControllerTest extends TestCase
 
         $this->assertDatabaseHas('experiment2entity', ['experiment_id' => $experiment->id, 'entity_id' => $entityId]);
         $this->assertDatabaseHas('entities', ['id' => $entityId, 'project_id' => $project->id]);
+        $this->assertDatabaseHas('entity_states', ['entity_id' => $entityId]);
     }
 }

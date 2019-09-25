@@ -7,6 +7,8 @@ use App\Models\Project;
 
 class GetFileByPathAction
 {
+    use ProjectNameFilePath;
+
     // Look up file by path. This controller expects the path to start with the project name. This is done
     // to retain compatibility with the old NodeJS based API.
     public function __invoke($projectId, $filePath)
@@ -20,13 +22,4 @@ class GetFileByPathAction
         return $file;
     }
 
-    /**
-     * To remain compatible with the old api paths are assumed to start with the project name. This action
-     * will remove the project name and just keep the starting slash as names are stored with a / for the
-     * the root rather than the project name.
-     */
-    private function removeProjectNameFromPath($path, $projectNameLength)
-    {
-        return substr_replace($path, '', 0, $projectNameLength);
-    }
 }

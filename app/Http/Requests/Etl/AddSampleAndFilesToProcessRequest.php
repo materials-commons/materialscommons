@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Etl;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddSampleAndFilesToProcessRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class AddSampleAndFilesToProcessRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,15 @@ class AddSampleAndFilesToProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'project_id'                => 'required',
+            'experiment_id'             => 'required',
+            'process_id'                => 'required',
+            'sample_id'                 => 'required',
+            'property_set_id'           => 'required',
+            'transform'                 => 'boolean',
+            'files_by_name'             => 'required|array',
+            'files_by_name.*.path'      => 'required|string',
+            'files_by_name.*.direction' => ['required', Rule::in(['in', 'out'])],
         ];
     }
 }

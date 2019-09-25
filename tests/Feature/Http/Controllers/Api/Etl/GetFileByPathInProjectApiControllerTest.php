@@ -35,6 +35,7 @@ class GetFileByPathInProjectApiControllerTest extends TestCase
         ]);
 
         $this->actingAs($user, 'api');
+
         $this->json('post', '/api/etl/getFileByPathInProject', [
             'project_id' => $project->id,
             'path'       => 'p1/test.txt',
