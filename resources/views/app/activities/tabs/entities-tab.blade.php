@@ -10,7 +10,7 @@
     @foreach($activity->entities as $entity)
         <tr>
             <td>
-                <a href="#">{{$entity->name}}</a>
+                <a href="{{route('projects.entities.show', [$project, $entity])}}">{{$entity->name}}</a>
             </td>
             <td>{{$entity->description}}</td>
             <td>{{$entity->updated_at->diffForHumans()}}</td>

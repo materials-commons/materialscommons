@@ -10,7 +10,7 @@
     @foreach($object->experiments as $experiment)
         <tr>
             <td>
-                <a href="#">{{$experiment->name}}</a>
+                <a href="{{route('projects.experiments.show', [$project, $experiment])}}">{{$experiment->name}}</a>
             </td>
             <td>{{$experiment->description}}</td>
             <td>{{$experiment->updated_at->diffForHumans()}}</td>

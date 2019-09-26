@@ -10,7 +10,7 @@
     @foreach($object->activities as $activity)
         <tr>
             <td>
-                <a href="#">{{$activity->name}}</a>
+                <a href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
             </td>
             <td>{{$activity->description}}</td>
             <td>{{$activity->updated_at->diffForHumans()}}</td>

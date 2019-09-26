@@ -10,7 +10,7 @@
     @foreach($entity->files as $file)
         <tr>
             <td>
-                <a href="#">{{$file->name}}</a>
+                <a href="{{route('projects.files.show', [$project->id, $file->id])}}">{{$file->name}}</a>
             </td>
             <td>{{$file->description}}</td>
             <td>{{$file->updated_at->diffForHumans()}}</td>
