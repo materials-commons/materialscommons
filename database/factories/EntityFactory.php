@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Entity::class, function (Faker $faker) {
     return [
-        'name'        => $faker->sentence(6, true),
-        'description' => $faker->sentence,
+        'name'        => "Sample {$faker->randomNumber()}",
+        'description' => "Sample description",
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;

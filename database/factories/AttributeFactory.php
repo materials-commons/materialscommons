@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Attribute::class, function (Faker $faker) {
     return [
         'name'              => $faker->sentence(6, true),
-        'description'       => $faker->sentence,
+        'description'       => "Attribute Description",
         'uuid'              => $faker->uuid,
         'attributable_id'   => function () {
             return factory(EntityState::class)->create()->id;

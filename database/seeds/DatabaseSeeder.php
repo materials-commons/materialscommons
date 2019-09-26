@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $activity = factory(Activity::class)->create([
+            'name'       => 'Heat Treatment',
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
@@ -67,6 +68,7 @@ class DatabaseSeeder extends Seeder
         $activity->workflows()->attach($workflow);
 
         $attribute = factory(Attribute::class)->create([
+            'name'              => 'Treatment',
             'attributable_id'   => $activity->id,
             'attributable_type' => Activity::class,
         ]);
@@ -76,7 +78,7 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(AttributeValue::class)->create([
             'attribute_id' => $attribute->id,
-            'val'          => ['value' => ['gradient' => 4, 'slope' => 5]],
+            'val'          => ['value' => ['temperature' => 4, 'time' => 5]],
         ]);
         factory(AttributeValue::class)->create([
             'attribute_id' => $attribute->id,
@@ -84,6 +86,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $entity = factory(Entity::class)->create([
+            'name'       => 'Sample 1',
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
