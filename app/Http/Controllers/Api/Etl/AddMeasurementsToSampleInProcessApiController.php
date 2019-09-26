@@ -8,12 +8,11 @@ use App\Http\Requests\Etl\AddMeasurementsToSampleInProcessRequest;
 
 class AddMeasurementsToSampleInProcessApiController extends Controller
 {
-    public function __invoke(
-        AddMeasurementsToSampleInProcessRequest $request,
-        AddMeasurementsToEntity $addMeasurementsToEntity
-    ) {
+    public function __invoke(AddMeasurementsToSampleInProcessRequest $request, AddMeasurementsToEntity $addMeasurementsToEntity)
+    {
         $validated = $request->validated();
         $entity = $addMeasurementsToEntity($validated);
+
         return $entity;
     }
 }
