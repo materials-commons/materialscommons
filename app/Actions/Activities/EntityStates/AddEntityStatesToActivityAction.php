@@ -14,8 +14,21 @@ class AddEntityStatesToActivityAction
             $entries->put($entityState["id"], ["direction" => $entityState["direction"]]);
         }
 
-        DB::transaction(function () use ($activity, $entityStates) {
-            $activity->entityStates()->attach($entityStates);
+        $entities = DB::table('entity_states')->select('entity_id')->distinct()
+                      ->whereIn('id', $entries->keys())
+                      ->get()
+                      ->map(
+                          function($e) {
+                              return $e->entity_id;
+                          }
+                      );
+
+        DB::transaction(function() use ($activity, $entries, $entities) {
+            $activity->entityStates()->attach($entries);
+
+            $activity->entities()->attach($entities->map(function($e) {
+                return $e->entity_id;
+            }));
         });
 
         return $activity;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Api\Activities;
+namespace Tests\Feature\Http\Controllers\Api\Activities\Files;
 
 use App\Models\Activity;
 use App\Models\File;

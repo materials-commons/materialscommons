@@ -13,7 +13,7 @@ class CreateActivity2entityTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity2entity', function (Blueprint $table) {
+        Schema::create('activity2entity', function(Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('activity_id');

@@ -18,7 +18,7 @@ class EntityActivityImportTest extends TestCase
     public function test_spreadsheet_d1_headers()
     {
         $importer = new EntityActivityImporter(1, 1, 1);
-        Excel::import($importer, "./test_data/d1_headers.xlsx");
+        Excel::import($importer, storage_path("test_data/etl/d1_headers.xlsx"));
         $headers = $importer->getHeaders()->headersByIndex;
 
         // Spreadsheet headers
@@ -78,7 +78,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, "./test_data/d1.xlsx");
+        Excel::import($importer, storage_path("test_data/etl/d1.xlsx"));
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
     }
 }
