@@ -2,6 +2,7 @@
 
 namespace App\Imports\Etl;
 
+use App\Actions\Entities\CreateEntityAction;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\BeforeSheet;
@@ -11,14 +12,20 @@ class EntityActivityImporter implements OnEachRow, WithEvents
 {
     private $projectId;
     private $experimentId;
+    private $userId;
+
     private $sawHeader = false;
     private $headerTracker;
     public $worksheet;
+    private $entityTracker;
 
-    public function __construct($projectId, $experimentId)
+    public function __construct($projectId, $experimentId, $userId)
     {
         $this->projectId = $projectId;
         $this->experimentId = $experimentId;
+        $this->userId = $userId;
+
+        $this->entityTracker = new EntityTracker();
     }
 
     public function onRow(Row $row)
@@ -57,12 +64,26 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     // Process a sample in the worksheet
     private function processSample(Row $row)
     {
+        $createEntityAction = new CreateEntityAction();
+
         $index = 0;
         $cellIterator = $row->getDelegate()->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
         foreach ($cellIterator as $cell) {
+            $value = $cell->getValue();
+            if ($value === null) {
+                continue;
+            }
+            $value = trim($value);
             if ($index === 0) {
-                // sample
+                if (!$this->entityTracker->hasEntity($value)) {
+                    $entity = $createEntityAction([
+                        'name'          => $value,
+                        'project_id'    => $this->projectId,
+                        'experiment_id' => $this->experimentId,
+                    ], $this->userId);
+                    $this->entityTracker->addEntity($entity);
+                }
             } elseif ($index === 1) {
                 // related activity
             } else {

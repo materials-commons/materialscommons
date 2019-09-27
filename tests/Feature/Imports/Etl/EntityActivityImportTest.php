@@ -3,16 +3,22 @@
 namespace Tests\Feature\Imports\Etl;
 
 use App\Imports\Etl\EntityActivityImporter;
+use App\Models\Experiment;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
 class EntityActivityImportTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function test_spreadsheet_d1_headers()
     {
-        $importer = new EntityActivityImporter(1, 1);
-        Excel::import($importer, "./test_data/d1.xlsx");
+        $importer = new EntityActivityImporter(1, 1, 1);
+        Excel::import($importer, "./test_data/d1_headers.xlsx");
         $headers = $importer->getHeaders()->headersByIndex;
 
         // Spreadsheet headers
@@ -56,5 +62,23 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("mm", $headers[7]->unit);
         $this->assertEquals("bead width", $headers[7]->name);
         $this->assertEquals("entity", $headers[7]->attrType);
+    }
+
+    /** @test */
+    public function test_simple_import_d1()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, "./test_data/d1.xlsx");
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
     }
 }

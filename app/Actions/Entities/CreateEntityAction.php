@@ -7,13 +7,13 @@ use App\Models\EntityState;
 
 class CreateEntityAction
 {
-    public function __invoke($data)
+    public function __invoke($data, $userId)
     {
         $entitiesData = collect($data)->except('experiment_id')->toArray();
-        $entitiesData['owner_id'] = auth()->id();
+        $entitiesData['owner_id'] = $userId;
         $entity = Entity::create($entitiesData);
         EntityState::create([
-            'owner_id'  => auth()->id(),
+            'owner_id'  => $userId,
             'entity_id' => $entity->id,
             'current'   => true,
         ]);

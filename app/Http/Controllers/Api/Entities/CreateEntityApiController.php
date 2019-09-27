@@ -12,7 +12,7 @@ class CreateEntityApiController extends Controller
     public function __invoke(CreateEntityRequest $request, CreateEntityAction $createEntityAction)
     {
         $validated = $request->validated();
-        $entity = $createEntityAction($validated);
+        $entity = $createEntityAction($validated, auth()->id());
         return (new EntityResource($entity))->response()->setStatusCode(201);
     }
 }
