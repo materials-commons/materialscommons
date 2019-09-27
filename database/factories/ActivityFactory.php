@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Activity::class, function (Faker $faker) {
     return [
-        'name'        => "Process {$faker->randonNumber()}",
+        'name'        => "Process {$faker->randomNumber()}",
         'description' => "Process Description",
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
