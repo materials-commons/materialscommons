@@ -99,4 +99,35 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('attributes',
             ['name' => 'stress relief time', 'attributable_type' => Activity::class]);
     }
+
+    /** @test */
+    public function test_simple_import_of_2_entities()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, storage_path("test_data/etl/double.xlsx"));
+        // Check entities and entity attributes
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES5']);
+        $this->assertEquals(8, Attribute::where('attributable_type', EntityState::class)->count());
+
+        // Check activity and activity attributes
+        $this->assertDatabaseHas('activities', ['name' => 'sem']);
+        $this->assertEquals(2, Activity::count());
+        $this->assertEquals(5, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'stress relief temperature', 'attributable_type' => Activity::class]);
+        $stressReliefAttr = Attribute::where('name', 'stress relief temperature')->first();
+        $this->assertDatabaseHas('attribute_values',
+            ['attribute_id' => $stressReliefAttr->id, 'val' => '{"value":2}', 'unit' => "°C"]);
+    }
 }
