@@ -81,49 +81,54 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         $this->rows->push($rowTracker);
         $this->rows->each(function(RowTracker $val) use ($createEntityAction) {
             if (!$this->entityTracker->hasEntity($val->entityName)) {
-                $entity = $createEntityAction([
-                    'name'          => $val->entityName,
-                    'project_id'    => $this->projectId,
-                    'experiment_id' => $this->experimentId,
-                ], $this->userId);
-                $this->entityTracker->addEntity($entity);
-                $state = $entity->entityStates()->first();
-                $seenAttributes = collect();
-                $val->entityAttributes->each(function($attr) use ($state, $seenAttributes, $entity) {
-                    if ($seenAttributes->has($attr->name)) {
-                        $a = $seenAttributes->get($attr->name);
-                        AttributeValue::create([
-                            'attribute_id' => $a->id,
-                            'unit'         => $attr->unit,
-                            'val'          => ['value' => $attr->value],
-                        ]);
-                    } else {
-                        $a = Attribute::create([
-                            'name'              => $attr->name,
-                            'attributable_id'   => $state->id,
-                            'attributable_type' => EntityState::class,
-                        ]);
-                        AttributeValue::create([
-                            'attribute_id' => $a->id,
-                            'unit'         => $attr->unit,
-                            'val'          => ['value' => $attr->value],
-                        ]);
-                        $seenAttributes->put($attr->name, $a);
-                    }
-                });
-
-                $activity = $this->activityTracker->getActivity($val->activityAttributesHash);
-                if ($activity === null) {
-                    // Add a new activity
-                    $activity = $this->addNewActivity($entity, $state, $val);
-                    $this->activityTracker->addActivity($val->activityAttributesHash, $activity);
-                } else {
-                    // What needs to be done here?
-                    // $activity->entities()->attach($entity);
-                    // $activity->entityStates()->attach($entity);
-                }
+                $this->addNewEntity($val, $createEntityAction);
             }
         });
+    }
+
+    private function addNewEntity(RowTracker $row, CreateEntityAction $createEntityAction)
+    {
+        $entity = $createEntityAction([
+            'name'          => $row->entityName,
+            'project_id'    => $this->projectId,
+            'experiment_id' => $this->experimentId,
+        ], $this->userId);
+        $this->entityTracker->addEntity($entity);
+        $state = $entity->entityStates()->first();
+        $seenAttributes = collect();
+        $row->entityAttributes->each(function($attr) use ($state, $seenAttributes, $entity) {
+            if ($seenAttributes->has($attr->name)) {
+                $a = $seenAttributes->get($attr->name);
+                AttributeValue::create([
+                    'attribute_id' => $a->id,
+                    'unit'         => $attr->unit,
+                    'val'          => ['value' => $attr->value],
+                ]);
+            } else {
+                $a = Attribute::create([
+                    'name'              => $attr->name,
+                    'attributable_id'   => $state->id,
+                    'attributable_type' => EntityState::class,
+                ]);
+                AttributeValue::create([
+                    'attribute_id' => $a->id,
+                    'unit'         => $attr->unit,
+                    'val'          => ['value' => $attr->value],
+                ]);
+                $seenAttributes->put($attr->name, $a);
+            }
+        });
+
+        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
+        if ($activity === null) {
+            // Add a new activity
+            $activity = $this->addNewActivity($entity, $state, $row);
+            $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
+        } else {
+            // What needs to be done here?
+            // $activity->entities()->attach($entity);
+            // $activity->entityStates()->attach($entity);
+        }
     }
 
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)
