@@ -15,4 +15,9 @@ class HeaderTracker
     {
         array_push($this->headersByIndex, $header);
     }
+
+    public function getHeaderByIndex($index)
+    {
+        return $this->headersByIndex[$index];
+    }
 }

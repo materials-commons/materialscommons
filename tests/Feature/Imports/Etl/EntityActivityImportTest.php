@@ -3,6 +3,9 @@
 namespace Tests\Feature\Imports\Etl;
 
 use App\Imports\Etl\EntityActivityImporter;
+use App\Models\Activity;
+use App\Models\Attribute;
+use App\Models\EntityState;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\User;
@@ -79,6 +82,21 @@ class EntityActivityImportTest extends TestCase
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
         Excel::import($importer, storage_path("test_data/etl/d1.xlsx"));
+
+        // Check entities and entity attributes
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
+        $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
+        $attrWith2Values = Attribute::where('name', 'bead width')->first();
+        $this->assertDatabaseHas('attribute_values',
+            ['attribute_id' => $attrWith2Values->id, 'val' => '{"value":122.4135}']);
+
+        // Check activity and activity attributes
+        $this->assertDatabaseHas('activities', ['name' => 'sem']);
+        $this->assertEquals(1, Activity::count());
+
+        $this->assertEquals(2, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'stress relief time', 'attributable_type' => Activity::class]);
     }
 }

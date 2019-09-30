@@ -9,10 +9,10 @@ use App\Models\AttributeValue;
 class CreateActivityAction
 {
     // TODO: What about wrapping this in a transaction? How expensive would this be?
-    public function __invoke($data)
+    public function __invoke($data, $userId)
     {
         $activitiesData = collect($data)->except('experiment_id', 'attributes')->toArray();
-        $activitiesData['owner_id'] = auth()->id();
+        $activitiesData['owner_id'] = $userId;
         $activity = Activity::create($activitiesData);
         if (array_key_exists('experiment_id', $data)) {
             $activity->experiments()->attach($data['experiment_id']);

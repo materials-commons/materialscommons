@@ -20,7 +20,8 @@ class CreateActivityApiController extends Controller
     public function __invoke(CreateActivityRequest $request, CreateActivityAction $createActivityAction)
     {
         $validated = $request->validated();
-        $activity = $createActivityAction($validated);
+        $userId = auth()->id();
+        $activity = $createActivityAction($validated, $userId);
         return (new ActivityResource($activity))->response()->setStatusCode(201);
     }
 }
