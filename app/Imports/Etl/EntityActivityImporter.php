@@ -203,12 +203,24 @@ class EntityActivityImporter implements OnEachRow, WithEvents
 
     private function createActivityRelationships()
     {
-        $this->rows->each(function(RowTracker $row) {
-            $row->activityName;
-            $row->entityName;
-            $row->activityAttributesHash;
-            $row->relatedActivityName;
-        });
+        $seenRelationships = collect(); // ["{$activity->name}/{$activity->id}"]
+        $this->rows
+            ->filter(function(RowTracker $row) {
+                return $row->relatedActivityName !== "";
+            })
+            ->each(function(RowTracker $row) {
+                $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
+                $entity = $activity->entities()->where('name', $row->entityName)->first();
+                // Hook up all the activities who have an entityId === $entityId and that have a name === $row->relatedActivityName
+                // by loop through each of these activities and doing the following: (entity state is the entity state from the
+                // $activity for the given $entity
+                //    $foundActivity->entityStates()->attach($state, [direction => out]]);
+                error_log("found entity {$entity->name}/{$entity->id} for activity {$activity->name}/{$activity->id}");
+//            $row->activityName;
+//            $row->entityName;
+//            $row->activityAttributesHash;
+//            $row->relatedActivityName;
+            });
     }
 
     /**
@@ -226,7 +238,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                 $this->currentSheetRows = collect();
             },
 
-            AfterSheet::class  => function(AfterSheet $event) {
+            AfterSheet::class => function(AfterSheet $event) {
                 // Sheet processed, now process the rows associated with it
                 $this->currentSheetRows->each(function(RowTracker $row) {
                     if (!$this->entityTracker->hasEntity($row->entityName)) {
