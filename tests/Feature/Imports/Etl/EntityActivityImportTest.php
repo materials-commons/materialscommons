@@ -216,24 +216,24 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, AttributeValue::where('attribute_id', $wireCompAttr->id)->count());
     }
 
-//    /** @test */
-//    public function test_import_with_parent_2_worksheets()
-//    {
-//        $this->withoutExceptionHandling();
-//        $user = factory(User::class)->create();
-//        $project = factory(Project::class)->create([
-//            'owner_id' => $user->id,
-//        ]);
-//        $experiment = factory(Experiment::class)->create([
-//            'owner_id'   => $user->id,
-//            'project_id' => $project->id,
-//        ]);
-//
-//        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-//        Excel::import($importer, storage_path("test_data/etl/two-worksheets-with-parent.xlsx"));
-//
-//        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
-//        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES5']);
-//        $this->assertEquals(3, Activity::count());
-//    }
+    /** @test */
+    public function test_import_with_parent_2_worksheets()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, storage_path("test_data/etl/two-worksheets-with-parent.xlsx"));
+
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd2']);
+        $this->assertEquals(3, Activity::count());
+    }
 }
