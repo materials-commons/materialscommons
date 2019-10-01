@@ -11,6 +11,7 @@ use App\Models\EntityState;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Events\BeforeSheet;
 use Maatwebsite\Excel\Row;
@@ -195,9 +196,19 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         ], $this->userId);
 
         $activity->entities()->attach($entity);
-        $activity->entityStates()->attach($entityState);
+        $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
 
         return $activity;
+    }
+
+    private function createActivityRelationships()
+    {
+        $this->rows->each(function(RowTracker $row) {
+            $row->activityName;
+            $row->entityName;
+            $row->activityAttributesHash;
+            $row->relatedActivityName;
+        });
     }
 
     /**
@@ -214,6 +225,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                 $this->rowNumber = 0;
                 $this->currentSheetRows = collect();
             },
+
             AfterSheet::class  => function(AfterSheet $event) {
                 // Sheet processed, now process the rows associated with it
                 $this->currentSheetRows->each(function(RowTracker $row) {
@@ -223,6 +235,12 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                         $this->addToExistingEntity($row);
                     }
                 });
+            },
+
+            AfterImport::class => function(AfterImport $event) {
+                // All sheets processed and loaded, now build relationships
+                // from parent column.
+                $this->createActivityRelationships();
             },
         ];
     }
