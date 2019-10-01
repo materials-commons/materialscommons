@@ -70,6 +70,10 @@ class RowTracker
             hash_update($ctx, $val->value);
         });
 
+        // To ensure that hashes will be unique both within and across sheets add the sheet name
+        // to the strings to compute the hash on.
+        hash_update($ctx, $this->activityName);
+
         $this->activityAttributesHash = hash_final($ctx);
     }
 }
