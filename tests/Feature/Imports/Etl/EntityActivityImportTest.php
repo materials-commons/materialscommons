@@ -301,11 +301,19 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f3 = factory(File::class)->create([
+        $f4 = factory(File::class)->create([
             'project_id'   => $project->id,
             'name'         => 'f4.txt',
             'mime_type'    => 'text',
             'directory_id' => $rootDir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $f5 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'f5.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $d1Dir->id,
             'owner_id'     => $user->id,
         ]);
 
@@ -318,6 +326,6 @@ class EntityActivityImportTest extends TestCase
         Excel::import($importer, storage_path("test_data/etl/file_associations.xlsx"));
 
         $activity = Activity::where('name', 'sem')->first();
-        $this->assertEquals(4, $activity->files()->count());
+        $this->assertEquals(5, $activity->files()->count());
     }
 }

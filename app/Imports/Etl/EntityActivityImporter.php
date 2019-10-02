@@ -178,6 +178,10 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         ) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
             $path = "{$header->name}/{$attr->value}";
+            if (strpos($attr->value, "/") !== false) {
+                // Cell contains the path, no need to use the header
+                $path = $attr->value;
+            }
             $file = $getFileByPathAction($this->projectId, $path);
             if ($file !== null) {
                 $activity->files()->attach([$file->id => ['direction' => 'in']]);
