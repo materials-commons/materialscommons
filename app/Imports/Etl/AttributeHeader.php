@@ -70,6 +70,32 @@ class AttributeHeader
 
     private static function parseHeaderType($attrType, $colon, $header)
     {
+        if ($attrType === "file") {
+            return AttributeHeader::parseFileHeader($colon, $header);
+        } else {
+            return AttributeHeader::parseEntityOrActivityHeader($attrType, $colon, $header);
+        }
+    }
+
+    private static function parseFileHeader($colon, $header)
+    {
+        $firstColon = strpos($header, ":");
+        $secondColon = strrpos($header, ":");
+        if ($firstColon != $secondColon) {
+            // if firstColon != secondColon then there is a description and a path
+            // ie, the format is:  FILE:My description:directory-path/to/file/in/cell/in/materials-commons
+            $filePath = trim(substr($header, $secondColon + 1));
+            return new AttributeHeader($filePath, "", "file");
+        }
+
+        // If we are here then firstColon == secondColon, which means the format is:
+        // FILE:directory-path/to/file/in/cell/in/materials-commons
+        $filePath = trim(substr($header, $firstColon + 1));
+        return new AttributeHeader($filePath, "", "file");
+    }
+
+    private static function parseEntityOrActivityHeader($attrType, $colon, $header)
+    {
         $openParen = strpos($header, "(");
         $closeParen = strpos($header, ")");
         $unit = "";

@@ -9,6 +9,7 @@ use App\Models\AttributeValue;
 use App\Models\Entity;
 use App\Models\EntityState;
 use App\Models\Experiment;
+use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -67,6 +68,14 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("mm", $headers[7]->unit);
         $this->assertEquals("bead width", $headers[7]->name);
         $this->assertEquals("entity", $headers[7]->attrType);
+
+        $this->assertEquals("", $headers[8]->unit);
+        $this->assertEquals("p1/d1", $headers[8]->name);
+        $this->assertEquals("file", $headers[8]->attrType);
+
+        $this->assertEquals("", $headers[9]->unit);
+        $this->assertEquals("p1", $headers[9]->name);
+        $this->assertEquals("file", $headers[9]->attrType);
     }
 
     /** @test */
@@ -235,5 +244,80 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd2']);
         $this->assertEquals(3, Activity::count());
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(2, $activity->entityStates()->count());
+        $this->assertDatabaseHas('activity2entity_state', ['activity_id' => $activity->id, 'direction' => 'in']);
+        $this->assertDatabaseHas('activity2entity_state', ['activity_id' => $activity->id, 'direction' => 'out']);
+    }
+
+    /** @test */
+    public function test_file_associations()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'name'     => 'P1',
+            'owner_id' => $user->id,
+        ]);
+
+        $rootDir = factory(File::class)->create([
+            'project_id' => $project->id,
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
+        ]);
+
+        $d1Dir = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'D1',
+            'path'         => '/D1',
+            'directory_id' => $rootDir->id,
+            'mime_type'    => 'directory',
+            'owner_id'     => $user->id,
+        ]);
+
+        $f1 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'f1.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $d1Dir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $f2 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'f2.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $d1Dir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $f3 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'f3.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $d1Dir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $f3 = factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => 'f4.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $rootDir->id,
+            'owner_id'     => $user->id,
+        ]);
+
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, storage_path("test_data/etl/file_associations.xlsx"));
+
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(4, $activity->files()->count());
     }
 }

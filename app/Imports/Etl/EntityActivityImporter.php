@@ -4,6 +4,8 @@ namespace App\Imports\Etl;
 
 use App\Actions\Activities\CreateActivityAction;
 use App\Actions\Entities\CreateEntityAction;
+use App\Actions\Etl\GetFileByPathAction;
+use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Entity;
@@ -42,6 +44,37 @@ class EntityActivityImporter implements OnEachRow, WithEvents
 
         $this->entityTracker = new EntityTracker();
         $this->activityTracker = new HashedActivityTracker();
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            BeforeSheet::class => function(BeforeSheet $event) {
+                // For each worksheet reset some of the state
+                $this->sawHeader = false;
+                $this->headerTracker = new HeaderTracker();
+                $this->worksheet = $event->getDelegate()->getDelegate();
+                $this->rowNumber = 0;
+                $this->currentSheetRows = collect();
+            },
+
+            AfterSheet::class => function(AfterSheet $event) {
+                // Sheet processed, now process the rows associated with it
+                $this->currentSheetRows->each(function(RowTracker $row) {
+                    if (!$this->entityTracker->hasEntity($row->entityName)) {
+                        $this->addNewEntity($row);
+                    } else {
+                        $this->addToExistingEntity($row);
+                    }
+                });
+            },
+
+            AfterImport::class => function(AfterImport $event) {
+                // All sheets processed and loaded, now build relationships
+                // from parent column.
+                $this->createActivityRelationships();
+            },
+        ];
     }
 
     public function onRow(Row $row)
@@ -97,16 +130,10 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         $this->entityTracker->addEntity($entity);
         $state = $entity->entityStates()->first();
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
-        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
-        if ($activity === null) {
-            // Add a new activity
-            $activity = $this->addNewActivity($entity, $state, $row);
-            $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
-        } else {
-            // What needs to be done here?
-            // $activity->entities()->attach($entity);
-            // $activity->entityStates()->attach($entity);
-        }
+        // Add a new activity
+        $activity = $this->addNewActivity($entity, $state, $row);
+        $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
+        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state)
@@ -132,6 +159,28 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                     'val'          => ['value' => $attr->value],
                 ]);
                 $seenAttributes->put($attr->name, $a);
+            }
+        });
+    }
+
+    private function addFilesToActivityAndEntity(
+        Collection $fileAttributes,
+        Entity $entity,
+        EntityState $entityState,
+        Activity $activity
+    ) {
+        $getFileByPathAction = new GetFileByPathAction();
+        $fileAttributes->each(function(ColumnAttribute $attr) use (
+            $getFileByPathAction,
+            $entity,
+            $entityState,
+            $activity
+        ) {
+            $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
+            $path = "{$header->name}/{$attr->value}";
+            $file = $getFileByPathAction($this->projectId, $path);
+            if ($file !== null) {
+                $activity->files()->attach([$file->id => ['direction' => 'in']]);
             }
         });
     }
@@ -203,57 +252,22 @@ class EntityActivityImporter implements OnEachRow, WithEvents
 
     private function createActivityRelationships()
     {
-        $seenRelationships = collect(); // ["{$activity->name}/{$activity->id}"]
         $this->rows
             ->filter(function(RowTracker $row) {
                 return $row->relatedActivityName !== "";
             })
             ->each(function(RowTracker $row) {
                 $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
-                $entity = $activity->entities()->where('name', $row->entityName)->first();
                 // Hook up all the activities who have an entityId === $entityId and that have a name === $row->relatedActivityName
                 // by loop through each of these activities and doing the following: (entity state is the entity state from the
                 // $activity for the given $entity
-                //    $foundActivity->entityStates()->attach($state, [direction => out]]);
-                error_log("found entity {$entity->name}/{$entity->id} for activity {$activity->name}/{$activity->id}");
-//            $row->activityName;
-//            $row->entityName;
-//            $row->activityAttributesHash;
-//            $row->relatedActivityName;
-            });
-    }
-
-    /**
-     * @return array
-     */
-    public function registerEvents(): array
-    {
-        return [
-            BeforeSheet::class => function(BeforeSheet $event) {
-                // For each worksheet reset some of the state
-                $this->sawHeader = false;
-                $this->headerTracker = new HeaderTracker();
-                $this->worksheet = $event->getDelegate()->getDelegate();
-                $this->rowNumber = 0;
-                $this->currentSheetRows = collect();
-            },
-
-            AfterSheet::class => function(AfterSheet $event) {
-                // Sheet processed, now process the rows associated with it
-                $this->currentSheetRows->each(function(RowTracker $row) {
-                    if (!$this->entityTracker->hasEntity($row->entityName)) {
-                        $this->addNewEntity($row);
-                    } else {
-                        $this->addToExistingEntity($row);
-                    }
+                $entity = $activity->entities()->where('name', $row->entityName)->first();
+                $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
+                $entityActivities->each(function($ea) use ($entity, $activity) {
+                    $entityState = $ea->entityStates()->where('entity_id', $entity->id)->where('direction',
+                        'out')->first();
+                    $activity->entityStates()->attach($entityState, ['direction' => 'in']);
                 });
-            },
-
-            AfterImport::class => function(AfterImport $event) {
-                // All sheets processed and loaded, now build relationships
-                // from parent column.
-                $this->createActivityRelationships();
-            },
-        ];
+            });
     }
 }

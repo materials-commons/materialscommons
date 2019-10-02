@@ -14,7 +14,10 @@ class GetFileByPathAction
     public function __invoke($projectId, $filePath)
     {
         $project = Project::findOrFail($projectId);
-        $pathWithoutProject = $this->removeProjectNameFromPath($filePath, strlen($project->name));
+        $pathWithoutProject = $filePath;
+        if ($filePath[0] !== "/") {
+            $pathWithoutProject = $this->removeProjectNameFromPath($filePath, strlen($project->name));
+        }
         $fileName = basename($pathWithoutProject);
         $dirName = dirname($pathWithoutProject);
         $dir = File::where('project_id', $projectId)->where('path', $dirName)->first();
