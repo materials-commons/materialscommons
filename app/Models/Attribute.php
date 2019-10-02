@@ -3,15 +3,20 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin Builder
+ */
 class Attribute extends Model
 {
     use HasUUID;
 
     protected $guarded = ['id', 'uuid'];
 
-    public function attributable() {
+    public function attributable()
+    {
         return $this->morphTo();
     }
 

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
 use App\Enums\UserType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @mixin Builder
+ */
 class User extends Authenticatable
 {
     use Notifiable;
