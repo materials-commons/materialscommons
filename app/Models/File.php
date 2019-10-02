@@ -54,4 +54,9 @@ class File extends Model
     {
         return $this->belongsToMany(Experiment::class, 'experiment2file', 'file_id', 'experiment_id');
     }
+
+    public function directory()
+    {
+        return $this->belongsTo(File::class, 'directory_id');
+    }
 }
