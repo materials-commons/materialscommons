@@ -2,6 +2,7 @@
 
 namespace App\Imports\Etl;
 
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Row;
 
 class RowTracker
@@ -14,6 +15,11 @@ class RowTracker
     public $fileAttributes;
     public $activityAttributesHash;
     public $rowNumber;
+
+    private static $blankCellKeywords = [
+        'n/a'   => true,
+        'blank' => true,
+    ];
 
     public function __construct(int $rowNumber, $sheetName)
     {
@@ -33,7 +39,7 @@ class RowTracker
         $cellIterator = $row->getDelegate()->getCellIterator();
         foreach ($cellIterator as $cell) {
             $value = $cell->getValue();
-            if ($value === null) {
+            if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
             }
@@ -75,5 +81,18 @@ class RowTracker
         hash_update($ctx, $this->activityName);
 
         $this->activityAttributesHash = hash_final($ctx);
+    }
+
+    private function isBlankCell($value)
+    {
+        if ($value === null) {
+            return true;
+        }
+
+        if ($value === "") {
+            return true;
+        }
+
+        return array_key_exists(Str::lower($value), RowTracker::$blankCellKeywords);
     }
 }
