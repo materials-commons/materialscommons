@@ -10,6 +10,7 @@
     @component('components.card')
         @slot('header')
             File: {{$file->name}}
+
             <a class="float-right action-link" href="#">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
@@ -17,6 +18,13 @@
             <a class="float-right action-link mr-4" href="#">
                 <i class="fas fa-trash-alt mr-2"></i>Delete
             </a>
+
+            @if ($file->mime_type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                <a class="float-right action-link mr-4" href="{{route('projects.files.import', [$project, $file])}}">
+                    <i class="fas fa-file-import mr-2"></i>Import
+                </a>
+            @endif
+
         @endslot
 
         @slot('body')
@@ -28,6 +36,8 @@
                     <dd class="col-sm-10">{{$file->owner->name}}</dd>
                     <dt class="col-sm-2">Last Updated</dt>
                     <dd class="col-sm-10">{{$file->updated_at->diffForHumans()}}</dd>
+                    <dt class="col-sm-2">Mediatype</dt>
+                    <dd class="col-sm-10">{{$file->mime_type}}</dd>
                 </dl>
             </div>
             <div class="row ml-5">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\ImportSpreadsheetWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
@@ -24,3 +25,6 @@ Route::get('/projects/{project}/files/{file}/experiments',
 
 Route::get('/projects/{project}/files/{file}/download',
     DownloadFileWebController::class)->name('projects.files.download');
+
+Route::get('/projects/{project}/files/{file}/import',
+    ImportSpreadsheetWebController::class)->name('projects.files.import');

@@ -21,11 +21,6 @@ class ProcessSpreadsheet implements ShouldQueue
     private $userId;
     private $fileId;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct($projectId, $experimentId, $userId, $fileId)
     {
         $this->projectId = $projectId;

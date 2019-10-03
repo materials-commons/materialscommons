@@ -13,9 +13,15 @@
     <div id="workflow"></div>
     <div id="codearea" class="col-lg-10" hidden>
         <br>
+
         <form method="post"
+              @if ($experiment->workflows()->count() !== 0)
               action="{{route('projects.experiments.workflows.update', [$project->id, $experiment->id, $experiment->workflows[0]->id])}}"
+              @else
+              action="#"
+              @endif
               id="edit-workflow">
+
             @csrf
             @method('patch')
             <input hidden name="project_id" value="{{$project->id}}">
