@@ -44,4 +44,9 @@ class Experiment extends Model
     {
         return $this->belongsToMany(File::class, 'experiment2file', 'experiment_id', 'file_id');
     }
+
+    public static function laratablesCustomAction($experiment)
+    {
+        return '';
+    }
 }

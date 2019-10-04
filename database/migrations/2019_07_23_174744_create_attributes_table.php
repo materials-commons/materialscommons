@@ -23,10 +23,6 @@ class CreateAttributesTable extends Migration
             $table->string('attributable_type');
 
             $table->unsignedBigInteger('best_value_id')->nullable();
-            $table->foreign('best_value_id')
-                  ->references('id')
-                  ->on('attribute_values')
-                  ->onDelete('cascade');
 
             $table->timestamps();
         });

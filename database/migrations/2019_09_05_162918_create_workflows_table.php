@@ -17,7 +17,7 @@ class CreateWorkflowsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description')->default('');
+            $table->text('description')->nullable();
             $table->text('workflow');
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

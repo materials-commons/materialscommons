@@ -17,11 +17,11 @@ class CreateFilesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
 
-            $table->string('name');
+            $table->string('name', 80);
 
-            $table->text('path')->nullable()->index();
+            $table->string('path', 700)->nullable()->index();
 
-            $table->text('description')->default("");
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('size')->default(0);
             $table->string('checksum')->default("");
             $table->boolean('current')->default(true);
@@ -41,7 +41,7 @@ class CreateFilesTable extends Migration
                   ->on('projects')
                   ->onDelete('cascade');
 
-            $table->boolean('is_shortcut')->default('false');
+            $table->boolean('is_shortcut')->default(false);
 
             $table->unsignedBigInteger('directory_id')->nullable();
             $table->foreign('directory_id')
@@ -49,9 +49,9 @@ class CreateFilesTable extends Migration
                   ->on('files');
 
             $table->uuid('uses_uuid')->nullable();
-            $table->foreign('uses_uuid')
-                  ->references('uuid')
-                  ->on('files');
+//            $table->foreign('uses_uuid')
+//                  ->references('uuid')
+//                  ->on('files');
 
             $table->unsignedBigInteger('uses_id')->nullable();
             $table->foreign('uses_id')

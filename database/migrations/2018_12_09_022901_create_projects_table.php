@@ -18,7 +18,7 @@ class CreateProjectsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('disk')->nullable()->default('local');
-            $table->text('description')->default('');
+            $table->text('description')->nullable();
             $table->boolean('default_project')->default(false);
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('owner_id');

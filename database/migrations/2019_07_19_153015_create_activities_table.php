@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateActivitiesTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->text('description')->default('');
+            $table->text('description')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

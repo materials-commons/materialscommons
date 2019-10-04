@@ -111,6 +111,7 @@
                             }
                         },
                         {
+                            name: 'action',
                             data: null,
                             render: (data, type, row) => {
                                 let showRoute = route('projects.experiments.show', {
