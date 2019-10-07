@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\RelationshipDirection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,9 +26,7 @@ class CreateActivity2entityStateTable extends Migration
                   ->references('id')
                   ->on('entity_states');
 
-            $table->tinyInteger('direction')
-                  ->unsigned()
-                  ->default(RelationshipDirection::In);
+            $table->string('direction')->nullable();
 
             $table->timestamps();
         });
