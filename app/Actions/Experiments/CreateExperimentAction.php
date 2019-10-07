@@ -3,17 +3,27 @@
 namespace App\Actions\Experiments;
 
 use App\Enums\ExperimentStatus;
+use App\Jobs\Etl\ProcessSpreadsheet;
 use App\Models\Experiment;
 
 class CreateExperimentAction
 {
     public function __invoke($data)
     {
-        $experiment           = new Experiment($data);
+        $experiment = new Experiment(['name' => $data['name'], 'project_id' => $data['project_id']]);
+        if (array_key_exists('description', $data)) {
+            $experiment->description = $data['description'];
+        }
         $experiment->owner_id = auth()->id();
-        $experiment->status   = ExperimentStatus::InProgress;
+        $experiment->status = ExperimentStatus::InProgress;
         $experiment->save();
+        $experiment->fresh();
 
-        return $experiment->fresh();
+        if (array_key_exists('file_id', $data)) {
+            $ps = new ProcessSpreadsheet($data['project_id'], $experiment->id, auth()->id(), $data['file_id']);
+            dispatch($ps);
+        }
+
+        return $experiment;
     }
 }

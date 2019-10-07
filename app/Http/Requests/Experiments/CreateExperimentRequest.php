@@ -27,6 +27,7 @@ class CreateExperimentRequest extends FormRequest
             'name'        => 'required|string|max:80',
             'description' => 'nullable|string|max:2048',
             'project_id'  => 'required|integer',
+            'file_id'     => 'nullable',
             'loading'     => 'boolean',
         ];
     }

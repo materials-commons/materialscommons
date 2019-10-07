@@ -9,11 +9,9 @@ use App\Models\Project;
 
 class StoreExperimentWebController extends Controller
 {
-    public function __invoke(
-        CreateExperimentRequest $request,
-        CreateExperimentAction $createExperimentAction,
-        Project $project
-    ) {
+    public function __invoke(CreateExperimentRequest $request, CreateExperimentAction $createExperimentAction,
+        Project $project)
+    {
         $validated = $request->validated();
         $createExperimentAction($validated);
         return redirect(route('projects.show', compact('project')));

@@ -7,15 +7,9 @@ use App\Models\Project;
 
 class ShowProjectWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \App\Models\Project  $project
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Project $project)
+    public function __invoke($projectId)
     {
+        $project = Project::with('owner')->where('id', $projectId)->first();
         return view('app.projects.show', compact('project'));
     }
 }
