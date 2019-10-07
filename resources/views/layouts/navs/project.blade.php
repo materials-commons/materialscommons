@@ -39,8 +39,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.publish')}}"
-                   href="{{route('projects.publish.index', ['project' => $project->id])}}">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.datasets')}}"
+                   href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
                     Publish
                 </a>

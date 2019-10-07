@@ -16,7 +16,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web2\HomeController;
-use App\Http\Controllers\Web2\Projects\Datasets\ProjectDatasetsController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
 use App\Http\Controllers\Web2\Projects\Users\ProjectUsersController;
@@ -82,6 +81,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/workflows_web.php');
     require base_path('routes/web_routes/files_web.php');
     require base_path('routes/web_routes/folders_web.php');
+    require base_path('routes/web_routes/datasets_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 
@@ -91,9 +91,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::name('projects.')->group(function () {
 
 
-
-
-        Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
+//        Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
 
         Route::get('/projects/{project}/users', [ProjectUsersController::class, 'index'])->name('users.index');
 
