@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateDatasetsTable extends Migration
 {
@@ -17,15 +17,15 @@ class CreateDatasetsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('license');
-            $table->string('license_link');
-            $table->text('funding');
-            $table->text('description');
-            $table->string('doi');
+            $table->string('license')->nullable();
+            $table->string('license_link')->nullable();
+            $table->text('funding')->nullable();
+            $table->text('description')->nullable();
+            $table->string('doi')->nullable();
             $table->datetime('published_at')->nullable();
             $table->datetime('privately_published_at')->nullable();
-            $table->text('authors');
-            $table->string('institution');
+            $table->text('authors')->nullable();
+            $table->string('institution')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

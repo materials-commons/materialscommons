@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
 
         $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
 
-        $datasets = factory(Dataset::class, 50)->create([
+        $datasets = factory(Dataset::class, 10)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
