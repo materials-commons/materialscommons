@@ -62,6 +62,8 @@ class CreateFilesTable extends Migration
 
             $table->index(['project_id', 'directory_id']);
             $table->index(['project_id', 'path']);
+            $table->index(['project_id', 'mime_type']);
+            $table->index(['uses_uuid']);
         });
     }
 
