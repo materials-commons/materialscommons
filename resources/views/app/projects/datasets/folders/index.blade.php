@@ -1,0 +1,69 @@
+@extends('layouts.app')
+
+@section('pageTitle', 'Files')
+
+@section('nav')
+    @include('layouts.navs.project')
+@stop
+
+@section('content')
+    @component('components.card')
+        @slot('header')
+            @if (Request::routeIs('projects.datasets.folders.index'))
+                {{$directory->name}}
+            @else
+                {{$directory->path}}
+            @endif
+        @endslot
+
+        @slot('body')
+            <table id="files" class="table table-hover" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Selected</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($files as $file)
+                    <tr>
+                        <td>
+                            @if ($file->mime_type === 'directory')
+                                <a href="{{route('projects.datasets.folders.show', [$project, $dataset, $file])}}">
+                                    <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
+                                </a>
+                            @else
+                                <a href="{{route('projects.files.show', [$project, $file])}}">
+                                    <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
+                                </a>
+                            @endif
+                        </td>
+                        <td>{{$file->mime_type}}</td>
+                        <td>{{$file->size}}</td>
+                        <td>
+                            <div class="form-group form-check-inline">
+                                <input type="checkbox" class="form-check-input" id="{{$file->uuid}}">
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endslot
+    @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                $(document).ready(() => {
+                    $('#files').DataTable({
+                        stateSave: true,
+                    });
+                });
+            });
+        </script>
+    @endpush
+
+@stop

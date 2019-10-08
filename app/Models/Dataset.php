@@ -20,6 +20,10 @@ class Dataset extends Model
         'privately_published_at',
     ];
 
+    protected $casts = [
+        'file_selection' => 'array',
+    ];
+
     public function workflows()
     {
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');

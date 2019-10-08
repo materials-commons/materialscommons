@@ -9,20 +9,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            @if (Request::routeIs('projects.folders.index'))
+            @if (Request::routeIs('projects.datasets.folders.index'))
                 {{$directory->name}}
             @else
                 {{$directory->path}}
             @endif
-            <a class="float-right action-link"
-               href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
-                <i class="fas fa-plus mr-2"></i>Add Files
-            </a>
-
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.edit', $project->id)}}">
-                <i class="fas fa-plus mr-2"></i>Create Directory
-            </a>
         @endslot
 
         @slot('body')
@@ -33,6 +24,7 @@
                     <th>ID</th>
                     <th>Type</th>
                     <th>Size</th>
+                    <th>Selected</th>
                 </tr>
                 </thead>
             </table>
@@ -43,7 +35,7 @@
         <script>
             $(document).ready(function () {
                 let ajaxRoute;
-                @if (Request::routeIs('projects.folders.index'))
+                @if (Request::routeIs('projects.datasets.folders.index'))
                     ajaxRoute = "{{route('projects.get_root_folder', [$project->id])}}";
                 @else
                     ajaxRoute = "{{route('projects.get_folder', [$project->id, $directory->id])}}";

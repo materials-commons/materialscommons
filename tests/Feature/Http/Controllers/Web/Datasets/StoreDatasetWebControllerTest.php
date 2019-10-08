@@ -25,6 +25,6 @@ class StoreDatasetWebControllerTest extends TestCase
             'project_id' => $project->id,
         ])->assertStatus(302);
 
-        $this->assertDatabaseHas('datasets', ['project_id' => $project->id]);
+        $this->assertDatabaseHas('datasets', ['project_id' => $project->id, 'name' => 'ds1']);
     }
 }

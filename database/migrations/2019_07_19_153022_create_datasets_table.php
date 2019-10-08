@@ -26,6 +26,7 @@ class CreateDatasetsTable extends Migration
             $table->datetime('privately_published_at')->nullable();
             $table->text('authors')->nullable();
             $table->string('institution')->nullable();
+            $table->json('file_selection')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
