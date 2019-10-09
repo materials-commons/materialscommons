@@ -14,6 +14,7 @@ class StoreDatasetWebController extends Controller
         $createDatasetAction = new CreateDatasetAction(auth()->id());
         $validated = $request->validated();
         $dataset = $createDatasetAction($validated);
-        return redirect(route('projects.datasets.show', [$project, $dataset]));
+
+        return redirect(route('projects.datasets.files.edit', [$project, $dataset]));
     }
 }

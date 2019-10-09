@@ -41,10 +41,15 @@
                             @endif
                         </td>
                         <td>{{$file->mime_type}}</td>
-                        <td>{{$file->size}}</td>
+                        @if ($file->mime_type === 'directory')
+                            <td>N/A</td>
+                        @else
+                            <td>{{$file->toHumanBytes()}}</td>
+                        @endif
                         <td>
                             <div class="form-group form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="{{$file->uuid}}">
+                                <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
+                                       onclick="updateSelection({{$file}}, this)">
                             </div>
                         </td>
                     </tr>
@@ -56,6 +61,9 @@
 
     @push('scripts')
         <script>
+            let projectId = "{{$project->id}}";
+            let datasetId = "{{$dataset->id}}";
+
             $(document).ready(function () {
                 $(document).ready(() => {
                     $('#files').DataTable({
@@ -63,6 +71,10 @@
                     });
                 });
             });
+
+            function updateSelection(file, checkbox) {
+                console.log(`${file.id}/${file.mime_type} was clicked ${checkbox.checked}`);
+            }
         </script>
     @endpush
 
