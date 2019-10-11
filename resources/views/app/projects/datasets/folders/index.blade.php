@@ -63,6 +63,10 @@
         <script>
             let projectId = "{{$project->id}}";
             let datasetId = "{{$dataset->id}}";
+            let directoryPath = "{{$directory->path}}";
+            let route = "{{route('projects.datasets.selection', [$dataset])}}";
+            let apiToken = "{{$user->api_token}}";
+            console.log(`apiToken = ${apiToken}`);
 
             $(document).ready(function () {
                 $(document).ready(() => {
@@ -74,6 +78,21 @@
 
             function updateSelection(file, checkbox) {
                 console.log(`${file.id}/${file.mime_type} was clicked ${checkbox.checked}`);
+                if (checkbox.checked) {
+                    axios.put(`${route}?api_token=${apiToken}`, {
+                        project_id: projectId,
+                        include_file: `${directoryPath}/${file.name}`
+                    }).then(
+                        () => console.log('success adding file')
+                    );
+                } else {
+                    axios.put(`${route}?api_token=${apiToken}`, {
+                        project_id: projectId,
+                        remove_include_file: `${directoryPath}/${file.name}`
+                    }).then(
+                        () => console.log('success removing file')
+                    );
+                }
             }
         </script>
     @endpush

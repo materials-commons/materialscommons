@@ -14,8 +14,8 @@ class ShowDatasetFilesDirectoryWebController extends Controller
         error_log('ShowDatasetFilesDirectoryId');
         $directory = File::where('project_id', $project->id)->where('id', $folderId)->first();
         $files = $this->geFolderFiles($project->id, $directory->id);
-
-        return view('app.projects.datasets.folders.index', compact('project', 'dataset', 'files', 'directory'));
+        $user = auth()->user();
+        return view('app.projects.datasets.folders.index', compact('project', 'dataset', 'files', 'directory', 'user'));
     }
 
     private function geFolderFiles($projectId, $folderId)

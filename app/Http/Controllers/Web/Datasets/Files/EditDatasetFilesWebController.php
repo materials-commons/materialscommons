@@ -13,8 +13,9 @@ class EditDatasetFilesWebController extends Controller
     {
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         $files = $this->getRootFolderFiles($project->id, $directory->id);
+        $user = auth()->user();
 
-        return view('app.projects.datasets.folders.index', compact('project', 'dataset', 'files', 'directory'));
+        return view('app.projects.datasets.folders.index', compact('project', 'dataset', 'files', 'directory', 'user'));
     }
 
     private function getRootFolderFiles($projectId, $rootId)
