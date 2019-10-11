@@ -3,7 +3,7 @@
 @section('pageTitle', 'Edit Experiment')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.project')
 @stop
 
 @section('content')
