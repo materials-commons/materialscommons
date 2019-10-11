@@ -10,15 +10,10 @@ class UpdateDatasetSelectionAction
     {
         DB::transaction(function() use ($selection, $dataset) {
             $fileSelection = collect($dataset->file_selection);
-            if (array_key_exists('include_file', $selection)) {
-                $fileSelection = $this->mergeSelectionEntry($fileSelection, 'include_files',
-                    [$selection["include_file"]]);
-            }
-
-            if (array_key_exists('remove_include_file', $selection)) {
-                $fileSelection = $this->removeSelectionEntry($fileSelection, 'include_files',
-                    $selection["remove_include_file"]);
-            }
+            $fileSelection = $this->addRemoveIfExists($fileSelection, 'include_files', $selection, 'include_file');
+            $fileSelection = $this->addRemoveIfExists($fileSelection, 'exclude_files', $selection, 'exclude_file');
+            $fileSelection = $this->addRemoveIfExists($fileSelection, 'include_dirs', $selection, 'include_dir');
+            $fileSelection = $this->addRemoveIfExists($fileSelection, 'exclude_dirs', $selection, 'exclude_dir');
 
             $dataset->update(['file_selection' => $fileSelection]);
         });
@@ -43,7 +38,7 @@ class UpdateDatasetSelectionAction
     private function mergeSelectionEntry($fileSelection, $fileSelectionKey, $selection)
     {
         $selectionEntry = collect($fileSelection->get($fileSelectionKey));
-        $selectionEntry = $selectionEntry->merge($selection);
+        $selectionEntry = $selectionEntry->merge($selection)->unique();
         $fileSelection->put($fileSelectionKey, $selectionEntry->toArray());
         return $fileSelection;
     }
