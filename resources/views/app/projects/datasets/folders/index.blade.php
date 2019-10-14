@@ -28,6 +28,7 @@
                 </thead>
                 <tbody>
                 @foreach($files as $file)
+                    {{--                    {{dd($file)}}--}}
                     <tr>
                         <td>
                             @if ($file->mime_type === 'directory')
@@ -49,6 +50,7 @@
                         <td>
                             <div class="form-group form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
+                                       {{$file->selected ? 'checked' : ''}}
                                        onclick="updateSelection({{$file}}, this)">
                             </div>
                         </td>
@@ -79,21 +81,57 @@
             function updateSelection(file, checkbox) {
                 console.log(`${file.id}/${file.mime_type} was clicked ${checkbox.checked}`);
                 if (checkbox.checked) {
-                    axios.put(`${route}?api_token=${apiToken}`, {
-                        project_id: projectId,
-                        include_file: `${directoryPath}/${file.name}`
-                    }).then(
-                        () => console.log('success adding file')
-                    );
+                    if (file.mime_type === 'directory') {
+                        addDirectory(file);
+                    } else {
+                        addFile(file);
+                    }
+
                 } else {
-                    axios.put(`${route}?api_token=${apiToken}`, {
-                        project_id: projectId,
-                        remove_include_file: `${directoryPath}/${file.name}`
-                    }).then(
-                        () => console.log('success removing file')
-                    );
+                    if (file.mime_type === 'directory') {
+                        removeDirectory(file);
+                    } else {
+                        removeFile(file);
+                    }
                 }
             }
+
+            function addDirectory(dir) {
+                axios.put(`${route}?api_token=${apiToken}`, {
+                    project_id: projectId,
+                    include_dir: `${dir.path}`
+                }).then(
+                    () => console.log('success adding dir')
+                );
+            }
+
+            function addFile(file) {
+                axios.put(`${route}?api_token=${apiToken}`, {
+                    project_id: projectId,
+                    include_file: `${directoryPath}/${file.name}`
+                }).then(
+                    () => console.log('success adding file')
+                );
+            }
+
+            function removeDirectory(dir) {
+                axios.put(`${route}?api_token=${apiToken}`, {
+                    project_id: projectId,
+                    remove_include_dir: `${dir.path}`
+                }).then(
+                    () => console.log('success removing dir')
+                );
+            }
+
+            function removeFile(file) {
+                axios.put(`${route}?api_token=${apiToken}`, {
+                    project_id: projectId,
+                    remove_include_file: `${directoryPath}/${file.name}`
+                }).then(
+                    () => console.log('success removing file')
+                );
+            }
+
         </script>
     @endpush
 

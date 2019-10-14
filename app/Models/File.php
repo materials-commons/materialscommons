@@ -15,6 +15,10 @@ class File extends Model
 
     protected $guarded = ['id'];
 
+    protected $appends = ['selected'];
+
+    private $selected;
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -75,5 +79,15 @@ class File extends Model
         $bytes /= pow(1024, $pow);
 
         return round($bytes, $precision).' '.$units[$pow];
+    }
+
+    public function getSelectedAttribute()
+    {
+        return $this->selected;
+    }
+
+    public function setSelectedAttribute($selected)
+    {
+        $this->selected = $selected;
     }
 }
