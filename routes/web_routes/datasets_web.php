@@ -29,6 +29,8 @@ Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::c
 
 Route::patch('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
      ->name('projects.datasets.update');
+Route::put('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
+     ->name('projects.datasets.update');
 Route::get('/projects/{project}//datasets/{dataset}/edit', EditDatasetWebController::class)
      ->name('projects.datasets.edit');
 

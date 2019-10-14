@@ -4,7 +4,7 @@ namespace App\Http\Requests\Datasets;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateDatasetRequest extends FormRequest
+class DatasetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
