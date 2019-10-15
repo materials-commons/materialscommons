@@ -71,6 +71,15 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/dir2/dir3/file.txt"));
     }
 
+    /** @test */
+    public function empty_selection_should_always_return_false()
+    {
+        $selection = $this->makeSelection();
+        $dsFileSelection = new DatasetFileSelection($selection);
+        $this->assertFalse($dsFileSelection->isIncludedDir('/d1'));
+        $this->assertFalse($dsFileSelection->isIncludedFile('/file1.txt'));
+    }
+
     private function makeSelection()
     {
         return [
