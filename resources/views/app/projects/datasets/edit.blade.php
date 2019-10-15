@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Dataset
+            Edit Dataset
         @endslot
 
         @slot('body')
@@ -36,9 +36,30 @@
                 </div>
                 <div class="form-group">
                     <label for="license">License</label>
-                    <input class="form-control" id="license" name="license" type="text"
-                           value="{{$dataset->license}}"
-                           placeholder="License...">
+                    <select name="license" class="selectpicker col-lg-10" data-live-search="true"
+                            value="{{$dataset->license}}"
+                            title="License">
+                        <option data-token="No License" value="No License"
+                                {{$dataset->license === "No License" ? 'selected' : ''}}>
+                            No License
+                        </option>
+                        <option data-token="Public Domain Dedication and License (PDDL)"
+                                value="Public Domain Dedication and License (PDDL)"
+                                {{$dataset->license === "Public Domain Dedication and License (PDDL)" ? 'selected' : ''}}>
+                            Public Domain Dedication and License (PDDL)
+                        </option>
+                        <option data-token="Attribution License (ODC-By)"
+                                value="Attribution License (ODC-By)"
+                                {{$dataset->license === "Attribution License (ODC-By)" ? 'selected' : ''}}>
+                            Attribution License (ODC-By)
+                        </option>
+                        <option data-token="Open Database License (ODC-ODbL)"
+                                value="Open Database License (ODC-ODbL)"
+                                {{$dataset->license === "Open Database License (ODC-ODbL)" ? 'selected' : ''}}>
+                            Open Database License (ODC-ODbL)
+                        </option>
+                    </select>
+                    <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
                 </div>
                 <div class="form-group">
                     <label for="institution">Institution</label>

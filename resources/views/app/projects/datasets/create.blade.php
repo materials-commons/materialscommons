@@ -33,8 +33,23 @@
                 </div>
                 <div class="form-group">
                     <label for="license">License</label>
-                    <input class="form-control" id="license" name="license" type="text" value=""
-                           placeholder="License...">
+                    <select name="license" class="selectpicker col-lg-10" data-live-search="true"
+                            title="License">
+                        <option data-token="No License" value="No License">No License</option>
+                        <option data-token="Public Domain Dedication and License (PDDL)"
+                                value="Public Domain Dedication and License (PDDL)">
+                            Public Domain Dedication and License (PDDL)
+                        </option>
+                        <option data-token="Attribution License (ODC-By)"
+                                value="Attribution License (ODC-By)">
+                            Attribution License (ODC-By)
+                        </option>
+                        <option data-token="Open Database License (ODC-ODbL)"
+                                value="Open Database License (ODC-ODbL)">
+                            Open Database License (ODC-ODbL)
+                        </option>
+                    </select>
+                    <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
                 </div>
                 <div class="form-group">
                     <label for="institution">Institution</label>
