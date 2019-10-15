@@ -48,6 +48,13 @@
                     <label class="form-check-label" for="is_active">Is Active?</label>
                 </div>
             </div>
+            <div class="row ml-5">
+                <h5>Description</h5>
+            </div>
+            <div class="row ml-5">
+                <p>{{$project->description}}</p>
+            </div>
+            <br>
         @endslot
     @endcomponent
 
