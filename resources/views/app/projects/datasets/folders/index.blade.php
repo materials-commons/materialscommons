@@ -28,7 +28,6 @@
                 </thead>
                 <tbody>
                 @foreach($files as $file)
-                    {{--                    {{dd($file)}}--}}
                     <tr>
                         <td>
                             @if ($file->mime_type === 'directory')
