@@ -18,8 +18,12 @@ class GetDatasetFilesAction
         $directory = $this->getDirectory($projectId, $dir);
         $files = $this->getFolderFiles($projectId, $directory->id);
         $files->each(function($file) use ($directory) {
-            $filePath = "{$directory->path}/{$file->name}";
-            $file->selected = $this->datasetFileSelection->isIncludedFile($filePath);
+            if ($file->mime_type === 'directory') {
+                $file->selected = $this->datasetFileSelection->isIncludedDir($file->path);
+            } else {
+                $filePath = "{$directory->path}/{$file->name}";
+                $file->selected = $this->datasetFileSelection->isIncludedFile($filePath);
+            }
         });
         return ['files' => $files, 'directory' => $directory];
     }
