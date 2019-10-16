@@ -16,7 +16,7 @@
 
         @slot('body')
             <form method="post" action="{{route('projects.datasets.update', [$project, $dataset])}}"
-                  id="dataset-create">
+                  id="dataset-update">
                 @csrf
                 @method('put')
                 <div class="form-group">
@@ -90,21 +90,22 @@
                            value="{{$dataset->authors}}"
                            placeholder="Authors...">
                 </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="save" value="0" id="save"/>
+
                 <div class="float-right">
                     <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
                        class="action-link danger mr-3">
                         Cancel
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="save"
-                       onclick="save()">
+                    <a class="action-link mr-3" href="#" id="savelink" onclick="save()">
                         Save
                     </a>
 
                     <a class="action-link" href="#" id="next"
-                       onclick="document.getElementById('dataset-create').submit()">
+                       onclick="document.getElementById('dataset-update').submit()">
                         Files
                     </a>
                 </div>
@@ -121,14 +122,16 @@
             function validate() {
                 if ($('#name').val().length > 0) {
                     $("#next").prop("disabled", false).removeClass("isDisabled");
+                    $("#savelink").prop("disabled", false).removeClass("isDisabled");
                 } else {
                     $("#next").prop("disabled", true).addClass("isDisabled");
+                    $("#savelink").prop("disabled", true).addClass("isDisabled");
                 }
             }
 
             function save() {
                 $('#save').val(1);
-                document.getElementById('dataset-create').submit();
+                document.getElementById('dataset-update').submit();
             }
         </script>
     @endpush

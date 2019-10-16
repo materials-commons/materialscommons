@@ -61,16 +61,23 @@
                     <input class="form-control" id="authors" name="authors" type="text" value=""
                            placeholder="Authors...">
                 </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
+                <input type="hidden" name="save" value="0" id="save"/>
+
                 <div class="float-right">
                     <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
                        class="action-link danger mr-3">
                         Cancel
                     </a>
 
+                    <a class="action-link mr-3" href="#" id="save" onclick="save()">
+                        Save
+                    </a>
+
                     <a class="action-link" href="#" id="next"
                        onclick="document.getElementById('dataset-create').submit()">
-                        Next
+                        Files
                     </a>
                 </div>
             </form>
@@ -89,6 +96,11 @@
                 } else {
                     $("#next").prop("disabled", true).addClass("isDisabled");
                 }
+            }
+
+            function save() {
+                $('#save').val(1);
+                document.getElementById('dataset-create').submit();
             }
         </script>
     @endpush
