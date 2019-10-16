@@ -49,7 +49,7 @@
                                 <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a href="{{route('projects.datasets.destroy', [$project, $dataset])}}"
+                                <a href="{{route('projects.datasets.delete', [$project, $dataset])}}"
                                    class="action-link">
                                     <i class="fas fa-fw fa-trash-alt"></i>
                                 </a>

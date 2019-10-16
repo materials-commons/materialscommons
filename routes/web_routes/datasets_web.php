@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Datasets\AssignDoiWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
+use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\Files\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebController;
@@ -38,7 +39,10 @@ Route::put('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController:
 Route::get('/projects/{project}//datasets/{dataset}/edit', EditDatasetWebController::class)
      ->name('projects.datasets.edit');
 
-Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetWebController::class)
+Route::get('/projects/{project}/datasets/{dataset}/delete', DeleteDatasetWebController::class)
+     ->name('projects.datasets.delete');
+
+Route::delete('/projects/{project}/datasets/{dataset}', DestroyDatasetWebController::class)
      ->name('projects.datasets.destroy');
 
 Route::get('/projects/{project}/dataasets/{dataset}/assign-doi', AssignDoiWebController::class)
