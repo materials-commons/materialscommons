@@ -65,5 +65,15 @@ Breadcrumbs::for('projects.datasets.show', function($trail, $project, $dataset) 
 
 Breadcrumbs::for('projects.datasets.edit', function($trail, $project, $dataset) {
     $trail->parent('projects.datasets.index', $project);
-    $trail->push($dataset->name, route('projects.datasets.show', [$project, $dataset]));
+    $trail->push($dataset->name, route('projects.datasets.edit', [$project, $dataset]));
+});
+
+Breadcrumbs::for('projects.datasets.files.edit', function($trail, $project, $dataset) {
+    $trail->parent('projects.datasets.edit', $project, $dataset);
+    $trail->push("Files", route('projects.datasets.files.edit', [$project, $dataset]));
+});
+
+Breadcrumbs::for('projects.datasets.folders.show', function($trail, $project, $dataset) {
+    $trail->parent('projects.datasets.edit', $project, $dataset);
+    $trail->push("Files", route('projects.datasets.files.edit', [$project, $dataset]));
 });

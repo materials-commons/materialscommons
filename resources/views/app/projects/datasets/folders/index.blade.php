@@ -1,14 +1,17 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Files')
+@section('pageTitle', 'Dataset Files')
 
 @section('nav')
     @include('layouts.navs.project')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.datasets.files.edit', $project, $dataset))
+
 @section('content')
     @component('components.card')
         @slot('header')
+            <span class="float-right">Dataset: {{$dataset->name}}</span>
             @if (Request::routeIs('projects.datasets.folders.index'))
                 {{$directory->name}}
             @else
