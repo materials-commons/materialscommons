@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Datasets\AssignDoiWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
@@ -39,6 +40,9 @@ Route::get('/projects/{project}//datasets/{dataset}/edit', EditDatasetWebControl
 
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetWebController::class)
      ->name('projects.datasets.destroy');
+
+Route::get('/projects/{project}/dataasets/{dataset}/assign-doi', AssignDoiWebController::class)
+     ->name('projects.datasets.assign-doi');
 
 
 

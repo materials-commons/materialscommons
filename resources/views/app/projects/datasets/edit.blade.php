@@ -6,6 +6,8 @@
     @include('layouts.navs.project')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.datasets.edit', $project, $dataset))
+
 @section('content')
     @component('components.card')
         @slot('header')
@@ -27,6 +29,21 @@
                     <textarea class="form-control" id="description" name="description" type="text"
                               value="{{$dataset->description}}"
                               placeholder="Description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="doi">DOI</label>
+                    @if (empty($dataset->doi))
+                        <span class="col-6">
+                            (None)
+                            <a href="{{route('projects.datasets.assign-doi', [$project, $dataset])}}"
+                               class="ml-6 pl-6">
+                                Assign DOI
+                            </a>
+                        </span>
+                    @else
+                        <input class="form-control" id="doi" name="doi" type="text"
+                               value="{{$dataset->doi}}" readonly>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="funding">Funding</label>
