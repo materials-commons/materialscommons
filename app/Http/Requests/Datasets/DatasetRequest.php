@@ -31,6 +31,7 @@ class DatasetRequest extends FormRequest
             'license'     => 'nullable|string|max:256',
             'institution' => 'nullable|string|max:256',
             'authors'     => 'nullable|string|max:2048',
+            'save'        => 'boolean|required',
         ];
     }
 }

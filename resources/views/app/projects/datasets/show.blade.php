@@ -28,6 +28,8 @@
                 <dl class="row">
                     <dt class="col-sm-2">Name</dt>
                     <dd class="col-sm-10">{{$dataset->name}}</dd>
+                    <dt class="col-sm-2">DOI</dt>
+                    <dd class="col-sm-10">{{$dataset->doi}}</dd>
                     <dt class="col-sm-2">Funding</dt>
                     <dd class="col-sm-10">{{$dataset->funding}}</dd>
                     <dt class="col-sm-2">License</dt>

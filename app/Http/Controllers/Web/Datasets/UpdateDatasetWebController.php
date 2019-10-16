@@ -14,7 +14,12 @@ class UpdateDatasetWebController extends Controller
         Dataset $dataset)
     {
         $validated = $request->validated();
+        $save = $validated["save"];
+        unset($validated["save"]);
         $dataset = $updateDatasetAction($validated, $dataset);
+        if ($save === "1") {
+            return redirect(route('projects.datasets.show', compact('project', 'dataset')));
+        }
         return redirect(route('projects.datasets.files.edit', compact('project', 'dataset')));
     }
 }
