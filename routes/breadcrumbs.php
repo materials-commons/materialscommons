@@ -57,3 +57,13 @@ Breadcrumbs::for('projects.datasets.index', function($trail, $project) {
     $trail->parent('projects.show', $project);
     $trail->push('Datasets', route('projects.datasets.index', [$project]));
 });
+
+Breadcrumbs::for('projects.datasets.show', function($trail, $project, $dataset) {
+    $trail->parent('projects.datasets.index', $project);
+    $trail->push($dataset->name, route('projects.datasets.show', [$project, $dataset]));
+});
+
+Breadcrumbs::for('projects.datasets.edit', function($trail, $project, $dataset) {
+    $trail->parent('projects.datasets.index', $project);
+    $trail->push($dataset->name, route('projects.datasets.show', [$project, $dataset]));
+});
