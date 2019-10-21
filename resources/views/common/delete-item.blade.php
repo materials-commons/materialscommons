@@ -21,7 +21,7 @@
                 </div>
                 <div class="float-right">
                     <button type="submit" class="btn btn-danger">Delete</button>
-                    <button onclick="window.history.go(-1)" class="btn btn-success">Cancel</button>
+                    <button type="button" onclick="window.history.go(-1)" class="btn btn-success">Cancel</button>
                 </div>
             </form>
         @endslot
