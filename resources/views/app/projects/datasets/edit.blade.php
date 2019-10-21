@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="license">License</label>
-                    <select name="license" class="selectpicker col-lg-10" data-live-search="true"
+                    <select name="license" class="selectpicker col-lg-8" data-live-search="true"
                             value="{{$dataset->license}}"
                             title="License">
                         <option data-token="No License" value="No License"
