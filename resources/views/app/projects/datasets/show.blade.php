@@ -17,8 +17,8 @@
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
-            <a data-toggle="modal" class="float-right action-link mr-4"
-               href="#project-delete-{{$project->id}}">
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.datasets.delete', [$project, $dataset])}}">
                 <i class="fas fa-trash-alt mr-2"></i>Delete
             </a>
         @endslot
