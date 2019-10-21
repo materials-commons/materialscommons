@@ -43,4 +43,9 @@ class Dataset extends Model
     {
         return $this->belongsToMany(File::class, 'dataset2file', 'dataset_id', 'file_id');
     }
+
+    public function experiments()
+    {
+        return $this->belongsToMany(Experiment::class, 'dataset2experiment', 'datsaet_id', 'experiment_id');
+    }
 }
