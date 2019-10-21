@@ -21,6 +21,18 @@
                href="{{route('projects.datasets.delete', [$project, $dataset])}}">
                 <i class="fas fa-trash-alt mr-2"></i>Delete
             </a>
+
+            @if (isset($dataset->published_at))
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
+                    <i class="fas fa-minus-circle mr-2"></i>Unpublish
+                </a>
+            @else
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.datasets.publish', [$project, $dataset])}}">
+                    <i class="fas fa-upload mr-2"></i>Publish
+                </a>
+            @endif
         @endslot
 
         @slot('body')
@@ -28,6 +40,14 @@
                 <dl class="row">
                     <dt class="col-sm-2">Name</dt>
                     <dd class="col-sm-10">{{$dataset->name}}</dd>
+                    <dt class="col-sm-2">Published</dt>
+                    <dd class="col-sm-10">
+                        @if (isset($dataset->published_at))
+                            {{$dataset->published_at->diffForHumans()}}
+                        @else
+                            Not Published
+                        @endif
+                    </dd>
                     <dt class="col-sm-2">DOI</dt>
                     <dd class="col-sm-10">{{$dataset->doi}}</dd>
                     <dt class="col-sm-2">Funding</dt>

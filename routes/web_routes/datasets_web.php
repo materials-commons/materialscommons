@@ -8,9 +8,11 @@ use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\Files\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
+use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetAndFolderWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWebController;
+use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,12 @@ Route::delete('/projects/{project}/datasets/{dataset}', DestroyDatasetWebControl
 
 Route::get('/projects/{project}/dataasets/{dataset}/assign-doi', AssignDoiWebController::class)
      ->name('projects.datasets.assign-doi');
+
+Route::get('/projects/{project}/datasets/{dataset}/publish', PublishDatasetWebController::class)
+     ->name('projects.datasets.publish');
+
+Route::get('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetWebController::class)
+     ->name('projects.datasets.unpublish');
 
 
 
