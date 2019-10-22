@@ -26,7 +26,8 @@
     "spatie/laravel-tags": "^2.4",
     "spatie/laravel-view-models": "^1.1",
     "tightenco/ziggy": "^0.8",
-    "waavi/sanitizer": "~1.0"
+    "waavi/sanitizer": "~1.0",
+    "ext-zip": "*"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
