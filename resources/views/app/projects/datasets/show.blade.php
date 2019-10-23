@@ -40,6 +40,15 @@
                 <dl class="row">
                     <dt class="col-sm-2">Name</dt>
                     <dd class="col-sm-10">{{$dataset->name}}</dd>
+                    <dt class="col-sm-2">Experiments</dt>
+                    <dd class="col-sm-10">
+                        @foreach($dataset->experiments as $experiment)
+                            <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
+                               class="mr-2">
+                                {{$experiment->name}}
+                            </a>
+                        @endforeach
+                    </dd>
                     <dt class="col-sm-2">Published</dt>
                     <dd class="col-sm-10">
                         @if (isset($dataset->published_at))
