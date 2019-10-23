@@ -3,6 +3,7 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
+use Illuminate\Support\Facades\DB;
 
 class CreateDatasetAction
 {
@@ -15,6 +16,11 @@ class CreateDatasetAction
 
     public function __invoke($data)
     {
+        $experiments = null;
+        if (array_key_exists('experiments', $data)) {
+            $experiments = $data['experiments'];
+            unset($data['experiments']);
+        }
         $dataset = new Dataset($data);
         $dataset->owner_id = $this->userId;
         $dataset->file_selection = [
@@ -23,7 +29,14 @@ class CreateDatasetAction
             'include_dirs'  => [],
             'exclude_dirs'  => [],
         ];
-        $dataset->save();
+
+        DB::transaction(function () use ($dataset, $experiments) {
+            $dataset->save();
+            if ($experiments !== null) {
+                $dataset->experiments()->attach($experiments);
+            }
+        });
+
         return $dataset->fresh();
     }
 }

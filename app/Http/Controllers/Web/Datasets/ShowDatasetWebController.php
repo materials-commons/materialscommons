@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 
 class ShowDatasetWebController extends Controller
 {
-    public function __invoke(Request $request, Project $project, Dataset $dataset)
+    public function __invoke(Request $request, Project $project, $datasetId)
     {
+        $dataset = Dataset::with('experiments')->find($datasetId);
         $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);
         $filesAndDir = $getDatasetFilesAction($project->id, '/');
         $directory = $filesAndDir["directory"];

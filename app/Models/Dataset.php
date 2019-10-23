@@ -46,6 +46,6 @@ class Dataset extends Model
 
     public function experiments()
     {
-        return $this->belongsToMany(Experiment::class, 'dataset2experiment', 'datsaet_id', 'experiment_id');
+        return $this->belongsToMany(Experiment::class, 'dataset2experiment', 'dataset_id', 'experiment_id');
     }
 }

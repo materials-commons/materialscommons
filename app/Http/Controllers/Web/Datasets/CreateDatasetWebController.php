@@ -10,6 +10,8 @@ class CreateDatasetWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        return view('app.projects.datasets.create', compact('project'));
+        $experiments = $project->experiments()->get();
+
+        return view('app.projects.datasets.create', compact('project', 'experiments'));
     }
 }
