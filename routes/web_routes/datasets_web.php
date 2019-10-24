@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebControll
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetAndFolderWebController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
@@ -37,6 +38,9 @@ Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::c
      ->name('projects.datasets.show');
 Route::get('/projects/{project}/datasets/{dataset}/next/{folder}', ShowDatasetAndFolderWebController::class)
      ->name('projects.datasets.show.next');
+
+Route::get('/projects/{project}/datasets/{dataset}/entities', ShowDatasetEntitiesWebController::class)
+     ->name('projects.datasets.show.entities');
 
 Route::patch('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
      ->name('projects.datasets.update');

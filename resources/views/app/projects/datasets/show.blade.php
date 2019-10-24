@@ -77,64 +77,16 @@
         @endslot
     @endcomponent
 
-    @component('components.card')
-        @slot('header')
-            {{$directory->path}}
-        @endslot
+    <br>
+    @include('app.projects.datasets.tabs.tabs')
+    <br>
 
-        @slot('body')
-            <table id="files" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Size</th>
-                    <th>Selected</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($files as $file)
-                    <tr>
-                        <td>
-                            @if ($file->mime_type === 'directory')
-                                <a href="{{route('projects.datasets.show.next', [$project, $dataset, $file])}}">
-                                    <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
-                                </a>
-                            @else
-                                <a href="{{route('projects.files.show', [$project, $file])}}">
-                                    <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
-                                </a>
-                            @endif
-                        </td>
-                        <td>{{$file->mime_type}}</td>
-                        @if ($file->mime_type === 'directory')
-                            <td>N/A</td>
-                        @else
-                            <td>{{$file->toHumanBytes()}}</td>
-                        @endif
-                        <td>
-                            <div class="form-group form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
-                                       {{$file->selected ? 'checked' : ''}} readonly onclick="return false;">
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        @endslot
-    @endcomponent
-
-    @push('scripts')
-        <script>
-            $(document).ready(function () {
-                $(document).ready(() => {
-                    $('#files').DataTable({
-                        stateSave: true,
-                    });
-                });
-            });
-        </script>
-    @endpush
+    @if(Request::routeIs('projects.datasets.show'))
+        @include('app.projects.datasets.tabs.files')
+    @elseif(Request::routeIs('projects.datasets.show.next'))
+        @include('app.projects.datasets.tabs.files')
+    @elseif(Request::routeIs('projects.datasets.show.entities'))
+        @include('app.projects.datasets.tabs.entities')
+    @endif
 
 @stop
