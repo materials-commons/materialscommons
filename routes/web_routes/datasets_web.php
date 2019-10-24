@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Datasets\AssignDoiWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
+use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\Files\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebController;
@@ -29,6 +30,9 @@ Route::get('/projects/{project}/datasets/{dataset}/files', EditDatasetFilesWebCo
 Route::get('/projects/{project}/datasets/{dataset}/folders/{folder}', ShowDatasetFilesDirectoryWebController::class)
      ->name('projects.datasets.folders.show');
 
+Route::get('/projects/{project}/datasets/{dataset}/edit/samples', EditDatasetSamplesWebController::class)
+     ->name('projects.datasets.samples.edit');
+
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::class)
      ->name('projects.datasets.show');
 Route::get('/projects/{project}/datasets/{dataset}/next/{folder}', ShowDatasetAndFolderWebController::class)
@@ -38,7 +42,7 @@ Route::patch('/projects/{project}/datasets/{dataset}', UpdateDatasetWebControlle
      ->name('projects.datasets.update');
 Route::put('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
      ->name('projects.datasets.update');
-Route::get('/projects/{project}//datasets/{dataset}/edit', EditDatasetWebController::class)
+Route::get('/projects/{project}/datasets/{dataset}/edit', EditDatasetWebController::class)
      ->name('projects.datasets.edit');
 
 Route::get('/projects/{project}/datasets/{dataset}/delete', DeleteDatasetWebController::class)

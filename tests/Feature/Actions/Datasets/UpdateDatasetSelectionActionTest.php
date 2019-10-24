@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Datasets;
 
-use App\Actions\Datasets\UpdateDatasetSelectionAction;
+use App\Actions\Datasets\UpdateDatasetFileSelectionAction;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\User;
@@ -25,7 +25,7 @@ class UpdateDatasetSelectionActionTest extends TestCase
             'project_id' => $project->id,
         ]);
 
-        $updateDatasetSelectionAction = new UpdateDatasetSelectionAction();
+        $updateDatasetSelectionAction = new UpdateDatasetFileSelectionAction();
 
         $dataset = $updateDatasetSelectionAction(['include_file' => '/a/b'], $dataset);
         $this->assertEquals(["/a/b"], $dataset->file_selection["include_files"]);

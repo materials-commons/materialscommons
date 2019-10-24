@@ -103,7 +103,7 @@
                 </div>
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
-                <input type="hidden" name="save" value="0" id="save"/>
+                <input type="hidden" name="action" value="" id="action"/>
 
                 <div class="float-right">
                     <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
@@ -111,13 +111,16 @@
                         Cancel
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="savelink" onclick="save()">
+                    <a class="action-link mr-3" href="#" id="save-button" onclick="save()">
                         Save
                     </a>
 
-                    <a class="action-link" href="#" id="next"
-                       onclick="document.getElementById('dataset-update').submit()">
-                        Files
+                    <a class="action-link mr-3" href="#" id="add-samples-button" onclick="addSamples()">
+                        Add Samples
+                    </a>
+
+                    <a class="action-link" href="#" id="add-files-button" onclick="addFiles()">
+                        Add Files
                     </a>
                 </div>
             </form>
@@ -132,16 +135,36 @@
 
             function validate() {
                 if ($('#name').val().length > 0) {
-                    $("#next").prop("disabled", false).removeClass("isDisabled");
-                    $("#savelink").prop("disabled", false).removeClass("isDisabled");
+                    setNextButtonsDisabled(false);
                 } else {
-                    $("#next").prop("disabled", true).addClass("isDisabled");
-                    $("#savelink").prop("disabled", true).addClass("isDisabled");
+                    setNextButtonsDisabled(true);
+                }
+            }
+
+            function setNextButtonsDisabled(disable) {
+                if (disable) {
+                    $("#save-button").prop("disabled", true).addClass("isDisabled");
+                    $("#add-samples-button").prop("disabled", true).addClass("isDisabled");
+                    $("#add-files-button").prop("disabled", true).addClass("isDisabled");
+                } else {
+                    $("#save-button").prop("disabled", false).removeClass("isDisabled");
+                    $("#add-samples-button").prop("disabled", false).removeClass("isDisabled");
+                    $("#add-files-button").prop("disabled", false).removeClass("isDisabled");
                 }
             }
 
             function save() {
-                $('#save').val(1);
+                $('#action').val("save");
+                document.getElementById('dataset-update').submit();
+            }
+
+            function addSamples() {
+                $('#action').val("samples");
+                document.getElementById('dataset-update').submit();
+            }
+
+            function addFiles() {
+                $('#action').val("files");
                 document.getElementById('dataset-update').submit();
             }
         </script>

@@ -23,7 +23,7 @@ class StoreDatasetWebControllerTest extends TestCase
         $this->post(route('projects.datasets.store', [$project]), [
             'name'       => 'ds1',
             'project_id' => $project->id,
-            'save'       => false,
+            'action'     => "save",
         ])->assertStatus(302);
 
         $this->assertDatabaseHas('datasets', ['project_id' => $project->id, 'name' => 'ds1']);

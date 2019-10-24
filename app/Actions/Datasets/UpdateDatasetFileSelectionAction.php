@@ -4,7 +4,7 @@ namespace App\Actions\Datasets;
 
 use Illuminate\Support\Facades\DB;
 
-class UpdateDatasetSelectionAction
+class UpdateDatasetFileSelectionAction
 {
     public function __invoke($selection, $dataset)
     {

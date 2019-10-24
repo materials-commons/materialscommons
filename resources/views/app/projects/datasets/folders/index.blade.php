@@ -70,18 +70,14 @@
             let directoryPath = "{{$directory->path}}";
             let route = "{{route('projects.datasets.selection', [$dataset])}}";
             let apiToken = "{{$user->api_token}}";
-            console.log(`apiToken = ${apiToken}`);
 
-            $(document).ready(function () {
-                $(document).ready(() => {
-                    $('#files').DataTable({
-                        stateSave: true,
-                    });
+            $(document).ready(() => {
+                $('#files').DataTable({
+                    stateSave: true,
                 });
             });
 
             function updateSelection(file, checkbox) {
-                console.log(`${file.id}/${file.mime_type} was clicked ${checkbox.checked}`);
                 if (checkbox.checked) {
                     if (file.mime_type === 'directory') {
                         addDirectory(file);
@@ -103,7 +99,7 @@
                     project_id: projectId,
                     include_dir: `${dir.path}`
                 }).then(
-                    () => console.log('success adding dir')
+                    () => null
                 );
             }
 
@@ -112,7 +108,7 @@
                     project_id: projectId,
                     include_file: `${directoryPath}/${file.name}`
                 }).then(
-                    () => console.log('success adding file')
+                    () => null
                 );
             }
 
@@ -121,7 +117,7 @@
                     project_id: projectId,
                     remove_include_dir: `${dir.path}`
                 }).then(
-                    () => console.log('success removing dir')
+                    () => null
                 );
             }
 
@@ -130,7 +126,7 @@
                     project_id: projectId,
                     remove_include_file: `${directoryPath}/${file.name}`
                 }).then(
-                    () => console.log('success removing file')
+                    () => null
                 );
             }
 
