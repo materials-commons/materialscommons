@@ -18,7 +18,7 @@ class CreateDatasetZipfile extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:create-dataset-zipfile {dataset : id of dataset to create}';
+    protected $signature = 'mc:create-dataset-zipfile {dataset : id of dataset to create} {--create-dataset-files-table}';
 
     /**
      * The console command description.
@@ -45,6 +45,12 @@ class CreateDatasetZipfile extends Command
     public function handle()
     {
         $dataset = Dataset::find($this->argument('dataset'));
+        $createDatasetFilesTable = $this->option('create-dataset-files-table');
+
+        if ($createDatasetFilesTable) {
+            $dataset->files()->detach();
+        }
+
         $datasetDir = storage_path("app/__datasets/{$dataset->uuid}");
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0700, true);
@@ -64,6 +70,11 @@ class CreateDatasetZipfile extends Command
                         $zip->close();
                         $zip->open($zipfile) or die("Error: Could not reopen Zip");
                     }
+
+                    if ($createDatasetFilesTable) {
+                        $dataset->files()->attach($file->id);
+                    }
+
                     $uuid = $file->uses_uuid ?? $file->uuid;
                     $uuidPath = $this->filePathFromUuid($uuid);
                     $fullPath = storage_path("app/{$uuidPath}");
