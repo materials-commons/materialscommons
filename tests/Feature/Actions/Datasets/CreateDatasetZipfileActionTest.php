@@ -6,15 +6,9 @@ use Tests\TestCase;
 
 class CreateDatasetZipfileActionTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    /** @test */
+    public function a_zipfile_is_created()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->assertTrue(true);
     }
 }
