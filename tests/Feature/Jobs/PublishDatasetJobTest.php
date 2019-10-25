@@ -1,22 +1,23 @@
 <?php
 
-namespace Tests\Feature\Actions\Datasets;
+namespace Tests\Feature\Jobs;
 
-use App\Actions\Datasets\SyncActivitiesToPublishedDatasetAction;
+use App\Jobs\PublishDatasetJob;
 use App\Models\Activity;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class SyncActivitiesToPublishedDatasetActionTest extends TestCase
+class PublishDatasetJobTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_sync_the_activites_in_entities_to_the_dataset()
+    public function it_should_complete_publishing_dataset()
     {
         $this->withoutExceptionHandling();
 
@@ -43,10 +44,12 @@ class SyncActivitiesToPublishedDatasetActionTest extends TestCase
 
         $dataset->entities()->attach($entity);
 
-        $syncActivities = new SyncActivitiesToPublishedDatasetAction();
-        $syncActivities($dataset->id);
+        $job = new PublishDatasetJob($dataset->id);
+        $job->handle();
 
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());
+
+        Storage::disk('local')->deleteDirectory("__datasets/{$dataset->uuid}");
     }
 }
