@@ -3,7 +3,7 @@
 namespace App\Actions\Experiments;
 
 use App\Enums\ExperimentStatus;
-use App\Jobs\Etl\ProcessSpreadsheet;
+use App\Jobs\Etl\ProcessSpreadsheetJob;
 use App\Models\Experiment;
 
 class CreateExperimentAction
@@ -20,7 +20,7 @@ class CreateExperimentAction
         $experiment->fresh();
 
         if (array_key_exists('file_id', $data)) {
-            $ps = new ProcessSpreadsheet($data['project_id'], $experiment->id, auth()->id(), $data['file_id']);
+            $ps = new ProcessSpreadsheetJob($data['project_id'], $experiment->id, auth()->id(), $data['file_id']);
             dispatch($ps);
         }
 
