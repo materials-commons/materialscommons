@@ -27,6 +27,7 @@ class PublishDatasetJob implements ShouldQueue
      */
     public function handle()
     {
-        $finishPublishingDatasetAction = new FinishPublishingDatasetAction($this->datasetId);
+        $finishPublishingDatasetAction = new FinishPublishingDatasetAction();
+        $finishPublishingDatasetAction($this->datasetId);
     }
 }
