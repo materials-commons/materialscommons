@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Actions\Datasets\FinishPublishingDatasetAction;
+use App\Actions\Datasets\CreateDatasetZipfileAction;
+use App\Actions\Datasets\SyncActivitiesToPublishedDatasetAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -27,7 +28,10 @@ class PublishDatasetJob implements ShouldQueue
      */
     public function handle()
     {
-        $finishPublishingDatasetAction = new FinishPublishingDatasetAction();
-        $finishPublishingDatasetAction($this->datasetId);
+        $syncActivitiesToPublishedDatasetAction = new SyncActivitiesToPublishedDatasetAction();
+        $syncActivitiesToPublishedDatasetAction($this->datasetId);
+
+        $createDatasetZipfileAction = new CreateDatasetZipfileAction();
+        $createDatasetZipfileAction($this->datasetId, true);
     }
 }
