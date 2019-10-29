@@ -64,7 +64,7 @@ Route::prefix('public')->group(function () {
         Route::get('/new', [PublicDataNewController::class, 'index'])->name('new.index');
         Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('projects.index');
         Route::get('/datasets', [PublicDataDatasetsController::class, 'index'])->name('datasets.index');
-        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
+        //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
         Route::get('/authors', [PublicDataAuthorsController::class, 'index'])->name('authors.index');
         Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
         Route::view('/community', 'public.community.index')->name('community.index');

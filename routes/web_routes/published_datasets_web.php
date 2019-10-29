@@ -4,9 +4,10 @@ use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetActivitiesD
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)->name('published.dataset.show');
+Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)->name('datasets.show');
 
 Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)->name('datasets.entities.index');
 
