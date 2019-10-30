@@ -18,7 +18,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link {{setActiveNavByName('public.datasets.files')}}"
+           href="{{route('public.datasets.files.index', ['dataset' => $dataset])}}">
             Files
         </a>
     </li>

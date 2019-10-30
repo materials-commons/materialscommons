@@ -38,7 +38,7 @@
 
             <br>
 
-            @include('public.datasets.tabs.datasets-tabs')
+            @include('public.datasets.tabs.tabs')
 
             <br>
 
@@ -48,6 +48,8 @@
                 @include('public.datasets.tabs.entities-tab')
             @elseif (Request::routeIs('public.datasets.activities*'))
                 @include('public.datasets.tabs.activities-tab')
+            @elseif (Request::routeIs('public.datasets.files*'))
+                @include('public.datasets.tabs.files-tab')
             @endif
 
         @endslot

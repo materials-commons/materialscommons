@@ -1,0 +1,57 @@
+<table id="files" class="table table-hover" style="width: 100%">
+    <thead>
+    <th>Name</th>
+    <th>ID</th>
+    <th>Type</th>
+    <th>Size</th>
+    </thead>
+</table>
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#files').DataTable({
+                serverSide: true,
+                processing: true,
+                response: true,
+                stateSave: true,
+                ajax: "{{route('public.dt_get_published_dataset_files', [$dataset])}}",
+                columns: [
+                    {
+                        name: 'name',
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                let rowType = row["2"];
+                                let objectId = row["1"];
+                                        {{--r = route('projects.files.show', [{{$project->id}}, objectId]).url();--}}
+                                let r = "#";
+                                let icon = `<i class="fa-fw fas mr-2 fa-file"></i>`;
+                                let ndata = `<a href="${r}">${icon} ${data}</a>`;
+                                return ndata;
+                            }
+
+                            return data;
+                        }
+                    },
+                    {name: 'id'},
+                    {name: 'mime_type'},
+                    {
+                        name: 'size',
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return formatters.humanFileSize(data);
+                            }
+                            return data;
+                        }
+                    }
+                ],
+                columnDefs: [
+                    {
+                        targets: [1],
+                        visible: false
+                    }
+                ]
+            });
+        });
+    </script>
+@endpush
