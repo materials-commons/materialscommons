@@ -1,4 +1,4 @@
-<table id="entities" class="table table-hover" width="100%">
+<table id="entities" class="table table-hover" style="width:100%">
     <thead>
     <th>Sample</th>
     <th>Description</th>
