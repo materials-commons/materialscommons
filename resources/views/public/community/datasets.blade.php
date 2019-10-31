@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Public Data Community')
+@section('pageTitle', 'Community Datasets')
 
 @section('nav')
     @include('layouts.navs.public')
@@ -9,28 +9,26 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Data Communities
+            Datasets for Community {{$community->name}}
         @endslot
 
         @slot('body')
-            <table id="communities" class="table table-hover">
+            <table id="datasets" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Community</th>
-                    <th>Organizer</th>
+                    <th>Name</th>
                     <th>Description</th>
-                    <th>Datasets</th>
+                    <th>Authors</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($communities as $community)
+                @foreach($community->datasets as $dataset)
                     <tr>
                         <td>
-                            <a href="{{route('public.communities.datasets.index', $community)}}">{{$community->name}}</a>
+                            <a href="{{route('public.datasets.show', $dataset)}}">{{$dataset->name}}</a>
                         </td>
-                        <td>{{$community->owner->name}}</td>
-                        <td>{{$community->description}}</td>
-                        <td>{{$community->datasets_count}}</td>
+                        <td>{{$dataset->description}}</td>
+                        <td>{{$dataset->authors}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -42,7 +40,7 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('#communities').DataTable({
+            $('#datasets').DataTable({
                 stateSave: true,
             });
         });
