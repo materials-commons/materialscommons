@@ -48,4 +48,9 @@ class Dataset extends Model
     {
         return $this->belongsToMany(Experiment::class, 'dataset2experiment', 'dataset_id', 'experiment_id');
     }
+
+    public function communities()
+    {
+        return $this->belongsToMany(Community::class, 'dataset2community', 'dataset_id', 'community_id');
+    }
 }
