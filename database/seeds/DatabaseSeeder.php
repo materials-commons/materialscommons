@@ -3,6 +3,7 @@
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\EntityState;
@@ -54,10 +55,14 @@ class DatabaseSeeder extends Seeder
 
         $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
 
+        $communities = factory(Community::class, 5)->create();
+
         $datasets = factory(Dataset::class, 3)->create([
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+
+        $communities[0]->datasets()->attach($datasets);
 
         $activity = factory(Activity::class)->create([
             'name'       => 'Heat Treatment',

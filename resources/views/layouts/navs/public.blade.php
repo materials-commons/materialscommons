@@ -23,7 +23,8 @@
             {{--                        </a>--}}
             {{--                    </li>--}}
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.community')}}" href="{{route('public.community.index')}}">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.communities')}}"
+                   href="{{route('public.communities.index')}}">
                     <i class="fa-fw fas fa-users mr-2"></i>
                     Communities
                 </a>

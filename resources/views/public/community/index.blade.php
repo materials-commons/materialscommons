@@ -9,26 +9,42 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Public Data Communities
+            Data Communities
         @endslot
 
         @slot('body')
-            <div class="container-fluid content-row">
-                <div class="row">
-                    <div class="col-lg-4 d-flex align-items-stretch">
-                        <div class="card community-card">
-                            … content card …
-                            <p>Stuff</p>
-                        </div>
-
-                        <div class="card community-card">
-                            … content card …
-                            <p>Stuff</p>
-                            <p>stuff 2</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table id="communities" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Community</th>
+                    <th>Organizer</th>
+                    <th>Description</th>
+                    <th>Datasets</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($communities as $community)
+                    <tr>
+                        <td>
+                            <a href="#">{{$community->name}}</a>
+                        </td>
+                        <td>{{$community->owner->name}}</td>
+                        <td>{{$community->description}}</td>
+                        <td>{{$community->datasets_count}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         @endslot
     @endcomponent
 @stop
+
+@push('scripts')
+    <script>
+        $(document).ready(() => {
+            $('#communities').DataTable({
+                stateSave: true,
+            });
+        });
+    </script>
+@endpush

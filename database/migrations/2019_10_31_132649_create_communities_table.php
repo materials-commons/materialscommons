@@ -15,10 +15,12 @@ class CreateCommunitiesTable extends Migration
     {
         Schema::create('communities', function(Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->uuid('uuid')->unique();
+
             $table->string('name');
             $table->text('description')->nullable();
+
+            $table->boolean('public')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
