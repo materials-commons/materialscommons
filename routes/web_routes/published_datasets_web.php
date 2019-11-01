@@ -7,13 +7,16 @@ use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWe
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
+use App\Http\Controllers\Web\Published\Files\ShowPublishedFileWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)->name('datasets.show');
 
-Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)->name('datasets.entities.index');
+Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)
+     ->name('datasets.entities.index');
 
-Route::get('/datasets/{dataset}/activities', ShowPublishedDatasetActivitiesWebController::class)->name('datasets.activities.index');
+Route::get('/datasets/{dataset}/activities', ShowPublishedDatasetActivitiesWebController::class)
+     ->name('datasets.activities.index');
 
 Route::get('/datasets/{dataset}/files', ShowPublishedDatasetFilesWebController::class)->name('datasets.files.index');
 
@@ -24,5 +27,9 @@ Route::get('/datasets/{dataset}/datatables/entities', GetDatasetEntitiesDatatabl
 
 Route::get('/datasets/{dataset}/datatables/files', GetDatasetFilesDatatableWebController::class)
      ->name('dt_get_published_dataset_files');
+
+// Published files
+ROute::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)
+     ->name('datasets.files.show');
 
 

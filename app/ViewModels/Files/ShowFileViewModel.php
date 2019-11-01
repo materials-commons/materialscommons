@@ -3,7 +3,6 @@
 namespace App\ViewModels\Files;
 
 use App\Models\File;
-use App\Models\Project;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ViewModels\ViewModel;
@@ -17,11 +16,13 @@ class ShowFileViewModel extends ViewModel
 
     private $file;
     private $project;
+    private $dataset;
 
-    public function __construct(File $file, Project $project)
+    public function __construct(File $file, $project, $dataset = null)
     {
-        $this->file    = $file;
+        $this->file = $file;
         $this->project = $project;
+        $this->dataset = $dataset;
 
         $this->officeTypes = [
             "application/vnd.ms-excel"                                                  => true,
@@ -50,7 +51,7 @@ class ShowFileViewModel extends ViewModel
         ];
     }
 
-    public function project(): Project
+    public function project()
     {
         return $this->project;
     }
@@ -58,6 +59,11 @@ class ShowFileViewModel extends ViewModel
     public function file(): File
     {
         return $this->file;
+    }
+
+    public function dataset()
+    {
+        return $this->dataset;
     }
 
     public function fileType(): string
@@ -89,7 +95,7 @@ class ShowFileViewModel extends ViewModel
         }
 
         $entries = explode('-', $uuid);
-        $entry1  = $entries[1];
+        $entry1 = $entries[1];
         try {
             return Storage::disk('local')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
         } catch (FileNotFoundException $e) {

@@ -3,7 +3,11 @@
 @section('pageTitle', 'View Process')
 
 @section('nav')
-    @include('layouts.navs.project')
+    @isset($project)
+        @include('layouts.navs.project')
+    @else
+        @include('layouts.navs.public')
+    @endisset
 @stop
 
 @section('content')
