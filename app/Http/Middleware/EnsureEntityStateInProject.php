@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EntityStateInProject
+class EnsureEntityStateInProject
 {
+    use GetRequestParameterId;
+
     /**
      * Handle an incoming request.
      *
