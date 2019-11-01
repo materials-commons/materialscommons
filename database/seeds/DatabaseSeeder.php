@@ -133,6 +133,8 @@ class DatabaseSeeder extends Seeder
             'owner_id'     => $user->id,
         ]);
 
+        $datasets[0]->files()->attach($files);
+
         $entityState = factory(EntityState::class)->create([
             'entity_id' => $entity->id,
         ]);
