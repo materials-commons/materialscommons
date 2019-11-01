@@ -7,7 +7,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($object->experiments as $experiment)
+    @foreach($file->experiments as $experiment)
         <tr>
             <td>
                 <a href="{{route('projects.experiments.show', [$project, $experiment])}}">{{$experiment->name}}</a>

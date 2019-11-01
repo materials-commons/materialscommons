@@ -7,10 +7,12 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($object->entities as $entity)
+    @foreach($file->entities as $entity)
         <tr>
             <td>
-                <a href="{{route('projects.entities.show', [$project, $entity])}}">{{$entity->name}}</a>
+                @isset($project)
+                    <a href="{{route('projects.entities.show', [$project, $entity])}}">{{$entity->name}}</a>
+                @endisset
             </td>
             <td>{{$entity->description}}</td>
             <td>{{$entity->updated_at->diffForHumans()}}</td>

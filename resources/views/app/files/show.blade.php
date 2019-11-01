@@ -11,20 +11,22 @@
         @slot('header')
             File: {{$file->name}}
 
-            <a class="float-right action-link" href="#">
-                <i class="fas fa-edit mr-2"></i>Edit
-            </a>
-
-            <a class="float-right action-link mr-4" href="#">
-                <i class="fas fa-trash-alt mr-2"></i>Delete
-            </a>
-
-            @if ($file->mime_type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                <a class="float-right action-link mr-4"
-                   href="{{route('projects.files.create-experiment', [$project, $file])}}">
-                    <i class="fas fa-file-import mr-2"></i>Create Experiment From Spreadsheet
+            @isset($project)
+                <a class="float-right action-link" href="#">
+                    <i class="fas fa-edit mr-2"></i>Edit
                 </a>
-            @endif
+
+                <a class="float-right action-link mr-4" href="#">
+                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                </a>
+
+                @if ($file->mime_type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    <a class="float-right action-link mr-4"
+                       href="{{route('projects.files.create-experiment', [$project, $file])}}">
+                        <i class="fas fa-file-import mr-2"></i>Create Experiment From Spreadsheet
+                    </a>
+                @endif
+            @endisset
 
         @endslot
 
@@ -50,32 +52,9 @@
 
             <br>
 
-            @include('app.files.tabs.tabs', [
-                'showRouteName' => 'projects.files.show',
-                'showRoute' => route('projects.files.show', [$project, $file]),
-                'entitiesRouteName' => 'projects.files.entities',
-                'entitiesRoute' => route('projects.files.entities', [$project, $file]),
-                'activitiesRouteName' => 'projects.files.activities',
-                'activitiesRoute' => route('projects.files.activities', [$project, $file]),
-                'attributesRouteName' => 'projects.files.attributes',
-                'attributesRoute' => route('projects.files.attributes', [$project, $file]),
-                'experimentsRouteName' => 'projects.files.experiments',
-                'experimentsRoute' => route('projects.files.experiments', [$project, $file]),
-            ])
-
-            <br>
-
-            @if(Request::routeIs('projects.files.show'))
-                @include('app.files.tabs.display-file')
-            @elseif (Request::routeIs('projects.files.entities'))
-                @include('app.files.tabs.entities', ['object' => $file])
-            @elseif (Request::routeIs('projects.files.activities'))
-                @include('app.files.tabs.activities', ['object' => $file])
-            @elseif (Request::routeIs('projects.files.attributes'))
-                @include('app.files.tabs.attributes')
-            @elseif (Request::routeIs('projects.files.experiments'))
-                @include('app.files.tabs.experiments', ['object' => $file])
-            @endif
+            @isset($project)
+                @include('app.files.tabs.project-tabs')
+            @endisset
 
         @endslot
     @endcomponent
