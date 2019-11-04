@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CreateDatasetZipfile::class,
+        Commands\ImportGlobusUploadCommand::class,
+        Commands\ProcessFinishedGlobusTasksCommand::class,
     ];
 
     /**
