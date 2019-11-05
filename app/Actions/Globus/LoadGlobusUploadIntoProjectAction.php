@@ -5,6 +5,7 @@ namespace App\Actions\Globus;
 use App\Models\File;
 use App\Models\GlobusUpload;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -53,5 +54,17 @@ class LoadGlobusUploadIntoProjectAction
     {
         $finfo->getSize();
         mime_content_type($path);
+        $fileEntry = new File([
+            'uuid'         => Uuid::uuid4()->toString(),
+            'checksum'     => md5_file($path),
+            'mime_type'    => mime_content_type($path),
+            'size'         => $finfo->getSize(),
+            'name'         => $finfo->getFilename(),
+            'owner_id'     => $this->globusUpload->owner->id,
+            'current'      => true,
+            'description'  => "",
+            'project_id'   => $this->globusUpload->project->id,
+            'directory_id' => $currentDir->id,
+        ]);
     }
 }
