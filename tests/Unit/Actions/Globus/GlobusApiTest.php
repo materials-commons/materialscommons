@@ -10,8 +10,8 @@ class GlobusApiTest extends TestCase
     /** @test */
     public function test_authentication()
     {
-        $ccUser = 'd8eba3ad-fdd9-468d-95a1-d5c4ff91de3f';
-        $ccPassword = 'K3DWTaRt2MT9QzYA+Ttxs++9kea0cUO219wzaElQqP4=';
+        $ccUser = env('MC_GLOBUS_CC_USER');
+        $ccPassword = env('MC_GLOBUS_CC_TOKEN');
         $globusApi = new GlobusApi($ccUser, $ccPassword);
         $resp = $globusApi->authenticate();
         $this->assertArrayHasKey('access_token', $resp);
@@ -22,7 +22,7 @@ class GlobusApiTest extends TestCase
     /** @test */
     public function test_get_endpoint_tasks()
     {
-        $endpoint = '2c8eb4de-c64c-11e8-8c33-0a1d4c5c824a';
+        $endpoint = env('MC_GLOBUS_ENDPOINT_ID');
         $globusApi = $this->createApiClient();
         $resp = $globusApi->getEndpointTaskList($endpoint, 7);
         $this->assertArrayHasKey('DATA_TYPE', $resp);
@@ -31,8 +31,8 @@ class GlobusApiTest extends TestCase
 
     private function createApiClient(): GlobusApi
     {
-        $ccUser = 'd8eba3ad-fdd9-468d-95a1-d5c4ff91de3f';
-        $ccPassword = 'K3DWTaRt2MT9QzYA+Ttxs++9kea0cUO219wzaElQqP4=';
+        $ccUser = env('MC_GLOBUS_CC_USER');
+        $ccPassword = env('MC_GLOBUS_CC_TOKEN');
         $globusApi = new GlobusApi($ccUser, $ccPassword);
         $globusApi->authenticate();
         return $globusApi;
