@@ -4,6 +4,8 @@ namespace App\Actions\Globus;
 
 use App\Models\File;
 use App\Models\GlobusUpload;
+use App\Traits\PathFromUUID;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
@@ -11,6 +13,8 @@ use RecursiveIteratorIterator;
 
 class LoadGlobusUploadIntoProjectAction
 {
+    use PathFromUUID;
+
     /** @var \App\Models\GlobusUpload */
     private $globusUpload;
 
@@ -24,7 +28,7 @@ class LoadGlobusUploadIntoProjectAction
 
     public function __invoke()
     {
-        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->globusUpload->path),
+        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Storage::disk('local')->path($this->globusUpload->path)),
             RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;
 
@@ -33,7 +37,6 @@ class LoadGlobusUploadIntoProjectAction
         foreach ($dirIterator as $path => $finfo) {
             if ($fileCount >= $this->maxItemsToProcess) {
                 $this->globusUpload->update(['loading' => false]);
-
                 return;
             }
 
@@ -46,6 +49,7 @@ class LoadGlobusUploadIntoProjectAction
                 $currentDir = $this->processDir($path, $currentDir);
             } else {
                 $this->processFile($path, $finfo, $currentDir);
+                $fileCount++;
             }
         }
 
@@ -54,8 +58,9 @@ class LoadGlobusUploadIntoProjectAction
 
     private function processDir($path, File $currentDir): File
     {
-        $dirPath = Str::replaceFirst($this->globusUpload->path, "", $path);
-        echo $dirPath;
+        $pathPart = Storage::disk('local')->path($this->globusUpload->path);
+        $dirPath = Str::replaceFirst($pathPart, "", $path);
+//        echo "create dir with path {$dirPath}\n";
         $dir = File::where('project_id', $this->globusUpload->project->id)->where('path', $dirPath)->first();
         if ($dir !== null) {
             return $dir;
@@ -112,6 +117,19 @@ class LoadGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $uuid)
     {
+//        echo "path = {$path}\n";
+        $to = $this->getDirPathFromUuid($uuid)."/{$uuid}";
+        $pathPart = Storage::disk('local')->path("__globus_uploads");
+//        echo "pathPart = {$pathPart}\n";
+        $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
+//        echo "move file {$filePath} to {$to}\n";
+        if (Storage::disk('local')->move($filePath, $to) !== true) {
+            $status = Storage::disk('local')->copy($filePath, $to);
+            unlink($path);
+            return $status;
+        }
+
+        return true;
     }
 }

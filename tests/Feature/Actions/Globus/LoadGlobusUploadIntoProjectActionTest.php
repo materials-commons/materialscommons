@@ -8,6 +8,7 @@ use App\Models\GlobusUpload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class LoadGlobusUploadIntoProjectActionTest extends TestCase
@@ -16,14 +17,16 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
 
     public function tearDown(): void
     {
-        $globusUploadsPath = storage_path('test_data/__globus_uploads');
+        $globusUploadsPath = storage_path('app/__globus_uploads');
         exec("rm -rf {$globusUploadsPath}");
+
+        $this->cleanupCopiedFiles();
     }
 
     /** @test */
     public function files_and_directories_should_be_loaded_into_project()
     {
-        $globusUploadsPath = storage_path('test_data/__globus_uploads');
+        $globusUploadsPath = storage_path('app/__globus_uploads');
         $this->Mkdir($globusUploadsPath);
         $from = storage_path('test_data/globus/test1');
         $cmd = "cp -r {$from} {$globusUploadsPath}";
@@ -44,7 +47,7 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
         $globusUpload = factory(GlobusUpload::class)->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
-            'path'       => storage_path("test_data/__globus_uploads/test1"),
+            'path'       => "__globus_uploads/test1",
         ]);
 
         $loadGlobusUploadIntoProjectAction = new LoadGlobusUploadIntoProjectAction($globusUpload, 10);
@@ -73,6 +76,15 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
     {
         if ( ! is_dir($path)) {
             mkdir($path);
+        }
+    }
+
+    private function cleanupCopiedFiles()
+    {
+        foreach (Storage::disk('local')->directories() as $dir) {
+            if ($dir !== 'public') {
+                Storage::disk('local')->deleteDirectory($dir);
+            }
         }
     }
 }
