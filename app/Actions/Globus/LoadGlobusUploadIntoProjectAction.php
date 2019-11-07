@@ -60,7 +60,6 @@ class LoadGlobusUploadIntoProjectAction
     {
         $pathPart = Storage::disk('local')->path($this->globusUpload->path);
         $dirPath = Str::replaceFirst($pathPart, "", $path);
-//        echo "create dir with path {$dirPath}\n";
         $dir = File::where('project_id', $this->globusUpload->project->id)->where('path', $dirPath)->first();
         if ($dir !== null) {
             return $dir;
@@ -117,13 +116,10 @@ class LoadGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $uuid)
     {
-//        echo "path = {$path}\n";
         $to = $this->getDirPathFromUuid($uuid)."/{$uuid}";
         $pathPart = Storage::disk('local')->path("__globus_uploads");
-//        echo "pathPart = {$pathPart}\n";
         $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
-//        echo "move file {$filePath} to {$to}\n";
         if (Storage::disk('local')->move($filePath, $to) !== true) {
             $status = Storage::disk('local')->copy($filePath, $to);
             unlink($path);
