@@ -18,9 +18,9 @@ class StoreDatasetWebControllerTest extends TestCase
             'owner_id' => $user->id,
         ]);
 
-        $this->actingAs($user, 'web');
+        $user->projects()->attach($project);
 
-        $this->post(route('projects.datasets.store', [$project]), [
+        $this->actingAs($user)->post(route('projects.datasets.store', [$project]), [
             'name'       => 'ds1',
             'project_id' => $project->id,
             'action'     => "save",
