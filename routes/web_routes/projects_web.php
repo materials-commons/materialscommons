@@ -23,7 +23,7 @@ Route::get('/projects/{project}/edit', EditProjectWebController::class)->name('p
 Route::delete('/projects/{project}', DeleteProjectWebController::class)->name('projects.destroy');
 
 Route::delete('/projects/{project}/users/{user}', RemoveUserFromProjectWebController::class)
-     ->name('projects.users.destroy');
+     ->name('projects.users.remove');
 
 Route::post('/projects/{project}/users/{user}', AddUserToProjectWebController::class)
      ->name('projects.users.add');
