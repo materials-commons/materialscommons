@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web\Projects;
 
 use App\Actions\Users\AddUserToProjectAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Projects\AddUserToProjectRequest;
 use App\Models\Project;
 use App\Models\User;
 
