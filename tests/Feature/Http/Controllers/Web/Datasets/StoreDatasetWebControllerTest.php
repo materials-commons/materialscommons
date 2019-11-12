@@ -10,7 +10,7 @@ class StoreDatasetWebControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_should_create_a_dataset()
+    public function a_user_can_create_a_dataset()
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
