@@ -19,12 +19,16 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($users as $user)
                             <tr>
                                 <td>{{$user->name}}</td>
+                                <td>
+                                    <a href="#"><i class="fa fa-fw fa-plus"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -35,12 +39,14 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($project->users as $puser)
                             <tr>
                                 <td>{{$puser->name}}</td>
+                                <td>Remove User</td>
                             </tr>
                         @endforeach
                         </tbody>
