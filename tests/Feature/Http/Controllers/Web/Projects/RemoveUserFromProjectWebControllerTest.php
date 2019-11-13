@@ -25,7 +25,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
 
         $this->actingAs($users[0]);
         $this->delete(route('projects.users.remove', [$project, $userToRemove]))
-             ->assertStatus(200);
+             ->assertStatus(302);
         $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $users[0]->id]);
         $this->assertDatabaseMissing('project2user', ['project_id' => $project->id, 'user_id' => $users[1]->id]);
     }

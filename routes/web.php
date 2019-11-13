@@ -18,7 +18,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
-use App\Http\Controllers\Web2\Projects\Users\ProjectUsersController;
 use App\Http\Controllers\Web2\Published\PublicDataAuthorsController;
 use App\Http\Controllers\Web2\Published\PublicDataController;
 use App\Http\Controllers\Web2\Published\PublicDataDatasetsController;
@@ -94,7 +93,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
 
 //        Route::resource('/projects/{project}/publish', ProjectDatasetsController::class);
 
-        Route::get('/projects/{project}/users', [ProjectUsersController::class, 'index'])->name('users.index');
+//        Route::get('/projects/{project}/users', [ProjectUsersController::class, 'index'])->name('users.index');
 
         Route::get('/projects/{project}/settings', [ProjectSettingsController::class, 'index'])->name('settings.index');
 

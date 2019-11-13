@@ -13,6 +13,6 @@ class RemoveUserFromProjectWebController extends Controller
     {
         $this->authorize('updateUsers', $project);
         $removeUserFromProjectAction($project, $user);
-        return; // Add a view here
+        return redirect(route('projects.users.index', [$project]));
     }
 }
