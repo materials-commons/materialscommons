@@ -11,6 +11,7 @@ class ModifyProjectUsersWebController extends Controller
     public function __invoke($projectId)
     {
         $project = Project::with('users')->findOrFail($projectId);
+        $this->authorize('updateUsers', $project);
         $users = DB::table('users')->select('*')
                    ->whereNotIn('id', function($q) use ($project) {
                        $q->select('user_id')->from('project2user')->where('project_id', $project->id);
