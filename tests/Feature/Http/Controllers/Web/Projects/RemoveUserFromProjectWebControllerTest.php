@@ -24,7 +24,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
         $userToRemove = $users[1];
 
         $this->actingAs($users[0]);
-        $this->delete(route('projects.users.remove', [$project, $userToRemove]))
+        $this->get(route('projects.users.remove', [$project, $userToRemove]))
              ->assertStatus(302);
         $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $users[0]->id]);
         $this->assertDatabaseMissing('project2user', ['project_id' => $project->id, 'user_id' => $users[1]->id]);
@@ -40,7 +40,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
 
         $user->projects()->attach($project);
         $this->actingAs($user);
-        $this->delete(route('projects.users.remove', [$project, $user]))
+        $this->get(route('projects.users.remove', [$project, $user]))
              ->assertStatus(400);
         $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $user->id]);
     }
@@ -59,7 +59,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
         $project->users()->attach($users);
 
         $this->actingAs($member);
-        $this->delete(route('projects.users.remove', [$project, $memberToRemove]))
+        $this->get(route('projects.users.remove', [$project, $memberToRemove]))
              ->assertStatus(403);
         $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $memberToRemove->id]);
     }

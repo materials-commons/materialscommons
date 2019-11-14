@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects;
+namespace App\Http\Controllers\Web\Projects\Users;
 
 use App\Actions\Users\RemoveUserFromProjectAction;
 use App\Http\Controllers\Controller;
@@ -13,6 +13,6 @@ class RemoveUserFromProjectWebController extends Controller
     {
         $this->authorize('updateUsers', $project);
         $removeUserFromProjectAction($project, $user);
-        return redirect(route('projects.users.index', [$project]));
+        return redirect(route('projects.users.edit', [$project]));
     }
 }

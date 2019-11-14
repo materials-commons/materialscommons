@@ -25,8 +25,8 @@ class AddUserToProjectWebControllerTest extends TestCase
         $userToAdd = factory(User::class)->create();
 
         $this->actingAs($user);
-        $this->post(route('projects.users.add', [$project, $userToAdd]))
-             ->assertStatus(200);
+        $this->get(route('projects.users.add', [$project, $userToAdd]))
+             ->assertStatus(302);
         $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $userToAdd->id]);
     }
 
@@ -48,7 +48,7 @@ class AddUserToProjectWebControllerTest extends TestCase
 
         $this->actingAs($member);
 
-        $this->post(route('projects.users.add', [$project, $userToAdd]))
+        $this->get(route('projects.users.add', [$project, $userToAdd]))
              ->assertStatus(403);
         $this->assertDatabaseMissing('project2user', ['project_id' => $project->id, 'user_id' => $userToAdd->id]);
     }
@@ -66,12 +66,12 @@ class AddUserToProjectWebControllerTest extends TestCase
         $userToAdd = factory(User::class)->create();
 
         $this->actingAs($user);
-        $this->post(route('projects.users.add', [$project, $userToAdd]))
-             ->assertStatus(200);
-        $this->post(route('projects.users.add', [$project, $userToAdd]))
-             ->assertStatus(200);
-        $count = DB::table('project2user')->where('user_id', $userToAdd->id)->where('project_id',
-            $project->id)->count();
+        $this->get(route('projects.users.add', [$project, $userToAdd]))
+             ->assertStatus(302);
+        $this->get(route('projects.users.add', [$project, $userToAdd]))
+             ->assertStatus(302);
+        $count = DB::table('project2user')->where('user_id', $userToAdd->id)
+                   ->where('project_id', $project->id)->count();
         $this->assertEquals(1, $count);
     }
 }

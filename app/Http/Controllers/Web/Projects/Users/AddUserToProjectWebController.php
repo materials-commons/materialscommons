@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects;
+namespace App\Http\Controllers\Web\Projects\Users;
 
 use App\Actions\Users\AddUserToProjectAction;
 use App\Http\Controllers\Controller;
@@ -13,6 +13,6 @@ class AddUserToProjectWebController extends Controller
     {
         $this->authorize('updateUsers', $project);
         $addUserToProjectAction($project, $user);
-        return; // Add a view here...
+        return redirect(route('projects.users.edit', [$project]));
     }
 }

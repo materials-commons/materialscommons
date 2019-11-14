@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\Web\Projects\AddUserToProjectWebController;
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
-use App\Http\Controllers\Web\Projects\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
-use App\Http\Controllers\Web\Projects\Users\CreateProjectUsersWebController;
+use App\Http\Controllers\Web\Projects\Users\AddUserToProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\IndexProjectUsersWebController;
+use App\Http\Controllers\Web\Projects\Users\ModifyProjectUsersWebController;
+use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/create', CreateProjectWebController::class)->name('projects.create');
@@ -24,14 +24,14 @@ Route::get('/projects/{project}/edit', EditProjectWebController::class)->name('p
 
 Route::delete('/projects/{project}', DeleteProjectWebController::class)->name('projects.destroy');
 
-Route::delete('/projects/{project}/users/{user}/remove', RemoveUserFromProjectWebController::class)
+Route::get('/projects/{project}/users/{user}/remove', RemoveUserFromProjectWebController::class)
      ->name('projects.users.remove');
 
-Route::post('/projects/{project}/users/{user}', AddUserToProjectWebController::class)
+Route::get('/projects/{project}/users/{user}/add', AddUserToProjectWebController::class)
      ->name('projects.users.add');
 
 Route::get('/projects/{project}/users', IndexProjectUsersWebController::class)
      ->name('projects.users.index');
 
-Route::get('/projects/{project}/users/create', CreateProjectUsersWebController::class)
-     ->name('projects.users.create');
+Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::class)
+     ->name('projects.users.edit');

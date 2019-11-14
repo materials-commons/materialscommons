@@ -27,7 +27,8 @@
                             <tr>
                                 <td>{{$user->name}}</td>
                                 <td>
-                                    <a href="#"><i class="fa fa-fw fa-plus"></i></a>
+                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}"><i
+                                                class="fa fa-fw fa-plus"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -46,7 +47,14 @@
                         @foreach($project->users as $puser)
                             <tr>
                                 <td>{{$puser->name}}</td>
-                                <td>Remove User</td>
+                                <td>
+                                    @if($project->owner->id === $puser->id)
+                                        (Project Owner)
+                                    @else
+                                        <a href="{{route('projects.users.remove', [$project->id, $puser->id])}}"><i
+                                                    class="fa fa-fw fa-trash"></i></a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
