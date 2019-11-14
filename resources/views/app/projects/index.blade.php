@@ -32,16 +32,16 @@
                 @foreach($projects as $project)
                     <tr>
                         <td>
-                            <a href="{{route('projects.show', ['id' => $project->id])}}" class="">{{$project->name}}</a>
+                            <a href="{{route('projects.show', [$project->id])}}" class="">{{$project->name}}</a>
                         </td>
                         <td>{{$project->description}}</td>
                         <td>{{$project->updated_at->diffForHumans()}}</td>
                         <td>
                             <div class="float-right">
-                                <a href="{{route('projects.show', ['id' => $project->id])}}" class="action-link">
+                                <a href="{{route('projects.show', [$project->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
-                                <a href="{{route('projects.edit', ['id' => $project->id])}}" class="action-link">
+                                <a href="{{route('projects.edit', [$project->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
                                 <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">

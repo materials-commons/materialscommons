@@ -31,15 +31,15 @@
                 @foreach($experiments as $experiment)
                     <tr>
                         <td>
-                            <a href="{{route('experiments.show', ['id' => $experiment->id])}}">{{$experiment->name}}</a>
+                            <a href="{{route('experiments.show', [$experiment->id])}}">{{$experiment->name}}</a>
                         </td>
                         <td>{{$experiment->description}}</td>
                         <td>{{$experiment->updated_at->diffForHumans()}}</td>
                         <td>
-                            <a href="{{route('experiments.show', ['id' => $experiment->id])}}" class="action-link">
+                            <a href="{{route('experiments.show', [$experiment->id])}}" class="action-link">
                                 <i class="fas fa-fw fa-eye"></i>
                             </a>
-                            <a href="{{route('experiments.edit', ['id' => $experiment->id])}}" class="action-link">
+                            <a href="{{route('experiments.edit', [$experiment->id])}}" class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
                             <a data-toggle="modal" href="#experiment-delete-{{$experiment->id}}" class="action-link">

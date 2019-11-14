@@ -47,11 +47,11 @@
                             <td>{{$task->name}}</td>
                             <td>{{$task->updated_at->diffForHumans()}}</td>
                             <td>
-                                <a href="{{route('tasks.show', ['id' => $task->id])}}"
+                                <a href="{{route('tasks.show', [$task->id])}}"
                                    class="">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
-                                <a href="{{route('tasks.edit', ['id' => $task->id])}}"
+                                <a href="{{route('tasks.edit', [$task->id])}}"
                                    class="">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
