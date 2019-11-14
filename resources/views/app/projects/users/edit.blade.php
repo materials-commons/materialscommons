@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Add Users
+            Modify Users
         @endslot
 
         @slot('body')
