@@ -13,12 +13,11 @@
     "ext-zip": "*",
     "bensampo/laravel-enum": "^1.16",
     "bkwld/cloner": "^3.5",
-    "calebporzio/livewire": "^0.3",
     "davejamesmiller/laravel-breadcrumbs": "5.x",
     "fideloper/proxy": "^4.0",
     "freshbitsweb/laratables": "^2.1",
     "guzzlehttp/guzzle": "~6.0",
-    "laravel/framework": "5.8.*",
+    "laravel/framework": "^6.0",
     "laravel/tinker": "^1.0",
     "maatwebsite/excel": "^3.1",
     "mavinoo/laravel-batch": "dev-master",
@@ -31,15 +30,16 @@
     "ext-fileinfo": "*"
   },
   "require-dev": {
+    "facade/ignition": "^1.4",
     "barryvdh/laravel-debugbar": "^3.2",
     "beyondcode/laravel-dump-server": "^1.0",
     "filp/whoops": "^2.0",
     "fzaninotto/faker": "^1.4",
     "mockery/mockery": "^1.0",
     "mpociot/laravel-apidoc-generator": "^3.15",
-    "nunomaduro/collision": "^2.0",
+    "nunomaduro/collision": "^3.0",
     "nunomaduro/larastan": "^0.3.21",
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^8.0"
   },
   "config": {
     "optimize-autoloader": true,

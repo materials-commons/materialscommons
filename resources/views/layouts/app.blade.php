@@ -62,7 +62,7 @@
     </div>
 </div>
 
-@livewireAssets
+{{--@livewireAssets--}}
 
 @stack('scripts')
 </body>
