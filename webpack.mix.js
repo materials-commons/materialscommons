@@ -17,5 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     .copy('resources/datatables/datatables.min.js', 'public/js')
     .copy('resources/datatables/datatables.min.css', 'public/css')
     .copyDirectory('resources/fa', 'public/css/fa')
-    .purgeCss()
+    // For now don't use purgeCss as it is removing css elements that
+    // are used, but is not apparently finding them.
+    // .purgeCss()
     .disableNotifications();
