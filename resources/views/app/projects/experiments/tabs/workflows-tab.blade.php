@@ -1,6 +1,6 @@
 <div class="ml-2">
     <div class="float-right">
-        <a href="{{route('projects.show', [$project->id])}}" class="action-link">
+        <a href="{{route('projects.experiments.workflows.create', [$project, $experiment])}}" class="action-link">
             <i class="fas fa-fw fa-plus"></i>
         </a>
         <a href="#" onclick="toggleCodeArea()" class="action-link">
@@ -36,8 +36,7 @@
             </div>
             <div class="float-right">
                 <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>
-                <button class="btn btn-success">Save
-                </button>
+                <button class="btn btn-success">Save</button>
                 <button type="button" onclick="resetAndClose()" class="btn btn-warning">Cancel</button>
             </div>
         </form>

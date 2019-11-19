@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Web\Workflows;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Experiment;
+use App\Models\Project;
 
 class CreateWorkflowWebController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Project $project, Experiment $experiment)
     {
-        // Decision
-        // Step
+        return view('app.projects.experiments.workflows.create', compact('project', 'experiment'));
     }
 }
