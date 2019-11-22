@@ -14,6 +14,7 @@ require('bootstrap-select');
 window.moment = require('moment');
 window.mcfl = require('./flowchart.js');
 window.formatters = require('./formatters');
+window.simplefl = require('./simpleflowchart');
 
 window.Uppy = require('@uppy/core');
 window.UppyXHRUpload = require('@uppy/xhr-upload');
