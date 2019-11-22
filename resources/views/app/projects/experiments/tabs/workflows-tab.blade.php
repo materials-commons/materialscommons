@@ -10,12 +10,34 @@
             <i class="fas fa-fw fa-trash-alt"></i>
         </a>
     </div>
+    <table id="workflows" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Workflow</th>
+            <th>Description</th>
+            <th>Updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($experiment->workflows as $workflow)
+            <tr>
+                <td>{{$workflow->name}}</td>
+                <td>{{$workflow->description}}</td>
+                <td>{{$workflow->updated_at->diffForHumans()}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    <br>
+    @if(sizeof($experiment->workflows) !== 0)
+        <h3>{{$experiment->workflows[0]->name}}</h3>
+    @endif
     <div id="workflow"></div>
     <div id="codearea" class="col-lg-10" hidden>
         <br>
 
         <form method="post"
-              @if ($experiment->workflows()->count() !== 0)
+              @if (sizeof($experiment->workflows) !== 0)
               action="{{route('projects.experiments.workflows.update', [$project->id, $experiment->id, $experiment->workflows[0]->id])}}"
               @else
               action="#"
@@ -27,7 +49,7 @@
             <input hidden name="project_id" value="{{$project->id}}">
             <div class="form-group">
                 <label for="description">Workflow</label>
-                @if ($experiment->workflows()->count() !== 0)
+                @if (sizeof($experiment->workflows) !== 0)
                     <textarea id="code" style="width:100%" rows="20"
                               name="workflow">{{$experiment->workflows[0]->workflow}}</textarea>
                 @else
@@ -47,11 +69,16 @@
     <script>
         let chart, savedCode;
         $(document).ready(() => {
-            let count = {!! $experiment->workflows()->count() !!};
+            let count = {!! sizeof($experiment->workflows) !!};
             if (count !== 0) {
                 drawWorkflow();
             }
             savedCode = document.getElementById('code').value;
+
+            $('#workflows').DataTable({
+                stateSave: true,
+                pageLength: 4,
+            });
         });
 
         function drawWorkflow() {
