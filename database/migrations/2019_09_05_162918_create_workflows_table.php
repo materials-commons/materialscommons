@@ -18,7 +18,14 @@ class CreateWorkflowsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->text('workflow');
+            $table->text('workflow')->nullable();
+
+            $table->unsignedBigInteger('file_id')->nullable();
+            $table->foreign('file_id')
+                  ->references('id')
+                  ->on('files')
+                  ->onDelete('cascade');
+
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                   ->references('id')
