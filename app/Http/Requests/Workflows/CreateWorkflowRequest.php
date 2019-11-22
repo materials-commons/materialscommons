@@ -4,7 +4,7 @@ namespace App\Http\Requests\Workflows;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEditWorkflowRequest extends FormRequest
+class CreateWorkflowRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class UpdateEditWorkflowRequest extends FormRequest
     public function rules()
     {
         return [
-            'workflow' => 'required|string',
+            'workflow'    => 'sometimes|string',
+            'file_id'     => 'sometimes|integer',
+            'description' => 'nullable|string|max:2048',
+            'name'        => 'required|string|max:80',
         ];
     }
 }

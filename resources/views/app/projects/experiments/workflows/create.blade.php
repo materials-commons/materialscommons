@@ -14,75 +14,42 @@
         @endslot
 
         @slot('body')
-            <div id="controls">
-                <div class="row">
-                    <input id="step" placeholder="Add Step...">
-                    <input id="branch" class="ml-2" placeholder="Add Branch...">
+            <form method="post" action="{{route('projects.experiments.workflows.store', [$project, $experiment])}}">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Workflow Name...">
                 </div>
-                <div class="row mt-2">
-                    <textarea id="steps" style="width:100%" rows="2" readonly>Receive Samples, Finished</textarea>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description"
+                              placeholder="Description..."></textarea>
                 </div>
-                <div class="row mt-2">
-                    <button class="btn btn-success">
-                        <i class="fas fa-plus mr-1"></i>Step
-                    </button>
-                    <button class="btn btn-success ml-2">
-                        <i class="fas fa-plus mr-1"></i>Branch
-                    </button>
+                <div class="form-group">
+                    <label for="workflow">Workflow</label>
+                    <textarea class="form-control" id="workflowcode" name="workflow"
+                              placeholder="Workflow..."></textarea>
                 </div>
-                <div class="row mt-2">
-                    <select class="selectpicker col-lg-4" data-live-search>
-                        <option data-token="Receive Samples" value="Receive Samples" selected>Receive Samples</option>
-                        <option data-token="Finished" value="Finished">Finished</option>
-                    </select>
-                    <span class="ml-2 mr-2"><i class="fas fa-3x fa-arrow-right"></i></span>
-                    <select class="selectpicker col-lg-4" data-live-search>
-                        <option data-token="Receive Samples" value="Receive Samples">Receive Samples</option>
-                        <option data-token="Finished" value="Finished" selected>Finished</option>
-                    </select>
-                    <a><i class="fas fa-trash fa-2x"></i></a>
+                <div class="float-right">
+                    <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>
+                    <button class="btn btn-success">Save</button>
+                    <button type="button" onclick="cancel()" class="btn btn-warning">Cancel</button>
                 </div>
-            </div>
-            <br/>
-            <br/>
-            <div id="workflow">
-            </div>
-            <br/>
-            <br/>
-            <div id="row">
-                <textarea id="code" rows="10" style="width:100%" readonly></textarea>
-            </div>
+            </form>
+            <div id="workflowcanvas"></div>
         @endslot
     @endcomponent
     @push('scripts')
         <script>
-            let fl = null;
-            let workflow = `st=>start: Receive Samples\ne=>end: Finished\nst->e`;
-            $(document).ready(() => {
-
-                $('#code').val(workflow);
-                drawWorkflow();
-                $('#step').on('keyup', (e) => {
-                    if (e.keyCode === 13) {
-                        let v = $('#steps').val();
-                        v = `${v}, ${e.target.value}`;
-                        $('#steps').val(v);
-                        let firstArray = workflow.indexOf('->');
-                        let newLine = workflow.lastIndexOf("\n", firstArray);
-                        let value = e.target.value;
-                        workflow = workflow.substring(0, newLine) + "\n" + `${value}=>operation: ${value}` + workflow.substring(newLine);
-                        $('#code').val(workflow);
-                        $('#step').val('');
-                    }
-                });
-            });
+            let workflowgraph;
 
             function drawWorkflow() {
-                if (fl !== null) {
-                    flowchart.clean();
+                if (workflowgraph) {
+                    workflowgraph.clean();
                 }
-                let code = document.getElementById('code').value;
-                fl = mcfl.drawFlowchart('workflow', code);
+                let code = document.getElementById('workflow').value;
+                let fl = simplefl.parseSimpleFlowchart(code);
+                workflowgraph = mcfl.drawFlowchart('workflowcanvas', fl);
             }
         </script>
     @endpush

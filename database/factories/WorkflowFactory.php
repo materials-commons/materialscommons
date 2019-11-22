@@ -8,22 +8,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Workflow::class, function (Faker $faker) {
     $workflow = <<<WORKFLOW
-st=>start: Receive Samples
-e=>end: Finished
-sand_sample=>operation: Sand Sample
-ht?=>condition: Heat Treat?
-sem=>operation: SEM
-ht_op=>operation: Heat Treatment 400c/2h
-ht_op2=>operation: Heat Treatment 400c/2h
-ht_op3=>operation: Heat Treatment 600c/1h
-ht_op4=>operation: Heat Treatment 600c/4h
-ht_op5=>operation: Heat Treatment 200c/3h
-
-st->sand_sample(right)->ht?
-ht?(yes, right)->ht_op(right)->ht_op2(right)->ht_op3(right)->ht_op4(right)->ht_op5
-ht_op5->sem
-ht?(no)->sem
-sem->e
+Sand Sample(right)->Heat Treat?(yes, right)->HT 400c/2h(right)->HT 400c/2h(right)->HT 600c/1h(right)->HT 200c/3h(right)->sem
+Heat Treat?(no)->sem
 WORKFLOW;
 
     return [

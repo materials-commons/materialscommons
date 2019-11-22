@@ -59,7 +59,8 @@
                 chart.clean();
             }
             let code = document.getElementById('code').value;
-            chart = mcfl.drawFlowchart('workflow', code);
+            let fl = simplefl.parseSimpleFlowchart(code);
+            chart = mcfl.drawFlowchart('workflow', fl);
         }
 
         function toggleCodeArea() {
