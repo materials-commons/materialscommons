@@ -7,14 +7,12 @@ function parseSimpleFlowchart(lines) {
             let node, entry = entries[i].trim();
             if (entry.indexOf('?') !== -1) {
                 // condition
-                console.log(`conditional '${entry}'`);
                 let openParen = entry.indexOf('('),
                     closeParen = entry.indexOf(')'),
                     name = entry.substr(0, openParen),
                     direction = entry.substr(openParen + 1, (closeParen - openParen - 1));
 
                 if (!(name in seenConditionals)) {
-                    console.log('   not in seenConditionals');
                     node = {
                         name: name,
                         _type: 'condition',
@@ -24,7 +22,6 @@ function parseSimpleFlowchart(lines) {
                     };
                     seenConditionals[name] = node;
                 } else {
-                    console.log('   in seenConditionals');
                     let n = seenConditionals[name];
                     node = {
                         name: name,
