@@ -33,11 +33,20 @@ function parseSimpleFlowchart(lines) {
                 }
             } else {
                 // operation
+                let openParen = entry.indexOf('('),
+                    closeParen = entry.indexOf(')'),
+                    direction = "",
+                    name = entry;
+                if (openParen !== -1 && closeParen !== -1) {
+                    name = entry.substr(0, openParen);
+                    direction = entry.substr(openParen + 1, (closeParen - openParen - 1));
+                }
                 node = {
-                    name: entry,
+                    name: name,
                     _type: 'operation',
                     id: `o_${idCounter}`,
                     last: i === entries.length - 1,
+                    direction: direction,
                 };
             }
             nodes.push(node);
@@ -94,20 +103,24 @@ function connectNodes(nodes, fl) {
         }
 
         if (node1.last) {
-            let nodeStr = generateNodeStringOnLeft(node1);
+            let nodeStr = generateNodeString(node1);
             fl = fl + `${nodeStr}->e` + (i === nodes.length - 1 ? "" : "\n");
         } else if (node2 !== null) {
-            let node1Str = generateNodeStringOnLeft(node1);
-            fl = fl + `${node1Str}->${node2.id}\n`;
+            let node1Str = generateNodeString(node1),
+                node2Str = generateNodeString(node2);
+            if (node2._type === 'condition') {
+                node2Str = node2.id;
+            }
+            fl = fl + `${node1Str}->${node2Str}\n`;
         }
     }
 
     return fl;
 }
 
-function generateNodeStringOnLeft(node) {
+function generateNodeString(node) {
     if (node._type === 'operation') {
-        return node.id;
+        return `${node.id}(${node.direction})`;
     }
 
     // Node is a condition
