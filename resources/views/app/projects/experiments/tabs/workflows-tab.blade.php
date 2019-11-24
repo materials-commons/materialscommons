@@ -21,7 +21,10 @@
         <tbody>
         @foreach($experiment->workflows as $workflow)
             <tr>
-                <td>{{$workflow->name}}</td>
+                <td>
+                    <a onclick="showSelectedWorkflow(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
+                       href="#">{{$workflow->name}}</a>
+                </td>
                 <td>{{$workflow->description}}</td>
                 <td>{{$workflow->updated_at->diffForHumans()}}</td>
             </tr>
@@ -30,7 +33,7 @@
     </table>
     <br>
     @if(sizeof($experiment->workflows) !== 0)
-        <h3>{{$experiment->workflows[0]->name}}</h3>
+        <h3 id="workflowtitle">{{$experiment->workflows[0]->name}}</h3>
     @endif
     <div id="workflow"></div>
     <div id="codearea" class="col-lg-10" hidden>
@@ -80,6 +83,15 @@
                 pageLength: 4,
             });
         });
+
+        function showSelectedWorkflow(code, name) {
+            if (chart) {
+                chart.clean();
+            }
+            $("#workflowtitle").html(name);
+            let fl = simplefl.parseSimpleFlowchart(code);
+            chart = mcfl.drawFlowchart('workflow', fl);
+        }
 
         function drawWorkflow() {
             if (chart) {
