@@ -3,18 +3,14 @@
 namespace App\Http\Controllers\Web\Workflows;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Experiment;
+use App\Models\Project;
+use App\Models\Workflow;
 
 class EditWorkflowWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Project $project, Experiment $experiment, Workflow $workflow)
     {
-        //
+        return view('app.projects.experiments.workflows.edit', compact('project', 'experiment', 'workflow'));
     }
 }
