@@ -6,6 +6,7 @@
     @include('layouts.navs.project')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('projects.experiments.workflows.create', $project, $experiment))
 
 @section('content')
     @component('components.card')
