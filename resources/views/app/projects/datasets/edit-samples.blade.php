@@ -39,6 +39,9 @@
                 @endforeach
                 </tbody>
             </table>
+            <br><br>
+            <a class="float-right btn btn-success"
+               href="{{route('projects.datasets.edit', [$project, $dataset])}}">Done</a>
         @endslot
     @endcomponent
 

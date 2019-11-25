@@ -60,6 +60,12 @@
                 @endforeach
                 </tbody>
             </table>
+            <br>
+            <br>
+            <a class="btn btn-success float-right nav-link"
+               href="{{route('projects.datasets.edit', [$project, $dataset])}}">
+                Done
+            </a>
         @endslot
     @endcomponent
 
