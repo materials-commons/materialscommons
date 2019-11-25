@@ -15,6 +15,7 @@
         @slot('body')
             <div class="row">
                 <div class="col-6">
+                    <h4>Select Users To Add</h4>
                     <table id="all-users" class="table table-hover">
                         <thead>
                         <tr>
@@ -36,6 +37,7 @@
                     </table>
                 </div>
                 <div class="col-6">
+                    <h4>Project Users</h4>
                     <table id="project-users" class="table table-hover">
                         <thead>
                         <tr>
