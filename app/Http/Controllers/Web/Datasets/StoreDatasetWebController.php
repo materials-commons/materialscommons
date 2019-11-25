@@ -20,6 +20,8 @@ class StoreDatasetWebController extends Controller
             return redirect(route('projects.datasets.index', compact('project')));
         } elseif ($action === "files") {
             return redirect(route('projects.datasets.files.edit', compact('project', 'dataset')));
+        } elseif ($action === "workflow") {
+            return redirect(route('projects.datasets.workflows.edit', compact('project', 'dataset')));
         } else {
             return redirect(route('projects.datasets.samples.edit', compact('project', 'dataset')));
         }
