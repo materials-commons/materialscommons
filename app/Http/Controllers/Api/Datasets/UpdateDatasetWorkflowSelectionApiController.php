@@ -13,7 +13,7 @@ class UpdateDatasetWorkflowSelectionApiController extends Controller
         UpdateDatasetWorkflowSelectionAction $updateDatasetWorkflowSelectionAction, Dataset $dataset)
     {
         $validated = $request->validated();
-        $dataset = $updateDatasetWorkflowSelectionAction($validated["workflow_id"], $dataset);
+        $dataset = $updateDatasetWorkflowSelectionAction($validated["workflow_id"], $validated["project_id"], $dataset);
         return $dataset;
     }
 }

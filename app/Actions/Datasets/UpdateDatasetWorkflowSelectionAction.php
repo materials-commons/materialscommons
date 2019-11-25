@@ -2,24 +2,28 @@
 
 namespace App\Actions\Datasets;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Workflow;
 
 class UpdateDatasetWorkflowSelectionAction
 {
-    public function __invoke($workflowId, $dataset)
+    public function __invoke($workflowId, $projectId, $dataset)
     {
+        abort_unless($this->workflowInProject($workflowId, $projectId), 400, "No such workflow");
         $dataset->workflows()->toggle($workflowId);
         return $dataset;
     }
 
-    private function blah()
+    private function workflowInProject($workflowId, $projectId)
     {
-        DB::table('workflows')->select('*')->whereIn('id', function($q) {
+        $workflows = Workflow::whereIn('id', function($q) use ($projectId) {
             $q->select('workflow_id')->from('item2workflow')
               ->where('item_type', 'App\Models\Experiment')
-              ->whereIn('item_id', function($q2) {
-                  $q2->select('id')->from('experiments')->where('project_id', 1);
+              ->whereIn('item_id', function($q2) use ($projectId) {
+                  $q2->select('id')->from('experiments')->where('project_id', $projectId);
               });
         })->get();
+
+        $workflow = $workflows->find($workflowId);
+        return $workflow !== null;
     }
 }
