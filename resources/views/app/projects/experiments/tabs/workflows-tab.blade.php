@@ -45,6 +45,7 @@
                 stateSave: true,
                 pageLength: 4,
                 orderFixed: [0, 'desc'],
+                lengthMenu: [4],
             });
             @if(sizeof($experiment->workflows) !== 0)
             showWorkflow(`{!!$experiment->workflows[0]->workflow!!}`, '{{$experiment->workflows[0]->name}}');
