@@ -1,7 +1,7 @@
-<a class="action-link float-right"
-   href="{{route('projects.create')}}">
-    <i class="fas fa-plus mr-2"></i>Create Sample
-</a>
+{{--<a class="action-link float-right"--}}
+{{--   href="{{route('projects.create')}}">--}}
+{{--    <i class="fas fa-plus mr-2"></i>Create Sample--}}
+{{--</a>--}}
 
 <table id="entities" class="table table-hover" style="width:100%">
     <thead>

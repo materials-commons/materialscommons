@@ -16,9 +16,9 @@
                 <i class="fas fa-download mr-2"></i>Download As Excel
             </a>
 
-            <a class="action-link float-right mr-4" href="#">
-                <i class="fas fa-plus mr-2"></i>Create Sample
-            </a>
+            {{--            <a class="action-link float-right mr-4" href="#">--}}
+            {{--                <i class="fas fa-plus mr-2"></i>Create Sample--}}
+            {{--            </a>--}}
         @endslot
 
         @slot('body')
