@@ -53,7 +53,6 @@
         });
 
         function showWorkflow(code, name) {
-            console.log(`showWorkflow ${code}`);
             if (chart) {
                 chart.clean();
             }
