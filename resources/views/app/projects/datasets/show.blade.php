@@ -87,6 +87,8 @@
         @include('app.projects.datasets.tabs.files')
     @elseif(Request::routeIs('projects.datasets.show.entities'))
         @include('app.projects.datasets.tabs.entities')
+    @elseif(Request::routeIs('projects.datasets.show.workflows'))
+        @include('app.projects.datasets.tabs.workflows')
     @endif
 
 @stop

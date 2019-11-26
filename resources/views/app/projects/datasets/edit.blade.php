@@ -111,15 +111,21 @@
                         Cancel
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="save-button" onclick="save()">
+                    <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
                         Save
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="add-samples-button" onclick="addSamples()">
+                    <a class="action-link mr-3" href="#" id="add-workflow-button"
+                       onclick="setActionAndSubmit('workflow')">
+                        Add Workflow
+                    </a>
+
+                    <a class="action-link mr-3" href="#" id="add-samples-button"
+                       onclick="setActionAndSubmit('samples')">
                         Add Samples
                     </a>
 
-                    <a class="action-link" href="#" id="add-files-button" onclick="addFiles()">
+                    <a class="action-link" href="#" id="add-files-button" onclick="setActionAndSubmit('files')">
                         Add Files
                     </a>
                 </div>
@@ -146,25 +152,17 @@
                     $("#save-button").prop("disabled", true).addClass("isDisabled");
                     $("#add-samples-button").prop("disabled", true).addClass("isDisabled");
                     $("#add-files-button").prop("disabled", true).addClass("isDisabled");
+                    $("#add-workflow-button").prop("disabled", true).addClass("isDisabled");
                 } else {
                     $("#save-button").prop("disabled", false).removeClass("isDisabled");
                     $("#add-samples-button").prop("disabled", false).removeClass("isDisabled");
                     $("#add-files-button").prop("disabled", false).removeClass("isDisabled");
+                    $("#add-workflow-button").prop("disabled", false).removeClass("isDisabled");
                 }
             }
 
-            function save() {
-                $('#action').val("save");
-                document.getElementById('dataset-update').submit();
-            }
-
-            function addSamples() {
-                $('#action').val("samples");
-                document.getElementById('dataset-update').submit();
-            }
-
-            function addFiles() {
-                $('#action').val("files");
+            function setActionAndSubmit(action) {
+                $('#action').val(action);
                 document.getElementById('dataset-update').submit();
             }
         </script>

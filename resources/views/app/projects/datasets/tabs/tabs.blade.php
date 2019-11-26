@@ -16,6 +16,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{setActiveNavByName('projects.datasets.show.workflows')}}"
+           href="{{route('projects.datasets.show.workflows', [$project, $dataset])}}">
+            Workflows
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.datasets.show.entities')}}"
            href="{{route('projects.datasets.show.entities', [$project, $dataset])}}">
             Samples
