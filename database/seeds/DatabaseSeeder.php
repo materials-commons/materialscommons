@@ -141,7 +141,8 @@ class DatabaseSeeder extends Seeder
 
         // Attach to all experiments
         foreach ($experiments as $exp) {
-            $exp->workflows()->attach($workflow);
+//            $exp->workflows()->attach($workflow);
+            $exp->workflows()->attach(factory(Workflow::class)->create(['owner_id' => $user->id]));
             $exp->entities()->attach($entity);
             $exp->activities()->attach($activity);
             $exp->files()->attach($files[0]);
