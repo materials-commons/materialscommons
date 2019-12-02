@@ -15,6 +15,6 @@
     </div>
 
     <script>
-        setTimeout(() => $(".alert").alert('close'), 2000);
+        // setTimeout(() => $(".alert").alert('close'), 2000);
     </script>
 @endif

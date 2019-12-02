@@ -12,6 +12,7 @@ class UpdateAccountGlobusUserWebController extends Controller
         $validated = $request->validated();
         $user = auth()->user();
         $user->update(['globus_user' => $validated['globus_user']]);
+        flash("Globus user updated")->success();
         return redirect(route('accounts.show'));
     }
 }

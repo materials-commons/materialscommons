@@ -24,9 +24,8 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" type="text">
-                        {{$user->description}}
-                    </textarea>
+                    <textarea class="form-control" id="description"
+                              name="description" type="text">{{$user->description}}</textarea>
                 </div>
                 <div class="float-right">
                     <a class="action-link" href="#"

@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.1.3",
+    "ext-fileinfo": "*",
     "ext-json": "*",
     "ext-zip": "*",
     "bensampo/laravel-enum": "^1.16",
@@ -17,6 +18,7 @@
     "fideloper/proxy": "^4.0",
     "freshbitsweb/laratables": "^2.1",
     "guzzlehttp/guzzle": "~6.0",
+    "laracasts/flash": "^3.0",
     "laravel/framework": "^6.0",
     "laravel/tinker": "^1.0",
     "maatwebsite/excel": "^3.1",
@@ -26,8 +28,7 @@
     "spatie/laravel-tags": "^2.4",
     "spatie/laravel-view-models": "^1.1",
     "tightenco/ziggy": "^0.8",
-    "waavi/sanitizer": "~1.0",
-    "ext-fileinfo": "*"
+    "waavi/sanitizer": "~1.0"
   },
   "require-dev": {
     "facade/ignition": "^1.4",

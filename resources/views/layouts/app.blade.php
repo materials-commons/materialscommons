@@ -55,6 +55,7 @@
         @yield('nav')
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="mt-3">
+                @include('flash::message')
                 @yield('breadcrumbs')
                 @yield('content')
             </div>
@@ -63,7 +64,9 @@
 </div>
 
 {{--@livewireAssets--}}
-
+<script>
+    $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+</script>
 @stack('scripts')
 </body>
 </html>

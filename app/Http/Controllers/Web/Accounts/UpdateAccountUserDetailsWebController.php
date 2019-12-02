@@ -12,6 +12,7 @@ class UpdateAccountUserDetailsWebController extends Controller
         $validated = $request->validated();
         $user = auth()->user();
         $user->update($validated);
+        flash('Updated')->success();
         return redirect(route('accounts.show'));
     }
 }
