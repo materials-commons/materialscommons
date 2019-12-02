@@ -9,6 +9,7 @@
                     {{$project->name}}
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.experiments')}}"
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
@@ -16,6 +17,7 @@
                     Experiments
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.entities')}}"
                    href="{{route('projects.entities.index', ['project' => $project->id])}}">
@@ -23,6 +25,7 @@
                     Samples
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.activities')}}"
                    href="{{route('projects.activities.index', ['project' => $project->id])}}">
@@ -30,11 +33,26 @@
                     Processes
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.folders')}}"
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
                     Files
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3" href="#">
+                    <i class="fa-fw fas fa-cloud-upload-alt mr-2"></i>
+                    Globus Upload
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3" href="#">
+                    <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
+                    Globus Download
                 </a>
             </li>
 
@@ -63,6 +81,13 @@
 
             <li class="nav-item">
                 <br>
+                <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}" href="{{route('accounts.show')}}">
+                    <i class="fa-fw fas fa-user mr-2"></i>
+                    Account
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11" href="{{route('public.index')}}">
                     <i class="fa-fw fas fa-globe mr-2"></i>
                     Public Data
