@@ -60,7 +60,7 @@ class Project extends Model
 
     public function experiments()
     {
-        return $this->hasMany(Experiment::class, 'project_id');
+        return $this->hasMany(Experiment::class, 'project_id')->orderBy('name');
     }
 
     public function entities()
