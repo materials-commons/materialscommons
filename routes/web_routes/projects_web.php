@@ -3,6 +3,8 @@
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectDownloadLinkWebController;
+use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectUploadLinkWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -35,3 +37,9 @@ Route::get('/projects/{project}/users', IndexProjectUsersWebController::class)
 
 Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::class)
      ->name('projects.users.edit');
+
+Route::get('/projects/{project}/globus/upload', GlobusGetProjectUploadLinkWebController::class)
+     ->name('projects.globus.upload');
+
+Route::get('/projects/{project}/globus/download', GlobusGetProjectDownloadLinkWebController::class)
+     ->name('projects.globus.download');
