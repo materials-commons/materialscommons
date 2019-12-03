@@ -15,7 +15,7 @@ trait SaveFile
     private function dirPathFromUuid($uuid)
     {
         $entries = explode('-', $uuid);
-        $entry1  = $entries[1];
+        $entry1 = $entries[1];
 
         return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
     }

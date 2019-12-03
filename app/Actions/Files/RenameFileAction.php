@@ -18,12 +18,14 @@ class RenameFileAction
     {
         // When renaming a file make sure to rename its previous versions
         $previousVersions = $file->previousVersions()->get();
-        DB::transaction(function () use ($file, $previousVersions, $name) {
-            $file->update(['name' => $name]);
-            if ($previousVersions->isNotEmpty()) {
-                File::whereIn('id', $previousVersions->pluck('id'))->update(['name' => $name]);
+        DB::transaction(
+            function () use ($file, $previousVersions, $name) {
+                $file->update(['name' => $name]);
+                if ($previousVersions->isNotEmpty()) {
+                    File::whereIn('id', $previousVersions->pluck('id'))->update(['name' => $name]);
+                }
             }
-        });
+        );
 
         return $file->fresh();
     }
