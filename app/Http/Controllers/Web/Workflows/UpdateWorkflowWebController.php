@@ -9,15 +9,11 @@ use App\Models\Workflow;
 
 class UpdateWorkflowWebController extends Controller
 {
-    public function __invoke(
-        UpdateWorkflowRequest $request,
-        UpdateWorkflowAction $updateWorkflowAction,
-        $projectId,
-        $experimentId,
-        Workflow $workflow
-    ) {
+    public function __invoke(UpdateWorkflowRequest $request, UpdateWorkflowAction $updateWorkflowAction, $projectId,
+        $experimentId, Workflow $workflow)
+    {
         $validated = $request->validated();
-        $updateWorkflowAction($workflow, $validated['workflow']);
+        $updateWorkflowAction($workflow, $validated);
         return redirect(route('projects.experiments.show', [$projectId, $experimentId]));
     }
 }

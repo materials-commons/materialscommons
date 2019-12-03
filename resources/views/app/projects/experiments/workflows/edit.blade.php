@@ -22,7 +22,17 @@
 
                     @csrf
                     @method('patch')
-                    <input hidden name="project_id" value="{{$project->id}}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input class="form-control" id="name" name="name" type="text" value="{{$workflow->name}}"
+                               placeholder="Workflow Name...">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description"
+                                  placeholder="Description...">{{$workflow->description}}</textarea>
+                    </div>
+
                     <div class="form-group">
                         <label for="description">Workflow</label>
                         <textarea id="code" style="width:100%" rows="4"
@@ -33,6 +43,8 @@
                         <button class="btn btn-success">Save</button>
                         <button type="button" onclick="resetAndClose()" class="btn btn-warning">Cancel</button>
                     </div>
+
+                    <input hidden name="project_id" value="{{$project->id}}">
                 </form>
             </div>
             <br>

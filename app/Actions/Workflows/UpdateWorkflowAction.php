@@ -6,8 +6,8 @@ use App\Models\Workflow;
 
 class UpdateWorkflowAction
 {
-    public function __invoke(Workflow $workflow, $workflowText)
+    public function __invoke(Workflow $workflow, $data)
     {
-        return tap($workflow)->update(['workflow' => $workflowText])->fresh();
+        return tap($workflow)->update($data)->fresh();
     }
 }
