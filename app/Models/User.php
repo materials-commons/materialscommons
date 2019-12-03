@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'globus_user', 'description',
+        'name', 'email', 'password', 'globus_user', 'description', 'api_token',
     ];
 
     /**
