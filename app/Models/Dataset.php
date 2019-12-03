@@ -26,7 +26,7 @@ class Dataset extends Model
 
     public function workflows()
     {
-        return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
+        return $this->morphToMany(Workflow::class, 'item', 'item2workflow')->orderBy('name');
     }
 
     public function entities()

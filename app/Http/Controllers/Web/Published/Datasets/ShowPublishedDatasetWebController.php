@@ -7,8 +7,9 @@ use App\Models\Dataset;
 
 class ShowPublishedDatasetWebController extends Controller
 {
-    public function __invoke(Dataset $dataset)
+    public function __invoke($datasetId)
     {
+        $dataset = Dataset::with('workflows')->findOrFail($datasetId);
         return view('public.datasets.show', compact('dataset'));
     }
 }
