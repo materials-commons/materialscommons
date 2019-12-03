@@ -12,6 +12,9 @@ class ShowExperimentWebController extends Controller
     {
         $project = Project::with('experiments')->findOrFail($projectId);
         $experiment = Experiment::with('workflows')->findOrFail($experimentId);
-        return view('app.projects.experiments.show', compact('project', 'experiment'));
+        // Datatables does case-insensitive sorting. The database is returning case sensitive, so
+        // create a case insensitive list of the workflow items
+        $workflows = $experiment->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+        return view('app.projects.experiments.show', compact('project', 'experiment', 'workflows'));
     }
 }

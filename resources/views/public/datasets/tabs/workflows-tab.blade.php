@@ -8,7 +8,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($dataset->workflows as $workflow)
+        @foreach($workflows as $workflow)
             <tr>
                 <td>
                     <a onclick="showWorkflow(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
@@ -32,11 +32,11 @@
             $('#workflows').DataTable({
                 stateSave: true,
                 pageLength: 4,
-                orderFixed: [0, 'desc'],
+                order: [[0, 'desc']],
                 lengthMenu: [4],
             });
-            @if(sizeof($dataset->workflows) !== 0)
-            showWorkflow(`{!!$dataset->workflows[0]->workflow!!}`, '{{$dataset->workflows[0]->name}}');
+            @if(sizeof($workflows) !== 0)
+            showWorkflow(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
             @endif
         });
 
