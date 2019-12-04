@@ -37,6 +37,15 @@
 
             <br>
             <hr>
+            <h3 class="mb-3">API Token</h3>
+            <a href="#" onclick="toggleAPIToken()" id="apitokenlink">Show API Token</a>
+            <div class="form-group" id="apitoken" style="display:none">
+                <label for="apitokeninput">API Token</label>
+                <input id="apitokeninput" value="{{$user->api_token}}" readonly>
+            </div>
+
+            <br>
+            <hr>
             <h3 class="mb-3">Globus Account</h3>
 
             <form method="post" id="globus" action="{{route('accounts.update.globus')}}">
@@ -95,4 +104,16 @@
             </form>
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            let showingAPIToken = false;
+
+            function toggleAPIToken() {
+                document.getElementById('apitoken').style.display = showingAPIToken ? "none" : "block";
+                document.getElementById('apitokenlink').innerHTML = showingAPIToken ? "Show API Token" : "Hide API Token";
+                showingAPIToken = !showingAPIToken;
+            }
+        </script>
+    @endpush
 @stop
