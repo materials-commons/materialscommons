@@ -12,8 +12,15 @@
                 <label for="comment_{{$comment->id}}">{{$comment->title}}</label>
                 <textarea class="form-control" id="comment_{{$comment->id}}" readonly
                           style="min-width:100%">{{$comment->body}}</textarea>
-                <span><small>{{$comment->owner->name}}</small> <small
-                            class="ml-2">Created: {{$comment->updated_at->diffForHumans()}}</small></span>
+                <span>
+                    <small>{{$comment->owner->name}}</small>
+                    <small class="ml-2">Created: {{$comment->updated_at->diffForHumans()}}</small>
+                    @if ($user->id === $comment->owner->id)
+                        <small class="ml-2">
+                            <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}">edit</a>
+                        </small>
+                    @endif
+                </span>
             </div>
         </form>
     </div>
