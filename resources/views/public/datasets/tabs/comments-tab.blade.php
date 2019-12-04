@@ -19,6 +19,9 @@
                         <small class="ml-2">
                             <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}">edit</a>
                         </small>
+                        <small class="ml-2">
+                            <a href="{{route('public.datasets.comments.delete', [$dataset, $comment])}}">delete</a>
+                        </small>
                     @endif
                 </span>
             </div>
