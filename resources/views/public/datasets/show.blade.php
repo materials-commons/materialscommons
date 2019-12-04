@@ -50,6 +50,8 @@
                 @include('public.datasets.tabs.activities-tab')
             @elseif (Request::routeIs('public.datasets.files*'))
                 @include('public.datasets.tabs.files-tab')
+            @elseif (Request::routeIs('public.datasets.comments*'))
+                @include('public.datasets.tabs.comments-tab')
             @endif
 
         @endslot

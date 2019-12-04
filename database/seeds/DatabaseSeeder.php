@@ -3,6 +3,7 @@
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Comment;
 use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Entity;
@@ -61,6 +62,13 @@ class DatabaseSeeder extends Seeder
             'owner_id'   => $user->id,
             'project_id' => $p->id,
         ]);
+
+        foreach ($datasets as $dataset) {
+            $comment = factory(Comment::class)->create();
+            $dataset->comments()->save($comment);
+            $comment = factory(Comment::class)->create();
+            $dataset->comments()->save($comment);
+        }
 
         $communities[0]->datasets()->attach($datasets);
 
@@ -141,7 +149,7 @@ class DatabaseSeeder extends Seeder
 
         // Attach to all experiments
         foreach ($experiments as $exp) {
-//            $exp->workflows()->attach($workflow);
+            //            $exp->workflows()->attach($workflow);
             $exp->workflows()->attach(factory(Workflow::class)->create(['owner_id' => $user->id]));
             $exp->entities()->attach($entity);
             $exp->activities()->attach($activity);
