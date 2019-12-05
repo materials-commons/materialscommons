@@ -22,6 +22,7 @@
                     <th>Community</th>
                     <th>Description</th>
                     <th>Updated</th>
+                    <th>Public?</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -35,8 +36,9 @@
                         </td>
                         <td>{{$community->description}}</td>
                         <td>{{$community->updated_at->diffForHumans()}}</td>
+                        <td>{{$community->public ? "Yes" : "No"}}</td>
                         <td>
-                            @include('partials.table_row_controls.partial', [
+                            @include('partials.table_row_controls', [
                                     'showRoute' => route('communities.show', [$community]),
                                     'editRoute' => route('communities.edit', [$community]),
                                     'deleteRoute' => route('communities.delete', [$community])

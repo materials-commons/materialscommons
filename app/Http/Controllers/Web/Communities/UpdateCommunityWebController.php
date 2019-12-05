@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Web\Communities;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Communities\UpdateCommunityRequest;
+use App\Models\Community;
 
 class UpdateCommunityWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateCommunityRequest $request, Community $community)
     {
-        //
+        $validated = $request->validated();
+        $community->update($validated);
+        return redirect(route('communities.index'));
     }
 }
