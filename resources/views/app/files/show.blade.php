@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'View Process')
+@section('pageTitle', 'View File')
 
 @section('nav')
     @isset($project)

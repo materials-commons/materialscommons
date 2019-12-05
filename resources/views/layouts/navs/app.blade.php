@@ -7,12 +7,13 @@
                     Projects
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('tasks')}}" href="{{route('tasks.index')}}">
-                    <i class="fa-fw fas fa-tasks mr-2"></i>
-                    Tasks
-                </a>
-            </li>
+
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 {{setActiveNav('tasks')}}" href="{{route('tasks.index')}}">--}}
+            {{--                    <i class="fa-fw fas fa-tasks mr-2"></i>--}}
+            {{--                    Tasks--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
@@ -22,11 +23,18 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('settings')}}" href="{{route('settings.index')}}">
-                    <i class="fa-fw fas fa-cogs mr-2 {{setActiveNav('settings')}}"></i>
-                    Settings
+                <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
+                    <i class="fa-fw fas fa-users mr-2"></i>
+                    Communities
                 </a>
             </li>
+
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 {{setActiveNav('settings')}}" href="{{route('settings.index')}}">--}}
+            {{--                    <i class="fa-fw fas fa-cogs mr-2 {{setActiveNav('settings')}}"></i>--}}
+            {{--                    Settings--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             <li class="nav-item">
                 <br>

@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'owner_id');
     }
+
+    public function communities()
+    {
+        return $this->hasMany(Community::class, 'owner_id');
+    }
 }
