@@ -13,7 +13,8 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('public.datasets.comments.destroy', [$dataset])}}" id="comment-detroy">
+            <form method="post" action="{{route('public.datasets.comments.destroy', [$dataset, $comment])}}"
+                  id="comment-detroy">
                 @csrf
                 @method('delete')
                 <div class="form-group">
