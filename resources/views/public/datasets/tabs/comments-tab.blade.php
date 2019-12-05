@@ -14,7 +14,7 @@
                           style="min-width:100%">{{$comment->body}}</textarea>
                 <span>
                     <small>{{$comment->owner->name}}</small>
-                    <small class="ml-2">Created: {{$comment->updated_at->diffForHumans()}}</small>
+                    <small class="ml-2">Last Updated: {{$comment->updated_at->diffForHumans()}}</small>
                     @if ($user->id === $comment->owner->id)
                         <small class="ml-2">
                             <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}">edit</a>
