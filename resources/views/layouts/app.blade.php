@@ -35,7 +35,7 @@
 
 <body>
 <nav class="navbar navbar-dark fixed-top bg-nav p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons 2</a>
     <div class="d-flex justify-content-endx">
         <input class="form-control w-75 form-rounded" type="text" placeholder="Search" aria-label="Search">
 
@@ -43,7 +43,8 @@
             <li class="nav-item text-nowrap">
                 <form method="post" action="{{route('logout')}}" id="signout">
                     @csrf
-                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign out</a>
+                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign
+                        out</a>
                 </form>
             </li>
         </ul>
