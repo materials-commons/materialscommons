@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Experiments\CreateExperimentWebController;
 use App\Http\Controllers\Web\Experiments\Datatables\GetExperimentActivitiesDatatableWebController;
 use App\Http\Controllers\Web\Experiments\Datatables\GetExperimentEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Experiments\DeleteExperimentWebController;
+use App\Http\Controllers\Web\Experiments\DestroyExperimentWebController;
 use App\Http\Controllers\Web\Experiments\EditExperimentWebController;
 use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
@@ -24,8 +25,11 @@ Route::prefix('/projects/{project}')->group(function () {
         UpdateExperimentWebController::class)->name('projects.experiments.update');
     Route::get('/experiments/{experiment}/edit', EditExperimentWebController::class)->name('projects.experiments.edit');
 
+    Route::get('/experiments/{experiment}/delete', DeleteExperimentWebController::class)
+         ->name('projects.experiments.delete');
+
     Route::delete('/experiments/{experiment}',
-        DeleteExperimentWebController::class)->name('projects.experiments.destroy');
+        DestroyExperimentWebController::class)->name('projects.experiments.destroy');
 
     Route::get('/experiments/{experiment}/entities-tab', function (Project $project, Experiment $experiment) {
         return view('app.projects.experiments.show', compact('project', 'experiment'));

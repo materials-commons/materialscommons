@@ -44,11 +44,10 @@
                                class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
-                            <a data-toggle="modal" href="#experiment-delete-{{$experiment->id}}" class="action-link">
+                            <a href="{{route('projects.experiment.delete', [$project, $experiment]}}"
+                               class="action-link">
                                 <i class="fas fa-fw fa-trash-alt"></i>
                             </a>
-                            @component('app.projects.delete-project', ['project' => $project])
-                            @endcomponent
                         </td>
                     </tr>
                 @endforeach

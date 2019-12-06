@@ -129,11 +129,14 @@
                                     project: projectId,
                                     experiment: row["1"]
                                 }).url();
-                                let deleteRef = `#experiment-delete-${row["1"]}`;
+                                let deleteRoute = route('projects.experiments.delete', {
+                                    project: projectId,
+                                    experiment: row["1"]
+                                }).url();
                                 return `
                                    <a href="${showRoute}" class="action-link"><i class="fas fa-fw fa-eye"></i></a>
                                    <a href="${editRoute}" class="action-link"><i class="fas fa-fw fa-edit"></i></a>
-                                   <a data-toggle="modal" href="${deleteRef}" class="action-link"><i class="fas fa-fw fa-trash-alt"></i></a>`;
+                                   <a href="${deleteRoute}" class="action-link"><i class="fas fa-fw fa-trash-alt"></i></a>`;
                             }
                         }
                     ],
