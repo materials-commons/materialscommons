@@ -28,7 +28,8 @@
     "spatie/laravel-tags": "^2.4",
     "spatie/laravel-view-models": "^1.1",
     "tightenco/ziggy": "^0.8",
-    "waavi/sanitizer": "~1.0"
+    "waavi/sanitizer": "~1.0",
+    "ylsideas/feature-flags": "^1.2"
   },
   "require-dev": {
     "facade/ignition": "^1.4",

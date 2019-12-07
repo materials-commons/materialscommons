@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-  "content-hash": "cbc928f1de50983e18bda823cbb336e5",
-    "packages": [
-        {
-            "name": "bensampo/laravel-enum",
-            "version": "v1.27",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "6dfe3045e740bbebe30cc8c31e3ed0f6c3b33f98"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "1708202d02941d011e4418ea1dddbd92",
+  "packages": [
+    {
+      "name": "bensampo/laravel-enum",
+      "version": "v1.27",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/BenSampo/laravel-enum.git",
+        "reference": "6dfe3045e740bbebe30cc8c31e3ed0f6c3b33f98"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/6dfe3045e740bbebe30cc8c31e3ed0f6c3b33f98",
                 "reference": "6dfe3045e740bbebe30cc8c31e3ed0f6c3b33f98",
@@ -985,61 +985,61 @@
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
         },
-        {
-          "name": "laracasts/flash",
-          "version": "3.0.3",
-          "source": {
-            "type": "git",
-            "url": "https://github.com/laracasts/flash.git",
-            "reference": "77fe3a0f0ebf32c66d9c891782e3fa4b305df249"
-          },
-          "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/laracasts/flash/zipball/77fe3a0f0ebf32c66d9c891782e3fa4b305df249",
-            "reference": "77fe3a0f0ebf32c66d9c891782e3fa4b305df249",
-            "shasum": ""
-          },
-          "require": {
-            "illuminate/support": "~5.0|^6.0",
-            "php": ">=5.4.0"
-          },
-          "require-dev": {
-            "mockery/mockery": "dev-master",
-            "phpunit/phpunit": "^6.1"
-          },
-          "type": "library",
-          "extra": {
-            "laravel": {
-              "providers": [
-                "Laracasts\\Flash\\FlashServiceProvider"
-              ],
-              "aliases": {
-                "Flash": "Laracasts\\Flash\\Flash"
-              }
-            }
-          },
-          "autoload": {
-            "psr-0": {
-              "Laracasts\\Flash": "src/"
-            },
-            "files": [
-              "src/Laracasts/Flash/functions.php"
-            ]
-          },
-          "notification-url": "https://packagist.org/downloads/",
-          "license": [
-            "MIT"
+    {
+      "name": "laracasts/flash",
+      "version": "3.0.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/laracasts/flash.git",
+        "reference": "77fe3a0f0ebf32c66d9c891782e3fa4b305df249"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/laracasts/flash/zipball/77fe3a0f0ebf32c66d9c891782e3fa4b305df249",
+        "reference": "77fe3a0f0ebf32c66d9c891782e3fa4b305df249",
+        "shasum": ""
+      },
+      "require": {
+        "illuminate/support": "~5.0|^6.0",
+        "php": ">=5.4.0"
+      },
+      "require-dev": {
+        "mockery/mockery": "dev-master",
+        "phpunit/phpunit": "^6.1"
+      },
+      "type": "library",
+      "extra": {
+        "laravel": {
+          "providers": [
+            "Laracasts\\Flash\\FlashServiceProvider"
           ],
-          "authors": [
-            {
-              "name": "Jeffrey Way",
-              "email": "jeffrey@laracasts.com"
-            }
-          ],
-          "description": "Easy flash notifications",
-          "time": "2019-09-03T18:59:42+00:00"
+          "aliases": {
+            "Flash": "Laracasts\\Flash\\Flash"
+          }
+        }
+      },
+      "autoload": {
+        "psr-0": {
+          "Laracasts\\Flash": "src/"
         },
-      {
+        "files": [
+          "src/Laracasts/Flash/functions.php"
+        ]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Jeffrey Way",
+          "email": "jeffrey@laracasts.com"
+        }
+      ],
+      "description": "Easy flash notifications",
+      "time": "2019-09-03T18:59:42+00:00"
+    },
+    {
             "name": "laravel/framework",
             "version": "v6.5.2",
             "source": {
@@ -4379,26 +4379,85 @@
             "description": "Data sanitizer and Laravel 5 form requests with input sanitation.",
             "keywords": [
                 "input",
-                "input filter",
-                "input sanitation",
-                "input sanitizer",
-                "laravel",
-                "sanitation",
-                "transform input"
+              "input filter",
+              "input sanitation",
+              "input sanitizer",
+              "laravel",
+              "sanitation",
+              "transform input"
             ],
-            "time": "2019-11-14T12:19:43+00:00"
+          "time": "2019-11-14T12:19:43+00:00"
         },
+    {
+      "name": "ylsideas/feature-flags",
+      "version": "v1.2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ylsideas/feature-flags.git",
+        "reference": "a2b4049ecb80c7ff45c477ca3f5b0d889b31f887"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/ylsideas/feature-flags/zipball/a2b4049ecb80c7ff45c477ca3f5b0d889b31f887",
+        "reference": "a2b4049ecb80c7ff45c477ca3f5b0d889b31f887",
+        "shasum": ""
+      },
+      "require": {
+        "illuminate/support": "6.*|5.8.*",
+        "php": "^7.2"
+      },
+      "require-dev": {
+        "mockery/mockery": "^1.2.3",
+        "orchestra/testbench": "4.0.*|3.9.*|3.8.*",
+        "phpunit/phpunit": "^8.3.4",
+        "scrutinizer/ocular": "^1.6"
+      },
+      "type": "library",
+      "extra": {
+        "laravel": {
+          "providers": [
+            "YlsIdeas\\FeatureFlags\\FeatureFlagsServiceProvider"
+          ],
+          "aliases": {
+            "FeatureFlags": "YlsIdeas\\FeatureFlags\\Facades\\Features"
+          }
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "YlsIdeas\\FeatureFlags\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
         {
-            "name": "zendframework/zend-code",
-            "version": "3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-code.git",
-                "reference": "46feaeecea14161734b56c1ace74f28cb329f194"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/46feaeecea14161734b56c1ace74f28cb329f194",
+          "name": "Peter Fox",
+          "email": "peter.fox@ylsideas.co",
+          "role": "Developer"
+        }
+      ],
+      "description": "A Laravel package for handling feature flags",
+      "homepage": "https://github.com/ylsideas/feature-flags",
+      "keywords": [
+        "feature-flags",
+        "ylsideas"
+      ],
+      "time": "2019-10-28T13:44:11+00:00"
+    },
+    {
+      "name": "zendframework/zend-code",
+      "version": "3.4.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/zendframework/zend-code.git",
+        "reference": "46feaeecea14161734b56c1ace74f28cb329f194"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/zendframework/zend-code/zipball/46feaeecea14161734b56c1ace74f28cb329f194",
                 "reference": "46feaeecea14161734b56c1ace74f28cb329f194",
                 "shasum": ""
             },
@@ -8068,9 +8127,9 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3",
+      "php": "^7.1.3",
       "ext-fileinfo": "*",
-        "ext-json": "*",
+      "ext-json": "*",
       "ext-zip": "*"
     },
     "platform-dev": []
