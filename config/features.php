@@ -23,6 +23,7 @@ return [
 
     'feature' => [
         // 'login' => true,
+        'public-projects' => false,
     ],
 
     /*
