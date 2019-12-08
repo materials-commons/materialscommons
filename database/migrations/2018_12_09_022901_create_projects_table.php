@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('default_project')->default(false);
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_public')->default(false);
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
             $table->foreign('owner_id')
