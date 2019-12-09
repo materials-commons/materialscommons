@@ -39,15 +39,23 @@
     <div class="d-flex justify-content-endx">
         <input class="form-control w-75 form-rounded" type="text" placeholder="Search" aria-label="Search">
 
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <form method="post" action="{{route('logout')}}" id="signout">
-                    @csrf
-                    <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">Sign
-                        out</a>
-                </form>
-            </li>
-        </ul>
+        @auth
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <form method="post" action="{{route('logout')}}" id="signout">
+                        @csrf
+                        <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">
+                            Sign out</a>
+                    </form>
+                </li>
+            </ul>
+        @else
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link td-none" href="{{route('login')}}">Sign in/Register</a>
+                </li>
+            </ul>
+        @endauth
     </div>
 </nav>
 
