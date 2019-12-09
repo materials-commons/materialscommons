@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Folders\CreateFolderWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
+use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowRootFolderWebController;
 use App\Http\Controllers\Web\Folders\StoreFolderWebController;
@@ -14,6 +15,9 @@ Route::get('/projects/{project}/folders/{folder}/create', CreateFolderWebControl
      ->name('projects.folders.create');
 Route::post('/projects/{project}/folders/{folder}', StoreFolderWebController::class)
      ->name('projects.folders.store');
+
+Route::get('/projects/{project}/goto_folder_by_path', GotoFolderByPathInParam::class)
+     ->name('projects.folders.by_path');
 
 Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
      ->name('projects.folders.index');

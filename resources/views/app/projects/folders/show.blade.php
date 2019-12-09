@@ -12,7 +12,16 @@
             @if (Request::routeIs('projects.folders.index'))
                 {{$directory->name}}
             @else
-                {{$directory->path}}
+                @if(sizeof($dirPaths) == 1)
+                    {{$directory->name}}
+                @else
+                    @foreach($dirPaths as $dirpath)
+                        <a class="action-link"
+                           href="{{route('projects.folders.by_path', ['project' => $project, 'path' => $dirpath["path"]])}}">
+                            {{$dirpath['name']}}/
+                        </a>
+                    @endforeach
+                @endif
             @endif
             <a class="float-right action-link"
                href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
