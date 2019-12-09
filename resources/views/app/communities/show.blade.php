@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Show Community {{$community->name}}
+            Community: {{$community->name}}
             <a class="action-link float-right" href="{{route('communities.edit', [$community])}}">
                 <i class="fas fa-edit mr-2"></i>Edit Community
             </a>
