@@ -20,7 +20,7 @@
             </a>
 
             <a class="float-right action-link mr-4"
-               href="{{route('projects.edit', $project->id)}}">
+               href="{{route('projects.folders.create', [$project, $directory])}}">
                 <i class="fas fa-plus mr-2"></i>Create Directory
             </a>
         @endslot
