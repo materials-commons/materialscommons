@@ -24,8 +24,8 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
-                    <i class="fa-fw fas fa-users mr-2"></i>
-                    Communities
+                    <i class="fa-fw fas fa-users-cog mr-2"></i>
+                    Manage Communities
                 </a>
             </li>
 
