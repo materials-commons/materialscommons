@@ -2,16 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Laratrust\Models\LaratrustTeam;
 
-/**
- * @mixin Builder
- */
-class Team extends Model
+class Team extends LaratrustTeam
 {
-    use HasUUID;
     //
-    protected $guarded = ['id', 'uuid'];
 }

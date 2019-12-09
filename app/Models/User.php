@@ -6,12 +6,14 @@ use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * @mixin Builder
  */
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use Notifiable;
 
     /**
@@ -45,11 +47,6 @@ class User extends Authenticatable
     public function labs()
     {
         return $this->belongsToMany(Lab::class, 'lab2user', 'user_id', 'lab_id');
-    }
-
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'team2user', 'user_id', 'team_id');
     }
 
     public function tasks()
