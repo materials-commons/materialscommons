@@ -3,7 +3,7 @@
 @section('pageTitle', 'Samples')
 
 @section('nav')
-    @include('layouts.navs.project')
+    @include('layouts.navs.app.project')
 @stop
 
 @section('breadcrumbs', Breadcrumbs::render('projects.entities.index', $project))

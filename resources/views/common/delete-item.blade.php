@@ -3,7 +3,7 @@
 @section('pageTitle', 'Delete')
 
 @section('nav')
-    @include('layouts.navs.project')
+    @include('layouts.navs.app.project')
 @stop
 
 @section('content')

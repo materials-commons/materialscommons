@@ -4,7 +4,7 @@
 
 @section('nav')
     @isset($project)
-        @include('layouts.navs.project')
+        @include('layouts.navs.app.project')
     @else
         @include('layouts.navs.public')
     @endisset

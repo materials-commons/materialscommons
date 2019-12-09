@@ -3,7 +3,7 @@
 @section('pageTitle', 'Experiments')
 
 @section('nav')
-    @include('layouts.navs.project')
+    @include('layouts.navs.app.project')
 @stop
 
 @section('breadcrumbs', Breadcrumbs::render('projects.experiments.index', $project))
@@ -44,7 +44,7 @@
                                class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
-                            <a href="{{route('projects.experiment.delete', [$project, $experiment]}}"
+                            <a href="{{route('projects.experiments.delete', [$project, $experiment])}}"
                                class="action-link">
                                 <i class="fas fa-fw fa-trash-alt"></i>
                             </a>

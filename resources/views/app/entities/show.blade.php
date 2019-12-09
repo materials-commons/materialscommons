@@ -3,7 +3,7 @@
 @section('pageTitle', 'View Sample')
 
 @section('nav')
-    @include('layouts.navs.project')
+    @include('layouts.navs.app.project')
 @stop
 
 @if (Request::routeIs('projects.experiments*'))
