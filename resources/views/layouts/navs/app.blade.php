@@ -3,7 +3,7 @@
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
-                    <i class="fa-fw fas fa-project-diagram mr-2 "></i>
+                    <i class="fa-fw fas fa-layer-group mr-2 "></i>
                     Projects
                 </a>
             </li>
