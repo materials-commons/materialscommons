@@ -35,6 +35,8 @@ class ProcessGlobusTaskAction
             return;
         }
 
+        $upload->update(['loading' => true]);
+
         $this->globusApi->deleteEndpointAclRule($this->endpointId, $upload->globus_acl_id);
 
         if ($processTaskInBackground) {
