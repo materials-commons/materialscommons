@@ -35,6 +35,10 @@ class ProcessGlobusTaskAction
             return;
         }
 
+        if ($this->otherTasksForProjectAreLoading($upload->project_id)) {
+            return;
+        }
+
         $upload->update(['loading' => true]);
 
         $this->globusApi->deleteEndpointAclRule($this->endpointId, $upload->globus_acl_id);
@@ -46,5 +50,11 @@ class ProcessGlobusTaskAction
             $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, 1000);
             $loadGlobusUploadInProjectAction();
         }
+    }
+
+    private function otherTasksForProjectAreLoading($projectId)
+    {
+        $count = GlobusUpload::where('project_id', $projectId)->count();
+        return $count > 0; // If greater than zero than tasks for this project are being loaded.
     }
 }
