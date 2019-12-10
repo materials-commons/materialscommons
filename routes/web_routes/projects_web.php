@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectDownloadLinkWebController;
 use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectUploadLinkWebController;
+use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadsStatusWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -43,3 +44,6 @@ Route::get('/projects/{project}/globus/upload', GlobusGetProjectUploadLinkWebCon
 
 Route::get('/projects/{project}/globus/download', GlobusGetProjectDownloadLinkWebController::class)
      ->name('projects.globus.download');
+
+Route::get('/projects/{project}/globus/status', ShowProjectGlobusUploadsStatusWebController::class)
+     ->name('projects.globus.status');
