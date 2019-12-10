@@ -48,6 +48,13 @@ return [
             'retry_after' => 3610,
         ],
 
+        'database_spreadsheets' => [
+            'driver'      => 'database',
+            'table'       => 'jobs',
+            'queue'       => 'spreadsheets',
+            'retry_after' => 910,
+        ],
+
         'beanstalkd' => [
             'driver'      => 'beanstalkd',
             'host'        => 'localhost',
