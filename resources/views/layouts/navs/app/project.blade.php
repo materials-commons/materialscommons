@@ -66,7 +66,7 @@
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.status')}}"
                    href="{{route('projects.globus.status', [$project])}}">
-                    <i class="fa-fw fas fa-cloud mr-2"></i>
+                    <i class="fa-fw fas fa-info-circle mr-2"></i>
                     Globus Uploads Status
                 </a>
             </li>
