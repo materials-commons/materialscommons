@@ -3,9 +3,11 @@
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectDownloadLinkWebController;
-use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectUploadLinkWebController;
 use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadsStatusWebController;
+use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\StoreGlobusUploadToProjectWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -39,11 +41,17 @@ Route::get('/projects/{project}/users', IndexProjectUsersWebController::class)
 Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::class)
      ->name('projects.users.edit');
 
-Route::get('/projects/{project}/globus/upload', GlobusGetProjectUploadLinkWebController::class)
-     ->name('projects.globus.upload');
+Route::post('/projects/{project}/globus/uploads', StoreGlobusUploadToProjectWebController::class)
+     ->name('projects.globus.uploads.store');
 
-Route::get('/projects/{project}/globus/download', GlobusGetProjectDownloadLinkWebController::class)
-     ->name('projects.globus.download');
+Route::get('/projects/{project}/globus/uploads/create', CreateProjectGlobusUploadWebController::class)
+     ->name('projects.globus.uploads.create');
+
+Route::get('/projects/{project}/globus/uploads/{globusUpload}', ShowProjectGlobusUploadWebController::class)
+     ->name('projects.globus.uploads.show');
+
+Route::get('/projects/{project}/globus/downloads', GlobusGetProjectDownloadLinkWebController::class)
+     ->name('projects.globus.downloads');
 
 Route::get('/projects/{project}/globus/status', ShowProjectGlobusUploadsStatusWebController::class)
      ->name('projects.globus.status');

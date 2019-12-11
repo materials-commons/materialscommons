@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Globus;
 
-use App\Actions\Globus\CreateGlobusUploadRequestAction;
+use App\Actions\Globus\FinishCreatingGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
 use App\Models\GlobusUpload;
 use App\Models\Project;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class CreateGlobusUploadRequestActionTest extends TestCase
+class FinishCreatingGlobusUploadActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -29,8 +29,8 @@ class CreateGlobusUploadRequestActionTest extends TestCase
             'project_id' => $project->id,
         ]);
 
-        $createGlobusUploadRequestAction = new CreateGlobusUploadRequestAction($globusApiMock);
-        $globusUpload = $createGlobusUploadRequestAction($globusUpload, $user);
+        $finishCreatingGlobusUploadAction = new FinishCreatingGlobusUploadAction($globusApiMock);
+        $globusUpload = $finishCreatingGlobusUploadAction($globusUpload, $user);
         $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
         $this->assertEquals($globusUpload->globus_endpoint_id, $endpointId);
         $expectedGlobusPath = "/__globus_uploads/{$globusUpload->uuid}/";

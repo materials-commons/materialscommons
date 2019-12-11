@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property string $uuid
+ * @property string $name
+ * @property string $description
+ *
  * @mixin Builder
  */
 class Project extends Model

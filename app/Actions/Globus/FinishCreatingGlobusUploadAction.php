@@ -6,7 +6,7 @@ use App\Http\Controllers\Web\Projects\Globus\GlobusUrl;
 use App\Models\GlobusUpload;
 use App\Models\User;
 
-class CreateGlobusUploadRequestAction
+class FinishCreatingGlobusUploadAction
 {
     private $globusApi;
     private $endpointId;
