@@ -29,6 +29,16 @@ class GlobusApiTest extends TestCase
         $this->assertEquals('task_list', $resp['DATA_TYPE']);
     }
 
+    /** @test */
+    public function test_get_identities()
+    {
+        $globusApi = $this->createApiClient();
+        $resp = $globusApi->getIdentities(["gtarcea@umich.edu"]);
+        $this->assertArrayHasKey("identities", $resp);
+        $this->assertEquals(1, sizeof($resp["identities"]));
+        $this->assertArrayHasKey("id", $resp["identities"][0]);
+    }
+
     private function createApiClient(): GlobusApi
     {
         $ccUser = env('MC_GLOBUS_CC_USER');

@@ -10,7 +10,7 @@ class EndpointAclRule
     public $permissions;
     public $endpointId;
 
-    public function __construct($principalType, $identityId, $path, $permissions, $endpointId)
+    public function __construct($identityId, $path, $permissions, $endpointId, $principalType = "identity")
     {
         $this->principalType = $principalType;
         $this->identityId = $identityId;

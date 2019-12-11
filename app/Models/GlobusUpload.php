@@ -9,7 +9,7 @@ class GlobusUpload extends Model
 {
     use HasUUID;
 
-    protected $guarded = ['id', 'uuid'];
+    protected $guarded = ['id'];
 
     public function project()
     {

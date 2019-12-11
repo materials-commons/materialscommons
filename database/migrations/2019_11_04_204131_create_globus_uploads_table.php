@@ -21,11 +21,16 @@ class CreateGlobusUploadsTable extends Migration
             $table->string('globus_acl_id');
             $table->string('globus_endpoint_id');
             $table->string('globus_identity_id');
+            $table->string('globus_path');
 
             $table->string('path', 700);
 
             // True if the request is already being processed
             $table->boolean('loading')->nullable();
+
+            // Initially true - status information so a user can check if the files
+            // are being uploaded, or being processed.
+            $table->boolean('uploading')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
