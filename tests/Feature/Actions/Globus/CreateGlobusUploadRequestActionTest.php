@@ -7,6 +7,7 @@ use App\Actions\Globus\GlobusApi;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
@@ -45,5 +46,8 @@ class CreateGlobusUploadRequestActionTest extends TestCase
             'globus_acl_id'      => 'acl_id_1234',
             'path'               => storage_path("app/__globus_uploads/{$uuid}"),
         ]);
+
+        Storage::disk('local')->assertExists("__globus_uploads/{$uuid}");
+        Storage::disk('local')->deleteDirectory("__globus_uploads");
     }
 }
