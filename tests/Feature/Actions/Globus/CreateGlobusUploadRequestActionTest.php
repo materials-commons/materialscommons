@@ -4,11 +4,11 @@ namespace Tests\Feature\Actions\Globus;
 
 use App\Actions\Globus\CreateGlobusUploadRequestAction;
 use App\Actions\Globus\GlobusApi;
+use App\Models\GlobusUpload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class CreateGlobusUploadRequestActionTest extends TestCase
@@ -24,18 +24,20 @@ class CreateGlobusUploadRequestActionTest extends TestCase
 
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $uuid = Uuid::uuid4()->toString();
+        $globusUpload = factory(GlobusUpload::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
 
         $createGlobusUploadRequestAction = new CreateGlobusUploadRequestAction($globusApiMock);
-        $resp = $createGlobusUploadRequestAction($project, $user, $uuid);
+        $globusUpload = $createGlobusUploadRequestAction($globusUpload, $user);
         $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
-        $this->assertEquals($resp->globusEndpointId, $endpointId);
-        $expectedGlobusPath = "/__globus_uploads/${uuid}/";
+        $this->assertEquals($globusUpload->globus_endpoint_id, $endpointId);
+        $expectedGlobusPath = "/__globus_uploads/{$globusUpload->uuid}/";
         $expectedUrl = "https://app.globus.org/file-manager?destination_id={$endpointId}&destination_path={$expectedGlobusPath}";
-        $this->assertEquals($expectedUrl, $resp->globusUrl);
-        $this->assertEquals($expectedGlobusPath, $resp->globusEndpointPath);
+        $this->assertEquals($expectedUrl, $globusUpload->globus_url);
+        $this->assertEquals($expectedGlobusPath, $globusUpload->globus_path);
         $this->assertDatabaseHas('globus_uploads', [
-            'uuid'               => $uuid,
             'owner_id'           => $user->id,
             'project_id'         => $project->id,
             'loading'            => false,
@@ -44,10 +46,10 @@ class CreateGlobusUploadRequestActionTest extends TestCase
             'globus_endpoint_id' => $endpointId,
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
-            'path'               => storage_path("app/__globus_uploads/{$uuid}"),
+            'path'               => storage_path("app/__globus_uploads/{$globusUpload->uuid}"),
         ]);
 
-        Storage::disk('local')->assertExists("__globus_uploads/{$uuid}");
+        Storage::disk('local')->assertExists("__globus_uploads/{$globusUpload->uuid}");
         Storage::disk('local')->deleteDirectory("__globus_uploads");
     }
 }

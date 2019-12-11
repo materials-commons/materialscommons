@@ -17,13 +17,17 @@ class CreateGlobusUploadsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
 
-            // Globus columns
-            $table->string('globus_acl_id');
-            $table->string('globus_endpoint_id');
-            $table->string('globus_identity_id');
-            $table->string('globus_path');
+            $table->string('name');
+            $table->string('description')->nullable();
 
-            $table->string('path', 700);
+            // Globus columns
+            $table->string('globus_acl_id')->nullable();
+            $table->string('globus_endpoint_id')->nullable();
+            $table->string('globus_identity_id')->nullable();
+            $table->string('globus_path')->nullable();
+            $table->string('globus_url')->nullable();
+
+            $table->string('path', 700)->nullable();
 
             // True if the request is already being processed
             $table->boolean('loading')->nullable();

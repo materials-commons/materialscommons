@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 
 /**
+ * @property string $globus_user
  * @mixin Builder
  */
 class User extends Authenticatable
