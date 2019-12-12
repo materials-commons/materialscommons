@@ -18,13 +18,37 @@
         <tr>
             <td>{{$upload->name}}</td>
             <td>{{$upload->description}}</td>
-            <td><a href="{{$upload->globus_url}}" target="_blank">Goto Globus</a></td>
+            <td>
+                @if($upload->uploading)
+                    <a href="{{$upload->globus_url}}" target="_blank">Goto Globus</a>
+                @endif
+            </td>
             @if($showProject)
                 <td>{{$upload->project->name}}</td>
             @endif
             <td>{{$upload->owner->name}}</td>
             <td>{{$upload->updated_at->diffForHumans()}}</td>
-            <td>{{$upload->loading ? "Processing files" : "Unprocessed/Still uploading"}}</td>
+            <td>
+                @if($upload->uploading)
+                    Open for Uploads/Uploading files
+                @elseif ($upload->loading)
+                    Processing files
+                @else
+                    Waiting to process files
+                @endif
+            </td>
+            <td>
+                @if ($upload->uploading)
+                    <a href="{{route('projects.globus.uploads.done', [$project, $upload])}}"
+                       class="btn btn-sm btn-success">
+                        <i class="fas fa-fw fa-check-circle"></i> done
+                    </a>
+                    <a href="{{route('projects.globus.uploads.delete', [$project, $upload])}}"
+                       class="btn btn-sm btn-danger">
+                        <i class="fas fa-fw fa-trash-alt"></i> delete
+                    </a>
+                @endif
+            </td>
         </tr>
     @endforeach
     </tbody>
