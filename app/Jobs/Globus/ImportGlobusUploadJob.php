@@ -16,10 +16,12 @@ class ImportGlobusUploadJob implements ShouldQueue
 
     /** @var GlobusUpload */
     private $globusUpload;
+    private $maxItemsToProcess;
 
-    public function __construct(GlobusUpload $globusUpload)
+    public function __construct(GlobusUpload $globusUpload, $maxItemsToProcess)
     {
         $this->globusUpload = $globusUpload;
+        $this->maxItemsToProcess = $maxItemsToProcess;
     }
 
     /**
@@ -29,7 +31,8 @@ class ImportGlobusUploadJob implements ShouldQueue
      */
     public function handle()
     {
-        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($this->globusUpload, 1000);
+        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($this->globusUpload,
+            $this->maxItemsToProcess);
         $loadGlobusUploadInProjectAction();
     }
 }

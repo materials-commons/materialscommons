@@ -17,7 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $globus_url
  * @property string $path
  * @property boolean $loading
- * @property boolean uploading
+ * @property boolean $uploading
+ * @property integer $project_id
+ *
  * @mixin Builder
  */
 class GlobusUpload extends Model
