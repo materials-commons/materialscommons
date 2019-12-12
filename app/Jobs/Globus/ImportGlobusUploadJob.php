@@ -14,9 +14,11 @@ class ImportGlobusUploadJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    // For testability these properties are public.
+
     /** @var GlobusUpload */
-    private $globusUpload;
-    private $maxItemsToProcess;
+    public $globusUpload;
+    public $maxItemsToProcess;
 
     public function __construct(GlobusUpload $globusUpload, $maxItemsToProcess)
     {
