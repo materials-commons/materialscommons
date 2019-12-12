@@ -18,7 +18,7 @@ class ProcessFinishedGlobusUploadsAction
             $upload->update(['loading' => true]);
             if ($processUploadsInBackground) {
                 $importGlobusUploadJob = new ImportGlobusUploadJob($upload, 1000);
-                dispatch($importGlobusUploadJob);
+                dispatch($importGlobusUploadJob)->onQueue('globus');
             } else {
                 $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, 1000);
                 $loadGlobusUploadInProjectAction();
