@@ -6,7 +6,7 @@ use App\Models\GlobusUpload;
 
 class GetFinishedGlobusUploadsAction
 {
-    // Returns the list of globus uploads that are not in process that **do not** have a project_id matching
+    // Returns the list of globus uploads that are not in process and that **do not** have a project_id matching
     // an upload that is being processed.
     public function __invoke()
     {
