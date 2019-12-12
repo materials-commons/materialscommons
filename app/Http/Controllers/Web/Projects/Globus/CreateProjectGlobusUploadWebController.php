@@ -9,6 +9,8 @@ class CreateProjectGlobusUploadWebController extends Controller
 {
     public function __invoke(Project $project)
     {
-        return view('app.projects.globus.uploads.create', compact('project'));
+        $user = auth()->user();
+
+        return view('app.projects.globus.uploads.create', compact('project', 'user'));
     }
 }
