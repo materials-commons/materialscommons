@@ -36,6 +36,9 @@
                     <div class="col h5">
                         <span>Owner: {{$project->owner->name}}</span>
                         <span class="ml-4">Last Updated {{$project->updated_at->diffForHumans()}}</span>
+                        <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
+                            {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
+                        </a>
                         {{--                        <div class="form-group form-check-inline ml-4">--}}
                         {{--                            <input type="checkbox" class="form-check-input" id="is_active"--}}
                         {{--                                   {{$project->is_active ? 'checked' : ''}} readonly onclick="return false;">--}}

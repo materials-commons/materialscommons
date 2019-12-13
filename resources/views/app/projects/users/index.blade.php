@@ -23,12 +23,18 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Description</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($project->users as $user)
                     <tr>
-                        <td>{{$user->name}}</td>
+                        <td>
+                            <a href="{{route('projects.users.show', [$project, $user])}}">
+                                {{$user->name}}
+                            </a>
+                        </td>
+                        <td>{{$user->description}}</td>
                     </tr>
                 @endforeach
                 </tbody>

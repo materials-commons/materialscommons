@@ -9,7 +9,7 @@ class ShowProjectWebController extends Controller
 {
     public function __invoke($projectId)
     {
-        $project = Project::with('owner')->where('id', $projectId)->first();
+        $project = Project::with('owner')->withCount('users')->where('id', $projectId)->first();
         return view('app.projects.show', compact('project'));
     }
 }
