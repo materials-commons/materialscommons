@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Modify project members')
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Modify Users
+            Modify Members of Project {{$project->name}}
         @endslot
 
         @slot('body')
