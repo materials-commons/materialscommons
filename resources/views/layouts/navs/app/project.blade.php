@@ -50,7 +50,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5" href="{{route('projects.globus.uploads.create', [$project])}}">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.uploads')}}"
+                   href="{{route('projects.globus.uploads.create', [$project])}}">
                     <i class="fa-fw fas fa-cloud-upload-alt mr-2"></i>
                     Globus Upload
                 </a>
@@ -67,7 +68,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.status')}}"
                    href="{{route('projects.globus.status', [$project])}}">
                     <i class="fa-fw fas fa-info-circle mr-2"></i>
-                    Globus Uploads Status
+                    Upload Status
                 </a>
             </li>
 
@@ -83,7 +84,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
                    href="{{route('projects.users.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-users-cog mr-2"></i>
-                    Users
+                    Members
                 </a>
             </li>
             <li class="nav-item">
