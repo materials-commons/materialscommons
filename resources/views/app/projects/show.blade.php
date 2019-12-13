@@ -26,35 +26,24 @@
         @endslot
 
         @slot('body')
-            <div class="ml-5">
-                <dl class="row">
-                    <dt class="col-sm-2">Name</dt>
-                    <dd class="col-sm-10">{{$project->name}}</dd>
-                    <dt class="col-sm-2">Description</dt>
-                    <dd class="col-sm-10">{{$project->description}}</dd>
-                    <dt class="col-sm-2">Owner</dt>
-                    <dd class="col-sm-10">{{$project->owner->name}}</dd>
-                    <dt class="col-sm-2">Last Updated</dt>
-                    <dd class="col-sm-10">{{$project->updated_at->diffForHumans()}}</dd>
-                </dl>
-{{--                <div class="form-group form-check-inline">--}}
-{{--                    <input type="checkbox" class="form-check-input" id="default_project"--}}
-{{--                           {{$project->default_project ? 'checked' : ''}} readonly onclick="return false;">--}}
-{{--                    <label class="form-check-label" for="default_project">Default Project?</label>--}}
-{{--                </div>--}}
-                <div class="form-group form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="is_active"
-                           {{$project->is_active ? 'checked' : ''}} readonly onclick="return false;">
-                    <label class="form-check-label" for="is_active">Is Active?</label>
+            <form>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" type="text" value=""
+                              placeholder="Description..." readonly>{{$project->description}}</textarea>
                 </div>
-            </div>
-            <div class="row ml-5">
-                <h5>Description</h5>
-            </div>
-            <div class="row ml-5">
-                <p>{{$project->description}}</p>
-            </div>
-            <br>
+                <div class="form-row">
+                    <div class="col h5">
+                        <span>Owner: {{$project->owner->name}}</span>
+                        <span class="ml-4">Last Updated {{$project->updated_at->diffForHumans()}}</span>
+                        {{--                        <div class="form-group form-check-inline ml-4">--}}
+                        {{--                            <input type="checkbox" class="form-check-input" id="is_active"--}}
+                        {{--                                   {{$project->is_active ? 'checked' : ''}} readonly onclick="return false;">--}}
+                        {{--                            <label class="form-check-label mt-2" for="is_active">Is Active?</label>--}}
+                        {{--                        </div>--}}
+                    </div>
+                </div>
+            </form>
         @endslot
     @endcomponent
 
