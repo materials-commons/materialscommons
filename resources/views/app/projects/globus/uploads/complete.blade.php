@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Globus Upload for project {{$project->name}}
+            Mark Globus upload done for {{$project->name}}
         @endslot
 
         @slot('body')
@@ -28,11 +28,14 @@
                               placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>
                 </div>
                 <div class="form-group">
-                    <a href="{{$globusUpload->globus_url}}" target="_blank">Goto Globus</a>
+                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
+                    <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
                 <div class="form-group">
-                    <p>
-                        Before marking as complete please make sure all globus transfers are done.
+                    <p class="h5">
+                        Before marking as complete please make sure all globus transfers are done. You can check your
+                        uploads on globus
+                        by clicking on the "View Globus Upload Activity" link above.
                     </p>
                 </div>
                 <div class="float-right">

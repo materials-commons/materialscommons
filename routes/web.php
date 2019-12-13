@@ -84,6 +84,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/datasets_web.php');
     require base_path('routes/web_routes/account_web.php');
     require base_path('routes/web_routes/communities_web.php');
+    require base_path('routes/web_routes/dashboard_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 

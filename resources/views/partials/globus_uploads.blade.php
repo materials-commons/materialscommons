@@ -19,7 +19,7 @@
             <td>{{$upload->name}}</td>
             <td>{{$upload->description}}</td>
             <td>
-                @if($upload->uploading)
+                @if($upload->uploading && $user->id == $upload->owner_id)
                     <a href="{{$upload->globus_url}}" target="_blank">Goto Globus</a>
                 @endif
             </td>
@@ -38,7 +38,7 @@
                 @endif
             </td>
             <td>
-                @if ($upload->uploading)
+                @if ($upload->uploading && $user->id == $upload->owner_id)
                     <a href="{{route('projects.globus.uploads.done', [$project, $upload])}}"
                        class="btn btn-sm btn-success">
                         <i class="fas fa-fw fa-check-circle"></i> done

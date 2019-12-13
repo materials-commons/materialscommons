@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Globus Upload for project {{$project->name}}
+            Delete Globus Upload for project {{$project->name}}
         @endslot
 
         @slot('body')
@@ -29,12 +29,15 @@
                               placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>
                 </div>
                 <div class="form-group">
-                    <a href="{{$globusUpload->globus_url}}" target="_blank">Goto Globus</a>
+                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
+                    <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
                 <div class="form-group">
-                    <p>
+                    <p class="h5">
                         Deleting the upload will prevent Globus from uploading any more files for this request. Any
                         files that were uploaded will not be loaded into the project and instead will be deleted.
+                        You can check your uploads on globus
+                        by clicking on the "View Globus Upload Activity" link above.
                     </p>
                 </div>
                 <div class="float-right">
