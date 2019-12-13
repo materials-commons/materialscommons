@@ -30,23 +30,9 @@
         @endslot
 
         @slot('body')
-            <div class="ml-5">
-                <dl class="row">
-                    <dt class="col-sm-2">Name</dt>
-                    <dd class="col-sm-10">{{$experiment->name}}</dd>
-                    <dt class="col-sm-2">Owner</dt>
-                    <dd class="col-sm-10">{{$experiment->owner->name}}</dd>
-                    <dt class="col-sm-2">Last Updated</dt>
-                    <dd class="col-sm-10">{{$experiment->updated_at->diffForHumans()}}</dd>
-                </dl>
-            </div>
-            <div class="row ml-5">
-                <h5>Description</h5>
-            </div>
-            <div class="row ml-5">
-                <p>{{$experiment->description}}</p>
-            </div>
+            @include('partials.item_details', ['item' => $experiment])
 
+            <hr>
             <br>
 
             @include('app.projects.experiments.tabs.experiment-tabs')

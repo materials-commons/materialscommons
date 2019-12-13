@@ -26,22 +26,9 @@
         @endslot
 
         @slot('body')
-            <div class="ml-5">
-                <dl class="row">
-                    <dt class="col-sm-2">Name</dt>
-                    <dd class="col-sm-10">{{$entity->name}}</dd>
-                    <dt class="col-sm-2">Owner</dt>
-                    <dd class="col-sm-10">{{$entity->owner->name}}</dd>
-                    <dt class="col-sm-2">Last Updated</dt>
-                    <dd class="col-sm-10">{{$entity->updated_at->diffForHumans()}}</dd>
-                </dl>
-            </div>
-            <div class="row ml-5">
-                <h5>Description</h5>
-            </div>
-            <div class="row ml-5">
-                <p>{{$entity->description}}</p>
-            </div>
+            @include('partials.item_details', ['item' => $entity])
+
+            <hr>
 
             <br>
             @if (Request::routeIs('projects.experiments.entities*'))
