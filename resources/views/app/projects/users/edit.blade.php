@@ -20,16 +20,23 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Description</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td>{{$user->name}}</td>
                                 <td>
-                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}"><i
-                                                class="fa fa-fw fa-plus"></i></a>
+                                    <a href="{{route('users.show', [$user->id])}}">
+                                        {{$user->name}}
+                                    </a>
+                                </td>
+                                <td>{{$user->description}}</td>
+                                <td>
+                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}">
+                                        <i class="fa fa-fw fa-plus"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -42,19 +49,24 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Description</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($project->users as $puser)
                             <tr>
-                                <td>{{$puser->name}}</td>
+                                <td>
+                                    <a href="{{route('projects.users.show', [$project, $puser])}}">{{$puser->name}}</a>
+                                </td>
+                                <td>{{$puser->description}}</td>
                                 <td>
                                     @if($project->owner->id === $puser->id)
                                         (Project Owner)
                                     @else
-                                        <a href="{{route('projects.users.remove', [$project->id, $puser->id])}}"><i
-                                                    class="fa fa-fw fa-trash"></i></a>
+                                        <a href="{{route('projects.users.remove', [$project->id, $puser->id])}}">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>
