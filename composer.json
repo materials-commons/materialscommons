@@ -17,6 +17,7 @@
     "davejamesmiller/laravel-breadcrumbs": "5.x",
     "fideloper/proxy": "^4.0",
     "freshbitsweb/laratables": "^2.1",
+    "graham-campbell/markdown": "^11.1",
     "guzzlehttp/guzzle": "~6.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "^6.0",
