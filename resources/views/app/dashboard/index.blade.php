@@ -13,6 +13,8 @@
         @endslot
 
         @slot('body')
+            <h4 class="mb-2">Outstanding Globus Uploads</h4>
+            @include('partials.globus_uploads', ['showProject' => true])
         @endslot
     @endcomponent
 @endsection
