@@ -30,7 +30,8 @@
         @endslot
 
         @slot('body')
-            @include('partials.item_details', ['item' => $experiment])
+            @component('components.items-details', ['item' => $experiment])
+            @endcomponent
 
             <hr>
             <br>

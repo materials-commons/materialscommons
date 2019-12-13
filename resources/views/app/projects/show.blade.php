@@ -26,27 +26,11 @@
         @endslot
 
         @slot('body')
-            <form>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" type="text" value=""
-                              placeholder="Description..." readonly>{{$project->description}}</textarea>
-                </div>
-                <div class="form-row">
-                    <div class="col h5">
-                        <span>Owner: {{$project->owner->name}}</span>
-                        <span class="ml-4">Last Updated {{$project->updated_at->diffForHumans()}}</span>
-                        <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
-                            {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
-                        </a>
-                        {{--                        <div class="form-group form-check-inline ml-4">--}}
-                        {{--                            <input type="checkbox" class="form-check-input" id="is_active"--}}
-                        {{--                                   {{$project->is_active ? 'checked' : ''}} readonly onclick="return false;">--}}
-                        {{--                            <label class="form-check-label mt-2" for="is_active">Is Active?</label>--}}
-                        {{--                        </div>--}}
-                    </div>
-                </div>
-            </form>
+            @component('components.items-details', ['item' => $project])
+                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
+                    {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
+                </a>
+            @endcomponent
         @endslot
     @endcomponent
 

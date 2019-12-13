@@ -26,7 +26,8 @@
         @endslot
 
         @slot('body')
-            @include('partials.item_details', ['item' => $activity])
+            @component('components.items-details', ['item' => $activity])
+            @endcomponent
             <hr>
             <br>
             @if (Request::routeIs('projects.experiments.activities*'))

@@ -35,25 +35,10 @@
         @endslot
 
         @slot('body')
-            <div class="ml-5">
-                <dl class="row">
-                    <dt class="col-sm-2">Name</dt>
-                    <dd class="col-sm-10">{{$file->name}}</dd>
-                    <dt class="col-sm-2">Owner</dt>
-                    <dd class="col-sm-10">{{$file->owner->name}}</dd>
-                    <dt class="col-sm-2">Last Updated</dt>
-                    <dd class="col-sm-10">{{$file->updated_at->diffForHumans()}}</dd>
-                    <dt class="col-sm-2">Mediatype</dt>
-                    <dd class="col-sm-10">{{$file->mime_type}}</dd>
-                </dl>
-            </div>
-            <div class="row ml-5">
-                <h5>Description</h5>
-            </div>
-            <div class="row ml-5">
-                <p>{{$file->description}}</p>
-            </div>
-
+            @component('components.items-details', ['item' => $file])
+                <span class="ml-4">Mediatype: {{$file->mime_type}}</span>
+            @endcomponent
+            <hr>
             <br>
 
             @isset($project)

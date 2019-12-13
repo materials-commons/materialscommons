@@ -8,6 +8,7 @@
         <div class="col h5">
             <span>Owner: {{$item->owner->name}}</span>
             <span class="ml-4">Last Updated {{$item->updated_at->diffForHumans()}}</span>
+            {{$slot}}
         </div>
     </div>
 </form>

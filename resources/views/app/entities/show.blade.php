@@ -26,7 +26,8 @@
         @endslot
 
         @slot('body')
-            @include('partials.item_details', ['item' => $entity])
+            @component('components.items-details', ['item' => $entity])
+            @endcomponent
 
             <hr>
 
