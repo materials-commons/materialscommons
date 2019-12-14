@@ -22,6 +22,7 @@
     "laracasts/flash": "^3.0",
     "laravel/framework": "^6.0",
     "laravel/tinker": "^1.0",
+    "league/commonmark-extras": "^1.1",
     "maatwebsite/excel": "^3.1",
     "mavinoo/laravel-batch": "dev-master",
     "santigarcor/laratrust": "5.2.*",
