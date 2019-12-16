@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use League\CommonMark\Extras\CommonMarkExtrasExtension;
+
 return [
 
     /*
@@ -41,7 +43,7 @@ return [
     |
     */
 
-    'extensions' => [],
+    'extensions' => [CommonMarkExtrasExtension::class],
 
     /*
     |--------------------------------------------------------------------------
