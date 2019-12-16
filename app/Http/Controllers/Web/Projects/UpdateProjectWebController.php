@@ -14,6 +14,6 @@ class UpdateProjectWebController extends Controller
         $validated = $request->validated();
         $updateProjectAction($validated, $project);
 
-        return redirect(route('projects.index'));
+        return redirect(route('projects.show', [$project]));
     }
 }
