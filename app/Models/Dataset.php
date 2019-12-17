@@ -29,6 +29,11 @@ class Dataset extends Model
         'file_selection' => 'array',
     ];
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function workflows()
     {
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
