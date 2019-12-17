@@ -13,36 +13,37 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('projects.datasets.store', [$project])}}" id="dataset-create">
+            <form method="post" action="{{route('projects.datasets.store', [$project])}}" id="dataset_create">
                 @csrf
                 <div class="form-group">
                     <label class="required" for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value=""
                            placeholder="Name...">
                 </div>
+
+                <div class="form-group">
+                    <label for="authors">Authors and Affiliations</label>
+                    <input class="form-control" id="authors" name="authors" type="text" value=""
+                           placeholder="Authors...">
+                </div>
+
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               value=""
                               placeholder="Description..."></textarea>
                 </div>
+
                 <div class="form-group">
-                    <label for="experiments">Experiments</label>
-                    <select name="experiments[]" class="selectpicker col-lg-8"
-                            title="experiments"
-                            data-live-search="true" multiple>
-                        @foreach($experiments as $experiment)
-                            <option data-token="{{$experiment->id}}" value="{{$experiment->id}}">
-                                {{$experiment->name}}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label for="doi">DOI</label>
+                    <span class="col-6">
+                            (None)
+                            <a href="#" onclick="changeActionAndSubmit()" class="ml-6 pl-6">
+                                Assign DOI
+                            </a>
+                        </span>
                 </div>
-                <div class="form-group">
-                    <label for="funding">Funding</label>
-                    <input class="form-control" id="funding" name="funding" type="text" value=""
-                           placeholder="Funding...">
-                </div>
+
                 <div class="form-group">
                     <label for="license">License</label>
                     <select name="license" class="selectpicker col-lg-8" data-live-search="true"
@@ -62,16 +63,6 @@
                         </option>
                     </select>
                     <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
-                </div>
-                <div class="form-group">
-                    <label for="institution">Institution</label>
-                    <input class="form-control" id="institution" name="institution" type="text"
-                           value="" placeholder="Institution...">
-                </div>
-                <div class="form-group">
-                    <label for="authors">Authors</label>
-                    <input class="form-control" id="authors" name="authors" type="text" value=""
-                           placeholder="Authors...">
                 </div>
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
@@ -137,7 +128,13 @@
 
             function setActionAndSubmit(action) {
                 $('#action').val(action);
-                document.getElementById('dataset-create').submit();
+                document.getElementById('dataset_create').submit();
+            }
+
+            function changeActionAndSubmit() {
+                $('#action').val('save');
+                document.forms.dataset_create.action = "{{route('projects.datasets.create-doi', [$project])}}";
+                document.forms.dataset_create.submit();
             }
 
         </script>

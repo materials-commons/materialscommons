@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWebController;
+use App\Http\Controllers\Web\Datasets\StoreDatasetWithDoiWebController;
 use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
 use Illuminate\Support\Facades\Route;
@@ -63,8 +64,11 @@ Route::get('/projects/{project}/datasets/{dataset}/delete', DeleteDatasetWebCont
 Route::delete('/projects/{project}/datasets/{dataset}', DestroyDatasetWebController::class)
      ->name('projects.datasets.destroy');
 
-Route::get('/projects/{project}/dataasets/{dataset}/assign-doi', AssignDoiWebController::class)
+Route::get('/projects/{project}/datasets/{dataset}/assign-doi', AssignDoiWebController::class)
      ->name('projects.datasets.assign-doi');
+
+Route::post('/projects/{project}/datasets/create-doi', StoreDatasetWithDoiWebController::class)
+     ->name('projects.datasets.create-doi');
 
 Route::get('/projects/{project}/datasets/{dataset}/publish', PublishDatasetWebController::class)
      ->name('projects.datasets.publish');

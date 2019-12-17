@@ -17,13 +17,13 @@ class StoreDatasetWebController extends Controller
         unset($validated["action"]);
         $dataset = $createDatasetAction($validated);
         if ($action === "save") {
-            return redirect(route('projects.datasets.index', compact('project')));
+            return redirect(route('projects.datasets.index', [$project]));
         } elseif ($action === "files") {
-            return redirect(route('projects.datasets.files.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.files.edit', [$project, $dataset]));
         } elseif ($action === "workflow") {
-            return redirect(route('projects.datasets.workflows.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.workflows.edit', [$project, $dataset]));
         } else {
-            return redirect(route('projects.datasets.samples.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.samples.edit', [$project, $dataset]));
         }
     }
 }
