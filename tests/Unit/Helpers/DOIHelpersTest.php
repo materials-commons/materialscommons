@@ -36,6 +36,7 @@ class DOIHelpersTest extends TestCase
     /** @test */
     public function test_make_doi_ez_api()
     {
+        $this->markTestSkipped('DOI Creation skipped for now');
         $client = new Client();
         $uri = "https://ez.test.datacite.org/shoulder/doi:".env('DOI_NAMESPACE');
         $body = "_target:https://materialscommons.org\n".
@@ -78,6 +79,7 @@ class DOIHelpersTest extends TestCase
     /** @test */
     public function test_mintDOI()
     {
+        $this->markTestSkipped('DOI Creation skipped for now');
         $doi = DOIHelpers::mintDOI("A title", "a author", 1);
         $this->assertTrue(strpos($doi, 'doi:') !== false);
     }
