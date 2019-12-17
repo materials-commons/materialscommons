@@ -13,7 +13,7 @@
         @slot('header')
             Globus Uploads
             <a class="action-link float-right" href="#" onclick="refresh()">
-                <i class="fas fa-plus mr-2"></i>Refresh
+                <i class="fas fa-sync-alt mr-2"></i>Refresh
             </a>
         @endslot
 
