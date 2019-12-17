@@ -7,11 +7,11 @@ use App\Models\Dataset;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
-class ShowDatasetEntitiesWebController extends Controller
+class ShowDatasetCommunitiesWebController extends Controller
 {
     public function __invoke(Request $request, Project $project, $datasetId)
     {
-        $dataset = Dataset::with(['experiments', 'entities'])->find($datasetId);
+        $dataset = Dataset::with('communities')->find($datasetId);
         return view('app.projects.datasets.show', compact('project', 'dataset'));
     }
 }

@@ -89,6 +89,8 @@
         @include('app.projects.datasets.tabs.entities')
     @elseif(Request::routeIs('projects.datasets.show.workflows'))
         @include('app.projects.datasets.tabs.workflows')
+    @elseif(Request::routeIs('projects.datasets.show.communities'))
+        @include('app.projects.datasets.tabs.communities')
     @endif
 
 @stop

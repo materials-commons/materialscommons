@@ -28,4 +28,11 @@
             Samples
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{setActiveNavByName('projects.datasets.show.communities')}}"
+           href="{{route('projects.datasets.show.communities', [$project, $dataset])}}">
+            Communities
+        </a>
+    </li>
 </ul>
