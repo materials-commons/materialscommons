@@ -16,10 +16,10 @@ class CreateDatasetAction
 
     public function __invoke($data)
     {
-        $experiments = null;
-        if (array_key_exists('experiments', $data)) {
-            $experiments = $data['experiments'];
-            unset($data['experiments']);
+        $communities = null;
+        if (array_key_exists('communities', $data)) {
+            $communities = $data['communities'];
+            unset($data['communities']);
         }
         $dataset = new Dataset($data);
         $dataset->owner_id = $this->userId;
@@ -30,10 +30,10 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $experiments) {
+        DB::transaction(function () use ($dataset, $communities) {
             $dataset->save();
-            if ($experiments !== null) {
-                $dataset->experiments()->attach($experiments);
+            if ($communities !== null) {
+                $dataset->communities()->attach($communities);
             }
         });
 

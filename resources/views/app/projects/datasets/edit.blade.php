@@ -24,23 +24,21 @@
                     <input class="form-control" id="name" name="name" type="text" value="{{$dataset->name}}"
                            placeholder="Name...">
                 </div>
+
+                <div class="form-group">
+                    <label for="authors">Authors and Affiliations</label>
+                    <input class="form-control" id="authors" name="authors" type="text"
+                           value="{{$dataset->authors}}"
+                           placeholder="Authors...">
+                </div>
+
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               value="{{$dataset->description}}"
                               placeholder="Description...">{{$dataset->description}}</textarea>
                 </div>
-                <div class="form-group">
-                    <label for="experiments">Experiments</label>
-                    <select name="experiments[]" class="selectpicker col-lg-8" data-live-search="true" multiple
-                            title="Experiments">
-                        @foreach($experiments as $experiment)
-                            <option data-token="{{$experiment->id}}"
-                                    {{$datasetHasExperiment($experiment) ? 'selected' : ''}}
-                                    value="{{$experiment->id}}">{{$experiment->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label for="doi">DOI</label>
                     @if (empty($dataset->doi))
@@ -89,17 +87,17 @@
                     </select>
                     <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
                 </div>
+
                 <div class="form-group">
-                    <label for="institution">Institution</label>
-                    <input class="form-control" id="institution" name="institution" type="text"
-                           value="{{$dataset->institution}}"
-                           placeholder="Institution...">
-                </div>
-                <div class="form-group">
-                    <label for="authors">Authors</label>
-                    <input class="form-control" id="authors" name="authors" type="text"
-                           value="{{$dataset->authors}}"
-                           placeholder="Authors...">
+                    <label for="communities">Communities</label>
+                    <select name="communities[]" class="selectpicker col-lg-8" data-live-search="true" multiple
+                            title="Communities">
+                        @foreach($communities as $community)
+                            <option data-token="{{$community->id}}"
+                                    {{$datasetHasCommunity($community) ? 'selected' : ''}}
+                                    value="{{$community->id}}">{{$community->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">

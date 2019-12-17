@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Datasets;
 
 use App\Http\Controllers\Controller;
+use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\ViewModels\Datasets\ShowDatasetViewModel;
@@ -11,9 +12,9 @@ class EditDatasetWebController extends Controller
 {
     public function __invoke(Project $project, $datasetId)
     {
-        $dataset = Dataset::with('experiments')->where('id', $datasetId)->first();
-        $experiments = $project->experiments()->get();
-        $viewModel = new ShowDatasetViewModel($project, $dataset, $experiments);
+        $dataset = Dataset::with('communities')->where('id', $datasetId)->first();
+        $communities = Community::where('public', true)->get();
+        $viewModel = new ShowDatasetViewModel($project, $dataset, $communities);
 
         return view('app.projects.datasets.edit', $viewModel);
     }

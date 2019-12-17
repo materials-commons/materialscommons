@@ -3,8 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer $id
+ * @property mixed $datasets
+ *
+ * @mixin Builder
+ */
 class Community extends Model
 {
     use HasUUID;

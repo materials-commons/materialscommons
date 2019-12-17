@@ -19,13 +19,11 @@ class CreateDatasetsTable extends Migration
             $table->string('name');
             $table->string('license')->nullable();
             $table->string('license_link')->nullable();
-            $table->text('funding')->nullable();
             $table->text('description')->nullable();
             $table->string('doi')->nullable();
             $table->datetime('published_at')->nullable();
             $table->datetime('privately_published_at')->nullable();
             $table->text('authors')->nullable();
-            $table->string('institution')->nullable();
             $table->json('file_selection')->nullable();
 
             $table->unsignedBigInteger('owner_id');

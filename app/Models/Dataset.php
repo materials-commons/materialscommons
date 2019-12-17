@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property mixed $communities
+ * @property integer $owner_id
+ * @property array $file_selection
+ *
  * @mixin Builder
  */
 class Dataset extends Model

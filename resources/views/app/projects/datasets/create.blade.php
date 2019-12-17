@@ -65,6 +65,19 @@
                     <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
                 </div>
 
+                <div class="form-group">
+                    <label for="communities">Communities</label>
+                    <select name="communities[]" class="selectpicker col-lg-8"
+                            title="communities"
+                            data-live-search="true" multiple>
+                        @foreach($communities as $community)
+                            <option data-token="{{$community->id}}" value="{{$community->id}}">
+                                {{$community->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="action" value="" id="action"/>
 

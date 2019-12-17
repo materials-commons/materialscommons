@@ -9,16 +9,16 @@ class UpdateDatasetAction
 {
     public function __invoke($data, Dataset $dataset)
     {
-        $experiments = null;
-        if (array_key_exists('experiments', $data)) {
-            $experiments = $data['experiments'];
-            unset($data['experiments']);
+        $communities = null;
+        if (array_key_exists('communities', $data)) {
+            $communities = $data['communities'];
+            unset($data['communities']);
         }
-        DB::transaction(function () use ($dataset, $data, $experiments) {
+        DB::transaction(function () use ($dataset, $data, $communities) {
             $dataset->update($data);
-            $dataset->experiments()->sync($experiments);
+            $dataset->communities()->sync($communities);
         });
 
-        return Dataset::with('experiments')->where('id', $dataset->id)->first();
+        return Dataset::with('communities')->where('id', $dataset->id)->first();
     }
 }

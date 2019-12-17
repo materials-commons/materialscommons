@@ -2,8 +2,8 @@
 
 namespace App\ViewModels\Datasets;
 
+use App\Models\Community;
 use App\Models\Dataset;
-use App\Models\Experiment;
 use App\Models\Project;
 use Spatie\ViewModels\ViewModel;
 
@@ -11,13 +11,13 @@ class ShowDatasetViewModel extends ViewModel
 {
     private $dataset;
     private $project;
-    private $experiments;
+    private $communities;
 
-    public function __construct(Project $project, Dataset $dataset, $experiments)
+    public function __construct(Project $project, Dataset $dataset, $communities)
     {
         $this->project = $project;
         $this->dataset = $dataset;
-        $this->experiments = $experiments;
+        $this->communities = $communities;
     }
 
     public function project()
@@ -30,19 +30,19 @@ class ShowDatasetViewModel extends ViewModel
         return $this->dataset;
     }
 
-    public function experiments()
+    public function communities()
     {
-        return $this->experiments;
+        return $this->communities;
     }
 
-    public function datasetHasExperiment(Experiment $experiment)
+    public function datasetHasCommunity(Community $community)
     {
-        return $this->dataset->experiments->contains($experiment->id);
+        return $this->dataset->communities->contains($community->id);
     }
 
-    public function datasetExperimentIds()
+    public function datasetCommunityIds()
     {
-        return $this->dataset->experiments->map(function ($item) {
+        return $this->dataset->communities->map(function ($item) {
             return $item->id;
         });
     }
