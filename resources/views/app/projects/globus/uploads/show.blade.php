@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Globus Upload for project {{$project->name}}
+            Globus Upload for project {{$project->name}}
         @endslot
 
         @slot('body')

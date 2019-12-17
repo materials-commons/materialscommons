@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Projects')
+@section('pageTitle', 'Account Details')
 
 @section('nav')
     @include('layouts.navs.app')
@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Account {{$user->name}}
+            Account Details for {{$user->name}}
         @endslot
 
         @slot('body')
