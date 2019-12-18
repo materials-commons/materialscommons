@@ -9,7 +9,7 @@ class IndexPublishedCommunityDatasetsWebController extends Controller
 {
     public function __invoke($communityId)
     {
-        $community = Community::with(['datasets', 'owner'])->findOrFail($communityId);
+        $community = Community::with(['publishedDatasets', 'owner'])->findOrFail($communityId);
         return view('public.community.datasets', compact('community'));
     }
 }

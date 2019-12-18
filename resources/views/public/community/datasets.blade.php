@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($community->datasets as $dataset)
+                @foreach($community->publishedDatasets as $dataset)
                     <tr>
                         <td>
                             <a href="{{route('public.datasets.show', $dataset)}}">{{$dataset->name}}</a>

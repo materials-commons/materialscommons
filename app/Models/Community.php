@@ -27,4 +27,10 @@ class Community extends Model
     {
         return $this->belongsToMany(Dataset::class, 'dataset2community', 'community_id', 'dataset_id');
     }
+
+    public function publishedDatasets()
+    {
+        return $this->belongsToMany(Dataset::class, 'dataset2community', 'community_id', 'dataset_id')
+                    ->whereNotNull('published_at');
+    }
 }
