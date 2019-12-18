@@ -2,6 +2,13 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
+                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
+                    <i class="fa-fw fas fa-tachometer-alt mr-2"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11" href="{{route('projects.index')}}">
                     <i class="fa-fw fas fa-layer-group mr-2"></i>
                     Projects
@@ -96,7 +103,13 @@
             </li>
 
             <li class="nav-item">
-                <br>
+                <a class="nav-link fs-11" href="{{route('public.index')}}">
+                    <i class="fa-fw fas fa-globe mr-2"></i>
+                    Public Data
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}" href="{{route('accounts.show')}}">
                     <i class="fa-fw fas fa-user mr-2"></i>
                     Account
@@ -105,15 +118,8 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
-                    <i class="fa-fw fas fa-users mr-2"></i>
-                    Communities
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11" href="{{route('public.index')}}">
-                    <i class="fa-fw fas fa-globe mr-2"></i>
-                    Public Data
+                    <i class="fa-fw fas fa-users-cog mr-2"></i>
+                    My Communities
                 </a>
             </li>
         </ul>

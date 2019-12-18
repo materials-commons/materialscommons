@@ -1,6 +1,22 @@
 <nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10 sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
+                        <i class="fa-fw fas fa-tachometer-alt mr-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
+                        <i class="fa-fw fas fa-layer-group mr-2 "></i>
+                        Projects
+                    </a>
+                </li>
+            @endauth
+
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNavByName('public.index')}}" href="{{route('public.index')}}">
                     <i class="fa-fw fas fa-globe mr-2"></i>
@@ -56,14 +72,6 @@
 
             @auth
                 <li class="nav-item">
-                    <br>
-                    <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
-                        <i class="fa-fw fas fa-layer-group mr-2 "></i>
-                        Projects
-                    </a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
                         <i class="fa-fw fas fa-user mr-2"></i>
                         Account
@@ -73,10 +81,11 @@
                 <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
                         <i class="fa-fw fas fa-users-cog mr-2"></i>
-                        Manage Communities
+                        My Communities
                     </a>
                 </li>
             @endauth
+
         </ul>
     </div>
 </nav>
