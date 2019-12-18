@@ -6,7 +6,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($dataset->communities as $community)
+    @foreach($dataset->publishedCommunities as $community)
         <tr>
             <td>
                 <a href="{{route('public.communities.datasets.index', [$community])}}">
