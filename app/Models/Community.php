@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
+ * @property string $uuid
+ * @property string $name
+ * @property string $description
+ * @property boolean $public
  * @property mixed $datasets
+ * @property mixed $publishedDatasets
  *
  * @mixin Builder
  */
