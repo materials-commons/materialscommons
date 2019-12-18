@@ -35,7 +35,11 @@
 
 <body>
 <nav class="navbar navbar-dark fixed-top bg-nav p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons 2</a>
+    @if(Request::routeIs('public.*'))
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('public.index')}}">MaterialsCommons 2</a>
+    @else
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons 2</a>
+    @endif
     <div class="d-flex justify-content-endx">
         <input class="form-control w-75 form-rounded" type="text" placeholder="Search" aria-label="Search">
 
