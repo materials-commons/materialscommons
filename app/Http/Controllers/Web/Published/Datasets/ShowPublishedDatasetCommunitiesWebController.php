@@ -9,7 +9,7 @@ class ShowPublishedDatasetCommunitiesWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        $dataset = Dataset::with('communities')->findOrFail($datasetId);
+        $dataset = Dataset::with('publishedCommunities')->findOrFail($datasetId);
 
         return view('public.datasets.show', compact('dataset'));
     }
