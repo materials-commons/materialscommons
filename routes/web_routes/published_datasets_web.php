@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDat
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
@@ -31,6 +32,9 @@ Route::get('/datasets/{dataset}/files', ShowPublishedDatasetFilesWebController::
 
 Route::get('/datasets/{dataset}/comments', ShowPublishedDatasetCommentsWebController::class)
      ->name('datasets.comments.index');
+
+Route::get('/datasets/{dataset}/communities', ShowPublishedDatasetCommunitiesWebController::class)
+     ->name('datasets.communities.index');
 
 // Published file
 ROute::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)

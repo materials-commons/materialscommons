@@ -24,6 +24,12 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link {{setActiveNavByName('public.datasets.communities')}}"
+           href="{{route('public.datasets.communities.index', [$dataset])}}">
+            Communities
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('public.datasets.comments')}}"
            href="{{route('public.datasets.comments.index', ['dataset' => $dataset])}}">
             Comments

@@ -13,28 +13,34 @@
         @endslot
 
         @slot('body')
-            <div class="ml-5">
-                <dl class="row">
-                    <dt class="col-sm-2">Name</dt>
-                    <dd class="col-sm-10">{{$dataset->name}}</dd>
-                    <dt class="col-sm-2">License</dt>
-                    <dd class="col-sm-10"><a href="{{$dataset->license_link}}">{{$dataset->license}}</a></dd>
-                    <dt class="col-sm-2">Authors</dt>
-                    <dd class="col-sm-10">{{$dataset->authors}}</dd>
-                    <dt class="col-sm-2">Institution</dt>
-                    <dd class="col-sm-10">{{$dataset->institution}}</dd>
-                    <dt class="col-sm-2">Funding</dt>
-                    <dd class="col-sm-10">{{$dataset->funding}}</dd>
-                    <dt class="col-sm-2">Published</dt>
-                    <dd class="col-sm-10">{{$dataset->published_at->diffForHumans()}}</dd>
-                </dl>
-            </div>
-            <div class="row ml-5">
-                <h5>Description</h5>
-            </div>
-            <div class="row ml-5">
-                <p>{{$dataset->description}}</p>
-            </div>
+            @component('components.items-details', ['item' => $dataset])
+                @slot('top')
+                    <div class="form-group">
+                        <label for="authors">Authors and Affiliations</label>
+                        <input class="form-control" value="{{$dataset->authors}}" id="authors" type="text" readonly>
+                    </div>
+                @endslot
+
+
+                <span class="ml-4">Published:
+                    @isset($dataset->published_at)
+                        {{$dataset->published_at->diffForHumans()}}
+                    @else
+                        Not Published
+                    @endisset
+                </span>
+
+                @slot('bottom')
+                    <div class="form-group">
+                        <label for="doi">DOI</label>
+                        <input class="form-control" id="doi" type="text" value="{{$dataset->doi}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="license">License</label>
+                        <input class="form-control" id="license" type="text" value="{{$dataset->license}}" readonly>
+                    </div>
+                @endslot
+            @endcomponent
 
             <br>
 
@@ -50,6 +56,8 @@
                 @include('public.datasets.tabs.activities-tab')
             @elseif (Request::routeIs('public.datasets.files*'))
                 @include('public.datasets.tabs.files-tab')
+            @elseif(Request::routeIs('public.datasets.communities.*'))
+                @include('public.datasets.tabs.communities')
             @elseif (Request::routeIs('public.datasets.comments*'))
                 @include('public.datasets.tabs.comments-tab')
             @endif
