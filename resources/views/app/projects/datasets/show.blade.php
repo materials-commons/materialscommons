@@ -62,18 +62,6 @@
                         <label for="license">License</label>
                         <input class="form-control" id="license" type="text" value="{{$dataset->license}}" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="communities">Communities</label>
-                        <div class="form-control" id="communities">
-                            @forelse($dataset->communities as $community)
-                                <a href="{{route('communities.show', [$community])}}" class="mr-3">
-                                    {{$community->name}}
-                                </a>
-                            @empty
-                                Not in any communities
-                            @endforelse
-                        </div>
-                    </div>
                 @endslot
             @endcomponent
 
