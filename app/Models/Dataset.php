@@ -64,6 +64,12 @@ class Dataset extends Model
         return $this->belongsToMany(Community::class, 'dataset2community', 'dataset_id', 'community_id');
     }
 
+    public function publishedCommunities()
+    {
+        return $this->belongsToMany(Community::class, 'dataset2community', 'dataset_id', 'community_id')
+                    ->where('public', true);
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
