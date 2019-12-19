@@ -121,6 +121,22 @@ class DatabaseSeeder extends Seeder
             'owner_id'   => $user->id,
         ]);
 
+        factory(File::class)->create([
+            'project_id' => $projects[1]->id,
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
+        ]);
+
+        factory(File::class)->create([
+            'project_id' => $projects[2]->id,
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
+        ]);
+
         $d2 = factory(File::class)->create([
             'project_id'   => $p->id,
             'name'         => 'd1',
