@@ -87,7 +87,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    MaterialsCommons
+                    MaterialsCommons 2
                 </div>
 
                 <div class="links">
