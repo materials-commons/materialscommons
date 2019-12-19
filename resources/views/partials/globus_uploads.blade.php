@@ -39,11 +39,11 @@
             </td>
             <td>
                 @if ($upload->uploading && $user->id == $upload->owner_id)
-                    <a href="{{route('projects.globus.uploads.done', [$project, $upload])}}"
+                    <a href="{{route('projects.globus.uploads.done', [$upload->project, $upload])}}"
                        class="btn btn-sm btn-success">
                         <i class="fas fa-fw fa-check-circle"></i> done
                     </a>
-                    <a href="{{route('projects.globus.uploads.delete', [$project, $upload])}}"
+                    <a href="{{route('projects.globus.uploads.delete', [$upload->project, $upload])}}"
                        class="btn btn-sm btn-danger">
                         <i class="fas fa-fw fa-trash-alt"></i> delete
                     </a>
