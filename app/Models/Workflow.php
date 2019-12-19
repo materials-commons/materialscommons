@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property integer $owner_id
+ * @property integer $project_id
+ * @property integer $file_id;
+ * @property string $workflow
+ * @property string $description
+ *
  * @mixin Builder
  */
 class Workflow extends Model
@@ -20,9 +27,9 @@ class Workflow extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function projects()
+    public function project()
     {
-        return $this->morphedByMany(Project::class, 'item', 'item2workflow');
+        return $this->belongsTo(Project::class);
     }
 
     public function experiments()

@@ -20,6 +20,12 @@ class CreateWorkflowsTable extends Migration
             $table->text('description')->nullable();
             $table->text('workflow')->nullable();
 
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')
+                  ->references('id')
+                  ->on('projects')
+                  ->onDelete('cascade');
+
             $table->unsignedBigInteger('file_id')->nullable();
             $table->foreign('file_id')
                   ->references('id')

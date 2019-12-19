@@ -50,7 +50,7 @@ class Project extends Model
 
     public function workflows()
     {
-        return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
+        return $this->hasMany(Workflow::class, 'project_id');
     }
 
     public function owner()

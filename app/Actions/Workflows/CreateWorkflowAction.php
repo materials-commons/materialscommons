@@ -26,6 +26,7 @@ class CreateWorkflowAction
             $workflow->file_id = $data['file_id'];
         }
         $workflow->owner_id = $userId;
+        $workflow->project_id = $projectId;
         $workflow->save();
         $workflow->fresh();
         $experiment->workflows()->attach($workflow);

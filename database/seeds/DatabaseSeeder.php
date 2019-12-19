@@ -54,7 +54,10 @@ class DatabaseSeeder extends Seeder
             'project_id' => $p->id,
         ]);
 
-        $workflow = factory(Workflow::class)->create(['owner_id' => $user->id]);
+        $workflow = factory(Workflow::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $p->id,
+        ]);
 
         $communities = factory(Community::class, 5)->create();
 
