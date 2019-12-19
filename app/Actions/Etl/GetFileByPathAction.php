@@ -21,8 +21,8 @@ class GetFileByPathAction
         $fileName = basename($pathWithoutProject);
         $dirName = dirname($pathWithoutProject);
         $dir = File::where('project_id', $projectId)->where('path', $dirName)->first();
-        $file = File::where('directory_id', $dir->id)->where('name', $fileName)->where('current', true)->first();
-        return $file;
+        return File::where('directory_id', $dir->id)->where('name', $fileName)
+                   ->where('current', true)->first();
     }
 
 }
