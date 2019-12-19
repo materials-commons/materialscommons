@@ -49,7 +49,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     public function registerEvents(): array
     {
         return [
-            BeforeSheet::class => function(BeforeSheet $event) {
+            BeforeSheet::class => function (BeforeSheet $event) {
                 // For each worksheet reset some of the state
                 $this->sawHeader = false;
                 $this->headerTracker = new HeaderTracker();
@@ -58,9 +58,9 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                 $this->currentSheetRows = collect();
             },
 
-            AfterSheet::class => function(AfterSheet $event) {
+            AfterSheet::class => function (AfterSheet $event) {
                 // Sheet processed, now process the rows associated with it
-                $this->currentSheetRows->each(function(RowTracker $row) {
+                $this->currentSheetRows->each(function (RowTracker $row) {
                     if (!$this->entityTracker->hasEntity($row->entityName)) {
                         $this->addNewEntity($row);
                     } else {
@@ -69,7 +69,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
                 });
             },
 
-            AfterImport::class => function(AfterImport $event) {
+            AfterImport::class => function (AfterImport $event) {
                 // All sheets processed and loaded, now build relationships
                 // from parent column.
                 $this->createActivityRelationships();
@@ -139,7 +139,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state)
     {
         $seenAttributes = collect();
-        $entityAttributes->each(function($attr) use ($state, $seenAttributes, $entity) {
+        $entityAttributes->each(function ($attr) use ($state, $seenAttributes, $entity) {
             if ($seenAttributes->has($attr->name)) {
                 $a = $seenAttributes->get($attr->name);
                 AttributeValue::create([
@@ -163,14 +163,11 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         });
     }
 
-    private function addFilesToActivityAndEntity(
-        Collection $fileAttributes,
-        Entity $entity,
-        EntityState $entityState,
-        Activity $activity
-    ) {
+    private function addFilesToActivityAndEntity(Collection $fileAttributes, Entity $entity, EntityState $entityState,
+        Activity $activity)
+    {
         $getFileByPathAction = new GetFileByPathAction();
-        $fileAttributes->each(function(ColumnAttribute $attr) use (
+        $fileAttributes->each(function (ColumnAttribute $attr) use (
             $getFileByPathAction,
             $entity,
             $entityState,
@@ -206,6 +203,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
             $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
             $activity = $this->addNewActivity($entity, $state, $row);
             $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
+            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
         } else {
             // Matching activity found, so add attribute values as additional values on existing
             // measurements for this entity. To do this first get the entity state that is associated
@@ -214,12 +212,13 @@ class EntityActivityImporter implements OnEachRow, WithEvents
             $entityStates = $activity->entityStates()->get();
             $entityState = $entityStates->firstWhere('entity_id', $entity->id);
             $this->addValuesToEntityStateAttributes($row->entityAttributes, $entityState);
+            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $entityState, $activity);
         }
     }
 
     private function addValuesToEntityStateAttributes(Collection $attributes, EntityState $entityState)
     {
-        $attributes->each(function(ColumnAttribute $attr) use ($entityState) {
+        $attributes->each(function (ColumnAttribute $attr) use ($entityState) {
             $a = Attribute::where('name', $attr->name)->where('attributable_type', EntityState::class)
                           ->where('attributable_id', $entityState->id)->first();
             AttributeValue::create([
@@ -233,7 +232,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)
     {
         $createActivityAction = new CreateActivityAction();
-        $attributes = $rowTracker->activityAttributes->map(function(ColumnAttribute $attr) {
+        $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) {
             return [
                 'name'  => $attr->name,
                 'value' => $attr->value,
@@ -257,17 +256,17 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     private function createActivityRelationships()
     {
         $this->rows
-            ->filter(function(RowTracker $row) {
+            ->filter(function (RowTracker $row) {
                 return $row->relatedActivityName !== "";
             })
-            ->each(function(RowTracker $row) {
+            ->each(function (RowTracker $row) {
                 $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
                 // Hook up all the activities who have an entityId === $entityId and that have a name === $row->relatedActivityName
                 // by loop through each of these activities and doing the following: (entity state is the entity state from the
                 // $activity for the given $entity
                 $entity = $activity->entities()->where('name', $row->entityName)->first();
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
-                $entityActivities->each(function($ea) use ($entity, $activity) {
+                $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)->where('direction',
                         'out')->first();
                     $activity->entityStates()->attach($entityState, ['direction' => 'in']);
