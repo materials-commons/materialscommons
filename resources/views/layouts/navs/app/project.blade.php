@@ -57,25 +57,17 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.uploads')}}"
-                   href="{{route('projects.globus.uploads.create', [$project])}}">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.status')}}"
+                   href="{{route('projects.globus.status', [$project])}}">
                     <i class="fa-fw fas fa-cloud-upload-alt mr-2"></i>
-                    Globus Upload
+                    Globus Uploads
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5" href="#">
                     <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
-                    Globus Download
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.status')}}"
-                   href="{{route('projects.globus.status', [$project])}}">
-                    <i class="fa-fw fas fa-info-circle mr-2"></i>
-                    Upload Status
+                    Globus Downloads
                 </a>
             </li>
 

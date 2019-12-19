@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Description</th>
+{{--        <th>Description</th>--}}
         <th>Link</th>
         @if($showProject)
             <th>Project</th>
@@ -17,7 +17,7 @@
     @foreach($globusUploads as $upload)
         <tr>
             <td>{{$upload->name}}</td>
-            <td>{{$upload->description}}</td>
+            {{--            <td>{{$upload->description}}</td>--}}
             <td>
                 @if($upload->uploading && $user->id == $upload->owner_id)
                     <a href="{{$upload->globus_url}}" target="_blank">Goto Globus</a>

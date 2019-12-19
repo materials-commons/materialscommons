@@ -22,11 +22,11 @@
                         <input class="form-control" id="name" name="name" type="text"
                                placeholder="Name..." required>
                     </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" type="text"
-                                  placeholder="Description..."></textarea>
-                    </div>
+                    {{--                    <div class="form-group">--}}
+                    {{--                        <label for="description">Description</label>--}}
+                    {{--                        <textarea class="form-control" id="description" name="description" type="text"--}}
+                    {{--                                  placeholder="Description..."></textarea>--}}
+                    {{--                    </div>--}}
                     <div class="float-right">
                         <a href="{{route('projects.show', [$project])}}" class="action-link danger mr-3">
                             Cancel
