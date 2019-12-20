@@ -23,7 +23,8 @@
 
                 <div class="form-group">
                     <label for="authors">Authors and Affiliations</label>
-                    <input class="form-control" id="authors" name="authors" type="text" value=""
+                    <input class="form-control" id="authors" name="authors" type="text"
+                           value="{{$authorsAndAffiliations}}"
                            placeholder="Authors...">
                 </div>
 
