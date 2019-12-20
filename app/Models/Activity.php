@@ -80,6 +80,11 @@ class Activity extends Model implements Searchable
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
+    public function getTypeAttribute()
+    {
+        return "process";
+    }
+
     public function getSearchResult(): SearchResult
     {
         $url = route('projects.activities.show', [$this->project_id, $this]);

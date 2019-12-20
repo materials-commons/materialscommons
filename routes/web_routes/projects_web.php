@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadsStatusWebCo
 use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\StoreGlobusUploadToProjectWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
+use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
@@ -77,3 +78,6 @@ Route::get('/projects/{project}/globus/downloads', GlobusGetProjectDownloadLinkW
 
 Route::get('/projects/{project}/globus/status', ShowProjectGlobusUploadsStatusWebController::class)
      ->name('projects.globus.status');
+
+Route::post('/projects/{project}/search', SearchProjectWebController::class)
+     ->name('projects.search');

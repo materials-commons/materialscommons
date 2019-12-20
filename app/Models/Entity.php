@@ -77,6 +77,11 @@ class Entity extends Model implements Searchable
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
+    public function getTypeAttribute()
+    {
+        return "sample";
+    }
+
     public function getSearchResult(): SearchResult
     {
         $url = route('projects.entities.show', [$this->project_id, $this]);

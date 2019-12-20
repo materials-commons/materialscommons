@@ -12,7 +12,9 @@ use Spatie\Searchable\SearchResult;
  * @property integer $id
  * @property string $name
  * @property string $description
+ * @property string $mime_type
  * @property integer $project_id
+ * @property integer $directory_id;
  *
  * @mixin Builder
  */
@@ -96,6 +98,15 @@ class File extends Model implements Searchable
     public function setSelectedAttribute($selected)
     {
         $this->selected = $selected;
+    }
+
+    public function getTypeAttribute()
+    {
+        if ($this->mime_type == "directory") {
+            return "directory";
+        }
+
+        return "file";
     }
 
     public function getSearchResult(): SearchResult

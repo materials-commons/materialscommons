@@ -52,11 +52,14 @@
         </ul>
 
         @auth
-            <form method="post" action="" class="form-inline my-2 my-lg-0">
-                @csrf
-                <input class="form-control mr-sm-2 w-auto form-rounded" type="search" placeholder="Search project..."
-                       name="search" aria-label="Search">
-            </form>
+            @isset($project)
+                <form method="post" action="{{route('projects.search', [$project])}}" class="form-inline my-2 my-lg-0">
+                    @csrf
+                    <input class="form-control mr-sm-2 w-auto form-rounded" type="search"
+                           placeholder="Search project..."
+                           name="search" aria-label="Search">
+                </form>
+            @endisset
             <ul class="navbar-nav pr-6">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"

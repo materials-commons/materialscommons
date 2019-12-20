@@ -5,9 +5,14 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property integer $id
+ * @property string name
+ * @property string description
+ * @property integer project_id
  * @property mixed $communities
  * @property mixed $experiments
  * @property integer $owner_id
@@ -15,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class Dataset extends Model
+class Dataset extends Model implements Searchable
 {
     use HasUUID;
 
@@ -74,5 +79,16 @@ class Dataset extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function getTypeAttribute()
+    {
+        return "dataset";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.datasets.show', [$this->project_id, $this]);
+        return new SearchResult($this, $this->name, $url);
     }
 }

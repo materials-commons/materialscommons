@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property integer $id
@@ -17,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class Community extends Model
+class Community extends Model implements Searchable
 {
     use HasUUID;
 
@@ -37,5 +39,16 @@ class Community extends Model
     {
         return $this->belongsToMany(Dataset::class, 'dataset2community', 'community_id', 'dataset_id')
                     ->whereNotNull('published_at');
+    }
+
+    public function getTypeAttribute()
+    {
+        return "community";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('communities.show', [$this]);
+        return new SearchResult($this, $this->name, $url);
     }
 }
