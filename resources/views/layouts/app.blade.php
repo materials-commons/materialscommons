@@ -62,7 +62,7 @@
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
                        role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Glenn Tarcea
+                        {{auth()->user()->name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <form method="post" action="{{route('logout')}}" id="signout">
