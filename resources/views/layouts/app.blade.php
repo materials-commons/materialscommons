@@ -34,29 +34,61 @@
 </head>
 
 <body>
-<nav class="navbar navbar-dark fixed-top bg-nav p-0 shadow">
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-nav p-0 shadow">
     @if(Request::routeIs('public.*'))
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('public.index')}}">MaterialsCommons 2</a>
     @else
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons 2</a>
     @endif
-    <div class="d-flex justify-content-endx">
-        <input class="form-control w-75 form-rounded" type="text" placeholder="Search" aria-label="Search">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {{--            Kept here for formatting purposes--}}
+        </ul>
 
         @auth
-            <ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    <form method="post" action="{{route('logout')}}" id="signout">
-                        @csrf
-                        <a class="nav-link td-none" href="#" onclick="document.getElementById('signout').submit()">
-                            Sign out</a>
-                    </form>
+            <form method="post" action="" class="form-inline my-2 my-lg-0">
+                @csrf
+                <input class="form-control mr-sm-2 w-auto form-rounded" type="search" placeholder="Search project..."
+                       name="search" aria-label="Search">
+            </form>
+            <ul class="navbar-nav pr-6">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
+                       role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Glenn Tarcea
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form method="post" action="{{route('logout')}}" id="signout">
+                            @csrf
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('signout').submit()">
+                                Sign out</a>
+                        </form>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <span class="navbar-spacing"></span>
                 </li>
             </ul>
         @else
-            <ul class="navbar-nav px-3">
+            <form method="post" action="" class="form-inline my-2 my-lg-0">
+                @csrf
+                <input class="form-control mr-sm-2 w-auto form-rounded" type="search" placeholder="Search datasets..."
+                       name="search" aria-label="Search">
+            </form>
+            <ul class="navbar-nav pr-6">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link td-none" href="{{route('login')}}">Sign in/Register</a>
+                </li>
+                <li class="nav-item">
+                    <span class="navbar-spacing"></span>
                 </li>
             </ul>
         @endauth
