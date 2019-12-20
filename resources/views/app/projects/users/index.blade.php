@@ -23,6 +23,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Affiliations</th>
                     <th>Description</th>
                 </tr>
                 </thead>
@@ -34,6 +35,7 @@
                                 {{$user->name}}
                             </a>
                         </td>
+                        <td>{{$user->affiliations}}</td>
                         <td>{{$user->description}}</td>
                     </tr>
                 @endforeach

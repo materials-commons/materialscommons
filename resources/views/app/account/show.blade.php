@@ -27,6 +27,11 @@
                     <textarea class="form-control" id="description"
                               name="description" type="text">{{$user->description}}</textarea>
                 </div>
+                <div class="form-group">
+                    <label for="affiliations">Affiliations</label>
+                    <textarea class="form-control" id="affiliations"
+                              name="affiliations" type="text">{{$user->affiliations}}</textarea>
+                </div>
                 <div class="float-right">
                     <a class="action-link" href="#"
                        onclick="document.getElementById('user-details').submit()">

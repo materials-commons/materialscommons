@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 
 /**
+ * @property integer $id
+ * @property string $name
+ * @property string $description
+ * @property string $affiliations
  * @property string $globus_user
+ * @property string $api_token
+ *
  * @mixin Builder
  */
 class User extends Authenticatable
@@ -23,7 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'globus_user', 'description', 'api_token',
+        'name', 'email', 'password', 'globus_user', 'description',
+        'api_token', 'affiliations',
     ];
 
     /**
@@ -34,11 +40,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function getTypeAttribute($value)
-    {
-        return UserType::getKey((int)$value);
-    }
 
     public function projects()
     {

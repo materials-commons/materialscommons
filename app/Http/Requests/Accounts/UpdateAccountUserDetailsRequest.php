@@ -24,8 +24,9 @@ class UpdateAccountUserDetailsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string',
-            'description' => 'sometimes|required|string|max:2048',
+            'name'         => 'required|string',
+            'description'  => 'nullable|string|max:2048',
+            'affiliations' => 'nullable|string|max:512',
         ];
     }
 }

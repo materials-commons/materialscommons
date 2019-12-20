@@ -20,7 +20,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>Affiliations</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -32,7 +32,7 @@
                                         {{$user->name}}
                                     </a>
                                 </td>
-                                <td>{{$user->description}}</td>
+                                <td>{{$user->affiliations}}</td>
                                 <td>
                                     <a href="{{route('projects.users.add', [$project->id, $user->id])}}">
                                         <i class="fa fa-fw fa-plus"></i>
@@ -49,7 +49,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>Affiliations</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -59,7 +59,7 @@
                                 <td>
                                     <a href="{{route('projects.users.show', [$project, $puser])}}">{{$puser->name}}</a>
                                 </td>
-                                <td>{{$puser->description}}</td>
+                                <td>{{$puser->affiliations}}</td>
                                 <td>
                                     @if($project->owner->id === $puser->id)
                                         (Project Owner)
