@@ -5,11 +5,19 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
+ * @property integer $id
+ * @property string $uuid
+ * @property string name
+ * @property string description
+ * @property integer $project_id
+ *
  * @mixin Builder
  */
-class Entity extends Model
+class Entity extends Model implements Searchable
 {
     use HasUUID;
 
@@ -67,5 +75,11 @@ class Entity extends Model
     public function workflows()
     {
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.entities.show', [$this->project_id, $this]);
+        return new SearchResult($this, $this->name, $url);
     }
 }

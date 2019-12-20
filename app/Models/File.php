@@ -5,11 +5,18 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
+ * @property integer $id
+ * @property string $name
+ * @property string $description
+ * @property integer $project_id
+ *
  * @mixin Builder
  */
-class File extends Model
+class File extends Model implements Searchable
 {
     use HasUUID;
 
@@ -89,5 +96,11 @@ class File extends Model
     public function setSelectedAttribute($selected)
     {
         $this->selected = $selected;
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.files.show', [$this->project_id, $this]);
+        return new SearchResult($this, $this->name, $url);
     }
 }
