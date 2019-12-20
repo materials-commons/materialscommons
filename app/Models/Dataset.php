@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property mixed $communities
+ * @property mixed $experiments
  * @property integer $owner_id
  * @property array $file_selection
  *

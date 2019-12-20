@@ -66,6 +66,19 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="experiments">Experiments</label>
+                    <select name="experiments[]" class="selectpicker col-lg-8"
+                            title="experiments"
+                            data-live-search="true" multiple>
+                        @foreach($experiments as $experiment)
+                            <option data-token="{{$experiment->id}}" value="{{$experiment->id}}">
+                                {{$experiment->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="communities">Communities</label>
                     <select name="communities[]" class="selectpicker col-lg-8"
                             title="communities"

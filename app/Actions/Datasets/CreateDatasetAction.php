@@ -21,6 +21,13 @@ class CreateDatasetAction
             $communities = $data['communities'];
             unset($data['communities']);
         }
+
+        $experiments = null;
+        if (array_key_exists('experiments', $data)) {
+            $experiments = $data['experiments'];
+            unset($data['experiments']);
+        }
+
         $dataset = new Dataset($data);
         $dataset->owner_id = $this->userId;
         $dataset->file_selection = [
@@ -30,10 +37,14 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities) {
+        DB::transaction(function () use ($dataset, $communities, $experiments) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
+            }
+
+            if ($experiments !== null) {
+                $dataset->experiments()->attach($experiments);
             }
         });
 

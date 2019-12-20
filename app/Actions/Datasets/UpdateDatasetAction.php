@@ -14,9 +14,17 @@ class UpdateDatasetAction
             $communities = $data['communities'];
             unset($data['communities']);
         }
-        DB::transaction(function () use ($dataset, $data, $communities) {
+
+        $experiments = null;
+        if (array_key_exists('experiments', $data)) {
+            $experiments = $data['experiments'];
+            unset($data['experiments']);
+        }
+
+        DB::transaction(function () use ($dataset, $data, $communities, $experiments) {
             $dataset->update($data);
             $dataset->communities()->sync($communities);
+            $dataset->experiments()->sync($experiments);
         });
 
         return Dataset::with('communities')->where('id', $dataset->id)->first();

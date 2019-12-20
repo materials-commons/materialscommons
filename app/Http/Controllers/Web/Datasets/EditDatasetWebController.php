@@ -14,7 +14,8 @@ class EditDatasetWebController extends Controller
     {
         $dataset = Dataset::with('communities')->where('id', $datasetId)->first();
         $communities = Community::where('public', true)->get();
-        $viewModel = new ShowDatasetViewModel($project, $dataset, $communities);
+        $experiments = $project->experiments()->get();
+        $viewModel = new ShowDatasetViewModel($project, $dataset, $communities, $experiments);
 
         return view('app.projects.datasets.edit', $viewModel);
     }
