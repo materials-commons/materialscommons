@@ -36,7 +36,7 @@ class SearchProjectActionTest extends TestCase
     }
 
     /** @test */
-    public function search_not_find_matching_entity_in_different_project()
+    public function search_should_not_find_matching_entity_in_different_project()
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
