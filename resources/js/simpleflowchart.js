@@ -14,7 +14,7 @@ function parseSimpleFlowchart(lines) {
 
                 if (!(name in seenConditionals)) {
                     node = {
-                        name: name,
+                        name: name.trim(),
                         _type: 'condition',
                         id: `c_${idCounter}`,
                         last: i === entries.length - 1,
@@ -24,7 +24,7 @@ function parseSimpleFlowchart(lines) {
                 } else {
                     let n = seenConditionals[name];
                     node = {
-                        name: name,
+                        name: name.trim(),
                         _type: 'condition',
                         id: n.id,
                         last: i === entries.length - 1,
@@ -42,7 +42,7 @@ function parseSimpleFlowchart(lines) {
                     direction = entry.substr(openParen + 1, (closeParen - openParen - 1));
                 }
                 node = {
-                    name: name,
+                    name: name.trim(),
                     _type: 'operation',
                     id: `o_${idCounter}`,
                     last: i === entries.length - 1,
