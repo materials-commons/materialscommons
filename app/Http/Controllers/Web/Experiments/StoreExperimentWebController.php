@@ -13,7 +13,8 @@ class StoreExperimentWebController extends Controller
         Project $project)
     {
         $validated = $request->validated();
-        $createExperimentAction($validated);
-        return redirect(route('projects.show', compact('project')));
+        $experiment = $createExperimentAction($validated);
+
+        return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 }
