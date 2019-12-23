@@ -31,7 +31,7 @@
             <form method="post" action="{{route('projects.folders.move.update', [$project, $directory])}}"
                   id="move-files">
                 <div class="form-group">
-                    <label for="directories">Directories</label>
+                    <label for="directories">Move to directory</label>
                     <select name="directory" class="selectpicker col-lg-8"
                             title="directories" data-live-search="true">
                         @foreach($dirsInProject as $dir)
