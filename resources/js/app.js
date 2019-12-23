@@ -16,6 +16,7 @@ window.mcfl = require('./flowchart.js');
 window.formatters = require('./formatters');
 window.simplefl = require('./simpleflowchart');
 window.mcutil = require('./util');
+window.Intercooler = require('intercooler');
 
 window.Uppy = require('@uppy/core');
 window.UppyXHRUpload = require('@uppy/xhr-upload');
