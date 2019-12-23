@@ -57,7 +57,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.folders')}}"
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
                     Files

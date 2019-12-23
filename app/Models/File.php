@@ -90,6 +90,15 @@ class File extends Model implements Searchable
         return round($bytes, $precision).' '.$units[$pow];
     }
 
+    public function isDir()
+    {
+        if ($this->mime_type == 'directory') {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getSelectedAttribute()
     {
         return $this->selected;
@@ -113,5 +122,10 @@ class File extends Model implements Searchable
     {
         $url = route('projects.files.show', [$this->project_id, $this]);
         return new SearchResult($this, $this->name, $url);
+    }
+
+    public static function laratablesCustomAction($file)
+    {
+        return '';
     }
 }

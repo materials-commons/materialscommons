@@ -4,11 +4,12 @@ use App\Http\Controllers\Web\Folders\CreateFolderWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
+use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowRootFolderWebController;
+use App\Http\Controllers\Web\Folders\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Folders\StoreFolderWebController;
-use App\Models\File;
-use App\Models\Project;
+use App\Http\Controllers\Web\Folders\UpdateMoveFilesWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/{project}/folders/{folder}/create', CreateFolderWebController::class)
@@ -25,9 +26,14 @@ Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
 Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
-Route::get('/projects/{project}/folders/{directory}/upload', function (Project $project, File $directory) {
-    return view('app.projects.folders.upload', compact('project', 'directory'));
-})->name('projects.folders.upload');
+Route::get('/projects/{project}/folders/{directory}/upload', ShowUploadFilesWebController::class)
+     ->name('projects.folders.upload');
+
+Route::get('/projects/{project}/folders/{folder}/move', MoveFilesWebController::class)
+     ->name('projects.folders.move');
+
+Route::post('/projects/{project}/folders/{folder}/move', UpdateMoveFilesWebController::class)
+     ->name('projects.folders.move.update');
 
 Route::get('/projects/{project}/getRootFolder',
     GetRootFolderDatatableWebController::class)->name('projects.get_root_folder');
