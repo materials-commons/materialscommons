@@ -55,7 +55,7 @@ class File extends Model implements Searchable
 
     public function previousVersions()
     {
-        File::where('directory_id', $this->directory_id)->where('name', $this->name);
+        return File::where('directory_id', $this->directory_id)->where('name', $this->name);
     }
 
     public function datasets()

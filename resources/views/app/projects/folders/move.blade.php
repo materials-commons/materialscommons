@@ -30,6 +30,8 @@
 
             <form method="post" action="{{route('projects.folders.move.update', [$project, $directory])}}"
                   id="move-files">
+                @csrf
+
                 <div class="form-group">
                     <label for="directories">Move to directory</label>
                     <select name="directory" class="selectpicker col-lg-8"
@@ -68,7 +70,7 @@
                                 <td>{{$file->mime_type}}</td>
                                 <td>{{$file->toHumanBytes()}}</td>
                                 <td>
-                                    <input type="checkbox" name="ids" value="{{$file->id}}">
+                                    <input type="checkbox" name="ids[]" value="{{$file->id}}">
                                 </td>
                             </tr>
                         @endforeach
@@ -86,6 +88,9 @@
                     </a>
                 </div>
             </form>
+
+            @include('common.errors')
+
         @endslot
     @endcomponent
 
