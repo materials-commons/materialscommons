@@ -49,6 +49,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {{--            Kept here for formatting purposes--}}
+            <li class="nav-item">
+                <a class="nav-link outline-none td-none navbar-brand help-color"
+                   href="https://materialscommons.miserver.it.umich.edu/docs/docs/getting-started/" target="_blank">
+                    Help
+                </a>
+            </li>
         </ul>
 
         @auth
