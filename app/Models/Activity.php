@@ -13,6 +13,7 @@ use Spatie\Searchable\SearchResult;
  * @property string name
  * @property string description
  * @property integer $project_id
+ * @property mixed experiments
  *
  * @mixin Builder
  */

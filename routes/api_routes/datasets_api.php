@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Datasets\UpdateDatasetActivitySelectionApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetEntitySelectionApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetFileSelectionApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetWorkflowSelectionApiController;
@@ -10,6 +11,9 @@ Route::put('/datasets/{dataset}/selection', UpdateDatasetFileSelectionApiControl
 
 Route::put('/datasets/{dataset}/entities', UpdateDatasetEntitySelectionApiController::class)
      ->name('api.projects.datasets.entities');
+
+Route::put('/datasets/{dataset}/activities/selection', UpdateDatasetActivitySelectionApiController::class)
+     ->name('api.projects.datasets.activities.selection');
 
 Route::put('/datastes/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
      ->name('api.projects.datasets.workflows');

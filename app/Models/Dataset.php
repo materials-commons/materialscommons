@@ -17,6 +17,8 @@ use Spatie\Searchable\SearchResult;
  * @property mixed $experiments
  * @property integer $owner_id
  * @property array $file_selection
+ * @property mixed entities
+ * @property mixed activities
  *
  * @mixin Builder
  */

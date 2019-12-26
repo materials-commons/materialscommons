@@ -18,13 +18,15 @@ class UpdateDatasetWebController extends Controller
         unset($validated["action"]);
         $dataset = $updateDatasetAction($validated, $dataset);
         if ($action === "save") {
-            return redirect(route('projects.datasets.show', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.show', [$project, $dataset]));
         } elseif ($action === "files") {
-            return redirect(route('projects.datasets.files.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.files.edit', [$project, $dataset]));
         } elseif ($action === "workflow") {
-            return redirect(route('projects.datasets.workflows.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.workflows.edit', [$project, $dataset]));
+        } elseif ($action === "processes") {
+            return redirect(route('projects.datasets.activities.edit', [$project, $dataset]));
         } else {
-            return redirect(route('projects.datasets.samples.edit', compact('project', 'dataset')));
+            return redirect(route('projects.datasets.samples.edit', [$project, $dataset]));
         }
     }
 }
