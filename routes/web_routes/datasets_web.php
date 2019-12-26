@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\Datasets\Files\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetAndFolderWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetCommunitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
@@ -49,6 +50,9 @@ Route::get('/projects/{project}/datasets/{dataset}/next/{folder}', ShowDatasetAn
 
 Route::get('/projects/{project}/datasets/{dataset}/entities', ShowDatasetEntitiesWebController::class)
      ->name('projects.datasets.show.entities');
+
+Route::get('/projects/{project}/datasets/{dataset}/activities', ShowDatasetActivitiesWebController::class)
+     ->name('projects.datasets.show.activities');
 
 Route::get('/projects/{project}/datasets/{dataset}/workflows', ShowDatasetWorkflowsWebController::class)
      ->name('projects.datasets.show.workflows');
