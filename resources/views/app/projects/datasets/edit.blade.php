@@ -26,7 +26,7 @@
                     </a>
 
                     <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
-                        Save
+                        Done
                     </a>
                 </div>
                 <br>
