@@ -19,6 +19,8 @@ class EditDatasetViewModel extends ViewModel
     private $communities;
     private $experiments;
     private $workflows;
+    private $files;
+    private $directory;
 
     public function __construct(Project $project, Dataset $dataset, $user)
     {
@@ -28,6 +30,8 @@ class EditDatasetViewModel extends ViewModel
         $this->communities = collect();
         $this->experiments = collect();
         $this->workflows = collect();
+        $this->files = collect();
+        $this->directory = null;
     }
 
     public function project()
@@ -76,6 +80,28 @@ class EditDatasetViewModel extends ViewModel
     public function workflows()
     {
         return $this->workflows;
+    }
+
+    public function withFiles($files)
+    {
+        $this->files = $files;
+        return $this;
+    }
+
+    public function files()
+    {
+        return $this->files;
+    }
+
+    public function withDirectory($directory)
+    {
+        $this->directory = $directory;
+        return $this;
+    }
+
+    public function directory()
+    {
+        return $this->directory;
     }
 
     public function datasetHasCommunity(Community $community)
