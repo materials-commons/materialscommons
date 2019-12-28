@@ -1,31 +1,39 @@
-<table id="entities" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Experiments</th>
-        <th>Description</th>
-        <th>Selected</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($workflows as $workflow)
-        <tr>
-            <td>
-                <a href="#">{{$workflow->name}}</a>
-            </td>
-            <td>{{$workflowExperiments($workflow)}}</td>
-            <td>{{$workflow->description}}</td>
-            <td>
-                <div class="form-group form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
-                           {{$workflowInDataset($workflow) ? 'checked' : ''}}
-                           onclick="updateWorkflowSelection({{$workflow}}, this)">
-                </div>
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+@component('components.card')
+    @slot('header')
+        Workflows
+    @endslot
+
+    @slot('body')
+        <table id="entities" class="table table-hover" style="width:100%">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Experiments</th>
+                <th>Description</th>
+                <th>Selected</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($workflows as $workflow)
+                <tr>
+                    <td>
+                        <a href="#">{{$workflow->name}}</a>
+                    </td>
+                    <td>{{$workflowExperiments($workflow)}}</td>
+                    <td>{{$workflow->description}}</td>
+                    <td>
+                        <div class="form-group form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
+                                   {{$workflowInDataset($workflow) ? 'checked' : ''}}
+                                   onclick="updateWorkflowSelection({{$workflow}}, this)">
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    @endslot
+@endcomponent
 
 @push('scripts')
     <script>
