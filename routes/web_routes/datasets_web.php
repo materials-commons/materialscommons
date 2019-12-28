@@ -8,8 +8,6 @@ use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowsWebController;
-use App\Http\Controllers\Web\Datasets\Files\EditDatasetFilesWebController;
-use App\Http\Controllers\Web\Datasets\Files\ShowDatasetFilesDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
@@ -32,11 +30,6 @@ Route::get('/projects/{project}/datasets/create', CreateDatasetWebController::cl
      ->name('projects.datasets.create');
 Route::post('/projects/{project}/datasets', StoreDatasetWebController::class)
      ->name('projects.datasets.store');
-
-Route::get('/projects/{project}/datasets/{dataset}/files', EditDatasetFilesWebController::class)
-     ->name('projects.datasets.files.edit');
-Route::get('/projects/{project}/datasets/{dataset}/folders/{folder}', ShowDatasetFilesDirectoryWebController::class)
-     ->name('projects.datasets.folders.show');
 
 Route::get('/projects/{project}/datasets/{dataset}/edit/samples', EditDatasetSamplesWebController::class)
      ->name('projects.datasets.samples.edit');
