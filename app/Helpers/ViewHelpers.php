@@ -12,6 +12,11 @@ function setActiveNavByName($name)
     return Request::routeIs($name.'*') ? 'active' : '';
 }
 
+function setActiveNavByExactName($name)
+{
+    return Request::routeIs($name) ? 'active' : '';
+}
+
 function setActiveNavByOneOf($names)
 {
     foreach ($names as $name) {
