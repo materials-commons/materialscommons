@@ -38,7 +38,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
-                    <i class="fa-fw fas fa-users-cog mr-2"></i>
+                    <i class="fa-fw fas fa-city mr-2"></i>
                     My Communities
                 </a>
             </li>

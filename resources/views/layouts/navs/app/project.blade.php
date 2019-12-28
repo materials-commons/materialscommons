@@ -19,7 +19,7 @@
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.show')}}"
                    href="{{route('projects.show', ['project' => $project->id])}}">
                     <span data-feather="home"></span>
-                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
+                    <i class="fa-fw fas fa-vector-square mr-2"></i>
                     {{$project->name}}
                 </a>
             </li>
@@ -43,7 +43,7 @@
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities')}}"
                    href="{{route('projects.activities.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-square mr-2"></i>
+                    <i class="fa-fw fas fa-code-branch mr-2"></i>
                     Processes
                 </a>
             </li>
@@ -51,7 +51,7 @@
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5"
                    href="{{route('projects.activities.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-code-branch mr-2"></i>
+                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
                     Workflows
                 </a>
             </li>
@@ -118,7 +118,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
-                    <i class="fa-fw fas fa-users-cog mr-2"></i>
+                    <i class="fa-fw fas fa-city mr-2"></i>
                     My Communities
                 </a>
             </li>
