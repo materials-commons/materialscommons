@@ -21,6 +21,7 @@ class EditDatasetViewModel extends ViewModel
     private $workflows;
     private $files;
     private $directory;
+    private $dirPaths;
 
     public function __construct(Project $project, Dataset $dataset, $user)
     {
@@ -32,6 +33,7 @@ class EditDatasetViewModel extends ViewModel
         $this->workflows = collect();
         $this->files = collect();
         $this->directory = null;
+        $this->dirPaths = [];
     }
 
     public function project()
@@ -96,12 +98,18 @@ class EditDatasetViewModel extends ViewModel
     public function withDirectory($directory)
     {
         $this->directory = $directory;
+        $this->createDirectoryPaths();
         return $this;
     }
 
     public function directory()
     {
         return $this->directory;
+    }
+
+    public function dirPaths()
+    {
+        return $this->dirPaths;
     }
 
     public function datasetHasCommunity(Community $community)
@@ -165,5 +173,23 @@ class EditDatasetViewModel extends ViewModel
             return $e->name;
         });
         return implode(",", $experimentNames->toArray());
+    }
+
+    private function createDirectoryPaths()
+    {
+        if ($this->directory->path === "/") {
+            array_push($this->dirPaths, ['name' => '', 'path' => "/"]);
+        } else {
+            $pieces = explode('/', $this->directory->path);
+            $currentPath = "";
+            foreach ($pieces as $piece) {
+                if ($piece === "") {
+                    array_push($this->dirPaths, ['name' => '', 'path' => "/"]);
+                } else {
+                    $currentPath = "{$currentPath}/${piece}";
+                    array_push($this->dirPaths, ['name' => $piece, 'path' => $currentPath]);
+                }
+            }
+        }
     }
 }

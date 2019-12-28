@@ -1,9 +1,14 @@
 @component('components.card')
     @slot('header')
-        @if (Request::routeIs('projects.datasets.folders.index'))
+        @if(sizeof($dirPaths) == 1)
             {{$directory->name}}
         @else
-            {{$directory->path}}
+            @foreach($dirPaths as $dirpath)
+                <a class="action-link"
+                   href="{{route('projects.datasets.edit', ['project' => $project, 'dataset' => $dataset, 'path' => $dirpath["path"]])}}">
+                    {{$dirpath['name']}}/
+                </a>
+            @endforeach
         @endif
     @endslot
 

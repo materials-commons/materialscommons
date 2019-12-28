@@ -1,18 +1,9 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        @if(Request::routeIs('projects.datasets.edit'))
-            <a class="nav-link active" href="{{route('projects.datasets.files.edit', [$project, $dataset])}}">
-                Files
-            </a>
-        @elseif(Request::routeIs('projects.datasets.files.edit'))
-            <a class="nav-link active" href="{{route('projects.datasets.show', [$project, $dataset])}}">
-                Files
-            </a>
-        @else
-            <a class="nav-link" href="{{route('projects.datasets.show', [$project, $dataset])}}">
-                Files
-            </a>
-        @endif
+        <a class="nav-link {{setActiveNavByName('projects.datasets.edit')}}"
+           href="{{route('projects.datasets.edit', [$project, $dataset])}}">
+            Files
+        </a>
     </li>
 
     <li class="nav-item">
