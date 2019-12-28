@@ -19,6 +19,7 @@ use Spatie\Searchable\SearchResult;
  * @property array $file_selection
  * @property mixed entities
  * @property mixed activities
+ * @property mixed workflows
  *
  * @mixin Builder
  */

@@ -19,6 +19,17 @@
                   id="dataset-update">
                 @csrf
                 @method('put')
+                <div class="float-right">
+                    <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
+                       class="action-link danger mr-3">
+                        Cancel
+                    </a>
+
+                    <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
+                        Save
+                    </a>
+                </div>
+                <br>
                 <div class="form-group">
                     <label class="required" for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{$dataset->name}}"
@@ -114,37 +125,21 @@
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="action" value="" id="action"/>
-
-                <div class="float-right">
-                    <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-                       class="action-link danger mr-3">
-                        Cancel
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
-                        Save
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="add-workflow-button"
-                       onclick="setActionAndSubmit('workflow')">
-                        Add Workflow
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="add-samples-button"
-                       onclick="setActionAndSubmit('samples')">
-                        Add Samples
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="add-processes-button"
-                       onclick="setActionAndSubmit('processes')">
-                        Add Processes
-                    </a>
-
-                    <a class="action-link" href="#" id="add-files-button" onclick="setActionAndSubmit('files')">
-                        Add Files
-                    </a>
-                </div>
             </form>
+            <br>
+            @include('app.projects.datasets.edit-tabs.tabs')
+            <br>
+
+            @if (Request::routeIs('projects.datasets.edit'))
+                @include('app.projects.datasets.edit-tabs.files')
+            @elseif (Request::routeIs('projects.datasets.samples.edit'))
+                @include('app.projects.datasets.edit-tabs.entities')
+            @elseif (Request::routeIs('projects.datasets.activities.edit'))
+                @include('app.projects.datasets.edit-tabs.activities')
+            @elseif (Request::routeIs('projects.datasets.workflows.edit'))
+                @include('app.projects.datasets.edit-tabs.workflows')
+            @endif
+
         @endslot
     @endcomponent
     @push('scripts')

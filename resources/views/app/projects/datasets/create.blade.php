@@ -105,23 +105,9 @@
                         Save
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="add-workflow-button"
-                       onclick="setActionAndSubmit('workflow')">
-                        Add Workflow
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="add-samples-button"
-                       onclick="setActionAndSubmit('samples')">
-                        Add Samples
-                    </a>
-
-                    <a class="action-link mr-3" href="#" id="add-processes-button"
-                       onclick="setActionAndSubmit('processes')">
-                        Add Processes
-                    </a>
-
-                    <a class="action-link" href="#" id="add-files-button" onclick="setActionAndSubmit('files')">
-                        Add Files
+                    <a class="action-link mr-3" href="#" id="add-assets-button"
+                       onclick="setActionAndSubmit('assets')">
+                        Save And Add Assets
                     </a>
                 </div>
             </form>
@@ -147,16 +133,10 @@
             function setNextButtonsDisabled(disable) {
                 if (disable) {
                     $("#save-button").prop("disabled", true).addClass("isDisabled");
-                    $("#add-samples-button").prop("disabled", true).addClass("isDisabled");
-                    $("#add-processes-button").prop("disabled", true).addClass("isDisabled");
-                    $("#add-files-button").prop("disabled", true).addClass("isDisabled");
-                    $("#add-workflow-button").prop("disabled", true).addClass("isDisabled");
+                    $("#add-assets-button").prop("disabled", true).addClass("isDisabled");
                 } else {
                     $("#save-button").prop("disabled", false).removeClass("isDisabled");
-                    $("#add-samples-button").prop("disabled", false).removeClass("isDisabled");
-                    $("#add-processes-button").prop("disabled", false).removeClass("isDisabled");
-                    $("#add-files-button").prop("disabled", false).removeClass("isDisabled");
-                    $("#add-workflow-button").prop("disabled", false).removeClass("isDisabled");
+                    $("#add-assets-button").prop("disabled", false).removeClass("isDisabled");
                 }
             }
 
