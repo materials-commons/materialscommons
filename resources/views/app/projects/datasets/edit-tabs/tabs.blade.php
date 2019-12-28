@@ -21,7 +21,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.actvities.edit')}}"
+        <a class="nav-link {{setActiveNavByName('projects.datasets.activities.edit')}}"
            href="{{route('projects.datasets.activities.edit', [$project, $dataset])}}">
             Processes
         </a>
