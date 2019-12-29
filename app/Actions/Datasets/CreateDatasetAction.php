@@ -3,6 +3,7 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
+use App\Models\Experiment;
 use Illuminate\Support\Facades\DB;
 
 class CreateDatasetAction
@@ -45,6 +46,11 @@ class CreateDatasetAction
 
             if ($experiments !== null) {
                 $dataset->experiments()->attach($experiments);
+                foreach ($experiments as $experimentId) {
+                    $experiment = Experiment::with(['activities', 'entities'])->find($experimentId);
+                    $dataset->activities()->syncWithoutDetaching($experiment->activities);
+                    $dataset->entities()->syncWithoutDetaching($experiment->entities);
+                }
             }
         });
 
