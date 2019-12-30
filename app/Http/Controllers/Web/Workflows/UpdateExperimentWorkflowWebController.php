@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Workflows\UpdateWorkflowRequest;
 use App\Models\Workflow;
 
-class UpdateWorkflowWebController extends Controller
+class UpdateExperimentWorkflowWebController extends Controller
 {
     public function __invoke(UpdateWorkflowRequest $request, UpdateWorkflowAction $updateWorkflowAction, $projectId,
         $experimentId, Workflow $workflow)

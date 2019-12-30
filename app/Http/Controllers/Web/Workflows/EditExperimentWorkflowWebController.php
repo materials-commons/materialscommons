@@ -7,7 +7,7 @@ use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\Workflow;
 
-class EditWorkflowWebController extends Controller
+class EditExperimentWorkflowWebController extends Controller
 {
     public function __invoke(Project $project, Experiment $experiment, Workflow $workflow)
     {

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
 
-class CreateWorkflowWebController extends Controller
+class CreateExperimentWorkflowWebController extends Controller
 {
     public function __invoke(Project $project, Experiment $experiment)
     {

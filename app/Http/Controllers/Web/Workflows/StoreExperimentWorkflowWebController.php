@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Workflows\CreateWorkflowRequest;
 use App\Models\Experiment;
 
-class StoreWorkflowWebController extends Controller
+class StoreExperimentWorkflowWebController extends Controller
 {
     public function __invoke(CreateWorkflowRequest $request, CreateWorkflowAction $createWorkflowAction, $projectId,
         Experiment $experiment)
