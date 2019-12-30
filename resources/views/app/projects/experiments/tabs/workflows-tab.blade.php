@@ -1,7 +1,10 @@
 <div class="ml-2">
-    <div class="float-right">
+    <div class="float-right mr-2">
         <a href="{{route('projects.experiments.workflows.create', [$project, $experiment])}}" class="action-link">
             <i class="fas fa-fw fa-plus"></i> New Workflow
+        </a>
+        <a href="#" class="action-link ml-3">
+            <i class="fas fa-fw fa-link"></i> Attach Workflow
         </a>
     </div>
     <table id="workflows" class="table table-hover">
