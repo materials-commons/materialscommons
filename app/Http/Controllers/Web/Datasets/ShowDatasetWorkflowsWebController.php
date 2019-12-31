@@ -11,6 +11,7 @@ class ShowDatasetWorkflowsWebController extends Controller
     public function __invoke(Project $project, $datasetId)
     {
         $dataset = Dataset::with(['experiments', 'workflows'])->findOrFail($datasetId);
-        return view('app.projects.datasets.show', compact('project', 'dataset'));
+        $workflows = $dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+        return view('app.projects.datasets.show', compact('project', 'dataset', 'workflows'));
     }
 }
