@@ -28,7 +28,11 @@
                     </a>
                 </td>
             @elseif(isset($editProjectWorkflowRoute))
-                <td></td>
+                <td>
+                    <a href="{{route($editProjectWorkflowRoute, [$project, $workflow])}}" class="action-link">
+                        <i class="fas fa-fw fa-edit"></i>
+                    </a>
+                </td>
             @endif
         </tr>
     @endforeach

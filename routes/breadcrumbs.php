@@ -79,12 +79,28 @@ Breadcrumbs::for('projects.datasets.edit', function($trail, $project, $dataset) 
     $trail->push($dataset->name, route('projects.datasets.edit', [$project, $dataset]));
 });
 
-Breadcrumbs::for('projects.datasets.files.edit', function($trail, $project, $dataset) {
+Breadcrumbs::for('projects.datasets.files.edit', function ($trail, $project, $dataset) {
     $trail->parent('projects.datasets.edit', $project, $dataset);
     $trail->push("Files", route('projects.datasets.files.edit', [$project, $dataset]));
 });
 
-Breadcrumbs::for('projects.datasets.folders.show', function($trail, $project, $dataset) {
+Breadcrumbs::for('projects.datasets.folders.show', function ($trail, $project, $dataset) {
     $trail->parent('projects.datasets.edit', $project, $dataset);
     $trail->push("Files", route('projects.datasets.files.edit', [$project, $dataset]));
+});
+
+// Project Breadcrumbs
+Breadcrumbs::for('projects.workflows.index', function ($trail, $project) {
+    $trail->parent('projects.show', $project);
+    $trail->push('Workflows', route('projects.workflows.index', [$project]));
+});
+
+Breadcrumbs::for('projects.workflows.edit', function ($trail, $project, $workflow) {
+    $trail->parent('projects.workflows.index', $project);
+    $trail->push($workflow->name, route('projects.workflows.edit', [$project, $workflow]));
+});
+
+Breadcrumbs::for('projects.workflows.create', function ($trail, $project) {
+    $trail->parent('projects.workflows.index', $project);
+    $trail->push('Create', route('projects.workflows.create', [$project]));
 });

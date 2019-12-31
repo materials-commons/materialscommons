@@ -7,7 +7,7 @@ use App\Models\Workflow;
 
 class CreateWorkflowAction
 {
-    public function __invoke($data, $projectId, $experiment, $userId)
+    public function __invoke($data, $projectId, $userId, $experiment = null)
     {
         $workflow = new Workflow([
             'name' => $data['name'],
@@ -29,6 +29,8 @@ class CreateWorkflowAction
         $workflow->project_id = $projectId;
         $workflow->save();
         $workflow->fresh();
-        $experiment->workflows()->attach($workflow);
+        if ($experiment != null) {
+            $experiment->workflows()->attach($workflow);
+        }
     }
 }

@@ -13,7 +13,7 @@ class StoreExperimentWorkflowWebController extends Controller
         Experiment $experiment)
     {
         $validated = $request->validated();
-        $createWorkflowAction($validated, $projectId, $experiment, auth()->id());
+        $createWorkflowAction($validated, $projectId, auth()->id(), $experiment);
         return redirect(route('projects.experiments.show', [$projectId, $experiment]));
     }
 }

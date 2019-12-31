@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Web\Workflows;
 
+use App\Actions\Workflows\UpdateWorkflowAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Workflows\UpdateWorkflowRequest;
+use App\Models\Workflow;
 
 class UpdateProjectWorkflowWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateWorkflowRequest $request, UpdateWorkflowAction $updateWorkflowAction, $projectId,
+        Workflow $workflow)
     {
-        //
+        $validated = $request->validated();
+        $updateWorkflowAction($workflow, $validated);
+        return redirect(route('projects.workflows.index', [$projectId]));
     }
 }
