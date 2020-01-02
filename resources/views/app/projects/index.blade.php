@@ -29,26 +29,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($projects as $project)
+                @foreach($projects as $proj)
                     <tr>
                         <td>
-                            <a href="{{route('projects.show', [$project->id])}}" class="">{{$project->name}}</a>
+                            <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                         </td>
-                        <td>{{$project->description}}</td>
-                        <td>{{$project->updated_at->diffForHumans()}}</td>
+                        <td>{{$proj->description}}</td>
+                        <td>{{$proj->updated_at->diffForHumans()}}</td>
                         <td>
                             <div class="float-right">
-                                <a href="{{route('projects.show', [$project->id])}}" class="action-link">
+                                <a href="{{route('projects.show', [$proj->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
-                                <a href="{{route('projects.edit', [$project->id])}}" class="action-link">
+                                <a href="{{route('projects.edit', [$proj->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a data-toggle="modal" href="#project-delete-{{$project->id}}" class="action-link">
+                                <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">
                                     <i class="fas fa-fw fa-trash-alt"></i>
                                 </a>
                             </div>
-                            @component('app.projects.delete-project', ['project' => $project])
+                            @component('app.projects.delete-project', ['project' => $proj])
                             @endcomponent
                         </td>
                     </tr>
