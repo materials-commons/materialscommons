@@ -13,6 +13,6 @@ class IndexProjectsWebController extends Controller
     {
         $projects = auth()->user()->projects()->get();
 
-        return view('app.projects.index', ['projects' => $projects]);
+        return view('app.projects.index', compact('projects'));
     }
 }
