@@ -1,10 +1,12 @@
 <?php
 
 use App\Exports\EntitiesExport;
+use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityWebController;
+use App\Http\Controllers\Web\Entities\StoreProjectEntityWebController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -12,6 +14,12 @@ Route::get('/projects/{project}/entities', IndexEntitiesWebController::class)
      ->name('projects.entities.index');
 Route::get('/projects/{project}/datatables/entities', GetProjectEntitiesDatatableWebController::class)
      ->name('dt_get_project_entities');
+
+Route::get('/projects/{project}/entitites/create', CreateProjectEntityWebController::class)
+     ->name('projects.entities.create');
+
+Route::post('/projects/{project}/entities', StoreProjectEntityWebController::class)
+     ->name('projects.entities.store');
 
 Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::class)
      ->name('projects.entities.show');

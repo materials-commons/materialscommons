@@ -28,9 +28,9 @@ class CreateEntityRequest extends FormRequest
     {
         return [
             'name'          => 'required|string|max:80',
-            'description'   => 'string|max:2048',
-            'project_id'    => 'required|integer',
-            'experiment_id' => 'integer',
+            'description'   => 'nullable|string|max:2048',
+            'project_id'    => 'nullable|integer',
+            'experiment_id' => 'nullable|integer',
         ];
     }
 
