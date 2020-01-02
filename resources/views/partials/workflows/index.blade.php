@@ -52,9 +52,19 @@
                 order: [[0, 'desc']],
                 lengthMenu: [4],
             });
-            @if(sizeof($workflows) !== 0)
-            showWorkflow(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
-            @endif
+            let oTable = $('#workflows').dataTable();
+            let item = oTable.fnGetData($('#workflows tbody tr:eq(0)')[0]);
+            if (item) {
+                let firstTick = item[0].indexOf('`'),
+                    secondTick = item[0].lastIndexOf('`'),
+                    workflowCode = item[0].substr(firstTick, secondTick - firstTick);
+
+                let part1 = item[0].indexOf('#">'),
+                    part2 = item[0].indexOf("</a>"),
+                    workflowName = item[0].substr(part1 + 3, part2 - part1 - 3);
+
+                showWorkflow(workflowCode, workflowName);
+            }
         });
 
         function showWorkflow(code, name) {
