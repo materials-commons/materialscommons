@@ -49,8 +49,11 @@
         <ul class="navbar-nav">
             {{--            Kept here for formatting purposes--}}
             <li class="nav-item">
-                <a class="nav-link outline-none td-none navbar-brand help-color"
-                   href="{{helpUrl()}}" target="_blank">
+                {{--                <a class="nav-link outline-none td-none navbar-brand help-color"--}}
+                {{--                   href="{{helpUrl()}}" target="_blank">--}}
+                {{--                    Help--}}
+                {{--                </a>--}}
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal" href="#item-help">
                     Help
                 </a>
             </li>
@@ -111,6 +114,25 @@
                 @yield('content')
             </div>
         </main>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="item-help" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Help for {{helpTitle()}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 500px">
+                <iframe src="{{helpUrl()}}" width="100%" height="100%"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Done</button>
+            </div>
+        </div>
     </div>
 </div>
 

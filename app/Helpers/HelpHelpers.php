@@ -24,6 +24,26 @@ function helpUrl()
 function makeHelpUrl($doc)
 {
     $base = config('help.site');
+
     return "{$base}/{$doc}";
+}
+
+function helpTitle()
+{
+    if (Request::routeIs('projects.activities.*')) {
+        return "Processes";
+    } elseif (Request::routeIs('projects.experiments.activities.*')) {
+        return "Processes";
+    } elseif (Request::routeIs('projects.entities.*')) {
+        return "Samples";
+    } elseif (Request::routeIs('projects.experiments.*')) {
+        return "Experiments";
+    } elseif (Request::routeIs('projects.datasets.*')) {
+        return "Publishing";
+    } elseif (Request::routeIs('projects.*')) {
+        return "Projects";
+    } else {
+        return "Getting Started";
+    }
 }
 
