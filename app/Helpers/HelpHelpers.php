@@ -14,6 +14,8 @@ function helpUrl()
         return makeHelpUrl("experiments");
     } elseif (Request::routeIs('projects.datasets.*')) {
         return makeHelpUrl("publishing");
+    } elseif (Request::routeIs('projects.globus.*')) {
+        return makeHelpUrl("globus");
     } elseif (Request::routeIs('projects.*')) {
         return makeHelpUrl("projects");
     } else {
@@ -40,6 +42,8 @@ function helpTitle()
         return "Experiments";
     } elseif (Request::routeIs('projects.datasets.*')) {
         return "Publishing";
+    } elseif (Request::routeIs('projects.globus.*')) {
+        return "Globus";
     } elseif (Request::routeIs('projects.*')) {
         return "Projects";
     } else {
