@@ -2,25 +2,30 @@
 
 use Illuminate\Support\Facades\Request;
 
+function helpRoutes()
+{
+    return [
+        ['route' => 'projects.activities.*', 'help' => 'processes', 'title' => 'Processes'],
+        ['route' => 'projects.experiments.activities.*', 'help' => 'processes', 'title' => 'Processes'],
+        ['route' => 'projects.entities.*', 'help' => 'samples', 'title' => 'Samples'],
+        ['route' => 'projects.experiments.*', 'help' => 'experiments', 'title' => 'Experiments'],
+        ['route' => 'projects.datasets.*', 'help' => 'publishing', 'title' => 'Publishing'],
+        ['route' => 'projects.globus.*', 'help' => 'globus', 'title' => 'Globus'],
+        ['route' => 'projects.files.*', 'help' => 'files', 'title' => 'Files'],
+        ['route' => 'projects.folders.*', 'help' => 'files', 'title' => 'Files'],
+        ['route' => 'projects.*', 'help' => 'projects', 'title' => 'Projects'],
+        ['route' => 'accounts.*', 'help' => 'account', 'title' => 'Account'],
+    ];
+}
+
 function helpUrl()
 {
-    if (Request::routeIs('projects.activities.*')) {
-        return makeHelpUrl("processes");
-    } elseif (Request::routeIs('projects.experiments.activities.*')) {
-        return makeHelpUrl("processes");
-    } elseif (Request::routeIs('projects.entities.*')) {
-        return makeHelpUrl("samples");
-    } elseif (Request::routeIs('projects.experiments.*')) {
-        return makeHelpUrl("experiments");
-    } elseif (Request::routeIs('projects.datasets.*')) {
-        return makeHelpUrl("publishing");
-    } elseif (Request::routeIs('projects.globus.*')) {
-        return makeHelpUrl("globus");
-    } elseif (Request::routeIs('projects.*')) {
-        return makeHelpUrl("projects");
-    } else {
-        return makeHelpUrl("getting-started");
+    foreach (helpRoutes() as $helpRoute) {
+        if (Request::routeIs($helpRoute['route'])) {
+            return makeHelpUrl($helpRoute['help']);
+        }
     }
+    return makeHelpUrl("getting-started");
 }
 
 function makeHelpUrl($doc)
@@ -32,22 +37,11 @@ function makeHelpUrl($doc)
 
 function helpTitle()
 {
-    if (Request::routeIs('projects.activities.*')) {
-        return "Processes";
-    } elseif (Request::routeIs('projects.experiments.activities.*')) {
-        return "Processes";
-    } elseif (Request::routeIs('projects.entities.*')) {
-        return "Samples";
-    } elseif (Request::routeIs('projects.experiments.*')) {
-        return "Experiments";
-    } elseif (Request::routeIs('projects.datasets.*')) {
-        return "Publishing";
-    } elseif (Request::routeIs('projects.globus.*')) {
-        return "Globus";
-    } elseif (Request::routeIs('projects.*')) {
-        return "Projects";
-    } else {
-        return "Getting Started";
+    foreach (helpRoutes() as $helpRoute) {
+        if (Request::routeIs($helpRoute['route'])) {
+            return $helpRoute['title'];
+        }
     }
+    return "Getting Started";
 }
 
