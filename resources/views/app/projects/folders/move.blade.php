@@ -10,19 +10,9 @@
     @component('components.card')
         @slot('header')
             @if (Request::routeIs('projects.folders.index'))
-                {{$directory->name}}
+                Move files in {{$directory->name}}
             @else
-                implement dirpaths
-                {{--                @if(sizeof($dirPaths) == 1)--}}
-                {{--                    {{$directory->name}}--}}
-                {{--                @else--}}
-                {{--                    @foreach($dirPaths as $dirpath)--}}
-                {{--                        <a class="action-link"--}}
-                {{--                           href="{{route('projects.folders.by_path', ['project' => $project, 'path' => $dirpath["path"]])}}">--}}
-                {{--                            {{$dirpath['name']}}/--}}
-                {{--                        </a>--}}
-                {{--                    @endforeach--}}
-                {{--                @endif--}}
+                Move files in {{$directory->path}}
             @endif
         @endslot
 
