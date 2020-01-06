@@ -12,6 +12,13 @@ class CreateGlobusDownloadForProjectAction
 {
     use PathFromUUID;
 
+    private $globusApi;
+
+    public function __construct(GlobusApi $globusApi)
+    {
+        $this->globusApi = $globusApi;
+    }
+
     public function __invoke($projectId, User $user)
     {
         $allDirs = File::where('project_id', $projectId)
@@ -20,6 +27,9 @@ class CreateGlobusDownloadForProjectAction
                        ->get();
 
         $baseDir = storage_path("app/__globus_downloads/{$projectId}/{$user->uuid}");
+        $globusPath = "/__globus_downloads/{$projectId}/{$user->uuid}/";
+        $globusIdentity = $this->getGlobusIdentity($user->globus_user);
+        $aclId = $this->setAclOnPath($globusPath, $globusIdentity);
 
         $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
         $this->createDirs($dirsToCreate, $baseDir);
@@ -66,5 +76,18 @@ class CreateGlobusDownloadForProjectAction
                 // ignore
             }
         }
+    }
+
+    private function setAclOnPath($globusPath, $globusUserId)
+    {
+        $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", env('MC_GLOBUS_ENDPOINT_ID'));
+        $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
+        return $resp["access_id"];
+    }
+
+    private function getGlobusIdentity($globusEmail)
+    {
+        $resp = $this->globusApi->getIdentities([$globusEmail]);
+        return $resp["identities"][0]["id"];
     }
 }
