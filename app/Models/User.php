@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,6 +10,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * @property integer $id
+ * @property string uuid
  * @property string $name
  * @property string $description
  * @property string $affiliations
@@ -21,6 +23,7 @@ class User extends Authenticatable
 {
     use LaratrustUserTrait;
     use Notifiable;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +32,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'globus_user', 'description',
-        'api_token', 'affiliations',
+        'api_token', 'affiliations', 'uuid',
     ];
 
     /**
