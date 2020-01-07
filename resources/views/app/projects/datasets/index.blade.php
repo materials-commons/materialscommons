@@ -23,6 +23,7 @@
                 <tr>
                     <th>Dataset</th>
                     <th>Description</th>
+                    <th>Tags</th>
                     <th>Published</th>
                     <th>Updated</th>
                     <th></th>
@@ -35,6 +36,11 @@
                             <a href="{{route('projects.datasets.show', [$project, $dataset])}}">{{$dataset->name}}</a>
                         </td>
                         <td>{{$dataset->description}}</td>
+                        <td>
+                            @foreach($dataset->tags as $tag)
+                                <span class="badge badge-info ml-1">{{$tag->name}}</span>
+                            @endforeach
+                        </td>
                         @if ($dataset->published_at === null)
                             <td>Not published</td>
                         @else

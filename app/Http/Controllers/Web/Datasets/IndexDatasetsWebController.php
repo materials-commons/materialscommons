@@ -11,7 +11,7 @@ class IndexDatasetsWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        $datasets = Dataset::where('project_id', $project->id)->get();
+        $datasets = Dataset::with('tags')->where('project_id', $project->id)->get();
         return view('app.projects.datasets.index', compact('project', 'datasets'));
     }
 }
