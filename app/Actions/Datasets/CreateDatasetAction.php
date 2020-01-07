@@ -4,10 +4,13 @@ namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Experiment;
+use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
 class CreateDatasetAction
 {
+    use HasTagsInRequest;
+
     private $userId;
 
     public function __construct($userId)
@@ -29,13 +32,16 @@ class CreateDatasetAction
             unset($data['experiments']);
         }
 
-        $tags = null;
-        if (array_key_exists('tags', $data)) {
-            $tags = collect($data['tags'])->map(function ($tag) {
-                return $tag["value"];
-            })->toArray();
-            unset($data['tags']);
-        }
+        $this->loadTagsFromData($data);
+        unset($data['tags']);
+
+//        $tags = [];
+//        if (array_key_exists('tags', $data)) {
+//            $tags = collect($data['tags'])->map(function ($tag) {
+//                return $tag["value"];
+//            })->toArray();
+//            unset($data['tags']);
+//        }
 
         $dataset = new Dataset($data);
         $dataset->owner_id = $this->userId;
@@ -46,7 +52,7 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments, $tags) {
+        DB::transaction(function () use ($dataset, $communities, $experiments) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -61,9 +67,7 @@ class CreateDatasetAction
                 }
             }
 
-            if ($tags !== null) {
-                $dataset->attachTags($tags);
-            }
+            $dataset->attachTags($this->tags);
         });
 
         return $dataset->fresh();
