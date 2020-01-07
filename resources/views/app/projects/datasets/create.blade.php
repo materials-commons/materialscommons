@@ -92,6 +92,11 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <input class="form-control" id="tags" name="tags">
+                </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="action" value="" id="action"/>
 
@@ -120,6 +125,9 @@
             $(document).ready(() => {
                 validate();
                 $('#name').change(validate).keypress(() => validate());
+
+                let tagsInput = document.querySelector('#tags');
+                new Tagify(tagsInput);
             });
 
             function validate() {

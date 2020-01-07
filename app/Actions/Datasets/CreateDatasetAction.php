@@ -29,6 +29,14 @@ class CreateDatasetAction
             unset($data['experiments']);
         }
 
+        $tags = null;
+        if (array_key_exists('tags', $data)) {
+            $tags = collect($data['tags'])->map(function ($tag) {
+                return $tag["value"];
+            })->toArray();
+            unset($data['tags']);
+        }
+
         $dataset = new Dataset($data);
         $dataset->owner_id = $this->userId;
         $dataset->file_selection = [
@@ -38,7 +46,7 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments) {
+        DB::transaction(function () use ($dataset, $communities, $experiments, $tags) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -51,6 +59,10 @@ class CreateDatasetAction
                     $dataset->activities()->syncWithoutDetaching($experiment->activities);
                     $dataset->entities()->syncWithoutDetaching($experiment->entities);
                 }
+            }
+
+            if ($tags !== null) {
+                $dataset->attachTags($tags);
             }
         });
 

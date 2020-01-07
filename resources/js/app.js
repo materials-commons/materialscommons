@@ -25,6 +25,7 @@ window.UppyDashboard = require('@uppy/dashboard');
 // Uppy styles for dashboard
 require('@uppy/core/dist/style.css');
 require('@uppy/dashboard/dist/style.css');
+window.Tagify = require('@yaireo/tagify');
 
 
 /**

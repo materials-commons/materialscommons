@@ -175,6 +175,14 @@ class EditDatasetViewModel extends ViewModel
         return implode(",", $experimentNames->toArray());
     }
 
+    public function tagsList()
+    {
+        $tags = $this->dataset->tags->map(function ($tag) {
+            return $tag->name;
+        });
+        return implode(", ", $tags->toArray());
+    }
+
     private function createDirectoryPaths()
     {
         if ($this->directory->path === "/") {

@@ -24,14 +24,23 @@ class DatasetRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string|max:80',
-            'description' => 'nullable|string|max:2048',
-            'project_id'  => 'required',
-            'license'     => 'nullable|string|max:256',
-            'authors'     => 'nullable|string|max:2048',
-            'action'      => 'string|required',
-            'experiments' => 'nullable|array',
-            'communities' => 'nullable|array',
+            'name'         => 'required|string|max:80',
+            'description'  => 'nullable|string|max:2048',
+            'project_id'   => 'required',
+            'license'      => 'nullable|string|max:256',
+            'authors'      => 'nullable|string|max:2048',
+            'action'       => 'string|required',
+            'experiments'  => 'nullable|array',
+            'communities'  => 'nullable|array',
+            'tags'         => 'nullable|array',
+            'tags.*.value' => 'required|string',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'tags' => json_decode($this->tags, true),
+        ]);
     }
 }

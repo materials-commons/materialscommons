@@ -16,7 +16,7 @@ class EditDatasetWebController extends Controller
     {
         $path = request()->input("path");
         $folder = $this->getFolder($path, $folderId, $project->id);
-        $dataset = Dataset::with(['communities', 'experiments'])->findOrFail($datasetId);
+        $dataset = Dataset::with(['communities', 'experiments', 'tags'])->findOrFail($datasetId);
         $communities = Community::where('public', true)->get();
         $experiments = $project->experiments()->get();
         $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);

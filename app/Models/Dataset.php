@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Spatie\Tags\HasTags;
 
 /**
  * @property integer $id
@@ -26,6 +27,7 @@ use Spatie\Searchable\SearchResult;
 class Dataset extends Model implements Searchable
 {
     use HasUUID;
+    use HasTags;
 
     protected $guarded = ['id', 'uuid'];
 

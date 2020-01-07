@@ -19,17 +19,7 @@
                   id="dataset-update">
                 @csrf
                 @method('put')
-                <div class="float-right">
-                    <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-                       class="action-link danger mr-3">
-                        Cancel
-                    </a>
 
-                    <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
-                        Done
-                    </a>
-                </div>
-                <br>
                 <div class="form-group">
                     <label class="required" for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{$dataset->name}}"
@@ -123,9 +113,29 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <input class="form-control" id="tags" name="tags" value="{{$tagsList}}">
+                </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <input type="hidden" name="action" value="" id="action"/>
+
+                <div class="float-right">
+                    <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
+                       class="action-link danger mr-3">
+                        Cancel
+                    </a>
+
+                    <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
+                        Done
+                    </a>
+                </div>
             </form>
+
+            @include('common.errors')
+
+            <br>
             <br>
             @include('app.projects.datasets.edit-tabs.tabs')
             <br>
@@ -147,6 +157,8 @@
             $(document).ready(() => {
                 validate();
                 $('#name').change(validate).keypress(() => validate());
+                let tagsInput = document.querySelector('#tags');
+                new Tagify(tagsInput);
             });
 
             function validate() {

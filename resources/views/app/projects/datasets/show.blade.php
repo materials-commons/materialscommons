@@ -62,6 +62,14 @@
                         <label for="license">License</label>
                         <input class="form-control" id="license" type="text" value="{{$dataset->license}}" readonly>
                     </div>
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <div class="form-control" id="tags" readonly>
+                            @foreach($dataset->tags as $tag)
+                                <span class="badge badge-info fs-11">{{$tag->name}}</span>
+                            @endforeach
+                        </div>
+                    </div>
                 @endslot
             @endcomponent
 

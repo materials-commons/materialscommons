@@ -21,10 +21,19 @@ class UpdateDatasetAction
             unset($data['experiments']);
         }
 
-        DB::transaction(function () use ($dataset, $data, $communities, $experiments) {
+        $tags = [];
+        if (array_key_exists('tags', $data)) {
+            $tags = collect($data['tags'])->map(function ($tag) {
+                return $tag["value"];
+            })->toArray();
+            unset($data['tags']);
+        }
+
+        DB::transaction(function () use ($dataset, $data, $communities, $experiments, $tags) {
             $dataset->update($data);
             $dataset->communities()->sync($communities);
             $dataset->experiments()->sync($experiments);
+            $dataset->syncTags($tags);
         });
 
         return Dataset::with('communities')->where('id', $dataset->id)->first();
