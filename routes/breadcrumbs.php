@@ -104,3 +104,8 @@ Breadcrumbs::for('projects.workflows.create', function ($trail, $project) {
     $trail->parent('projects.workflows.index', $project);
     $trail->push('Create', route('projects.workflows.create', [$project]));
 });
+
+Breadcrumbs::for('projects.workflows.show', function ($trail, $project, $workflow) {
+    $trail->parent('projects.workflows.index', $project);
+    $trail->push($workflow->name, route('projects.workflows.show', [$project, $workflow]));
+});

@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Workflows\DestroyProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\EditExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\EditProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\IndexProjectWorkflowsWebController;
+use App\Http\Controllers\Web\Workflows\ShowProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\StoreExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\StoreProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\UpdateExperimentWorkflowWebController;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 // Experiment level workflows
 
-Route::patch('/projects/{project}/experiments/{experiment}/workflows/{workflow}/update',
+Route::put('/projects/{project}/experiments/{experiment}/workflows/{workflow}/update',
     UpdateExperimentWorkflowWebController::class)
      ->name('projects.experiments.workflows.update');
 
@@ -52,5 +53,8 @@ Route::get('/projects/{project}/workflows/{workflow}/delete', DeleteProjectWorkf
 
 Route::delete('/projects/{project}/workflows/{workflow}', DestroyProjectWorkflowWebController::class)
      ->name('projects.workflow.destroy');
+
+Route::get('/projects/{project}/workflows/{workflow}', ShowProjectWorkflowWebController::class)
+     ->name('projects.workflows.show');
 
 

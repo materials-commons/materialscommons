@@ -26,4 +26,4 @@
 <div id="workflowcanvas"></div>
 
 @include('partials.workflows.help')
-@include('partials.workflows.create_edit_js', ['cancelRoute' => $cancelRoute])
+@include('partials.workflows.workflow_js', ['cancelRoute' => $cancelRoute])

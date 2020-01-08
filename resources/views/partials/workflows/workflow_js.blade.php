@@ -11,8 +11,10 @@
             workflowgraph = mcfl.drawFlowchart('workflowcanvas', fl);
         }
 
+        @isset($cancelRoute)
         function cancel() {
             window.location.href = "{{$cancelRoute}}";
         }
+        @endisset
     </script>
 @endpush

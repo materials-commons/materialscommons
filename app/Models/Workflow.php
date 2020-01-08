@@ -63,7 +63,7 @@ class Workflow extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('projects.entities.show', [$this->project_id, $this]);
+        $url = route('projects.workflows.show', [$this->project_id, $this]);
         return new SearchResult($this, $this->name, $url);
     }
 }
