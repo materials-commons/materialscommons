@@ -28,15 +28,6 @@ class Project extends Model
         'owner_id'        => 'integer',
     ];
 
-    public function setDescriptionAttribute($value)
-    {
-        if (is_null($value)) {
-            $this->attributes['description'] = '';
-        } else {
-            $this->attributes['description'] = $value;
-        }
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'project2user', 'project_id',

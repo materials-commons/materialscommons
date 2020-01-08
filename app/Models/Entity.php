@@ -24,15 +24,6 @@ class Entity extends Model implements Searchable
 
     protected $guarded = ['id', 'uuid'];
 
-    public function setDescriptionAttribute($value)
-    {
-        if (is_null($value)) {
-            $this->attributes['description'] = '';
-        } else {
-            $this->attributes['description'] = $value;
-        }
-    }
-
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');

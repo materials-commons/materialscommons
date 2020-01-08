@@ -28,7 +28,7 @@ class UpdateActivityRequest extends FormRequest
     {
         return [
             'name'        => 'string|max:80',
-            'description' => 'string|max:2048',
+            'description' => 'nullable|string|max:2048',
         ];
     }
 
