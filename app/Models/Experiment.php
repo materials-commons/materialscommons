@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property integer $id
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class Experiment extends Model
+class Experiment extends Model implements Searchable
 {
     use HasUUID;
 
@@ -56,5 +58,17 @@ class Experiment extends Model
     public static function laratablesCustomAction($experiment)
     {
         return '';
+    }
+
+    public function getTypeAttribute()
+    {
+        return "experiment";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.experiments.show', [$this->project_id, $this]);
+
+        return new SearchResult($this, $this->name, $url);
     }
 }

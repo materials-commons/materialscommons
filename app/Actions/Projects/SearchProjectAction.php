@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Entity;
+use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Workflow;
 use Spatie\Searchable\ModelSearchAspect;
@@ -20,7 +21,13 @@ class SearchProjectAction
                 $modelSearchAspect->addSearchableAttribute('name')
                                   ->addSearchableAttribute('description')
                                   ->addSearchableAttribute('path')
+                                  ->addSearchableAttribute('mime_type')
                                   ->addSearchableAttribute('media_type_description')
+                                  ->where('project_id', $projectId);
+            })
+            ->registerModel(Experiment::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
+                $modelSearchAspect->addSearchableAttribute('name')
+                                  ->addSearchableAttribute('description')
                                   ->where('project_id', $projectId);
             })
             ->registerModel(Entity::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
