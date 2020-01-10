@@ -22,7 +22,7 @@ class Entity extends Model implements Searchable
 {
     use HasUUID;
 
-    protected $guarded = ['id', 'uuid'];
+    protected $guarded = ['id'];
 
     public function owner()
     {
