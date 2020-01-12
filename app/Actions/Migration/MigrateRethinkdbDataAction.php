@@ -36,8 +36,7 @@ class MigrateRethinkdbDataAction
     private $placeHolderProject;
     private $placeHolderUser;
     private $pathToDumpFiles;
-    private $knownSamples;
-    private $knownProcesses;
+    private $knownItems;
 
     public function __construct($pathToDumpFiles)
     {
@@ -131,16 +130,21 @@ class MigrateRethinkdbDataAction
 
     private function setupForSamplesDumpfile()
     {
-        $this->knownSamples = [];
-        $project2sampleDumpfile = "{$this->pathToDumpFiles}/project2sample.json";
+        return $this->setupItemMapping("project2sample.json", "sample_id", "project_id");
+    }
+
+    private function setupItemMapping($file, $key, $valueKey)
+    {
+        $this->knownItems = [];
+        $project2sampleDumpfile = "{$this->pathToDumpFiles}/${file}";
         $handle = fopen($project2sampleDumpfile, "r");
-        while ( ! feof($handle)) {
+        while (!feof($handle)) {
             $line = fgets($handle);
             if ($this->ignoreLine($line)) {
                 continue;
             }
             $data = $this->decodeLine($line);
-            $this->knownSamples[$data["sample_id"]] = $data["project_id"];
+            $this->knownItems[$data[$key]] = $data[$valueKey];
         }
 
         fclose($handle);
@@ -150,31 +154,17 @@ class MigrateRethinkdbDataAction
 
     private function cleanupForSamplesDumpfile()
     {
-        $this->knownSamples = [];
+        $this->knownItems = [];
     }
 
     private function setupForProcessesDumpfile()
     {
-        $this->knownProcesses = [];
-        $project2processDumpfile = "{$this->pathToDumpFiles}/project2process.json";
-        $handle = fopen($project2processDumpfile, "r");
-        while ( ! feof($handle)) {
-            $line = fgets($handle);
-            if ($this->ignoreLine($line)) {
-                continue;
-            }
-            $data = $this->decodeLine($line);
-            $this->knownProcesses[$data["process_id"]] = $data["project_id"];
-        }
-
-        fclose($handle);
-
-        return true;
+        return $this->setupItemMapping("project2process.json", "process_id", "project_id");
     }
 
     private function cleanupForProcessesDumpfile()
     {
-        $this->knownProcesses = [];
+        $this->knownItems = [];
     }
 
     private function loadJoinDumpFile($dumpFile)
@@ -313,7 +303,7 @@ class MigrateRethinkdbDataAction
     private function loadDataForEntity($data)
     {
         $modelData = [];
-        if ( ! isset($this->knownSamples[$data['id']])) {
+        if (!isset($this->knownItems[$data['id']])) {
             return null;
         }
         $modelData["uuid"] = $data["id"];
@@ -328,7 +318,7 @@ class MigrateRethinkdbDataAction
         }
         $modelData['owner_id'] = $user->id;
 
-        $project = Project::where('uuid', $this->knownSamples[$data['id']])->first();
+        $project = Project::where('uuid', $this->knownItems[$data['id']])->first();
         if ($project == null) {
             return null;
         }
