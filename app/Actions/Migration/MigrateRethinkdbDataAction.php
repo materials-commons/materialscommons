@@ -23,7 +23,7 @@ class MigrateRethinkdbDataAction
         //        ['datadirs.json' => File::class],
         //        ['datafiles.json' => File::class],
         ['samples.json' => Entity::class],
-        //        ['processes.json' => Activity::class],
+        ['processes.json' => Activity::class],
         //        ['properties.json' => Attribute::class],
         //        ['measurements.json' => AttributeValue::class],
         //        ['setupproperties.json' => Attribute::class], // special handling needed
@@ -69,7 +69,9 @@ class MigrateRethinkdbDataAction
     private function inOrderProcessDumpFiles()
     {
         foreach ($this->orderToProcessObjectDumpFiles as $dumpFile) {
-            $this->loadObjectDumpFile($dumpFile);
+            if (!$this->loadObjectDumpFile($dumpFile)) {
+                return;
+            }
         }
 
         foreach ($this->orderToProcessJoinDumpFiles as $dumpFile) {
@@ -88,7 +90,7 @@ class MigrateRethinkdbDataAction
         echo "\nLoading file {$dumpFilePath}\n";
         $handle = fopen($dumpFilePath, "r");
 
-        while ( ! feof($handle)) {
+        while (!feof($handle)) {
             $line = fgets($handle);
             if ($this->ignoreLine($line)) {
                 continue;
@@ -99,20 +101,23 @@ class MigrateRethinkdbDataAction
                 $this->loadDataForModel($model, $file, $data);
             } catch (\Exception $e) {
                 echo "Error loading data {$e->getMessage()}, model {$model}, file {$file}, line {$line}\n";
-                break;
+                return false;
             }
         }
 
         fclose($handle);
 
         $this->performCleanupForDumpfile($file);
+        return true;
     }
 
     private function performDumpFileSetup($dumpFile)
     {
         switch ($dumpFile) {
             case 'samples.json':
-                return $this->setupForSamplesDumpfile();
+                return $this->setupItemMapping("project2sample.json", "sample_id", "project_id");
+            case 'processes.json':
+                return $this->setupItemMapping("project2process.json", "process_id", "project_id");
             default:
                 return true;
         }
@@ -121,17 +126,14 @@ class MigrateRethinkdbDataAction
     private function performCleanupForDumpfile($dumpFile)
     {
         switch ($dumpFile) {
+            case 'processes.json':
             case 'samples.json':
-                return $this->cleanupForSamplesDumpfile();
+                return $this->cleanupItemMapping();
             default:
                 return true;
         }
     }
 
-    private function setupForSamplesDumpfile()
-    {
-        return $this->setupItemMapping("project2sample.json", "sample_id", "project_id");
-    }
 
     private function setupItemMapping($file, $key, $valueKey)
     {
@@ -152,17 +154,7 @@ class MigrateRethinkdbDataAction
         return true;
     }
 
-    private function cleanupForSamplesDumpfile()
-    {
-        $this->knownItems = [];
-    }
-
-    private function setupForProcessesDumpfile()
-    {
-        return $this->setupItemMapping("project2process.json", "process_id", "project_id");
-    }
-
-    private function cleanupForProcessesDumpfile()
+    private function cleanupItemMapping()
     {
         $this->knownItems = [];
     }
@@ -302,6 +294,32 @@ class MigrateRethinkdbDataAction
 
     private function loadDataForEntity($data)
     {
+        $modelData = $this->createModelDataForKnownItems($data);
+
+        if ($modelData == null) {
+            return null;
+        }
+
+        echo "Adding Sample {$modelData['name']}\n";
+
+        return Entity::create($modelData);
+    }
+
+    private function loadDataForActivity($data)
+    {
+        $modelData = $this->createModelDataForKnownItems($data);
+
+        if ($modelData == null) {
+            return null;
+        }
+
+        echo "Adding Process {$modelData['name']}\n";
+
+        return Activity::create($modelData);
+    }
+
+    private function createModelDataForKnownItems($data)
+    {
         $modelData = [];
         if (!isset($this->knownItems[$data['id']])) {
             return null;
@@ -310,6 +328,10 @@ class MigrateRethinkdbDataAction
         $modelData["name"] = $data["name"];
         if (isset($data['description'])) {
             $modelData['description'] = $data['description'];
+        } else {
+            if (isset($data['note'])) {
+                $modelData['description'] = $data['note'];
+            }
         }
 
         $user = User::where('email', $data['owner'])->first();
@@ -324,15 +346,7 @@ class MigrateRethinkdbDataAction
         }
 
         $modelData['project_id'] = $project->id;
-
-        echo "Adding Sample {$modelData['name']}\n";
-
-        return Entity::create($modelData);
-    }
-
-    private function loadDataForActivity($data)
-    {
-        return true;
+        return $modelData;
     }
 
     private function loadDataForAttribute($data)
