@@ -2,6 +2,7 @@
 
 namespace App\Actions\Migration;
 
+use App\Enums\ExperimentStatus;
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
@@ -14,13 +15,18 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+class Datadirs2ndTime
+{
+}
+
 class MigrateRethinkdbDataAction
 {
     private $orderToProcessObjectDumpFiles = [
         ['users.json' => User::class],
         ['projects.json' => Project::class],
-        //        ['experiments.json' => Experiment::class],
-        //        ['datadirs.json' => File::class],
+        ['experiments.json' => Experiment::class],
+        ['datadirs.json' => File::class],
+        ['datadirs.json' => Datadirs2ndTime::class],
         //        ['datafiles.json' => File::class],
         ['samples.json' => Entity::class],
         ['processes.json' => Activity::class],
@@ -118,6 +124,10 @@ class MigrateRethinkdbDataAction
                 return $this->setupItemMapping("project2sample.json", "sample_id", "project_id");
             case 'processes.json':
                 return $this->setupItemMapping("project2process.json", "process_id", "project_id");
+            case 'experiments.json':
+                return $this->setupItemMapping('project2experiment.json', 'experiment_id', 'project_id');
+            case 'datadirs.json':
+                return $this->setupItemMapping('project2datadir.json', 'datadir_id', 'project_id');
             default:
                 return true;
         }
@@ -126,6 +136,8 @@ class MigrateRethinkdbDataAction
     private function performCleanupForDumpfile($dumpFile)
     {
         switch ($dumpFile) {
+            case 'experiments.json':
+            case 'datadirs.json':
             case 'processes.json':
             case 'samples.json':
                 return $this->cleanupItemMapping();
@@ -210,6 +222,9 @@ class MigrateRethinkdbDataAction
 
                 return $this->loadDataForFile($data);
 
+            case Datadirs2ndTime::class:
+                return $this->matchupDirectories($data);
+
             case Entity::class:
                 return $this->loadDataForEntity($data);
 
@@ -258,33 +273,104 @@ class MigrateRethinkdbDataAction
 
     private function loadDataForProject($data)
     {
-        $modelData = [];
-        $modelData['name'] = $data['name'];
-        if (isset($modelData['description'])) {
-            $modelData['description'] = $data['description'];
+        $modelData = $this->createCommonModelData($data);
+        if ($modelData == null) {
+            return null;
         }
 
-        $user = User::where('email', $data['owner'])->first();
-        if ($user == null) {
-            return false;
-        }
-
-        $modelData['owner_id'] = $user->id;
-        $modelData['uuid'] = $data['id'];
         $modelData['is_active'] = true;
-        echo "Adding project {$modelData['name']} owned by {$user->email}\n";
+        echo "Adding project {$modelData['name']}\n";
 
         return Project::create($modelData);
     }
 
     private function loadDataForExperiment($data)
     {
-        return true;
+        $modelData = $this->createModelDataForKnownItems($data);
+        if ($modelData == null) {
+            return null;
+        }
+
+        $modelData['status'] = $this->mapExperimentStatus($data);
+
+        echo "Adding experiment {$modelData['name']}\n";
+
+        return Experiment::create($modelData);
+    }
+
+    private function mapExperimentStatus($data)
+    {
+        if (!isset($data['status'])) {
+            return ExperimentStatus::InProgress;
+        }
+
+        switch ($data['status']) {
+            case 'done':
+                return ExperimentStatus::Done;
+            case 'on-hold':
+                return ExperimentStatus::OnHold;
+            default:
+                return ExperimentStatus::InProgress;
+        }
     }
 
     private function loadDataForDirectory($data)
     {
-        return true;
+        $modelData = $this->createModelDataForKnownItems($data);
+        if ($modelData == null) {
+            return null;
+        }
+
+        $nameWithPath = $modelData['name'];
+        $modelData['name'] = basename($nameWithPath);
+        $modelData['path'] = $this->removeProjectFromPathName($nameWithPath);
+        $modelData['mime_type'] = 'directory';
+        $modelData['media_type_description'] = 'directory';
+        $modelData['disk'] = 'local';
+
+        echo "Adding directory {$modelData['name']}, path: {$modelData['path']}\n";
+
+        return File::create($modelData);
+    }
+
+    private function removeProjectFromPathName($nameWithPath)
+    {
+        // return everything from first '/' to end of string
+        return substr($nameWithPath, strpos($nameWithPath, '/'));
+    }
+
+    private function matchupDirectories($data)
+    {
+        if (!isset($this->knownItems[$data['id']])) {
+            return null;
+        }
+
+        if (!isset($data['parent'])) {
+            return null;
+        }
+
+        if ($data['parent'] == '') {
+            return null;
+        }
+
+        if (!isset($this->knownItems[$data['parent']])) {
+            return null;
+        }
+
+        $dir = File::where('uuid', $data['id'])->first();
+        if ($dir == null) {
+            return null;
+        }
+
+        $parentDir = File::where('uuid', $data['parent'])->first();
+        if ($parentDir == null) {
+            return null;
+        }
+
+        echo "Updating parent link for {$dir->path} to point at {$parentDir->path}\n";
+
+        $dir->update(['directory_id' => $parentDir->id]);
+        return $dir;
     }
 
     private function loadDataForFile($data)
@@ -320,10 +406,28 @@ class MigrateRethinkdbDataAction
 
     private function createModelDataForKnownItems($data)
     {
-        $modelData = [];
         if (!isset($this->knownItems[$data['id']])) {
             return null;
         }
+
+        $modelData = $this->createCommonModelData($data);
+
+        if ($modelData == null) {
+            return null;
+        }
+
+        $project = Project::where('uuid', $this->knownItems[$data['id']])->first();
+        if ($project == null) {
+            return null;
+        }
+
+        $modelData['project_id'] = $project->id;
+        return $modelData;
+    }
+
+    private function createCommonModelData($data)
+    {
+        $modelData = [];
         $modelData["uuid"] = $data["id"];
         $modelData["name"] = $data["name"];
         if (isset($data['description'])) {
@@ -338,14 +442,9 @@ class MigrateRethinkdbDataAction
         if ($user == null) {
             return null;
         }
+
         $modelData['owner_id'] = $user->id;
 
-        $project = Project::where('uuid', $this->knownItems[$data['id']])->first();
-        if ($project == null) {
-            return null;
-        }
-
-        $modelData['project_id'] = $project->id;
         return $modelData;
     }
 
