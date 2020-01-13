@@ -43,6 +43,7 @@ class MigrateRethinkdbDataAction
     private $placeHolderUser;
     private $pathToDumpFiles;
     private $knownItems;
+    private $knownItems2;
 
     public function __construct($pathToDumpFiles)
     {
@@ -128,6 +129,9 @@ class MigrateRethinkdbDataAction
                 return $this->setupItemMapping('project2experiment.json', 'experiment_id', 'project_id');
             case 'datadirs.json':
                 return $this->setupItemMapping('project2datadir.json', 'datadir_id', 'project_id');
+            case 'datafiles.json':
+                $this->setupItemMapping('project2datafile.json', 'datafile_id', 'project_id');
+                return $this->setupItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id', true);
             default:
                 return true;
         }
@@ -136,8 +140,9 @@ class MigrateRethinkdbDataAction
     private function performCleanupForDumpfile($dumpFile)
     {
         switch ($dumpFile) {
-            case 'experiments.json':
             case 'datadirs.json':
+            case 'datafiles.json':
+            case 'experiments.json':
             case 'processes.json':
             case 'samples.json':
                 return $this->cleanupItemMapping();
@@ -147,9 +152,9 @@ class MigrateRethinkdbDataAction
     }
 
 
-    private function setupItemMapping($file, $key, $valueKey)
+    private function setupItemMapping($file, $key, $valueKey, $use2nd = false)
     {
-        $this->knownItems = [];
+        $knownItems = [];
         $project2sampleDumpfile = "{$this->pathToDumpFiles}/${file}";
         $handle = fopen($project2sampleDumpfile, "r");
         while (!feof($handle)) {
@@ -158,17 +163,24 @@ class MigrateRethinkdbDataAction
                 continue;
             }
             $data = $this->decodeLine($line);
-            $this->knownItems[$data[$key]] = $data[$valueKey];
+            $knownItems[$data[$key]] = $data[$valueKey];
         }
 
         fclose($handle);
 
+        if ($use2nd) {
+            $this->knownItems2 = $knownItems;
+        } else {
+            $this->knownItems = $knownItems;
+        }
         return true;
     }
 
     private function cleanupItemMapping()
     {
         $this->knownItems = [];
+        $this->knownItems2 = [];
+        return true;
     }
 
     private function loadJoinDumpFile($dumpFile)
@@ -373,45 +385,19 @@ class MigrateRethinkdbDataAction
         return $dir;
     }
 
-    /*
-     * {
-    "uploaded": 7048,
-    "description": "",
-    "parent": "",
-    "checksum": "71a87031b30ebbaee9c2df78c6bdf6fa",
-    "mtime": {
-      "timezone": "+00:00",
-      "$reql_type$": "TIME",
-      "epoch_time": 1492059869.188
-    },
-    "mediatype": {
-      "mime": "text/plain",
-      "description": "Text"
-    },
-    "name": "traj.txt",
-    "current": true,
-    "otype": "datafile",
-    "usesid": "f42a2e3e-2bf3-47d5-a489-bd375f5415e7",
-    "owner": "anirudh@engineering.ucsb.edu",
-    "birthtime": {
-      "timezone": "+00:00",
-      "$reql_type$": "TIME",
-      "epoch_time": 1492059869.188
-    },
-    "atime": {
-      "timezone": "+00:00",
-      "$reql_type$": "TIME",
-      "epoch_time": 1492059869.188
-    },
-    "id": "000000b4-e3dd-4d5c-b7b5-a077366135d0",
-    "size": 7048
-  },
-
-     */
     private function loadDataForFile($data)
     {
         $modelData = $this->createModelDataForKnownItems($data);
         if ($modelData == null) {
+            return null;
+        }
+
+        if (!isset($this->knownItems2[$data['id']])) {
+            return null;
+        }
+
+        $dir = File::where('uuid', $this->knownItems2[$data['id']])->first();
+        if ($dir == null) {
             return null;
         }
 
@@ -422,7 +408,9 @@ class MigrateRethinkdbDataAction
         $modelData['current'] = $data['current'];
         $modelData['uses_uuid'] = $data['usesid'];
         $modelData['checksum'] = $data['checksum'];
-        return true;
+        $modelData['directory_id'] = $dir->id;
+
+        return File::create($modelData);
     }
 
     private function loadDataForEntity($data)
