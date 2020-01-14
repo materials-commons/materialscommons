@@ -15,7 +15,7 @@ class AttributeValue extends Model
 
     protected $table = 'attribute_values';
 
-    protected $guarded = ['id', 'uuid'];
+    protected $guarded = ['id'];
     protected $casts = [
         'val' => 'array',
     ];
