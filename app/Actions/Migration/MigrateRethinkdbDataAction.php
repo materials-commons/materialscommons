@@ -22,17 +22,17 @@ class Datadirs2ndTime
 class MigrateRethinkdbDataAction
 {
     private $orderToProcessObjectDumpFiles = [
-        ['users.json' => User::class],
-        ['projects.json' => Project::class],
-        ['experiments.json' => Experiment::class],
-        ['datadirs.json' => File::class],
-        ['datadirs.json' => Datadirs2ndTime::class],
-        //        ['datafiles.json' => File::class],
-        ['samples.json' => Entity::class],
-        ['processes.json' => Activity::class],
+//        ['users.json' => User::class],
+//        ['projects.json' => Project::class],
+//        ['experiments.json' => Experiment::class],
+//        ['datadirs.json' => File::class],
+//        ['datadirs.json' => Datadirs2ndTime::class],
+//        ['datafiles.json' => File::class],
+//        ['samples.json' => Entity::class],
+//        ['processes.json' => Activity::class],
+        ['setupproperties.json' => Attribute::class],
         //        ['properties.json' => Attribute::class],
         //        ['measurements.json' => AttributeValue::class],
-        //        ['setupproperties.json' => Attribute::class], // special handling needed
         //        ['datasets.json' => Dataset::class]
         // Need propertysets here...
     ];
@@ -132,6 +132,8 @@ class MigrateRethinkdbDataAction
             case 'datafiles.json':
                 $this->setupItemMapping('project2datafile.json', 'datafile_id', 'project_id');
                 return $this->setupItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id', true);
+            case 'setupproperties.json':
+                return $this->setupItemMapping('process2setup.json', 'setup_id', 'process_id');
             default:
                 return true;
         }
@@ -140,6 +142,7 @@ class MigrateRethinkdbDataAction
     private function performCleanupForDumpfile($dumpFile)
     {
         switch ($dumpFile) {
+            case 'setupproperties.json':
             case 'datadirs.json':
             case 'datafiles.json':
             case 'experiments.json':
@@ -473,12 +476,13 @@ class MigrateRethinkdbDataAction
             }
         }
 
-        $user = User::where('email', $data['owner'])->first();
-        if ($user == null) {
-            return null;
+        if (isset($data['owner'])) {
+            $user = User::where('email', $data['owner'])->first();
+            if ($user == null) {
+                return null;
+            }
+            $modelData['owner_id'] = $user->id;
         }
-
-        $modelData['owner_id'] = $user->id;
 
         return $modelData;
     }
@@ -495,7 +499,26 @@ class MigrateRethinkdbDataAction
 
     private function loadDataForActivitySetting($data)
     {
-        return true;
+        $setupId = $data['setup_id'];
+        if (!isset($this->knownItems[$setupId])) {
+            return null;
+        }
+        $activityUuid = $this->knownItems[$setupId];
+        $activity = Activity::where('uuid', $activityUuid)->first();
+        if ($activity == null) {
+            return null;
+        }
+        $attrModelData = $this->createCommonModelData($data);
+        $attrModelData['attributable_type'] = Activity::class;
+        $attrModelData['attributable_id'] = $activity->id;
+        echo "Creating attribute {$attrModelData['name']} for activity {$activity->name}\n";
+        $attr = Attribute::create($attrModelData);
+        AttributeValue::create([
+            'val'          => ['value' => $data['value'] ?? ""],
+            'unit'         => $data['unit'] ?? "",
+            'attribute_id' => $attr->id,
+        ]);
+        return $attr;
     }
 
     private function loadDataForDataset($data)
