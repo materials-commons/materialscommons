@@ -6,6 +6,8 @@ class ImportEntityStateAttributeValues extends AbstractImporter
 {
     use ItemLoader;
 
+    private $measurement2attribute;
+
     public function __construct($pathToDumpfiles)
     {
         parent::__construct($pathToDumpfiles);
@@ -13,12 +15,13 @@ class ImportEntityStateAttributeValues extends AbstractImporter
 
     protected function setup()
     {
-        // TODO: Implement setup() method.
+        $this->measurement2attribute = $this->loadItemMapping('property2measurement.json', 'measurement_id',
+            'property_id');
     }
 
     protected function cleanup()
     {
-        // TODO: Implement cleanup() method.
+        $this->measurement2attribute = [];
     }
 
     protected function loadData($data)
