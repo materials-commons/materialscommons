@@ -2,12 +2,17 @@
 
 namespace App\Actions\Migration;
 
+use App\Models\Attribute;
+use App\Models\EntityState;
+
 class ImportEntityStateAttributes extends AbstractImporter
 {
     use ItemLoader;
+    use ItemCreater;
 
-    private $knownItems;
-    private $knownItems2;
+    private $property2propertyset;
+    private $propertyset2sample;
+    private $sample2project;
 
     public function __construct($pathToDumpfiles)
     {
@@ -16,28 +21,44 @@ class ImportEntityStateAttributes extends AbstractImporter
 
     protected function setup()
     {
-        $this->knownItems = $this->loadItemMapping('propertyset2property.json', 'property_id', 'property_set_id');
-        $this->knownItems2 = $this->loadItemMapping('sample2propertyset.json', 'property_set_id', 'sample_id');
+        $this->property2propertyset = $this->loadItemMapping('propertyset2property.json', 'property_id',
+            'property_set_id');
+        $this->propertyset2sample = $this->loadItemMapping('sample2propertyset.json', 'property_set_id', 'sample_id');
+        $this->sample2project = $this->loadItemMapping('project2sample.json', 'sample_id', 'project_id');
     }
 
     protected function cleanup()
     {
-        $this->knownItems = [];
-        $this->knownItems2 = [];
+        $this->property2propertyset = [];
+        $this->propertyset2sample = [];
+        $this->sample2project = [];
     }
 
     protected function loadData($data)
     {
         $propertyUuid = $data['id'];
-        if (!isset($this->knownItems[$propertyUuid])) {
+        if (!isset($this->property2propertyset[$propertyUuid])) {
             return null;
         }
 
-        $propertySetUuid = $this->knownItems[$propertyUuid];
-        if (!isset($this->knownItems2[$propertySetUuid])) {
+        $propertySetUuid = $this->property2propertyset[$propertyUuid];
+        if (!isset($this->propertyset2sample[$propertySetUuid])) {
             return null;
         }
 
-        $sampleUuid = $this->knownItems2[$propertySetUuid];
+        $sampleUuid = $this->propertyset2sample[$propertySetUuid];
+        if (!isset($this->sample2project[$sampleUuid])) {
+            return null;
+        }
+
+        $entityState = EntityState::where('uuid', $propertySetUuid)->first();
+        if ($entityState == null) {
+            return null;
+        }
+
+        $modelData = $this->createCommonModelData($data);
+        $modelData['attributable_type'] = EntityState::class;
+        $modelData['attributable_id'] = $entityState->id;
+        return Attribute::create($modelData);
     }
 }
