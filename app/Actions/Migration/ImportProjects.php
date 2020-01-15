@@ -6,7 +6,7 @@ use App\Models\Project;
 
 class ImportProjects extends AbstractImporter
 {
-    use ItemLoader;
+    use ItemCreater;
 
     public function __construct($pathToDumpfiles)
     {

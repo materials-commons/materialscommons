@@ -7,6 +7,9 @@ use App\Models\Activity;
 class ImportActivities extends AbstractImporter
 {
     use ItemLoader;
+    use ItemCreater;
+
+    private $knownItems;
 
     public function __construct($pathToDumpfiles)
     {
@@ -15,12 +18,12 @@ class ImportActivities extends AbstractImporter
 
     protected function setup()
     {
-        $this->setupItemMapping("project2process.json", "process_id", "project_id");
+        $this->knownItems = $this->loadItemMapping("project2process.json", "process_id", "project_id");
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data);
+        $modelData = $this->createModelDataForKnownItems($data, $this->knownItems);
 
         if ($modelData == null) {
             return null;
@@ -33,6 +36,6 @@ class ImportActivities extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->cleanupItemMapping();
+        $this->knownItems = [];
     }
 }

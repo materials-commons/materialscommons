@@ -9,10 +9,18 @@ use App\Models\AttributeValue;
 class ImportActivitySettings extends AbstractImporter
 {
     use ItemLoader;
+    use ItemCreater;
+
+    private $knownItems;
+
+    public function __construct($pathToDumpfiles)
+    {
+        parent::__construct($pathToDumpfiles);
+    }
 
     protected function setup()
     {
-        $this->setupItemMapping('process2setup.json', 'setup_id', 'process_id');
+        $this->knownItems = $this->loadItemMapping('process2setup.json', 'setup_id', 'process_id');
     }
 
     protected function loadData($data)
@@ -41,6 +49,6 @@ class ImportActivitySettings extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->cleanupItemMapping();
+        $this->knownItems = [];
     }
 }

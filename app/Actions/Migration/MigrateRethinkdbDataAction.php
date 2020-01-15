@@ -20,7 +20,8 @@ class MigrateRethinkdbDataAction
         ['samples.json' => ImportEntities::class],
         ['processes.json' => ImportActivities::class],
         ['setupproperties.json' => ImportActivitySettings::class],
-        //        ['properties.json' => Attribute::class],
+        ['propertysets.json' => ImportEntityStates::class],
+//        ['properties.json' => ImportEntityStateAttributes::class],
         //        ['measurements.json' => AttributeValue::class],
         //        ['datasets.json' => Dataset::class]
         // Need propertysets here...

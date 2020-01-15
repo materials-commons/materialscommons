@@ -7,6 +7,10 @@ use App\Models\File;
 class ImportFiles extends AbstractImporter
 {
     use ItemLoader;
+    use ItemCreater;
+
+    private $knownItems;
+    private $knownItems2;
 
     public function __construct($pathToDumpfiles)
     {
@@ -15,13 +19,13 @@ class ImportFiles extends AbstractImporter
 
     protected function setup()
     {
-        $this->setupItemMapping('project2datafile.json', 'datafile_id', 'project_id');
-        $this->setupItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id', true);
+        $this->knownItems = $this->loadItemMapping('project2datafile.json', 'datafile_id', 'project_id');
+        $this->knownItems2 = $this->loadItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id');
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data);
+        $modelData = $this->createModelDataForKnownItems($data, $this->knownItems);
         if ($modelData == null) {
             return null;
         }
@@ -51,6 +55,7 @@ class ImportFiles extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->cleanupItemMapping();
+        $this->knownItems = [];
+        $this->knownItems2 = [];
     }
 }

@@ -8,6 +8,8 @@ class ImportDirectoriesMatchParents extends AbstractImporter
 {
     use ItemLoader;
 
+    private $knownItems;
+
     public function __construct($pathToDumpfiles)
     {
         parent::__construct($pathToDumpfiles);
@@ -15,7 +17,7 @@ class ImportDirectoriesMatchParents extends AbstractImporter
 
     protected function setup()
     {
-        $this->setupItemMapping('project2datadir.json', 'datadir_id', 'project_id');
+        $this->knownItems = $this->loadItemMapping('project2datadir.json', 'datadir_id', 'project_id');
     }
 
     protected function loadData($data)
@@ -54,6 +56,6 @@ class ImportDirectoriesMatchParents extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->cleanupItemMapping();
+        $this->knownItems = [];
     }
 }
