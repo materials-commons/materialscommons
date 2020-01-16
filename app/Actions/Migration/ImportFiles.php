@@ -12,9 +12,9 @@ class ImportFiles extends AbstractImporter
     private $knownItems;
     private $knownItems2;
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        parent::__construct($pathToDumpfiles, "files", $ignoreExisting);
     }
 
     protected function setup()

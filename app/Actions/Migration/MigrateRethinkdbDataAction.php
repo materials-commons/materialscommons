@@ -28,18 +28,24 @@ class MigrateRethinkdbDataAction
     ];
 
     private $pathToDumpFiles;
+    private $ignoreExisting;
 
-    public function __construct($pathToDumpFiles)
+    public function __construct($pathToDumpFiles, $ignoreExisting)
     {
         $this->pathToDumpFiles = $pathToDumpFiles;
+        $this->ignoreExisting = $ignoreExisting;
     }
 
-    public function __invoke()
+    public function __invoke($projectsToIgnore, $projectsToLoad)
     {
         foreach ($this->orderToProcessObjectDumpFiles as $dumpFile) {
             $file = key($dumpFile);
             $importerClass = $dumpFile[$file];
-            $importer = new $importerClass($this->pathToDumpFiles);
+            $importer = new $importerClass($this->pathToDumpFiles, $this->ignoreExisting);
+            if ($file == "projects.json") {
+                $importer->setProjectsToIgnore($projectsToIgnore);
+                $importer->setProjectsToLoad($projectsToLoad);
+            }
             if (!$importer->loadDumpfile($file)) {
                 return;
             }

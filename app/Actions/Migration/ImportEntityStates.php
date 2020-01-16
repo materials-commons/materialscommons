@@ -12,6 +12,11 @@ class ImportEntityStates extends AbstractImporter
     private $knownItems;
     private $knownItems2;
 
+    public function __construct($pathToDumpfiles, $ignoreExisting)
+    {
+        parent::__construct($pathToDumpfiles, "entity_states", $ignoreExisting);
+    }
+
     protected function setup()
     {
         $this->knownItems = $this->loadItemMapping('project2sample.json', 'sample_id', 'project_id');

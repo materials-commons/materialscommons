@@ -11,6 +11,11 @@ class ImportEntities extends AbstractImporter
 
     private $knownItems;
 
+    public function __construct($pathToDumpfiles, $ignoreExisting)
+    {
+        parent::__construct($pathToDumpfiles, "entities", $ignoreExisting);
+    }
+
     protected function setup()
     {
         $this->knownItems = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");

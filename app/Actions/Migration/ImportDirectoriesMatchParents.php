@@ -10,9 +10,10 @@ class ImportDirectoriesMatchParents extends AbstractImporter
 
     private $knownItems;
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        // Always ignore existing because we are working with files that were just loaded in the previous step
+        parent::__construct($pathToDumpfiles, "files", false);
     }
 
     protected function setup()
@@ -40,6 +41,10 @@ class ImportDirectoriesMatchParents extends AbstractImporter
 
         $dir = File::where('uuid', $data['id'])->first();
         if ($dir == null) {
+            return null;
+        }
+
+        if (!is_null($dir->directory_id)) {
             return null;
         }
 

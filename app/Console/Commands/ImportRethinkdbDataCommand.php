@@ -12,7 +12,10 @@ class ImportRethinkdbDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:import-rethinkdb-data {dbDir : The path for the directory containing the JSON files}';
+    protected $signature = 'mc:import-rethinkdb-data {dbDir : The path for the directory containing the JSON files} 
+                                                     {--ignore-existing : do not load if already in database} 
+                                                     {--ignore-projects=* : projects to ignore loading} 
+                                                     {--load-projects=* : only projects to load}';
 
     /**
      * The console command description.
@@ -39,7 +42,10 @@ class ImportRethinkdbDataCommand extends Command
     public function handle()
     {
         $dbDir = $this->argument('dbDir');
-        $migrateRethinkdbDataAction = new MigrateRethinkdbDataAction($dbDir);
-        $migrateRethinkdbDataAction();
+        $ignoreExisting = $this->option("ignore-existing");
+        $migrateRethinkdbDataAction = new MigrateRethinkdbDataAction($dbDir, $ignoreExisting);
+        $projectsToIgnore = $this->option('ignore-projects');
+        $projectsToLoad = $this->option('load-projects');
+        $migrateRethinkdbDataAction($projectsToIgnore, $projectsToLoad);
     }
 }

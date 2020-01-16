@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 class ImportUsers extends AbstractImporter
 {
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        parent::__construct($pathToDumpfiles, "users", $ignoreExisting);
     }
 
     protected function setup()

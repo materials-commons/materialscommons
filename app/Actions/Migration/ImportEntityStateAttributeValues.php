@@ -8,9 +8,9 @@ class ImportEntityStateAttributeValues extends AbstractImporter
 
     private $measurement2attribute;
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        parent::__construct($pathToDumpfiles, "attribute_values", $ignoreExisting);
     }
 
     protected function setup()

@@ -11,9 +11,9 @@ class ImportDirectories extends AbstractImporter
 
     private $knownItems;
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        parent::__construct($pathToDumpfiles, "files", $ignoreExisting);
     }
 
     protected function setup()

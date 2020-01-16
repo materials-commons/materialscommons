@@ -14,9 +14,9 @@ class ImportEntityStateAttributes extends AbstractImporter
     private $propertyset2sample;
     private $sample2project;
 
-    public function __construct($pathToDumpfiles)
+    public function __construct($pathToDumpfiles, $ignoreExisting)
     {
-        parent::__construct($pathToDumpfiles);
+        parent::__construct($pathToDumpfiles, "entity_states", $ignoreExisting);
     }
 
     protected function setup()
