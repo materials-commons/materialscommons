@@ -80,6 +80,7 @@ abstract class AbstractImporter
 
         fclose($handle);
 
+        $this->existing = [];
         $this->cleanup();
         return true;
     }
