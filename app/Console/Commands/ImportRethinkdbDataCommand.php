@@ -41,6 +41,7 @@ class ImportRethinkdbDataCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $dbDir = $this->argument('dbDir');
         $ignoreExisting = $this->option("ignore-existing");
         $migrateRethinkdbDataAction = new MigrateRethinkdbDataAction($dbDir, $ignoreExisting);
