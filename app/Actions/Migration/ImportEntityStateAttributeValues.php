@@ -2,6 +2,9 @@
 
 namespace App\Actions\Migration;
 
+use App\Models\Attribute;
+use App\Models\AttributeValue;
+
 class ImportEntityStateAttributeValues extends AbstractImporter
 {
     use ItemLoader;
@@ -26,6 +29,21 @@ class ImportEntityStateAttributeValues extends AbstractImporter
 
     protected function loadData($data)
     {
-        // TODO: Implement loadData() method.
+        if (!isset($this->measurement2attribute[$data['id']])) {
+            return null;
+        }
+
+        $attrUuid = $this->measurement2attribute[$data['id']];
+        $attr = Attribute::where('uuid', $attrUuid)->first();
+        if ($attr == null) {
+            return null;
+        }
+
+        return AttributeValue::create([
+            'uuid'         => $data['id'],
+            'val'          => ['value' => $data['value'] ?? ""],
+            'unit'         => $data['unit'] ?? "",
+            'attribute_id' => $attr->id,
+        ]);
     }
 }
