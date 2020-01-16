@@ -11,7 +11,7 @@ class ImportActivitySettings extends AbstractImporter
     use ItemLoader;
     use ItemCreater;
 
-    private $knownItems;
+    private $setup2process;
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -20,16 +20,16 @@ class ImportActivitySettings extends AbstractImporter
 
     protected function setup()
     {
-        $this->knownItems = $this->loadItemMapping('process2setup.json', 'setup_id', 'process_id');
+        $this->setup2process = $this->loadItemMapping('process2setup.json', 'setup_id', 'process_id');
     }
 
     protected function loadData($data)
     {
         $setupId = $data['setup_id'];
-        if (!isset($this->knownItems[$setupId])) {
+        if (!isset($this->setup2process[$setupId])) {
             return null;
         }
-        $activityUuid = $this->knownItems[$setupId];
+        $activityUuid = $this->setup2process[$setupId];
         $activity = Activity::where('uuid', $activityUuid)->first();
         if ($activity == null) {
             return null;
@@ -40,6 +40,7 @@ class ImportActivitySettings extends AbstractImporter
         echo "Creating attribute {$attrModelData['name']} for activity {$activity->name}\n";
         $attr = Attribute::create($attrModelData);
         AttributeValue::create([
+            'uuid'         => $data['id'],
             'val'          => ['value' => $data['value'] ?? ""],
             'unit'         => $data['unit'] ?? "",
             'attribute_id' => $attr->id,
@@ -49,6 +50,6 @@ class ImportActivitySettings extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->knownItems = [];
+        $this->setup2process = [];
     }
 }
