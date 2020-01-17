@@ -44,6 +44,7 @@ class CreateGlobusUploadActionTest extends TestCase
             'globus_endpoint_id' => $endpointId,
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
+            'type'               => 'upload',
             'path'               => storage_path("app/__globus_uploads/{$globusUpload->uuid}"),
         ]);
 
