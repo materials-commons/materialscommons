@@ -6,7 +6,7 @@ use App\Http\Controllers\Web\Projects\Globus\GlobusUrl;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;
 
-class FinishCreatingGlobusUploadAction
+class CreateGlobusUploadAction
 {
     private $globusApi;
     private $endpointId;
@@ -17,8 +17,15 @@ class FinishCreatingGlobusUploadAction
         $this->endpointId = env('MC_GLOBUS_ENDPOINT_ID');
     }
 
-    public function __invoke(GlobusUploadDownload $globusUpload, User $user)
+    public function __invoke($data, $projectId, User $user)
     {
+        $data['project_id'] = $projectId;
+        $data['owner_id'] = $user->id;
+        $data['loading'] = false;
+        $data['uploading'] = true;
+        $data['type'] = 'upload';
+        $globusUpload = GlobusUploadDownload::create($data);
+
         $path = storage_path("app/__globus_uploads/{$globusUpload->uuid}");
         $globusPath = "/__globus_uploads/{$globusUpload->uuid}/";
 

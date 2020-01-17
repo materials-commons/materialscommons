@@ -2,16 +2,15 @@
 
 namespace Tests\Feature\Actions\Globus;
 
-use App\Actions\Globus\FinishCreatingGlobusUploadAction;
+use App\Actions\Globus\CreateGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
-use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class FinishCreatingGlobusUploadActionTest extends TestCase
+class CreateGlobusUploadActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,13 +23,12 @@ class FinishCreatingGlobusUploadActionTest extends TestCase
 
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $globusUpload = factory(GlobusUploadDownload::class)->create([
-            'owner_id'   => $user->id,
-            'project_id' => $project->id,
-        ]);
 
-        $finishCreatingGlobusUploadAction = new FinishCreatingGlobusUploadAction($globusApiMock);
-        $globusUpload = $finishCreatingGlobusUploadAction($globusUpload, $user);
+        $uploadData = [];
+        $uploadData['name'] = 'globus upload';
+
+        $createGlobusUploadAction = new CreateGlobusUploadAction($globusApiMock);
+        $globusUpload = $createGlobusUploadAction($uploadData, $project->id, $user);
         $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
         $this->assertEquals($globusUpload->globus_endpoint_id, $endpointId);
         $expectedGlobusPath = "/__globus_uploads/{$globusUpload->uuid}/";
