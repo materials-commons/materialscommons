@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGlobusUploadsTable extends Migration
+class CreateGlobusUploadsDownloadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateGlobusUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('globus_uploads', function(Blueprint $table) {
+        Schema::create('globus_uploads_downloads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
 
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('type')->nullable();
 
             // Globus columns
             $table->string('globus_acl_id')->nullable();

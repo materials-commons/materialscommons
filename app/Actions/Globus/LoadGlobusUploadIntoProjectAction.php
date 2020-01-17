@@ -3,7 +3,7 @@
 namespace App\Actions\Globus;
 
 use App\Models\File;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Traits\PathFromUUID;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,12 +15,12 @@ class LoadGlobusUploadIntoProjectAction
 {
     use PathFromUUID;
 
-    /** @var \App\Models\GlobusUpload */
+    /** @var \App\Models\GlobusUploadDownload */
     private $globusUpload;
 
     private $maxItemsToProcess;
 
-    public function __construct(GlobusUpload $globusUpload, $maxItemsToProcess)
+    public function __construct(GlobusUploadDownload $globusUpload, $maxItemsToProcess)
     {
         $this->globusUpload = $globusUpload;
         $this->maxItemsToProcess = $maxItemsToProcess;

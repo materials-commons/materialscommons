@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property string $name
  * @property string $description
+ * @property string $type
  * @property string $globus_acl_id
  * @property string $globus_endpoint_id
  * @property string $globus_identity_id
@@ -23,9 +24,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class GlobusUpload extends Model
+class GlobusUploadDownload extends Model
 {
     use HasUUID;
+
+    protected $table = "globus_uploads_downloads";
 
     protected $guarded = ['id'];
 

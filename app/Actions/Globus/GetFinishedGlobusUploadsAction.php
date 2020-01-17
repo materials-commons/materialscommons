@@ -2,7 +2,7 @@
 
 namespace App\Actions\Globus;
 
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 
 class GetFinishedGlobusUploadsAction
 {
@@ -10,11 +10,11 @@ class GetFinishedGlobusUploadsAction
     // an upload that is being processed.
     public function __invoke()
     {
-        return GlobusUpload::where('uploading', false)
-                           ->where('loading', false)
-                           ->whereNotIn('project_id', function ($q) {
-                               $q->select('project_id')->from('globus_uploads')
-                                 ->where('loading', true);
-                           })->get();
+        return GlobusUploadDownload::where('uploading', false)
+                                   ->where('loading', false)
+                                   ->whereNotIn('project_id', function ($q) {
+                                       $q->select('project_id')->from('globus_uploads')
+                                         ->where('loading', true);
+                                   })->get();
     }
 }

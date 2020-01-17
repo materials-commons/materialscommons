@@ -3,7 +3,7 @@
 namespace App\Actions\Globus;
 
 use App\Http\Controllers\Web\Projects\Globus\GlobusUrl;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\User;
 
 class FinishCreatingGlobusUploadAction
@@ -17,7 +17,7 @@ class FinishCreatingGlobusUploadAction
         $this->endpointId = env('MC_GLOBUS_ENDPOINT_ID');
     }
 
-    public function __invoke(GlobusUpload $globusUpload, User $user)
+    public function __invoke(GlobusUploadDownload $globusUpload, User $user)
     {
         $path = storage_path("app/__globus_uploads/{$globusUpload->uuid}");
         $globusPath = "/__globus_uploads/{$globusUpload->uuid}/";

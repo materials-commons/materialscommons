@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Web\Projects\Globus;
 
 use App\Actions\Globus\GlobusApi;
 use App\Http\Controllers\Controller;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 
 class DestroyGlobusUploadWebController extends Controller
 {
-    public function __invoke(Project $project, GlobusUpload $globusUpload)
+    public function __invoke(Project $project, GlobusUploadDownload $globusUpload)
     {
         try {
             $globusApi = GlobusApi::createGlobusApi();

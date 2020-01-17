@@ -66,6 +66,6 @@ class User extends Authenticatable
 
     public function globusUploads()
     {
-        return $this->hasMany(GlobusUpload::class, 'owner_id');
+        return $this->hasMany(GlobusUploadDownload::class, 'owner_id');
     }
 }

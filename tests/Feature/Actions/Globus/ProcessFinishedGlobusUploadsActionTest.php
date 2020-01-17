@@ -4,7 +4,7 @@ namespace Tests\Feature\Actions\Globus;
 
 use App\Actions\Globus\ProcessFinishedGlobusUploadsAction;
 use App\Jobs\Globus\ImportGlobusUploadJob;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,13 +20,13 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
     {
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => false,
             'uploading'  => false,
         ]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => true,
@@ -46,20 +46,20 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
     {
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => false,
             'uploading'  => false,
         ]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => true,
             'uploading'  => false,
         ]);
         $project2 = factory(Project::class)->create(['owner_id' => $user->id]);
-        $uploadToProcess = factory(GlobusUpload::class)->create([
+        $uploadToProcess = factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project2->id,
             'loading'    => false,

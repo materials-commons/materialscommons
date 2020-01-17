@@ -4,7 +4,7 @@ namespace Tests\Feature\Actions\Globus;
 
 use App\Actions\Globus\LoadGlobusUploadIntoProjectAction;
 use App\Models\File;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,7 +44,7 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
             'owner_id'   => $user->id,
         ]);
 
-        $globusUpload = factory(GlobusUpload::class)->create([
+        $globusUpload = factory(GlobusUploadDownload::class)->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
             'path'       => "__globus_uploads/test1",

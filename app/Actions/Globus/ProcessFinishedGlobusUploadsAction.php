@@ -3,7 +3,7 @@
 namespace App\Actions\Globus;
 
 use App\Jobs\Globus\ImportGlobusUploadJob;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 
 class ProcessFinishedGlobusUploadsAction
 {
@@ -11,7 +11,7 @@ class ProcessFinishedGlobusUploadsAction
     {
         $getFinishedGlobusUploadsAction = new GetFinishedGlobusUploadsAction();
         $finishedUploads = $getFinishedGlobusUploadsAction();
-        $uniqueByProjectUploads = $finishedUploads->unique(function (GlobusUpload $upload) {
+        $uniqueByProjectUploads = $finishedUploads->unique(function (GlobusUploadDownload $upload) {
             return $upload->project_id;
         });
         foreach ($uniqueByProjectUploads as $upload) {

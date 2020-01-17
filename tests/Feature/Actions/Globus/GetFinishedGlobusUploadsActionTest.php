@@ -3,7 +3,7 @@
 namespace Tests\Feature\Actions\Globus;
 
 use App\Actions\Globus\GetFinishedGlobusUploadsAction;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,13 +18,13 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
     {
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => false,
             'uploading'  => false,
         ]);
-        factory(GlobusUpload::class)->create([
+        factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'loading'    => true,
@@ -37,7 +37,7 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
 
         // Add an upload from a different project, and check that we get it back
         $project2 = factory(Project::class)->create(['owner_id' => $user->id]);
-        $uploadToProcess = factory(GlobusUpload::class)->create([
+        $uploadToProcess = factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project2->id,
             'loading'    => false,

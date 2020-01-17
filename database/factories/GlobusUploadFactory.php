@@ -2,12 +2,12 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Faker\Generator as Faker;
 
-$factory->define(GlobusUpload::class, function (Faker $faker) {
+$factory->define(GlobusUploadDownload::class, function (Faker $faker) {
     return [
         'uuid'       => $faker->uuid,
         'name'       => "GlobusUpload {$faker->randomNumber()}",

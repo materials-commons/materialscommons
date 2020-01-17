@@ -3,7 +3,7 @@
 namespace App\Jobs\Globus;
 
 use App\Actions\Globus\LoadGlobusUploadIntoProjectAction;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,11 +16,11 @@ class ImportGlobusUploadJob implements ShouldQueue
 
     // For testability these properties are public.
 
-    /** @var GlobusUpload */
+    /** @var GlobusUploadDownload */
     public $globusUpload;
     public $maxItemsToProcess;
 
-    public function __construct(GlobusUpload $globusUpload, $maxItemsToProcess)
+    public function __construct(GlobusUploadDownload $globusUpload, $maxItemsToProcess)
     {
         $this->globusUpload = $globusUpload;
         $this->maxItemsToProcess = $maxItemsToProcess;

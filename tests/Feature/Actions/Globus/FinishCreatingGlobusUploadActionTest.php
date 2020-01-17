@@ -4,7 +4,7 @@ namespace Tests\Feature\Actions\Globus;
 
 use App\Actions\Globus\FinishCreatingGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +24,7 @@ class FinishCreatingGlobusUploadActionTest extends TestCase
 
         $user = factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $globusUpload = factory(GlobusUpload::class)->create([
+        $globusUpload = factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);

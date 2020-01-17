@@ -6,7 +6,7 @@ use App\Actions\Globus\FinishCreatingGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Globus\CreateGlobusProjectUploadRequest;
-use App\Models\GlobusUpload;
+use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 
 class StoreGlobusUploadToProjectWebController extends Controller
@@ -18,8 +18,9 @@ class StoreGlobusUploadToProjectWebController extends Controller
         $validated['owner_id'] = auth()->id();
         $validated['loading'] = false;
         $validated['uploading'] = true;
+        $validated['type'] = 'upload';
 
-        $globusUpload = GlobusUpload::create($validated);
+        $globusUpload = GlobusUploadDownload::create($validated);
         $globusApi = GlobusApi::createGlobusApi();
 
         $finishCreatingGlobusUploadAction = new FinishCreatingGlobusUploadAction($globusApi);
