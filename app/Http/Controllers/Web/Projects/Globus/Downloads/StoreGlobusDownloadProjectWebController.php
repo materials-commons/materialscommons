@@ -15,5 +15,6 @@ class StoreGlobusDownloadProjectWebController extends Controller
         $validated = $request->validated();
         $createGlobusDownloadForProjectAction = new CreateGlobusDownloadForProjectAction(GlobusApi::createGlobusApi());
         $globusDownload = $createGlobusDownloadForProjectAction($validated, $project->id, auth()->user());
+        return redirect(route('projects.globus.downloads.show', [$project, $globusDownload]));
     }
 }

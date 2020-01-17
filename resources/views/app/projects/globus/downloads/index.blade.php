@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Project Globs Uploads')
+@section('pageTitle', 'Project Globus Downloads')
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -11,14 +11,14 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Globus Uploads
-            <a class="action-link float-right" href="{{route('projects.globus.uploads.create', [$project])}}">
-                <i class="fas fa-plus mr-2"></i> New Globus Upload
+            Globus Downloads
+            <a class="action-link float-right" href="{{route('projects.globus.downloads.create', [$project])}}">
+                <i class="fas fa-plus mr-2"></i> New Globus Download
             </a>
         @endslot
 
         @slot('body')
-            @include('partials.globus_uploads', ['showProject' => false])
+            @include('partials.globus_downloads', ['showProject' => false])
         @endslot
     @endcomponent
 @stop

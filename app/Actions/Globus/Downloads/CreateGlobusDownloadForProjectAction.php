@@ -10,6 +10,7 @@ use App\Models\GlobusUploadDownload;
 use App\Models\User;
 use App\Traits\PathFromUUID;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreateGlobusDownloadForProjectAction
@@ -53,7 +54,11 @@ class CreateGlobusDownloadForProjectAction
                 $uuid = $file->uses_uuid ?? $file->uuid;
                 $uuidPath = $this->filePathFromUuid($uuid);
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
-                link($uuidPath, $filePath);
+                try {
+                    link($uuidPath, $filePath);
+                } catch (\Exception $e) {
+                    Log::error("Unable to link {$uuidPath} to {$filePath}");
+                }
             }
         }
 

@@ -39,7 +39,7 @@
                     </p>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('projects.globus.status', [$project])}}" class="action-link danger mr-3">Cancel</a>
+                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
                     <button class="btn btn-success">Mark Done</button>
                 </div>
             </form>

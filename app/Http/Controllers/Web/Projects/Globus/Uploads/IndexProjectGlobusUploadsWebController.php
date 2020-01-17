@@ -10,11 +10,12 @@ class IndexProjectGlobusUploadsWebController extends Controller
 {
     public function __invoke(Project $project)
     {
-        $globusUploads = GlobusUploadDownload::where('project_id', $project->id)
+        $user = auth()->user();
+        $globusUploads = GlobusUploadDownload::with('owner')
+                                             ->where('project_id', $project->id)
                                              ->where('type', 'upload')
                                              ->get();
-        $user = auth()->user();
 
-        return view('app.projects.globus.index', compact('project', 'globusUploads', 'user'));
+        return view('app.projects.globus.uploads.index', compact('project', 'globusUploads', 'user'));
     }
 }

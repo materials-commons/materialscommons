@@ -3,6 +3,11 @@
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\CreateProjectGlobusDownloadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\DeleteGlobusDownloadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\DestroyGlobusDownloadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloadsWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
@@ -50,6 +55,7 @@ Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::cl
 Route::get('/projects/{project}/users/{user}/show', ShowProjectUserWebController::class)
      ->name('projects.users.show');
 
+
 // Globus Uploads
 
 Route::post('/projects/{project}/globus/uploads', StoreGlobusUploadToProjectWebController::class)
@@ -78,10 +84,27 @@ Route::get('/projects/{project}/globus/uploads/index', IndexProjectGlobusUploads
 Route::get('/projects/{project}/globus/uploads/{globusUpload}', ShowProjectGlobusUploadWebController::class)
      ->name('projects.globus.uploads.show');
 
+
 // Globus Downloads
 
-Route::get('/projects/{project}/globus/downloads', StoreGlobusDownloadProjectWebController::class)
-     ->name('projects.globus.downloads');
+Route::post('/projects/{project}/globus/downloads', StoreGlobusDownloadProjectWebController::class)
+     ->name('projects.globus.downloads.store');
+
+Route::get('/projects/{project}/globus/downloads/create', CreateProjectGlobusDownloadWebController::class)
+     ->name('projects.globus.downloads.create');
+
+Route::get('/projects/{project}/globus/downloads/{globusDownload}/delete', DeleteGlobusDownloadWebController::class)
+     ->name('projects.globus.downloads.delete');
+
+Route::delete('/projects/{project}/globus/downloads/{globusDownload}', DestroyGlobusDownloadWebController::class)
+     ->name('projects.globus.downloads.destroy');
+
+Route::get('/projects/{project}/globus/downloads/index', IndexProjectGlobusDownloadsWebController::class)
+     ->name('projects.globus.downloads.index');
+
+Route::get('/projects/{project}/globus/downloads/{globusDownload}', ShowProjectGlobusDownloadWebController::class)
+     ->name('projects.globus.downloads.show');
+
 
 // Project Search
 

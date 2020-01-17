@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Globus Upload')
+@section('pageTitle', 'Create Globus Download')
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,13 +9,13 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Globus Upload for project {{$project->name}}
+            Create Globus Download for project {{$project->name}}
         @endslot
 
         @slot('body')
             @if(isset($user->globus_user))
-                <form method="post" action="{{route('projects.globus.uploads.store', [$project])}}"
-                      id="upload-create">
+                <form method="post" action="{{route('projects.globus.downloads.store', [$project])}}"
+                      id="download-create">
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -28,12 +28,12 @@
                     {{--                                  placeholder="Description..."></textarea>--}}
                     {{--                    </div>--}}
                     <div class="float-right">
-                        <a href="{{route('projects.globus.uploads.index', [$project])}}"
+                        <a href="{{route('projects.globus.downloads.index', [$project])}}"
                            class="action-link danger mr-3">
                             Cancel
                         </a>
 
-                        <a class="action-link" href="#" onclick="document.getElementById('upload-create').submit()">
+                        <a class="action-link" href="#" onclick="document.getElementById('download-create').submit()">
                             Create
                         </a>
                     </div>

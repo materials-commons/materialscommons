@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Globus Upload')
+@section('pageTitle', 'Create Globus Download')
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,18 +9,18 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Delete Globus Upload for project {{$project->name}}
+            Delete Globus Download for project {{$project->name}}
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('projects.globus.uploads.destroy', [$project, $globusUpload])}}"
-                  id="delete-upload">
+            <form method="post" action="{{route('projects.globus.downloads.destroy', [$project, $globusDownload])}}"
+                  id="delete-download">
                 @csrf
                 @method('delete')
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" id="name" name="name" type="text" value="{{$globusUpload->name}}"
+                    <input class="form-control" id="name" name="name" type="text" value="{{$globusDownload->name}}"
                            placeholder="Name..." readonly>
                 </div>
                 {{--                <div class="form-group">--}}
@@ -29,21 +29,19 @@
                 {{--                              placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>--}}
                 {{--                </div>--}}
                 <div class="form-group">
-                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
+                    <a href="{{$globusDownload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
                     <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
                 <div class="form-group">
                     <p class="h5">
-                        Deleting the upload will prevent Globus from uploading any more files for this request. Any
-                        files that were uploaded will not be loaded into the project and instead will be deleted.
-                        You can check your uploads on globus
-                        by clicking on the "View Globus Upload Activity" link above.
+                        Deleting the download will remove all the files that were setup for downloading. If your project
+                        hasn't changed or you don't need to refresh the files, then you may want to keep this download.
                     </p>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
+                    <a href="{{route('projects.globus.downloads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
                     <a href="#" class="action-link"
-                       onclick="document.getElementById('delete-upload').submit()">
+                       onclick="document.getElementById('delete-download').submit()">
                         Delete
                     </a>
                 </div>

@@ -73,7 +73,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5" href="#">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.downloads.index')}}"
+                   href="{{route('projects.globus.downloads.index', [$project])}}">
                     <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
                     Globus Downloads
                 </a>

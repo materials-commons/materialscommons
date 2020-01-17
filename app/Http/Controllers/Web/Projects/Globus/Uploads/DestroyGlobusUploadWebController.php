@@ -21,6 +21,6 @@ class DestroyGlobusUploadWebController extends Controller
 
         $globusUpload->delete();
 
-        return redirect(route('projects.globus.status', [$project]));
+        return redirect(route('projects.globus.uploads.index', [$project]));
     }
 }
