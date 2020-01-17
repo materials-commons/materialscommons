@@ -12,8 +12,9 @@ class GetFinishedGlobusUploadsAction
     {
         return GlobusUploadDownload::where('uploading', false)
                                    ->where('loading', false)
+                                   ->where('type', 'upload')
                                    ->whereNotIn('project_id', function ($q) {
-                                       $q->select('project_id')->from('globus_uploads')
+                                       $q->select('project_id')->from('globus_uploads_downloads')
                                          ->where('loading', true);
                                    })->get();
     }

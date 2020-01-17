@@ -19,5 +19,6 @@ $factory->define(GlobusUploadDownload::class, function (Faker $faker) {
         },
         'loading'    => false,
         'uploading'  => true,
+        'type'       => 'upload',
     ];
 });

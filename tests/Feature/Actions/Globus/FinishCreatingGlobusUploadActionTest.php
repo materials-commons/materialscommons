@@ -37,7 +37,7 @@ class FinishCreatingGlobusUploadActionTest extends TestCase
         $expectedUrl = "https://app.globus.org/file-manager?destination_id={$endpointId}&destination_path={$expectedGlobusPath}";
         $this->assertEquals($expectedUrl, $globusUpload->globus_url);
         $this->assertEquals($expectedGlobusPath, $globusUpload->globus_path);
-        $this->assertDatabaseHas('globus_uploads', [
+        $this->assertDatabaseHas('globus_uploads_downloads', [
             'owner_id'           => $user->id,
             'project_id'         => $project->id,
             'loading'            => false,
