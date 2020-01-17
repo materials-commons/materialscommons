@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Globus;
+namespace App\Actions\Globus\Uploads;
 
 use App\Jobs\Globus\ImportGlobusUploadJob;
 use App\Models\GlobusUploadDownload;

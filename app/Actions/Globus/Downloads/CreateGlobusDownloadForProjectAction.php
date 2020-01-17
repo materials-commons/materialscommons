@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Actions\Globus;
+namespace App\Actions\Globus\Downloads;
 
+use App\Actions\Globus\EndpointAclRule;
+use App\Actions\Globus\GlobusApi;
 use App\Models\File;
 use App\Models\User;
 use App\Traits\PathFromUUID;
@@ -22,9 +24,9 @@ class CreateGlobusDownloadForProjectAction
     public function __invoke($projectId, User $user)
     {
         $allDirs = File::where('project_id', $projectId)
-                       ->where('mime_type', 'directory')
-                       ->orderBy('path')
-                       ->get();
+            ->where('mime_type', 'directory')
+            ->orderBy('path')
+            ->get();
 
         $baseDir = storage_path("app/__globus_downloads/{$projectId}/{$user->uuid}");
         $globusPath = "/__globus_downloads/{$projectId}/{$user->uuid}/";

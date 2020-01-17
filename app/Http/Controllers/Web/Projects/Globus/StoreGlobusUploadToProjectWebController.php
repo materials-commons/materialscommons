@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\Projects\Globus;
 
-use App\Actions\Globus\CreateGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
+use App\Actions\Globus\Uploads\CreateGlobusUploadAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Globus\CreateGlobusProjectUploadRequest;
 use App\Models\Project;

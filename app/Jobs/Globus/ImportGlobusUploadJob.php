@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Globus;
 
-use App\Actions\Globus\LoadGlobusUploadIntoProjectAction;
+use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
 use App\Models\GlobusUploadDownload;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

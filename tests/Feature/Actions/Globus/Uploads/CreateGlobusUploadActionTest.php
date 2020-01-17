@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Actions\Globus;
+namespace Tests\Feature\Actions\Globus\Uploads;
 
-use App\Actions\Globus\CreateGlobusUploadAction;
 use App\Actions\Globus\GlobusApi;
+use App\Actions\Globus\Uploads\CreateGlobusUploadAction;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Actions\Globus;
+namespace App\Actions\Globus\Uploads;
 
+use App\Actions\Globus\EndpointAclRule;
+use App\Actions\Globus\GlobusApi;
 use App\Http\Controllers\Web\Projects\Globus\GlobusUrl;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;

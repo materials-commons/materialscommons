@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\Actions\Globus;
+namespace Tests\Feature\Actions\Globus\Uploads;
 
-use App\Actions\Globus\ProcessFinishedGlobusUploadsAction;
+use App\Actions\Globus\Uploads\ProcessFinishedGlobusUploadsAction;
 use App\Jobs\Globus\ImportGlobusUploadJob;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
