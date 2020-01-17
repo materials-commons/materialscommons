@@ -37,9 +37,9 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('public.index')}}">MaterialsCommons 2</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('public.index')}}">Materials Commons 2.0</a>
     @else
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">MaterialsCommons 2</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">Materials Commons 2.0</a>
     @endif
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
