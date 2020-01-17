@@ -4,7 +4,9 @@ namespace App\Actions\Globus\Downloads;
 
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
+use App\Http\Controllers\Web\Projects\Globus\GlobusUrl;
 use App\Models\File;
+use App\Models\GlobusUploadDownload;
 use App\Models\User;
 use App\Traits\PathFromUUID;
 use Exception;
@@ -15,23 +17,32 @@ class CreateGlobusDownloadForProjectAction
     use PathFromUUID;
 
     private $globusApi;
+    private $endpointId;
 
     public function __construct(GlobusApi $globusApi)
     {
         $this->globusApi = $globusApi;
+        $this->endpointId = env('MC_GLOBUS_ENDPOINT_ID');
     }
 
-    public function __invoke($projectId, User $user)
+    public function __invoke($data, $projectId, User $user)
     {
-        $allDirs = File::where('project_id', $projectId)
-            ->where('mime_type', 'directory')
-            ->orderBy('path')
-            ->get();
+        $data['project_id'] = $projectId;
+        $data['owner_id'] = $user->id;
+        $data['loading'] = false;
+        $data['uploading'] = false;
+        $data['type'] = 'download';
 
-        $baseDir = storage_path("app/__globus_downloads/{$projectId}/{$user->uuid}");
-        $globusPath = "/__globus_downloads/{$projectId}/{$user->uuid}/";
-        $globusIdentity = $this->getGlobusIdentity($user->globus_user);
-        $aclId = $this->setAclOnPath($globusPath, $globusIdentity);
+        $globusDownload = GlobusUploadDownload::create($data);
+
+        $allDirs = File::where('project_id', $projectId)
+                       ->where('mime_type', 'directory')
+                       ->orderBy('path')
+                       ->get();
+
+        $baseDir = storage_path("app/__globus_downloads/{$globusDownload->uuid}");
+        $globusPath = "/__globus_downloads/{$globusDownload->uuid}/";
+
 
         $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
         $this->createDirs($dirsToCreate, $baseDir);
@@ -45,6 +56,18 @@ class CreateGlobusDownloadForProjectAction
                 link($uuidPath, $filePath);
             }
         }
+
+        $globusIdentity = $this->getGlobusIdentity($user->globus_user);
+        $aclId = $this->setAclOnPath($globusPath, $globusIdentity);
+        $globusDownload->update([
+            'globus_acl_id'      => $aclId,
+            'globus_endpoint_id' => $this->endpointId,
+            'globus_identity_id' => $globusIdentity,
+            'globus_url'         => GlobusUrl::globusDownloadUrl($this->endpointId, $globusPath),
+            'globus_path'        => $globusPath,
+            'path'               => $baseDir,
+        ]);
+        return $globusDownload->fresh();
     }
 
     private function determineMinimumSetOfDirsToCreate($allDirs)
