@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GlobusUpload;
 use App\Models\Project;
 
-class ShowGlobusDownloadToMarkAsCompleteWebController extends Controller
+class ShowGlobusUploadToMarkAsCompleteWebController extends Controller
 {
     public function __invoke(Project $project, GlobusUpload $globusUpload)
     {

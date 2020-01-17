@@ -8,7 +8,7 @@ use App\Models\GlobusUpload;
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 
-class DestroyGlobusDownloadWebController extends Controller
+class MarkGlobusUploadAsCompleteWebController extends Controller
 {
     public function __invoke(Project $project, GlobusUpload $globusUpload)
     {
@@ -19,7 +19,7 @@ class DestroyGlobusDownloadWebController extends Controller
             Log::error("Unable to delete acl");
         }
 
-        $globusUpload->delete();
+        $globusUpload->update(['uploading' => false]);
 
         return redirect(route('projects.globus.status', [$project]));
     }
