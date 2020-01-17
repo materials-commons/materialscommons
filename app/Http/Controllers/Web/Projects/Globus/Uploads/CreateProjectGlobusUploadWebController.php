@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects\Globus;
+namespace App\Http\Controllers\Web\Projects\Globus\Uploads;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;

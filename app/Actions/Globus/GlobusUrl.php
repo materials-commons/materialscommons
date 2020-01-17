@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects\Globus;
+namespace App\Actions\Globus;
 
 class GlobusUrl
 {

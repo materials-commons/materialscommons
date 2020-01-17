@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects\Globus;
+namespace App\Http\Controllers\Web\Projects\Globus\Uploads;
 
 use App\Http\Controllers\Controller;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 
-class ShowProjectGlobusUploadsStatusWebController extends Controller
+class IndexProjectGlobusUploadsWebController extends Controller
 {
     public function __invoke(Project $project)
     {

@@ -3,15 +3,15 @@
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
-use App\Http\Controllers\Web\Projects\Globus\CreateProjectGlobusUploadWebController;
-use App\Http\Controllers\Web\Projects\Globus\DeleteGlobusUploadWebController;
-use App\Http\Controllers\Web\Projects\Globus\DestroyGlobusUploadWebController;
-use App\Http\Controllers\Web\Projects\Globus\GlobusGetProjectDownloadLinkWebController;
-use App\Http\Controllers\Web\Projects\Globus\MarkGlobusUploadAsCompleteWebController;
-use App\Http\Controllers\Web\Projects\Globus\ShowGlobusUploadToMarkAsCompleteWebController;
-use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadsStatusWebController;
-use App\Http\Controllers\Web\Projects\Globus\ShowProjectGlobusUploadWebController;
-use App\Http\Controllers\Web\Projects\Globus\StoreGlobusUploadToProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\DestroyGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\IndexProjectGlobusUploadsWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\MarkGlobusUploadAsCompleteWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowGlobusUploadToMarkAsCompleteWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowProjectGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\StoreGlobusUploadToProjectWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
@@ -50,6 +50,8 @@ Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::cl
 Route::get('/projects/{project}/users/{user}/show', ShowProjectUserWebController::class)
      ->name('projects.users.show');
 
+// Globus Uploads
+
 Route::post('/projects/{project}/globus/uploads', StoreGlobusUploadToProjectWebController::class)
      ->name('projects.globus.uploads.store');
 
@@ -70,14 +72,18 @@ Route::post('/projects/{project}/globus/uploads/{globusUpload}/mark_done',
     MarkGlobusUploadAsCompleteWebController::class)
      ->name('projects.globus.uploads.mark_done');
 
+Route::get('/projects/{project}/globus/uploads/index', IndexProjectGlobusUploadsWebController::class)
+     ->name('projects.globus.uploads.index');
+
 Route::get('/projects/{project}/globus/uploads/{globusUpload}', ShowProjectGlobusUploadWebController::class)
      ->name('projects.globus.uploads.show');
 
-Route::get('/projects/{project}/globus/downloads', GlobusGetProjectDownloadLinkWebController::class)
+// Globus Downloads
+
+Route::get('/projects/{project}/globus/downloads', StoreGlobusDownloadProjectWebController::class)
      ->name('projects.globus.downloads');
 
-Route::get('/projects/{project}/globus/status', ShowProjectGlobusUploadsStatusWebController::class)
-     ->name('projects.globus.status');
+// Project Search
 
 Route::post('/projects/{project}/search', SearchProjectWebController::class)
      ->name('projects.search');
