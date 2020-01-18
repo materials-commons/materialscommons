@@ -2,9 +2,6 @@
 
 namespace App\Actions\Migration;
 
-use App\Models\Project;
-use App\Models\User;
-
 trait ItemCreater
 {
 
@@ -20,7 +17,7 @@ trait ItemCreater
             return null;
         }
 
-        $project = Project::where('uuid', $this->knownItems[$data['id']])->first();
+        $project = ItemCache::findProject($this->knownItems[$data['id']]);
         if ($project == null) {
             return null;
         }
@@ -43,7 +40,7 @@ trait ItemCreater
         }
 
         if (isset($data['owner'])) {
-            $user = User::where('email', $data['owner'])->first();
+            $user = ItemCache::findUser($data['owner']);
             if ($user == null) {
                 return null;
             }

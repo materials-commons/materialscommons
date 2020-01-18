@@ -42,12 +42,20 @@ class MigrateRethinkdbDataAction
             $file = key($dumpFile);
             $importerClass = $dumpFile[$file];
             $importer = new $importerClass($this->pathToDumpFiles, $this->ignoreExisting);
+
             if ($file == "projects.json") {
                 $importer->setProjectsToIgnore($projectsToIgnore);
                 $importer->setProjectsToLoad($projectsToLoad);
             }
+
             if (!$importer->loadDumpfile($file)) {
                 return;
+            }
+
+            if ($file == "users.json") {
+                ItemCache::loadUsers();
+            } elseif ($file == "projects.json") {
+                ItemCache::loadProjects();
             }
         }
     }
