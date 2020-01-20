@@ -55,6 +55,8 @@ class MigrateRethinkdbDataAction
                 ItemCache::loadUsers();
             } elseif ($file == "projects.json") {
                 ItemCache::loadProjects();
+            } elseif ($file == "processes.json") {
+                ItemCache::loadActivities();
             }
         }
     }
