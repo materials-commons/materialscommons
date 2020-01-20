@@ -29,7 +29,7 @@ class ImportActivities extends AbstractImporter
             return null;
         }
 
-        echo "Adding Process {$modelData['name']}\n";
+//        echo "Adding Process {$modelData['name']}\n";
 
         return Activity::create($modelData);
     }

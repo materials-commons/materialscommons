@@ -31,7 +31,7 @@ class ImportExperiments extends AbstractImporter
 
         $modelData['status'] = $this->mapExperimentStatus($data);
 
-        echo "Adding experiment {$modelData['name']}\n";
+//        echo "Adding experiment {$modelData['name']}\n";
 
         return Experiment::create($modelData);
     }

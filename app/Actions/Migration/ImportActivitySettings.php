@@ -37,7 +37,7 @@ class ImportActivitySettings extends AbstractImporter
         $attrModelData = $this->createCommonModelData($data);
         $attrModelData['attributable_type'] = Activity::class;
         $attrModelData['attributable_id'] = $activity->id;
-        echo "Creating attribute {$attrModelData['name']} for activity {$activity->name}\n";
+//        echo "Creating attribute {$attrModelData['name']} for activity {$activity->name}\n";
         $attr = Attribute::create($attrModelData);
         AttributeValue::create([
             'uuid'         => $data['id'],

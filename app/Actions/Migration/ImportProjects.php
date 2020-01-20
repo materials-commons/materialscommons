@@ -46,7 +46,7 @@ class ImportProjects extends AbstractImporter
         }
 
         $modelData['is_active'] = true;
-        echo "Adding project {$modelData['name']}\n";
+//        echo "Adding project {$modelData['name']}\n";
 
         return Project::create($modelData);
     }

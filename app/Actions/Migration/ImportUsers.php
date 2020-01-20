@@ -35,7 +35,7 @@ class ImportUsers extends AbstractImporter
 
         $modelData["api_token"] = Str::random(60);
         $modelData["password"] = Hash::make(Str::random(24));
-        echo "Adding user {$modelData['email']}/{$modelData['name']}\n";
+//        echo "Adding user {$modelData['email']}/{$modelData['name']}\n";
 
         return User::create($modelData);
     }
