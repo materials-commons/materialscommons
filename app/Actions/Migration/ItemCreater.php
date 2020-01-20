@@ -17,7 +17,7 @@ trait ItemCreater
             return null;
         }
 
-        $project = ItemCache::findProject($this->knownItems[$data['id']]);
+        $project = ItemCache::findProject($knownItems[$data['id']]);
         if ($project == null) {
             return null;
         }
