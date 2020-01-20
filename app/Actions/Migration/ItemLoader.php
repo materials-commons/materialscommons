@@ -24,5 +24,24 @@ trait ItemLoader
 
         return $knownItems;
     }
+
+    public function loadItemToObjectMapping($file, $key)
+    {
+        $knownItems = [];
+        $project2sampleDumpfile = "{$this->pathToDumpfiles}/${file}";
+        $handle = fopen($project2sampleDumpfile, "r");
+        while (!feof($handle)) {
+            $line = fgets($handle);
+            if ($this->ignoreLine($line)) {
+                continue;
+            }
+            $data = $this->decodeLine($line);
+            $knownItems[$data[$key]] = $data;
+        }
+
+        fclose($handle);
+
+        return $knownItems;
+    }
 }
 
