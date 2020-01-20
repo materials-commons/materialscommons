@@ -20,7 +20,7 @@ class ImportDatasets extends AbstractImporter
 
     protected function setup()
     {
-        $this->dataset2project = $this->loadItemMapping("project2dataset", "dataset_id", "project_id");
+        $this->dataset2project = $this->loadItemMapping("project2dataset.json", "dataset_id", "project_id");
         $this->fileSelections = $this->loadItemToObjectMapping("fileselection.json", "id");
     }
 
@@ -33,10 +33,13 @@ class ImportDatasets extends AbstractImporter
     protected function loadData($data)
     {
         $modelData = $this->createModelDataForKnownItems($data, $this->dataset2project);
+        if ($modelData == null) {
+            return null;
+        }
         $modelData['license'] = $data['license']['name'];
         $modelData['license_link'] = $data['license']['link'];
         $modelData['description'] = "{$modelData['description']} {$data['funding']} {$data['institution']}";
-        if ($modelData['published']) {
+        if (isset($data['published'])) {
             $modelData['published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
         }
         if (isset($data['is_privately_published'])) {
