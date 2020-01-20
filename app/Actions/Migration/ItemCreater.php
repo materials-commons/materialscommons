@@ -30,7 +30,12 @@ trait ItemCreater
     {
         $modelData = [];
         $modelData["uuid"] = $data["id"];
-        $modelData["name"] = $data["name"];
+        if (isset($data['name'])) {
+            $modelData["name"] = $data["name"];
+        } elseif (isset($data['title'])) {
+            $modelData['name'] = $data['title'];
+        }
+
         if (isset($data['description'])) {
             $modelData['description'] = $data['description'];
         } else {
