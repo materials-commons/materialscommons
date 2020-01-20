@@ -57,6 +57,10 @@ class ImportEntityStateAttributes extends AbstractImporter
         }
 
         $modelData = $this->createCommonModelData($data);
+        if ($modelData == null) {
+            return null;
+        }
+
         $modelData['attributable_type'] = EntityState::class;
         $modelData['attributable_id'] = $entityState->id;
         return Attribute::create($modelData);
