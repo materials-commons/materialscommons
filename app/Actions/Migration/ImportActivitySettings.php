@@ -30,7 +30,7 @@ class ImportActivitySettings extends AbstractImporter
             return null;
         }
         $activityUuid = $this->setup2process[$setupId];
-        $activity = Activity::where('uuid', $activityUuid)->first();
+        $activity = ItemCache::findActivity($activityUuid);
         if ($activity == null) {
             return null;
         }

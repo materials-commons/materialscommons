@@ -9,6 +9,7 @@ class ItemCache
 {
     public static $projects;
     public static $users;
+    public static $activities;
 
     public static function loadProjects()
     {
@@ -41,6 +42,24 @@ class ItemCache
     {
         if (isset(ItemCache::$users[$email])) {
             return ItemCache::$users[$email];
+        }
+
+        return null;
+    }
+
+    public static function loadActivities()
+    {
+        Project::orderBy('id')->chunk(1000, function ($activities) {
+            foreach ($activities as $activity) {
+                ItemCache::$activities[$activity->uuid] = $activity;
+            }
+        });
+    }
+
+    public static function findActivity($uuid)
+    {
+        if (isset(ItemCache::$activities[$uuid])) {
+            return ItemCache::$activities[$uuid];
         }
 
         return null;
