@@ -76,8 +76,9 @@ abstract class AbstractImporter
 
                 $this->loadData($data);
                 $count++;
-                if ($count % 1000) {
-                    echo "\n   Loaded ${count} entries...\n";
+                if ($count % 1000 == 0) {
+                    $now = Carbon::now()->toTimeString();
+                    echo "\n   Loaded ${count} entries at {$now}...\n";
                 }
             } catch (\Exception $e) {
                 echo "Error loading data {$e->getMessage()}, file {$file}, line {$line}\n";
