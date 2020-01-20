@@ -2,6 +2,7 @@
 
 namespace App\Actions\Migration;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 abstract class AbstractImporter
@@ -56,9 +57,11 @@ abstract class AbstractImporter
         $this->setup();
 
         $dumpFilePath = "{$this->pathToDumpfiles}/${file}";
-        echo "\nLoading file {$dumpFilePath}\n";
+        $startedAt = Carbon::now()->toTimeString();
+        echo "\nLoading file {$dumpFilePath} started at {$startedAt}\n";
         $handle = fopen($dumpFilePath, "r");
 
+        $count = 0;
         while (!feof($handle)) {
             $line = fgets($handle);
             if ($this->ignoreLine($line)) {
@@ -72,6 +75,10 @@ abstract class AbstractImporter
                 }
 
                 $this->loadData($data);
+                $count++;
+                if ($count % 1000) {
+                    echo "\n   Loaded ${count} entries...\n";
+                }
             } catch (\Exception $e) {
                 echo "Error loading data {$e->getMessage()}, file {$file}, line {$line}\n";
                 return false;
@@ -82,6 +89,8 @@ abstract class AbstractImporter
 
         $this->existing = [];
         $this->cleanup();
+        $finishedAt = Carbon::now()->toTimeString();
+        echo "\nFinished loading {$count} entries from file {$dumpFilePath} at {$finishedAt}\n";
         return true;
     }
 }
