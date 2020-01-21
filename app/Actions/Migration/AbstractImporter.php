@@ -57,11 +57,12 @@ abstract class AbstractImporter
         $this->setup();
 
         $dumpFilePath = "{$this->pathToDumpfiles}/${file}";
-        $startedAt = Carbon::now()->toTimeString();
+        $startedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
         echo "\nLoading file {$dumpFilePath} started at {$startedAt}\n";
         $handle = fopen($dumpFilePath, "r");
 
         $count = 0;
+        $loadedCount = 0;
         while (!feof($handle)) {
             $line = fgets($handle);
             if ($this->ignoreLine($line)) {
@@ -69,29 +70,28 @@ abstract class AbstractImporter
             }
 
             $data = $this->decodeLine($line);
-//            try {
             if ($this->skipLoading($data['id'])) {
                 continue;
             }
 
-            $this->loadData($data);
-            $count++;
-            if ($count % 1000 == 0) {
-                $now = Carbon::now()->toTimeString();
-                echo "\n   Loaded ${count} entries at {$now}...\n";
+            if ($this->loadData($data) != null) {
+                $loadedCount++;
             }
-//            } catch (\Exception $e) {
-//                echo "Error loading data {$e->getMessage()}, file {$file}, line {$line}\n";
-//                return false;
-//            }
+
+            $count++;
+
+            if ($count % 1000 == 0) {
+                $now = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
+                echo "\n   Processed ${count}/Loaded {$loadedCount} entries at {$now}...\n";
+            }
         }
 
         fclose($handle);
 
         $this->existing = [];
         $this->cleanup();
-        $finishedAt = Carbon::now()->toTimeString();
-        echo "\nFinished loading {$count} entries from file {$dumpFilePath} at {$finishedAt}\n";
+        $finishedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
+        echo "\nFinished processing {$count} entries, loaded ${loadedCount} from file {$dumpFilePath} at {$finishedAt}\n";
         return true;
     }
 }
