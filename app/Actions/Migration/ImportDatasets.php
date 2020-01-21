@@ -12,6 +12,9 @@ class ImportDatasets extends AbstractImporter
 
     private $dataset2project;
     private $fileSelections;
+    private $dataset2experiments;
+    private $dataset2activities;
+    private $dataset2entities;
 
     public function __construct($pathToDumpfiles, $ignoreExisting = false)
     {
@@ -21,13 +24,21 @@ class ImportDatasets extends AbstractImporter
     protected function setup()
     {
         $this->dataset2project = $this->loadItemMapping("project2dataset.json", "dataset_id", "project_id");
+        $size = sizeof($this->dataset2project);
         $this->fileSelections = $this->loadItemToObjectMapping("fileselection.json", "id");
+        $this->dataset2experiments = $this->loadItemMappingMultiple("experiment2dataset.json", "dataset_id",
+            "experiment_id");
+        $this->dataset2activities = $this->loadItemMappingMultiple("dataset2process.json", "dataset_id", "process_id");
+        $this->dataset2entities = $this->loadItemMappingMultiple("dataset2sample.json", "dataset_id", "sample_id");
     }
 
     protected function cleanup()
     {
         $this->dataset2project = [];
         $this->fileSelections = [];
+        $this->dataset2experiments = [];
+        $this->dataset2entities = [];
+        $this->dataset2activities = [];
     }
 
     protected function loadData($data)
