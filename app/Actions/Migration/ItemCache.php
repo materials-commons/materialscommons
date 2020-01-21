@@ -2,14 +2,15 @@
 
 namespace App\Actions\Migration;
 
+use App\Models\Activity;
 use App\Models\Project;
 use App\Models\User;
 
 class ItemCache
 {
-    public static $projects;
-    public static $users;
-    public static $activities;
+    public static $projects = [];
+    public static $users = [];
+    public static $activities = [];
 
     public static function loadProjects()
     {
@@ -49,7 +50,7 @@ class ItemCache
 
     public static function loadActivities()
     {
-        Project::orderBy('id')->chunk(1000, function ($activities) {
+        Activity::orderBy('id')->chunk(1000, function ($activities) {
             foreach ($activities as $activity) {
                 ItemCache::$activities[$activity->uuid] = $activity;
             }
