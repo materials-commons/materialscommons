@@ -48,8 +48,6 @@ class ImportFiles extends AbstractImporter
         $modelData['checksum'] = $data['checksum'];
         $modelData['directory_id'] = $dir->id;
 
-//        echo "Loading file ${modelData['name']}\n";
-
         return File::create($modelData);
     }
 

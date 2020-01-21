@@ -35,8 +35,6 @@ class ImportDirectories extends AbstractImporter
         $modelData['media_type_description'] = 'directory';
         $modelData['disk'] = 'local';
 
-//        echo "Adding directory {$modelData['name']}, path: {$modelData['path']}\n";
-
         return File::create($modelData);
     }
 

@@ -53,8 +53,6 @@ class ImportDirectoriesMatchParents extends AbstractImporter
             return null;
         }
 
-//        echo "Updating parent link for {$dir->path} to point at {$parentDir->path}\n";
-
         $dir->update(['directory_id' => $parentDir->id]);
         return $dir;
     }

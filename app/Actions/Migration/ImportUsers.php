@@ -33,9 +33,12 @@ class ImportUsers extends AbstractImporter
             $modelData["affiliations"] = $data["affiliation"];
         }
 
+        if (isset($data['globus_user'])) {
+            $modelData['globus_user'] = $data['globus_user'];
+        }
+
         $modelData["api_token"] = Str::random(60);
         $modelData["password"] = Hash::make(Str::random(24));
-//        echo "Adding user {$modelData['email']}/{$modelData['name']}\n";
 
         return User::create($modelData);
     }

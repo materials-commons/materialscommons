@@ -29,8 +29,6 @@ class ImportEntities extends AbstractImporter
             return null;
         }
 
-//        echo "Adding Sample {$modelData['name']}\n";
-
         return Entity::create($modelData);
     }
 

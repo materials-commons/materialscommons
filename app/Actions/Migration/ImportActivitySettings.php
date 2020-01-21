@@ -42,14 +42,15 @@ class ImportActivitySettings extends AbstractImporter
 
         $attrModelData['attributable_type'] = Activity::class;
         $attrModelData['attributable_id'] = $activity->id;
-//        echo "Creating attribute {$attrModelData['name']} for activity {$activity->name}\n";
         $attr = Attribute::create($attrModelData);
+
         AttributeValue::create([
             'uuid'         => $data['id'],
             'val'          => ['value' => $data['value'] ?? ""],
             'unit'         => $data['unit'] ?? "",
             'attribute_id' => $attr->id,
         ]);
+
         return $attr;
     }
 

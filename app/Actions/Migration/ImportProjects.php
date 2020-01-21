@@ -46,7 +46,6 @@ class ImportProjects extends AbstractImporter
         }
 
         $modelData['is_active'] = true;
-//        echo "Adding project {$modelData['name']}\n";
 
         return Project::create($modelData);
     }
@@ -62,7 +61,6 @@ class ImportProjects extends AbstractImporter
 
         // If we are here then projectsToIgnore list is either empty, or it didn't contain that uuid,
         // so now check if there are projects that we should only load.
-
         if ($this->projectsToLoad->isEmpty()) {
             // If projects list is empty then no filter is taking place and return
             // true to load the project.
