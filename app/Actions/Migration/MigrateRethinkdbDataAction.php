@@ -69,7 +69,7 @@ class MigrateRethinkdbDataAction
             }
         }
         $finishedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
-        echo "Migration started at: {$startedAt}\n";
+        echo "\nMigration started at: {$startedAt}\n";
         echo "Migration completed at: {$finishedAt}\n";
     }
 
