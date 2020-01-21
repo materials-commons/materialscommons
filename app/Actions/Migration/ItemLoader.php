@@ -8,35 +8,43 @@ trait ItemLoader
 
     public function loadItemMapping($file, $key, $valueKey)
     {
-        $knownItems = [];
-        $project2sampleDumpfile = "{$this->pathToDumpfiles}/${file}";
-        $handle = fopen($project2sampleDumpfile, "r");
-        while (!feof($handle)) {
-            $line = fgets($handle);
-            if ($this->ignoreLine($line)) {
-                continue;
-            }
-            $data = $this->decodeLine($line);
+        return $this->loadItems($file, $key, function (&$knownItems, $data, $key) use ($valueKey) {
             $knownItems[$data[$key]] = $data[$valueKey];
-        }
-
-        fclose($handle);
-
-        return $knownItems;
+            return $knownItems;
+        });
     }
 
     public function loadItemToObjectMapping($file, $key)
     {
+        return $this->loadItems($file, $key, function (&$knownItems, $data, $key) {
+            $knownItems[$data[$key]] = $data;
+            return $knownItems;
+        });
+    }
+
+    public function loadItemMappingMultiple($file, $key, $valueKey)
+    {
+        return $this->loadItems($file, $key, function (&$knownItems, $data, $key) use ($valueKey) {
+            if (!isset($knownItems[$data[$key]])) {
+                $knownItems[$data[$key]] = [];
+            }
+            array_push($knownItems[$data[$key]], $data[$valueKey]);
+            return $knownItems;
+        });
+    }
+
+    private function loadItems($file, $key, $func)
+    {
         $knownItems = [];
-        $project2sampleDumpfile = "{$this->pathToDumpfiles}/${file}";
-        $handle = fopen($project2sampleDumpfile, "r");
+        $dumpfile = "{$this->pathToDumpfiles}/${file}";
+        $handle = fopen($dumpfile, "r");
         while (!feof($handle)) {
             $line = fgets($handle);
             if ($this->ignoreLine($line)) {
                 continue;
             }
             $data = $this->decodeLine($line);
-            $knownItems[$data[$key]] = $data;
+            $knownItems = $func($knownItems, $data, $key);
         }
 
         fclose($handle);
