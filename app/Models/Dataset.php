@@ -29,7 +29,7 @@ class Dataset extends Model implements Searchable
     use HasUUID;
     use HasTags;
 
-    protected $guarded = ['id', 'uuid'];
+    protected $guarded = ['id'];
 
     protected $dates = [
         'published_at',
