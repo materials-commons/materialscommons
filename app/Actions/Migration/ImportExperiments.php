@@ -10,7 +10,7 @@ class ImportExperiments extends AbstractImporter
     use ItemLoader;
     use ItemCreater;
 
-    private $knownItems;
+    private $experiment2project;
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -19,12 +19,12 @@ class ImportExperiments extends AbstractImporter
 
     protected function setup()
     {
-        $this->knownItems = $this->loadItemMapping("project2process.json", "process_id", "project_id");
+        $this->experiment2project = $this->loadItemMapping("project2experiment.json", "experiment_id", "project_id");
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data, $this->knownItems);
+        $modelData = $this->createModelDataForKnownItems($data, $this->experiment2project);
         if ($modelData == null) {
             return null;
         }
@@ -54,6 +54,6 @@ class ImportExperiments extends AbstractImporter
 
     protected function cleanup()
     {
-        $this->knownItems = [];
+        $this->experiment2project = [];
     }
 }
