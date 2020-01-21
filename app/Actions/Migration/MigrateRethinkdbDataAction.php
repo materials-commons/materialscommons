@@ -2,6 +2,8 @@
 
 namespace App\Actions\Migration;
 
+use Illuminate\Support\Carbon;
+
 class Datadirs2ndTime
 {
 }
@@ -28,17 +30,24 @@ class MigrateRethinkdbDataAction
 
     private $pathToDumpFiles;
     private $ignoreExisting;
+    private $filesToLoad;
 
-    public function __construct($pathToDumpFiles, $ignoreExisting)
+    public function __construct($pathToDumpFiles, $ignoreExisting, $filesToLoad)
     {
         $this->pathToDumpFiles = $pathToDumpFiles;
         $this->ignoreExisting = $ignoreExisting;
+        $this->filesToLoad = collect($filesToLoad)->flip();
     }
 
     public function __invoke($projectsToIgnore, $projectsToLoad)
     {
+        $startedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
+
         foreach ($this->orderToProcessObjectDumpFiles as $dumpFile) {
             $file = key($dumpFile);
+            if (!$this->shouldLoadFile($file)) {
+                continue;
+            }
             $importerClass = $dumpFile[$file];
             $importer = new $importerClass($this->pathToDumpFiles, $this->ignoreExisting);
 
@@ -59,5 +68,17 @@ class MigrateRethinkdbDataAction
                 ItemCache::loadActivities();
             }
         }
+        $finishedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
+        echo "Migration started at: {$startedAt}\n";
+        echo "Migration completed at: {$finishedAt}\n";
+    }
+
+    private function shouldLoadFile($file)
+    {
+        if ($this->filesToLoad->isEmpty()) {
+            return true;
+        }
+
+        return $this->filesToLoad->has($file);
     }
 }

@@ -14,8 +14,9 @@ class ImportRethinkdbDataCommand extends Command
      */
     protected $signature = 'mc:import-rethinkdb-data {dbDir : The path for the directory containing the JSON files} 
                                                      {--ignore-existing : do not load if already in database} 
-                                                     {--ignore-projects=* : projects to ignore loading} 
-                                                     {--load-projects=* : only projects to load}';
+                                                     {--ignore-project=* : projects to ignore loading} 
+                                                     {--load-file=* : files to load}
+                                                     {--load-project=* : only projects to load}';
 
     /**
      * The console command description.
@@ -44,9 +45,11 @@ class ImportRethinkdbDataCommand extends Command
         ini_set("memory_limit", "4096M");
         $dbDir = $this->argument('dbDir');
         $ignoreExisting = $this->option("ignore-existing");
-        $migrateRethinkdbDataAction = new MigrateRethinkdbDataAction($dbDir, $ignoreExisting);
-        $projectsToIgnore = $this->option('ignore-projects');
-        $projectsToLoad = $this->option('load-projects');
+        $filesToLoad = $this->option('load-file');
+        $migrateRethinkdbDataAction = new MigrateRethinkdbDataAction($dbDir, $ignoreExisting, $filesToLoad);
+
+        $projectsToIgnore = $this->option('ignore-project');
+        $projectsToLoad = $this->option('load-project');
         $migrateRethinkdbDataAction($projectsToIgnore, $projectsToLoad);
     }
 }
