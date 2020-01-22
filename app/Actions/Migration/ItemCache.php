@@ -3,6 +3,8 @@
 namespace App\Actions\Migration;
 
 use App\Models\Activity;
+use App\Models\Entity;
+use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\User;
 
@@ -11,6 +13,8 @@ class ItemCache
     public static $projects = [];
     public static $users = [];
     public static $activities = [];
+    public static $entities = [];
+    public static $experiments = [];
 
     public static function loadProjects()
     {
@@ -64,5 +68,57 @@ class ItemCache
         }
 
         return null;
+    }
+
+    public static function loadEntities()
+    {
+        Entity::orderBy('id')->chunk(1000, function ($entities) {
+            foreach ($entities as $entity) {
+                ItemCache::$entities[$entity->uuid] = $entity;
+            }
+        });
+    }
+
+    public static function findEntity($uuid)
+    {
+        if (isset(ItemCache::$entities[$uuid])) {
+            return ItemCache::$entities[$uuid];
+        }
+
+        return null;
+    }
+
+    public static function loadExperiments()
+    {
+        Experiment::orderBy('id')->chunk(1000, function ($experiments) {
+            foreach ($experiments as $experiment) {
+                ItemCache::$experiments[$experiment->uuid] = $experiment;
+            }
+        });
+    }
+
+    public static function findExperiment($uuid)
+    {
+        if (isset(ItemCache::$experiments[$uuid])) {
+            return ItemCache::$experiments[$uuid];
+        }
+
+        return null;
+    }
+
+    public static function loadItemsFromMultiple($itemsList, $key, $getFunc)
+    {
+        $itemsToReturn = [];
+        if (isset($itemsList[$key])) {
+            $itemIds = $itemsList[$key];
+            foreach ($itemIds as $itemId) {
+                $item = $getFunc($itemId);
+                if ($item != null) {
+                    array_push($itemsToReturn, $item);
+                }
+            }
+        }
+
+        return $itemsToReturn;
     }
 }

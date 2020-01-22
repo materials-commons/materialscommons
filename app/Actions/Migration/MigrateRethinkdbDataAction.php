@@ -60,13 +60,7 @@ class MigrateRethinkdbDataAction
                 return;
             }
 
-            if ($file == "users.json") {
-                ItemCache::loadUsers();
-            } elseif ($file == "projects.json") {
-                ItemCache::loadProjects();
-            } elseif ($file == "processes.json") {
-                ItemCache::loadActivities();
-            }
+            $this->loadCacheForFile($file);
         }
         $finishedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
         echo "\nMigration started at: {$startedAt}\n";
@@ -80,5 +74,26 @@ class MigrateRethinkdbDataAction
         }
 
         return $this->filesToLoad->has($file);
+    }
+
+    private function loadCacheForFile($file)
+    {
+        switch ($file) {
+            case "users.json":
+                ItemCache::loadUsers();
+                break;
+            case "projects.json":
+                ItemCache::loadProjects();
+                break;
+            case "processes.json":
+                ItemCache::loadActivities();
+                break;
+            case "samples.json":
+                ItemCache::loadEntities();
+                break;
+            case "experiments.json":
+                ItemCache::loadExperiments();
+                break;
+        }
     }
 }
