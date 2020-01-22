@@ -33,7 +33,18 @@ trait ItemLoader
         });
     }
 
-    private function loadItems($file, $key, $func)
+    public function loadItemToObjectMappingMultiple($file, $key)
+    {
+        return $this->loadItems($file, $key, function (&$knownItems, $data, $key) {
+            if (!isset($knownItems[$data[$key]])) {
+                $knownItems[$data[$key]] = [];
+            }
+            array_push($knownItems[$data[$key]], $data);
+            return $knownItems;
+        });
+    }
+
+    public function loadItems($file, $key, $func)
     {
         $knownItems = [];
         $dumpfile = "{$this->pathToDumpfiles}/${file}";
