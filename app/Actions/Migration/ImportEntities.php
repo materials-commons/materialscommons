@@ -40,15 +40,17 @@ class ImportEntities extends AbstractImporter
 
         $e = Entity::create($modelData);
 
-        $e->experiments()->syncWithoutDetaching($this->getEntityExperiments($e->uuid));
+        $experiments = $this->getEntityExperiments($e->uuid);
+        $e->experiments()->syncWithoutDetaching($experiments);
 
         return $e;
     }
 
     private function getEntityExperiments($uuid)
     {
-        return ItemCache::loadItemsFromMultiple($this->sample2experiments, $uuid, function ($experimentUuid) {
-            return ItemCache::findExperiment($experimentUuid);
+        ItemCache::loadItemsFromMultiple($this->sample2experiments, $uuid, function ($experimentUuid) {
+            $e = ItemCache::findExperiment($experimentUuid);
+            return $e->id ?? null;
         });
     }
 }

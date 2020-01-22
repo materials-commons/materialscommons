@@ -122,21 +122,24 @@ class ImportDatasets extends AbstractImporter
     private function getDatasetActivities($uuid)
     {
         return ItemCache::loadItemsFromMultiple($this->dataset2activities, $uuid, function ($activityUuid) {
-            return ItemCache::findActivity($activityUuid);
+            $a = ItemCache::findActivity($activityUuid);
+            return $a->id ?? null;
         });
     }
 
     private function getDatasetEntities($uuid)
     {
         return ItemCache::loadItemsFromMultiple($this->dataset2entities, $uuid, function ($entityUuid) {
-            return ItemCache::findEntity($entityUuid);
+            $e = ItemCache::findEntity($entityUuid);
+            return $e->id ?? null;
         });
     }
 
     private function getDatasetExperiments($uuid)
     {
         return ItemCache::loadItemsFromMultiple($this->dataset2experiments, $uuid, function ($experimentUuid) {
-            return ItemCache::findExperiment($experimentUuid);
+            $e = ItemCache::findExperiment($experimentUuid);
+            return $e->id ?? null;
         });
     }
 }
