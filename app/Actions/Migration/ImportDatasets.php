@@ -24,7 +24,6 @@ class ImportDatasets extends AbstractImporter
     protected function setup()
     {
         $this->dataset2project = $this->loadItemMapping("project2dataset.json", "dataset_id", "project_id");
-        $size = sizeof($this->dataset2project);
         $this->fileSelections = $this->loadItemToObjectMapping("fileselection.json", "id");
         $this->dataset2experiments = $this->loadItemMappingMultiple("experiment2dataset.json", "dataset_id",
             "experiment_id");
@@ -62,7 +61,13 @@ class ImportDatasets extends AbstractImporter
         $modelData['authors'] = $this->createAuthors($data['authors']);
         $modelData['file_selection'] = $this->createFileSelection($data);
 
-        return Dataset::create($modelData);
+        $ds = Dataset::create($modelData);
+
+        $ds->activities()->syncWithoutDetaching($this->getDatasetActivities($ds->uuid));
+        $ds->entities()->syncWithoutDetaching($this->getDatasetEntities($ds->uuid));
+        $ds->experiments()->syncWithoutDetaching($this->getDatasetExperiments($ds->uuid));
+
+        return $ds;
     }
 
     private function createAuthors($authors)
@@ -112,5 +117,26 @@ class ImportDatasets extends AbstractImporter
         }
 
         return $convertedEntries;
+    }
+
+    private function getDatasetActivities($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->dataset2activities, $uuid, function ($activityUuid) {
+            return ItemCache::findActivity($activityUuid);
+        });
+    }
+
+    private function getDatasetEntities($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->dataset2entities, $uuid, function ($entityUuid) {
+            return ItemCache::findEntity($entityUuid);
+        });
+    }
+
+    private function getDatasetExperiments($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->dataset2experiments, $uuid, function ($experimentUuid) {
+            return ItemCache::findExperiment($experimentUuid);
+        });
     }
 }
