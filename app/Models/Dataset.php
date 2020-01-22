@@ -12,6 +12,7 @@ use Spatie\Tags\HasTags;
 /**
  * @property integer $id
  * @property string name
+ * @property string uuid
  * @property string description
  * @property integer project_id
  * @property mixed $communities
