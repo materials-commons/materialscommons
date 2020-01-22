@@ -4,6 +4,7 @@ namespace App\Actions\Migration;
 
 use App\Models\Activity;
 use App\Models\Entity;
+use App\Models\EntityState;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\User;
@@ -14,6 +15,7 @@ class ItemCache
     public static $users = [];
     public static $activities = [];
     public static $entities = [];
+    public static $entityStates = [];
     public static $experiments = [];
 
     public static function loadProjects()
@@ -83,6 +85,24 @@ class ItemCache
     {
         if (isset(ItemCache::$entities[$uuid])) {
             return ItemCache::$entities[$uuid];
+        }
+
+        return null;
+    }
+
+    public static function loadEntityStates()
+    {
+        EntityState::orderBy('id')->chunk(1000, function ($entityStates) {
+            foreach ($entityStates as $entityState) {
+                ItemCache::$entityStates[$entityState->uuid] = $entityState;
+            }
+        });
+    }
+
+    public static function findEntityState($uuid)
+    {
+        if (isset(ItemCache::$entityStates[$uuid])) {
+            return ItemCache::$entityStates[$uuid];
         }
 
         return null;
