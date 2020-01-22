@@ -20,9 +20,9 @@ class MigrateRethinkdbDataAction
         ['datadirs.json' => ImportDirectoriesMatchParents::class],
         ['datafiles.json' => ImportFiles::class],
         ['samples.json' => ImportEntities::class],
+        ['propertysets.json' => ImportEntityStates::class],
         ['processes.json' => ImportActivities::class],
         ['setupproperties.json' => ImportActivitySettings::class],
-        ['propertysets.json' => ImportEntityStates::class],
         ['properties.json' => ImportEntityStateAttributes::class],
         ['measurements.json' => ImportEntityStateAttributeValues::class],
         ['datasets.json' => ImportDatasets::class],
@@ -93,6 +93,9 @@ class MigrateRethinkdbDataAction
                 break;
             case "experiments.json":
                 ItemCache::loadExperiments();
+                break;
+            case "propertysets.json":
+                ItemCache::loadEntityStates();
                 break;
         }
     }

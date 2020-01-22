@@ -2,7 +2,6 @@
 
 namespace App\Actions\Migration;
 
-use App\Models\Entity;
 use App\Models\EntityState;
 
 class ImportEntityStates extends AbstractImporter
@@ -46,7 +45,7 @@ class ImportEntityStates extends AbstractImporter
         $modelData['name'] = 'Imported Dataset';
         $modelData['uuid'] = $propertySetUuid;
 
-        $entity = Entity::where('uuid', $sampleUuid)->first();
+        $entity = ItemCache::findEntity($sampleUuid);
         if ($entity == null) {
             return null;
         }

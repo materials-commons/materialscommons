@@ -9,7 +9,8 @@ class ImportEntities extends AbstractImporter
     use ItemLoader;
     use ItemCreater;
 
-    private $knownItems;
+    private $sample2project = [];
+    private $sample2experiments = [];
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -18,22 +19,36 @@ class ImportEntities extends AbstractImporter
 
     protected function setup()
     {
-        $this->knownItems = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");
+        $this->sample2project = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");
+        $this->sample2experiments = $this->loadItemMappingMultiple("experiment2sample.json", "sample_id",
+            "experiment_id");
+    }
+
+    protected function cleanup()
+    {
+        $this->sample2project = [];
+        $this->sample2experiments = [];
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data, $this->knownItems);
+        $modelData = $this->createModelDataForKnownItems($data, $this->sample2project);
 
         if ($modelData == null) {
             return null;
         }
 
-        return Entity::create($modelData);
+        $e = Entity::create($modelData);
+
+        $e->experiments()->syncWithoutDetaching($this->getEntityExperiments($e->uuid));
+
+        return $e;
     }
 
-    protected function cleanup()
+    private function getEntityExperiments($uuid)
     {
-        $this->knownItems = [];
+        return ItemCache::loadItemsFromMultiple($this->sample2experiments, $uuid, function ($experimentUuid) {
+            return ItemCache::findExperiment($experimentUuid);
+        });
     }
 }

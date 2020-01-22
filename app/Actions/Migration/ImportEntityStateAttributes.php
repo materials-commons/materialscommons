@@ -51,7 +51,7 @@ class ImportEntityStateAttributes extends AbstractImporter
             return null;
         }
 
-        $entityState = EntityState::where('uuid', $propertySetUuid)->first();
+        $entityState = ItemCache::findEntityState($propertySetUuid);
         if ($entityState == null) {
             return null;
         }
