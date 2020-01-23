@@ -56,4 +56,18 @@ class ImportFiles extends AbstractImporter
         $this->knownItems = [];
         $this->knownItems2 = [];
     }
+
+    protected function getModelClass()
+    {
+        return File::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

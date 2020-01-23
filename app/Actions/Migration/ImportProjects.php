@@ -73,4 +73,18 @@ class ImportProjects extends AbstractImporter
     protected function cleanup()
     {
     }
+
+    protected function getModelClass()
+    {
+        return Project::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

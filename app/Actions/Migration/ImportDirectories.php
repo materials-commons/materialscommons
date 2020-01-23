@@ -49,4 +49,17 @@ class ImportDirectories extends AbstractImporter
         $this->knownItems = [];
     }
 
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function getModelClass()
+    {
+        return File::class;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

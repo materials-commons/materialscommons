@@ -61,13 +61,24 @@ class ImportDatasets extends AbstractImporter
         $modelData['authors'] = $this->createAuthors($data['authors']);
         $modelData['file_selection'] = $this->createFileSelection($data);
 
-        $ds = Dataset::create($modelData);
+        return Dataset::create($modelData);
+    }
 
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return true;
+    }
+
+    protected function getModelClass()
+    {
+        return Dataset::class;
+    }
+
+    protected function loadRelationships($ds)
+    {
         $ds->activities()->syncWithoutDetaching($this->getDatasetActivities($ds->uuid));
         $ds->entities()->syncWithoutDetaching($this->getDatasetEntities($ds->uuid));
         $ds->experiments()->syncWithoutDetaching($this->getDatasetExperiments($ds->uuid));
-
-        return $ds;
     }
 
     private function createAuthors($authors)

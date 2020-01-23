@@ -13,6 +13,12 @@ abstract class AbstractImporter
 
     abstract protected function cleanup();
 
+    abstract protected function getModelClass();
+
+    abstract protected function shouldLoadRelationshipsOnSkip();
+
+    abstract protected function loadRelationships($item);
+
     abstract protected function loadData($data);
 
     protected $pathToDumpfiles;
@@ -50,6 +56,12 @@ abstract class AbstractImporter
         });
     }
 
+    public function getModelForId($uuid)
+    {
+        $modelClass = $this->getModelClass();
+        return $modelClass::where('uuid', $uuid)->first();
+    }
+
     public function loadDumpfile($file)
     {
         $this->loadExisting();
@@ -71,10 +83,18 @@ abstract class AbstractImporter
 
             $data = $this->decodeLine($line);
             if ($this->skipLoading($data['id'])) {
+                if ($this->shouldLoadRelationshipsOnSkip()) {
+                    $model = $this->getModelForId($data['id']);
+                    if ($model != null) {
+                        $this->loadRelationships($model);
+                    }
+                }
                 continue;
             }
 
-            if ($this->loadData($data) != null) {
+            $item = $this->loadData($data);
+            if ($item != null) {
+                $this->loadRelationships($item);
                 $loadedCount++;
             }
 

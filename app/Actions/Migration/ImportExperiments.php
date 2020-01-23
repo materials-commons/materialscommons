@@ -54,4 +54,18 @@ class ImportExperiments extends AbstractImporter
     {
         $this->experiment2project = [];
     }
+
+    protected function getModelClass()
+    {
+        return Experiment::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

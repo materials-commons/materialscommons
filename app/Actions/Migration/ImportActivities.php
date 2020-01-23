@@ -33,6 +33,23 @@ class ImportActivities extends AbstractImporter
         $this->process2experiments = [];
     }
 
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return true;
+    }
+
+    protected function getModelClass()
+    {
+        return Activity::class;
+    }
+
+    protected function loadRelationships($activity)
+    {
+        $activity->entities()->syncWithoutDetaching($this->getActivityEntities($activity->uuid));
+        $activity->entityStates()->syncWithoutDetaching($this->getActivityEntityStates($activity->uuid));
+        $activity->experiments()->syncWithoutDetaching($this->getActivityExperiments($activity->uuid));
+    }
+
     protected function loadData($data)
     {
         $modelData = $this->createModelDataForKnownItems($data, $this->process2project);
@@ -41,13 +58,7 @@ class ImportActivities extends AbstractImporter
             return null;
         }
 
-        $activity = Activity::create($modelData);
-
-        $activity->entities()->syncWithoutDetaching($this->getActivityEntities($activity->uuid));
-        $activity->entityStates()->syncWithoutDetaching($this->getActivityEntityStates($activity->uuid));
-        $activity->experiments()->syncWithoutDetaching($this->getActivityExperiments($activity->uuid));
-
-        return $activity;
+        return Activity::create($modelData);
     }
 
 

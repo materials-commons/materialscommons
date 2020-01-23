@@ -58,4 +58,18 @@ class ImportActivitySettings extends AbstractImporter
     {
         $this->setup2process = [];
     }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function getModelClass()
+    {
+        return Attribute::class;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

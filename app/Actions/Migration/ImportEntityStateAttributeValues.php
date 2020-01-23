@@ -46,4 +46,18 @@ class ImportEntityStateAttributeValues extends AbstractImporter
             'attribute_id' => $attr->id,
         ]);
     }
+
+    protected function getModelClass()
+    {
+        return AttributeValue::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

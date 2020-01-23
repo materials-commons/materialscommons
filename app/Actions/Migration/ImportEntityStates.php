@@ -55,4 +55,18 @@ class ImportEntityStates extends AbstractImporter
 
         return EntityState::create($modelData);
     }
+
+    protected function getModelClass()
+    {
+        return EntityState::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

@@ -65,4 +65,18 @@ class ImportEntityStateAttributes extends AbstractImporter
         $modelData['attributable_id'] = $entityState->id;
         return Attribute::create($modelData);
     }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function getModelClass()
+    {
+        return Attribute::class;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

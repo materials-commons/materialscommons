@@ -46,4 +46,18 @@ class ImportUsers extends AbstractImporter
     protected function cleanup()
     {
     }
+
+    protected function getModelClass()
+    {
+        return User::class;
+    }
+
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return false;
+    }
+
+    protected function loadRelationships($item)
+    {
+    }
 }

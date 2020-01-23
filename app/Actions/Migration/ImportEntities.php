@@ -38,12 +38,23 @@ class ImportEntities extends AbstractImporter
             return null;
         }
 
-        $e = Entity::create($modelData);
+        return Entity::create($modelData);
+    }
 
+    protected function shouldLoadRelationshipsOnSkip()
+    {
+        return true;
+    }
+
+    protected function getModelClass()
+    {
+        return Entity::class;
+    }
+
+    protected function loadRelationships($e)
+    {
         $experiments = $this->getEntityExperiments($e->uuid);
         $e->experiments()->syncWithoutDetaching($experiments);
-
-        return $e;
     }
 
     private function getEntityExperiments($uuid)
@@ -53,4 +64,6 @@ class ImportEntities extends AbstractImporter
             return $e->id ?? null;
         });
     }
+
+
 }
