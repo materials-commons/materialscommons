@@ -3,13 +3,16 @@
 namespace App\Actions\Migration;
 
 use App\Models\Project;
+use App\Models\User;
 
 class ImportProjects extends AbstractImporter
 {
     use ItemCreater;
+    use ItemLoader;
 
     private $projectsToLoad;
     private $projectsToIgnore;
+    private $project2users;
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -20,6 +23,12 @@ class ImportProjects extends AbstractImporter
 
     protected function setup()
     {
+        $this->project2users = $this->loadItemMappingMultiple("access.json", "project_id", "user_id");
+    }
+
+    protected function cleanup()
+    {
+        $this->project2users = null;
     }
 
     public function setProjectsToLoad($projectsToLoad)
@@ -70,10 +79,6 @@ class ImportProjects extends AbstractImporter
         return $this->projectsToLoad->has($uuid);
     }
 
-    protected function cleanup()
-    {
-    }
-
     protected function getModelClass()
     {
         return Project::class;
@@ -81,10 +86,22 @@ class ImportProjects extends AbstractImporter
 
     protected function shouldLoadRelationshipsOnSkip()
     {
-        return false;
+        return true;
     }
 
-    protected function loadRelationships($item)
+    /**
+     * @param  \App\Models\Project  $project
+     */
+    protected function loadRelationships($project)
     {
+        $project->users()->syncWithoutDetaching($this->getProjectUsers($project->uuid));
+    }
+
+    private function getProjectUsers($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->project2users, $uuid, function ($email) {
+            $user = User::where('email', $email)->first();
+            return $user->id ?? null;
+        });
     }
 }
