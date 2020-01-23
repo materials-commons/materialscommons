@@ -9,8 +9,9 @@ class ImportFiles extends AbstractImporter
     use ItemLoader;
     use ItemCreater;
 
-    private $knownItems;
-    private $knownItems2;
+    private $datafile2project;
+    private $datafile2datadir;
+    private $datafile2experiments;
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -19,22 +20,31 @@ class ImportFiles extends AbstractImporter
 
     protected function setup()
     {
-        $this->knownItems = $this->loadItemMapping('project2datafile.json', 'datafile_id', 'project_id');
-        $this->knownItems2 = $this->loadItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id');
+        $this->datafile2project = $this->loadItemMapping('project2datafile.json', 'datafile_id', 'project_id');
+        $this->datafile2datadir = $this->loadItemMapping('datadir2datafile.json', 'datafile_id', 'datadir_id');
+        $this->datafile2experiments = $this->loadItemMappingMultiple("experiment2datafile.json", "datafile_id",
+            "experiment_id");
+    }
+
+    protected function cleanup()
+    {
+        $this->datafile2project = [];
+        $this->datafile2datadir = [];
+        $this->datafile2experiments = [];
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data, $this->knownItems);
+        $modelData = $this->createModelDataForKnownItems($data, $this->datafile2project);
         if ($modelData == null) {
             return null;
         }
 
-        if (!isset($this->knownItems2[$data['id']])) {
+        if (!isset($this->datafile2datadir[$data['id']])) {
             return null;
         }
 
-        $dir = File::where('uuid', $this->knownItems2[$data['id']])->first();
+        $dir = File::where('uuid', $this->datafile2datadir[$data['id']])->first();
         if ($dir == null) {
             return null;
         }
@@ -51,12 +61,6 @@ class ImportFiles extends AbstractImporter
         return File::create($modelData);
     }
 
-    protected function cleanup()
-    {
-        $this->knownItems = [];
-        $this->knownItems2 = [];
-    }
-
     protected function getModelClass()
     {
         return File::class;
@@ -67,7 +71,19 @@ class ImportFiles extends AbstractImporter
         return false;
     }
 
-    protected function loadRelationships($item)
+    /**
+     * @param  \App\Models\File  $file
+     */
+    protected function loadRelationships($file)
     {
+        $file->experiments()->syncWithoutDetaching($this->getFileExperiments($file->uuid));
+    }
+
+    private function getFileExperiments($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->datafile2experiments, $uuid, function ($experimentUuid) {
+            $e = ItemCache::findExperiment($experimentUuid);
+            return $e->id ?? null;
+        });
     }
 }

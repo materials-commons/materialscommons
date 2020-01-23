@@ -3,14 +3,16 @@
 namespace App\Actions\Migration;
 
 use App\Models\Entity;
+use App\Models\File;
 
 class ImportEntities extends AbstractImporter
 {
     use ItemLoader;
     use ItemCreater;
 
-    private $sample2project = [];
-    private $sample2experiments = [];
+    private $entity2project = [];
+    private $entity2experiments = [];
+    private $entity2files = [];
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -19,20 +21,22 @@ class ImportEntities extends AbstractImporter
 
     protected function setup()
     {
-        $this->sample2project = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");
-        $this->sample2experiments = $this->loadItemMappingMultiple("experiment2sample.json", "sample_id",
+        $this->entity2project = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");
+        $this->entity2experiments = $this->loadItemMappingMultiple("experiment2sample.json", "sample_id",
             "experiment_id");
+        $this->entity2files = $this->loadItemMappingMultiple("sample2datafile.json", "sample_id", "datafile_id");
     }
 
     protected function cleanup()
     {
-        $this->sample2project = [];
-        $this->sample2experiments = [];
+        $this->entity2project = [];
+        $this->entity2experiments = [];
+        $this->entity2files = [];
     }
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data, $this->sample2project);
+        $modelData = $this->createModelDataForKnownItems($data, $this->entity2project);
 
         if ($modelData == null) {
             return null;
@@ -51,19 +55,28 @@ class ImportEntities extends AbstractImporter
         return Entity::class;
     }
 
+    /**
+     * @param  \App\Models\Entity  $e
+     */
     protected function loadRelationships($e)
     {
-        $experiments = $this->getEntityExperiments($e->uuid);
-        $e->experiments()->syncWithoutDetaching($experiments);
+        $e->experiments()->syncWithoutDetaching($this->getEntityExperiments($e->uuid));
+        $e->files()->syncWithoutDetaching($this->getEntityFiles($e->uuid));
     }
 
     private function getEntityExperiments($uuid)
     {
-        ItemCache::loadItemsFromMultiple($this->sample2experiments, $uuid, function ($experimentUuid) {
+        return ItemCache::loadItemsFromMultiple($this->entity2experiments, $uuid, function ($experimentUuid) {
             $e = ItemCache::findExperiment($experimentUuid);
             return $e->id ?? null;
         });
     }
 
-
+    private function getEntityFiles($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->entity2files, $uuid, function ($fileUuid) {
+            $f = File::findByUuid($fileUuid);
+            return $f->id ?? null;
+        });
+    }
 }

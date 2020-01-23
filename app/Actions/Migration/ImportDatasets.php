@@ -3,6 +3,7 @@
 namespace App\Actions\Migration;
 
 use App\Models\Dataset;
+use App\Models\File;
 use Illuminate\Support\Carbon;
 
 class ImportDatasets extends AbstractImporter
@@ -15,6 +16,7 @@ class ImportDatasets extends AbstractImporter
     private $dataset2experiments;
     private $dataset2activities;
     private $dataset2entities;
+    private $dataset2files;
 
     public function __construct($pathToDumpfiles, $ignoreExisting = false)
     {
@@ -29,6 +31,7 @@ class ImportDatasets extends AbstractImporter
             "experiment_id");
         $this->dataset2activities = $this->loadItemMappingMultiple("dataset2process.json", "dataset_id", "process_id");
         $this->dataset2entities = $this->loadItemMappingMultiple("dataset2sample.json", "dataset_id", "sample_id");
+        $this->dataset2files = $this->loadItemMappingMultiple("dataset2datafile", "dataset_id", "datafile_id");
     }
 
     protected function cleanup()
@@ -38,6 +41,7 @@ class ImportDatasets extends AbstractImporter
         $this->dataset2experiments = [];
         $this->dataset2entities = [];
         $this->dataset2activities = [];
+        $this->dataset2files = [];
     }
 
     protected function loadData($data)
@@ -74,11 +78,15 @@ class ImportDatasets extends AbstractImporter
         return Dataset::class;
     }
 
+    /**
+     * @param  \App\Models\Dataset  $ds
+     */
     protected function loadRelationships($ds)
     {
         $ds->activities()->syncWithoutDetaching($this->getDatasetActivities($ds->uuid));
         $ds->entities()->syncWithoutDetaching($this->getDatasetEntities($ds->uuid));
         $ds->experiments()->syncWithoutDetaching($this->getDatasetExperiments($ds->uuid));
+        $ds->files()->syncWithoutDetaching($this->getDatasetFiles($ds->uuid));
     }
 
     private function createAuthors($authors)
@@ -151,6 +159,14 @@ class ImportDatasets extends AbstractImporter
         return ItemCache::loadItemsFromMultiple($this->dataset2experiments, $uuid, function ($experimentUuid) {
             $e = ItemCache::findExperiment($experimentUuid);
             return $e->id ?? null;
+        });
+    }
+
+    private function getDatasetFiles($uuid)
+    {
+        return ItemCache::loadItemsFromMultiple($this->dataset2files, $uuid, function ($fileUuid) {
+            $f = File::findByUuid($fileUuid);
+            return $f->id ?? null;
         });
     }
 }
