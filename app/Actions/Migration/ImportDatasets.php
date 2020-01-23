@@ -31,7 +31,7 @@ class ImportDatasets extends AbstractImporter
             "experiment_id");
         $this->dataset2activities = $this->loadItemMappingMultiple("dataset2process.json", "dataset_id", "process_id");
         $this->dataset2entities = $this->loadItemMappingMultiple("dataset2sample.json", "dataset_id", "sample_id");
-        $this->dataset2files = $this->loadItemMappingMultiple("dataset2datafile", "dataset_id", "datafile_id");
+        $this->dataset2files = $this->loadItemMappingMultiple("dataset2datafile.json", "dataset_id", "datafile_id");
     }
 
     protected function cleanup()
