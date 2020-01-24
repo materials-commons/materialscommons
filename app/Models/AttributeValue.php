@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property string $uuid
+ * @property string unit
+ * @property array $val
+ *
  * @mixin Builder
  */
 class AttributeValue extends Model
