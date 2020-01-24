@@ -65,7 +65,13 @@ class ImportDatasets extends AbstractImporter
         $modelData['authors'] = $this->createAuthors($data['authors']);
         $modelData['file_selection'] = $this->createFileSelection($data);
 
-        return Dataset::create($modelData);
+        $ds = Dataset::create($modelData);
+
+        if (isset($data['keywords'])) {
+            $ds->attachTags($data['keywords']);
+        }
+
+        return $ds;
     }
 
     protected function shouldLoadRelationshipsOnSkip()
