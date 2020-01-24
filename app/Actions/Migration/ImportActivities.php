@@ -80,13 +80,22 @@ class ImportActivities extends AbstractImporter
 
     private function getActivityEntityStates($uuid)
     {
-        return ItemCache::loadItemsFromMultiple($this->process2entities, $uuid, function ($entry) {
+        $states = ItemCache::loadItemsFromMultiple($this->process2entities, $uuid, function ($entry) {
             $es = ItemCache::findEntityState($entry["property_set_id"]);
             if ($es == null) {
                 return null;
             }
             return [$es->id => ['direction' => $entry['direction']]];
         });
+
+        $flattenedStates = [];
+        foreach ($states as $state) {
+            foreach ($state as $key => $value) {
+                $flattenedStates[$key] = $value;
+            }
+        }
+
+        return $flattenedStates;
     }
 
     private function getActivityExperiments($uuid)
