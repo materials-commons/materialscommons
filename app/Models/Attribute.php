@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property string $uuid
+ * @property string name
+ * @property string description
+ *
  * @mixin Builder
  */
 class Attribute extends Model
@@ -23,5 +28,10 @@ class Attribute extends Model
     public function values()
     {
         return $this->hasMany(AttributeValue::class, 'attribute_id');
+    }
+
+    public function bestValue()
+    {
+        return $this->hasOne(AttributeValue::class, 'attribute_id', 'best_value_id');
     }
 }
