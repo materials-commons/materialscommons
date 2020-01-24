@@ -10,6 +10,7 @@ class ImportEntityStateAttributeValues extends AbstractImporter
     use ItemLoader;
 
     private $measurement2attribute;
+    private $bestmeasures;
 
     public function __construct($pathToDumpfiles, $ignoreExisting)
     {
@@ -20,11 +21,13 @@ class ImportEntityStateAttributeValues extends AbstractImporter
     {
         $this->measurement2attribute = $this->loadItemMapping('property2measurement.json', 'measurement_id',
             'property_id');
+        $this->bestmeasures = $this->loadItemMapping("best_measure_history.json", 'measurement_id', 'property_id');
     }
 
     protected function cleanup()
     {
         $this->measurement2attribute = [];
+        $this->bestmeasures = null;
     }
 
     protected function loadData($data)
@@ -39,12 +42,18 @@ class ImportEntityStateAttributeValues extends AbstractImporter
             return null;
         }
 
-        return AttributeValue::create([
+        $av = AttributeValue::create([
             'uuid'         => $data['id'],
             'val'          => ['value' => $data['value'] ?? ""],
             'unit'         => $data['unit'] ?? "",
             'attribute_id' => $attr->id,
         ]);
+
+        if (isset($this->bestmeasures[$data['id']])) {
+            $attr->update(['best_value_id' => $av->id]);
+        }
+
+        return $av;
     }
 
     protected function getModelClass()
