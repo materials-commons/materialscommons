@@ -3,6 +3,7 @@
 namespace Tests\Feature\Actions\Globus\Downloads;
 
 use App\Actions\Globus\Downloads\CreateGlobusDownloadForProjectAction;
+use App\Actions\Globus\Downloads\CreateGlobusProjectDownloadDirsAction;
 use App\Actions\Globus\GlobusApi;
 use App\Models\File;
 use App\Models\Project;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class CreateGlobusDownloadForProjectActionTest extends TestCase
+class CreateGlobusProjectDownloadDirsActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -44,8 +45,11 @@ class CreateGlobusDownloadForProjectActionTest extends TestCase
         $downloadData = [];
         $downloadData['name'] = 'globus download';
 
-        $createGlobusDownloadForProjectAction = new CreateGlobusDownloadForProjectAction($globusApiMock);
+        $createGlobusDownloadForProjectAction = new CreateGlobusDownloadForProjectAction();
         $globusDownload = $createGlobusDownloadForProjectAction($downloadData, $project->id, $user);
+
+        $createGlobusProjectDownloadDirsAction = new CreateGlobusProjectDownloadDirsAction($globusApiMock);
+        $globusDownload = $createGlobusProjectDownloadDirsAction($globusDownload, $user);
         $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
         $this->assertEquals($globusDownload->globus_endpoint_id, $endpointId);
 
