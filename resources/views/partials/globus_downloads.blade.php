@@ -19,7 +19,7 @@
             <td>{{$download->name}}</td>
             {{--            <td>{{$download->description}}</td>--}}
             <td>
-                @if($download->status == \App\Enums\GlobusStatus::Done && $user->id == $download->owner_id)
+                @if ($download->status == \App\Enums\GlobusStatus::Done && $user->id == $download->owner_id)
                     <a href="{{$download->globus_url}}" target="_blank">Goto Globus</a>
                 @endif
             </td>
@@ -38,10 +38,12 @@
                 @endif
             </td>
             <td>
-                <a href="{{route('projects.globus.downloads.delete', [$download->project, $download])}}"
-                   class="btn btn-sm btn-danger">
-                    <i class="fas fa-fw fa-trash-alt"></i> delete
-                </a>
+                @if ($download->status == \App\Enums\GlobusStatus::Done && $user->id == $download->owner_id)
+                    <a href="{{route('projects.globus.downloads.delete', [$download->project, $download])}}"
+                       class="btn btn-sm btn-danger">
+                        <i class="fas fa-fw fa-trash-alt"></i> delete
+                    </a>
+                @endif
             </td>
         </tr>
     @endforeach
