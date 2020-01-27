@@ -2,6 +2,8 @@
 
 namespace App\Actions\Globus\Downloads;
 
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;
 
@@ -11,9 +13,8 @@ class CreateGlobusDownloadForProjectAction
     {
         $data['project_id'] = $projectId;
         $data['owner_id'] = $user->id;
-        $data['loading'] = false;
-        $data['uploading'] = false;
-        $data['type'] = 'download';
+        $data['type'] = GlobusType::ProjectDownload;
+        $data['status'] = GlobusStatus::NotStarted;
 
         return GlobusUploadDownload::create($data);
     }

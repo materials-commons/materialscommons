@@ -5,6 +5,7 @@ namespace App\Actions\Globus\Downloads;
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\GlobusUrl;
+use App\Enums\GlobusStatus;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Traits\PathFromUUID;
@@ -26,6 +27,7 @@ class CreateGlobusProjectDownloadDirsAction
 
     public function __invoke(GlobusUploadDownload $globusDownload, $user)
     {
+        $globusDownload->update(['status' => GlobusStatus::Loading]);
         $allDirs = File::where('project_id', $globusDownload->project_id)
                        ->where('mime_type', 'directory')
                        ->orderBy('path')
@@ -59,6 +61,7 @@ class CreateGlobusProjectDownloadDirsAction
             'globus_identity_id' => $globusIdentity,
             'globus_url'         => GlobusUrl::globusDownloadUrl($this->endpointId, $globusPath),
             'globus_path'        => $globusPath,
+            'status'             => GlobusStatus::Done,
             'path'               => $baseDir,
         ]);
         return $globusDownload->fresh();

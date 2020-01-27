@@ -5,6 +5,8 @@ namespace App\Actions\Globus\Uploads;
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\GlobusUrl;
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;
 
@@ -23,9 +25,8 @@ class CreateGlobusUploadAction
     {
         $data['project_id'] = $projectId;
         $data['owner_id'] = $user->id;
-        $data['loading'] = false;
-        $data['uploading'] = true;
-        $data['type'] = 'upload';
+        $data['type'] = GlobusType::ProjectUpload;
+        $data['status'] = GlobusStatus::Uploading;
         $globusUpload = GlobusUploadDownload::create($data);
 
         $path = storage_path("app/__globus_uploads/{$globusUpload->uuid}");

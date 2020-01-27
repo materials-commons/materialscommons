@@ -19,7 +19,7 @@ class CreateGlobusUploadsDownloadsTable extends Migration
 
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('type')->nullable();
+            $table->tinyInteger('type')->nullable();
 
             // Globus columns
             $table->string('globus_acl_id')->nullable();
@@ -30,12 +30,7 @@ class CreateGlobusUploadsDownloadsTable extends Migration
 
             $table->string('path', 700)->nullable();
 
-            // True if the request is already being processed
-            $table->boolean('loading')->nullable();
-
-            // Initially true - status information so a user can check if the files
-            // are being uploaded, or being processed.
-            $table->boolean('uploading')->nullable();
+            $table->tinyInteger('status')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')

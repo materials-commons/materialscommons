@@ -2,6 +2,7 @@
 
 namespace App\Actions\Globus\Uploads;
 
+use App\Enums\GlobusStatus;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Traits\PathFromUUID;
@@ -36,7 +37,7 @@ class LoadGlobusUploadIntoProjectAction
         $currentDir = File::where('project_id', $this->globusUpload->project->id)->where('name', '/')->first();
         foreach ($dirIterator as $path => $finfo) {
             if ($fileCount >= $this->maxItemsToProcess) {
-                $this->globusUpload->update(['loading' => false]);
+                $this->globusUpload->update(['status' => GlobusStatus::Done]);
                 return;
             }
 

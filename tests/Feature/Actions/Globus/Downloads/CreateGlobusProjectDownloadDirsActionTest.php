@@ -5,6 +5,8 @@ namespace Tests\Feature\Actions\Globus\Downloads;
 use App\Actions\Globus\Downloads\CreateGlobusDownloadForProjectAction;
 use App\Actions\Globus\Downloads\CreateGlobusProjectDownloadDirsAction;
 use App\Actions\Globus\GlobusApi;
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
@@ -62,13 +64,12 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
         $this->assertDatabaseHas('globus_uploads_downloads', [
             'owner_id'           => $user->id,
             'project_id'         => $project->id,
-            'loading'            => false,
-            'uploading'          => false,
+            'status'             => GlobusStatus::Done,
             'globus_path'        => $expectedGlobusPath,
             'globus_endpoint_id' => $endpointId,
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
-            'type'               => 'download',
+            'type'               => GlobusType::ProjectDownload,
             'path'               => storage_path("app/__globus_downloads/{$globusDownload->uuid}"),
         ]);
 

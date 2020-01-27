@@ -2,6 +2,7 @@
 
 namespace App\Actions\Globus\Uploads;
 
+use App\Enums\GlobusStatus;
 use App\Jobs\Globus\ImportGlobusUploadJob;
 use App\Models\GlobusUploadDownload;
 
@@ -15,7 +16,7 @@ class ProcessFinishedGlobusUploadsAction
             return $upload->project_id;
         });
         foreach ($uniqueByProjectUploads as $upload) {
-            $upload->update(['loading' => true]);
+            $upload->update(['status' => GlobusStatus::Loading]);
             if ($processUploadsInBackground) {
                 $importGlobusUploadJob = new ImportGlobusUploadJob($upload, 1000);
                 dispatch($importGlobusUploadJob)->onQueue('globus');

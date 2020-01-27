@@ -2,6 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
@@ -17,8 +19,7 @@ $factory->define(GlobusUploadDownload::class, function (Faker $faker) {
         'project_id' => function () {
             return factory(Project::class)->create()->id;
         },
-        'loading'    => false,
-        'uploading'  => true,
-        'type'       => 'upload',
+        'status'     => GlobusStatus::Uploading,
+        'type'       => GlobusType::ProjectUpload,
     ];
 });

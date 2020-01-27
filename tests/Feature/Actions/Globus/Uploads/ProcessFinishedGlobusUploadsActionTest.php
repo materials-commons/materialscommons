@@ -3,6 +3,8 @@
 namespace Tests\Feature\Actions\Globus\Uploads;
 
 use App\Actions\Globus\Uploads\ProcessFinishedGlobusUploadsAction;
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Jobs\Globus\ImportGlobusUploadJob;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
@@ -23,14 +25,14 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
         factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
-            'loading'    => false,
-            'uploading'  => false,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Done,
         ]);
         factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
-            'loading'    => true,
-            'uploading'  => false,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Loading,
         ]);
 
         Queue::fake();
@@ -49,21 +51,21 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
         factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
-            'loading'    => false,
-            'uploading'  => false,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Done,
         ]);
         factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
-            'loading'    => true,
-            'uploading'  => false,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Loading,
         ]);
         $project2 = factory(Project::class)->create(['owner_id' => $user->id]);
         $uploadToProcess = factory(GlobusUploadDownload::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project2->id,
-            'loading'    => false,
-            'uploading'  => false,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Done,
         ]);
 
         Queue::fake();

@@ -2,6 +2,8 @@
 
 namespace App\Actions\Globus\Uploads;
 
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 
 class GetFinishedGlobusUploadsAction
@@ -10,12 +12,11 @@ class GetFinishedGlobusUploadsAction
     // an upload that is being processed.
     public function __invoke()
     {
-        return GlobusUploadDownload::where('uploading', false)
-                                   ->where('loading', false)
-                                   ->where('type', 'upload')
+        return GlobusUploadDownload::where('status', GlobusStatus::Done)
+                                   ->where('type', GlobusType::ProjectUpload)
                                    ->whereNotIn('project_id', function ($q) {
                                        $q->select('project_id')->from('globus_uploads_downloads')
-                                         ->where('loading', true);
+                                         ->where('status', GlobusStatus::Loading);
                                    })->get();
     }
 }

@@ -4,6 +4,8 @@ namespace Tests\Feature\Actions\Globus\Uploads;
 
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\Uploads\CreateGlobusUploadAction;
+use App\Enums\GlobusStatus;
+use App\Enums\GlobusType;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,13 +40,12 @@ class CreateGlobusUploadActionTest extends TestCase
         $this->assertDatabaseHas('globus_uploads_downloads', [
             'owner_id'           => $user->id,
             'project_id'         => $project->id,
-            'loading'            => false,
-            'uploading'          => true,
+            'status'             => GlobusStatus::Uploading,
             'globus_path'        => $expectedGlobusPath,
             'globus_endpoint_id' => $endpointId,
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
-            'type'               => 'upload',
+            'type'               => GlobusType::ProjectUpload,
             'path'               => storage_path("app/__globus_uploads/{$globusUpload->uuid}"),
         ]);
 
