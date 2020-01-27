@@ -2,6 +2,9 @@
 
 namespace App\Jobs\Globus;
 
+use App\Actions\Globus\Downloads\CreateGlobusProjectDownloadDirsAction;
+use App\Actions\Globus\GlobusApi;
+use App\Models\GlobusUploadDownload;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,14 +15,13 @@ class CreateGlobusProjectDownloadDirsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $globusDownload;
+    public $user;
+
+    public function __construct(GlobusUploadDownload $globusDownload, $user)
     {
-        //
+        $this->globusDownload = $globusDownload;
+        $this->user = $user;
     }
 
     /**
@@ -29,6 +31,8 @@ class CreateGlobusProjectDownloadDirsJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $globusApi = GlobusApi::createGlobusApi();
+        $createGlobusProjectDownloadDirsAction = new CreateGlobusProjectDownloadDirsAction($globusApi);
+        $createGlobusProjectDownloadDirsAction($this->globusDownload, $this->user);
     }
 }

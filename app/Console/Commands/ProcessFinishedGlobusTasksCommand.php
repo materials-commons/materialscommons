@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Globus\ProcessFinishedGlobusUploadsAction;
+use App\Actions\Globus\Uploads\ProcessFinishedGlobusUploadsAction;
 use Illuminate\Console\Command;
 
 class ProcessFinishedGlobusTasksCommand extends Command
