@@ -26,8 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command("mc:process-finished-globus-tasks --background")
+                 ->everyFiveMinutes()
+                 ->runInBackground()
+                 ->withoutOverlapping();
     }
 
     /**
