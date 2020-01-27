@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Projects\Globus\Uploads;
 
 use App\Actions\Globus\GlobusApi;
+use App\Enums\GlobusStatus;
 use App\Http\Controllers\Controller;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
@@ -19,8 +20,8 @@ class MarkGlobusUploadAsCompleteWebController extends Controller
             Log::error("Unable to delete acl");
         }
 
-        $globusUpload->update(['uploading' => false]);
+        $globusUpload->update(['status' => GlobusStatus::Done]);
 
-        return redirect(route('projects.globus.status', [$project]));
+        return redirect(route('projects.globus.uploads.index', [$project]));
     }
 }

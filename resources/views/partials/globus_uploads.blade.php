@@ -29,16 +29,16 @@
             <td>{{$upload->owner->name}}</td>
             <td>{{$upload->updated_at->diffForHumans()}}</td>
             <td>
-                @if($upload->uploading)
+                @if($upload->status == \App\Enums\GlobusStatus::Uploading)
                     Open for Uploads/Uploading files
-                @elseif ($upload->loading)
+                @elseif ($upload->status == \App\Enums\GlobusStatus::Loading)
                     Processing files
                 @else
                     Waiting to process files
                 @endif
             </td>
             <td>
-                @if ($upload->uploading && $user->id == $upload->owner_id)
+                @if ($upload->status ==  \App\Enums\GlobusStatus::Uploading && $user->id == $upload->owner_id)
                     <a href="{{route('projects.globus.uploads.done', [$upload->project, $upload])}}"
                        class="btn btn-sm btn-success">
                         <i class="fas fa-fw fa-check-circle"></i> done
