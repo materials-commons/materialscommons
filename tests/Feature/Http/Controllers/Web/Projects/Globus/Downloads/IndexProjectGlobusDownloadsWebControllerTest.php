@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Web\Projects\Globus\Downloads;
 
 use App\Enums\GlobusStatus;
+use App\Jobs\Globus\CreateGlobusProjectDownloadDirsJob;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
@@ -38,6 +39,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
             'name' => 'test download',
         ])->assertStatus(302);
 
+        Bus::assertDispatched(CreateGlobusProjectDownloadDirsJob::class);
+
         $this->get(route('projects.globus.downloads.index', [$project]))
              ->assertSee('Waiting to start creating project download')
              ->assertDontSee('Goto Globus');
@@ -66,6 +69,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $this->post(route('projects.globus.downloads.store', [$project]), [
             'name' => 'test download',
         ])->assertStatus(302);
+
+        Bus::assertDispatched(CreateGlobusProjectDownloadDirsJob::class);
 
         $globusDownload = GlobusUploadDownload::find(1);
         $globusDownload->update(['status' => GlobusStatus::Loading]);
@@ -97,6 +102,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $this->post(route('projects.globus.downloads.store', [$project]), [
             'name' => 'test download',
         ])->assertStatus(302);
+
+        Bus::assertDispatched(CreateGlobusProjectDownloadDirsJob::class);
 
         $globusDownload = GlobusUploadDownload::find(1);
         $globusDownload->update(['status' => GlobusStatus::Done]);
