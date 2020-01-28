@@ -1,6 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/datatables.min.js": "/js/datatables.min.js",
-    "/css/datatables.min.css": "/css/datatables.min.css"
+  "/js/app.js": "/js/app.js",
+  "/css/app.css": "/css/app.css",
+  "/js/datatables.min.js": "/js/datatables.min.js",
+  "/css/datatables.min.css": "/css/datatables.min.css",
+  "/css/main.css": "/css/main.css"
 }
