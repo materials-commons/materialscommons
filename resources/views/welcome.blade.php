@@ -112,7 +112,7 @@
 
                 <p>MaterialsCommons comes with a powerful command line tool that allows you to write scripts. If you
                     prefer to work
-                    from the prompt we got you covered!</p>
+                    from the command prompt we've got you covered!</p>
             </div>
 
             <div class="mx-3 px-2 md:w-1/3">
