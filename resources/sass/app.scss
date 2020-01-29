@@ -109,7 +109,7 @@ body {
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1.1rem;
-  color: $yellow-8 !important;
+  color: #fffff0 !important;
   //background-color: rgba(0, 0, 0, .25);
   //box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
   font-weight: bold;
@@ -121,7 +121,7 @@ body {
 }
 
 a.navbar-brand:hover {
-  background-color: $indigo-3;
+  background-color: #3182ce;
 }
 
 .navbar .form-control {
@@ -152,7 +152,24 @@ a.navbar-brand:hover {
 }
 
 .bg-nav {
-  background-color: $indigo-4;
+  // Current website
+  //background-color: $indigo-4;
+
+  // Palette 2
+  //background-color: hsl(205, 67%, 45%);
+
+  // Palette 8
+  //background-color: hsl(210, 83%, 53%);
+
+  // Jigsaw colors
+  // base
+  //background-color: #3182ce;
+
+  // lighter than base by one
+  //background-color: #4299e1;
+
+  // darker than base by one
+  background-color: #2b6cb0;
 }
 
 a.nav-link.action {
@@ -267,6 +284,10 @@ p {
 
 .help-color {
   color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.h-8 {
+  height: 1.5rem;
 }
 
 

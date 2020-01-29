@@ -16,7 +16,7 @@
     <meta name="twitter:image:alt" content="">
     <meta name="twitter:card" content="summary_large_image">
 
-    <title>MaterialsCommons</title>
+    <title>Materials Commons</title>
 
     <link rel="home" href="/">
     <link rel="icon" href="/favicon.ico">
@@ -31,24 +31,25 @@
 </head>
 
 <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
-<header class="flex items-center shadow bg-white border-b h-24 mb-8 py-4" role="banner">
+<header class="flex items-center shadow bg-white border-b h-18 py-4 bg-blue-700" role="banner">
     <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-8">
         <div class="flex items-center">
             <a href="/" title="Materials Commons home" class="inline-flex items-center">
                 <img class="h-8 md:h-10 mr-3" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
 
-                <h1 class="text-lg md:text-2xl text-blue-900 font-semibold hover:text-blue-600 my-0 pr-4">Materials
-                    Commons 2.0</h1>
+                <h1 class="text-lg md:text-2xl text-yellow-100 font-semibold hover:text-yellow-100 my-0 pr-4">
+                    Materials Commons 2.0
+                </h1>
             </a>
         </div>
 
         <div class="flex flex-1 justify-end items-center text-right md:pl-10">
             <a href="/login"
-               class="flex justify-center items-center bg-blue-500 text-white border border-blue-500 h-10 mr-4 px-5 rounded-full focus:outline-none">
+               class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
                 Login
             </a>
             <a href="/register"
-               class="flex justify-center items-center bg-blue-500 text-white border border-blue-500 h-10 mr-4 px-5 rounded-full focus:outline-none">
+               class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
                 Register
             </a>
         </div>
@@ -58,33 +59,32 @@
 </header>
 
 <main role="main" class="w-full flex-auto">
-    <section class="container max-w-6xl mx-auto px-6 py-10 md:py-12">
-        <div class="flex flex-col-reverse mb-10 lg:flex-row lg:mb-24">
-            <div class="mt-8">
+    <section class="container max-w-6xl mx-auto px-6 py-4 md:py-6">
+        <div class="flex flex-col-reverse mb-6 lg:flex-row lg:mb-6">
+            <div class="mt-4">
                 <h1 id="intro-docs-template">Materials Commons</h1>
 
                 <h2 id="intro-powered-by-jigsaw" class="font-light mt-4">A site for Materials Scientists to collaborate,
                     store and publish research.</h2>
 
-                <p class="text-lg">Give your research a boost with MaterialsCommons. <br class="hidden sm:block">Track
-                    your assets and workflow. Easily share with colleagues or publish online.</p>
+                <p class="text-lg">Give your research a boost with Materials Commons. <br class="hidden sm:block"> Store
+                    your results and workflow. Easily share with colleagues or publish online.</p>
 
                 <div class="flex my-10">
-                    <a href="#" title="About MaterialsCommons"
+                    <a href="#" title="About Materials Commons"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         View Published Datasets
                     </a>
 
                     <a href="/docs/getting-started" title="Materials Commons getting started"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
-                        Read the docs
+                        Read The Docs
                     </a>
 
-                    <a href="#" title="About MaterialsCommons"
+                    <a href="#" title="About Materials Commons"
                        class="bg-gray-400 hover:bg-gray-600 text-blue-900 font-normal hover:text-white rounded py-2 px-6">
                         About Materials Commons
                     </a>
-
 
                 </div>
             </div>
@@ -101,7 +101,7 @@
 
                 <h3 id="intro-laravel" class="text-2xl text-blue-900 mb-0">Access Anywhere</h3>
 
-                <p>The MaterialsCommons website gives you access to your research anywhere you have an internet
+                <p>The Materials Commons website gives you access to your research anywhere you have an internet
                     connection.</p>
             </div>
 
@@ -110,19 +110,19 @@
 
                 <h3 id="intro-markdown" class="text-2xl text-blue-900 mb-0">Powerful Command Line Tool</h3>
 
-                <p>MaterialsCommons comes with a powerful command line tool that allows you to write scripts. If you
-                    prefer to work
-                    from the command prompt we've got you covered!</p>
+                <p>If you prefer to work from the command prompt we've got you covered! Materials Commons comes with a
+                    powerful command line tool and a Python API that allows you to write scripts to automate
+                    processes. </p>
             </div>
 
             <div class="mx-3 px-2 md:w-1/3">
                 <img src="{{asset('images/icon-stack.svg')}}" class="h-12 w-12" alt="stack icon">
 
-                <h3 id="intro-mix" class="text-2xl text-blue-900 mb-0">Save. Share. Publish.</h3>
+                <h3 id="intro-mix" class="text-2xl text-blue-900 mb-0">Store. Share. Publish.</h3>
 
-                <p>Saving your data on MaterialsCommons gives you access to tools for sharing with others, publishing
-                    your results and
-                    protecting your important assets.</p>
+                <p>Storing your data on Materials Commons gives you access to tools for annotating your data, sharing it
+                    with others, and publishing
+                    datasets the community can easily find.</p>
             </div>
         </div>
     </section>

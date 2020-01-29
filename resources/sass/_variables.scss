@@ -106,9 +106,24 @@ $red: $red-3;
 $yellow: $yellow-6;
 $green: $green-4;
 
-$primary: $indigo-4;
+//$primary: $indigo-4;
 //$danger: $red;
+$primary: $blue-4;
 
 //$card-border-color: $grey-8;
-$card-border-color: $indigo-9;
-$card-cap-bg: $indigo-10;
+
+// Current website
+//$card-border-color: $indigo-9;
+//$card-cap-bg: $indigo-10;
+
+// Palette 2
+//$card-border-color: hsl(205, 97%, 85%);
+//$card-cap-bg: hsl(205, 97%, 85%);
+
+// Palette 8
+//$card-border-color: hsl(204, 100%, 86%);
+//$card-cap-bg: hsl(204, 100%, 86%);
+
+// Jigsaw colors
+$card-border-color: #bee3f8;
+$card-cap-bg: #bee3f8;
