@@ -15,6 +15,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Welcome\AboutWebController;
+use App\Http\Controllers\Web\Welcome\WelcomeWebController;
 use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
@@ -29,11 +31,8 @@ use App\Http\Controllers\Web2\UsersController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//Auth::routes();
+Route::get('/', WelcomeWebController::class)->name('welcome');
+Route::get('/about', AboutWebController::class)->name('about');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
