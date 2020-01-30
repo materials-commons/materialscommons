@@ -66,7 +66,7 @@
                         <label for="tags">Tags</label>
                         <div class="form-control" id="tags" readonly>
                             @foreach($dataset->tags as $tag)
-                                <span class="badge badge-info fs-11">{{$tag->name}}</span>
+                                <span class="badge badge-success fs-11">{{$tag->name}}</span>
                             @endforeach
                         </div>
                     </div>
