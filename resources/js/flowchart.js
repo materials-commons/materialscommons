@@ -3,7 +3,7 @@ function drawFlowchart(id, code) {
     chart.drawSVG(id, {
         // 'x': 30,
         // 'y': 50,
-        'line-width': 3,
+        'line-width': 4,
         'maxWidth': 3,//ensures the flowcharts fits within a certain width
         'line-length': 50,
         'text-margin': 10,
