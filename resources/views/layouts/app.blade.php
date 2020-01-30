@@ -21,7 +21,10 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-    <!-- Bootstrap core CSS -->
+{{--    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">--}}
+{{--    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">--}}
+
+<!-- Bootstrap core CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
