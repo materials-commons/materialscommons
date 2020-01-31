@@ -54,7 +54,12 @@ class ImportFiles extends AbstractImporter
         $modelData['media_type_description'] = $data['mediatype']['description'];
         $modelData['size'] = $data['size'];
         $modelData['current'] = $data['current'];
-        $modelData['uses_uuid'] = $data['usesid'];
+        if (isset($data['usesid'])) {
+            if ($data['usesid'] !== '') {
+                $modelData['uses_uuid'] = $data['usesid'];
+            }
+        }
+
         $modelData['checksum'] = $data['checksum'];
         $modelData['directory_id'] = $dir->id;
 
