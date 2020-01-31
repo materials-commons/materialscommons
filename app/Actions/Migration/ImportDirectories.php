@@ -29,8 +29,14 @@ class ImportDirectories extends AbstractImporter
         }
 
         $nameWithPath = $modelData['name'];
-        $modelData['name'] = basename($nameWithPath);
-        $modelData['path'] = $this->removeProjectFromPathName($nameWithPath);
+        $name = basename($nameWithPath);
+        if (strpos($nameWithPath, '/') == false) {
+            // No other slash so this is the root
+            $modelData['name'] = '/';
+        } else {
+            $modelData['name'] = $name;
+        }
+        $modelData['path'] = $this->removeProjectFromPathName($nameWithPath);;
         $modelData['mime_type'] = 'directory';
         $modelData['media_type_description'] = 'directory';
         $modelData['disk'] = 'local';
@@ -41,7 +47,13 @@ class ImportDirectories extends AbstractImporter
     private function removeProjectFromPathName($nameWithPath)
     {
         // return everything from first '/' to end of string
-        return substr($nameWithPath, strpos($nameWithPath, '/'));
+        $name = substr($nameWithPath, strpos($nameWithPath, '/'));
+        if (strpos($name, '/') == false) {
+            // if no other / then this is root
+            return '/';
+        }
+
+        return $name;
     }
 
     protected function cleanup()
