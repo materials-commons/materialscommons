@@ -21,7 +21,6 @@ class ImportUsers extends AbstractImporter
     public function loadData($data)
     {
         $modelData = [];
-        $modelData["uuid"] = $data["id"];
         $modelData["email"] = $data["email"];
         $modelData["name"] = $data["name"];
 
@@ -41,7 +40,11 @@ class ImportUsers extends AbstractImporter
 //        $modelData["password"] = Hash::make(Str::random(24));
         $modelData["password"] = Hash::make("abc123456");
 
-        return User::create($modelData);
+        try {
+            return User::create($modelData);
+        } catch (\Exception $e) {
+            echo "Failed creating user\n";
+        }
     }
 
     protected function cleanup()
