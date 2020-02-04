@@ -46,6 +46,11 @@ class Dataset extends Model implements Searchable
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
     public function workflows()
     {
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
