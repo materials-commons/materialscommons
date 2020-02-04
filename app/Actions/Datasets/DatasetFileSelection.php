@@ -2,6 +2,8 @@
 
 namespace App\Actions\Datasets;
 
+use App\Helpers\PathHelpers;
+
 class DatasetFileSelection
 {
     private $selection;
@@ -30,22 +32,24 @@ class DatasetFileSelection
 
     public function isIncludedFile($filePath)
     {
+        $path = PathHelpers::normalizePath($filePath);
         $includeFiles = $this->selection->get('include_files');
         $excludeFiles = $this->selection->get('exclude_files');
 
-        if ($includeFiles->has($filePath)) {
+        if ($includeFiles->has($path)) {
             return true;
         }
 
-        if ($excludeFiles->has($filePath)) {
+        if ($excludeFiles->has($path)) {
             return false;
         }
 
-        return $this->isIncludedDir(dirname($filePath));
+        return $this->isIncludedDir(dirname($path));
     }
 
-    public function isIncludedDir($path)
+    public function isIncludedDir($dirPath)
     {
+        $path = PathHelpers::normalizePath($dirPath);
         $includeDirs = $this->selection->get('include_dirs');
         $excludeDirs = $this->selection->get('exclude_dirs');
 
