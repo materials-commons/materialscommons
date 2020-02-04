@@ -73,4 +73,15 @@ class Project extends Model
     {
         return $this->hasMany(File::class, 'project_id');
     }
+
+    public function datasets()
+    {
+        return $this->hasMany(Dataset::class, 'project_id');
+    }
+
+    public function rootDir()
+    {
+        return $this->hasOne(File::class, 'project_id')
+                    ->where('path', '/');
+    }
 }
