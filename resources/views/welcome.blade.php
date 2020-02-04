@@ -85,7 +85,6 @@
                        class="bg-gray-400 hover:bg-gray-600 text-blue-900 font-normal hover:text-white rounded py-2 px-6">
                         About Materials Commons
                     </a>
-
                 </div>
             </div>
 
