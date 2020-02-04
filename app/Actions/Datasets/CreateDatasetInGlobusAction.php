@@ -40,10 +40,12 @@ class CreateDatasetInGlobusAction
                 }
 
                 $uuid = $file->uses_uuid ?? $file->uuid;
-                $uuidPath = $this->filePathFromUuid($uuid);
+                $uuidPath = storage_path("app/".$this->filePathFromUuid($uuid));
                 $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
                 try {
-                    link($uuidPath, $filePath);
+                    if (!link($uuidPath, $filePath)) {
+                        Log::error("Unable to link {$uuidPath} to {$filePath}");
+                    }
                 } catch (\Exception $e) {
                     Log::error("Unable to link {$uuidPath} to {$filePath}");
                 }
