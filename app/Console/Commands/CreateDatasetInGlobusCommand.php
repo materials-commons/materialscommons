@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Datasets\CreateDatasetInGlobusAction;
+use App\Actions\Globus\GlobusApi;
 use Illuminate\Console\Command;
 
 class CreateDatasetInGlobusCommand extends Command
@@ -40,5 +42,8 @@ class CreateDatasetInGlobusCommand extends Command
     {
         $datasetId = $this->argument('datasetId');
         $isPrivate = $this->option('private');
+        $globusApi = GlobusApi::createGlobusApi();
+        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApi);
+        $createDatasetInGlobusAction($datasetId, $isPrivate);
     }
 }
