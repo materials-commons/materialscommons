@@ -30,7 +30,7 @@ class ImportDirectories extends AbstractImporter
 
         $nameWithPath = $modelData['name'];
         $name = basename($nameWithPath);
-        if (strpos($nameWithPath, '/') == false) {
+        if (strpos($nameWithPath, '/') === false) {
             // No other slash so this is the root
             $modelData['name'] = '/';
         } else {
@@ -48,7 +48,7 @@ class ImportDirectories extends AbstractImporter
     {
         // return everything from first '/' to end of string
         $name = substr($nameWithPath, strpos($nameWithPath, '/'));
-        if (strpos($name, '/') == false) {
+        if (strpos($name, '/') === false) {
             // if no other / then this is root
             return '/';
         }
