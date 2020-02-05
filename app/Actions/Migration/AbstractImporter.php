@@ -92,10 +92,15 @@ abstract class AbstractImporter
                 continue;
             }
 
-            $item = $this->loadData($data);
-            if ($item != null) {
-                $this->loadRelationships($item);
-                $loadedCount++;
+            try {
+                $item = $this->loadData($data);
+                if ($item != null) {
+                    $this->loadRelationships($item);
+                    $loadedCount++;
+                }
+            } catch (\Exception $e) {
+                $exceptionMessage = $e->getMessage();
+                echo "Failed loading data {$exceptionMessage}\n";
             }
 
             $count++;

@@ -40,11 +40,7 @@ class ImportUsers extends AbstractImporter
 //        $modelData["password"] = Hash::make(Str::random(24));
         $modelData["password"] = Hash::make("abc123456");
 
-        try {
-            return User::create($modelData);
-        } catch (\Exception $e) {
-            echo "Failed creating user\n";
-        }
+        return User::create($modelData);
     }
 
     protected function cleanup()
