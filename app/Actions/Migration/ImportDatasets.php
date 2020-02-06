@@ -54,11 +54,15 @@ class ImportDatasets extends AbstractImporter
         $modelData['license_link'] = $data['license']['link'];
         $modelData['description'] = "{$modelData['description']} {$data['funding']} {$data['institution']}";
         if (isset($data['published'])) {
-            $modelData['published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
+            if ($data['published']) {
+                $modelData['published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
+            }
         }
         if (isset($data['is_privately_published'])) {
             if ($data['is_privately_published']) {
-                $modelData['privately_published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
+                if ($data['is_privately_published']) {
+                    $modelData['privately_published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
+                }
             }
         }
         $modelData['doi'] = $data['doi'];
