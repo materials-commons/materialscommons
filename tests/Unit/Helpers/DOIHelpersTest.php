@@ -38,7 +38,7 @@ class DOIHelpersTest extends TestCase
     {
         $this->markTestSkipped('DOI Creation skipped for now');
         $client = new Client();
-        $uri = "https://ez.test.datacite.org/shoulder/doi:".env('DOI_NAMESPACE');
+        $uri = "https://ez.test.datacite.org/shoulder/doi:".config('doi.namespace');
         $body = "_target:https://materialscommons.org\n".
             "datacite.creator: Test Author\n".
             "datacite.title: Test publish 1111\n".
@@ -49,7 +49,7 @@ class DOIHelpersTest extends TestCase
         $resp = $client->request('POST', $uri, [
             'headers' => ['Content-Type' => 'text/plain'],
             'body'    => $body,
-            'auth'    => [env('DOI_USER'), env('DOI_PASSWORD')],
+            'auth'    => [config('doi.user'), config('doi.password')],
         ]);
 
         $respBody = (string) $resp->getBody();

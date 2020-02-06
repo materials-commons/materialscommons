@@ -11,8 +11,8 @@ class DOIHelpers
     {
         $client = new Client();
         $year = Carbon::now()->year;
-        $DSURL = env('MC_DS_URL');
-        $uri = "https://ez.test.datacite.org/shoulder/doi:".env('DOI_NAMESPACE');
+        $DSURL = config('doi.dataset_url');
+        $uri = "https://ez.test.datacite.org/shoulder/doi:".config('doi.namespace');
         $body = "_target:{$DSURL}/{$datasetId}\n".
             "datacite.creator: {$author}\n".
             "datacite.title: {$title}\n".
@@ -22,7 +22,7 @@ class DOIHelpers
         $resp = $client->request('POST', $uri, [
             'headers' => ['Content-Type' => 'text/plain'],
             'body'    => $body,
-            'auth'    => [env('DOI_USER'), env('DOI_PASSWORD')],
+            'auth'    => [config('doi.user'), config('doi.password')],
         ]);
         $respBody = (string) $resp->getBody();
         $matches = [];
