@@ -22,7 +22,7 @@ class CreateGlobusProjectDownloadDirsAction
     public function __construct(GlobusApi $globusApi)
     {
         $this->globusApi = $globusApi;
-        $this->endpointId = env('MC_GLOBUS_ENDPOINT_ID');
+        $this->endpointId = config('globus.endpoint');
     }
 
     public function __invoke(GlobusUploadDownload $globusDownload, $user)
@@ -102,7 +102,7 @@ class CreateGlobusProjectDownloadDirsAction
 
     private function setAclOnPath($globusPath, $globusUserId)
     {
-        $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", env('MC_GLOBUS_ENDPOINT_ID'));
+        $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", $this->endpointId);
         $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
         return $resp["access_id"];
     }

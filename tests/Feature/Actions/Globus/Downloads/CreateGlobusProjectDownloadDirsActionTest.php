@@ -52,7 +52,7 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
 
         $createGlobusProjectDownloadDirsAction = new CreateGlobusProjectDownloadDirsAction($globusApiMock);
         $globusDownload = $createGlobusProjectDownloadDirsAction($globusDownload, $user);
-        $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
+        $endpointId = config('globus.endpoint');
         $this->assertEquals($globusDownload->globus_endpoint_id, $endpointId);
 
         $expectedGlobusPath = "/__globus_downloads/{$globusDownload->uuid}/";

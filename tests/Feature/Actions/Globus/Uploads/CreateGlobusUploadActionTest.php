@@ -31,7 +31,7 @@ class CreateGlobusUploadActionTest extends TestCase
 
         $createGlobusUploadAction = new CreateGlobusUploadAction($globusApiMock);
         $globusUpload = $createGlobusUploadAction($uploadData, $project->id, $user);
-        $endpointId = env('MC_GLOBUS_ENDPOINT_ID');
+        $endpointId = config('globus.endpoint');
         $this->assertEquals($globusUpload->globus_endpoint_id, $endpointId);
         $expectedGlobusPath = "/__globus_uploads/{$globusUpload->uuid}/";
         $expectedUrl = "https://app.globus.org/file-manager?destination_id={$endpointId}&destination_path={$expectedGlobusPath}";

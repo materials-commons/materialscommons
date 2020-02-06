@@ -18,7 +18,7 @@ class CreateGlobusUploadAction
     public function __construct(GlobusApi $globusApi)
     {
         $this->globusApi = $globusApi;
-        $this->endpointId = env('MC_GLOBUS_ENDPOINT_ID');
+        $this->endpointId = config('globus.endpoint');
     }
 
     public function __invoke($data, $projectId, User $user)

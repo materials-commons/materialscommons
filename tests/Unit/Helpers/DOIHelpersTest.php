@@ -8,31 +8,6 @@ use Tests\TestCase;
 
 class DOIHelpersTest extends TestCase
 {
-//    /** @test */
-//    public function test_make_doi_json_api()
-//    {
-//        $client = new Client();
-//        $req = $client->request('POST', 'https://api.test.datacite.org/dois', [
-//            'json' => [
-//                'data' => [
-//                    'type'       => 'dois',
-//                    'attributes' => [
-//                        'doi'             => env('DOI_NAMESPACE'),
-//                        'creators'        => [['name' => 'bob smith']],
-//                        'publisher'       => 'Materials Commons',
-//                        'publicationYear' => 2019,
-//                        'types'           => ['resourceTypeGeneral' => 'Dataset'],
-//                        'url'             => 'https://mateiralscommons.org',
-//                        'titles'          => [['title' => 'Test title 1']],
-//                    ],
-//                ],
-//            ],
-//            'auth' => [env('DOI_USER'), env('DOI_PASSWORD')],
-//        ]);
-//        dd($req);
-//        $this->assertTrue(true);
-//    }
-
     /** @test */
     public function test_make_doi_ez_api()
     {
