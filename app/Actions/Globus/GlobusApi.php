@@ -25,7 +25,7 @@ class GlobusApi
     public static function createGlobusApi()
     {
         $ccUser = config('globus.cc_user');
-        $ccPassword = env('globus.cc_token');
+        $ccPassword = config('globus.cc_token');
         $globusApi = new GlobusApi($ccUser, $ccPassword);
         $globusApi->authenticate();
         return $globusApi;
