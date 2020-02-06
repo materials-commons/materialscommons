@@ -55,6 +55,11 @@ return [
             'visibility' => 'public',
         ],
 
+        'mcfs' => [
+            'driver' => 'local',
+            'root'   => storage_path('app/mcfs'),
+        ],
+
         'test_data' => [
             'driver' => 'local',
             'root'   => storage_path('test_data'),
