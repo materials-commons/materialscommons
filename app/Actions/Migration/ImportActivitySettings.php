@@ -25,6 +25,11 @@ class ImportActivitySettings extends AbstractImporter
 
     protected function loadData($data)
     {
+        if (!isset($data['setup_id'])) {
+            // Some older entries don't have a setup_id field, ignore them
+            return null;
+        }
+
         $setupId = $data['setup_id'];
         if (!isset($this->setup2process[$setupId])) {
             return null;
