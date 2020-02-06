@@ -17,7 +17,7 @@ class CreateFilesTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
 
-            $table->string('name', 80);
+            $table->string('name', 150);
 
             $table->string('path', 700)->nullable()->index();
 
