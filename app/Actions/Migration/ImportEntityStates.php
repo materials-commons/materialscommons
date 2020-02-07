@@ -42,7 +42,7 @@ class ImportEntityStates extends AbstractImporter
         }
 
         $modelData = [];
-        $modelData['name'] = 'Imported Dataset';
+        $modelData['name'] = 'Imported Entity State';
         $modelData['uuid'] = $propertySetUuid;
 
         $entity = ItemCache::findEntity($sampleUuid);
