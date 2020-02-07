@@ -18,6 +18,7 @@ use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowGlobusUploadToMarkAsCom
 use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\StoreGlobusUploadToProjectWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
+use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -33,6 +34,9 @@ Route::get('/projects/create', CreateProjectWebController::class)->name('project
 Route::post('/projects', StoreProjectWebController::class)->name('projects.store');
 
 Route::get('/projects', IndexProjectsWebController::class)->name('projects.index');
+
+Route::post('/projects/search', SearchAcrossProjectsWebController::class)->name('projects.search_all');
+
 Route::get('/projects/{project}', ShowProjectWebController::class)->name('projects.show');
 
 Route::patch('/projects/{project}', UpdateProjectWebController::class)->name('projects.update');

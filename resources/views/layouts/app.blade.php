@@ -74,6 +74,15 @@
                            class="form-control form-rounded border border-right-0"
                            placeholder="Search project..." name="search" aria-label="Search">
                 </form>
+            @else
+                <form method="post"
+                      action="{{route('projects.search_all')}}"
+                      class="mx-2 my-auto d-inline w-75">
+                    @csrf
+                    <input type="text"
+                           class="form-control form-rounded border border-right-0"
+                           placeholder="Search across projects..." name="search" aria-label="Search">
+                </form>
             @endisset
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">

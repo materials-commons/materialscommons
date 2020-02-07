@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
 /**
  * @property integer $id
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class Project extends Model
+class Project extends Model implements Searchable
 {
     use HasUUID;
 
@@ -83,5 +85,16 @@ class Project extends Model
     {
         return $this->hasOne(File::class, 'project_id')
                     ->where('path', '/');
+    }
+
+    public function getTypeAttribute()
+    {
+        return "project";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.show', [$this->id]);
+        return new SearchResult($this, $this->name, $url);
     }
 }

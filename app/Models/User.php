@@ -15,6 +15,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property string $description
  * @property string $affiliations
  * @property string $globus_user
+ * @property mixed projects
  * @property string $api_token
  *
  * @mixin Builder
