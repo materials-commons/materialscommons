@@ -7,14 +7,14 @@
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($entitiesRouteName)}}" href="{{$entitiesRoute}}">
-            Entities
+            Samples
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($activitiesRouteName)}}"
            href="{{$activitiesRoute}}">
-            Activities
+            Processes
         </a>
     </li>
 
