@@ -4,6 +4,7 @@ use App\Exports\EntitiesExport;
 use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
+use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityWebController;
 use App\Http\Controllers\Web\Entities\StoreProjectEntityWebController;
@@ -25,11 +26,16 @@ Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::cla
      ->name('projects.entities.show');
 Route::get('/projects/{project}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.entities.files');
+Route::get('/projects/{project}/entities/{entity}/attributes', ShowEntityAttributesWebController::class)
+     ->name('projects.entities.attributes');
 
 Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}', ShowEntityWebController::class)
      ->name('projects.experiments.entities.show');
 Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.experiments.entities.files');
+Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}/attributes',
+    ShowEntityAttributesWebController::class)
+     ->name('projects.experiments.entities.attributes');
 
 Route::get('/projects/{project}/export-entities', function ($projectId) {
     return Excel::download(new EntitiesExport($projectId), 'entities.xlsx');

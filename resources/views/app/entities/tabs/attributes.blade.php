@@ -1,0 +1,1 @@
+@include('partials.attributes_table', ['object' => $entity])

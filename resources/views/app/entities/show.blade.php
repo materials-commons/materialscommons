@@ -36,6 +36,8 @@
                 @include('app.entities.tabs.tabs', [
                     'showRouteName' => 'projects.experiments.entities.show',
                     'showRoute' => route('projects.experiments.entities.show', [$project, $experiment, $entity]),
+                    'attributesRouteName' => 'projects.experiments.entities.attributes',
+                    'attributesRoute' => route('projects.experiments.entities.attributes', [$project, $experiment, $entity]),
                     'filesRouteName' => 'projects.experiments.entities.files',
                     'filesRoute' => route('projects.experiments.entities.files', [$project, $experiment, $entity])
                 ])
@@ -43,6 +45,8 @@
                 @include('app.entities.tabs.tabs', [
                     'showRouteName' => 'projects.entities.show',
                     'showRoute' => route('projects.entities.show', [$project, $entity]),
+                    'attributesRouteName' => 'projects.entities.attributes',
+                    'attributesRoute' => route('projects.entities.attributes', [$project, $entity]),
                     'filesRouteName' => 'projects.entities.files',
                     'filesRoute' => route('projects.entities.files', [$project, $entity])
                 ])
@@ -51,12 +55,16 @@
             @if (Request::routeIs('projects.experiments.entities*'))
                 @if (Request::routeIs('projects.experiments.entities.show*'))
                     @include('app.entities.tabs.activities-tab')
+                @elseif (Request::routeIs('projects.experiments.entities.attributes*'))
+                    @include('app.entities.tabs.attributes')
                 @elseif (Request::routeIs('projects.experiments.entities.files*'))
                     @include('app.entities.tabs.files-tab')
                 @endif
             @elseif (Request::routeIs('projects.entities*'))
                 @if (Request::routeIs('projects.entities.show*'))
                     @include('app.entities.tabs.activities-tab')
+                @elseif (Request::routeIs('projects.entities.attributes*'))
+                    @include('app.entities.tabs.attributes')
                 @elseif (Request::routeIs('projects.entities.files*'))
                     @include('app.entities.tabs.files-tab')
                 @endif
