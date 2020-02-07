@@ -1,1 +1,1 @@
-@include('partials.attributes_table', ['object' => $activity])
+@include('partials.attributes_table', ['attributes' => $activity->attributes])

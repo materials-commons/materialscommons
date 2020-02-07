@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($object->attributes as $attribute)
+    @foreach($attributes as $attribute)
         @if ($attribute->values->count() !== 0)
             @foreach($attribute->values as $value)
                 @if ($loop->first)
@@ -25,7 +25,7 @@
                 @else
                     <tr>
                         <td>
-                            <span href="#" class="ml-3">{{$attribute->name}}</span>
+                            <span class="ml-3">{{$attribute->name}}</span>
                         </td>
                         <td><span hidden>{{$attribute->description}}</span></td>
                         <td><span hidden>{{$attribute->updated_at->diffForHumans()}}</span></td>
@@ -37,7 +37,7 @@
         @else
             <tr>
                 <td>
-                    <a href="#">{{$attribute->name}}</a>
+                    {{$attribute->name}}/{{$attribute->id}}
                 </td>
                 <td>{{$attribute->description}}</td>
                 <td>{{$attribute->updated_at->diffForHumans()}}</td>

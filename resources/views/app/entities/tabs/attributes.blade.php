@@ -1,1 +1,1 @@
-@include('partials.attributes_table', ['object' => $entity])
+@include('partials.attributes_table', ['attributes' => $attributes])

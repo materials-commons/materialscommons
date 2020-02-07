@@ -16,12 +16,19 @@ class ShowEntityAttributesWebController extends Controller
         $experiment = null;
 
         $entityId = $request->route('entity');
-        $entity = Entity::with('attributes.values')->findOrFail($entityId);
+        $entity = Entity::with('entityStates.attributes.values')->findOrFail($entityId);
+
+        $attributes = collect();
+        foreach ($entity->entityStates as $es) {
+            foreach ($es->attributes as $attribute) {
+                $attributes->push($attribute);
+            }
+        }
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);
         }
 
-        return view('app.entities.show', compact('project', 'entity', 'experiment'));
+        return view('app.entities.show', compact('project', 'entity', 'attributes', 'experiment'));
     }
 }
