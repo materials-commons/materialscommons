@@ -47,8 +47,7 @@ class CreateDatasetZipfileAction
                         $dataset->files()->attach($file->id);
                     }
 
-                    $uuid = $file->uses_uuid ?? $file->uuid;
-                    $uuidPath = $this->getFilePathForFile($uuid);
+                    $uuidPath = $this->getFilePathForFile($file);
                     $fullPath = storage_path("app/{$uuidPath}");
                     $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
                     $zip->addFile($fullPath, $pathInZipfile);

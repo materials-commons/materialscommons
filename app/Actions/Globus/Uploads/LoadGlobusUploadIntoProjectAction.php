@@ -98,7 +98,7 @@ class LoadGlobusUploadIntoProjectAction
 
         if ( ! $matchingFileChecksum) {
             // Just save physical file and insert into database
-            $this->moveFileIntoProject($path, $fileEntry->uuid);
+            $this->moveFileIntoProject($path, $fileEntry);
         } else {
             // Matching file found, so point at it.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
@@ -115,15 +115,17 @@ class LoadGlobusUploadIntoProjectAction
         return $fileEntry;
     }
 
-    private function moveFileIntoProject($path, $uuid)
+    private function moveFileIntoProject($path, $file)
     {
-        $to = $this->getDirPathForFile($uuid)."/{$uuid}";
+        $uuid = $this->getUuid($file);
+        $to = $this->getDirPathForFile($file)."/{$uuid}";
         $pathPart = Storage::disk('local')->path("__globus_uploads");
         $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
         if (Storage::disk('local')->move($filePath, $to) !== true) {
             $status = Storage::disk('local')->copy($filePath, $to);
             unlink($path);
+
             return $status;
         }
 

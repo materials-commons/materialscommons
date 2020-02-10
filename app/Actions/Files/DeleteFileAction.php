@@ -28,9 +28,25 @@ class DeleteFileAction
             }
         });
 
-        Storage::disk('local')->delete($this->getFilePathForFile($file->uuid));
+        // Need to make sure nothing points at this file
+        if ( ! $this->filesPointAtFile($file)) {
+            Storage::disk('local')->delete($this->getFilePathForFile($file));
+        }
         $previousVersions->each(function ($file) {
-            Storage::disk('local')->delete($this->getFilePathForFile($file->uuid));
+            if ( ! $this->filesPointAtFile($file)) {
+                Storage::disk('local')->delete($this->getFilePathForFile($file));
+            }
         });
+    }
+
+    private function filesPointAtFile(File $file)
+    {
+        if (isset($file->uses_uuid)) {
+            return false;
+        }
+
+        $count = File::where('uses_uuid', $file->uuid)->count();
+
+        return $count != 0;
     }
 }

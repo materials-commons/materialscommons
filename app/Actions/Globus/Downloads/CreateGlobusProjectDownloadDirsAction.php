@@ -42,8 +42,8 @@ class CreateGlobusProjectDownloadDirsAction
         foreach ($allDirs as $dir) {
             $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
             foreach ($files as $file) {
-                $uuid = $file->uses_uuid ?? $file->uuid;
-                $uuidPath = $this->getFilePathForFile($uuid);
+                echo "link file {$file->name}\n";
+                $uuidPath = $this->getFilePathForFile($file);
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     link($uuidPath, $filePath);

@@ -37,8 +37,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
     public function handle()
     {
         $file = File::find($this->fileId);
-        $uuid = $file->uses_uuid ?? $file->uuid;
-        $uuidPath = $this->getFilePathForFile($uuid);
+        $uuidPath = $this->getFilePathForFile($file);
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
         Excel::import($importer, storage_path("app/{$uuidPath}"), null, \Maatwebsite\Excel\Excel::XLSX);
     }

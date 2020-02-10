@@ -39,8 +39,7 @@ class CreateDatasetInGlobusAction
                     mkdir($dirPath, 0700, true);
                 }
 
-                $uuid = $file->uses_uuid ?? $file->uuid;
-                $uuidPath = storage_path("app/".$this->getFilePathForFile($uuid));
+                $uuidPath = storage_path("app/".$this->getFilePathForFile($file));
                 $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
                 try {
                     if (!link($uuidPath, $filePath)) {

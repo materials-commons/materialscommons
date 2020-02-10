@@ -60,12 +60,12 @@ class DatasetFactory
             'mime_type'    => 'text',
         ]);
 
-        $dirPath = storage_path("app/".$this->getDirPathForFile($file->uuid));
+        $dirPath = storage_path("app/".$this->getDirPathForFile($file));
         if (!file_exists($dirPath)) {
             mkdir($dirPath, 0700, true);
         }
 
-        $filePath = storage_path("app/".$this->getFilePathForFile($file->uuid));
+        $filePath = storage_path("app/".$this->getFilePathForFile($file));
         $handle = fopen($filePath, "w");
         fwrite($handle, $content);
         fclose($handle);
