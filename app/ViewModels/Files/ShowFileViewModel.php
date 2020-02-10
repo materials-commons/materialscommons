@@ -97,7 +97,7 @@ class ShowFileViewModel extends ViewModel
         $entries = explode('-', $uuid);
         $entry1 = $entries[1];
         try {
-            return Storage::disk('local')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
+            return Storage::disk('mcfs')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
         } catch (FileNotFoundException $e) {
             return 'No file';
         }

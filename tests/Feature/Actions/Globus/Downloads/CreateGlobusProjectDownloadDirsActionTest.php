@@ -66,12 +66,12 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
             'type'               => GlobusType::ProjectDownload,
-            'path'               => storage_path("app/__globus_downloads/{$globusDownload->uuid}"),
+            'path'               => storage_path("app/mcfs/__globus_downloads/{$globusDownload->uuid}"),
         ]);
 
-        Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}");
-        Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}/dir1");
-        Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}/test.txt");
+        Storage::disk('mcfs')->assertExists("__globus_downloads/{$globusDownload->uuid}");
+        Storage::disk('mcfs')->assertExists("__globus_downloads/{$globusDownload->uuid}/dir1");
+        Storage::disk('mcfs')->assertExists("__globus_downloads/{$globusDownload->uuid}/test.txt");
         StorageUtils::clearStorage();
     }
 }

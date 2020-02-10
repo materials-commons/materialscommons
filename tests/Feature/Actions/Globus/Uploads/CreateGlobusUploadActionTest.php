@@ -46,10 +46,10 @@ class CreateGlobusUploadActionTest extends TestCase
             'globus_identity_id' => 'user_id_abc123',
             'globus_acl_id'      => 'acl_id_1234',
             'type'               => GlobusType::ProjectUpload,
-            'path'               => storage_path("app/__globus_uploads/{$globusUpload->uuid}"),
+            'path'               => storage_path("app/mcfs/__globus_uploads/{$globusUpload->uuid}"),
         ]);
 
-        Storage::disk('local')->assertExists("__globus_uploads/{$globusUpload->uuid}");
-        Storage::disk('local')->deleteDirectory("__globus_uploads");
+        Storage::disk('mcfs')->assertExists("__globus_uploads/{$globusUpload->uuid}");
+        Storage::disk('mcfs')->deleteDirectory("__globus_uploads");
     }
 }

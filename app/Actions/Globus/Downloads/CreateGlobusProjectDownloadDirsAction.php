@@ -33,7 +33,7 @@ class CreateGlobusProjectDownloadDirsAction
                        ->orderBy('path')
                        ->get();
 
-        $baseDir = storage_path("app/__globus_downloads/{$globusDownload->uuid}");
+        $baseDir = storage_path("app/mcfs/__globus_downloads/{$globusDownload->uuid}");
         $globusPath = "/__globus_downloads/{$globusDownload->uuid}/";
 
         $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
@@ -42,7 +42,7 @@ class CreateGlobusProjectDownloadDirsAction
         foreach ($allDirs as $dir) {
             $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
             foreach ($files as $file) {
-                $uuidPath = storage_path("app/".$this->getFilePathForFile($file));
+                $uuidPath = storage_path("app/mcfs/".$this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     if ( ! link($uuidPath, $filePath)) {

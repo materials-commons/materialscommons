@@ -39,7 +39,7 @@ class CreateDatasetInGlobusAction
                     mkdir($dirPath, 0700, true);
                 }
 
-                $uuidPath = storage_path("app/".$this->getFilePathForFile($file));
+                $uuidPath = storage_path("app/mcfs/".$this->getFilePathForFile($file));
                 $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
                 try {
                     if (!link($uuidPath, $filePath)) {
@@ -57,10 +57,10 @@ class CreateDatasetInGlobusAction
     private function getDatasetDir(Dataset $dataset, $isPrivate)
     {
         if ($isPrivate) {
-            return storage_path("app/__globus_private_datasets/{$dataset->uuid}");
+            return storage_path("app/mcfs/__globus_private_datasets/{$dataset->uuid}");
         }
 
-        return storage_path("app/__globus_published_datasets/{$dataset->uuid}");
+        return storage_path("app/mcfs/__globus_published_datasets/{$dataset->uuid}");
     }
 
     private function isIncludedFile(DatasetFileSelection $datasetFileSelection, File $file)

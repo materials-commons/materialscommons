@@ -60,12 +60,12 @@ class ProjectFactory
             'mime_type'    => 'text',
         ]);
 
-        $dirPath = storage_path("app/".$this->getDirPathForFile($file));
+        $dirPath = storage_path("app/mcfs/".$this->getDirPathForFile($file));
         if ( ! file_exists($dirPath)) {
             mkdir($dirPath, 0700, true);
         }
 
-        $filePath = storage_path("app/".$this->getFilePathForFile($file));
+        $filePath = storage_path("app/mcfs/".$this->getFilePathForFile($file));
         $handle = fopen($filePath, "w");
         fwrite($handle, $content);
         fclose($handle);

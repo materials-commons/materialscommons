@@ -30,11 +30,11 @@ class DeleteFileAction
 
         // Need to make sure nothing points at this file
         if ( ! $this->filesPointAtFile($file)) {
-            Storage::disk('local')->delete($this->getFilePathForFile($file));
+            Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
         }
         $previousVersions->each(function ($file) {
             if ( ! $this->filesPointAtFile($file)) {
-                Storage::disk('local')->delete($this->getFilePathForFile($file));
+                Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
             }
         });
     }
