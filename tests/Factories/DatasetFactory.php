@@ -3,15 +3,11 @@
 namespace Tests\Factories;
 
 use App\Models\Dataset;
-use App\Models\File;
 use App\Models\User;
-use App\Traits\PathForFile;
 use Facades\Tests\Factories\ProjectFactory;
 
 class DatasetFactory
 {
-    use PathForFile;
-
     protected $user;
     protected $project;
 
@@ -39,49 +35,16 @@ class DatasetFactory
 
     public function createDirectory($dataset, $parent, $name)
     {
-        $parentPath = $parent->path == '/' ? '' : $parent->path;
-        return factory(File::class)->create([
-            'project_id'   => $dataset->project_id,
-            'name'         => $name,
-            'path'         => "{$parentPath}/{$name}",
-            'directory_id' => $parent->id,
-            'owner_id'     => $dataset->owner_id,
-            'mime_type'    => 'directory',
-        ]);
+        return ProjectFactory::createDirectory($dataset->project, $parent, $name);
     }
 
     public function createFile($dataset, $dir, $name, $content)
     {
-        $file = factory(File::class)->create([
-            'project_id'   => $dataset->project_id,
-            'name'         => $name,
-            'directory_id' => $dir->id,
-            'owner_id'     => $dataset->owner_id,
-            'mime_type'    => 'text',
-        ]);
-
-        $dirPath = storage_path("app/".$this->getDirPathForFile($file));
-        if (!file_exists($dirPath)) {
-            mkdir($dirPath, 0700, true);
-        }
-
-        $filePath = storage_path("app/".$this->getFilePathForFile($file));
-        $handle = fopen($filePath, "w");
-        fwrite($handle, $content);
-        fclose($handle);
-
-        return $file;
+        return ProjectFactory::createFile($dataset->project, $dir, $name, $content);
     }
 
     public function createFilePointingAt($dataset, $file, $name)
     {
-        return factory(File::class)->create([
-            'project_id'   => $dataset->project_id,
-            'name'         => $name,
-            'directory_id' => $file->directory_id,
-            'owner_id'     => $dataset->owner_id,
-            'mime_type'    => 'text',
-            'uses_uuid'    => $file->uuid,
-        ]);
+        return ProjectFactory::createFilePointingAt($dataset->project, $file, $name);
     }
 }
