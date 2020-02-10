@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
-trait PathFromUUID
+trait PathForFile
 {
-    public function getDirPathFromUuid($uuid)
+    public function getDirPathForFile($uuid)
     {
         $entries = explode('-', $uuid);
         $entry1 = $entries[1];
@@ -12,9 +12,9 @@ trait PathFromUUID
         return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
     }
 
-    public function filePathFromUuid($uuid)
+    public function getFilePathForFile($uuid)
     {
-        return $this->getDirPathFromUuid($uuid).'/'.$uuid;
+        return $this->getDirPathForFile($uuid).'/'.$uuid;
     }
 }
 

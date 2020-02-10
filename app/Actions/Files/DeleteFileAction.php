@@ -3,13 +3,13 @@
 namespace App\Actions\Files;
 
 use App\Models\File;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteFileAction
 {
-    use PathFromUUID;
+    use PathForFile;
 
     /**
      * Delete a file and all its previous versions
@@ -28,9 +28,9 @@ class DeleteFileAction
             }
         });
 
-        Storage::disk('local')->delete($this->filePathFromUuid($file->uuid));
+        Storage::disk('local')->delete($this->getFilePathForFile($file->uuid));
         $previousVersions->each(function ($file) {
-            Storage::disk('local')->delete($this->filePathFromUuid($file->uuid));
+            Storage::disk('local')->delete($this->getFilePathForFile($file->uuid));
         });
     }
 }

@@ -5,7 +5,7 @@ namespace App\Actions\Datasets;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Models\File;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use ZipArchive;
 
 // This is a long running task -
@@ -13,7 +13,7 @@ use ZipArchive;
 
 class CreateDatasetZipfileAction
 {
-    use PathFromUUID;
+    use PathForFile;
 
     public function __invoke($datasetId, $createDatasetFilesTable)
     {
@@ -48,7 +48,7 @@ class CreateDatasetZipfileAction
                     }
 
                     $uuid = $file->uses_uuid ?? $file->uuid;
-                    $uuidPath = $this->filePathFromUuid($uuid);
+                    $uuidPath = $this->getFilePathForFile($uuid);
                     $fullPath = storage_path("app/{$uuidPath}");
                     $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
                     $zip->addFile($fullPath, $pathInZipfile);

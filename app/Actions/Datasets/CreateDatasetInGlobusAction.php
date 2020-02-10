@@ -7,12 +7,12 @@ use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
 
 class CreateDatasetInGlobusAction
 {
-    use PathFromUUID;
+    use PathForFile;
 
     private $globusApi;
     private $endpointId;
@@ -40,7 +40,7 @@ class CreateDatasetInGlobusAction
                 }
 
                 $uuid = $file->uses_uuid ?? $file->uuid;
-                $uuidPath = storage_path("app/".$this->filePathFromUuid($uuid));
+                $uuidPath = storage_path("app/".$this->getFilePathForFile($uuid));
                 $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
                 try {
                     if (!link($uuidPath, $filePath)) {

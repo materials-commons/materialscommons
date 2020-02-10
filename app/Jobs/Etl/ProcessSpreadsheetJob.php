@@ -4,7 +4,7 @@ namespace App\Jobs\Etl;
 
 use App\Imports\Etl\EntityActivityImporter;
 use App\Models\File;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProcessSpreadsheetJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, PathFromUUID;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, PathForFile;
 
     private $projectId;
     private $experimentId;
@@ -38,7 +38,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
     {
         $file = File::find($this->fileId);
         $uuid = $file->uses_uuid ?? $file->uuid;
-        $uuidPath = $this->filePathFromUuid($uuid);
+        $uuidPath = $this->getFilePathForFile($uuid);
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
         Excel::import($importer, storage_path("app/{$uuidPath}"), null, \Maatwebsite\Excel\Excel::XLSX);
     }

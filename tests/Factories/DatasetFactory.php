@@ -5,12 +5,12 @@ namespace Tests\Factories;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\User;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Facades\Tests\Factories\ProjectFactory;
 
 class DatasetFactory
 {
-    use PathFromUUID;
+    use PathForFile;
 
     protected $user;
     protected $project;
@@ -60,12 +60,12 @@ class DatasetFactory
             'mime_type'    => 'text',
         ]);
 
-        $dirPath = storage_path("app/".$this->getDirPathFromUuid($file->uuid));
+        $dirPath = storage_path("app/".$this->getDirPathForFile($file->uuid));
         if (!file_exists($dirPath)) {
             mkdir($dirPath, 0700, true);
         }
 
-        $filePath = storage_path("app/".$this->filePathFromUuid($file->uuid));
+        $filePath = storage_path("app/".$this->getFilePathForFile($file->uuid));
         $handle = fopen($filePath, "w");
         fwrite($handle, $content);
         fclose($handle);

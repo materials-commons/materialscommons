@@ -8,13 +8,13 @@ use App\Actions\Globus\GlobusUrl;
 use App\Enums\GlobusStatus;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreateGlobusProjectDownloadDirsAction
 {
-    use PathFromUUID;
+    use PathForFile;
 
     private $globusApi;
     private $endpointId;
@@ -43,7 +43,7 @@ class CreateGlobusProjectDownloadDirsAction
             $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
             foreach ($files as $file) {
                 $uuid = $file->uses_uuid ?? $file->uuid;
-                $uuidPath = $this->filePathFromUuid($uuid);
+                $uuidPath = $this->getFilePathForFile($uuid);
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     link($uuidPath, $filePath);

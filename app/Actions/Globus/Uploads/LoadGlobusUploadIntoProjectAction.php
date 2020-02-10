@@ -5,7 +5,7 @@ namespace App\Actions\Globus\Uploads;
 use App\Enums\GlobusStatus;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
-use App\Traits\PathFromUUID;
+use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
@@ -14,7 +14,7 @@ use RecursiveIteratorIterator;
 
 class LoadGlobusUploadIntoProjectAction
 {
-    use PathFromUUID;
+    use PathForFile;
 
     /** @var \App\Models\GlobusUploadDownload */
     private $globusUpload;
@@ -117,7 +117,7 @@ class LoadGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $uuid)
     {
-        $to = $this->getDirPathFromUuid($uuid)."/{$uuid}";
+        $to = $this->getDirPathForFile($uuid)."/{$uuid}";
         $pathPart = Storage::disk('local')->path("__globus_uploads");
         $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
