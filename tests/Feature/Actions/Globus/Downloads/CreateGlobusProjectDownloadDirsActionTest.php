@@ -8,11 +8,11 @@ use App\Actions\Globus\GlobusApi;
 use App\Enums\GlobusStatus;
 use App\Enums\GlobusType;
 use App\Models\File;
-use App\Models\Project;
-use App\Models\User;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Tests\Utils\StorageUtils;
 
 class CreateGlobusProjectDownloadDirsActionTest extends TestCase
 {
@@ -25,15 +25,11 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
         $globusApiMock->shouldReceive("getIdentities")->andReturns(["identities" => [["id" => "user_id_abc123"]]]);
         $globusApiMock->shouldReceive("addEndpointAclRule")->andReturns(["access_id" => "acl_id_1234"]);
 
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $rootDir = factory(File::class)->create([
-            'project_id' => $project->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-        ]);
+        $project = ProjectFactory::create();
+        ProjectFactory::createFile($project, $project->rootDir, "test.txt", "test");
+
+        $rootDir = $project->rootDir;
+        $user = $project->owner;
 
         factory(File::class)->create([
             'project_id'   => $project->id,
@@ -41,7 +37,7 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
             'path'         => '/dir1',
             'mime_type'    => 'directory',
             'directory_id' => $rootDir->id,
-            'owner_id'     => $user->id,
+            'owner_id'     => $project->owner_id,
         ]);
 
         $downloadData = [];
@@ -75,6 +71,7 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
 
         Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}");
         Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}/dir1");
-        Storage::disk('local')->deleteDirectory("__globus_downloads");
+        Storage::disk('local')->assertExists("__globus_downloads/{$globusDownload->uuid}/test.txt");
+        StorageUtils::clearStorage();
     }
 }
