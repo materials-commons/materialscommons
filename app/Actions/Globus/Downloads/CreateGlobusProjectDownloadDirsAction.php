@@ -42,11 +42,12 @@ class CreateGlobusProjectDownloadDirsAction
         foreach ($allDirs as $dir) {
             $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
             foreach ($files as $file) {
-                echo "link file {$file->name}\n";
-                $uuidPath = $this->getFilePathForFile($file);
+                $uuidPath = storage_path("app/".$this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
-                    link($uuidPath, $filePath);
+                    if ( ! link($uuidPath, $filePath)) {
+                        Log::error("Unable to link {$uuidPath} to {$filePath}");
+                    }
                 } catch (\Exception $e) {
                     Log::error("Unable to link {$uuidPath} to {$filePath}");
                 }
