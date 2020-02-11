@@ -106,16 +106,36 @@ class Dataset extends Model implements Searchable
 
     public function zipfilePath()
     {
-        return Storage::disk('mcfs')->path("__datasets/{$this->uuid}/{$this->name}.zip");
+        return Storage::disk('mcfs')->path($this->zipfilePathPartial());
     }
 
     public function publishedGlobusPath()
     {
-        return Storage::disk('mcfs')->path("__globus_published_datasets/{$this->uuid}");
+        return Storage::disk('mcfs')->path($this->publishedGlobusPathPartial());
     }
 
     public function privateGlobusPath()
     {
-        return Storage::disk('mcfs')->path("__globus_private_datasets/{$this->uuid}");
+        return Storage::disk('mcfs')->path($this->privateGlobusPathPartial());
+    }
+
+    public function publishedGlobusPathPartial()
+    {
+        return "__globus_published_datasets/{$this->uuid}";
+    }
+
+    public function zipfilePathPartial()
+    {
+        return "__datasets/{$this->uuid}/{$this->name}.zip";
+    }
+
+    public function zipfileDirPartial()
+    {
+        return "__datasets/{$this->uuid}";
+    }
+
+    public function privateGlobusPathPartial()
+    {
+        return "__globus_published_datasets/{$this->uuid}";
     }
 }
