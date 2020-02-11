@@ -77,6 +77,15 @@
                            class="form-control form-rounded border border-right-0"
                            placeholder="Search project..." name="search" aria-label="Search">
                 </form>
+            @elseif (Request::routeIs('public.*'))
+                <form method="post"
+                      action="{{route('public.search')}}"
+                      class="mx-2 my-auto d-inline w-75">
+                    @csrf
+                    <input type="text"
+                           class="form-control form-rounded border border-right-0"
+                           placeholder="Search published data..." name="search" aria-label="Search">
+                </form>
             @else
                 <form method="post"
                       action="{{route('projects.search_all')}}"

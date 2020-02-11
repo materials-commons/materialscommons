@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -101,6 +102,10 @@ class Dataset extends Model implements Searchable
     public function getSearchResult(): SearchResult
     {
         $url = route('projects.datasets.show', [$this->project_id, $this]);
+        if (Request::routeIs('public.*')) {
+            $url = route('public.datasets.show', [$this]);
+        }
+
         return new SearchResult($this, $this->name, $url);
     }
 
