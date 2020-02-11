@@ -6,9 +6,11 @@ use App\Http\Controllers\Web\Projects\EditProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\CreateProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\DeleteGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\DestroyGlobusDownloadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\EditGlobusAccountWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloadsWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DestroyGlobusUploadWebController;
@@ -96,6 +98,12 @@ Route::post('/projects/{project}/globus/downloads', StoreGlobusDownloadProjectWe
 
 Route::get('/projects/{project}/globus/downloads/create', CreateProjectGlobusDownloadWebController::class)
      ->name('projects.globus.downloads.create');
+
+Route::get('/projects/{project}/globus/downloads/account/edit', EditGlobusAccountWebController::class)
+     ->name('projects.globus.downloads.edit_account');
+
+Route::post('/projects/{project}/globus/downloads/account/update', UpdateGlobusAccountWebController::class)
+     ->name('projects.globus.downloads.update_account');
 
 Route::get('/projects/{project}/globus/downloads/{globusDownload}/delete', DeleteGlobusDownloadWebController::class)
      ->name('projects.globus.downloads.delete');
