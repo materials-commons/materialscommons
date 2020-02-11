@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
@@ -101,5 +102,20 @@ class Dataset extends Model implements Searchable
     {
         $url = route('projects.datasets.show', [$this->project_id, $this]);
         return new SearchResult($this, $this->name, $url);
+    }
+
+    public function zipfilePath()
+    {
+        return Storage::disk('mcfs')->path("__datasets/{$this->uuid}/{$this->name}.zip");
+    }
+
+    public function publishedGlobusPath()
+    {
+        return Storage::disk('mcfs')->path("__globus_published_datasets/{$this->uuid}");
+    }
+
+    public function privateGlobusPath()
+    {
+        return Storage::disk('mcfs')->path("__globus_private_datasets/{$this->uuid}");
     }
 }
