@@ -11,6 +11,7 @@ use Spatie\Searchable\SearchResult;
 /**
  * @property integer $id
  * @property string uuid
+ * @property string uses_uuid
  * @property string $name
  * @property string $description
  * @property string $mime_type
