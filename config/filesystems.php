@@ -57,7 +57,7 @@ return [
 
         'mcfs' => [
             'driver' => 'local',
-            'root'   => storage_path('app/mcfs'),
+            'root'   => env('MCFS_DIR', storage_path('app/mcfs')),
         ],
 
         'test_data' => [

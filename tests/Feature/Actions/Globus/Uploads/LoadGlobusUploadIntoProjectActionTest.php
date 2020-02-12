@@ -17,7 +17,7 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
 
     public function tearDown(): void
     {
-        $globusUploadsPath = storage_path('app/__globus_uploads');
+        $globusUploadsPath = storage_path('app/mcfs/__globus_uploads');
         exec("rm -rf {$globusUploadsPath}");
 
         $this->cleanupCopiedFiles();
@@ -26,7 +26,7 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
     /** @test */
     public function files_and_directories_should_be_loaded_into_project()
     {
-        $globusUploadsPath = storage_path('app/__globus_uploads');
+        $globusUploadsPath = storage_path('app/mcfs/__globus_uploads');
         $this->Mkdir($globusUploadsPath);
         $from = storage_path('test_data/globus/test1');
         $cmd = "cp -r {$from} {$globusUploadsPath}";

@@ -23,7 +23,7 @@ class CreateDatasetZipfileAction
             $dataset->files()->detach();
         }
 
-        $datasetDir = storage_path("app/__datasets/{$dataset->uuid}");
+        $datasetDir = storage_path("app/mcfs/__datasets/{$dataset->uuid}");
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0700, true);
         }
@@ -48,7 +48,7 @@ class CreateDatasetZipfileAction
                     }
 
                     $uuidPath = $this->getFilePathForFile($file);
-                    $fullPath = storage_path("app/{$uuidPath}");
+                    $fullPath = storage_path("app/mcfs/{$uuidPath}");
                     $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
                     $zip->addFile($fullPath, $pathInZipfile);
                 }

@@ -39,7 +39,7 @@ class ImportDirectories extends AbstractImporter
         $modelData['path'] = $this->removeProjectFromPathName($nameWithPath);;
         $modelData['mime_type'] = 'directory';
         $modelData['media_type_description'] = 'directory';
-        $modelData['disk'] = 'local';
+        $modelData['disk'] = 'mcfs';
 
         return File::create($modelData);
     }

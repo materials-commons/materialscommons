@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
 use App\Http\Controllers\Web2\HomeController;
@@ -59,6 +60,7 @@ Route::get('/getAllPublishedDatasets',
 
 Route::prefix('public')->group(function () {
     Route::name('public.')->group(function () {
+        Route::post('/search', SearchPublishedDataWebController::class)->name('search');
         Route::get('/new', [PublicDataNewController::class, 'index'])->name('new.index');
         Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('projects.index');
         Route::get('/datasets', [PublicDataDatasetsController::class, 'index'])->name('datasets.index');

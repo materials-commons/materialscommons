@@ -26,7 +26,7 @@ class DeleteGlobusDownloadAction
         }
 
         try {
-            Storage::disk('local')->deleteDirectory("__globus_downloads/{$globusDownload->uuid}");
+            Storage::disk('mcfs')->deleteDirectory("__globus_downloads/{$globusDownload->uuid}");
         } catch (\Exception $e) {
             Log::error("Unable to delete download dir __globus_downloads/{$globusDownload->uuid}");
         }

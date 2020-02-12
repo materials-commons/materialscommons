@@ -27,7 +27,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, false);
 
-        $datasetPath = storage_path("app/__globus_published_datasets/{$dataset->uuid}");
+        $datasetPath = storage_path("app/mcfs/__globus_published_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/test.txt");
 
@@ -47,7 +47,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
 
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, true);
-        $datasetPath = storage_path("app/__globus_private_datasets/{$dataset->uuid}");
+        $datasetPath = storage_path("app/mcfs/__globus_private_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/test.txt");
 
@@ -68,7 +68,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
 
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, true);
-        $datasetPath = storage_path("app/__globus_private_datasets/{$dataset->uuid}");
+        $datasetPath = storage_path("app/mcfs/__globus_private_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/anothername.txt");
 

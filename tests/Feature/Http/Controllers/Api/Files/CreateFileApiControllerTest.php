@@ -46,7 +46,7 @@ class CreateFileApiControllerTest extends TestCase
         $topFileDir = $this->topDirFromUuid($fileUuid);
         $fileDir = $this->dirFromUuid($fileUuid);
 
-        Storage::disk('local')->assertExists("{$fileDir}/{$fileUuid}");
+        Storage::disk('mcfs')->assertExists("{$fileDir}/{$fileUuid}");
         Storage::deleteDirectory($topFileDir);
     }
 

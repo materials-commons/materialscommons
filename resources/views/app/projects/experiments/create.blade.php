@@ -25,8 +25,9 @@
                     <textarea class="form-control" id="description" name="description" type="text" value=""
                               placeholder="Description..."></textarea>
                 </div>
-                @if ($excelFiles->count() !== 0)
-                    <div class="form-group">
+
+                <div class="form-group">
+                    @if ($excelFiles->count() !== 0)
                         <label for="file_id">Spreadsheet to import</label>
                         <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
                                 title="Spreadsheet">
@@ -39,8 +40,11 @@
                                 @endif
                             @endforeach
                         </select>
-                    </div>
-                @endif
+                    @else
+                        <span>There are no excel files in the project to build an experiment from.</span>
+                    @endif
+                </div>
+
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <div class="float-right">
                     <a href="{{route('projects.show', ['project' => $project->id])}}" class="action-link danger mr-3">

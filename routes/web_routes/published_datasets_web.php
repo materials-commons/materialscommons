@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Published\Datasets\Comments\UpdateDatasetCommentWeb
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetActivitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatatableWebController;
+use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
      ->name('datasets.show');
+
+Route::get('/datasets/{dataset}/zipfile', DownloadDatasetZipfileWebController::class)
+     ->name('datasets.download_zipfile');
 
 Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)
      ->name('datasets.entities.index');

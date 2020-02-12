@@ -9,7 +9,7 @@ trait SaveFile
     public function saveFile($file, $uuid)
     {
         $dir = $this->dirPathFromUuid($uuid);
-        Storage::disk('local')->putFileAs($dir, $file, $uuid);
+        Storage::disk('mcfs')->putFileAs($dir, $file, $uuid);
     }
 
     private function dirPathFromUuid($uuid)

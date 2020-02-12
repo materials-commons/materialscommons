@@ -40,11 +40,14 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('public.index')}}">Materials Commons 2.0</a>
+        <a class="navbar-brand col-sm-3 mr-0" href="{{route('public.index')}}">
+            <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+            Materials Commons 2.0
+        </a>
     @else
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('projects.index')}}">
-            <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/> Materials
-            Commons 2.0
+        <a class="navbar-brand col-sm-3 mr-0" href="{{route('projects.index')}}">
+            <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+            Materials Commons 2.0
         </a>
     @endif
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -73,6 +76,15 @@
                     <input type="text"
                            class="form-control form-rounded border border-right-0"
                            placeholder="Search project..." name="search" aria-label="Search">
+                </form>
+            @elseif (Request::routeIs('public.*'))
+                <form method="post"
+                      action="{{route('public.search')}}"
+                      class="mx-2 my-auto d-inline w-75">
+                    @csrf
+                    <input type="text"
+                           class="form-control form-rounded border border-right-0"
+                           placeholder="Search published data..." name="search" aria-label="Search">
                 </form>
             @else
                 <form method="post"

@@ -29,7 +29,7 @@ class CreateGlobusUploadAction
         $data['status'] = GlobusStatus::Uploading;
         $globusUpload = GlobusUploadDownload::create($data);
 
-        $path = storage_path("app/__globus_uploads/{$globusUpload->uuid}");
+        $path = storage_path("app/mcfs/__globus_uploads/{$globusUpload->uuid}");
         $globusPath = "/__globus_uploads/{$globusUpload->uuid}/";
 
         if (!is_dir($path)) {

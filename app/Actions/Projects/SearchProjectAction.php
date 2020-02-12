@@ -55,7 +55,7 @@ class SearchProjectAction
             ->registerModel(Community::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
                 $modelSearchAspect->addSearchableAttribute('name')
                                   ->addSearchableAttribute('description')
-                                  ->where('public', 'true');
+                                  ->where('public', true);
             })
             ->search($search);
     }

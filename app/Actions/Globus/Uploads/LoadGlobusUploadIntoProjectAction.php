@@ -29,7 +29,7 @@ class LoadGlobusUploadIntoProjectAction
 
     public function __invoke()
     {
-        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Storage::disk('local')->path($this->globusUpload->path)),
+        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Storage::disk('mcfs')->path($this->globusUpload->path)),
             RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;
 
@@ -59,7 +59,7 @@ class LoadGlobusUploadIntoProjectAction
 
     private function processDir($path, File $currentDir): File
     {
-        $pathPart = Storage::disk('local')->path($this->globusUpload->path);
+        $pathPart = Storage::disk('mcfs')->path($this->globusUpload->path);
         $dirPath = Str::replaceFirst($pathPart, "", $path);
         $dir = File::where('project_id', $this->globusUpload->project->id)->where('path', $dirPath)->first();
         if ($dir !== null) {
@@ -119,11 +119,11 @@ class LoadGlobusUploadIntoProjectAction
     {
         $uuid = $this->getUuid($file);
         $to = $this->getDirPathForFile($file)."/{$uuid}";
-        $pathPart = Storage::disk('local')->path("__globus_uploads");
+        $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
         $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
-        if (Storage::disk('local')->move($filePath, $to) !== true) {
-            $status = Storage::disk('local')->copy($filePath, $to);
+        if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
+            $status = Storage::disk('mcfs')->copy($filePath, $to);
             unlink($path);
 
             return $status;

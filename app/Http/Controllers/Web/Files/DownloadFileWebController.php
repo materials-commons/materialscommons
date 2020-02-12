@@ -32,7 +32,7 @@ class DownloadFileWebController extends Controller
         $entries = explode('-', $uuid);
         $entry1 = $entries[1];
 
-        return storage_path("app/{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
+        return storage_path("app/mcfs/{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
     }
 }
 

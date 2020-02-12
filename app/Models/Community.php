@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -49,6 +50,9 @@ class Community extends Model implements Searchable
     public function getSearchResult(): SearchResult
     {
         $url = route('communities.show', [$this]);
+        if (Request::routeIs('public.*')) {
+            $url = route('public.communities.datasets.index', [$this]);
+        }
         return new SearchResult($this, $this->name, $url);
     }
 }

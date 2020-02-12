@@ -50,6 +50,6 @@ class PublishDatasetJobTest extends TestCase
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());
 
-        Storage::disk('local')->deleteDirectory("__datasets/{$dataset->uuid}");
+        Storage::disk('mcfs')->deleteDirectory("__datasets/{$dataset->uuid}");
     }
 }
