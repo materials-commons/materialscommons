@@ -6,6 +6,7 @@ use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Traits\PathForFile;
+use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 // This is a long running task -
@@ -23,7 +24,7 @@ class CreateDatasetZipfileAction
             $dataset->files()->detach();
         }
 
-        $datasetDir = storage_path("app/mcfs/__datasets/{$dataset->uuid}");
+        $datasetDir = Storage::disk('mcfs')->path("__datasets/{$dataset->uuid}");
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0700, true);
         }
@@ -48,7 +49,7 @@ class CreateDatasetZipfileAction
                     }
 
                     $uuidPath = $this->getFilePathForFile($file);
-                    $fullPath = storage_path("app/mcfs/{$uuidPath}");
+                    $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
                     $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
                     $zip->addFile($fullPath, $pathInZipfile);
                 }

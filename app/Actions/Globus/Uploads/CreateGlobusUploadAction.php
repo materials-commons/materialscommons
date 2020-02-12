@@ -9,6 +9,7 @@ use App\Enums\GlobusStatus;
 use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class CreateGlobusUploadAction
 {
@@ -29,7 +30,7 @@ class CreateGlobusUploadAction
         $data['status'] = GlobusStatus::Uploading;
         $globusUpload = GlobusUploadDownload::create($data);
 
-        $path = storage_path("app/mcfs/__globus_uploads/{$globusUpload->uuid}");
+        $path = Storage::disk('mcfs')->path("__globus_uploads/{$globusUpload->uuid}");
         $globusPath = "/__globus_uploads/{$globusUpload->uuid}/";
 
         if (!is_dir($path)) {

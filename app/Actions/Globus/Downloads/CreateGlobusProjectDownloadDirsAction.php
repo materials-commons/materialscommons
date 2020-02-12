@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CreateGlobusProjectDownloadDirsAction
@@ -33,7 +34,7 @@ class CreateGlobusProjectDownloadDirsAction
                        ->orderBy('path')
                        ->get();
 
-        $baseDir = storage_path("app/mcfs/__globus_downloads/{$globusDownload->uuid}");
+        $baseDir = Storage::disk('mcfs')->path("__globus_downloads/{$globusDownload->uuid}");
         $globusPath = "/__globus_downloads/{$globusDownload->uuid}/";
 
         $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
@@ -42,7 +43,7 @@ class CreateGlobusProjectDownloadDirsAction
         foreach ($allDirs as $dir) {
             $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
             foreach ($files as $file) {
-                $uuidPath = storage_path("app/mcfs/".$this->getFilePathForFile($file));
+                $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     if ( ! link($uuidPath, $filePath)) {
