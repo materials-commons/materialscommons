@@ -13,6 +13,7 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
@@ -24,7 +25,7 @@ class EntityActivityImportTest extends TestCase
     public function test_spreadsheet_d1_headers()
     {
         $importer = new EntityActivityImporter(1, 1, 1);
-        Excel::import($importer, storage_path("test_data/etl/d1_headers.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/d1_headers.xlsx"));
         $headers = $importer->getHeaders()->headersByIndex;
 
         // Spreadsheet headers
@@ -92,7 +93,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/d1.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/d1.xlsx"));
 
         // Check entities and entity attributes
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
@@ -125,7 +126,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/d006-abc-113"), null, \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import($importer, Storage::disk('test_data')->path('etl/d006-abc-113'), null, \Maatwebsite\Excel\Excel::XLSX);
 
         // Check entities and entity attributes
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
@@ -158,7 +159,8 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/double.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/double.xlsx"));
+
         // Check entities and entity attributes
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES5']);
@@ -189,7 +191,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/two-worksheets.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/two-worksheets.xlsx"));
 
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES5']);
@@ -217,8 +219,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer,
-            storage_path("test_data/etl/one-sheet-same-sample-different-activity-attributes.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/one-sheet-same-sample-different-activity-attributes.xlsx"));
 
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
         $this->assertEquals(1, Entity::count());
@@ -242,13 +243,14 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/one-sheet-same-sample-same-activity-attributes.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/one-sheet-same-sample-same-activity-attributes.xlsx"));
+
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
         $this->assertEquals(1, Entity::count());
         $this->assertEquals(1, EntityState::count());
         $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
         $entityAttributes = Attribute::where('attributable_type', EntityState::class)->get();
-        $entityAttributeIds = $entityAttributes->map(function(Attribute $attr) {
+        $entityAttributeIds = $entityAttributes->map(function (Attribute $attr) {
             return $attr->id;
         });
         $this->assertEquals(10, AttributeValue::whereIn('attribute_id', $entityAttributeIds->toArray())->count());
@@ -272,7 +274,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/two-worksheets-with-parent.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/two-worksheets-with-parent.xlsx"));
 
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd2']);
@@ -356,7 +358,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        Excel::import($importer, storage_path("test_data/etl/file_associations.xlsx"));
+        Excel::import($importer, Storage::disk('test_data')->path("etl/file_associations.xlsx"));
 
         $activity = Activity::where('name', 'sem')->first();
         $this->assertEquals(5, $activity->files()->count());
