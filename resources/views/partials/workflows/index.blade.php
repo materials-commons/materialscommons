@@ -45,6 +45,10 @@
 @push('scripts')
     <script>
         let chart;
+        let projectId = "{{$project->id}}";
+        let experimentId = "{{isset($experiment) ? $experiment->id : ''}}";
+        let datasetId = "{{isset($dataset) ? $dataset->id : ''}}";
+
         $(document).ready(() => {
             $('#workflows').DataTable({
                 stateSave: true,
@@ -74,6 +78,16 @@
             $("#workflowtitle").html(name);
             let fl = simplefl.parseSimpleFlowchart(code);
             chart = mcfl.drawFlowchart('workflow', fl);
+        }
+
+        function myfunc(event, node) {
+            console.log("You just clicked this node:", node);
+            if (experimentId != "") {
+
+            } else if (datasetId != "") {
+            } else {
+                window.location.href = route('projects.show', {project: projectId}).url();
+            }
         }
     </script>
 @endpush
