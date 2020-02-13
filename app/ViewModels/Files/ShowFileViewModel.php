@@ -14,8 +14,19 @@ class ShowFileViewModel extends ViewModel
     private $binaryTypes;
     private $pdfTypes;
 
+    /**
+     * @var \App\Models\File
+     */
     private $file;
+
+    /**
+     * @var \App\Models\Project
+     */
     private $project;
+
+    /**
+     * @var \App\Models\Dataset | null
+     */
     private $dataset;
 
     public function __construct(File $file, $project, $dataset = null)

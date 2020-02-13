@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use App\Traits\PathForFile;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectFactory
 {
@@ -60,12 +61,12 @@ class ProjectFactory
             'mime_type'    => 'text',
         ]);
 
-        $dirPath = storage_path("app/mcfs/".$this->getDirPathForFile($file));
+        $dirPath = Storage::disk('mcfs')->path($this->getDirPathForFile($file));
         if ( ! file_exists($dirPath)) {
             mkdir($dirPath, 0700, true);
         }
 
-        $filePath = storage_path("app/mcfs/".$this->getFilePathForFile($file));
+        $filePath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
         $handle = fopen($filePath, "w");
         fwrite($handle, $content);
         fclose($handle);

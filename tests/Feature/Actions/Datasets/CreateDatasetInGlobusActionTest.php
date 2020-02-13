@@ -5,6 +5,7 @@ namespace Tests\Feature\Actions\Datasets;
 use App\Actions\Datasets\CreateDatasetInGlobusAction;
 use Facades\Tests\Factories\DatasetFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Tests\Utils\GlobusMockUtils;
 use Tests\Utils\StorageUtils;
@@ -27,7 +28,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, false);
 
-        $datasetPath = storage_path("app/mcfs/__globus_published_datasets/{$dataset->uuid}");
+        $datasetPath = Storage::disk('mcfs')->path("__globus_published_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/test.txt");
 
@@ -47,7 +48,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
 
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, true);
-        $datasetPath = storage_path("app/mcfs/__globus_private_datasets/{$dataset->uuid}");
+        $datasetPath = Storage::disk('mcfs')->path("__globus_private_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/test.txt");
 
@@ -68,7 +69,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
 
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, true);
-        $datasetPath = storage_path("app/mcfs/__globus_private_datasets/{$dataset->uuid}");
+        $datasetPath = Storage::disk('mcfs')->path("__globus_private_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/anothername.txt");
 
