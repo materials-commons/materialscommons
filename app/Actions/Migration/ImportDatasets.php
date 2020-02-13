@@ -17,6 +17,8 @@ class ImportDatasets extends AbstractImporter
     private $dataset2activities;
     private $dataset2entities;
     private $dataset2files;
+    private $datafile2project;
+    private $entity2project = [];
 
     public function __construct($pathToDumpfiles, $ignoreExisting = false)
     {
@@ -32,6 +34,8 @@ class ImportDatasets extends AbstractImporter
         $this->dataset2activities = $this->loadItemMappingMultiple("dataset2process.json", "dataset_id", "process_id");
         $this->dataset2entities = $this->loadItemMappingMultiple("dataset2sample.json", "dataset_id", "sample_id");
         $this->dataset2files = $this->loadItemMappingMultiple("dataset2datafile.json", "dataset_id", "datafile_id");
+        $this->datafile2project = $this->loadItemMapping('project2datafile.json', 'datafile_id', 'project_id');
+        $this->entity2project = $this->loadItemMapping("project2sample.json", "sample_id", "project_id");
     }
 
     protected function cleanup()
@@ -46,19 +50,34 @@ class ImportDatasets extends AbstractImporter
 
     protected function loadData($data)
     {
-        $modelData = $this->createModelDataForKnownItems($data, $this->dataset2project);
+        $modelData = $this->createCommonModelData($data);
         if ($modelData == null) {
             return null;
         }
+
+        $projectId = $this->findProjectForDataset($modelData['uuid']);
+        if ($projectId == null) {
+            $isPublished = "no";
+            if (isset($data['published'])) {
+                if ($data['published']) {
+                    $isPublished = "yes";
+                }
+            }
+            echo "Unable to find project for dataset {$data['title']}/{$data['id']} owned by {$data['owner']} Published: {$isPublished}\n";
+            echo "::{$data['id']}\n";
+            return null;
+        }
+
+        $modelData['project_id'] = $projectId;
         $modelData['license'] = $data['license']['name'];
         $modelData['license_link'] = $data['license']['link'];
         $modelData['description'] = "{$modelData['description']} {$data['funding']} {$data['institution']}";
+
         if (isset($data['published'])) {
             if ($data['published']) {
                 $modelData['published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
             }
-        }
-        if (isset($data['is_privately_published'])) {
+        } elseif (isset($data['is_privately_published'])) {
             if ($data['is_privately_published']) {
                 if ($data['is_privately_published']) {
                     $modelData['privately_published_at'] = Carbon::createFromTimestamp($data['birthtime']['epoch_time']);
@@ -76,6 +95,56 @@ class ImportDatasets extends AbstractImporter
         }
 
         return $ds;
+    }
+
+    private function findProjectForDataset($datasetUuid)
+    {
+        if (isset($this->dataset2project[$datasetUuid])) {
+            $projectId = $this->findProjectIdForUuid($this->dataset2project[$datasetUuid]);
+            if ($projectId != null) {
+                return $projectId;
+            }
+        }
+
+        $projectId = $this->findProjectForDatasetThrough($datasetUuid, $this->dataset2files, $this->datafile2project);
+        if ($projectId != null) {
+            return $projectId;
+        }
+
+        $projectId = $this->findProjectForDatasetThrough($datasetUuid, $this->dataset2entities, $this->entity2project);
+        if ($projectId != null) {
+            return $projectId;
+        }
+
+        return null;
+    }
+
+    private function findProjectIdForUuid($uuid)
+    {
+        $project = ItemCache::findProject($uuid);
+        if ($project != null) {
+            return $project->id;
+        }
+
+        return null;
+    }
+
+    private function findProjectForDatasetThrough($datasetUuid, $dataset2itemMap, $item2projectMap)
+    {
+        if (isset($dataset2itemMap[$datasetUuid])) {
+            if (sizeof($dataset2itemMap[$datasetUuid]) != 0) {
+                $idToLookup = $dataset2itemMap[$datasetUuid][0];
+                if (isset($item2projectMap[$idToLookup])) {
+                    $projectUuid = $item2projectMap[$idToLookup];
+                    $projectId = $this->findProjectIdForUuid($projectUuid);
+                    if ($projectId != null) {
+                        return $projectId;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
     protected function shouldLoadRelationshipsOnSkip()
