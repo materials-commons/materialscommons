@@ -166,6 +166,9 @@
 {{--@livewireAssets--}}
 <script>
     $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+    $(document).ready(() => {
+        mcutil.autosizeTextareas();
+    });
 </script>
 @stack('scripts')
 </body>
