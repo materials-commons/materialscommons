@@ -80,7 +80,7 @@
                         View Published Datasets
                     </a>
 
-                    <a href="/docs/getting-started" title="Materials Commons getting started"
+                    <a href="{{makeHelpUrl("getting-started")}}" title="Materials Commons getting started"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Read The Docs
                     </a>
