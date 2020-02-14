@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
@@ -114,6 +115,11 @@ class Dataset extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->zipfilePathPartial());
     }
 
+    public function zipfileDir()
+    {
+        return Storage::disk('mcfs')->path($this->zipfileDirPartial());
+    }
+
     public function publishedGlobusPath()
     {
         return Storage::disk('mcfs')->path($this->publishedGlobusPathPartial());
@@ -131,7 +137,8 @@ class Dataset extends Model implements Searchable
 
     public function zipfilePathPartial()
     {
-        return "zipfiles/{$this->uuid}/{$this->name}.zip";
+        $dsNameSlug = Str::slug($this->name);
+        return "zipfiles/{$this->uuid}/{$dsNameSlug}.zip";
     }
 
     public function zipfileDirPartial()
