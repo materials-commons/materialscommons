@@ -68,7 +68,8 @@ function parseSimpleFlowchart(lines) {
         if (!(node1.id in seenNodes)) {
             seenNodes[node1.id] = true;
             if (node1._type === 'operation') {
-                fl = fl + `${node1.id}=>operation: ${node1.name}:$myfunc\n`;
+                // fl = fl + `${node1.id}=>operation: ${node1.name}:$myfunc\n`;
+                fl = fl + `${node1.id}=>operation: ${node1.name}\n`;
             } else {
                 fl = fl + `${node1.id}=>condition: ${node1.name}\n`;
             }
@@ -78,7 +79,8 @@ function parseSimpleFlowchart(lines) {
             if (!(node2.id in seenNodes)) {
                 seenNodes[node2.id] = true;
                 if (node2._type === 'operation') {
-                    fl = fl + `${node2.id}=>operation: ${node2.name}:$myfunc\n`;
+                    // fl = fl + `${node2.id}=>operation: ${node2.name}:$myfunc\n`;
+                    fl = fl + `${node2.id}=>operation: ${node2.name}\n`;
                 } else {
                     fl = fl + `${node2.id}=>condition: ${node2.name}\n`;
                 }
