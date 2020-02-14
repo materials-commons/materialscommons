@@ -126,21 +126,21 @@ class Dataset extends Model implements Searchable
 
     public function publishedGlobusPathPartial()
     {
-        return "__globus_published_datasets/{$this->uuid}";
+        return "__published_datasets/{$this->uuid}";
     }
 
     public function zipfilePathPartial()
     {
-        return "__datasets/{$this->uuid}/{$this->name}.zip";
+        return "zipfiles/{$this->uuid}/{$this->name}.zip";
     }
 
     public function zipfileDirPartial()
     {
-        return "__datasets/{$this->uuid}";
+        return "zipfiles/{$this->uuid}";
     }
 
     public function privateGlobusPathPartial()
     {
-        return "__globus_published_datasets/{$this->uuid}";
+        return "__datasets/{$this->uuid}";
     }
 }
