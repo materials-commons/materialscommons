@@ -16,13 +16,13 @@
     @component('components.card')
         @slot('header')
             Sample: {{$entity->name}}
-            <a class="float-right action-link" href="#">
-                <i class="fas fa-edit mr-2"></i>Edit
-            </a>
+            {{--            <a class="float-right action-link" href="#">--}}
+            {{--                <i class="fas fa-edit mr-2"></i>Edit--}}
+            {{--            </a>--}}
 
-            <a class="float-right action-link mr-4" href="#">
-                <i class="fas fa-trash-alt mr-2"></i>Delete
-            </a>
+            {{--            <a class="float-right action-link mr-4" href="#">--}}
+            {{--                <i class="fas fa-trash-alt mr-2"></i>Delete--}}
+            {{--            </a>--}}
         @endslot
 
         @slot('body')
