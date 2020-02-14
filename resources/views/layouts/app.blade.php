@@ -115,7 +115,7 @@
             </ul>
         @else
             <form method="post"
-                  action=""
+                  action="{{route('public.search')}}"
                   class="mx-2 my-auto d-inline w-75">
                 @csrf
                 <input type="text"
