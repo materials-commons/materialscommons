@@ -74,6 +74,10 @@ Route::prefix('public')->group(function () {
     });
 });
 
+//Route::get('/share/{file}', function() {
+//
+//})->name('share')->middleware('signed');
+
 Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/projects_web.php');
     require base_path('routes/web_routes/experiments_web.php');
