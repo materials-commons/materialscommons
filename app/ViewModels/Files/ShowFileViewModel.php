@@ -7,12 +7,36 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ViewModels\ViewModel;
 
+/*
+ * const convertibleImageFileTypes = {
+    'image/tiff': true,
+    'image/x-ms-bmp': true,
+    'image/bmp': true,
+};
+
+const convertibleDocumentFileTypes = {
+    'application/vnd.ms-excel': true,
+    'application/vnd.ms-powerpoint': true,
+    'application/msword': true,
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation': true,
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': true,
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': true,
+};
+
+const spreadsheetDocumentFileTypes = {
+    'application/vnd.ms-excel': true,
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': true,
+};
+ */
+
 class ShowFileViewModel extends ViewModel
 {
     private $officeTypes;
     private $imageTypes;
     private $binaryTypes;
     private $pdfTypes;
+
+    private $convertibleImageTypes;
 
     /**
      * @var \App\Models\File
@@ -51,6 +75,12 @@ class ShowFileViewModel extends ViewModel
             "image/tiff"     => true,
             "image/x-ms-bmp" => true,
             "image/bmp"      => true,
+        ];
+
+        $this->convertibleImageTypes = [
+            'image/tiff'     => true,
+            'image/x-ms-bmp' => true,
+            'image/bmp'      => true,
         ];
 
         $this->binaryTypes = [
@@ -98,7 +128,23 @@ class ShowFileViewModel extends ViewModel
         return "text";
     }
 
+    public function fileExists()
+    {
+        $filePath = Storage::disk('mcfs')->path($this->fileContentsPathPartial());
+        return file_exists($filePath);
+    }
+
     public function fileContents()
+    {
+        $filePathPartial = $this->fileContentsPathPartial();
+        try {
+            return Storage::disk('mcfs')->get($filePathPartial);
+        } catch (FileNotFoundException $e) {
+            return 'No file';
+        }
+    }
+
+    private function fileContentsPathPartial()
     {
         $uuid = $this->file->uuid;
         if ($this->file->uses_uuid !== null) {
@@ -107,11 +153,21 @@ class ShowFileViewModel extends ViewModel
 
         $entries = explode('-', $uuid);
         $entry1 = $entries[1];
-        try {
-            return Storage::disk('mcfs')->get("{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}/{$uuid}");
-        } catch (FileNotFoundException $e) {
-            return 'No file';
+
+        $dirPath = "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
+        $fileName = $uuid;
+
+        if (array_key_exists($this->file->mime_type, $this->convertibleImageTypes)) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".jpg";
         }
+
+        if (array_key_exists($this->file->mime_type, $this->officeTypes)) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".pdf";
+        }
+
+        return "{$dirPath}/{$fileName}";
     }
 
     public function fileExtension()
