@@ -23,7 +23,6 @@ use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
 use App\Http\Controllers\Web2\Published\PublicDataAuthorsController;
 use App\Http\Controllers\Web2\Published\PublicDataController;
-use App\Http\Controllers\Web2\Published\PublicDataDatasetsController;
 use App\Http\Controllers\Web2\Published\PublicDataNewController;
 use App\Http\Controllers\Web2\Published\PublicDataProjectsController;
 use App\Http\Controllers\Web2\Published\PublicDataTagsController;
@@ -63,7 +62,7 @@ Route::prefix('public')->group(function () {
         Route::post('/search', SearchPublishedDataWebController::class)->name('search');
         Route::get('/new', [PublicDataNewController::class, 'index'])->name('new.index');
         Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('projects.index');
-        Route::get('/datasets', [PublicDataDatasetsController::class, 'index'])->name('datasets.index');
+        Route::get('/datasets', [PublicDataController::class, 'index'])->name('datasets.index');
         //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
         Route::get('/authors', [PublicDataAuthorsController::class, 'index'])->name('authors.index');
         Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
