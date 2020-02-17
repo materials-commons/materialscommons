@@ -38,6 +38,6 @@ class GlobusAuthTest extends Command
      */
     public function handle()
     {
-        GlobusApi::createGlobusApi();
+        GlobusApi::createGlobusApiWithEcho();
     }
 }

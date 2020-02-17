@@ -37,6 +37,20 @@ class GlobusApi
         return $globusApi;
     }
 
+    public static function createGlobusApiWithEcho()
+    {
+        $ccUser = config('globus.cc_user');
+        $ccPassword = config('globus.cc_token');
+        $globusApi = new GlobusApi($ccUser, $ccPassword);
+        try {
+            $globusApi->authenticate();
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "Failed authenticating to globus ${msg}\n";
+        }
+        return $globusApi;
+    }
+
     public function authenticate()
     {
         $url = self::AuthUrlBase."/oauth2/token";
