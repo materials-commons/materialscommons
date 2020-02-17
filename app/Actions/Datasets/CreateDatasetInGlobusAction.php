@@ -109,7 +109,7 @@ class CreateDatasetInGlobusAction
 
     private function setPublishedDatasetAcl(Dataset $dataset)
     {
-        $globusPath = "/__globus_published_datasets/{$dataset->uuid}/";
+        $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
         $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $this->endpointId,
             EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
         $aclId = $this->globusApi->addEndpointAclRule($endpointAclRule);

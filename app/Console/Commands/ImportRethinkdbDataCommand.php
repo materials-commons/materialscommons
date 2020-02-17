@@ -23,7 +23,7 @@ class ImportRethinkdbDataCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Migrate rethinkdb data';
 
     /**
      * Create a new command instance.

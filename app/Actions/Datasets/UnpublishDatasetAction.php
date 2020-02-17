@@ -19,11 +19,11 @@ class UnpublishDatasetAction
     public function __invoke(Dataset $dataset)
     {
         try {
-            $this->globusApi->deleteEndpointAclRule($dataset->globus_endpoint_id,
-                $dataset->globus_acl_id);
+            $this->globusApi->deleteEndpointAclRule($dataset->globus_endpoint_id, $dataset->globus_acl_id);
         } catch (\Exception $e) {
             Log::error("Unable to delete acl");
         }
+
         $dataset->update(['published_at' => null]);
         Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
         Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
