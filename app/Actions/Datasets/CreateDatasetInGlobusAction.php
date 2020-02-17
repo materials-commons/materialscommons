@@ -61,7 +61,7 @@ class CreateDatasetInGlobusAction
             return Storage::disk('mcfs')->path("__globus_private_datasets/{$dataset->uuid}");
         }
 
-        return Storage::disk('mcfs')->path("__globus_published_datasets/{$dataset->uuid}");
+        return Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}");
     }
 
     private function isIncludedFile(DatasetFileSelection $datasetFileSelection, File $file)
