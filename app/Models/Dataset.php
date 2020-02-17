@@ -25,6 +25,9 @@ use Spatie\Tags\HasTags;
  * @property mixed entities
  * @property mixed activities
  * @property mixed workflows
+ * @property string $globus_acl_id
+ * @property string $globus_endpoint_id
+ * @property string $globus_path
  *
  * @mixin Builder
  */

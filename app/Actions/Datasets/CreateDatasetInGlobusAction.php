@@ -4,6 +4,7 @@ namespace App\Actions\Datasets;
 
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
+use App\Actions\Globus\GlobusUrl;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
@@ -112,6 +113,12 @@ class CreateDatasetInGlobusAction
         $globusPath = "/__globus_published_datasets/{$dataset->uuid}/";
         $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $this->endpointId,
             EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
-        $this->globusApi->addEndpointAclRule($endpointAclRule);
+        $aclId = $this->globusApi->addEndpointAclRule($endpointAclRule);
+        $dataset->update([
+            'globus_acl_id'      => $aclId,
+            'globus_endpoint_id' => $this->endpointId,
+            'globus_url'         => GlobusUrl::globusDownloadUrl($this->endpointId, $globusPath),
+            'globus_path'        => $globusPath,
+        ]);
     }
 }
