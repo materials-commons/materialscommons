@@ -1,7 +1,3 @@
-{{--<div class="embed-responsive embed-responsive-4by3">--}}
-{{--    <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.download', [$project, $file])}}">--}}
-{{--</div>--}}
-
 @if($fileExists())
     @switch($fileType)
         @case("image")
