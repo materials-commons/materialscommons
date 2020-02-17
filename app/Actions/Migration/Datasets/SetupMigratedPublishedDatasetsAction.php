@@ -32,7 +32,7 @@ class SetupMigratedPublishedDatasetsAction
         $existingZipfilePath = Storage::disk('mcfs')->path($zipfile);
         if (Storage::disk('mcfs')->exists($dataset->zipfilePathPartial())) {
             // No need to link old zipfile to new zipfile
-            echo "No need to link, zipfile already exists.";
+            echo "No need to link, zipfile already exists.\n";
             return;
         }
         $newZipfilePath = $dataset->zipfilePath();
