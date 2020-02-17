@@ -22,7 +22,7 @@ class SetupMigratedPublishedDatasetsAction
         $publishedDatasets->each(function (Dataset $dataset) {
             foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
                 $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
-                $this->setupGlobusAccessForDataset($dataset);
+//                $this->setupGlobusAccessForDataset($dataset);
             }
         });
     }
@@ -32,6 +32,7 @@ class SetupMigratedPublishedDatasetsAction
         $existingZipfilePath = Storage::disk('mcfs')->path($zipfile);
         if (Storage::disk('mcfs')->exists($dataset->zipfilePathPartial())) {
             // No need to link old zipfile to new zipfile
+            echo "No need to link, zipfile already exists.";
             return;
         }
         $newZipfilePath = $dataset->zipfilePath();
