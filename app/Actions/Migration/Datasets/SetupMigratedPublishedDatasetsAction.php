@@ -20,16 +20,22 @@ class SetupMigratedPublishedDatasetsAction
     {
         $publishedDatasets = Dataset::whereNotNull('published_at')->get();
         $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
-            foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
-                if ($runZipLinker) {
-                    echo "Running zipfile linker\n";
-                    $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
-                }
+            try {
+                foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
+                    if ($runZipLinker) {
+                        echo "Running zipfile linker\n";
+                        $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
+                    }
 
-                if ($runGlobus) {
-                    echo "Running globus\n";
-                    $this->setupGlobusAccessForDataset($dataset);
+                    if ($runGlobus) {
+                        echo "Running globus\n";
+                        $this->setupGlobusAccessForDataset($dataset);
+                    }
                 }
+            } catch (\Exception $e) {
+                echo "Failed on all files for dataset {$dataset->name}/{$dataset->uuid}\n";
+                $exceptionMessage = $e->getMessage();
+                echo "  Reason: {$exceptionMessage}\n";
             }
         });
     }
@@ -62,13 +68,14 @@ class SetupMigratedPublishedDatasetsAction
             $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $endpointId,
                 EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
             $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
-            print_r($resp);
-            $aclId = $resp["access_id"];
-            $dataset->update([
-                'globus_acl_id'      => $aclId,
-                'globus_endpoint_id' => $endpointId,
-                'globus_path'        => $globusPath,
-            ]);
+            if (isset($resp["access_id"])) {
+                $aclId = $resp["access_id"];
+                $dataset->update([
+                    'globus_acl_id'      => $aclId,
+                    'globus_endpoint_id' => $endpointId,
+                    'globus_path'        => $globusPath,
+                ]);
+            }
         } catch (\Exception $e) {
             echo "Unable to setup globus for dataset {$dataset->name}/{$dataset->uuid}\n";
             $exceptionMessage = $e->getMessage();
