@@ -1,4 +1,4 @@
-@if($fileExists())
+@if($fileExists)
     @switch($fileType)
         @case("image")
         <div class="col-lg-10">
