@@ -31,7 +31,6 @@ class SetupMigratedPublishedDatasetsActionTest extends TestCase
             'globus_path'        => $expectedGlobusPath,
         ]);
 
-        echo $dataset->zipfilePath();
         $this->assertFileExists($dataset->zipfilePath());
 
         StorageUtils::clearStorage();
