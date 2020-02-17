@@ -22,10 +22,12 @@ class SetupMigratedPublishedDatasetsAction
         $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
             foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
                 if ($runZipLinker) {
+                    echo "Running zipfile linker\n";
                     $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
                 }
 
                 if ($runGlobus) {
+                    echo "Running globus\n";
                     $this->setupGlobusAccessForDataset($dataset);
                 }
             }
@@ -60,6 +62,7 @@ class SetupMigratedPublishedDatasetsAction
             $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $endpointId,
                 EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
             $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
+            print_r($resp);
             $aclId = $resp["access_id"];
             $dataset->update([
                 'globus_acl_id'      => $aclId,
