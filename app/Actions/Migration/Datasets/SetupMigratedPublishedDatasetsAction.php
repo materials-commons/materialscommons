@@ -16,13 +16,18 @@ class SetupMigratedPublishedDatasetsAction
         $this->globusApi = $globusApi;
     }
 
-    public function __invoke()
+    public function __invoke($runZipLinker, $runGlobus)
     {
         $publishedDatasets = Dataset::whereNotNull('published_at')->get();
-        $publishedDatasets->each(function (Dataset $dataset) {
+        $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
             foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
-                $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
-//                $this->setupGlobusAccessForDataset($dataset);
+                if ($runZipLinker) {
+                    $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
+                }
+
+                if ($runGlobus) {
+                    $this->setupGlobusAccessForDataset($dataset);
+                }
             }
         });
     }

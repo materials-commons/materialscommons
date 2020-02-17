@@ -13,7 +13,7 @@ class SetupImportedDatasets extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:setup-imported-datasets';
+    protected $signature = 'mc:setup-imported-datasets {--globus : do not run globus} {--zip : do not run zip file linker}';
 
     /**
      * The console command description.
@@ -39,7 +39,9 @@ class SetupImportedDatasets extends Command
      */
     public function handle()
     {
-        $setupMigratedPublishedDatasetsAction = new SetupMigratedPublishedDatasetsAction(GlobusApi::createGlobusApi());
-        $setupMigratedPublishedDatasetsAction();
+        $runZipLinker = $this->option('--zip');
+        $runGlobus = $this->option('--globus');
+        $setupMigratedPublishedDatasetsAction = new SetupMigratedPublishedDatasetsAction(GlobusApi::createGlobusApiWithEcho());
+        $setupMigratedPublishedDatasetsAction($runZipLinker, $runGlobus);
     }
 }
