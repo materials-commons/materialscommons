@@ -4,7 +4,6 @@ namespace App\Actions\Datasets;
 
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
-use App\Actions\Globus\GlobusUrl;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
@@ -117,7 +116,6 @@ class CreateDatasetInGlobusAction
         $dataset->update([
             'globus_acl_id'      => $aclId,
             'globus_endpoint_id' => $this->endpointId,
-            'globus_url'         => GlobusUrl::globusDownloadUrl($this->endpointId, $globusPath),
             'globus_path'        => $globusPath,
         ]);
     }
