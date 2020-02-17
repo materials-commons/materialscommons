@@ -65,6 +65,7 @@ class SetupMigratedPublishedDatasetsAction
         $endpointId = config('globus.endpoint');
         try {
             $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
+            echo "Globus Path = {$globusPath}\n";
             $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $endpointId,
                 EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
             $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
