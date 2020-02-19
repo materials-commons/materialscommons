@@ -6,6 +6,8 @@
     @include('layouts.navs.public')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $dataset))
+
 @section('content')
     @component('components.card')
         @slot('header')

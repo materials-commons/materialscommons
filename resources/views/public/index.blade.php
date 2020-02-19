@@ -6,6 +6,8 @@
     @include('layouts.navs.public')
 @stop
 
+@section('breadcrumbs', Breadcrumbs::render('public.datasets.index'))
+
 @section('content')
     @component('components.card')
         @slot('header')
