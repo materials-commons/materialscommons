@@ -2,7 +2,7 @@
     @switch($fileType)
         @case("image")
         <div class="col-lg-10">
-            <img src="{{route('projects.files.download', [$project, $file])}}" class="img-fluid">
+            <img src="{{route('public.datasets.files.display', [$dataset, $file])}}" class="img-fluid">
         </div>
         @break
 
