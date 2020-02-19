@@ -24,13 +24,13 @@ class CreateDatasetZipfileAction
             $dataset->files()->detach();
         }
 
-        $datasetDir = Storage::disk('mcfs')->path("__datasets/{$dataset->uuid}");
+        $datasetDir = $dataset->zipfileDir();
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0700, true);
         }
 
         $zip = new ZipArchive();
-        $zipfile = "{$datasetDir}/{$dataset->name}.zip";
+        $zipfile = $dataset->zipfilePath();
         $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
         $zip->open($zipfile, ZipArchive::CREATE) or die("Could not open archive");
 

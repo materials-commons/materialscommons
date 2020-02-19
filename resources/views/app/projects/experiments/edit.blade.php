@@ -34,7 +34,7 @@
                         Cancel
                     </a>
                     <a class="action-link" onclick="document.getElementById('edit-experiment').submit()" href="#">
-                        Submit Changes
+                        Save
                     </a>
                 </div>
             </form>

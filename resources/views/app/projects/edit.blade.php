@@ -44,7 +44,7 @@
                     </a>
 
                     <a class="action-link" onclick="document.getElementById('edit-project').submit()" href="#">
-                        Submit Changes
+                        Save
                     </a>
                 </div>
             </form>

@@ -17,6 +17,10 @@
             project: "{{$project->id}}",
             file: "{{$directory->id}}"
         }).url();
+        let folderUrl = route('projects.folders.show', {
+            project: "{{$project->id}}",
+            folder: "{{$directory->id}}",
+        }).url();
         const uppy = Uppy()
             .use(UppyDashboard, {
                 trigger: '#file-upload',
@@ -31,7 +35,7 @@
         });
 
         uppy.on('complete', (result) => {
-            setTimeout(() => window.history.go(-1), 1000);
+            setTimeout(() => window.location.replace(folderUrl), 1000);
         });
     </script>
 @endpush

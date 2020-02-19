@@ -16,7 +16,7 @@
             Processes
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Files</a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link" href="#">Files</a>--}}
+    {{--    </li>--}}
 </ul>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
@@ -24,6 +25,9 @@ use Spatie\Tags\HasTags;
  * @property mixed entities
  * @property mixed activities
  * @property mixed workflows
+ * @property string $globus_acl_id
+ * @property string $globus_endpoint_id
+ * @property string $globus_path
  *
  * @mixin Builder
  */
@@ -114,6 +118,11 @@ class Dataset extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->zipfilePathPartial());
     }
 
+    public function zipfileDir()
+    {
+        return Storage::disk('mcfs')->path($this->zipfileDirPartial());
+    }
+
     public function publishedGlobusPath()
     {
         return Storage::disk('mcfs')->path($this->publishedGlobusPathPartial());
@@ -126,21 +135,22 @@ class Dataset extends Model implements Searchable
 
     public function publishedGlobusPathPartial()
     {
-        return "__globus_published_datasets/{$this->uuid}";
+        return "__published_datasets/{$this->uuid}";
     }
 
     public function zipfilePathPartial()
     {
-        return "__datasets/{$this->uuid}/{$this->name}.zip";
+        $dsNameSlug = Str::slug($this->name);
+        return "zipfiles/{$this->uuid}/{$dsNameSlug}.zip";
     }
 
     public function zipfileDirPartial()
     {
-        return "__datasets/{$this->uuid}";
+        return "zipfiles/{$this->uuid}";
     }
 
     public function privateGlobusPathPartial()
     {
-        return "__globus_published_datasets/{$this->uuid}";
+        return "__datasets/{$this->uuid}";
     }
 }

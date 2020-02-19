@@ -4,6 +4,7 @@ namespace App\Actions\Globus;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class GlobusApi
 {
@@ -27,7 +28,26 @@ class GlobusApi
         $ccUser = config('globus.cc_user');
         $ccPassword = config('globus.cc_token');
         $globusApi = new GlobusApi($ccUser, $ccPassword);
-        $globusApi->authenticate();
+        try {
+            $globusApi->authenticate();
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            Log::error("Failed authenticating to globus ${msg}");
+        }
+        return $globusApi;
+    }
+
+    public static function createGlobusApiWithEcho()
+    {
+        $ccUser = config('globus.cc_user');
+        $ccPassword = config('globus.cc_token');
+        $globusApi = new GlobusApi($ccUser, $ccPassword);
+        try {
+            $globusApi->authenticate();
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "Failed authenticating to globus ${msg}\n";
+        }
         return $globusApi;
     }
 

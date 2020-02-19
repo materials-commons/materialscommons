@@ -115,7 +115,7 @@
             </ul>
         @else
             <form method="post"
-                  action=""
+                  action="{{route('public.search')}}"
                   class="mx-2 my-auto d-inline w-75">
                 @csrf
                 <input type="text"
@@ -166,6 +166,9 @@
 {{--@livewireAssets--}}
 <script>
     $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+    $(document).ready(() => {
+        mcutil.autosizeTextareas();
+    });
 </script>
 @stack('scripts')
 </body>

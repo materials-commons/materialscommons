@@ -27,6 +27,13 @@
                 </div>
 
                 <div class="form-group">
+                    <p>
+                        Materials Commons can <b>optionally</b> import a spreadsheet to create your experiment. This
+                        will set up the
+                        processes, samples and files. To see the format for the spreadsheet please read the
+                        documentation
+                        on <a href="{{makeHelpUrl("spreadsheets")}}" target="_blank">spreadsheets.</a>
+                    </p>
                     @if ($excelFiles->count() !== 0)
                         <label for="file_id">Spreadsheet to import</label>
                         <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"

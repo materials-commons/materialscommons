@@ -61,7 +61,7 @@ class CreateDatasetInGlobusAction
             return Storage::disk('mcfs')->path("__globus_private_datasets/{$dataset->uuid}");
         }
 
-        return Storage::disk('mcfs')->path("__globus_published_datasets/{$dataset->uuid}");
+        return Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}");
     }
 
     private function isIncludedFile(DatasetFileSelection $datasetFileSelection, File $file)
@@ -109,9 +109,14 @@ class CreateDatasetInGlobusAction
 
     private function setPublishedDatasetAcl(Dataset $dataset)
     {
-        $globusPath = "/__globus_published_datasets/{$dataset->uuid}/";
+        $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
         $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $this->endpointId,
             EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
-        $this->globusApi->addEndpointAclRule($endpointAclRule);
+        $aclId = $this->globusApi->addEndpointAclRule($endpointAclRule);
+        $dataset->update([
+            'globus_acl_id'      => $aclId,
+            'globus_endpoint_id' => $this->endpointId,
+            'globus_path'        => $globusPath,
+        ]);
     }
 }
