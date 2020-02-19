@@ -12,6 +12,6 @@ class ShowPublishedFileWebController extends Controller
     public function __invoke(Dataset $dataset, File $file)
     {
         $viewModel = new ShowFileViewModel($file, null, $dataset);
-        return view('app.files.show', $viewModel);
+        return view('public.datasets.files.show', $viewModel);
     }
 }

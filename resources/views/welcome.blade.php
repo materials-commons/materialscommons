@@ -138,8 +138,12 @@
         </li>
 
         <li class="md:ml-4">
-            Built with <a href="http://jigsaw.tighten.co" title="Jigsaw by Tighten">Jigsaw</a>
-            and <a href="https://tailwindcss.com" title="Tailwind CSS, a utility-first CSS framework">Tailwind CSS</a>.
+            The Materials Commons is supported by the U.S. Department of Energy, Office of Basic Energy Sciences,
+            Division of Materials Sciences and Engineering under Award #DE-SC0008637 as part of the Center for
+            PRedictive
+            Integrated Structural Materials Science (PRISMS Center) at University of Michigan.
+            {{--            Built with <a href="http://jigsaw.tighten.co" title="Jigsaw by Tighten">Jigsaw</a>--}}
+            {{--            and <a href="https://tailwindcss.com" title="Tailwind CSS, a utility-first CSS framework">Tailwind CSS</a>.--}}
         </li>
     </ul>
 </footer>

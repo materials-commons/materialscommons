@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesW
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
+use App\Http\Controllers\Web\Published\Files\DisplayPublishedFileWebController;
 use App\Http\Controllers\Web\Published\Files\ShowPublishedFileWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,8 +42,11 @@ Route::get('/datasets/{dataset}/communities', ShowPublishedDatasetCommunitiesWeb
      ->name('datasets.communities.index');
 
 // Published file
-ROute::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)
+Route::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)
      ->name('datasets.files.show');
+
+Route::get('/datasets/{dataset}/files/{file}/display', DisplayPublishedFileWebController::class)
+     ->name('datasets.files.display');
 
 
 // Datatables
