@@ -1,1 +1,0 @@
-@include('partials.attributes_table', ['attributes' => $attributes])
