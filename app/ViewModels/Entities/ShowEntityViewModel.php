@@ -16,12 +16,12 @@ class ShowEntityViewModel extends ViewModel
      */
     private $experiment;
 
-    private $attributes;
-
     /**
      * @var \App\Models\Entity
      */
     private $entity;
+
+    private $attributes;
 
     public function __construct($project, $entity)
     {

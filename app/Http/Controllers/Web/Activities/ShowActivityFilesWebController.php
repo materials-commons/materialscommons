@@ -6,22 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Experiment;
 use App\Models\Project;
+use App\ViewModels\Activities\ShowActivityViewModel;
 use Illuminate\Http\Request;
 
 class ShowActivityFilesWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        $experimentId = $request->route('experiment');
-        $experiment   = null;
-
         $activityId = $request->route('activity');
-        $activity   = Activity::with('files')->where('id', $activityId)->first();
+        $activity = Activity::with('files')->where('id', $activityId)->first();
+        $showActivityViewModel = new ShowActivityViewModel($project, $activity);
 
+        $experimentId = $request->route('experiment');
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);
+            $showActivityViewModel->setExperiment($experiment);
+            return view('app.projects.experiments.processes.show', $showActivityViewModel);
         }
 
-        return view('app.activities.show', compact('project', 'activity', 'experiment'));
+        return view('app.projects.activities.show', $showActivityViewModel);
     }
 }

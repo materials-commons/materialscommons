@@ -1,0 +1,1 @@
+@include('partials.attributes_table', ['attributes' => $activity->attributes])
