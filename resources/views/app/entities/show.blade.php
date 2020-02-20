@@ -30,7 +30,7 @@
             @endcomponent
 
             <hr>
-
+            <br>
             <br>
             @if (Request::routeIs('projects.experiments.entities*'))
                 @include('app.entities.tabs.tabs', [
