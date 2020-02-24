@@ -15,14 +15,16 @@
                 <span>
                     <small>{{$comment->owner->name}}</small>
                     <small class="ml-2">Last Updated: {{$comment->updated_at->diffForHumans()}}</small>
-                    @if ($user->id === $comment->owner->id)
-                        <small class="ml-2">
+                    @auth
+                        @if ($user->id === $comment->owner->id)
+                            <small class="ml-2">
                             <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}">edit</a>
                         </small>
-                        <small class="ml-2">
+                            <small class="ml-2">
                             <a href="{{route('public.datasets.comments.delete', [$dataset, $comment])}}">delete</a>
                         </small>
-                    @endif
+                        @endif
+                    @endauth
                 </span>
             </div>
         </form>
