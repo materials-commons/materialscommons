@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 class ClientIPAddress
 {
     private static $HTTP_HEADERS = [
