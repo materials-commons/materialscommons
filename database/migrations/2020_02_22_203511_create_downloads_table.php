@@ -15,6 +15,9 @@ class CreateDownloadsTable extends Migration
     {
         Schema::create('downloads', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->unique();
+            $table->string('ip_address');
+            $table->morphs('downloadable');
             $table->timestamps();
         });
     }

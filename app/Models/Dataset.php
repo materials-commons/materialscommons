@@ -98,6 +98,16 @@ class Dataset extends Model implements Searchable
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function views()
+    {
+        return $this->morphMany(View::class, 'viewable');
+    }
+
+    public function downloads()
+    {
+        return $this->morphMany(Download::class, 'downloadable');
+    }
+
     public function getTypeAttribute()
     {
         return "dataset";

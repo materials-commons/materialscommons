@@ -15,8 +15,9 @@ class CreateViewsTable extends Migration
     {
         Schema::create('views', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->morphs("");
+            $table->uuid('uuid')->unique();
+            $table->string('ip_address');
+            $table->morphs('viewable');
             $table->timestamps();
         });
     }
