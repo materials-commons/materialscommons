@@ -9,7 +9,7 @@ class ShowPublishedDatasetWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        $dataset = Dataset::with('workflows')->findOrFail($datasetId);
+        $dataset = Dataset::with('workflows')->withCount(['views', 'downloads'])->findOrFail($datasetId);
         // Datatables does case-insensitive sorting. The database is returning case sensitive, so
         // create a case insensitive list of the workflow items
         $workflows = $dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);

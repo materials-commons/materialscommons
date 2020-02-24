@@ -32,6 +32,9 @@
                     @endisset
                 </span>
 
+                <span class="ml-4">Views: {{$dataset->views_count}}</span>
+                <span class="ml-4">Downloads: {{$dataset->downloads_count}}</span>
+
                 @slot('bottom')
                     <div class="form-group">
                         <label for="doi">DOI</label>
