@@ -20,7 +20,7 @@ class CreateDownloadsTable extends Migration
             $table->morphs('downloadable');
             $table->timestamps();
 
-            $table->index(['downloadable_type', 'downloadable_id', 'who']);
+            $table->unique(['downloadable_type', 'downloadable_id', 'who']);
         });
     }
 

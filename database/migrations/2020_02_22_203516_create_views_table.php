@@ -20,7 +20,7 @@ class CreateViewsTable extends Migration
             $table->morphs('viewable');
             $table->timestamps();
 
-            $table->index(['viewable_type', 'viewable_id', 'who']);
+            $table->unique(['viewable_type', 'viewable_id', 'who']);
         });
     }
 
