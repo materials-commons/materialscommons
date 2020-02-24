@@ -7,8 +7,11 @@ use App\Models\Dataset;
 
 class DownloadDatasetZipfileWebController extends Controller
 {
+    use ViewsAndDownloads;
+
     public function __invoke(Dataset $dataset)
     {
+        $this->incrementDownloads($dataset->id);
         return response()->download($dataset->zipfilePath());
     }
 }

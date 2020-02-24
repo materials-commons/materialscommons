@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Request;
+
 class ClientIPAddress
 {
     private static $HTTP_HEADERS = [
@@ -14,19 +16,20 @@ class ClientIPAddress
         'REMOTE_ADDR',
     ];
 
-    public function getClientIp()
+    public static function getClientIp()
     {
         foreach (static::$HTTP_HEADERS as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip); // just to be safe
-                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                    if (filter_var($ip, FILTER_VALIDATE_IP,
+                            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
                         return $ip;
                     }
                 }
             }
         }
 
-        return null;
+        return Request::ip();
     }
 }

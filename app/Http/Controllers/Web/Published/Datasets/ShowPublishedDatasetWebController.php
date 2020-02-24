@@ -7,9 +7,13 @@ use App\Models\Dataset;
 
 class ShowPublishedDatasetWebController extends Controller
 {
+    use ViewsAndDownloads;
+
     public function __invoke($datasetId)
     {
+        $this->incrementViews($datasetId);
         $dataset = Dataset::with('workflows')->withCount(['views', 'downloads'])->findOrFail($datasetId);
+
         // Datatables does case-insensitive sorting. The database is returning case sensitive, so
         // create a case insensitive list of the workflow items
         $workflows = $dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
