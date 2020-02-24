@@ -16,9 +16,11 @@ class CreateViewsTable extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
-            $table->string('ip_address');
+            $table->string('who')->index();
             $table->morphs('viewable');
             $table->timestamps();
+
+            $table->index(['viewable_type', 'viewable_id', 'who']);
         });
     }
 
