@@ -24,7 +24,7 @@ class CreateCommentsTable extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
-            $table->morphs('commentable');
+            $table->nullableMorphs('commentable');
             $table->timestamps();
         });
     }
