@@ -26,6 +26,7 @@ class MigrateRethinkdbDataAction
         ['properties.json' => ImportEntityStateAttributes::class],
         ['measurements.json' => ImportEntityStateAttributeValues::class],
         ['datasets.json' => ImportDatasets::class],
+        ['views.json' => ImportDatasetViews::class],
     ];
 
     private $pathToDumpFiles;
@@ -49,7 +50,12 @@ class MigrateRethinkdbDataAction
                 continue;
             }
             $importerClass = $dumpFile[$file];
-            $importer = new $importerClass($this->pathToDumpFiles, $this->ignoreExisting);
+            $pathToDumpFiles = $this->pathToDumpFiles;
+            if ($importerClass == ImportDatasetViews::class) {
+                $pathToDumpFiles = $this->pathToDumpFiles."/../mcpub";
+            }
+
+            $importer = new $importerClass($pathToDumpFiles, $this->ignoreExisting);
 
             if ($file == "projects.json") {
                 $importer->setProjectsToIgnore($projectsToIgnore);
