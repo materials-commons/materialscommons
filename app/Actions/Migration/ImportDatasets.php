@@ -3,6 +3,7 @@
 namespace App\Actions\Migration;
 
 use App\Models\Dataset;
+use App\Models\Download;
 use App\Models\File;
 use Illuminate\Support\Carbon;
 
@@ -92,6 +93,10 @@ class ImportDatasets extends AbstractImporter
 
         if (isset($data['keywords'])) {
             $ds->attachTags($data['keywords']);
+        }
+
+        if (isset($data['download_count'])) {
+            $this->addDownloads($ds, $data['download_count']);
         }
 
         return $ds;
@@ -215,6 +220,17 @@ class ImportDatasets extends AbstractImporter
         }
 
         return $convertedEntries;
+    }
+
+    private function addDownloads(Dataset $ds, $count)
+    {
+        for ($i = 0; $i < $count; $i++) {
+            Download::create([
+                'who'               => "unknown_{$count}",
+                'downloadable_type' => Dataset::class,
+                'downloadable_id'   => $ds->id,
+            ]);
+        }
     }
 
     private function getDatasetActivities($uuid)
