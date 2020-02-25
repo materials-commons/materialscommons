@@ -70,9 +70,9 @@ class RegisterController extends Controller
     {
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == '') {
-            return 'something here';
+            return route('projects.index');
         }
 
-        return '/app/projects';
+        return 'something here';
     }
 }
