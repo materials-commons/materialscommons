@@ -9,7 +9,7 @@ class ShowPublishedDatasetEntitiesWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        $dataset = Dataset::with('entities')->findOrFail($datasetId);
+        $dataset = Dataset::with('entities')->withCount(['views', 'downloads'])->findOrFail($datasetId);
 
         return view('public.datasets.show', compact('dataset'));
     }

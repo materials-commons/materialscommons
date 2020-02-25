@@ -130,9 +130,19 @@ Breadcrumbs::for('public.datasets.activities.index', function ($trail, $dataset)
     $trail->push('Processes', route('public.datasets.activities.index', [$dataset]));
 });
 
+Breadcrumbs::for('public.datasets.activities.show', function ($trail, $dataset, $activity) {
+    $trail->parent('public.datasets.activities.index', $dataset);
+    $trail->push($activity->name, route('public.datasets.activities.show', [$dataset, $activity]));
+});
+
 Breadcrumbs::for('public.datasets.entities.index', function ($trail, $dataset) {
     $trail->parent('public.datasets.show', $dataset);
     $trail->push('Samples', route('public.datasets.entities.index', [$dataset]));
+});
+
+Breadcrumbs::for('public.datasets.entities.show', function ($trail, $dataset, $entity) {
+    $trail->parent('public.datasets.entities.index', $dataset);
+    $trail->push($entity->name, route('public.datasets.entities.show', [$dataset, $entity]));
 });
 
 Breadcrumbs::for('public.datasets.communities.index', function ($trail, $dataset) {

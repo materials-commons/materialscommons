@@ -9,7 +9,7 @@ class ShowPublishedDatasetCommentsWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        $dataset = Dataset::with(['comments.owner'])->findOrFail($datasetId);
+        $dataset = Dataset::with(['comments.owner'])->withCount(['views', 'downloads'])->findOrFail($datasetId);
         $user = auth()->user();
 
         return view('public.datasets.show', compact('dataset', 'user'));

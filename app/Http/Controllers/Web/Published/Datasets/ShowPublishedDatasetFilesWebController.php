@@ -7,8 +7,9 @@ use App\Models\Dataset;
 
 class ShowPublishedDatasetFilesWebController extends Controller
 {
-    public function __invoke(Dataset $dataset)
+    public function __invoke($datasetId)
     {
+        $dataset = Dataset::withCount(['views', 'downloads'])->findOrFail($datasetId);
         return view('public.datasets.show', compact('dataset'));
     }
 }

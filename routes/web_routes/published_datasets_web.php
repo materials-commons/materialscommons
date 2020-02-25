@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Published\Datasets\Activities\ShowPublishedDatasetActivityWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\CreateDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DeleteDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DestroyDatasetCommentWebController;
@@ -9,7 +10,9 @@ use App\Http\Controllers\Web\Published\Datasets\Comments\UpdateDatasetCommentWeb
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetActivitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatatableWebController;
+use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
+use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
@@ -26,6 +29,9 @@ Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
 Route::get('/datasets/{dataset}/zipfile', DownloadDatasetZipfileWebController::class)
      ->name('datasets.download_zipfile');
 
+Route::get('/datasets/{dataset}/globus', DownloadDatasetGlobusRedirectWebController::class)
+     ->name('datasets.download_globus');
+
 Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)
      ->name('datasets.entities.index');
 
@@ -40,6 +46,16 @@ Route::get('/datasets/{dataset}/comments', ShowPublishedDatasetCommentsWebContro
 
 Route::get('/datasets/{dataset}/communities', ShowPublishedDatasetCommunitiesWebController::class)
      ->name('datasets.communities.index');
+
+// Entity
+
+Route::get('/datasets/{dataset}/entities/{entity}', ShowPublishedDatasetEntityWebController::class)
+     ->name('datasets.entities.show');
+
+// Activity
+
+Route::get('/datasets/{dataset}/activities/{activity}', ShowPublishedDatasetActivityWebController::class)
+     ->name('datasets.activities.show');
 
 // Published file
 Route::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)
