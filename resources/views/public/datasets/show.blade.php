@@ -45,19 +45,24 @@
                         <input class="form-control" id="license" type="text" value="{{$dataset->license}}" readonly>
                     </div>
 
-                    <div class="form-group">
-                        @if(file_exists($dataset->zipfilePath()))
-                            <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">Download Dataset
-                                Zipfile</a>
-                        @endif
+                    @if(file_exists($dataset->zipfilePath()) || file_exists($dataset->publishedGlobusPath()))
+                        <div class="form-group">
+                            <label>Download Files</label>
+                            <div class="row ml-2">
+                                @if(file_exists($dataset->zipfilePath()))
+                                    <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">Download Dataset
+                                        Zipfile</a>
+                                @endif
 
-                        @if(file_exists($dataset->publishedGlobusPath()))
-                            <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-4"
-                               target="_blank">
-                                Download Using Globus
-                            </a>
-                        @endif
-                    </div>
+                                @if(file_exists($dataset->publishedGlobusPath()))
+                                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-4"
+                                       target="_blank">
+                                        Download Using Globus
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
                 @endslot
             @endcomponent
 
