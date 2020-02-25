@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Published\Datasets\Activities\ShowPublishedDatasetActivityWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\CreateDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DeleteDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DestroyDatasetCommentWebController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDat
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
+use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
@@ -44,6 +46,16 @@ Route::get('/datasets/{dataset}/comments', ShowPublishedDatasetCommentsWebContro
 
 Route::get('/datasets/{dataset}/communities', ShowPublishedDatasetCommunitiesWebController::class)
      ->name('datasets.communities.index');
+
+// Entity
+
+Route::get('/datasets/{dataset}/entities/{entity}', ShowPublishedDatasetEntityWebController::class)
+     ->name('datasets.entities.show');
+
+// Activity
+
+Route::get('/datasets/{dataset}/activities/{activity}', ShowPublishedDatasetActivityWebController::class)
+     ->name('datasets.activities.show');
 
 // Published file
 Route::get('/datasets/{dataset}/files/{file}', ShowPublishedFileWebController::class)

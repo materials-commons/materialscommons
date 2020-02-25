@@ -8,7 +8,7 @@
     @foreach($dataset->activities as $activity)
         <tr>
             <td>
-                <a href="#">{{$activity->name}}</a>
+                <a href="{{route('public.datasets.activities.show', [$dataset, $activity])}}">{{$activity->name}}</a>
             </td>
             <td>{{$activity->description}}</td>
             <td>{{$activity->updated_at->diffForHumans()}}</td>
