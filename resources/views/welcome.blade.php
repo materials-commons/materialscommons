@@ -43,15 +43,23 @@
             </a>
         </div>
 
+
         <div class="flex flex-1 justify-end items-center text-right md:pl-10">
-            <a href="{{route('login')}}"
-               class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
-                Login
-            </a>
-            <a href="{{route('register')}}"
-               class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
-                Register
-            </a>
+            @auth
+                <a href="{{route('projects.index')}}"
+                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                    {{auth()->user()->email}}
+                </a>
+            @else
+                <a href="{{route('login')}}"
+                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                    Login
+                </a>
+                <a href="{{route('register')}}"
+                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                    Register
+                </a>
+            @endauth
         </div>
     </div>
 
@@ -72,17 +80,26 @@
 
                 <div class="flex my-10">
 
-                    <a href="{{route('public.index')}}" title="About Materials Commons"
+
+                    <a href="{{makeHelpUrl("getting-started")}}" title="About Materials Commons"
+                       title="Materials Commons getting started"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Getting Started
                     </a>
 
-                    <a href="{{route('public.index')}}" title="About Materials Commons"
-                       class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
-                        Upload and Publish Data
-                    </a>
+                    @auth
+                        <a href="{{route('public.publish.wizard.select_project')}}" title="Publish data"
+                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                            Upload and Publish Data
+                        </a>
+                    @else
+                        <a href="{{route('public.publish.wizard.select_project')}}" title="Publish data"
+                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                            Upload and Publish Data
+                        </a>
+                    @endauth
 
-                    <a href="{{makeHelpUrl("getting-started")}}" title="Materials Commons getting started"
+                    <a href="{{route('public.index')}}" title="Browse published data"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Browse Published Data
                     </a>
@@ -139,20 +156,15 @@
 @stack('scripts')
 
 <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
-    <ul class="flex flex-col md:flex-row justify-center">
-        <li class="md:mr-2">
-            &copy; <a href="https://prisms-center.org" title="PRISMS Website">PRISMS Center</a> {{ date('Y') }}.
-        </li>
-
-        <li class="md:ml-4">
+    <div class="flex flex-col md:flex-row justify-center">
+        <span class="md:ml-4">
             The Materials Commons is supported by the U.S. Department of Energy, Office of Basic Energy Sciences,
-            Division of Materials Sciences and Engineering under Award #DE-SC0008637 as part of the Center for
-            PRedictive
-            Integrated Structural Materials Science (PRISMS Center) at University of Michigan.
-            {{--            Built with <a href="http://jigsaw.tighten.co" title="Jigsaw by Tighten">Jigsaw</a>--}}
-            {{--            and <a href="https://tailwindcss.com" title="Tailwind CSS, a utility-first CSS framework">Tailwind CSS</a>.--}}
-        </li>
-    </ul>
+            Division of Materials Sciences and Engineering under Award #DE-SC0008637 as part of the
+            <a href="http://www.prisms-center.org" target="_blank">
+                Center for PRedictive Integrated Structural Materials Science (PRISMS Center)
+            </a> at the University of Michigan.
+        </span>
+    </div>
 </footer>
 </body>
 </html>

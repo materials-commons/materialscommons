@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -23,13 +24,6 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/app/projects';
 
     /**
      * Create a new controller instance.
@@ -70,5 +64,15 @@ class RegisterController extends Controller
             'password'  => Hash::make($data['password']),
             'api_token' => Str::random(60),
         ]);
+    }
+
+    public function redirectTo()
+    {
+        $routeName = Route::getCurrentRoute()->getName();
+        if ($routeName == '') {
+            return 'something here';
+        }
+
+        return '/app/projects';
     }
 }

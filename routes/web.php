@@ -44,6 +44,8 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+//Route::get('')
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home2', function () {
     return view('home2');
@@ -70,6 +72,7 @@ Route::prefix('public')->group(function () {
 
         require base_path('routes/web_routes/published_datasets_web.php');
         require base_path('routes/web_routes/published_communities_web.php');
+        require base_path('routes/web_routes/publish_dataset_wizard_web.php');
     });
 });
 
