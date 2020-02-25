@@ -52,8 +52,8 @@
                         @endif
 
                         @if(file_exists($dataset->publishedGlobusPath()))
-                            <a href="{{App\Actions\Globus\GlobusUrl::globusDownloadUrl(config('globus.endpoint'), "/__published_datasets/{$dataset->uuid}/")}}"
-                               class="ml-4" target="_blank">
+                            <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-4"
+                               target="_blank">
                                 Download Using Globus
                             </a>
                         @endif
