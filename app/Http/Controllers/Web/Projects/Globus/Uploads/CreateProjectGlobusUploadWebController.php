@@ -11,6 +11,10 @@ class CreateProjectGlobusUploadWebController extends Controller
     {
         $user = auth()->user();
 
+        if (!isset($user->globus_user)) {
+            return redirect(route('projects.globus.uploads.edit_account', [$project]));
+        }
+
         return view('app.projects.globus.uploads.create', compact('project', 'user'));
     }
 }

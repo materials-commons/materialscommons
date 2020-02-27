@@ -14,11 +14,13 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebCon
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DestroyGlobusUploadWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\EditGlobusAccountForUploadsWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\IndexProjectGlobusUploadsWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\MarkGlobusUploadAsCompleteWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowGlobusUploadToMarkAsCompleteWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\StoreGlobusUploadToProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\Uploads\UpdateGlobusAccountForUploadsWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
@@ -69,6 +71,12 @@ Route::post('/projects/{project}/globus/uploads', StoreGlobusUploadToProjectWebC
 
 Route::get('/projects/{project}/globus/uploads/create', CreateProjectGlobusUploadWebController::class)
      ->name('projects.globus.uploads.create');
+
+Route::get('/projects/{project}/globus/uploads/account/edit', EditGlobusAccountForUploadsWebController::class)
+     ->name('projects.globus.uploads.edit_account');
+
+Route::post('/projects/{project}/globus/uploads/account/update', UpdateGlobusAccountForUploadsWebController::class)
+     ->name('projects.globus.uploads.update_account');
 
 Route::get('/projects/{project}/globus/uploads/{globusUpload}/delete', DeleteGlobusUploadWebController::class)
      ->name('projects.globus.uploads.delete');
