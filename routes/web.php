@@ -39,6 +39,13 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+
+Route::get('login-for-upload', [LoginController::class, 'showLoginForm'])->name('login-for-upload');
+Route::post('login-for-upload', [LoginController::class, 'login'])->name('login-for-upload');
+
+Route::get('register-for-upload', [RegisterController::class, 'showRegistrationForm'])->name('register-for-upload');
+Route::post('register-for-upload', [RegisterController::class, 'register'])->name('register-for-upload');
+
 Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');

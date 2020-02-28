@@ -69,10 +69,10 @@ class RegisterController extends Controller
     public function redirectTo()
     {
         $routeName = Route::getCurrentRoute()->getName();
-        if ($routeName == '') {
-            return route('projects.index');
+        if ($routeName == 'register-for-upload') {
+            return route('public.publish.wizard.select_project');
         }
 
-        return 'something here';
+        return route('projects.index');
     }
 }

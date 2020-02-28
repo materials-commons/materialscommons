@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
@@ -36,11 +35,10 @@ class LoginController extends Controller
     public function redirectTo()
     {
         $routeName = Route::getCurrentRoute()->getName();
-        Log::info("routeName {$routeName}");
-        if ($routeName == '') {
-            return route('projects.index');
+        if ($routeName == 'login-for-upload') {
+            return route('public.publish.wizard.select_project');
         }
 
-        return 'something here';
+        return route('projects.index');
     }
 }
