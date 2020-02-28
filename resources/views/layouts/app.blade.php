@@ -157,7 +157,8 @@
                 <iframe src="{{helpUrl()}}" width="100%" height="100%"></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Done</button>
+                <a class="btn btn-secondary" href="{{helpGettingStarted()}}" target="_blank">Goto Docs</a>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
         </div>
     </div>
