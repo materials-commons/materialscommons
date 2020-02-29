@@ -37,9 +37,9 @@
 
                 <div class="form-group">
                     <label for="doi">DOI</label>
-                    <span class="col-6">
-                            (None)
-                            <a href="#" onclick="changeActionAndSubmit()" class="ml-6 pl-6">
+                    <span class="col-8">
+                            None
+                            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
                                 Assign DOI
                             </a>
                         </span>
