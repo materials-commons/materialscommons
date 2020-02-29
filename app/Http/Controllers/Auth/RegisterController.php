@@ -70,7 +70,7 @@ class RegisterController extends Controller
     {
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'register-for-upload') {
-            return route('public.publish.wizard.select_project');
+            return route('public.publish.wizard.dataset_details');
         }
 
         return route('projects.index');

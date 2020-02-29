@@ -92,8 +92,13 @@
                         Cancel
                     </a>
 
-                    <a class="action-link mr-3" href="#" id="add-assets-button"
-                       onclick="setActionAndSubmit('assets')">
+                    {{--                    <a class="action-link mr-3" href="#" id="add-assets-button"--}}
+                    {{--                       onclick="setActionAndSubmit('assets')">--}}
+                    {{--                        Save And Add Files--}}
+                    {{--                    </a>--}}
+
+                    <a class="action-link mr-3" href="{{route('public.publish.wizard.upload_files')}}"
+                       id="add-assets-button">
                         Save And Add Files
                     </a>
                 </div>
