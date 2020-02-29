@@ -10,7 +10,8 @@ class SelectProjectStepWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $projects = Project::all();
+        $user = auth()->user();
+        $projects = Project::where('owner_id', $user->id)->get();
         return view('app.publish.wizard.select_project', compact('projects'));
     }
 }
