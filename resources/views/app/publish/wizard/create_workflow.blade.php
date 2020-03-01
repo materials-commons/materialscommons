@@ -19,7 +19,9 @@
                 publish your workflow and add it at a later time.
             </p>
             @include('partials.workflows.create', [
+                'saveButtonName' => "Save And Next",
                 'storeRoute' => route('projects.workflows.store', [$project]),
+                'cancelButtonName' => "Skip",
                 'cancelRoute' => route('projects.workflows.index', [$project]),
             ])
         @endslot

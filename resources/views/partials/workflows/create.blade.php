@@ -18,9 +18,11 @@
     </div>
 
     <div class="float-right">
+        <button type="button" onclick="cancel()" class="btn btn-warning">
+            {{isset($cancelButtonName) ? $cancelButtonName : "Cancel"}}
+        </button>
         <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>
-        <button class="btn btn-success">Save</button>
-        <button type="button" onclick="cancel()" class="btn btn-warning">Cancel</button>
+        <button class="btn btn-success">{{isset($saveButtonName) ? $saveButtonName : "Save"}}</button>
     </div>
 </form>
 <div id="workflowcanvas"></div>
