@@ -25,3 +25,11 @@
         @endslot
     @endcomponent
 @stop
+
+@push('scripts')
+    <script>
+        $(document).ready(() => {
+            drawWorkflow();
+        });
+    </script>
+@endpush

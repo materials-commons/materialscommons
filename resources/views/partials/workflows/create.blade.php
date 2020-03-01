@@ -14,7 +14,7 @@
     <div class="form-group">
         <label for="workflowcode">Workflow</label>
         <textarea class="form-control" id="workflowcode" name="workflow"
-                  placeholder="Workflow..."></textarea>
+                  placeholder="Workflow...">{{isset($workflowcode) ? $workflowcode : ''}}</textarea>
     </div>
 
     <div class="float-right">

@@ -13,6 +13,7 @@ class CreateWorkflowStepWebController extends Controller
         $user = auth()->user();
         $project = Project::where('name', 'Published Datasets Project')
                           ->where('owner_id', $user->id)->first();
-        return view('app.publish.wizard.create_workflow', compact('project'));
+        $workflowcode = "Heat Treat?(yes, right)->Heat Treat 4h/200c(right)->SEM(right)->Analyze\nHeat Treat?(no)->SEM->Analyze";
+        return view('app.publish.wizard.create_workflow', compact('project', 'workflowcode'));
     }
 }
