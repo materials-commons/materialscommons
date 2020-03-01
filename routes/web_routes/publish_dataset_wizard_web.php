@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\PublishWizard\CreateWorkflowStepWebController;
 use App\Http\Controllers\Web\PublishWizard\DatasetDetailsStepWebController;
 use App\Http\Controllers\Web\PublishWizard\SelectProjectStepWebController;
 use App\Http\Controllers\Web\PublishWizard\UploadFilesStepWebController;
@@ -13,4 +14,7 @@ Route::get('/publish/wizard/upload_files', UploadFilesStepWebController::class)
 
 Route::get('/publish/wizard/dataset_details', DatasetDetailsStepWebController::class)
      ->name('publish.wizard.dataset_details');
+
+Route::get('/publish/wizard/create_workflow', CreateWorkflowStepWebController::class)
+     ->name('publish.wizard.create_workflow');
 
