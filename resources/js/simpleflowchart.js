@@ -54,7 +54,7 @@ function parseSimpleFlowchart(lines) {
         }
     });
     let seenNodes = {};
-    let fl = "st=>start: Receive Samples\ne=>end: Finished\n";
+    let fl = "st=>start: Receive Samples\ne=>end: Results\n";
     let node1, node2;
     for (let i = 0; i < nodes.length; i++) {
         if (i + 1 === nodes.length) {
