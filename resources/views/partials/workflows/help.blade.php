@@ -7,9 +7,6 @@
         Workflows are specified using a simple language. Each step in your workflow is separated
         by a '->'. Conditional steps have names that contain a '?' in them.
     </p>
-    <p>You <u><b>must not</b></u> have spaces between nodes. The following is invalid (because there is a space before
-        and after the '->'.
-    </p>
     <pre>
         Heat Treatment -> Analyze
     </pre>
@@ -19,9 +16,14 @@
         an example workflow.
     </p>
 
+    <p>
+        Note that the conditional steps have a "yes" or a "no" on their arrows, and that the steps with a "right" in
+        the paranthesis show the next step to their right, as opposed to below their step.
+    </p>
+
 
     <pre>
-        Heat Treat Sample?(yes, right)->Heat Treat at 400c/3h->SEM(right)->Analyze
+        Heat Treat Sample?(yes, right)->Heat Treat at 400c/3h(right)->SEM(right)->Analyze
         Heat Treat Sample?(no)->SEM->Analyze
     </pre>
 
