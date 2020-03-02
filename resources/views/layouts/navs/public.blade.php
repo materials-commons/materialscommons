@@ -27,10 +27,19 @@
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}"
                    href="{{route('public.new.index')}}">
-                    <i class="fa-fw fas fa-bullhorn mr-2"></i>
-                    What's New
+                    <i class="fa-fw fas fa-upload mr-2"></i>
+                    Publish
                 </a>
             </li>
+
+
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}"--}}
+            {{--                   href="{{route('public.new.index')}}">--}}
+            {{--                    <i class="fa-fw fas fa-bullhorn mr-2"></i>--}}
+            {{--                    What's New--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             {{--                    <li class="nav-item">--}}
             {{--                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">--}}

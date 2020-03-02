@@ -9,10 +9,18 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Public Data Authors
+            Published Authors
         @endslot
 
         @slot('body')
+            <ul>
+                @foreach($authors as $author => $count)
+                    <li>
+                        <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
+                        has {{$count}} @choice('dataset|datasets2', $count) published.
+                    </li>
+                @endforeach
+            </ul>
         @endslot
     @endcomponent
 @stop

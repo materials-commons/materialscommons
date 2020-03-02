@@ -21,7 +21,6 @@ use App\Http\Controllers\Web\Welcome\WelcomeWebController;
 use App\Http\Controllers\Web2\HomeController;
 use App\Http\Controllers\Web2\Projects\ProjectsDatatableController;
 use App\Http\Controllers\Web2\Projects\Settings\ProjectSettingsController;
-use App\Http\Controllers\Web2\Published\PublicDataAuthorsController;
 use App\Http\Controllers\Web2\Published\PublicDataController;
 use App\Http\Controllers\Web2\Published\PublicDataNewController;
 use App\Http\Controllers\Web2\Published\PublicDataProjectsController;
@@ -73,13 +72,13 @@ Route::prefix('public')->group(function () {
         Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('projects.index');
         Route::get('/datasets', [PublicDataController::class, 'index'])->name('datasets.index');
         //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
-        Route::get('/authors', [PublicDataAuthorsController::class, 'index'])->name('authors.index');
         Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
 //        Route::view('/community', 'public.community.index')->name('community.index');
 
         require base_path('routes/web_routes/published_datasets_web.php');
         require base_path('routes/web_routes/published_communities_web.php');
         require base_path('routes/web_routes/publish_dataset_wizard_web.php');
+        require base_path('routes/web_routes/published_authors_web.php');
     });
 });
 
