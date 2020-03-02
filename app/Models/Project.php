@@ -13,6 +13,8 @@ use Spatie\Searchable\SearchResult;
  * @property string $uuid
  * @property string $name
  * @property string $description
+ * @property mixed workflows
+ * @property mixed experiments
  *
  * @mixin Builder
  */

@@ -15,13 +15,15 @@ class UpdateDatasetWorkflowSelectionAction
 
     private function workflowInProject($workflowId, $projectId)
     {
-        $workflows = Workflow::whereIn('id', function($q) use ($projectId) {
-            $q->select('workflow_id')->from('item2workflow')
-              ->where('item_type', 'App\Models\Experiment')
-              ->whereIn('item_id', function($q2) use ($projectId) {
-                  $q2->select('id')->from('experiments')->where('project_id', $projectId);
-              });
-        })->get();
+//        $workflows = Workflow::whereIn('id', function($q) use ($projectId) {
+//            $q->select('workflow_id')->from('item2workflow')
+//              ->where('item_type', 'App\Models\Experiment')
+//              ->whereIn('item_id', function($q2) use ($projectId) {
+//                  $q2->select('id')->from('experiments')->where('project_id', $projectId);
+//              });
+//        })->get();
+
+        $workflows = Workflow::where('project_id', $projectId)->get();
 
         $workflow = $workflows->find($workflowId);
         return $workflow !== null;
