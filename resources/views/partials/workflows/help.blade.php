@@ -11,14 +11,14 @@
         Heat Treatment -> Analyze
     </pre>
     <p>
-        When specifying a step you can optionally give a direction in parathensis. When specifying
+        When specifying a step you can optionally give a direction in parentheses. When specifying
         a conditional step, you can specify the text on the connecting arrow. Below is the code and result for
         an example workflow.
     </p>
 
     <p>
         Note that the conditional steps have a "yes" or a "no" on their arrows, and that the steps with a "right" in
-        the paranthesis show the next step to their right, as opposed to below their step.
+        the parentheses show the next step to their right, as opposed to below their step.
     </p>
 
 
