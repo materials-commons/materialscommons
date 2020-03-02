@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web2\Published;
 
 use App\Http\Controllers\Controller;
+use App\Models\Community;
 use App\Models\Dataset;
 use Freshbitsweb\Laratables\Laratables;
 
@@ -13,7 +14,9 @@ class PublicDataController extends Controller
      */
     public function index()
     {
-        return view('public.index');
+        $communities = Community::with('owner')->withCount('datasets')
+                                ->where('public', true)->get();
+        return view('public.index', compact('communities'));
     }
 
     /**

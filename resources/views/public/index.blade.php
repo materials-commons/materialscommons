@@ -6,9 +6,13 @@
     @include('layouts.navs.public')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('public.datasets.index'))
-
 @section('content')
+    <p>
+        Welcome to Materials Commons published datasets. Here you will find data published by the Materials Science
+        community.
+        We provide many ways to explore and download the data. You can also easily publish your own data.
+    </p>
+
     @component('components.card')
         @slot('header')
             Public Datasets
@@ -28,14 +32,21 @@
         @endslot
     @endcomponent
 
-    {{--    @component('components.card')--}}
-    {{--        @slot('header')--}}
-    {{--            Public Projects--}}
-    {{--        @endslot--}}
+    <hr>
 
-    {{--        @slot('body')--}}
-    {{--        @endslot--}}
-    {{--    @endcomponent--}}
+    <p>
+        Communities are a way for our members to organize their data. A community is formed around common groups such as
+        DFT data or large Syncotron datasets. If you join Materials Commons you can even start your own community.
+    </p>
+    @component('components.card')
+        @slot('header')
+            Communities
+        @endslot
+
+        @slot('body')
+            @include('public.community._communities_table')
+        @endslot
+    @endcomponent
 
     @push('scripts')
         <script>

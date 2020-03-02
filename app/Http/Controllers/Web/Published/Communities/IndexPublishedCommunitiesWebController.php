@@ -10,7 +10,8 @@ class IndexPublishedCommunitiesWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $communities = Community::with('owner')->withCount('datasets')->where('public', true)->get();
+        $communities = Community::with('owner')->withCount('datasets')
+                                ->where('public', true)->get();
         return view('public.community.index', compact('communities'));
     }
 }
