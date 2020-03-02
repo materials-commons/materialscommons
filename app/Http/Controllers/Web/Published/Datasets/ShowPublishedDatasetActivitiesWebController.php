@@ -9,7 +9,7 @@ class ShowPublishedDatasetActivitiesWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        $dataset = Dataset::with('activities')->withCount(['views', 'downloads'])->findOrFail($datasetId);
+        $dataset = Dataset::with(['activities', 'tags'])->withCount(['views', 'downloads'])->findOrFail($datasetId);
 
         return view('public.datasets.show', compact('dataset'));
     }

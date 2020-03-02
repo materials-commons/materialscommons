@@ -50,7 +50,17 @@
                     </div>
                     <div class="form-group">
                         <label for="license">License</label>
-                        <input class="form-control" id="license" type="text" value="{{$dataset->license}}" readonly>
+                        <input class="form-control" id="license" type="text"
+                               value="{{$dataset->license ? $dataset->license : "No License"}}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <div class="form-control" id="tags" readonly>
+                            @foreach($dataset->tags as $tag)
+                                <span class="badge badge-success fs-11">{{$tag->name}}</span>
+                            @endforeach
+                        </div>
                     </div>
 
                     @if(file_exists($dataset->zipfilePath()) || file_exists($dataset->publishedGlobusPath()))
