@@ -25,6 +25,7 @@ class IndexPublishedAuthorsWebController extends Controller
             }
         }
 
+        $authors = collect($authors)->sortKeys()->toArray();
         return view('public.authors.index', compact('authors'));
     }
 }

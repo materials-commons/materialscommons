@@ -24,6 +24,7 @@ class IndexPublishedDataTagsWebController extends Controller
             }
         }
 
+        $tags = collect($tags)->sortKeys()->toArray();
         return view('public.tags.index', compact('tags'));
     }
 }
