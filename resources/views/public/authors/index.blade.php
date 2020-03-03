@@ -13,14 +13,34 @@
         @endslot
 
         @slot('body')
-            <ul>
+            <table id="authors" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Author</th>
+                    <th># Datasets</th>
+                </tr>
+                </thead>
+                <tbody>
                 @foreach($authors as $author => $count)
-                    <li>
-                        <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
-                        has {{$count}} @choice('dataset|datasets2', $count) published.
-                    </li>
+                    <tr>
+                        <td>
+                            <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
+                        </td>
+                        <td>{{$count}}</td>
+                    </tr>
                 @endforeach
-            </ul>
+                </tbody>
+            </table>
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(() => {
+                $('#authors').DataTable({
+                    stateSave: true,
+                });
+            });
+        </script>
+    @endpush
 @stop

@@ -13,14 +13,37 @@
         @endslot
 
         @slot('body')
-            <ul>
+            <table id="tags" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th># Datasets</th>
+                </tr>
+                </thead>
+                <tbody>
                 @foreach($tags as $tag => $count)
-                    <li>
-                        <a href="{{route('public.tags.search', ['tag' => $tag])}}">{{$tag}}</a>
-                        has {{$count}} @choice('dataset|datasets', $count).
-                    </li>
+                    <tr>
+                        <td>
+                            <a class="badge badge-success fs-11"
+                               href="{{route('public.tags.search', ['tag' => $tag])}}">
+                                {{$tag}}
+                            </a>
+                        </td>
+                        <td>{{$count}}</td>
+                    </tr>
                 @endforeach
-            </ul>
+                </tbody>
+            </table>
         @endslot
     @endcomponent
+
+    @push('scripts')
+        <script>
+            $(document).ready(() => {
+                $('#tags').DataTable({
+                    stateSave: true,
+                });
+            });
+        </script>
+    @endpush
 @stop
