@@ -97,7 +97,7 @@
                     {{--                        Save And Add Files--}}
                     {{--                    </a>--}}
 
-                    <a class="action-link mr-3" href="{{route('public.publish.wizard.upload_files')}}"
+                    <a class="action-link mr-3" href="{{route('public.publish.wizard.upload_files', [$project])}}"
                        id="add-assets-button">
                         Save And Add Files
                     </a>

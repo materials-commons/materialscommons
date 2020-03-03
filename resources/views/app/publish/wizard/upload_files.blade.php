@@ -8,7 +8,8 @@
 @section('content')
     <div class="row mb-10">
         <div class="col-8">
-            <a class="btn btn-primary float-right" href="{{route('public.publish.wizard.create_workflow')}}">
+            <a class="btn btn-primary float-right"
+               href="{{route('public.publish.wizard.create_workflow', [$project])}}">
                 Done Uploading Files
             </a>
         </div>

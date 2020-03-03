@@ -16,17 +16,25 @@
         </div>
         <div class="col-6 col-left-border">
             <h5>Select Project</h5>
-            <div class="form-group">
-                <label for="projects">Projects</label>
-                <select name="project" class="selectpicker col-lg-8" title="projects"
-                        data-live-search="true">
-                    @foreach($projects as $project)
-                        <option data-token="{{$project->id}}" value="{{$project->id}}">
-                            {{$project->name}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <form class="col-12">
+                <div class="form-group">
+                    <label for="projects">Projects</label>
+                    <select name="project" class="selectpicker col-lg-8" title="projects"
+                            data-live-search="true">
+                        @foreach($projects as $project)
+                            <option data-token="{{$project->id}}" value="{{$project->id}}">
+                                {{$project->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-9">
+                    <div class="float-right">
+                        <a class="action-link danger mr-3" href="#">Cancel</a>
+                        <a class="action-link mr-3" href="#">Use Selected Project</a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 @else

@@ -9,11 +9,8 @@ use Illuminate\Http\Request;
 
 class UploadFilesStepWebController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, Project $project)
     {
-        $user = auth()->user();
-        $project = Project::where('name', 'Published Datasets Project')
-                          ->where('owner_id', $user->id)->first();
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         return view('app.publish.wizard.upload_files', compact('project', 'directory'));
     }

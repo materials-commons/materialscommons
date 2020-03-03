@@ -5,17 +5,15 @@
 @section('nav')
     @include('layouts.navs.public')
 @stop
+
 @section('content')
     @component('components.card')
         @slot('header')
-            Select Project Step
+            Review Dataset
         @endslot
 
         @slot('body')
-            @include('partials.publish.wizard._select_project_step', [
-                'createProjectRoute' => '',
-                'cancelRoute' => ''
-            ])
+            Review Dataset
         @endslot
     @endcomponent
 @stop

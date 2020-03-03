@@ -25,11 +25,18 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}"
-                   href="{{route('public.new.index')}}">
-                    <i class="fa-fw fas fa-upload mr-2"></i>
-                    Publish
-                </a>
+                @auth
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.publish')}}"
+                       href="{{route('public.publish.wizard.choose_path')}}">
+                        <i class="fa-fw fas fa-upload mr-2"></i>
+                        Publish
+                    </a>
+                @else
+                    <a class="nav-link fs-11 ml-3" href="{{route('login-for-upload')}}">
+                        <i class="fa-fw fas fa-upload mr-2"></i>
+                        Publish
+                    </a>
+                @endauth
             </li>
 
 
@@ -93,7 +100,7 @@
                         My Communities
                     </a>
                 </li>
-                @endauth
+            @endauth
 
         </ul>
     </div>
