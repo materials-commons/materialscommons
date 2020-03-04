@@ -60,10 +60,15 @@
 
     @push('scripts')
         <script>
+            let projectsCount = "{{sizeof($projects)}}";
             $(document).ready(() => {
-                $('#projects').DataTable({
-                    stateSave: true,
-                });
+                if (projectsCount == 0) {
+                    $('#project-setup').modal();
+                } else {
+                    $('#projects').DataTable({
+                        stateSave: true,
+                    });
+                }
             });
         </script>
     @endpush

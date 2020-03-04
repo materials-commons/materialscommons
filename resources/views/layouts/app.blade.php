@@ -110,6 +110,7 @@
                                onclick="document.getElementById('signout').submit()">
                                 Sign out</a>
                         </form>
+                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>
                     </div>
                 </li>
             </ul>
@@ -157,12 +158,16 @@
                 <iframe src="{{helpUrl()}}" width="100%" height="100%"></iframe>
             </div>
             <div class="modal-footer">
+                <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#project-setup">Welcome
+                    Dialog!</a>
                 <a class="btn btn-secondary" href="{{helpGettingStarted()}}" target="_blank">Goto Docs</a>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
         </div>
     </div>
 </div>
+
+@include('app.projects.wizard.project-setup')
 
 {{--@livewireAssets--}}
 <script>
