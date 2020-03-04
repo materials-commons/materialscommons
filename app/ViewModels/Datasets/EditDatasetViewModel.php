@@ -22,6 +22,7 @@ class EditDatasetViewModel extends ViewModel
     private $files;
     private $directory;
     private $dirPaths;
+    private $isPublic;
 
     public function __construct(Project $project, Dataset $dataset, $user)
     {
@@ -51,9 +52,15 @@ class EditDatasetViewModel extends ViewModel
         return $this->user;
     }
 
+    public function isPublic()
+    {
+        return request()->input('public', false) ? true : false;
+    }
+
     public function withCommunities($communities)
     {
         $this->communities = $communities;
+
         return $this;
     }
 

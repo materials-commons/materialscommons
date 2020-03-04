@@ -15,7 +15,8 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('projects.datasets.update', [$project, $dataset])}}"
+            <form method="post"
+                  action="{{route('projects.datasets.update', [$project, $dataset, 'public' => $isPublic])}}"
                   id="dataset-update">
                 @csrf
                 @method('put')
