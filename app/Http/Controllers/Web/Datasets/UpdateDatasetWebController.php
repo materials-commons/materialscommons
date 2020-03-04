@@ -18,6 +18,11 @@ class UpdateDatasetWebController extends Controller
         unset($validated["action"]);
         $dataset = $updateDatasetAction($validated, $dataset);
         if ($action === "save") {
+            $public = $request->input('public', false);
+            if ($public) {
+                return redirect(route('public.datasets.show', [$dataset]));
+            }
+
             return redirect(route('projects.datasets.show', [$project, $dataset]));
         } elseif ($action === "files") {
             return redirect(route('projects.datasets.files.edit', [$project, $dataset]));
