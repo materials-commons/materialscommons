@@ -29,8 +29,9 @@
 
                 <form>
                     <div>
-                        <a class="btn btn-primary" href="{{route('projects.create', ['show-overview' => true])}}">Create
-                            project</a>
+                        <a class="btn btn-primary" href="{{route('projects.create', ['show-overview' => true])}}">
+                            Create project
+                        </a>
                         <a class="btn btn-info" href="{{helpGettingStarted()}}" target="_blank">
                             Read the getting started guide
                         </a>
