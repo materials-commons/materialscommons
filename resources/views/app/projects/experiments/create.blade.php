@@ -30,9 +30,11 @@
                     <p>
                         Materials Commons can <b>optionally</b> import a spreadsheet to create your experiment. This
                         will set up the
-                        processes, samples and files. To see the format for the spreadsheet please read the
-                        documentation
-                        on <a href="{{makeHelpUrl("reference/spreadsheets")}}" target="_blank">spreadsheets.</a>
+                        processes, samples and files.
+                    </p>
+                    <p>
+                        To see the format for the spreadsheet please read the
+                        <a href="{{makeHelpUrl("reference/spreadsheets")}}" target="_blank">documentation</a>.
                     </p>
                     @if ($excelFiles->count() !== 0)
                         <label for="file_id">Spreadsheet to import</label>
