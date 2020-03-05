@@ -23,7 +23,7 @@
         @endslot
 
         @slot('body')
-            @component('components.items-details', ['item' => $dataset])
+            @component('components.item-details', ['item' => $dataset])
                 @slot('top')
                     <div class="form-group">
                         <label for="authors">Authors and Affiliations</label>

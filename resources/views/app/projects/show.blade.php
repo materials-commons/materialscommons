@@ -26,7 +26,7 @@
         @endslot
 
         @slot('body')
-            @component('components.items-details', ['item' => $project])
+            @component('components.item-details', ['item' => $project])
                 <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
                     {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
                 </a>

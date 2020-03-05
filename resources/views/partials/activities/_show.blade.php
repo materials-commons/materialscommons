@@ -11,7 +11,7 @@
     @endslot
 
     @slot('body')
-        @component('components.items-details', ['item' => $activity])
+        @component('components.item-details', ['item' => $activity])
         @endcomponent
         <br>
         @include('partials.activities.tabs._tabs', [

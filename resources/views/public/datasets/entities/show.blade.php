@@ -15,7 +15,7 @@
         @endslot
 
         @slot('body')
-            @component('components.items-details', ['item' => $entity])
+            @component('components.item-details', ['item' => $entity])
             @endcomponent
             <br>
             <h4>Sample Attributes</h4>

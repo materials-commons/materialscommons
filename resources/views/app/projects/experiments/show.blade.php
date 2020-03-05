@@ -30,7 +30,7 @@
         @endslot
 
         @slot('body')
-            @component('components.items-details', ['item' => $experiment])
+            @component('components.item-details', ['item' => $experiment])
             @endcomponent
 
             <hr>

@@ -15,7 +15,7 @@
         @endslot
 
         @slot('body')
-            @component('components.items-details', ['item' => $file])
+            @component('components.item-details', ['item' => $file])
                 <span class="ml-4">Mediatype: {{$file->mime_type}}</span>
             @endcomponent
             <hr>

@@ -11,7 +11,7 @@
     @endslot
 
     @slot('body')
-        @component('components.items-details', ['item' => $entity])
+        @component('components.item-details', ['item' => $entity])
         @endcomponent
 
         <br>
