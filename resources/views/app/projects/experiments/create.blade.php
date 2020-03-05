@@ -32,7 +32,7 @@
                         will set up the
                         processes, samples and files. To see the format for the spreadsheet please read the
                         documentation
-                        on <a href="{{makeHelpUrl("spreadsheets")}}" target="_blank">spreadsheets.</a>
+                        on <a href="{{makeHelpUrl("reference/spreadsheets")}}" target="_blank">spreadsheets.</a>
                     </p>
                     @if ($excelFiles->count() !== 0)
                         <label for="file_id">Spreadsheet to import</label>
@@ -54,6 +54,8 @@
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <div class="float-right">
+                    <a class="action-link mr-3" href="{{route('projects.experiments.upload-excel', [$project])}}">Upload
+                        Excel Files</a>
                     <a href="{{route('projects.show', ['project' => $project->id])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

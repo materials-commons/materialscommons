@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
 use App\Http\Controllers\Web\Experiments\StoreExperimentWebController;
 use App\Http\Controllers\Web\Experiments\UpdateExperimentWebController;
+use App\Http\Controllers\Web\Experiments\UploadExcelFileWebController;
 use App\Models\Experiment;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/projects/{project}')->group(function () {
     Route::get('/experiments/create', CreateExperimentWebController::class)->name('projects.experiments.create');
     Route::post('/experiments', StoreExperimentWebController::class)->name('projects.experiments.store');
+
+    Route::get('/experiments/upload-excel', UploadExcelFileWebController::class)
+         ->name('projects.experiments.upload-excel');
 
     Route::get('/experiments', IndexExperimentsWebController::class)->name('projects.experiments.index');
     Route::get('/experiments/{experiment}', ShowExperimentWebController::class)->name('projects.experiments.show');
