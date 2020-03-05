@@ -16,7 +16,7 @@
 
                 <p>
                     It can be confusing learning a new system. Everything in Materials Commons is organized around
-                    a project. The "CREATE MY FIRST PROJECT" button will guide you through setting up your first project
+                    a project. The "CREATE PROJECT" button will guide you through setting up your first project
                     and using the system.
                 </p>
 
@@ -29,7 +29,8 @@
 
                 <form>
                     <div>
-                        <button class="btn btn-primary">Create my first project</button>
+                        <a class="btn btn-primary" href="{{route('projects.create', ['show-overview' => true])}}">Create
+                            project</a>
                         <a class="btn btn-info" href="{{helpGettingStarted()}}" target="_blank">
                             Read the getting started guide
                         </a>

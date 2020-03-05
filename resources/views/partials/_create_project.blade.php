@@ -14,8 +14,27 @@
             Cancel
         </a>
 
-        <a class="action-link" href="#" onclick="document.getElementById('project-create').submit()">
+        <a class="action-link @isset($createAndNext) mr-3 @endisset"
+           href="#" onclick="document.getElementById('project-create').submit()">
             Create
         </a>
+
+        @isset($createAndNext)
+            <a class="action-link" href="#" onclick="createAndNext()">
+                {{$createAndNext}}
+            </a>
+        @endisset
     </div>
 </form>
+
+@isset($createAndNext)
+    @push('scripts')
+        <script>
+            function createAndNext() {
+                let route = "{{$createAndNextRoute}}";
+                $("#project-create").attr('action', route);
+                document.getElementById('project-create').submit();
+            }
+        </script>
+    @endpush
+@endisset

@@ -14,7 +14,9 @@ class StoreExperimentWebController extends Controller
     {
         $validated = $request->validated();
         $experiment = $createExperimentAction($validated);
-
+        if ($request->input('files-next', false)) {
+            return redirect(route('projects.folders.index', [$project]));
+        }
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 }

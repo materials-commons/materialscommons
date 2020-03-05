@@ -7,6 +7,10 @@
 @stop
 
 @section('content')
+    <p>
+        Please select a directory to upload your excel files to. Once you have selected a directory you will
+        be able to upload files.
+    </p>
     <div class="form-group">
         <label for="directories">Select Directory For Excel File</label>
         <select name="directory" class="selectpicker col-lg-8" id="dir-picker"

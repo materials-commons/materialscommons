@@ -11,7 +11,12 @@ class StoreProjectWebController extends Controller
     public function __invoke(CreateProjectRequest $request, CreateProjectAction $createProjectAction)
     {
         $validated = $request->validated();
-        $createProjectAction($validated);
+        $rv = $createProjectAction($validated);
+        $showOverview = $request->input('show-overview', false);
+        if ($request->input('experiments-next', false)) {
+            $project = $rv['project'];
+            return redirect(route('projects.experiments.create', [$project, 'show-overview' => $showOverview]));
+        }
         return redirect(route('projects.index'));
     }
 

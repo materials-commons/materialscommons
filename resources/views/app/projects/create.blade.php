@@ -13,9 +13,12 @@
         @endslot
 
         @slot('body')
+            @include('app.projects._overview')
             @include('partials._create_project', [
-                'createProjectRoute' => route('projects.store'),
-                'cancelRoute' => route('projects.index')
+                'createProjectRoute' => route('projects.store', ['show-overview' => request()->input('show-overview', false)]),
+                'cancelRoute' => route('projects.index'),
+                'createAndNext' => 'Create And Add Experiments',
+                'createAndNextRoute' => route('projects.store', ['experiments-next' => true, 'show-overview' => request()->input('show-overview', false)])
             ])
         @endslot
     @endcomponent
