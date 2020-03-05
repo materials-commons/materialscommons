@@ -306,3 +306,14 @@ p {
   border-left: 1px solid $gray-400;
 }
 
+.form-control:disabled, .form-control[readonly] {
+  //background-color: #e9ecef;
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  opacity: 1;
+}
+
+textarea.form-control[readonly] {
+  resize:none;
+}
+
