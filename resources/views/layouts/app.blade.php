@@ -62,7 +62,8 @@
                 {{--                   href="{{helpUrl()}}" target="_blank">--}}
                 {{--                    Help--}}
                 {{--                </a>--}}
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal" href="#item-help">
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                   href="#help-dialog">
                     Help
                 </a>
             </li>
@@ -110,7 +111,7 @@
                                onclick="document.getElementById('signout').submit()">
                                 Sign out</a>
                         </form>
-                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>
+                        {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>
                 </li>
             </ul>
@@ -145,29 +146,9 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="item-help" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Help for {{helpTitle()}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="height: 500px">
-                <iframe src="{{helpUrl()}}" width="100%" height="100%"></iframe>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#project-setup">Welcome
-                    Dialog!</a>
-                <a class="btn btn-secondary" href="{{helpGettingStarted()}}" target="_blank">Goto Docs</a>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-@include('app.projects.wizard.project-setup')
+@include('app.dialogs._help-dialog')
+@include('app.dialogs._welcome-dialog')
 
 {{--@livewireAssets--}}
 <script>

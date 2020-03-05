@@ -63,12 +63,11 @@
             let projectsCount = "{{sizeof($projects)}}";
             $(document).ready(() => {
                 if (projectsCount == 0) {
-                    $('#project-setup').modal();
-                } else {
-                    $('#projects').DataTable({
-                        stateSave: true,
-                    });
+                    $('#welcome-dialog').modal();
                 }
+                $('#projects').DataTable({
+                    stateSave: true,
+                });
             });
         </script>
     @endpush
