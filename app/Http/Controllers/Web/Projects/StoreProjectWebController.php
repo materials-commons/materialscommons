@@ -12,9 +12,9 @@ class StoreProjectWebController extends Controller
     {
         $validated = $request->validated();
         $rv = $createProjectAction($validated);
-        $showOverview = $request->input('show-overview', false);
         if ($request->input('experiments-next', false)) {
             $project = $rv['project'];
+            $showOverview = $request->input('show-overview', false);
             return redirect(route('projects.experiments.create', [$project, 'show-overview' => $showOverview]));
         }
         return redirect(route('projects.index'));

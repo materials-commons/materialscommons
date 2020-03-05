@@ -93,7 +93,7 @@
 @push('scripts')
     <script>
         function createAndAddFiles() {
-            let actionRoute = "{{route('projects.experiments.store', [$project, 'files-next' => true, 'show-overview' => request()->input('show-overview', false)])}}";
+            let actionRoute = "{!!route('projects.experiments.store', [$project, 'files-next' => true, 'show-overview' => request()->input('show-overview', false)])!!}";
             $("#experiment-create").attr('action', actionRoute);
             document.getElementById('experiment-create').submit();
         }

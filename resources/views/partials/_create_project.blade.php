@@ -31,7 +31,7 @@
     @push('scripts')
         <script>
             function createAndNext() {
-                let route = "{{$createAndNextRoute}}";
+                let route = "{!! $createAndNextRoute !!}";
                 $("#project-create").attr('action', route);
                 document.getElementById('project-create').submit();
             }
