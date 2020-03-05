@@ -56,8 +56,10 @@
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
                 <div class="float-right">
-                    <a class="action-link mr-3" href="{{route('projects.experiments.upload-excel', [$project])}}">Upload
-                        Excel Files</a>
+                    <a class="action-link mr-3" href="{{route('projects.experiments.upload-excel', [$project])}}">
+                        Upload Excel Files
+                    </a>
+
                     <a href="{{route('projects.show', ['project' => $project->id])}}" class="action-link danger mr-3">
                         Cancel
                     </a>
