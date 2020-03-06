@@ -26,8 +26,8 @@
                 </p>
             @else
                 <p>
-                    After you've created a project to store your data in you will be taking to the steps for creating
-                    you dataset, uploading files, and publishing.
+                    After you've created a project to store your data in you will be taken to the steps for creating
+                    your dataset, uploading files, and publishing.
                 </p>
             @endif
 
