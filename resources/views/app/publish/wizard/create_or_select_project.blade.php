@@ -13,16 +13,17 @@
         @endslot
 
         @slot('body')
-            <div class="col-6">
+            <div class="col-10">
                 <form class="form-group">
                     <p>
-                        You can choose to start uploading directly, or select/create a project
-                        for your data.
+                        Materials Commons stores all data in projects. You can choose to create a new project, or
+                        use
+                        an existing one.
                     </p>
                     <div>
                         <a href="{{route('public.publish.wizard.create_default_project')}}"
                            class="btn btn-primary mr-3">
-                            Upload Directly
+                            Create Project
                         </a>
 
                         <a class="btn btn-info" href="{{route('public.publish.wizard.select_project')}}">

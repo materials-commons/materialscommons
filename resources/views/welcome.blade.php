@@ -88,7 +88,8 @@
                     </a>
 
                     @auth
-                        <a href="{{route('public.publish.wizard.choose_path')}}" title="Publish data"
+                        <a href="{{route('public.publish.wizard.choose_create_or_select_project')}}"
+                           title="Publish data"
                            class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                             Upload and Publish Data
                         </a>

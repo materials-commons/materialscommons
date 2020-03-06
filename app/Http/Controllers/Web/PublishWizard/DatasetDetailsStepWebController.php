@@ -12,6 +12,6 @@ class DatasetDetailsStepWebController extends Controller
     public function __invoke(CreateProjectAction $createProjectAction, Request $request, Project $project)
     {
         $communities = collect();
-        return view('app.publish.wizard.dataset_details', compact('project', 'communities'));
+        return view('app.publish.wizard.create_project', compact('project', 'communities'));
     }
 }

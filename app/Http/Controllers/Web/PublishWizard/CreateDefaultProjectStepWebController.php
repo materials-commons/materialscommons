@@ -6,7 +6,7 @@ use App\Actions\Projects\CreateProjectAction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CreateDefaultProjectStepWebController extends Controller
+class CreateProjectStepWebController extends Controller
 {
     public function __invoke(Request $request, CreateProjectAction $createProjectAction)
     {

@@ -9,6 +9,6 @@ class CreateProjectStepWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        //
+        return view('public.publish.wizard.create_project');
     }
 }

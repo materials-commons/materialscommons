@@ -7,14 +7,8 @@
     <br>
 
     <div class="row">
-        <div class="col-6">
-            <h5>Create Project</h5>
-            @include('partials._create_project', [
-                'createProjectRoute' => $createProjectRoute,
-                'cancelRoute' => $cancelRoute
-            ])
-        </div>
-        <div class="col-6 col-left-border">
+
+    <div class="col-6 col-left-border">
             <h5>Select Project</h5>
             <form class="col-12">
                 <div class="form-group">

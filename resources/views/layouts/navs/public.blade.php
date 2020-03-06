@@ -27,7 +27,7 @@
             <li class="nav-item">
                 @auth
                     <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.publish')}}"
-                       href="{{route('public.publish.wizard.choose_path')}}">
+                       href="{{route('public.publish.wizard.choose_create_or_select_project')}}">
                         <i class="fa-fw fas fa-upload mr-2"></i>
                         Publish
                     </a>
