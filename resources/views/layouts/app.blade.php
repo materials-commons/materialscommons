@@ -45,7 +45,7 @@
             Materials Commons 2.0
         </a>
     @else
-        <a class="navbar-brand col-sm-3 mr-0" href="{{route('projects.index')}}">
+        <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
             <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
