@@ -36,7 +36,7 @@ class LoginController extends Controller
     {
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'login-for-upload') {
-            return route('public.publish.wizard.choose_path');
+            return route('public.publish.wizard.choose_create_or_select_project');
         }
 
         return route('projects.index');
