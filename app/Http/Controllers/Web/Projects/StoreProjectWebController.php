@@ -19,5 +19,4 @@ class StoreProjectWebController extends Controller
         }
         return redirect(route('projects.index'));
     }
-
 }

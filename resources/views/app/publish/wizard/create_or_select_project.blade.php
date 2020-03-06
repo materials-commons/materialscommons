@@ -21,7 +21,7 @@
                         an existing one.
                     </p>
                     <div>
-                        <a href="{{route('public.publish.wizard.create_default_project')}}"
+                        <a href="{{route('public.publish.wizard.create_project')}}"
                            class="btn btn-primary mr-3">
                             Create Project
                         </a>
