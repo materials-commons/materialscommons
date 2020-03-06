@@ -9,9 +9,9 @@ class ChooseCreateOrSelectProjectStepWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $projects = auth()->user()->projects()->get();
-        if ($projects->isEmpty()) {
-            return view('app.publish.wizard.create_project');
+        $projectsCount = auth()->user()->projects()->count();
+        if ($projectsCount == 0) {
+            return view('app.publish.wizard.create_project', compact('projectsCount'));
         }
         return view('app.publish.wizard.create_or_select_project');
     }
