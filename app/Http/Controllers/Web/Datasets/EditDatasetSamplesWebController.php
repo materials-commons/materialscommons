@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Project;
-use App\ViewModels\Datasets\EditDatasetViewModel;
+use App\ViewModels\Datasets\EditOrCreateDataDatasetViewModel;
 
 class EditDatasetSamplesWebController extends Controller
 {
@@ -17,7 +17,7 @@ class EditDatasetSamplesWebController extends Controller
         $user = auth()->user();
         $communities = Community::where('public', true)->get();
         $experiments = $project->experiments()->get();
-        $viewModel = new EditDatasetViewModel($project, $dataset, $user);
+        $viewModel = new EditOrCreateDataDatasetViewModel($project, $dataset, $user);
         $viewModel->withCommunities($communities)
                   ->withExperiments($experiments);
         return view('app.projects.datasets.edit', $viewModel);

@@ -19,7 +19,7 @@ class StoreDatasetWebController extends Controller
         if ($action === "save") {
             return redirect(route('projects.datasets.index', [$project]));
         } else {
-            return redirect(route('projects.datasets.edit', [$project, $dataset]));
+            return redirect(route('projects.datasets.create-data', [$project, $dataset]));
         }
     }
 }

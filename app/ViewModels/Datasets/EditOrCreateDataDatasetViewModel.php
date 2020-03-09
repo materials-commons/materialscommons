@@ -11,7 +11,7 @@ use App\Models\Project;
 use App\Models\Workflow;
 use Spatie\ViewModels\ViewModel;
 
-class EditDatasetViewModel extends ViewModel
+class EditOrCreateDataDatasetViewModel extends ViewModel
 {
     private $dataset;
     private $project;

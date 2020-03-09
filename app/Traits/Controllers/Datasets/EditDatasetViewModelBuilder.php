@@ -7,12 +7,12 @@ use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
-use App\ViewModels\Datasets\EditDatasetViewModel;
+use App\ViewModels\Datasets\EditOrCreateDataDatasetViewModel;
 
 class EditDatasetViewModelBuilder
 {
     /**
-     * @var \App\ViewModels\Datasets\EditDatasetViewModel
+     * @var \App\ViewModels\Datasets\EditOrCreateDataDatasetViewModel
      */
     private $viewModel;
 
@@ -36,7 +36,7 @@ class EditDatasetViewModelBuilder
         $filesAndDir = $getDatasetFilesAction($project->id, $folder);
         $directory = $filesAndDir["directory"];
         $files = $filesAndDir["files"];
-        $viewModel = new EditDatasetViewModel($project, $dataset, auth()->user());
+        $viewModel = new EditOrCreateDataDatasetViewModel($project, $dataset, auth()->user());
         $viewModel->withCommunities($this->getProject())
                   ->withExperiments($project->experiments)
                   ->withFiles($files)

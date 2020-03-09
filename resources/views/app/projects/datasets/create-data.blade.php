@@ -21,14 +21,14 @@
             <br>
             <br>
             @include('app.projects.datasets.ce-tabs.tabs', [
-                'defaultRoute' => '',
-                'defaultRouteName' => '',
-                'workflowsRoute' => '',
-                'workflowsRouteName' => '',
-                'samplesRoute' => '',
-                'samplesRouteName' => '',
-                'processesRoute' => '',
-                'processesRouteName' => ''
+                'defaultRouteName' => 'projects.datasets.create-data',
+                'defaultRoute' => route('projects.datasets.create-data', [$project, $dataset]),
+                'workflowsRouteName' => 'projects.datasets.workflows.create-data',
+                'workflowsRoute' => route('projects.datasets.workflows.create-data', [$project, $dataset]),
+                'samplesRouteName' => 'projects.datasets.samples.create-data',
+                'samplesRoute' => route('projects.datasets.samples.create-data', [$project, $dataset]),
+                'processesRouteName' => 'projects.datasets.activities.create-data',
+                'processesRoute' => route('projects.datasets.activities.create-data', [$project, $dataset])
             ])
             <br>
 

@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Web\Datasets\AssignDoiWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataDatasetActivitiesWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataDatasetSamplesWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataDatasetWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
@@ -40,6 +44,23 @@ Route::get('/projects/{project}/datasets/{dataset}/edit/activities', EditDataset
 Route::get('/projects/{project}/datasets/{dataset}/edit/workflows', EditDatasetWorkflowsWebController::class)
      ->name('projects.datasets.workflows.edit');
 
+Route::get('/projects/{project}/datasets/{dataset}/edit/{folder?}', EditDatasetWebController::class)
+     ->name('projects.datasets.edit');
+
+Route::get('/projects/{project}/datasets/{dataset}/create-data/samples', CreateDataDatasetSamplesWebController::class)
+     ->name('projects.datasets.samples.create-data');
+
+Route::get('/projects/{project}/datasets/{dataset}/create-data/activities',
+    CreateDataDatasetActivitiesWebController::class)
+     ->name('projects.datasets.activities.create-data');
+
+Route::get('/projects/{project}/datasets/{dataset}/create-data/workflows',
+    CreateDataDatasetWorkflowsWebController::class)
+     ->name('projects.datasets.workflows.create-data');
+
+Route::get('/projects/{project}/datasets/{dataset}/create-data/{folder?}', CreateDataDatasetWebController::class)
+     ->name('projects.datasets.create-data');
+
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::class)
      ->name('projects.datasets.show');
 Route::get('/projects/{project}/datasets/{dataset}/next/{folder}', ShowDatasetAndFolderWebController::class)
@@ -64,8 +85,7 @@ Route::patch('/projects/{project}/datasets/{dataset}', UpdateDatasetWebControlle
      ->name('projects.datasets.update');
 Route::put('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
      ->name('projects.datasets.update');
-Route::get('/projects/{project}/datasets/{dataset}/edit/{folder?}', EditDatasetWebController::class)
-     ->name('projects.datasets.edit');
+
 
 Route::get('/projects/{project}/datasets/{dataset}/delete', DeleteDatasetWebController::class)
      ->name('projects.datasets.delete');
