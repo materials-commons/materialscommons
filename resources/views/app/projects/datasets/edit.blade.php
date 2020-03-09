@@ -138,17 +138,26 @@
 
             <br>
             <br>
-            @include('app.projects.datasets.edit-tabs.tabs')
+            @include('app.projects.datasets.ce-tabs.tabs',[
+                'defaultRoute' => route('projects.datasets.edit', [$project, $dataset, 'public' => $isPublic]),
+                'defaultRouteName' => 'projects.datasets.edit',
+                'workflowsRoute' => route('projects.datasets.workflows.edit', [$project, $dataset, 'public' => $isPublic]),
+                'workflowsRouteName' => 'projects.datasets.workflows.edit',
+                'samplesRoute' => route('projects.datasets.samples.edit', [$project, $dataset, 'public' => $isPublic]),
+                'samplesRouteName' => 'projects.datasets.samples.edit',
+                'processesRoute' => route('projects.datasets.activities.edit', [$project, $dataset, 'public' => $isPublic]),
+                'processesRouteName' => 'projects.datasets.activities.edit',
+            ])
             <br>
 
             @if (Request::routeIs('projects.datasets.edit'))
-                @include('app.projects.datasets.edit-tabs.files')
+                @include('app.projects.datasets.ce-tabs.files')
             @elseif (Request::routeIs('projects.datasets.samples.edit'))
-                @include('app.projects.datasets.edit-tabs.entities')
+                @include('app.projects.datasets.ce-tabs.entities')
             @elseif (Request::routeIs('projects.datasets.activities.edit'))
-                @include('app.projects.datasets.edit-tabs.activities')
+                @include('app.projects.datasets.ce-tabs.activities')
             @elseif (Request::routeIs('projects.datasets.workflows.edit'))
-                @include('app.projects.datasets.edit-tabs.workflows')
+                @include('app.projects.datasets.ce-tabs.workflows')
             @endif
 
         @endslot

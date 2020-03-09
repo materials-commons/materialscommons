@@ -20,17 +20,26 @@
 
             <br>
             <br>
-            @include('app.projects.datasets.edit-tabs.tabs')
+            @include('app.projects.datasets.ce-tabs.tabs', [
+                'defaultRoute' => '',
+                'defaultRouteName' => '',
+                'workflowsRoute' => '',
+                'workflowsRouteName' => '',
+                'samplesRoute' => '',
+                'samplesRouteName' => '',
+                'processesRoute' => '',
+                'processesRouteName' => ''
+            ])
             <br>
 
-            @if (Request::routeIs('projects.datasets.edit'))
-                @include('app.projects.datasets.edit-tabs.files')
-            @elseif (Request::routeIs('projects.datasets.samples.edit'))
-                @include('app.projects.datasets.edit-tabs.entities')
-            @elseif (Request::routeIs('projects.datasets.activities.edit'))
-                @include('app.projects.datasets.edit-tabs.activities')
-            @elseif (Request::routeIs('projects.datasets.workflows.edit'))
-                @include('app.projects.datasets.edit-tabs.workflows')
+            @if (Request::routeIs('projects.datasets.create-data'))
+                @include('app.projects.datasets.ce-tabs.files')
+            @elseif (Request::routeIs('projects.datasets.samples.create-data'))
+                @include('app.projects.datasets.ce-tabs.entities')
+            @elseif (Request::routeIs('projects.datasets.activities.create-data'))
+                @include('app.projects.datasets.ce-tabs.activities')
+            @elseif (Request::routeIs('projects.datasets.workflows.create-data'))
+                @include('app.projects.datasets.ce-tabs.workflows')
             @endif
         @endslot
     @endcomponent
