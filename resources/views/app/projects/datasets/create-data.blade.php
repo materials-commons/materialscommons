@@ -9,13 +9,45 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Dataset
+            Create Dataset -
+            @if (Request::routeIs('projects.datasets.create-data'))
+                Add Files
+            @elseif (Request::routeIs('projects.datasets.samples.create-data'))
+                Add Samples
+            @elseif (Request::routeIs('projects.datasets.activities.create-data'))
+                Add Processes
+            @elseif (Request::routeIs('projects.datasets.workflows.create-data'))
+                Add Workflows
+            @endif
         @endslot
 
         @slot('body')
-            <div class="form-group">
-                <label for="authors">Name</label>
-                <input class="form-control" value="{{$dataset->name}}" id="authors" type="text" readonly>
+            <form>
+                <div class="form-group">
+                    <label for="authors">Name</label>
+                    <input class="form-control" value="{{$dataset->name}}" id="authors" type="text" readonly>
+                </div>
+                <div class="float-right">
+                    <a href="#" class="action-link mr-3">
+                        Edit Details
+                    </a>
+                    <a href="#" class="action-link">
+                        Done And Review
+                    </a>
+                </div>
+            </form>
+
+            <br>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-11">
+                    <p>
+                        Add or select the files, samples, processes and workflows that make up your dataset. When you
+                        are done you can <a href="#">Review</a> your dataset. If you would like to edit the details,
+                        such as tags, authors, etc... you can select the <a href="#">Edit Details</a> link here or
+                        above.
+                    </p>
+                </div>
             </div>
 
             <br>
