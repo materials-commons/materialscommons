@@ -41,12 +41,8 @@
             <br>
             <div class="row justify-content-center">
                 <div class="col-11">
-                    <p>
-                        Add or select the files, samples, processes and workflows that make up your dataset. When you
-                        are done you can <a href="#">Review</a> your dataset. If you would like to edit the details,
-                        such as tags, authors, etc... you can select the <a href="#">Edit Details</a> link here or
-                        above.
-                    </p>
+                    @include('app.projects.datasets._create-data-help')
+
                 </div>
             </div>
 
