@@ -5,14 +5,13 @@
         @else
             @foreach($dirPaths as $dirpath)
                 <a class="action-link"
-                   href="{{route('projects.datasets.edit', ['project' => $project, 'dataset' => $dataset, 'path' => $dirpath["path"]])}}">
+                   href="{{route($directoryPathRouteName, ['project' => $project, 'dataset' => $dataset, 'path' => $dirpath["path"]])}}">
                     {{$dirpath['name']}}/
                 </a>
             @endforeach
         @endif
 
-        <a class="float-right action-link mr-4"
-           href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
+        <a class="float-right action-link mr-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>Add Files
         </a>
 

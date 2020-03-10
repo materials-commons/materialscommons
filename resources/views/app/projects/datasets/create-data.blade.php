@@ -63,6 +63,7 @@
                 @include('app.projects.datasets.ce-tabs.files',[
                     'addFilesRouteName' => 'projects.datasets.create-data.upload-files',
                     'createDirectoryRouteName' => 'projects.datasets.create-data.create-directory',
+                    'directoryPathRouteName' => 'projects.datasets.create-data',
                 ])
             @elseif (Request::routeIs('projects.datasets.samples.create-data'))
                 @include('app.projects.datasets.ce-tabs.entities')
