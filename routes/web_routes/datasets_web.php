@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataShowCreateDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataShowUploadFilesWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataStoreCreateDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
@@ -70,6 +71,10 @@ Route::get('/projects/{project}/datasets/{dataset}/create-data/upload/{directory
 Route::get('/projects/{project}/datasets/{dataset}/create-data/create-directory/{directory}',
     CreateDataShowCreateDirectoryWebController::class)
      ->name('projects.datasets.create-data.create-directory');
+
+Route::post('/projects/{project}/datasets/{dataset}/store-directory',
+    CreateDataStoreCreateDirectoryWebController::class)
+     ->name('projects.datasets.create-data.store-directory');
 
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::class)
      ->name('projects.datasets.show');
