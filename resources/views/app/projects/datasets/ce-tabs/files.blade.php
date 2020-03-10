@@ -71,7 +71,6 @@
         let projectId = "{{$project->id}}";
         let datasetId = "{{$dataset->id}}";
         let directoryPath = "{{$directory->path == '/' ? '' : $directory->path}}";
-        console.log(`directoryPath = ${directoryPath}`);
         let route = "{{route('projects.datasets.selection', [$dataset])}}";
         let apiToken = "{{$user->api_token}}";
 
@@ -108,7 +107,6 @@
         }
 
         function addFile(file) {
-            console.log(`addFile ${directoryPath}/${file.name}`);
             axios.put(`${route}?api_token=${apiToken}`, {
                 project_id: projectId,
                 include_file: `${directoryPath}/${file.name}`
