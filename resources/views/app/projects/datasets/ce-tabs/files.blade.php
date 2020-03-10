@@ -12,12 +12,12 @@
         @endif
 
         <a class="float-right action-link mr-4"
-           href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
+           href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>Add Files
         </a>
 
         <a class="float-right action-link mr-4"
-           href="{{route('projects.folders.create', [$project, $directory])}}">
+           href="{{route($createDirectoryRouteName, [$project, $dataset, $directory])}}">
             <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
         </a>
     @endslot
@@ -70,7 +70,8 @@
     <script>
         let projectId = "{{$project->id}}";
         let datasetId = "{{$dataset->id}}";
-        let directoryPath = "{{$directory->path}}";
+        let directoryPath = "{{$directory->path == '/' ? '' : $directory->path}}";
+        console.log(`directoryPath = ${directoryPath}`);
         let route = "{{route('projects.datasets.selection', [$dataset])}}";
         let apiToken = "{{$user->api_token}}";
 
@@ -107,6 +108,7 @@
         }
 
         function addFile(file) {
+            console.log(`addFile ${directoryPath}/${file.name}`);
             axios.put(`${route}?api_token=${apiToken}`, {
                 project_id: projectId,
                 include_file: `${directoryPath}/${file.name}`

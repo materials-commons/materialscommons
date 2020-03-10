@@ -42,7 +42,6 @@
             <div class="row justify-content-center">
                 <div class="col-11">
                     @include('app.projects.datasets._create-data-help')
-
                 </div>
             </div>
 
@@ -61,7 +60,10 @@
             <br>
 
             @if (Request::routeIs('projects.datasets.create-data'))
-                @include('app.projects.datasets.ce-tabs.files')
+                @include('app.projects.datasets.ce-tabs.files',[
+                    'addFilesRouteName' => 'projects.datasets.create-data.upload-files',
+                    'createDirectoryRouteName' => 'projects.datasets.create-data.create-directory',
+                ])
             @elseif (Request::routeIs('projects.datasets.samples.create-data'))
                 @include('app.projects.datasets.ce-tabs.entities')
             @elseif (Request::routeIs('projects.datasets.activities.create-data'))

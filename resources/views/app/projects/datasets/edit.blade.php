@@ -151,7 +151,10 @@
             <br>
 
             @if (Request::routeIs('projects.datasets.edit'))
-                @include('app.projects.datasets.ce-tabs.files')
+                @include('app.projects.datasets.ce-tabs.files', [
+                    'addFilesRouteName' => 'projects.datasets.create-data.upload-files',
+                    'createDirectoryRouteName' => 'projects.datasets.create-data.create-directory',
+                ])
             @elseif (Request::routeIs('projects.datasets.samples.edit'))
                 @include('app.projects.datasets.ce-tabs.entities')
             @elseif (Request::routeIs('projects.datasets.activities.edit'))

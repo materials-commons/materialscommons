@@ -28,6 +28,15 @@ class DatasetFileSelectionTest extends TestCase
     }
 
     /** @test */
+    public function selected_file_at_top_level_should_be_included()
+    {
+        $selection = $this->makeSelection();
+        array_push($selection["include_files"], "/file1.txt");
+        $dsFileSelection = new DatasetFileSelection($selection);
+        $this->assertTrue($dsFileSelection->isIncludedFile("/file1.txt"));
+    }
+
+    /** @test */
     public function exclude_files_should_override_dir()
     {
         $selection = $this->makeSelection();
