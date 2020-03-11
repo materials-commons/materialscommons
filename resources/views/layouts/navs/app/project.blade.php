@@ -25,6 +25,38 @@
             </li>
 
             <li class="nav-item">
+                <div class="dropdown">
+                    <a class="nav-link fs-11 ml-5 dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-fw fas fa-plus-circle mr-2"></i>Add
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item td-none" href="{{route('projects.experiments.create', [$project])}}">
+                            Experiment
+                        </a>
+
+                        <a class="dropdown-item td-none" href="{{route('projects.datasets.create', [$project])}}">
+                            Dataset
+                        </a>
+
+                        <a class="dropdown-item td-none"
+                           href="{{route('projects.folders.upload', [$project, $project->rootDir])}}">
+                            Files
+                        </a>
+
+                        <a class="dropdown-item td-none" href="{{route('projects.entities.create', [$project])}}">
+                            Sample
+                        </a>
+
+                        <a class="dropdown-item td-none" href="{{route('projects.workflows.create', [$project])}}">
+                            Workflow
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-flask mr-2"></i>
