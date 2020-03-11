@@ -89,8 +89,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5"
-                   href="{{route('projects.datasets.index', ['project' => $project->id])}}">
+                <a class="nav-link fs-11 ml-5" href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-upload mr-2"></i>
                     Publish
                 </a>
