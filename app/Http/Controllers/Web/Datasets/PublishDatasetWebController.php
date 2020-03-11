@@ -13,6 +13,6 @@ class PublishDatasetWebController extends Controller
     {
         $publishDatasetAction($dataset);
 
-        return back();
+        return redirect(route('projects.datasets.index', [$project]));
     }
 }

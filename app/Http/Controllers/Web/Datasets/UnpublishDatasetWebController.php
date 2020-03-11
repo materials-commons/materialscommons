@@ -15,6 +15,6 @@ class UnpublishDatasetWebController extends Controller
         $unpublishDatasetAction = new UnpublishDatasetAction(GlobusApi::createGlobusApi());
         $unpublishDatasetAction($dataset);
 
-        return back();
+        return redirect(route('projects.datasets.index', [$project]));
     }
 }
