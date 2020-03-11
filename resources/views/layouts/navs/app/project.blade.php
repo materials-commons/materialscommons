@@ -84,7 +84,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
                    href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
-                    Dataset
+                    Datasets
                 </a>
             </li>
 
