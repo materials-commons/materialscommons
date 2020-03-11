@@ -7,6 +7,12 @@
 @stop
 
 @section('content')
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <h4>Adding files to directory {{$directory->path}}</h4>
+        </div>
+    </div>
+
     <div id="file-upload"></div>
 @endsection
 
