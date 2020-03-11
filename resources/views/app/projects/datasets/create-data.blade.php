@@ -28,10 +28,10 @@
                     <input class="form-control" value="{{$dataset->name}}" id="authors" type="text" readonly>
                 </div>
                 <div class="float-right">
-                    <a href="#" class="action-link mr-3">
+                    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link mr-3">
                         Edit Details
                     </a>
-                    <a href="#" class="action-link">
+                    <a href="{{route('projects.datasets.show', [$project, $dataset])}}" class="action-link">
                         Done And Review
                     </a>
                 </div>
