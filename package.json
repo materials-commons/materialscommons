@@ -34,6 +34,7 @@
       "@yaireo/tagify": "^3.2.6",
       "flowchart.js": "^1.12.2",
       "intercooler": "^1.2.3",
-      "laravel-mix-purgecss": "^4.0.0"
+      "laravel-mix-purgecss": "^4.0.0",
+      "turbolinks": "^5.2.0"
     }
 }

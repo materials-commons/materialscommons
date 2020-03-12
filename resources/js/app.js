@@ -27,6 +27,9 @@ require('@uppy/core/dist/style.css');
 require('@uppy/dashboard/dist/style.css');
 window.Tagify = require('@yaireo/tagify');
 
+// const Turbolinks = require("turbolinks");
+// Turbolinks.start();
+
 
 /**
  * The following block of code may be used to automatically register your
