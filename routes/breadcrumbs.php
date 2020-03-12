@@ -110,7 +110,19 @@ Breadcrumbs::for('projects.workflows.show', function ($trail, $project, $workflo
     $trail->push($workflow->name, route('projects.workflows.show', [$project, $workflow]));
 });
 
+// Create Dataset breadcrumbs
+Breadcrumbs::for('projects.datasets.create', function ($trail, $project) {
+    $trail->parent('projects.datasets.index', $project);
+    $trail->push('Create', route('projects.datasets.create', [$project]));
+});
+
+Breadcrumbs::for('projects.datasets.create-data', function ($trail, $project, $dataset) {
+    $trail->parent('projects.datasets.create', $project);
+    $trail->push("{$dataset->name} Files", route('projects.datasets.create-data', [$project, $dataset]));
+});
+
 // Published data breadcrumbs
+
 Breadcrumbs::for('public.datasets.index', function ($trail) {
     $trail->push('Datasets', route('public.datasets.index'));
 });
