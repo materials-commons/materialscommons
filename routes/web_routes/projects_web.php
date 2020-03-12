@@ -25,6 +25,7 @@ use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
+use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddUserToProjectWebController;
@@ -38,6 +39,9 @@ Route::get('/projects/create', CreateProjectWebController::class)->name('project
 Route::post('/projects', StoreProjectWebController::class)->name('projects.store');
 
 Route::get('/projects', IndexProjectsWebController::class)->name('projects.index');
+
+Route::get('/projects/{project}/upload', ShowUploadFilesWebController::class)
+     ->name('projects.upload-files');
 
 Route::post('/projects/search', SearchAcrossProjectsWebController::class)->name('projects.search_all');
 

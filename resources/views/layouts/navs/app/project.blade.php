@@ -41,7 +41,7 @@
                         </a>
 
                         <a class="dropdown-item td-none"
-                           href="{{route('projects.folders.upload', [$project, $project->rootDir])}}">
+                           href="{{route('projects.upload-files', [$project])}}">
                             Files
                         </a>
 
