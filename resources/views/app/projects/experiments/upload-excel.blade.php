@@ -9,10 +9,10 @@
 @section('content')
     <p>
         Please select a directory to upload your excel files to. Once you have selected a directory you will
-        be able to upload files.
+        be able to upload files. You may change directories at any time.
     </p>
     <div class="form-group">
-        <label for="directories">Select Directory For Excel File</label>
+        <label for="directories">Select Directory You Are Uploading To</label>
         <select name="directory" class="selectpicker col-lg-8" id="dir-picker"
                 title="directories" data-live-search="true">
             @foreach($folders as $dir)
