@@ -226,7 +226,7 @@ class ImportDatasets extends AbstractImporter
     {
         for ($i = 0; $i < $count; $i++) {
             Download::create([
-                'who'               => "unknown_{$count}",
+                'who'               => "unknown_{$i}",
                 'downloadable_type' => Dataset::class,
                 'downloadable_id'   => $ds->id,
             ]);
