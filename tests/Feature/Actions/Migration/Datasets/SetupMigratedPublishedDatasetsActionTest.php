@@ -23,7 +23,7 @@ class SetupMigratedPublishedDatasetsActionTest extends TestCase
         $this->setupPublishedDataset($dataset);
 
         $setupMigrated = new SetupMigratedPublishedDatasetsAction($globusApiMock);
-        $setupMigrated();
+        $setupMigrated(true, true);
         $expectedGlobusPath = "/".$dataset->publishedGlobusPathPartial()."/";
         $this->assertDatabaseHas('datasets', [
             'globus_endpoint_id' => config('globus.endpoint'),

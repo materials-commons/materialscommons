@@ -28,7 +28,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApiMock);
         $createDatasetInGlobusAction($dataset->id, false);
 
-        $datasetPath = Storage::disk('mcfs')->path("__globus_published_datasets/{$dataset->uuid}");
+        $datasetPath = Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}");
         $this->assertDirectoryExists($datasetPath);
         $this->assertFileExists("{$datasetPath}/test.txt");
 
