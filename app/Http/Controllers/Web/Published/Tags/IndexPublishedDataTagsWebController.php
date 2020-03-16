@@ -10,7 +10,7 @@ class IndexPublishedDataTagsWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $datasets = Dataset::with('tags')->whereNotNull('published_at')->select('tags', 'id')->get();
+        $datasets = Dataset::with('tags')->whereNotNull('published_at')->get();
         $tags = [];
         foreach ($datasets as $ds) {
             foreach ($ds->tags as $tag) {
