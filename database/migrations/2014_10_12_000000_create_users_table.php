@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
                   ->unique()
                   ->nullable()
                   ->default(null);
+            $table->boolean('is_admin')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

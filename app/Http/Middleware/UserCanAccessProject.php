@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Traits\GetRequestParameterId;
-use Illuminate\Http\Request;
 use Closure;
+use Illuminate\Http\Request;
 
 class UserCanAccessProject
 {
@@ -21,10 +21,17 @@ class UserCanAccessProject
     public function handle(Request $request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $count = auth()->user()->projects()->where('project_id', $projectId)->count();
-            abort_unless($count == 1, 404, 'No such project');
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        if (auth()->user()->is_admin) {
+            return $next($request);
+        }
+
+        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
+        abort_unless($count == 1, 404, 'No such project');
+
         return $next($request);
     }
 }
