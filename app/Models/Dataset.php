@@ -28,6 +28,7 @@ use Spatie\Tags\HasTags;
  * @property string $globus_acl_id
  * @property string $globus_endpoint_id
  * @property string $globus_path
+ * @property string $authors
  *
  * @mixin Builder
  */
