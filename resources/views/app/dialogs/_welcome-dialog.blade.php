@@ -15,16 +15,17 @@
                 <p>
 
                 <p>
-                    It can be confusing learning a new system. Everything in Materials Commons is organized around
+                    It can be confusing learning a new system. We have guides to help you get started. To start
+                    everything in Materials Commons is organized around
                     a project. The "CREATE PROJECT" button will guide you through setting up your first project
                     and using the system.
                 </p>
 
                 <p>
-                    If your the type who prefers to start with documentation we've also included a link to our
-                    Getting Started guide. Don't worry you can always get back to this dialog by clicking on your
-                    account menu in the upper right corner and selecting the "Welcome Dialog" or clicking on the Help
-                    button, where you will find a button for the "Welcome Dialog".
+                    If you are the type who prefers to start with documentation we've also included a link to our
+                    Getting Started guide. Don't worry about dismissing this dialog, you can always get back to it by
+                    clicking on the Help button. The help popup has a button titled "Welcome Dialog" that will bring
+                    this dialog up.
                 </p>
 
                 <form>
