@@ -13,7 +13,7 @@
         @slot('header')
             Dataset: {{$dataset->name}}
             @auth
-                @if($dataset->owner_id == auth()->user()->id)
+                @if($dataset->owner_id == auth()->user()->id || auth()->user()->is_admin)
                     <a class="action-link float-right"
                        href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">
                         <i class="fas fa-edit mr-2"></i>Edit

@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataDatasetWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
+use App\Http\Controllers\Web\Datasets\CreateDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataShowCreateDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataShowUploadFilesWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataStoreCreateDirectoryWebController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWithDoiWebController;
+use App\Http\Controllers\Web\Datasets\StoreDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,8 @@ Route::get('/projects/{project}/datasets/create', CreateDatasetWebController::cl
 Route::post('/projects/{project}/datasets', StoreDatasetWebController::class)
      ->name('projects.datasets.store');
 
+// edit dataset routes
+
 Route::get('/projects/{project}/datasets/{dataset}/edit/samples', EditDatasetSamplesWebController::class)
      ->name('projects.datasets.samples.edit');
 
@@ -49,6 +53,16 @@ Route::get('/projects/{project}/datasets/{dataset}/edit/workflows', EditDatasetW
 
 Route::get('/projects/{project}/datasets/{dataset}/edit/{folder?}', EditDatasetWebController::class)
      ->name('projects.datasets.edit');
+
+Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/create',
+    CreateDatasetWorkflowFromEditWebController::class)
+     ->name('projects.datasets.workflows.edit.create');
+
+Route::post('/projects/{project}/datasets/{dataset}/edit/workflows/store',
+    StoreDatasetWorkflowFromEditWebController::class)
+     ->name('projects.datasets.workflows.edit.store');
+
+// create-data routes
 
 Route::get('/projects/{project}/datasets/{dataset}/create-data/samples', CreateDataDatasetSamplesWebController::class)
      ->name('projects.datasets.samples.create-data');

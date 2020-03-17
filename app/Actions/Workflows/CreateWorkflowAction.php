@@ -32,5 +32,7 @@ class CreateWorkflowAction
         if ($experiment != null) {
             $experiment->workflows()->attach($workflow);
         }
+
+        return $workflow;
     }
 }
