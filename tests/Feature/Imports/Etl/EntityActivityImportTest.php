@@ -363,4 +363,23 @@ class EntityActivityImportTest extends TestCase
         $activity = Activity::where('name', 'sem')->first();
         $this->assertEquals(5, $activity->files()->count());
     }
+
+    /** @test */
+    public function test_loading_ff_spreadsheet()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, Storage::disk('test_data')->path("etl/FF_Ti5553_ETL.xlsx"));
+
+        $this->assertTrue(true);
+    }
 }
