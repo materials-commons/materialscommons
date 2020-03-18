@@ -72,13 +72,16 @@ class RowTracker
         }
 
         $ctx = hash_init("md5");
-        $this->activityAttributes->each(function($val) use ($ctx) {
+        $this->activityAttributes->each(function ($val) use ($ctx) {
             hash_update($ctx, $val->value);
         });
 
         // To ensure that hashes will be unique both within and across sheets add the sheet name
         // to the strings to compute the hash on.
         hash_update($ctx, $this->activityName);
+
+        // Add in the entityName to make sure there aren't collisions in the same sheet across different entities
+        hash_update($ctx, $this->entityName);
 
         $this->activityAttributesHash = hash_final($ctx);
     }
