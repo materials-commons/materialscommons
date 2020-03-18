@@ -211,6 +211,9 @@ class EntityActivityImporter implements OnEachRow, WithEvents
             $entity = $this->entityTracker->getEntity($row->entityName);
             $entityStates = $activity->entityStates()->get();
             $entityState = $entityStates->firstWhere('entity_id', $entity->id);
+            if (is_null($entityState)) {
+                return;
+            }
             $this->addValuesToEntityStateAttributes($row->entityAttributes, $entityState);
             $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $entityState, $activity);
         }
