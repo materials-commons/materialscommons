@@ -15,7 +15,9 @@ class PublicDataController extends Controller
     public function index()
     {
         $communities = Community::with('owner')->withCount('datasets')
-                                ->where('public', true)->get();
+                                ->where('public', true)
+                                ->orderBy('name')
+                                ->get();
         return view('public.index', compact('communities'));
     }
 
