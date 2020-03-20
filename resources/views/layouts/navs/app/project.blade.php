@@ -122,7 +122,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5" href="{{route('projects.datasets.create', [$project])}}">
-                    <i class="fa-fw fas fa-upload mr-2"></i>
+                    <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>
                     Publish
                 </a>
             </li>

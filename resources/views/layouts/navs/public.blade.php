@@ -28,12 +28,12 @@
                 @auth
                     <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.publish')}}"
                        href="{{route('public.publish.wizard.choose_create_or_select_project')}}">
-                        <i class="fa-fw fas fa-upload mr-2"></i>
+                        <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>
                         Publish
                     </a>
                 @else
                     <a class="nav-link fs-11 ml-3" href="{{route('login-for-upload')}}">
-                        <i class="fa-fw fas fa-upload mr-2"></i>
+                        <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>
                         Publish
                     </a>
                 @endauth
