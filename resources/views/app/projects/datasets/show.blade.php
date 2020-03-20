@@ -30,7 +30,7 @@
             @else
                 <a class="float-right action-link mr-4"
                    href="{{route('projects.datasets.publish', [$project, $dataset])}}">
-                    <i class="fas fa-upload mr-2"></i>Publish
+                    <i class="fas fa-file-export mr-2"></i>Publish
                 </a>
             @endif
         @endslot
