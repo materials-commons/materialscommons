@@ -23,19 +23,19 @@ class SetupMigratedPublishedDatasetsAction
             try {
                 foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
                     if ($runZipLinker) {
-                        echo "Running zipfile linker\n";
+//                        echo "Running zipfile linker\n";
                         $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
                     }
 
                     if ($runGlobus) {
-                        echo "Running globus\n";
+                        //                        echo "Running globus\n";
                         $this->setupGlobusAccessForDataset($dataset);
                     }
                 }
             } catch (\Exception $e) {
-                echo "Failed on all files for dataset {$dataset->name}/{$dataset->uuid}\n";
+                //                echo "Failed on all files for dataset {$dataset->name}/{$dataset->uuid}\n";
                 $exceptionMessage = $e->getMessage();
-                echo "  Reason: {$exceptionMessage}\n";
+                //                echo "  Reason: {$exceptionMessage}\n";
             }
         });
     }
@@ -45,18 +45,18 @@ class SetupMigratedPublishedDatasetsAction
         $existingZipfilePath = Storage::disk('mcfs')->path($zipfile);
         if (Storage::disk('mcfs')->exists($dataset->zipfilePathPartial())) {
             // No need to link old zipfile to new zipfile
-            echo "No need to link, zipfile already exists.\n";
+            //            echo "No need to link, zipfile already exists.\n";
             return;
         }
         $newZipfilePath = $dataset->zipfilePath();
         try {
             if (!link($existingZipfilePath, $newZipfilePath)) {
-                echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
+                //                echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
             }
         } catch (\Exception $e) {
-            echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
+            //            echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
             $exceptionMessage = $e->getMessage();
-            echo "  Reason: {$exceptionMessage}\n";
+            //            echo "  Reason: {$exceptionMessage}\n";
         }
     }
 
@@ -65,7 +65,7 @@ class SetupMigratedPublishedDatasetsAction
         $endpointId = config('globus.endpoint');
         try {
             $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
-            echo "Globus Path = {$globusPath}\n";
+            //            echo "Globus Path = {$globusPath}\n";
             $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $endpointId,
                 EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
             $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
@@ -78,9 +78,9 @@ class SetupMigratedPublishedDatasetsAction
                 ]);
             }
         } catch (\Exception $e) {
-            echo "Unable to setup globus for dataset {$dataset->name}/{$dataset->uuid}\n";
+            //            echo "Unable to setup globus for dataset {$dataset->name}/{$dataset->uuid}\n";
             $exceptionMessage = $e->getMessage();
-            echo "  Reason: {$exceptionMessage}\n";
+            //            echo "  Reason: {$exceptionMessage}\n";
         }
     }
 }
