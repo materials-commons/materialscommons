@@ -18,6 +18,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property mixed projects
  * @property string $api_token
  * @property boolean is_admin
+ * @property string email
  *
  * @mixin Builder
  */
