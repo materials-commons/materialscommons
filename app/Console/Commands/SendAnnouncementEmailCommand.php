@@ -41,11 +41,14 @@ class SendAnnouncementEmailCommand extends Command
     public function handle()
     {
         ini_set("memory_limit", "4096M");
-        echo config('mail.driver');
 
-        $user = User::findOrFail(1);
-        print_r($user);
-        Mail::bcc($user->email)->send(new AnnouncementMail($user));
+//        $user = User::where('email', 'gtarcea@umich.edu')->first();
+//        Mail::bcc($user->email)->send(new AnnouncementMail($user));
+
+        $this->sendEmail("gtarcea@umich.edu");
+        $this->sendEmail("johnea@umich.edu");
+        $this->sendEmail("bpuchala@umich.edu");
+        $this->sendEmail("tradiasa@umich.edu");
 
 //        DB::table("users")->orderBy('email')->chunk(100, function($users) {
 //            foreach($users as $user) {
@@ -53,5 +56,12 @@ class SendAnnouncementEmailCommand extends Command
 //                Mail::bcc($user->email)->send(new AnnouncementMail($user));
 //            }
 //        });
+    }
+
+    private function sendEmail($emailAddress)
+    {
+        echo "Sending annoucement to: {$emailAddress}\n";
+        $user = User::where('email', $emailAddress)->first();
+        Mail::bcc($user->email)->send(new AnnouncementMail($user));
     }
 }

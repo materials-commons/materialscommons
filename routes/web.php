@@ -27,7 +27,6 @@ use App\Http\Controllers\Web2\Published\PublicDataProjectsController;
 use App\Http\Controllers\Web2\TasksController;
 use App\Http\Controllers\Web2\UsersController;
 use App\Mail\AnnouncementMail;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -64,7 +63,7 @@ Route::get('/home2', function () {
 
 Route::get('preview-mc-email', function () {
     $user = App\Models\User::where('email', 'admin@admin.org')->first();
-    Mail::bcc($user->email)->send(new AnnouncementMail($user));
+//    Mail::bcc($user->email)->send(new AnnouncementMail($user));
     return new AnnouncementMail($user);
 });
 

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\ViewModels\Emails\AnnouncementMailViewModel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -10,10 +11,12 @@ class AnnouncementMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $viewModel;
     private $user;
 
     public function __construct($user)
     {
+        $this->viewModel = new AnnouncementMailViewModel($user);
         $this->user = $user;
     }
 
@@ -24,6 +27,7 @@ class AnnouncementMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Materials Commons Redone!')->view('email.announcement')->with('user', $this->user);
+        $viewModel = new AnnouncementMailViewModel($this->user);
+        return $this->subject('Materials Commons 2.0!')->view('email.announcement')->with('vm', $viewModel);
     }
 }
