@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->string('disk')->nullable()->default('local');
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
             $table->boolean('default_project')->default(false);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_public')->default(false);

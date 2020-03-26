@@ -20,6 +20,7 @@ class CreateExperimentsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')

@@ -22,6 +22,7 @@ class CreateFilesTable extends Migration
             $table->string('path', 700)->nullable()->index();
 
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
             $table->unsignedBigInteger('size')->default(0);
             $table->string('checksum')->default("");
             $table->boolean('current')->default(true);

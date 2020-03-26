@@ -20,6 +20,7 @@ class CreateDatasetsTable extends Migration
             $table->string('license')->nullable();
             $table->string('license_link')->nullable();
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
             $table->string('doi')->nullable();
             $table->datetime('published_at')->nullable();
             $table->datetime('privately_published_at')->nullable();

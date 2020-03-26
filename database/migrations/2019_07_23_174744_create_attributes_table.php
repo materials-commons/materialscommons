@@ -18,6 +18,7 @@ class CreateAttributesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
             $table->morphs('attributable');
             $table->unsignedBigInteger('best_value_id')->nullable();
 

@@ -19,6 +19,7 @@ class CreateEntitiesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

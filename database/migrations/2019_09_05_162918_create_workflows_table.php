@@ -18,6 +18,7 @@ class CreateWorkflowsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('summary')->nullable();
             $table->text('workflow')->nullable();
 
             $table->unsignedBigInteger('project_id');
