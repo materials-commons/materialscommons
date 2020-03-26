@@ -22,7 +22,11 @@ class ImportUsers extends AbstractImporter
     {
         $modelData = [];
         $modelData["email"] = $data["email"];
-        $modelData["name"] = $data["name"];
+        if (isset($data["fullname"])) {
+            $modelData["name"] = $data["fullname"];
+        } else {
+            $modelData["name"] = $data["name"];
+        }
 
         if (isset($data["description"])) {
             $modelData["description"] = $data["description"];
