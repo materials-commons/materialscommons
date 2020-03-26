@@ -25,7 +25,8 @@ class CreateCommunityRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:80',
-            'description' => 'required|string|max:2048',
+            'description' => 'required|string|max:8192',
+            'summary'     => 'required|string|max:100',
             'public'      => 'boolean',
         ];
     }

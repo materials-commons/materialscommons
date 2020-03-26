@@ -20,7 +20,7 @@
                 <thead>
                 <tr>
                     <th>Community</th>
-                    <th>Description</th>
+                    <th>Summary</th>
                     <th>Updated</th>
                     <th>Public?</th>
                     <th></th>
@@ -34,7 +34,7 @@
                                 {{$community->name}}
                             </a>
                         </td>
-                        <td>{{$community->description}}</td>
+                        <td>{{$community->summary}}</td>
                         <td>{{$community->updated_at->diffForHumans()}}</td>
                         <td>{{$community->public ? "Yes" : "No"}}</td>
                         <td>

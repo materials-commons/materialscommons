@@ -22,6 +22,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <input class="form-control" id="summary" name="summary" type="text" placeholder="Summary...">
+                </div>
+
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description..." required></textarea>

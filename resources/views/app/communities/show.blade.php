@@ -24,6 +24,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="name">Summary</label>
+                    <input class="form-control" id="summary" name="summary" value="{{$community->summary}}" type="text"
+                           placeholder="Summary..." readonly>
+                </div>
+
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description..." readonly>{{$community->description}}</textarea>
