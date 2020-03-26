@@ -1,46 +1,39 @@
 @extends('layouts.email')
 
 @section('content')
-    <h4>Below is a starting point for the materials commons announcement email:</h4>
-    <hr>
     <p>
         Hello {{$vm->user()->name}},
     </p>
     <p>
-        We are excited to announce that a completely new version of Materials Commons is
-        available. This is a ground up rewrite of the site that adds many ease of use
-        enhancements. Below is a screenshot for the new published datasets page.
+        We are excited to announce that a completely new version of
+        <a href="https://materialscommons.org">Materials Commons</a> will be available
+        on Friday, April 2nd. The new site offers a number of improvements based on user feedback. We also have
+        exciting new features planned this year.
     </p>
 
-    <div class="col-8">
-        {{--        <img width="400" height="300"--}}
-        <img class="img-fluid" src="{{$vm->embedPngFile('email/published-dataset.png')}}">
-    </div>
-    <br>
-    <p>
-        The new site features a number of improvements and we have many exciting new features planned
-        this year. If you tried Materials Commons in the past and found it difficult to use we hope
-        you will give it another look. We've been busy incorporating feedback and working to improve
-        the site.
-    </p>
-
-    <p>A small list of improvements includes</p>
+    <p>Major enhancements include:</p>
     <ul>
         <li>A completely new and redesigned website</li>
         <li>Enhanced search</li>
-        <li>Replaced the old workflow editor with a simpler tool for describing your experimental steps.</li>
-        <li>Completely redesigned how you publish your data to make it easier to use, including
-            a wizard that guides you through the steps.
+        <li>Improved workflow visualization</li>
+        <li>Faster and easier data publication
         </li>
-        <li>And much, much more.</li>
     </ul>
 
     <p>
-        If you would like to take a tour of the site you can find it at the
+        If you would like to see screenshots and a tour of the site you can find it at the
         <a href="{{makeHelpUrl("tour")}}">Materials Commons 2.0 Tour</a>. Documentation can be found at
-        <a href="{{makeHelpUrl('getting-started')}}">Materials Commons 2.0 Documentation.</a>. And finally Materials
-        Commons is located
-        <a href="http://materialscommons.org">here</a>.
+        <a href="{{makeHelpUrl('getting-started')}}">Materials Commons 2.0 Documentation.</a>.
+    </p>
+    <p>
+        Your data will be automatically uploaded into the new Materials Commons 2.0 site. To login you will need to
+        reset
+        your password. You can easily reset your password by going <a
+                href="https://materialscommons.org/password/reset">here</a>.
+    </p>
+    <p>
+        The old Materials Commons site will be available in readonly mode at
+        <a href="https://materialscommons.eecs.umich.edu">materialscommons.eecs.umich.edu</a>.
     </p>
     <p>
         Thank you!
