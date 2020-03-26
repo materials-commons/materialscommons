@@ -11,6 +11,10 @@ use Spatie\Searchable\SearchResult;
 /**
  * @property integer $id
  * @property string name
+ * @property integer owner_id
+ * @property integer status
+ * @property string description
+ * @property string summary
  *
  * @mixin Builder
  */

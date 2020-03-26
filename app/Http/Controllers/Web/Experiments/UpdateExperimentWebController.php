@@ -10,12 +10,9 @@ use App\Models\Project;
 
 class UpdateExperimentWebController extends Controller
 {
-    public function __invoke(
-        UpdateExperimentRequest $request,
-        UpdateExperimentAction $updateExperimentAction,
-        Project $project,
-        Experiment $experiment
-    ) {
+    public function __invoke(UpdateExperimentRequest $request, UpdateExperimentAction $updateExperimentAction,
+        Project $project, Experiment $experiment)
+    {
         $validated = $request->validated();
         $updateExperimentAction($validated, $experiment);
         return redirect(route('projects.show', compact('project')));

@@ -14,6 +14,9 @@ class CreateExperimentAction
         if (array_key_exists('description', $data)) {
             $experiment->description = $data['description'];
         }
+        if (array_key_exists('summary', $data)) {
+            $experiment->summary = $data['summary'];
+        }
         $experiment->owner_id = auth()->id();
         $experiment->status = ExperimentStatus::InProgress;
         $experiment->save();
