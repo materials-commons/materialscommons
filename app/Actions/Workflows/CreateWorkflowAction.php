@@ -17,6 +17,10 @@ class CreateWorkflowAction
             $workflow->description = $data['description'];
         }
 
+        if (array_key_exists('summary', $data)) {
+            $workflow->description = $data['summary'];
+        }
+
         if (array_key_exists('workflow', $data)) {
             $workflow->workflow = $data['workflow'];
         } elseif (array_key_exists('file_id', $data)) {

@@ -9,6 +9,10 @@
                    placeholder="Workflow Name...">
         </div>
         <div class="form-group">
+            <label for="summary">Summary</label>
+            <input class="form-control" id="summary" value="{{$workflow->summary}}" name="summary">
+        </div>
+        <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description"
                       placeholder="Description...">{{$workflow->description}}</textarea>

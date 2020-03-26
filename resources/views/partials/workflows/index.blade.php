@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Workflow</th>
-        <th>Description</th>
+        <th>Summary</th>
         <th>Updated</th>
         @if(isset($editExperimentWorkflowRoute))
             <th></th>
@@ -18,7 +18,7 @@
                 <a onclick="showWorkflow(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
                    href="#">{{$workflow->name}}</a>
             </td>
-            <td>{{$workflow->description}}</td>
+            <td>{{$workflow->summary}}</td>
             <td>{{$workflow->updated_at->diffForHumans()}}</td>
             @if(isset($editExperimentWorkflowRoute))
                 <td>

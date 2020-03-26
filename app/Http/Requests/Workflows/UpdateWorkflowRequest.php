@@ -25,7 +25,8 @@ class UpdateWorkflowRequest extends FormRequest
     {
         return [
             'workflow'    => 'required|string|max:4096',
-            'description' => 'nullable|string|max:2048',
+            'description' => 'nullable|string|max:8192',
+            'summary'     => 'nullable|string|max:100',
             'name'        => 'required|string|max:80',
         ];
     }

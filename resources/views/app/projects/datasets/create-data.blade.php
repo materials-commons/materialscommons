@@ -27,6 +27,10 @@
                     <label for="authors">Name</label>
                     <input class="form-control" value="{{$dataset->name}}" id="authors" type="text" readonly>
                 </div>
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <input class="form-control" value="{{$dataset->summary}}" id="summary" type="text" readonly>
+                </div>
                 <div class="float-right">
                     <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link mr-3">
                         Edit Details

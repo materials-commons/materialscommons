@@ -26,7 +26,8 @@ class CreateWorkflowRequest extends FormRequest
         return [
             'workflow'    => 'sometimes|string',
             'file_id'     => 'sometimes|integer',
-            'description' => 'nullable|string|max:2048',
+            'description' => 'nullable|string|max:8192',
+            'summary'     => 'nullable|string|max:100',
             'name'        => 'required|string|max:80',
         ];
     }
