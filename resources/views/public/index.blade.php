@@ -24,7 +24,7 @@
                 <tr>
                     <th>Name</th>
                     <th>ID</th>
-                    <th>Description</th>
+                    <th>Summary</th>
                     <th>Authors</th>
                 </tr>
                 </thead>
@@ -71,7 +71,7 @@
                             }
                         },
                         {name: 'id'},
-                        {name: 'description'},
+                        {name: 'summary'},
                         {name: 'authors'},
                     ],
                     columnDefs: [

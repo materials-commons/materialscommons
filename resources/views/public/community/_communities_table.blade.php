@@ -3,7 +3,7 @@
     <tr>
         <th>Community</th>
         <th>Organizer</th>
-        <th>Description</th>
+        <th>Summary</th>
         <th>Datasets</th>
     </tr>
     </thead>
@@ -14,7 +14,7 @@
                 <a href="{{route('public.communities.datasets.index', $community)}}">{{$community->name}}</a>
             </td>
             <td>{{$community->owner->name}}</td>
-            <td>{{$community->description}}</td>
+            <td>{{$community->summary}}</td>
             <td>{{$community->datasets_count}}</td>
         </tr>
     @endforeach

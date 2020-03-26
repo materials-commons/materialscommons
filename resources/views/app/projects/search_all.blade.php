@@ -17,7 +17,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Description</th>
+                    <th>Summary</th>
                     <th>Project</th>
                     <th>Type</th>
                 </tr>
@@ -29,7 +29,7 @@
                             <td>
                                 <a href="{{$searchResult->url}}">{{$searchResult->title}}</a>
                             </td>
-                            <td>{{$searchResult->searchable->description}}</td>
+                            <td>{{$searchResult->searchable->summary}}</td>
                             <td>
                                 @if($searchResult->searchable->type != 'project' && $searchResult->searchable->type != 'community')
                                     <a href="{{route('projects.show', [$searchResult->searchable->project])}}">{{$searchResult->searchable->project->name}}</a>

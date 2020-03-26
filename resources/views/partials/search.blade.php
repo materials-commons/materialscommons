@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Description</th>
+        <th>Summary</th>
         <th>Type</th>
     </tr>
     </thead>
@@ -13,7 +13,7 @@
                 <td>
                     <a href="{{$searchResult->url}}">{{$searchResult->title}}</a>
                 </td>
-                <td>{{$searchResult->searchable->description}}</td>
+                <td>{{$searchResult->searchable->summary}}</td>
                 <td>{{$searchResult->searchable->type}}</td>
             </tr>
         @endforeach
