@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Sample</th>
-        <th>Description</th>
+        <th>Summary</th>
         <th>Updated</th>
     </tr>
     </thead>
@@ -14,7 +14,7 @@
                     <a href="{{route('projects.entities.show', [$project, $entity])}}">{{$entity->name}}</a>
                 @endisset
             </td>
-            <td>{{$entity->description}}</td>
+            <td>{{$entity->summary}}</td>
             <td>{{$entity->updated_at->diffForHumans()}}</td>
         </tr>
     @endforeach

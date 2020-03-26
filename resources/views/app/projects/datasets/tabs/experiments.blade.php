@@ -8,7 +8,7 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Summary</th>
             </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                             {{$experiment->name}}
                         </a>
                     </td>
-                    <td>{{$experiment->description}}</td>
+                    <td>{{$experiment->summary}}</td>
                 </tr>
             @endforeach
             </tbody>

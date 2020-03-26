@@ -13,7 +13,7 @@
             <tr>
                 <th>Name</th>
                 <th>Experiments</th>
-                <th>Description</th>
+                <th>Summary</th>
                 <th>Selected</th>
             </tr>
             </thead>
@@ -24,7 +24,7 @@
                         <a href="#">{{$workflow->name}}</a>
                     </td>
                     <td>{{$workflowExperiments($workflow)}}</td>
-                    <td>{{$workflow->description}}</td>
+                    <td>{{$workflow->summary}}</td>
                     <td>
                         <div class="form-group form-check-inline">
                             <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"

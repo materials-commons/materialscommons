@@ -8,7 +8,7 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Summary</th>
             </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                             {{$community->name}}
                         </a>
                     </td>
-                    <td>{{$community->description}}</td>
+                    <td>{{$community->summary}}</td>
                 </tr>
             @endforeach
             </tbody>

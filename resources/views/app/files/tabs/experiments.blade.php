@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Experiment</th>
-        <th>Description</th>
+        <th>Summary</th>
         <th>Updated</th>
     </tr>
     </thead>
@@ -12,7 +12,7 @@
             <td>
                 <a href="{{route('projects.experiments.show', [$project, $experiment])}}">{{$experiment->name}}</a>
             </td>
-            <td>{{$experiment->description}}</td>
+            <td>{{$experiment->summary}}</td>
             <td>{{$experiment->updated_at->diffForHumans()}}</td>
         </tr>
     @endforeach
