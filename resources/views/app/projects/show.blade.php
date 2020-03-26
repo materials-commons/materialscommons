@@ -48,7 +48,7 @@
                 <thead>
                 <th>Name</th>
                 <th>ID</th>
-                <th>Description</th>
+                <th>Summary</th>
                 <th>Updated</th>
                 <th></th>
                 </thead>
@@ -83,7 +83,7 @@
                             }
                         },
                         {name: 'id'},
-                        {name: 'description'},
+                        {name: 'summary'},
                         {
                             name: 'updated_at',
                             render: (data, type, row) => {
