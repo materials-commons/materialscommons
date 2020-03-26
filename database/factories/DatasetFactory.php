@@ -5,15 +5,16 @@
 use App\Models\Dataset;
 use Faker\Generator as Faker;
 
-$factory->define(Dataset::class, function(Faker $faker) {
+$factory->define(Dataset::class, function (Faker $faker) {
     return [
         'name'           => "Dataset {$faker->randomNumber()}",
         'description'    => "Dataset description",
-        'owner_id'       => function() {
+        'summary'        => "Dataset summary",
+        'owner_id'       => function () {
             return factory(App\Models\User::class)->create()->id;
         },
         'uuid'           => $faker->uuid,
-        'project_id'     => function() {
+        'project_id'     => function () {
             return factory(App\Models\Project::class)->create()->id;
         },
         'license'        => 'Public Domain Dedication and License (PDDL)',

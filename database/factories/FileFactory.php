@@ -10,6 +10,7 @@ $factory->define(App\Models\File::class, function (Faker $faker) {
     return [
         'name'        => $fileName,
         'description' => $faker->sentence,
+        'summary'     => 'File summary',
         'uuid'        => $faker->uuid,
         'checksum'    => $faker->md5,
         'mime_type'   => $faker->mimeType,

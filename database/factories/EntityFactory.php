@@ -9,6 +9,7 @@ $factory->define(Entity::class, function (Faker $faker) {
     return [
         'name'        => "Sample {$faker->randomNumber()}",
         'description' => "Sample description",
+        'summary'     => "Sample summary",
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;

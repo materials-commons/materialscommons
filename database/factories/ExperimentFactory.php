@@ -9,6 +9,7 @@ $factory->define(Experiment::class, function (Faker $faker) {
     return [
         'name'        => "Experiment {$faker->randomNumber()}",
         'description' => "Experiment description",
+        'summary'     => "Experiment summary",
         'loading'     => false,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;

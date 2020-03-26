@@ -9,6 +9,7 @@ $factory->define(Activity::class, function (Faker $faker) {
     return [
         'name'        => "Process {$faker->randomNumber()}",
         'description' => "Process Description",
+        'summary'     => "Process summary",
         'uuid'        => $faker->uuid,
         'owner_id'    => function () {
             return factory(App\Models\User::class)->create()->id;
