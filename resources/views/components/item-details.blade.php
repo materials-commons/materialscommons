@@ -8,7 +8,16 @@
             </div>
         </div>
     </div>
+
     {{$top ?? ''}}
+
+    @isset($item->summary)
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <input class="form-control" id="summary" value="{{$item->summary}}" readonly>
+        </div>
+    @endisset
+
     <div class="form-group">
         @isset($item->description)
             <label for="description">Description</label>
@@ -27,4 +36,5 @@
     </div>
 
     {{$bottom ?? ''}}
+
 </form>

@@ -8,6 +8,7 @@ $factory->define(App\Models\Project::class, function (Faker $faker) {
     return [
         'name'            => "Project {$faker->randomNumber()}",
         'description'     => 'Project description',
+        'summary'         => 'Project summary',
         'owner_id'        => function () {
             return factory(App\Models\User::class)->create()->id;
         },

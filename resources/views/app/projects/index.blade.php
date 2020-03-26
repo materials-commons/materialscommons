@@ -23,7 +23,7 @@
                 <thead>
                 <tr>
                     <th>Project</th>
-                    <th>Description</th>
+                    <th>Summary</th>
                     <th>Updated</th>
                     <th></th>
                 </tr>
@@ -34,7 +34,7 @@
                         <td>
                             <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                         </td>
-                        <td>{{$proj->description}}</td>
+                        <td>{{$proj->summary}}</td>
                         <td>{{$proj->updated_at->diffForHumans()}}</td>
                         <td>
                             <div class="float-right">

@@ -22,8 +22,13 @@
                     <input class="form-control" id="name" value="{{$project->name}}" name="name">
                 </div>
                 <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <input class="form-control" id="summary" value="{{$project->summary}}" name="summary">
+                </div>
+                <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description">{{$project->description}}</textarea>
+                    <textarea class="form-control" id="description"
+                              name="description">{{$project->description}}</textarea>
                 </div>
                 <div class="form-group form-check-inline">
                     <input type="hidden" name="default_project" value="0">

@@ -15,6 +15,7 @@ use Spatie\Searchable\SearchResult;
  * @property string $description
  * @property mixed workflows
  * @property mixed experiments
+ * @property integer owner_id
  *
  * @mixin Builder
  */
