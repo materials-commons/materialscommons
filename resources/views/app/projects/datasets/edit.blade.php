@@ -28,6 +28,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <input class="form-control" id="summary" value="{{$dataset->summary}}" name="summary">
+                </div>
+
+                <div class="form-group">
                     <label for="authors">Authors and Affiliations</label>
                     <input class="form-control" id="authors" name="authors" type="text"
                            value="{{$dataset->authors}}"
