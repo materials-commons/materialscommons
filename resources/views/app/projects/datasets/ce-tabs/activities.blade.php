@@ -67,5 +67,12 @@
                 activity_id: activity.id,
             });
         }
+
+        let x = 'steffan';
+        let jewel4 = x;
+
+        jewels = ['glenn', 'jewel5', 'jewel6'];
+        jewels.append('steffan');
+        jewels.prepend('luna');
     </script>
 @endpush

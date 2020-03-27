@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Workflows\DestroyProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\EditExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\EditProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\IndexProjectWorkflowsWebController;
+use App\Http\Controllers\Web\Workflows\ShowAttachWorkflowsToExperimentWebController;
 use App\Http\Controllers\Web\Workflows\ShowProjectWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\StoreExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Workflows\StoreProjectWorkflowWebController;
@@ -30,6 +31,10 @@ Route::post('/projects/{project}/experiments/{experiment}/workflows', StoreExper
 Route::get('/projects/{project}/experiments/{experiment}/workflows/{workflow}/edit',
     EditExperimentWorkflowWebController::class)
      ->name('projects.experiments.workflows.edit');
+
+Route::get('/projects/{project}/experiments{experiment}/workflows/attach',
+    ShowAttachWorkflowsToExperimentWebController::class)
+     ->name('projects.experiments.workflows.attach');
 
 // Project level workflows
 
