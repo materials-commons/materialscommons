@@ -37,8 +37,35 @@ class RowTracker
     {
         $index = 0;
         $cellIterator = $row->getDelegate()->getCellIterator();
+
         foreach ($cellIterator as $cell) {
             $value = $cell->getValue();
+//            if ($cell->getCoordinate() === "E2") {
+//                $valueFormatted = $cell->getFormattedValue();
+//                $valueCalculated = $cell->getCalculatedValue();
+//                $dataType = $cell->getDataType();
+//                $coordinates = $cell->getCoordinate();
+//                echo "Coordinates = {$coordinates}\n";
+//                echo "cell value = {$value}\n";
+//                echo "cell valueFormatted = {$valueFormatted}\n";
+//                echo "cell valueCalculated = {$valueCalculated}\n";
+//                echo "dataType = {$dataType}\n";
+//                $numberFormat = $cell->getStyle()->getNumberFormat()->getFormatCode();
+//                echo "numberFormat = {$numberFormat}\n";
+//
+//                $cell2 = $row->getDelegate()->getWorksheet()->getCell("E2");
+//                $valueFormatted = $cell2->getFormattedValue();
+//                $valueCalculated = $cell2->getCalculatedValue();
+//                $dataType = $cell2->getDataType();
+//                $coordinates = $cell2->getCoordinate();
+//                echo "Coordinates2 = {$coordinates}\n";
+//                echo "cell value2 = {$value}\n";
+//                echo "cell valueFormatted2 = {$valueFormatted}\n";
+//                echo "cell valueCalculated2 = {$valueCalculated}\n";
+//                echo "dataType2 = {$dataType}\n";
+//                $numberFormat = $cell2->getStyle()->getNumberFormat()->getFormatCode();
+//                echo "numberFormat2 = {$numberFormat}\n";
+//            }
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;

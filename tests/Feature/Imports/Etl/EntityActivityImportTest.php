@@ -382,4 +382,41 @@ class EntityActivityImportTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+    /** @test */
+    public function test_dates_load_properly()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        Excel::import($importer, Storage::disk('test_data')->path("etl/d1_with_date.csv"));
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function read_date_cell()
+    {
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $spreadsheet = $reader->load(Storage::disk('test_data')->path("etl/d1_with_date.xlsx"));
+        $cell = $spreadsheet->getActiveSheet()->getCell("E2");
+        $value = $cell->getValue();
+        $valueFormatted = $cell->getFormattedValue();
+        $valueCalculated = $cell->getCalculatedValue();
+        $dataType = $cell->getDataType();
+        echo "cell value = {$value}\n";
+        echo "cell valueFormatted = {$valueFormatted}\n";
+        echo "cell valueCalculated = {$valueCalculated}\n";
+        echo "dataType = {$dataType}\n";
+        $numberFormat = $cell->getStyle()->getNumberFormat()->getFormatCode();
+        echo "numberFormat = {$numberFormat}\n";
+        $this->assertTrue(true);
+    }
 }
