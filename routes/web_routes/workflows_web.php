@@ -32,7 +32,7 @@ Route::get('/projects/{project}/experiments/{experiment}/workflows/{workflow}/ed
     EditExperimentWorkflowWebController::class)
      ->name('projects.experiments.workflows.edit');
 
-Route::get('/projects/{project}/experiments{experiment}/workflows/attach',
+Route::get('/projects/{project}/experiments/{experiment}/workflows/attach',
     ShowAttachWorkflowsToExperimentWebController::class)
      ->name('projects.experiments.workflows.attach');
 

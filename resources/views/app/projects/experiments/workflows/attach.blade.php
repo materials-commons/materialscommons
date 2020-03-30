@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($workflows as $workflow)
+                @foreach($project->workflows as $workflow)
                     <tr>
                         <td>
                             {{$workflow->name}}
@@ -39,6 +39,11 @@
                 @endforeach
                 </tbody>
             </table>
+            <br>
+            <div class="float-right mr-2">
+                <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
+            </div>
+
         @endslot
     @endcomponent
 @stop

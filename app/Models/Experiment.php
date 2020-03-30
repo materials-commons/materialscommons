@@ -15,6 +15,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer status
  * @property string description
  * @property string summary
+ * @property mixed workflows
  *
  * @mixin Builder
  */
