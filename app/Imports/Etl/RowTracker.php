@@ -3,7 +3,9 @@
 namespace App\Imports\Etl;
 
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Row;
+//use Maatwebsite\Excel\Row;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
 class RowTracker
 {
@@ -36,15 +38,22 @@ class RowTracker
     public function loadRow(Row $row, HeaderTracker $headerTracker)
     {
         $index = 0;
-        $cellIterator = $row->getDelegate()->getCellIterator();
+        $cellIterator = $row->getCellIterator();
+//        try {
+//            $cellIterator->setIterateOnlyExistingCells(true);
+//        } catch (\Exception $e) {
+//            return;
+//        }
 
         foreach ($cellIterator as $cell) {
-            $value = $cell->getValue();
+            $value = $cell->getFormattedValue();
+//            echo "value = {$value}\n";
 //            if ($cell->getCoordinate() === "E2") {
 //                $valueFormatted = $cell->getFormattedValue();
 //                $valueCalculated = $cell->getCalculatedValue();
 //                $dataType = $cell->getDataType();
 //                $coordinates = $cell->getCoordinate();
+//
 //                echo "Coordinates = {$coordinates}\n";
 //                echo "cell value = {$value}\n";
 //                echo "cell valueFormatted = {$valueFormatted}\n";
@@ -52,19 +61,6 @@ class RowTracker
 //                echo "dataType = {$dataType}\n";
 //                $numberFormat = $cell->getStyle()->getNumberFormat()->getFormatCode();
 //                echo "numberFormat = {$numberFormat}\n";
-//
-//                $cell2 = $row->getDelegate()->getWorksheet()->getCell("E2");
-//                $valueFormatted = $cell2->getFormattedValue();
-//                $valueCalculated = $cell2->getCalculatedValue();
-//                $dataType = $cell2->getDataType();
-//                $coordinates = $cell2->getCoordinate();
-//                echo "Coordinates2 = {$coordinates}\n";
-//                echo "cell value2 = {$value}\n";
-//                echo "cell valueFormatted2 = {$valueFormatted}\n";
-//                echo "cell valueCalculated2 = {$valueCalculated}\n";
-//                echo "dataType2 = {$dataType}\n";
-//                $numberFormat = $cell2->getStyle()->getNumberFormat()->getFormatCode();
-//                echo "numberFormat2 = {$numberFormat}\n";
 //            }
             if ($this->isBlankCell($value)) {
                 $index++;
@@ -72,6 +68,7 @@ class RowTracker
             }
 
             if ($index === 0) {
+                echo "Processing value {$value}\n";
                 $this->entityName = $value;
             } elseif ($index === 1) {
                 $this->relatedActivityName = $value;
@@ -115,7 +112,7 @@ class RowTracker
 
     private function isBlankCell($value)
     {
-        if ($value === null) {
+        if (is_null($value)) {
             return true;
         }
 

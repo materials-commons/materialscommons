@@ -11,14 +11,10 @@ use App\Models\AttributeValue;
 use App\Models\Entity;
 use App\Models\EntityState;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\OnEachRow;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterImport;
-use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Events\BeforeSheet;
-use Maatwebsite\Excel\Row;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
-class EntityActivityImporter implements OnEachRow, WithEvents
+class EntityActivityImporter
 {
     private $projectId;
     private $experimentId;
@@ -26,7 +22,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
 
     private $sawHeader = false;
     private $headerTracker;
-    public $worksheet;
+    private $worksheet;
     private $entityTracker;
     private $activityTracker;
     private $rowNumber;
@@ -46,39 +42,92 @@ class EntityActivityImporter implements OnEachRow, WithEvents
         $this->activityTracker = new HashedActivityTracker();
     }
 
-    public function registerEvents(): array
+    public function execute($spreadsheetPath)
     {
-        return [
-            BeforeSheet::class => function (BeforeSheet $event) {
-                // For each worksheet reset some of the state
-                $this->sawHeader = false;
-                $this->headerTracker = new HeaderTracker();
-                $this->worksheet = $event->getDelegate()->getDelegate();
-                $this->rowNumber = 0;
-                $this->currentSheetRows = collect();
-            },
-
-            AfterSheet::class => function (AfterSheet $event) {
-                // Sheet processed, now process the rows associated with it
-                $this->currentSheetRows->each(function (RowTracker $row) {
-                    if (!$this->entityTracker->hasEntity($row->entityName)) {
-                        $this->addNewEntity($row);
-                    } else {
-                        $this->addToExistingEntity($row);
-                    }
-                });
-            },
-
-            AfterImport::class => function (AfterImport $event) {
-                // All sheets processed and loaded, now build relationships
-                // from parent column.
-                $this->createActivityRelationships();
-            },
-        ];
+        $reader = new Xlsx();
+//        $reader->setReadEmptyCells(false);
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($spreadsheetPath);
+        $worksheets = $spreadsheet->getAllSheets();
+        foreach ($worksheets as $worksheet) {
+            $title = $worksheet->getTitle();
+            $highest = $worksheet->getHighestRow();
+            echo "highest = {$highest}\n";
+            echo "Processing worksheet {$title}\n";
+            $this->beforeSheet($worksheet);
+            foreach ($worksheet->getRowIterator() as $row) {
+                echo "row\n";
+//                $this->onRow($row);
+            }
+            $this->afterSheet();
+        }
+        $this->afterImport();
     }
 
-    public function onRow(Row $row)
+    private function beforeSheet($worksheet)
     {
+        echo "beforeSheet\n";
+        $this->sawHeader = false;
+        $this->headerTracker = new HeaderTracker();
+        $this->worksheet = $worksheet;
+//        $this->worksheet = $event->getDelegate()->getDelegate();
+        $this->rowNumber = 0;
+        $this->currentSheetRows = collect();
+    }
+
+    private function afterSheet()
+    {
+        echo "afterSheet\n";
+        $this->currentSheetRows->each(function (RowTracker $row) {
+            if (!$this->entityTracker->hasEntity($row->entityName)) {
+                $this->addNewEntity($row);
+            } else {
+                $this->addToExistingEntity($row);
+            }
+        });
+    }
+
+    private function afterImport()
+    {
+        // All sheets processed and loaded, now build relationships
+        // from parent column.
+        $this->createActivityRelationships();
+    }
+
+//    public function registerEvents(): array
+//    {
+//        return [
+//            BeforeSheet::class => function (BeforeSheet $event) {
+//                // For each worksheet reset some of the state
+//                $this->sawHeader = false;
+//                $this->headerTracker = new HeaderTracker();
+//                $this->worksheet = $event->getDelegate()->getDelegate();
+//                $this->rowNumber = 0;
+//                $this->currentSheetRows = collect();
+//            },
+//
+//            AfterSheet::class => function (AfterSheet $event) {
+//                // Sheet processed, now process the rows associated with it
+//                $this->currentSheetRows->each(function (RowTracker $row) {
+//                    if (!$this->entityTracker->hasEntity($row->entityName)) {
+//                        $this->addNewEntity($row);
+//                    } else {
+//                        $this->addToExistingEntity($row);
+//                    }
+//                });
+//            },
+//
+//            AfterImport::class => function (AfterImport $event) {
+//                // All sheets processed and loaded, now build relationships
+//                // from parent column.
+//                $this->createActivityRelationships();
+//            },
+//        ];
+//    }
+
+    private function onRow(Row $row)
+    {
+        echo "onRow\n";
         if (!$this->sawHeader) {
             $this->processHeader($row);
         } else {
@@ -94,7 +143,7 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     private function processHeader(Row $row)
     {
         $index = 0;
-        $cellIterator = $row->getDelegate()->getCellIterator();
+        $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
         foreach ($cellIterator as $cell) {
             if ($index > 1) {
@@ -113,6 +162,8 @@ class EntityActivityImporter implements OnEachRow, WithEvents
     // Process a sample in the worksheet
     private function processSample(Row $row)
     {
+        $title = $this->worksheet->getTitle();
+        echo "processSample for worksheet {$title}\n";
         $rowTracker = new RowTracker($this->rowNumber, $this->worksheet->getTitle());
         $rowTracker->loadRow($row, $this->headerTracker);
         $this->rows->push($rowTracker);
