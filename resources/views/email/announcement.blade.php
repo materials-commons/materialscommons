@@ -22,8 +22,11 @@
 
     <p>
         If you would like to see screenshots and a tour of the site you can find it at the
-        <a href="{{makeHelpUrl("tour")}}">Materials Commons 2.0 Tour</a>. Documentation can be found at
-        <a href="{{makeHelpUrl('getting-started')}}">Materials Commons 2.0 Documentation.</a>.
+        <a href="https://materialscommons.org/docs/docs/tour/">Materials Commons 2.0 Tour</a>. Documentation can be
+        found at
+        <a href="https://materialscommons.org/docs/docs/getting-started/">Materials Commons 2.0 Documentation.</a><b>
+            These and other links
+            will be available starting on April 8th.</b>
     </p>
     <p>
         Your data will be automatically uploaded from Materials Commons to Materials Commons 2.0 on April 6th
@@ -48,7 +51,7 @@
     </p>
     <p>
         <small>
-            The Materials Commons is provided by the <a href="prisms-center.org">PRISMS Center</a> which
+            The Materials Commons is provided by the <a href="http://prisms-center.org">PRISMS Center</a> which
             is supported by the U.S. Department of Energy (DOE).
         </small>
     </p>
