@@ -4,10 +4,6 @@ namespace App\Actions\Migration;
 
 use Illuminate\Support\Carbon;
 
-class Datadirs2ndTime
-{
-}
-
 class MigrateRethinkdbDataAction
 {
     use LineHandler;
