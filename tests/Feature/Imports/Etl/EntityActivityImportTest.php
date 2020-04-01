@@ -126,7 +126,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        $importer->execute(Storage::disk('test_data')->path('etl/d006-abc-113'), null, \Maatwebsite\Excel\Excel::XLSX);
+        $importer->execute(Storage::disk('test_data')->path('etl/d006-abc-113'));
 
         // Check entities and entity attributes
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
