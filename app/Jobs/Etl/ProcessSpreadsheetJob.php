@@ -11,7 +11,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ProcessSpreadsheetJob implements ShouldQueue
 {
@@ -39,8 +38,8 @@ class ProcessSpreadsheetJob implements ShouldQueue
     {
         $file = File::find($this->fileId);
         $uuidPath = $this->getFilePathForFile($file);
-        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-        Excel::import($importer, $filePath, null, \Maatwebsite\Excel\Excel::XLSX);
+        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
+        $importer->execute($filePath);
     }
 }
