@@ -14,7 +14,6 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
 class EntityActivityImportTest extends TestCase
@@ -99,9 +98,10 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
         $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
         $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
+
         $attrWith2Values = Attribute::where('name', 'bead width')->first();
-        $this->assertDatabaseHas('attribute_values',
-            ['attribute_id' => $attrWith2Values->id, 'val' => '{"value":122.4135}']);
+        $attrValue = AttributeValue::where('attribute_id', $attrWith2Values->id)->first();
+        $this->assertEquals(122.4135, $attrValue->val["value"]);
 
         // Check activity and activity attributes
         $this->assertDatabaseHas('activities', ['name' => 'sem']);
@@ -132,9 +132,10 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
         $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
         $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
+
         $attrWith2Values = Attribute::where('name', 'bead width')->first();
-        $this->assertDatabaseHas('attribute_values',
-            ['attribute_id' => $attrWith2Values->id, 'val' => '{"value":122.4135}']);
+        $attrValue = AttributeValue::where('attribute_id', $attrWith2Values->id)->first();
+        $this->assertEquals(122.4135, $attrValue->val["value"]);
 
         // Check activity and activity attributes
         $this->assertDatabaseHas('activities', ['name' => 'sem']);
@@ -173,8 +174,9 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('attributes',
             ['name' => 'stress relief temperature', 'attributable_type' => Activity::class]);
         $stressReliefAttr = Attribute::where('name', 'stress relief temperature')->first();
-        $this->assertDatabaseHas('attribute_values',
-            ['attribute_id' => $stressReliefAttr->id, 'val' => '{"value":2}', 'unit' => "°C"]);
+        $attrValue = AttributeValue::where('attribute_id', $stressReliefAttr->id)->first();
+        $this->assertEquals(2, $attrValue->val["value"]);
+        $this->assertEquals("°C", $attrValue->unit);
     }
 
     /** @test */
@@ -397,28 +399,7 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-//        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_date.xlsx"));
         $importer->execute(Storage::disk('test_data')->path("etl/d1.xlsx"));
-//        Excel::import($importer, Storage::disk('test_data')->path("etl/d1_with_date.csv"));
-        $this->assertTrue(true);
-    }
-
-    /** @test */
-    public function read_date_cell()
-    {
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $spreadsheet = $reader->load(Storage::disk('test_data')->path("etl/d1_with_date.xlsx"));
-        $cell = $spreadsheet->getActiveSheet()->getCell("E2");
-        $value = $cell->getValue();
-        $valueFormatted = $cell->getFormattedValue();
-        $valueCalculated = $cell->getCalculatedValue();
-        $dataType = $cell->getDataType();
-        echo "cell value = {$value}\n";
-        echo "cell valueFormatted = {$valueFormatted}\n";
-        echo "cell valueCalculated = {$valueCalculated}\n";
-        echo "dataType = {$dataType}\n";
-        $numberFormat = $cell->getStyle()->getNumberFormat()->getFormatCode();
-        echo "numberFormat = {$numberFormat}\n";
         $this->assertTrue(true);
     }
 }

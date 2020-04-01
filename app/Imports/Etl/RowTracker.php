@@ -3,9 +3,9 @@
 namespace App\Imports\Etl;
 
 use Illuminate\Support\Str;
-//use Maatwebsite\Excel\Row;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
+
+//use Maatwebsite\Excel\Row;
 
 class RowTracker
 {
@@ -39,36 +39,16 @@ class RowTracker
     {
         $index = 0;
         $cellIterator = $row->getCellIterator();
-//        try {
-//            $cellIterator->setIterateOnlyExistingCells(true);
-//        } catch (\Exception $e) {
-//            return;
-//        }
+        $cellIterator->setIterateOnlyExistingCells(false);
 
         foreach ($cellIterator as $cell) {
             $value = $cell->getFormattedValue();
-//            echo "value = {$value}\n";
-//            if ($cell->getCoordinate() === "E2") {
-//                $valueFormatted = $cell->getFormattedValue();
-//                $valueCalculated = $cell->getCalculatedValue();
-//                $dataType = $cell->getDataType();
-//                $coordinates = $cell->getCoordinate();
-//
-//                echo "Coordinates = {$coordinates}\n";
-//                echo "cell value = {$value}\n";
-//                echo "cell valueFormatted = {$valueFormatted}\n";
-//                echo "cell valueCalculated = {$valueCalculated}\n";
-//                echo "dataType = {$dataType}\n";
-//                $numberFormat = $cell->getStyle()->getNumberFormat()->getFormatCode();
-//                echo "numberFormat = {$numberFormat}\n";
-//            }
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
             }
 
             if ($index === 0) {
-                echo "Processing value {$value}\n";
                 $this->entityName = $value;
             } elseif ($index === 1) {
                 $this->relatedActivityName = $value;
