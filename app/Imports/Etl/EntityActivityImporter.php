@@ -46,13 +46,25 @@ class EntityActivityImporter
     {
         $reader = new Xlsx();
         $reader->setReadEmptyCells(true);
-        $reader->setReadDataOnly(true);
+        $reader->setReadDataOnly(false);
         $spreadsheet = $reader->load($spreadsheetPath);
         $worksheets = $spreadsheet->getAllSheets();
+        $blankRowCount = 0;
         foreach ($worksheets as $worksheet) {
             $this->beforeSheet($worksheet);
             foreach ($worksheet->getRowIterator() as $row) {
-                $this->onRow($row);
+                if (!$this->onRow($row)) {
+                    // saw blank row
+                    $blankRowCount++;
+                } else {
+                    // Not a blank row so reset blankRowCount
+                    $blankRowCount = 0;
+                }
+                if ($blankRowCount >= 10) {
+                    // when we've seen 10 or more consecutive blank rows then
+                    // we stop processing data
+                    break;
+                }
             }
             $this->afterSheet();
         }
@@ -90,8 +102,9 @@ class EntityActivityImporter
     {
         if (!$this->sawHeader) {
             $this->processHeader($row);
+            return true;
         } else {
-            $this->processSample($row);
+            return $this->processSample($row);
         }
     }
 
@@ -124,8 +137,12 @@ class EntityActivityImporter
     {
         $rowTracker = new RowTracker($this->rowNumber, $this->worksheet->getTitle());
         $rowTracker->loadRow($row, $this->headerTracker);
+        if ($rowTracker->entityName == "") {
+            return false;
+        }
         $this->rows->push($rowTracker);
         $this->currentSheetRows->push($rowTracker);
+        return true;
     }
 
     private function addNewEntity(RowTracker $row)

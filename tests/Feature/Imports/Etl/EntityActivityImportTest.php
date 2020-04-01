@@ -399,7 +399,10 @@ class EntityActivityImportTest extends TestCase
         ]);
 
         $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
-        $importer->execute(Storage::disk('test_data')->path("etl/d1.xlsx"));
-        $this->assertTrue(true);
+        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_date.xlsx"));
+
+        $attr = Attribute::where('name', 'date completed')->first();
+        $attrValue = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals("03/05/20", $attrValue->val["value"]);
     }
 }
