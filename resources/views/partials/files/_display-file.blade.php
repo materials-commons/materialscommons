@@ -2,7 +2,7 @@
     @switch($fileType)
         @case("image")
         <div class="col-lg-10">
-            <img src="{{route('projects.files.download', [$project, $file])}}" class="img-fluid">
+            <img src="{{$downloadRoute}}" class="img-fluid">
         </div>
         @break
 
@@ -14,17 +14,21 @@
 
         @case("pdf")
         <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.download', [$project, $file])}}">
+            <embed class="col-xs-8 embed-responsive-item"
+                   src="{{$downloadRoute}}">
         </div>
         @break
 
         @case("excel")
-        @include('partials.files._display-excel-file', ['fileContents' => $fileContents])
+        @include('partials.files._display-excel-file', [
+            'fileContents' => $fileContents
+        ])
         @break
 
         @case("office")
         <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.download', [$project, $file])}}">
+            <embed class="col-xs-8 embed-responsive-item"
+                   src="{{$downloadRoute}}">
         </div>
         @break
 
@@ -34,4 +38,3 @@
 @else
     <span class="ml-3">Unable to display file, it may not exist or have been converted yet</span>
 @endif
-
