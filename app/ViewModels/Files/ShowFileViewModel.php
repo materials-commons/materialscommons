@@ -65,11 +65,11 @@ class ShowFileViewModel extends ViewModel
         ];
 
         $this->officeTypes = [
-//            "application/vnd.ms-excel"                                                  => true,
+            "application/vnd.ms-excel"                                                  => true,
             "application/vnd.ms-powerpoint"                                             => true,
             "application/msword"                                                        => true,
             "application/vnd.openxmlformats-officedocument.presentationml.presentation" => true,
-//            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"         => true,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"         => true,
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"   => true,
         ];
 
@@ -122,9 +122,9 @@ class ShowFileViewModel extends ViewModel
             return "pdf";
         }
 
-        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
-            return "excel";
-        }
+//        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
+//            return "excel";
+//        }
 
         if (array_key_exists($this->file->mime_type, $this->officeTypes)) {
             return "office";

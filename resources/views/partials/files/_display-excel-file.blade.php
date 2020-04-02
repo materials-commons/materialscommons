@@ -27,7 +27,7 @@
             // console.log('past base64ToArrayBuffer', fileContents);
             let workbook = xlsx.read(fileContents, {type: "base64"});
             console.log('past xlsx.read');
-            let first_sheet_name = workbook.SheetNames[0];
+            let first_sheet_name = workbook.SheetNames[2];
             console.log('first_sheet_name', first_sheet_name);
             let sheet = workbook.Sheets[first_sheet_name];
             console.log(sheet);
