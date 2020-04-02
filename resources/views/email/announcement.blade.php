@@ -16,7 +16,7 @@
         <li>A completely new and redesigned website</li>
         <li>Enhanced search</li>
         <li>Faster and easier data publication</li>
-        <li>Improved workflow of your visualization</li>
+        <li>Improved visualization of your scientific workflow</li>
         <li>Streamlined uploads/downloads using Globus for large datasets</li>
     </ul>
 
@@ -33,18 +33,18 @@
         and will be available for your viewing on April 8th. To login you will need to
         reset
         your password. You can easily reset your password by going <a
-                href="https://materialscommons.org/password/reset">here</a>. During the transition on April 6th,
-        Materials Commons will not be available upload new data.
+                href="https://materialscommons.org/password/reset">here</a>. During the transition on April 6 and 7,
+        Materials Commons will not be available to upload new data.
     </p>
     <p>
-        After the transition on April 6th, the old Materials Commons site will be available in readonly mode at
+        After the transition on April 6, the old Materials Commons site will be available in readonly mode at
         <a href="https://materialscommons.eecs.umich.edu">materialscommons.eecs.umich.edu</a> for a period of time
         for you to make sure that the movement of your information was successful.
     </p>
     <p>
         Thank you for your use of Materials Commons! We are committed to meeting the
         information infrastructure needs of the materials community and appreciate your support
-        and feedbackup. If you have questions or feedback you can send email to Glenn Tarcea (gtarcea@umich.edu).
+        and feedback. If you have questions or comments you can send email to Glenn Tarcea (gtarcea@umich.edu).
     </p>
     <p>
         The Materials Commons Team
