@@ -26,6 +26,7 @@
     "maatwebsite/excel": "^3.1",
     "mavinoo/laravel-batch": "dev-master",
     "santigarcor/laratrust": "5.2.*",
+    "spatie/laravel-backup": "^6.8",
     "spatie/laravel-json-api-paginate": "^1.5",
     "spatie/laravel-query-builder": "^2.0",
     "spatie/laravel-searchable": "^1.5",
