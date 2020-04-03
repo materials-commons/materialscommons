@@ -97,6 +97,7 @@ return [
              */
             'disks'           => [
                 'mcfs_backup',
+                'local_backup',
             ],
         ],
 
