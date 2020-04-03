@@ -45,15 +45,17 @@ class SendAnnouncementEmailCommand extends Command
 //        $user = User::where('email', 'gtarcea@umich.edu')->first();
 //        Mail::bcc($user->email)->send(new AnnouncementMail($user));
 
-        $this->sendEmail("gtarcea@umich.edu");
-        $this->sendEmail("johnea@umich.edu");
-        $this->sendEmail("bpuchala@umich.edu");
-        $this->sendEmail("tradiasa@umich.edu");
+//        $this->sendEmail("gtarcea@umich.edu");
+//        $this->sendEmail("johnea@umich.edu");
+//        $this->sendEmail("bpuchala@umich.edu");
+//        $this->sendEmail("tradiasa@umich.edu");
 
-//        DB::table("users")->orderBy('email')->chunk(100, function($users) {
-//            foreach($users as $user) {
-//                echo "Sending email to {$user->email}\n";
+//        $count = 1.;
+//        DB::table("users")->orderBy('email')->chunk(100, function ($users) use ($count) {
+//            foreach ($users as $user) {
+//                echo "{$count}. Sending email to {$user->email}\n";
 //                Mail::bcc($user->email)->send(new AnnouncementMail($user));
+//                $count++;
 //            }
 //        });
     }
