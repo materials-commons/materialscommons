@@ -2,6 +2,8 @@
 
 namespace App\Actions\Migration;
 
+use App\Actions\Datasets\UpdateDatasetWorkflowSelectionAction;
+use App\Actions\Workflows\CreateWorkflowAction;
 use App\Models\Dataset;
 use App\Models\Download;
 use App\Models\File;
@@ -20,10 +22,29 @@ class ImportDatasets extends AbstractImporter
     private $dataset2files;
     private $datafile2project;
     private $entity2project = [];
+    private $createWorkflowAction;
+    private $updateDatasetWorkflowSelectionAction;
+
+    private $dataset2workflow = [
+        "57490e70-df32-4592-8a6f-8a6cfbd36174" => "Polish -> SEM ->EBSD-> EPMA ->Analyze",
+        "9464559b-df1a-4e9f-973f-96ebacd7b2e9" => "Heat Treat ->TEM -> precipitate characterization",
+        "238117f2-6066-4a78-a6f0-e2afdf664625" => "XRD->SEM ->EBSD->Tensile Testing ->Analyze",
+        "a4eb07b1-e774-41b3-bd91-49a4f318a1bb" => "SEM/ STEM/ EDS Characterization  -> Free Immersion? (yes, right)-> SEM/TEM Cross Section\nFree Immersion? (no) -> Anodic Polarization -> SEM and TEM characterization -> Electrochemical Quantification",
+        "b8bc8038-a735-4cb9-9a9e-a0fb912b248c" => "Section(right)->Coat Sample?(yes, right)->Coat Sectioned Samples(right)->Oxidation Exposure for different times(right)->SEM/STEM-EDS/TEM\nCoat Sample?(no)->Oxidation Exposure for different times(right)->SEM/STEM-EDS/TEM",
+        "80e14bcb-3894-4fff-98e7-9ade02441887" => "EBSD Characterization -> Experimental?(yes, right) ->Tension/Compression Testing -> SEM DIC -> Analysis\nExperimental?(no) ->  2D and 3D CPFE Simulations (right) -> Analysis",
+        "fa4845ab-73af-4b30-9a5f-7c184ceb3852" => "Heat Treatment ->Ultrasonic Fatigue in SEM?(yes, right)->Vary Environment ->Analyze\nUltrasonic Fatigue in SEM?(no)->Ultrasonic Fatigue->Analyze",
+        "74df8927-89a2-4759-90a5-c787686f78a0" => "Oxidation Exposures for different times -> Hardness Profile -> SEM/TEM/STEM EDS Characterization",
+        "0b6dab0e-7e17-4129-9ccf-9e80444b8297" => "Low-Cycle Fatigue + HEDM -> Stress-Strain loop and intensity data for each cycle",
+        "ac483ba0-19f4-4528-9601-48635d7833f2" => "Room temperature compression-> Vary Heat Treatment -> EBSD -> GOS analysis",
+        "60b34544-47d1-4642-8837-03e1d31ec94d" => "Solution Treatment -> Oxidation Exposure? (yes, right) -> Vary Aging Condition -> WDS\nOxidation Exposure? (no) -> Vary Aging Condition -> WDS",
+        "21706c8b-fc7a-4db8-8a24-fed38a197167" => "Vary Alloy -> Annealing Heat Treatment -> Characterize texture and microstructure -> Small Fatigue Crack Growth/Tensile Testing/Ultrasonic Fatigue Lifetime with fractography",
+    ];
 
     public function __construct($pathToDumpfiles, $ignoreExisting = false)
     {
         parent::__construct($pathToDumpfiles, "datasets", $ignoreExisting);
+        $this->createWorkflowAction = new CreateWorkflowAction();
+        $this->updateDatasetWorkflowSelectionAction = new UpdateDatasetWorkflowSelectionAction();
     }
 
     protected function setup()
@@ -97,6 +118,12 @@ class ImportDatasets extends AbstractImporter
 
         if (isset($data['download_count'])) {
             $this->addDownloads($ds, $data['download_count']);
+        }
+
+        if (isset($data['published'])) {
+            if ($data['published']) {
+                $this->addWorkflow($ds);
+            }
         }
 
         return $ds;
@@ -263,5 +290,16 @@ class ImportDatasets extends AbstractImporter
             $f = File::findByUuid($fileUuid);
             return $f->id ?? null;
         });
+    }
+
+    private function addWorkflow(Dataset $dataset)
+    {
+        if (array_key_exists($dataset->uuid, $this->dataset2workflow)) {
+            $wf = [];
+            $wf['name'] = 'Experiment Workflow';
+            $wf['workflow'] = $this->dataset2workflow[$dataset->uuid];
+            $createdWorkflow = ($this->createWorkflowAction)($dataset->project_id, $dataset->owner_id);
+            ($this->updateDatasetWorkflowSelectionAction)($createdWorkflow->id, $dataset->project_id, $dataset);
+        }
     }
 }
