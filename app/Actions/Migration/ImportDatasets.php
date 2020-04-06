@@ -298,7 +298,7 @@ class ImportDatasets extends AbstractImporter
             $wf = [];
             $wf['name'] = 'Experiment Workflow';
             $wf['workflow'] = $this->dataset2workflow[$dataset->uuid];
-            $createdWorkflow = ($this->createWorkflowAction)($dataset->project_id, $dataset->owner_id);
+            $createdWorkflow = ($this->createWorkflowAction)($wf, $dataset->project_id, $dataset->owner_id);
             ($this->updateDatasetWorkflowSelectionAction)($createdWorkflow->id, $dataset->project_id, $dataset);
         }
     }
