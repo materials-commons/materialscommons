@@ -21,6 +21,7 @@ class SetupMigratedPublishedDatasetsAction
 
     public function __invoke($runZipLinker, $runGlobus)
     {
+        echo "{$runZipLinker}/{$runGlobus}\n";
         $publishedDatasets = Dataset::whereNotNull('published_at')->get();
         $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
             try {
