@@ -29,7 +29,7 @@ class SetupMigratedPublishedDatasetsAction
                 foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
                     if ($runZipLinker) {
                         echo "  Running zipfile linker\n";
-//                        $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
+                        $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
                     }
                 }
             } catch (\Exception $e) {
@@ -42,10 +42,10 @@ class SetupMigratedPublishedDatasetsAction
                     echo "  Running globus\n";
                     if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
                         echo "    Globus directory exists, setting up access...\n";
-//                        $this->setupGlobusAccessForDataset($dataset);
+                        $this->setupGlobusAccessForDataset($dataset);
                     } else {
                         echo "    Globus directory does NOT exist, creating...\n";
-//                        ($this->createDatsetInGlobusAction)($dataset->id, false);
+                        ($this->createDatsetInGlobusAction)($dataset->id, false);
                     }
                 }
             } catch (\Exception $e) {
