@@ -22,6 +22,7 @@ class SetupMigratedPublishedDatasetsAction
     public function __invoke($runZipLinker, $runGlobus)
     {
         $publishedDatasets = Dataset::whereNotNull('published_at')->get();
+        print_r($publishedDatasets);
         $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
             try {
                 foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
