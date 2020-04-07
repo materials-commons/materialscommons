@@ -29,7 +29,7 @@ class LoadGlobusUploadIntoProjectAction
 
     public function __invoke()
     {
-        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Storage::disk('mcfs')->path($this->globusUpload->path)),
+        $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->globusUpload->path),
             RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;
 
@@ -54,6 +54,7 @@ class LoadGlobusUploadIntoProjectAction
             }
         }
 
+        rmdir($this->globusUpload->path);
         $this->globusUpload->delete();
     }
 
