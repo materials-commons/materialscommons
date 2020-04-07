@@ -15,13 +15,14 @@
                 <th>Experiments</th>
                 <th>Summary</th>
                 <th>Selected</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             @foreach($workflows as $workflow)
                 <tr>
                     <td>
-                        <a href="#">{{$workflow->name}}</a>
+                        {{$workflow->name}}
                     </td>
                     <td>{{$workflowExperiments($workflow)}}</td>
                     <td>{{$workflow->summary}}</td>
@@ -31,6 +32,12 @@
                                    {{$workflowInDataset($workflow) ? 'checked' : ''}}
                                    onclick="updateWorkflowSelection({{$workflow}}, this)">
                         </div>
+                    </td>
+                    <td>
+                        <a href="{{route('projects.datasets.workflows.edit.workflow', [$project, $dataset, $workflow])}}"
+                           class="action-link">
+                            <i class="fas fa-fw fa-edit"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach

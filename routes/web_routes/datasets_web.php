@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowsWebController;
+use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
@@ -61,6 +62,9 @@ Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/create',
 Route::post('/projects/{project}/datasets/{dataset}/edit/workflows/store',
     StoreDatasetWorkflowFromEditWebController::class)
      ->name('projects.datasets.workflows.edit.store');
+
+Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/{workflow}', EditDatasetWorkflowWebController::class)
+     ->name('projects.datasets.workflows.edit.workflow');
 
 // create-data routes
 

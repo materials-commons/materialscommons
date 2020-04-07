@@ -1,7 +1,7 @@
 <div id="codearea" class="col-lg-10">
     <form method="post" action="{{$updateRoute}}" id="edit-workflow">
         @csrf
-        @method('put')
+        @method(isset($updateMethod) ? $updateMethod : 'put')
 
         <div class="form-group">
             <label for="name">Name</label>
