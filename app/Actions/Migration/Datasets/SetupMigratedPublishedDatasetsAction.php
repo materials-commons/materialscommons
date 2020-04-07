@@ -31,20 +31,25 @@ class SetupMigratedPublishedDatasetsAction
                         echo "Running zipfile linker\n";
                         $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
                     }
-
-                    if ($runGlobus) {
-                        echo "Running globus\n";
-                        if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
-                            echo "  Globus directory exists, setting up access...\n";
-                            $this->setupGlobusAccessForDataset($dataset);
-                        } else {
-                            echo "  Globus directory does NOT exist, creating...\n";
-                            ($this->createDatsetInGlobusAction)($dataset->id, false);
-                        }
-                    }
                 }
             } catch (\Exception $e) {
                 echo "Failed on all files for dataset {$dataset->name}/{$dataset->uuid}\n";
+                $exceptionMessage = $e->getMessage();
+                echo "  Reason: {$exceptionMessage}\n";
+            }
+            try {
+                if ($runGlobus) {
+                    echo "Running globus\n";
+                    if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
+                        echo "  Globus directory exists, setting up access...\n";
+                        $this->setupGlobusAccessForDataset($dataset);
+                    } else {
+                        echo "  Globus directory does NOT exist, creating...\n";
+                        ($this->createDatsetInGlobusAction)($dataset->id, false);
+                    }
+                }
+            } catch (\Exception $e) {
+                echo "Failed on exists for globus\n";
                 $exceptionMessage = $e->getMessage();
                 echo "  Reason: {$exceptionMessage}\n";
             }
