@@ -57,6 +57,10 @@ Route::get('/home2', function () {
     return view('home2');
 });
 
+Route::get('/mcapp', function () {
+    return redirect("/");
+});
+
 //Route::get('/getUsers', 'UsersController@getUsers')->name('get_users');
 
 //Route::view('/public', 'public.index')->name('public.index');
