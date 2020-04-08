@@ -31,8 +31,10 @@ class Kernel extends ConsoleKernel
                  ->runInBackground()
                  ->withoutOverlapping();
 
-        $schedule->command('backup:clean')->daily()->at('01:00');
-        $schedule->command('backup:run')->daily()->at('01:30');
+        if (config('backup.backup.run_backups') != 0) {
+            $schedule->command('backup:clean')->daily()->at('01:00');
+            $schedule->command('backup:run')->daily()->at('01:30');
+        }
     }
 
     /**

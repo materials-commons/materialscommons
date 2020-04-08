@@ -8,11 +8,12 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_NAME', 'laravel-backup'),
+        'name'        => env('APP_NAME', 'laravel-backup'),
+        'run_backups' => env('RUN_BACKUPS', 1),
 
-        'source'                   => [
+        'source' => [
 
-            'files'     => [
+            'files' => [
 
                 /*
                  * The list of directories and files that will be included in the backup.
