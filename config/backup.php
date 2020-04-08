@@ -136,8 +136,8 @@ return [
             'to' => 'gtarcea@umich.edu',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'noreply@materialscommons.org'),
-                'name'    => env('MAIL_FROM_NAME', 'Materials Commons'),
+                'address' => env('BACKUP_MAIL_FROM_ADDRESS', 'noreply@materialscommons.org'),
+                'name'    => env('BACKUP_MAIL_FROM_NAME', 'Materials Commons'),
             ],
         ],
 
