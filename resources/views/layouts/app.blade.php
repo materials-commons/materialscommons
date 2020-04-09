@@ -136,7 +136,14 @@
 <div class="container-fluid">
     <div class="row">
         @yield('nav')
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="mt-2 bg-red-3">
+                <p class="text-white pt-2 pb-2 pl-2">
+                    Globus uploads/downloads are not currently available. We are working
+                    with Globus support to resolve this issue.
+                <p>
+            </div>
             <div class="mt-3">
                 @include('flash::message')
                 @yield('breadcrumbs')
