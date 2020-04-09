@@ -69,7 +69,8 @@
     ],
     "files": [
       "app/Helpers/ViewHelpers.php",
-      "app/Helpers/HelpHelpers.php"
+      "app/Helpers/HelpHelpers.php",
+      "app/Helpers/BannerHelpers.php"
     ]
   },
   "autoload-dev": {
