@@ -18,9 +18,9 @@
         </div>
         @break
 
-        {{--        @case("excel")--}}
-        {{--        @include('partials.files._display-excel-file', ['fileContents' => $fileContents])--}}
-        {{--        @break--}}
+        @case("excel")
+        @include('partials.files._display-excel-file', ['fileContents' => $fileContents])
+        @break
 
         @case("office")
         <div class="embed-responsive embed-responsive-4by3">

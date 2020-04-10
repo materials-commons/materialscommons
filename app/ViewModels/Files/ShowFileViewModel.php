@@ -7,31 +7,10 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Spatie\ViewModels\ViewModel;
 
-/*
- * const convertibleImageFileTypes = {
-    'image/tiff': true,
-    'image/x-ms-bmp': true,
-    'image/bmp': true,
-};
-
-const convertibleDocumentFileTypes = {
-    'application/vnd.ms-excel': true,
-    'application/vnd.ms-powerpoint': true,
-    'application/msword': true,
-    'application/vnd.openxmlformats-officedocument.presentationml.presentation': true,
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': true,
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': true,
-};
-
-const spreadsheetDocumentFileTypes = {
-    'application/vnd.ms-excel': true,
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': true,
-};
- */
-
 class ShowFileViewModel extends ViewModel
 {
     private $officeTypes;
+    private $excelTypes;
     private $imageTypes;
     private $binaryTypes;
     private $pdfTypes;
@@ -62,14 +41,16 @@ class ShowFileViewModel extends ViewModel
         $this->excelTypes = [
             "application/vnd.ms-excel"                                          => true,
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => true,
+            "text/csv"                                                          => true,
         ];
 
         $this->officeTypes = [
-            "application/vnd.ms-excel"                                                  => true,
+            // Powerpoint documents
             "application/vnd.ms-powerpoint"                                             => true,
-            "application/msword"                                                        => true,
             "application/vnd.openxmlformats-officedocument.presentationml.presentation" => true,
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"         => true,
+
+            // Word documents
+            "application/msword"                                                        => true,
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"   => true,
         ];
 
@@ -122,9 +103,9 @@ class ShowFileViewModel extends ViewModel
             return "pdf";
         }
 
-//        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
-//            return "excel";
-//        }
+        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
+            return "excel";
+        }
 
         if (array_key_exists($this->file->mime_type, $this->officeTypes)) {
             return "office";
