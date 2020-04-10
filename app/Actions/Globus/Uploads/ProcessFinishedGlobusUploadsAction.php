@@ -16,14 +16,16 @@ class ProcessFinishedGlobusUploadsAction
         $uniqueByProjectUploads = $finishedUploads->unique(function (GlobusUploadDownload $upload) {
             return $upload->project_id;
         });
+        $maxItemsToProcess = config('globus.max_items');
         foreach ($uniqueByProjectUploads as $upload) {
             $upload->update(['status' => GlobusStatus::Loading]);
             if ($processUploadsInBackground) {
-                $importGlobusUploadJob = new ImportGlobusUploadJob($upload, 1000);
+                $importGlobusUploadJob = new ImportGlobusUploadJob($upload, $maxItemsToProcess);
                 dispatch($importGlobusUploadJob)->onQueue('globus');
             } else {
                 $globusApi = GlobusApi::createGlobusApi();
-                $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, 1000, $globusApi);
+                $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, $maxItemsToProcess,
+                    $globusApi);
                 $loadGlobusUploadInProjectAction();
             }
         }
