@@ -34,7 +34,9 @@ class CreateGlobusUploadAction
         $globusPath = "/__globus_uploads/{$globusUpload->uuid}/";
 
         if (!is_dir($path)) {
+            $old = umask(0);
             mkdir($path, 0777, true);
+            umask($old);
         }
 
         $globusUserId = $this->getGlobusIdentity($user->globus_user);
