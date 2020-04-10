@@ -2,6 +2,7 @@
 
 namespace App\Actions\Globus\Uploads;
 
+use App\Actions\Globus\GlobusApi;
 use App\Enums\GlobusStatus;
 use App\Jobs\Globus\ImportGlobusUploadJob;
 use App\Models\GlobusUploadDownload;
@@ -21,7 +22,8 @@ class ProcessFinishedGlobusUploadsAction
                 $importGlobusUploadJob = new ImportGlobusUploadJob($upload, 1000);
                 dispatch($importGlobusUploadJob)->onQueue('globus');
             } else {
-                $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, 1000);
+                $globusApi = GlobusApi::createGlobusApi();
+                $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, 1000, $globusApi);
                 $loadGlobusUploadInProjectAction();
             }
         }

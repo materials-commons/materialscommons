@@ -21,10 +21,14 @@ class LoadGlobusUploadIntoProjectAction
 
     private $maxItemsToProcess;
 
-    public function __construct(GlobusUploadDownload $globusUpload, $maxItemsToProcess)
+    /** @var \App\Actions\Globus\GlobusApi */
+    private $globusApi;
+
+    public function __construct(GlobusUploadDownload $globusUpload, $maxItemsToProcess, $globusApi)
     {
         $this->globusUpload = $globusUpload;
         $this->maxItemsToProcess = $maxItemsToProcess;
+        $this->globusApi = $globusApi;
     }
 
     public function __invoke()
@@ -54,13 +58,14 @@ class LoadGlobusUploadIntoProjectAction
             }
         }
 
-        rmdir($this->globusUpload->path);
+        $this->removeAcl();
         $this->globusUpload->delete();
+        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$this->globusUpload->uuid}");
     }
 
     private function processDir($path, File $currentDir): File
     {
-        $pathPart = Storage::disk('mcfs')->path($this->globusUpload->path);
+        $pathPart = Storage::disk('mcfs')->path("__globus_uploads/{$this->globusUpload->uuid}");
         $dirPath = Str::replaceFirst($pathPart, "", $path);
         $dir = File::where('project_id', $this->globusUpload->project->id)->where('path', $dirPath)->first();
         if ($dir !== null) {
@@ -97,7 +102,7 @@ class LoadGlobusUploadIntoProjectAction
         $existing = File::where('directory_id', $currentDir->id)->where('name', $fileEntry->name)->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
 
-        if ( ! $matchingFileChecksum) {
+        if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             $this->moveFileIntoProject($path, $fileEntry);
         } else {
@@ -131,5 +136,15 @@ class LoadGlobusUploadIntoProjectAction
         }
 
         return true;
+    }
+
+    private function removeAcl()
+    {
+        try {
+            $this->globusApi->deleteEndpointAclRule($this->globusUpload->globus_endpoint_id,
+                $this->globusUpload->globus_acl_id);
+        } catch (\Exception $e) {
+            // do nothing
+        }
     }
 }
