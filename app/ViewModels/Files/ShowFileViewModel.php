@@ -104,7 +104,7 @@ class ShowFileViewModel extends ViewModel
         }
 
         if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
-            return "excel";
+            return "office";
         }
 
         if (array_key_exists($this->file->mime_type, $this->officeTypes)) {
@@ -158,6 +158,11 @@ class ShowFileViewModel extends ViewModel
         }
 
         if (array_key_exists($this->file->mime_type, $this->officeTypes)) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".pdf";
+        }
+
+        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".pdf";
         }
