@@ -5,4 +5,5 @@ return [
     'namespace'   => env('DOI_NAMESPACE'),
     'user'        => env('DOI_USER'),
     'password'    => env('DOI_PASSWORD'),
+    'service_url' => env('DOI_SERVICE_URL'),
 ];

@@ -13,7 +13,8 @@ class DOIHelpersTest extends TestCase
     {
         $this->markTestSkipped('DOI Creation skipped for now');
         $client = new Client();
-        $uri = "https://ez.test.datacite.org/shoulder/doi:".config('doi.namespace');
+        $serviceUrl = config('doi.service_url');
+        $uri = "${serviceUrl}/shoulder/doi:".config('doi.namespace');
         $body = "_target:https://materialscommons.org\n".
             "datacite.creator: Test Author\n".
             "datacite.title: Test publish 1111\n".
@@ -48,7 +49,8 @@ class DOIHelpersTest extends TestCase
             "_updated: 1570810597\n".
             "_status: public";
         preg_match("/doi:\S*/", $resp, $matches);
-        $this->assertEquals("doi:10.33587/mjxa-rm95", $matches[0]);
+        $doi = str_replace("doi:", "", $matches[0]);
+        $this->assertEquals("10.33587/mjxa-rm95", $doi);
     }
 
     /** @test */
@@ -56,6 +58,7 @@ class DOIHelpersTest extends TestCase
     {
         $this->markTestSkipped('DOI Creation skipped for now');
         $doi = DOIHelpers::mintDOI("A title", "a author", 1);
-        $this->assertTrue(strpos($doi, 'doi:') !== false);
+        echo "doi = {$doi}\n";
+        $this->assertNotEmpty($doi);
     }
 }

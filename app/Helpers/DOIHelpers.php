@@ -12,7 +12,8 @@ class DOIHelpers
         $client = new Client();
         $year = Carbon::now()->year;
         $DSURL = config('doi.dataset_url');
-        $uri = "https://ez.test.datacite.org/shoulder/doi:".config('doi.namespace');
+        $serviceUrl = config('doi.service_url');
+        $uri = "${serviceUrl}/shoulder/doi:".config('doi.namespace');
         $body = "_target:{$DSURL}/{$datasetId}\n".
             "datacite.creator: {$author}\n".
             "datacite.title: {$title}\n".
@@ -27,7 +28,7 @@ class DOIHelpers
         $respBody = (string) $resp->getBody();
         $matches = [];
         preg_match("/doi:\S*/", $respBody, $matches);
-        return $matches[0];
+        return str_replace("doi:", "", $matches[0]);
     }
 }
 
