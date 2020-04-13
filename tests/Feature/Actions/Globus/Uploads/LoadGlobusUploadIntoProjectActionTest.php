@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Tests\Utils\GlobusMockUtils;
 
 class LoadGlobusUploadIntoProjectActionTest extends TestCase
 {
@@ -47,10 +48,11 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
         $globusUpload = factory(GlobusUploadDownload::class)->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
-            'path'       => "__globus_uploads/test1",
+            'path'       => Storage::disk('mcfs')->path("__globus_uploads/test1"),
         ]);
 
-        $loadGlobusUploadIntoProjectAction = new LoadGlobusUploadIntoProjectAction($globusUpload, 10);
+        $globusApiMock = GlobusMockUtils::createGlobusApiMock();
+        $loadGlobusUploadIntoProjectAction = new LoadGlobusUploadIntoProjectAction($globusUpload, 10, $globusApiMock);
         $loadGlobusUploadIntoProjectAction();
 
         $filesCount = File::where('project_id', $project->id)->whereNull('path')->count();
