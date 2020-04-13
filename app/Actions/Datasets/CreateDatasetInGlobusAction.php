@@ -26,6 +26,7 @@ class CreateDatasetInGlobusAction
 
     public function __invoke($datasetId, $isPrivate)
     {
+        umask(0);
         $dataset = Dataset::find($datasetId);
         $datasetDir = $this->getDatasetDir($dataset, $isPrivate);
         if (!file_exists($datasetDir)) {
@@ -37,7 +38,7 @@ class CreateDatasetInGlobusAction
             if ($this->isIncludedFile($datasetFileSelection, $file)) {
                 $dirPath = "{$datasetDir}{$file->directory->path}";
                 if (!file_exists($dirPath)) {
-                    mkdir($dirPath, 0700, true);
+                    mkdir($dirPath, 0777, true);
                 }
 
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
