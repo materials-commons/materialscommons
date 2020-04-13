@@ -10,6 +10,8 @@ trait SaveFile
     {
         $dir = $this->dirPathFromUuid($uuid);
         Storage::disk('mcfs')->putFileAs($dir, $file, $uuid);
+        $fpath = Storage::disk('mcfs')->path("{$dir}/{$uuid}");
+        chmod($fpath, 0777);
     }
 
     private function dirPathFromUuid($uuid)

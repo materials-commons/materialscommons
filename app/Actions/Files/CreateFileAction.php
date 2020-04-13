@@ -11,6 +11,7 @@ class CreateFileAction
 
     public function __invoke($projectId, $directoryId, $description, $file)
     {
+        umask(0);
         $fileEntry = new File([
             'uuid'         => Uuid::uuid4()->toString(),
             'checksum'     => md5_file($file->getRealPath()),

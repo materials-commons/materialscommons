@@ -26,6 +26,7 @@ class LoadGlobusUploadIntoProjectAction
 
     public function __construct(GlobusUploadDownload $globusUpload, $maxItemsToProcess, $globusApi)
     {
+        umask(0);
         $this->globusUpload = $globusUpload;
         $this->maxItemsToProcess = $maxItemsToProcess;
         $this->globusApi = $globusApi;
@@ -130,6 +131,8 @@ class LoadGlobusUploadIntoProjectAction
 
         if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
             $status = Storage::disk('mcfs')->copy($filePath, $to);
+            $fpath = Storage::disk('mcfs')->path($to);
+            chmod($fpath, 0777);
             unlink($path);
 
             return $status;
