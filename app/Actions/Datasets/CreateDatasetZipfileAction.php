@@ -41,6 +41,7 @@ class CreateDatasetZipfileAction
                 $filePath = "{$file->directory->path}/{$file->name}";
                 if ($datasetFileSelection->isIncludedFile($filePath)) {
                     if ($zip->numFiles == $maxFileCountBeforeReopen) {
+                        echo "close and reopen\n";
                         $zip->close();
                         $zip->open($zipfile) or die("Error: Could not reopen Zip");
                     }

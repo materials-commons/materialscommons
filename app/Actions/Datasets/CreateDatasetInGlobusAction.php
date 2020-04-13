@@ -45,9 +45,12 @@ class CreateDatasetInGlobusAction
                 try {
                     if (!link($uuidPath, $filePath)) {
                         Log::error("Unable to link {$uuidPath} to {$filePath}");
+                        echo "Unable to link {$uuidPath} to {$filePath}\n";
                     }
                 } catch (\Exception $e) {
                     Log::error("Unable to link {$uuidPath} to {$filePath}");
+                    $msg = $e->getMessage();
+                    echo "Unable to link {$uuidPath} to {$filePath}: {$msg}\n";
                 }
             }
         }
