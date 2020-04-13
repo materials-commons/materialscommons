@@ -13,7 +13,7 @@ class PublishDatasetAction
         $dataset->update(['published_at' => Carbon::now()]);
 
         $publishDatasetJob = new PublishDatasetJob($dataset->id);
-        dispatch($publishDatasetJob);
+        dispatch($publishDatasetJob)->onQueue('globus');
 
         return $dataset->fresh();
     }
