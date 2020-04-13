@@ -35,7 +35,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'globus_user', 'description',
-        'api_token', 'affiliations', 'uuid',
+        'api_token', 'affiliations', 'uuid', 'is_admin',
     ];
 
     /**
