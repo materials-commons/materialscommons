@@ -18,6 +18,7 @@ class CreateDatasetZipfileAction
 
     public function __invoke($datasetId, $createDatasetFilesTable)
     {
+        umask(0);
         $dataset = Dataset::find($datasetId);
 
         if ($createDatasetFilesTable) {
@@ -26,7 +27,7 @@ class CreateDatasetZipfileAction
 
         $datasetDir = $dataset->zipfileDir();
         if (!file_exists($datasetDir)) {
-            mkdir($datasetDir, 0700, true);
+            mkdir($datasetDir, 0777, true);
         }
 
         $zip = new ZipArchive();
