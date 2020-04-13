@@ -34,6 +34,10 @@ Route::get('/projects/{project}/files/{file}/create-experiment', function (Proje
     return view('app.files.import', compact('project', 'file'));
 });
 
+//Route::get('/projects/{project}/file_path/{path}', function (Project $project, $path) {
+//    dd($path);
+//})->where('path', '(.*)');
+
 Route::post('/projects/{project}/files/{file}/create-experiment',
     CreateExperimentFromSpreadsheetWebController::class)
      ->name('projects.files.create-experiment');
