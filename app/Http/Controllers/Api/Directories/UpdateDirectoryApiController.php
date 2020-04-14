@@ -17,11 +17,8 @@ class UpdateDirectoryApiController extends Controller
      * @param $directoryId
      * @return DirectoryResource
      */
-    public function __invoke(
-        UpdateDirectoryRequest $request,
-        UpdateDirectoryAction $updateDirectoryAction,
-        $directoryId
-    )
+    public function __invoke(UpdateDirectoryRequest $request, UpdateDirectoryAction $updateDirectoryAction,
+        $directoryId)
     {
         $validated = $request->validated();
         $directory = $updateDirectoryAction($validated, $directoryId);

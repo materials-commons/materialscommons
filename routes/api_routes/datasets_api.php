@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\Datasets\CreateDatasetApiController;
+use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
+use App\Http\Controllers\Api\Datasets\IndexDatasetsApiController;
+use App\Http\Controllers\Api\Datasets\PublishDatasetApiController;
+use App\Http\Controllers\Api\Datasets\ShowDatasetApiController;
+use App\Http\Controllers\Api\Datasets\UnpublishDatasetApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetActivitySelectionApiController;
+use App\Http\Controllers\Api\Datasets\UpdateDatasetApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetEntitySelectionApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetFileSelectionApiController;
 use App\Http\Controllers\Api\Datasets\UpdateDatasetWorkflowSelectionApiController;
@@ -17,4 +24,14 @@ Route::put('/datasets/{dataset}/activities/selection', UpdateDatasetActivitySele
 
 Route::put('/datastes/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
      ->name('api.projects.datasets.workflows');
+
+Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class);
+Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class);
+Route::put('/projects/{project}/datasets/{dataset}/update', UpdateDatasetApiController::class);
+Route::post('/projects/{project}/datasets', CreateDatasetApiController::class);
+Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
+Route::put('/projects/{project}/datasets/{dataset}/publish', PublishDatasetApiController::class);
+Route::put('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
+
+
 
