@@ -16,7 +16,7 @@ class ShowDirectoryApiController extends Controller
      */
     public function __invoke(SingleDirectoryQuery $query)
     {
-        $data = $query->get();
-        return new DirectoryResource($data[0]);
+        $data = $query->first();
+        return new DirectoryResource($data);
     }
 }

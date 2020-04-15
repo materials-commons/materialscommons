@@ -27,11 +27,11 @@ Route::put('/datastes/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiCon
 
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class);
 Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class);
-Route::put('/projects/{project}/datasets/{dataset}/update', UpdateDatasetApiController::class);
-Route::post('/projects/{project}/datasets', CreateDatasetApiController::class);
+Route::put('/datasets/{dataset}', UpdateDatasetApiController::class);
+Route::post('/datasets', CreateDatasetApiController::class);
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
-Route::put('/projects/{project}/datasets/{dataset}/publish', PublishDatasetApiController::class);
-Route::put('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
+Route::put('/datasets/{dataset}/publish', PublishDatasetApiController::class);
+Route::put('/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
 
 
 

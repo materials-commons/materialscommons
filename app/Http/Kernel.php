@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\EnsureActivityInProject;
 use App\Http\Middleware\EnsureDatasetInProject;
+use App\Http\Middleware\EnsureEntityInProject;
+use App\Http\Middleware\EnsureEntityStateInProject;
 use App\Http\Middleware\EnsureExperimentInProject;
 use App\Http\Middleware\EnsureFileInProject;
 use App\Http\Middleware\UserCanAccessProject;
@@ -43,6 +45,8 @@ class Kernel extends HttpKernel
             UserCanAccessProject::class,
             EnsureFileInProject::class,
             EnsureActivityInProject::class,
+            EnsureEntityInProject::class,
+            EnsureEntityStateInProject::class,
             EnsureDatasetInProject::class,
             EnsureExperimentInProject::class,
         ],
@@ -50,6 +54,13 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            UserCanAccessProject::class,
+            EnsureFileInProject::class,
+            EnsureActivityInProject::class,
+            EnsureEntityInProject::class,
+            EnsureEntityStateInProject::class,
+            EnsureDatasetInProject::class,
+            EnsureExperimentInProject::class,
         ],
     ];
 
