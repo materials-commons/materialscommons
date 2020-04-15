@@ -16,7 +16,7 @@ class CreateFileAction
             'uuid'         => Uuid::uuid4()->toString(),
             'checksum'     => md5_file($file->getRealPath()),
             'mime_type'    => $file->getClientMimeType(),
-            'size'         => $file->getClientSize(),
+            'size'         => $file->getSize(),
             'name'         => $file->getClientOriginalName(),
             'owner_id'     => auth()->id(),
             'current'      => true,
