@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -129,5 +130,24 @@ class File extends Model implements Searchable
     public static function laratablesCustomAction($file)
     {
         return '';
+    }
+
+    public function mcfsPath()
+    {
+        return Storage::disk('mcfs')->path($this->realPathPartial());
+    }
+
+    public function realPathPartial()
+    {
+        $uuid = $this->uuid;
+        if ($this->uses_uuid !== null) {
+            $uuid = $this->uses_uuid;
+        }
+
+        $entries = explode('-', $uuid);
+        $entry1 = $entries[1];
+
+        $dirPath = "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
+        return "{$dirPath}/{$uuid}";
     }
 }

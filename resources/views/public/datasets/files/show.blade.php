@@ -17,6 +17,11 @@
         @slot('body')
             @component('components.item-details', ['item' => $file])
                 <span class="ml-4">Mediatype: {{$file->mime_type}}</span>
+                @slot('bottom')
+                    <a href="{{route('public.datasets.download_file', [$dataset, $file])}}">
+                        Download file
+                    </a>
+                @endslot
             @endcomponent
             <hr>
             <br>

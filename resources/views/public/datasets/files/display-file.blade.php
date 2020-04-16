@@ -1,4 +1,5 @@
 @if($fileExists)
+    <p>File preview:</p>
     @switch($fileType)
         @case("image")
         <div class="col-lg-10">
@@ -17,6 +18,10 @@
             <embed class="col-xs-8 embed-responsive-item"
                    src="{{route('public.datasets.files.display', [$dataset, $file])}}">
         </div>
+        @break
+
+        @case("excel")
+        @include('partials.files._display-excel-file', ['fileContents' => $fileContents])
         @break
 
         @case("office")
