@@ -12,6 +12,6 @@ class ProjectsQueryBuilder extends QueryBuilder
     {
         parent::__construct($builder, $request);
         $this->allowedFields(['name', 'id', 'uuid', 'description', 'is_active'])
-             ->allowedIncludes(['activities', 'entities', 'files']);
+             ->allowedIncludes(['activities', 'entities', 'files', 'workflows', 'experiments']);
     }
 }
