@@ -24,7 +24,7 @@ class DatasetRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'required|string|max:80',
+            'name'         => 'required|string|max:200',
             'description'  => 'nullable|string|max:8192',
             'summary'      => 'nullable|string|max:100',
             'project_id'   => 'required',
