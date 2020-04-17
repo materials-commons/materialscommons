@@ -30,6 +30,10 @@
                         <i class="fas fa-file-import mr-2"></i>Create Experiment From Spreadsheet
                     </a>
                 @endif
+                <a class="action-link float-right mr-4"
+                   href="{{route('projects.files.download', [$project, $file])}}">
+                    <i class="fas fa-download mr-2"></i>Download File
+                </a>
             @endisset
 
         @endslot

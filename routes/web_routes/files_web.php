@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Files\CreateExperimentFromSpreadsheetWebController;
+use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileWebController;
@@ -26,6 +27,9 @@ Route::get('/projects/{project}/files/{file}/attributes', ShowFileEntitiesWebCon
 
 Route::get('/projects/{project}/files/{file}/experiments', ShowFileEntitiesWebController::class)
      ->name('projects.files.experiments');
+
+Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController::class)
+     ->name('projects.files.display');
 
 Route::get('/projects/{project}/files/{file}/download', DownloadFileWebController::class)
      ->name('projects.files.download');

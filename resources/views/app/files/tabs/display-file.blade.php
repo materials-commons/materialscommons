@@ -2,7 +2,7 @@
     @switch($fileType)
         @case("image")
         <div class="col-lg-10">
-            <img src="{{route('projects.files.download', [$project, $file])}}" class="img-fluid">
+            <img src="{{route('projects.files.display', [$project, $file])}}" class="img-fluid">
         </div>
         @break
 
@@ -14,7 +14,7 @@
 
         @case("pdf")
         <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.download', [$project, $file])}}">
+            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.display', [$project, $file])}}">
         </div>
         @break
 
@@ -24,7 +24,7 @@
 
         @case("office")
         <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.download', [$project, $file])}}">
+            <embed class="col-xs-8 embed-responsive-item" src="{{route('projects.files.display', [$project, $file])}}">
         </div>
         @break
 
