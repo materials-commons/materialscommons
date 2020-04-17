@@ -29,8 +29,6 @@ class CreateDataset2fileTable extends Migration
                   ->onDelete('cascade');
 
             $table->timestamps();
-
-            $table->index(['dataset_id', 'file_id']);
         });
     }
 
