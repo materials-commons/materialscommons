@@ -19,7 +19,6 @@ class IndexProjectsApiController extends Controller
      */
     public function __invoke(Request $request, AllProjectsForUserQuery $query)
     {
-        $data = $query->jsonPaginate();
-        return ProjectResource::collection($data);
+        return ProjectResource::collection($query->jsonPaginate());
     }
 }
