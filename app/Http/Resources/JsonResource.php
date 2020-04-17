@@ -18,14 +18,9 @@ class JsonResource extends BaseJsonResource
     {
         $data = [];
         foreach ($this->fields as $field) {
-            $data[$field] = $this->whenField($this[$field]);
+            $data[$field] = $this->when(isset($this[$field]), $this[$field]);
         }
 
         return $data;
-    }
-
-    protected function whenField($value)
-    {
-        return $this->when($value, $value);
     }
 }
