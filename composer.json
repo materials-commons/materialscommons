@@ -38,7 +38,7 @@
     "ylsideas/feature-flags": "^1.2"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^3.2",
+    "barryvdh/laravel-debugbar": "^3.0",
     "beyondcode/laravel-dump-server": "^1.0",
     "facade/ignition": "^2.0",
     "filp/whoops": "^2.0",
