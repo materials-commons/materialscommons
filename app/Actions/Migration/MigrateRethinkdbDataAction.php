@@ -9,20 +9,20 @@ class MigrateRethinkdbDataAction
     use LineHandler;
 
     private $orderToProcessObjectDumpFiles = [
-//        ['users.json' => ImportUsers::class],
+        ['users.json' => ImportUsers::class],
         ['projects.json' => ImportProjects::class],
-//        ['experiments.json' => ImportExperiments::class],
-//        ['datadirs.json' => ImportDirectories::class],
-//        ['datadirs.json' => ImportDirectoriesMatchParents::class],
-//        ['datafiles.json' => ImportFiles::class],
-//        ['samples.json' => ImportEntities::class],
-//        ['propertysets.json' => ImportEntityStates::class],
-//        ['processes.json' => ImportActivities::class],
-//        ['setupproperties.json' => ImportActivitySettings::class],
-//        ['properties.json' => ImportEntityStateAttributes::class],
-//        ['measurements.json' => ImportEntityStateAttributeValues::class],
-//        ['datasets.json' => ImportDatasets::class],
-//        ['views.json' => ImportDatasetViews::class],
+        ['experiments.json' => ImportExperiments::class],
+        ['datadirs.json' => ImportDirectories::class],
+        ['datadirs.json' => ImportDirectoriesMatchParents::class],
+        ['datafiles.json' => ImportFiles::class],
+        ['samples.json' => ImportEntities::class],
+        ['propertysets.json' => ImportEntityStates::class],
+        ['processes.json' => ImportActivities::class],
+        ['setupproperties.json' => ImportActivitySettings::class],
+        ['properties.json' => ImportEntityStateAttributes::class],
+        ['measurements.json' => ImportEntityStateAttributeValues::class],
+        ['datasets.json' => ImportDatasets::class],
+        ['views.json' => ImportDatasetViews::class],
     ];
 
     private $pathToDumpFiles;
