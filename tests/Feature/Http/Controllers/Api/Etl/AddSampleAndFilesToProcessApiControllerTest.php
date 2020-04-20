@@ -21,10 +21,6 @@ class AddSampleAndFilesToProcessApiControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
         $project = ProjectFactory::ownedBy($user)->create();
-//        $project = factory('App\Models\Project')->create([
-//            'name'     => 'p1',
-//            'owner_id' => $user->id,
-//        ]);
         $rootDir = factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',
