@@ -40,7 +40,7 @@ class MigrateRethinkdbDataAction
     {
         $startedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
 
-        $this->loadAllCaches();
+//        $this->loadAllCaches();
         foreach ($this->orderToProcessObjectDumpFiles as $dumpFile) {
             $file = key($dumpFile);
             if (!$this->shouldLoadFile($file)) {
