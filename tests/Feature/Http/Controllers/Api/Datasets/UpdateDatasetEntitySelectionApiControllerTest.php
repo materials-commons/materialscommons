@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Entity;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,9 +17,7 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
         $dataset = factory(Dataset::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,

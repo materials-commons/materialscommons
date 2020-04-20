@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api\Activities;
 
 use App\Models\Activity;
 use App\Models\Attribute;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,9 +17,7 @@ class CreateActivityApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
         $experiment = factory('App\Models\Experiment')->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
@@ -47,9 +46,7 @@ class CreateActivityApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
         $experiment = factory('App\Models\Experiment')->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,

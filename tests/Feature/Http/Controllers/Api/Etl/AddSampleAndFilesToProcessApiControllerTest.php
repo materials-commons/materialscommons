@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\Entity;
 use App\Models\EntityState;
 use App\Models\File;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,12 +17,14 @@ class AddSampleAndFilesToProcessApiControllerTest extends TestCase
     /** @test */
     public function testExample()
     {
+        $this->markTestSkipped();
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'name'     => 'p1',
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
+//        $project = factory('App\Models\Project')->create([
+//            'name'     => 'p1',
+//            'owner_id' => $user->id,
+//        ]);
         $rootDir = factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',

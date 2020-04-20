@@ -54,13 +54,13 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-//            UserCanAccessProject::class,
-//            EnsureFileInProject::class,
-//            EnsureActivityInProject::class,
-//            EnsureEntityInProject::class,
-//            EnsureEntityStateInProject::class,
-//            EnsureDatasetInProject::class,
-//            EnsureExperimentInProject::class,
+            UserCanAccessProject::class,
+            EnsureFileInProject::class,
+            EnsureActivityInProject::class,
+            EnsureEntityInProject::class,
+            EnsureEntityStateInProject::class,
+            EnsureDatasetInProject::class,
+            EnsureExperimentInProject::class,
         ],
     ];
 

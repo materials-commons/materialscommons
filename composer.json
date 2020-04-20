@@ -47,8 +47,7 @@
     "mpociot/laravel-apidoc-generator": "^4.0",
     "nunomaduro/collision": "^4.0",
     "nunomaduro/larastan": "^0.5",
-    "phploc/phploc": "^6.0",
-    "phpunit/phpunit": "^9.0"
+    "phpunit/phpunit": "^8.5"
   },
   "config": {
     "optimize-autoloader": true,
