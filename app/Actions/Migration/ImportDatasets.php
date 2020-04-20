@@ -141,6 +141,8 @@ class ImportDatasets extends AbstractImporter
             }
         }
 
+        echo "dataset2project {$datasetUuid} is not set";
+
         $projectId = $this->findProjectForDatasetThrough($datasetUuid, $this->dataset2files, $this->datafile2project);
         if ($projectId != null) {
             return $projectId;
