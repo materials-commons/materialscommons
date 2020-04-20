@@ -22,7 +22,7 @@ class MigrateRethinkdbDataAction
 //        ['properties.json' => ImportEntityStateAttributes::class],
 //        ['measurements.json' => ImportEntityStateAttributeValues::class],
         ['datasets.json' => ImportDatasets::class],
-        ['views.json' => ImportDatasetViews::class],
+//        ['views.json' => ImportDatasetViews::class],
     ];
 
     private $pathToDumpFiles;

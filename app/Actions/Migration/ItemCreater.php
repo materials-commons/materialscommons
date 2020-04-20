@@ -47,6 +47,7 @@ trait ItemCreater
         if (isset($data['owner'])) {
             $user = ItemCache::findUser($data['owner']);
             if ($user == null) {
+                echo "Failed looking up user {$data['owner']}\n";
                 return null;
             }
             $modelData['owner_id'] = $user->id;
