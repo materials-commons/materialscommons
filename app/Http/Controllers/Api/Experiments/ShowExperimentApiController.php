@@ -17,8 +17,6 @@ class ShowExperimentApiController extends Controller
      */
     public function __invoke(SingleExperimentQuery $query)
     {
-        $data = $query->get();
-
-        return new ExperimentResource($data[0]);
+        return new ExperimentResource($query->first());
     }
 }
