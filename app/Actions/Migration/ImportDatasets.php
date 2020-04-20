@@ -143,7 +143,7 @@ class ImportDatasets extends AbstractImporter
             }
         }
 
-        print_r($this->dataset2project);
+//        print_r($this->dataset2project);
         echo "dataset2project {$datasetUuid} failed\n";
 
         $projectId = $this->findProjectForDatasetThrough($datasetUuid, $this->dataset2files, $this->datafile2project);
