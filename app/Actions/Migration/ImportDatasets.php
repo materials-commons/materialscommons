@@ -135,13 +135,14 @@ class ImportDatasets extends AbstractImporter
     private function findProjectForDataset($datasetUuid)
     {
         if (isset($this->dataset2project[$datasetUuid])) {
+            echo "dataset2project is set\n";
             $projectId = $this->findProjectIdForUuid($this->dataset2project[$datasetUuid]);
             if ($projectId != null) {
                 return $projectId;
             }
         }
 
-        echo "dataset2project {$datasetUuid} is not set";
+        echo "dataset2project {$datasetUuid} is not failed\n";
 
         $projectId = $this->findProjectForDatasetThrough($datasetUuid, $this->dataset2files, $this->datafile2project);
         if ($projectId != null) {
