@@ -21,7 +21,7 @@ class MigrateRethinkdbDataAction
 //        ['setupproperties.json' => ImportActivitySettings::class],
 //        ['properties.json' => ImportEntityStateAttributes::class],
 //        ['measurements.json' => ImportEntityStateAttributeValues::class],
-        ['datasets.json' => ImportDatasets::class],
+//        ['datasets.json' => ImportDatasets::class],
 //        ['views.json' => ImportDatasetViews::class],
     ];
 
