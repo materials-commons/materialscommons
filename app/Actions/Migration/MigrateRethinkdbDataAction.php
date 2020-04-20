@@ -10,7 +10,7 @@ class MigrateRethinkdbDataAction
 
     private $orderToProcessObjectDumpFiles = [
 //        ['users.json' => ImportUsers::class],
-//        ['projects.json' => ImportProjects::class],
+        ['projects.json' => ImportProjects::class],
 //        ['experiments.json' => ImportExperiments::class],
 //        ['datadirs.json' => ImportDirectories::class],
 //        ['datadirs.json' => ImportDirectoriesMatchParents::class],

@@ -79,7 +79,7 @@ class ImportDatasets extends AbstractImporter
             return null;
         }
 
-        echo "Looking up project {$modelData['uuid']}\n";
+        echo "Looking up project for dataset {$modelData['uuid']}\n";
         $projectId = $this->findProjectForDataset($modelData['uuid']);
         if ($projectId == null) {
             $isPublished = "no";
