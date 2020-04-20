@@ -46,17 +46,25 @@ class ImportProjects extends AbstractImporter
     protected function loadData($data)
     {
         if (!$this->loadProject($data['id'])) {
+            echo "loadProject returned null\n";
             return null;
         }
 
         $modelData = $this->createCommonModelData($data);
         if ($modelData == null) {
+            echo "createCommonModelData returned none\n";
             return null;
         }
 
         $modelData['is_active'] = true;
 
-        return Project::create($modelData);
+        $proj = Project::create($modelData);
+
+        if ($proj == null) {
+            echo "Project::create failed\n";
+        }
+
+        return $proj;
     }
 
     private function loadProject($uuid)
