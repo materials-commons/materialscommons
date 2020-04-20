@@ -74,6 +74,8 @@ class ImportDatasets extends AbstractImporter
     {
         $modelData = $this->createCommonModelData($data);
         if ($modelData == null) {
+            echo "createCommonModelData failed\n";
+            print_r($data);
             return null;
         }
 
