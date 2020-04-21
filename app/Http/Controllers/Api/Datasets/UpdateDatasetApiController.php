@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api\Datasets;
 
+use App\Actions\Datasets\UpdateDatasetAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Datasets\DatasetRequest;
+use App\Http\Resources\Datasets\DatasetResource;
+use App\Models\Dataset;
+use Illuminate\Support\Arr;
 
 class UpdateDatasetApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(DatasetRequest $request, UpdateDatasetAction $updateDatasetAction, Dataset $dataset)
     {
-        //
+        $attrs = Arr::except($request->validated(), ['project_id']);
+        return new DatasetResource($updateDatasetAction($attrs, $dataset));
     }
 }
