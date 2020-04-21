@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects\Globus\Uploads;
+namespace App\Http\Controllers\Api\Globus\Uploads;
 
 use App\Actions\Globus\GlobusApi;
 use App\Http\Controllers\Controller;
 use App\Models\GlobusUploadDownload;
-use App\Models\Project;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class DestroyGlobusUploadWebController extends Controller
+class DeleteGlobusUploadApiController extends Controller
 {
-    public function __invoke(Project $project, GlobusUploadDownload $globusUpload)
+    public function __invoke($projectId, GlobusUploadDownload $globusUpload)
     {
         try {
             $globusApi = GlobusApi::createGlobusApi();
@@ -22,7 +21,5 @@ class DestroyGlobusUploadWebController extends Controller
 
         $globusUpload->delete();
         Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$globusUpload->uuid}");
-
-        return redirect(route('projects.globus.uploads.index', [$project]));
     }
 }
