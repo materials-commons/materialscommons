@@ -24,6 +24,7 @@ class UpdateExperimentRequest extends FormRequest
     public function rules()
     {
         return [
+            'project_id'  => 'nullable',
             'name'        => 'nullable|string|max:80',
             'description' => 'nullable|string|max:8192',
             'summary'     => 'nullable|string|max:100',
