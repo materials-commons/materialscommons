@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property string $uuid
+ * @property integer $owner_id
  * @property string $name
  * @property string $description
  * @property string $type
