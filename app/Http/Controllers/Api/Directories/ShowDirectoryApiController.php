@@ -8,13 +8,7 @@ use App\Http\Resources\Directories\DirectoryResource;
 
 class ShowDirectoryApiController extends Controller
 {
-    /**
-     * Show the directory
-     *
-     * @param  SingleDirectoryQuery  $query
-     * @return DirectoryResource
-     */
-    public function __invoke(SingleDirectoryQuery $query)
+    public function __invoke(SingleDirectoryQuery $query, $projectId)
     {
         $data = $query->first();
         return new DirectoryResource($data);

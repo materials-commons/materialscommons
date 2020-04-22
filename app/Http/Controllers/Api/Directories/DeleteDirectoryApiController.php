@@ -7,16 +7,7 @@ use App\Http\Controllers\Controller;
 
 class DeleteDirectoryApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  DeleteDirectoryAction  $deleteDirectoryAction
-     * @param $directoryId
-     *
-     * @return void
-     * @throws \Exception
-     */
-    public function __invoke(DeleteDirectoryAction $deleteDirectoryAction, $directoryId)
+    public function __invoke(DeleteDirectoryAction $deleteDirectoryAction, $projectId, $directoryId)
     {
         $directory = File::findOrFail($directoryId);
         $deleteDirectoryAction($directory);
