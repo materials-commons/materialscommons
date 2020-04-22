@@ -20,11 +20,13 @@ class MoveDirectoryAction
     public function __invoke($directoryId, $toDirectoryId)
     {
         $toDirectory = File::findOrFail($toDirectoryId);
-        $directory   = File::findOrFail($directoryId);
+        $directory = File::findOrFail($directoryId);
+
+        abort_unless($toDirectory->project_id == $directory->project_id, 400, "Directories must be in same project");
 
         // Setup variables for substr_replace to replace the old directory with the new path.
         $replaceWith = "{$toDirectory->path}/{$directory->name}";
-        $oldPathLen  = strlen($directory->path);
+        $oldPathLen = strlen($directory->path);
 
         $directoriesToUpdate = $this->getDirectoriesToUpdate($directory, $replaceWith, 0, $oldPathLen);
 
