@@ -27,7 +27,12 @@ class ConvertFileAction
 
         $originalFilePath = Storage::disk('mcfs')->path($file->realPathPartial());
         $convertedFilePath = Storage::disk('mcfs')->path($file->convertedPathPartial());
-        shell_exec("convert {$originalFilePath} {$convertedFilePath}");
+        try {
+            shell_exec("convert {$originalFilePath} {$convertedFilePath}");
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "Conversion failed: {$msg}\n";
+        }
         chmod($convertedFilePath, 0777);
     }
 
@@ -48,10 +53,15 @@ class ConvertFileAction
             "--convert-to pdf ".
             "--outdir {$tmpDir} ".
             "{$filePath}";
-        shell_exec($command);
-        shell_exec("cp {$tmpConvertedFilePath} {$convertedFilePath}");
-        shell_exec("rm {$tmpConvertedFilePath}");
-        chmod($convertedFilePath, 0777);
+        try {
+            shell_exec($command);
+            shell_exec("cp {$tmpConvertedFilePath} {$convertedFilePath}");
+            shell_exec("rm {$tmpConvertedFilePath}");
+            chmod($convertedFilePath, 0777);
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "Conversion failed: {$msg}\n";
+        }
     }
 
     private function createConversionDir(File $file)
