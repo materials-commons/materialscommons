@@ -59,7 +59,11 @@ class CreateProjectGlobusDownloadCommand extends Command
         $download = $createGlobusDownloadAction($data, $project->id, $user);
         $downloadPath = Storage::disk('mcfs')->path("__globus_downloads/{$download->uuid}");
         echo "Creating download in {$downloadPath}\n";
+        $now = now();
+        echo "Starting build at ${now}\n";
         $createDirsAction = new CreateGlobusProjectDownloadDirsAction(GlobusApi::createGlobusApi());
         $createDirsAction($download, $user);
+        $now = now();
+        echo "Finished build at ${now}\n";
     }
 }
