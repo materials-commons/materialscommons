@@ -21,6 +21,12 @@ class MoveFileAction
             if ($previousVersions->isNotEmpty()) {
                 File::whereIn('id', $previousVersions->pluck('id'))->update(['directory_id' => $toDirectoryId]);
             }
+            $files = File::where('name', $file->name)->where('directory_id', $toDirectoryId)->get();
+            foreach ($files as $f) {
+                if ($file->id != $f->id) {
+                    $f->update(['current' => false]);
+                }
+            }
         });
 
         return $file->fresh();
