@@ -9,8 +9,12 @@ class CreateExperimentWebController extends Controller
 {
     public function __invoke(Project $project)
     {
-        $excelFiles = $project->files()->with('directory')->where('mime_type',
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")->get();
+        $excelFiles = $project
+            ->files()
+            ->with('directory')
+            ->where('mime_type', "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            ->where('current', true)
+            ->get();
         return view('app.projects.experiments.create', compact('project', 'excelFiles'));
     }
 }
