@@ -42,7 +42,10 @@ class CreateGlobusProjectDownloadDirsAction
         $this->createDirs($dirsToCreate, $baseDir);
 
         foreach ($allDirs as $dir) {
-            $files = File::where('directory_id', $dir->id)->whereNull('path')->get();
+            $files = File::where('directory_id', $dir->id)
+                         ->where('current', true)
+                         ->whereNull('path')
+                         ->get();
             foreach ($files as $file) {
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
