@@ -71,17 +71,4 @@ class ConvertFileAction
             chmod(Storage::disk('mcfs')->path($file->pathDirPartial()."/.conversion"), 0777);
         }
     }
-
-    /*
-     * let tmpConvertedFile = path.join(os.tmpdir(), file.id + '.pdf');
-    let command = 'libreoffice ' +
-        ` -env:UserInstallation=file://${path.join(os.tmpdir(), file.id)}` +
-        ` --headless ` +
-        ` --convert-to pdf ` +
-        ` --outdir ${os.tmpdir()} ` +
-        ` ${mcdir.pathToFileId(file.id)};` +
-        ` cp ${tmpConvertedFile} ${mcdir.conversionDir(file.id)}; ` +
-        ` rm ${tmpConvertedFile}`;
-
-     */
 }
