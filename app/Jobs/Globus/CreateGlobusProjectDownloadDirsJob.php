@@ -31,6 +31,7 @@ class CreateGlobusProjectDownloadDirsJob implements ShouldQueue
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $globusApi = GlobusApi::createGlobusApi();
         $createGlobusProjectDownloadDirsAction = new CreateGlobusProjectDownloadDirsAction($globusApi);
         $createGlobusProjectDownloadDirsAction($this->globusDownload, $this->user);
