@@ -28,6 +28,7 @@ class CreateGlobusProjectDownloadDirsAction
 
     public function __invoke(GlobusUploadDownload $globusDownload, $user)
     {
+        umask(0);
         $globusDownload->update(['status' => GlobusStatus::Loading]);
         $allDirs = File::where('project_id', $globusDownload->project_id)
                        ->where('mime_type', 'directory')
@@ -47,9 +48,11 @@ class CreateGlobusProjectDownloadDirsAction
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     if ( ! link($uuidPath, $filePath)) {
+                        echo "Unable to link {$uuidPath} to {$filePath}\n";
                         Log::error("Unable to link {$uuidPath} to {$filePath}");
                     }
                 } catch (\Exception $e) {
+                    echo "Unable to link {$uuidPath} to {$filePath}\n";
                     Log::error("Unable to link {$uuidPath} to {$filePath}");
                 }
             }
