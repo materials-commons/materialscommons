@@ -47,7 +47,11 @@ class CreateGlobusProjectDownloadDirsAction
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
-                    if ( ! link($uuidPath, $filePath)) {
+                    $dirPathForFilePartial = "__globus_downloads/{$globusDownload->uuid}{$dir->path}";
+                    if (!Storage::disk('mcfs')->exists($dirPathForFilePartial)) {
+                        Storage::disk('mcfs')->makeDirectory($dirPathForFilePartial);
+                    }
+                    if (!link($uuidPath, $filePath)) {
                         echo "Unable to link {$uuidPath} to {$filePath}\n";
                         Log::error("Unable to link {$uuidPath} to {$filePath}");
                     }
