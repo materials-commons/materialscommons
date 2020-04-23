@@ -139,15 +139,84 @@ class File extends Model implements Searchable
 
     public function realPathPartial()
     {
+        $uuid = $this->getFileUuidToUse();
+        $dirPath = $this->pathDirPartial();
+        return "{$dirPath}/{$uuid}";
+    }
+
+    public function getFileUuidToUse()
+    {
         $uuid = $this->uuid;
         if ($this->uses_uuid !== null) {
             $uuid = $this->uses_uuid;
         }
 
+        return $uuid;
+    }
+
+    public function pathDirPartial()
+    {
+        $uuid = $this->getFileUuidToUse();
         $entries = explode('-', $uuid);
         $entry1 = $entries[1];
 
-        $dirPath = "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
-        return "{$dirPath}/{$uuid}";
+        return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
+    }
+
+    public function convertedPathPartial()
+    {
+        $fileName = $this->getFileUuidToUse();
+        if ($this->isConvertibleImage()) {
+            $fileName = $fileName.".jpg";
+        }
+
+        if ($this->isConvertibleOfficeDocument()) {
+            $fileName = $fileName.".pdf";
+        }
+
+        return $this->pathDirPartial()."/.conversion/{$fileName}";
+    }
+
+    public function isConvertible()
+    {
+        if ($this->isConvertibleImage()) {
+            return true;
+        }
+
+        return $this->isConvertibleOfficeDocument();
+    }
+
+    public function shouldBeConverted()
+    {
+        if (!$this->isConvertible()) {
+            return false;
+        }
+
+        return !Storage::disk('mcfs')->exists($this->convertedPathPartial());
+    }
+
+    public function isConvertibleImage()
+    {
+        switch ($this->mime_type) {
+            case 'image/bmp':
+            case 'image/x-ms-bmp':
+            case 'image/tiff':
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public function isConvertibleOfficeDocument()
+    {
+        switch ($this->mime_type) {
+            case "application/vnd.ms-powerpoint":
+            case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+            case "application/msword":
+            case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Actions\Globus\Uploads;
 
 use App\Enums\GlobusStatus;
+use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Traits\PathForFile;
@@ -117,6 +118,10 @@ class LoadGlobusUploadIntoProjectAction
         if ($existing->isNotEmpty()) {
             // Existing files to mark as not current
             File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
+        }
+
+        if ($fileEntry->shouldBeConverted()) {
+            ConvertFileJob::dispatch($fileEntry)->onQueue('globus');
         }
 
         return $fileEntry;

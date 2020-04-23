@@ -2,6 +2,7 @@
 
 namespace App\Actions\Files;
 
+use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
 use Ramsey\Uuid\Uuid;
 
@@ -42,6 +43,10 @@ class CreateFileAction
         if ($existing->isNotEmpty()) {
             // Existing files to mark as not current
             File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
+        }
+
+        if ($fileEntry->shouldBeConverted()) {
+            ConvertFileJob::dispatch($fileEntry)->onQueue('globus');
         }
 
         return $fileEntry;
