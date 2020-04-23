@@ -36,6 +36,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $file = File::find($this->fileId);
         $uuidPath = $this->getFilePathForFile($file);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
