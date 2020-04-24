@@ -28,7 +28,8 @@ class CreateEntityStatesTable extends Migration
             $table->unsignedBigInteger('entity_id');
             $table->foreign('entity_id')
                   ->references('id')
-                  ->on('entities');
+                  ->on('entities')
+                  ->onDelete('cascade');
 
             $table->timestamps();
         });

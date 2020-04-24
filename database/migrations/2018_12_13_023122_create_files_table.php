@@ -47,7 +47,8 @@ class CreateFilesTable extends Migration
             $table->unsignedBigInteger('directory_id')->nullable();
             $table->foreign('directory_id')
                   ->references('id')
-                  ->on('files');
+                  ->on('files')
+                  ->onDelete('cascade');
 
             $table->uuid('uses_uuid')->nullable();
 //            $table->foreign('uses_uuid')

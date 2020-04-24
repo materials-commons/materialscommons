@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntityState2fileTable extends Migration
+class CreateOnDeleteCascadeForEntityState2fileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,27 @@ class CreateEntityState2fileTable extends Migration
      */
     public function up()
     {
-        Schema::create('entity_state2file', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('entity_state_id');
+        Schema::table('entity_state2file', function (Blueprint $table) {
+            $this->dropForeign($table, 'entity_state2file_entity_state_id_foreign');
             $table->foreign('entity_state_id')
                   ->references('id')
                   ->on('entity_states')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('file_id');
+            $this->dropForeign($table, 'entity_state2file_file_id_foreign');
             $table->foreign('file_id')
                   ->references('id')
                   ->on('files')
                   ->onDelete('cascade');
-
-            $table->timestamps();
         });
+    }
+
+    private function dropForeign(Blueprint $table, $name)
+    {
+        if (env('DB_CONNECTION') == 'sqlite') {
+            return;
+        }
+        $table->dropForeign($name);
     }
 
     /**
@@ -39,6 +43,8 @@ class CreateEntityState2fileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entity_state2file');
+        Schema::table('entity_state2file', function (Blueprint $table) {
+            //
+        });
     }
 }

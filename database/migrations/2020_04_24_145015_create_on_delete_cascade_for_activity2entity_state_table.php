@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivity2entityStateTable extends Migration
+class CreateOnDeleteCascadeForActivity2entityStateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,27 @@ class CreateActivity2entityStateTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity2entity_state', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('activity_id');
+        Schema::table('activity2entity_state', function (Blueprint $table) {
+            $this->dropForeign($table, 'activity2entity_state_activity_id_foreign');
             $table->foreign('activity_id')
                   ->references('id')
                   ->on('activities')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('entity_state_id');
+            $this->dropForeign($table, 'activity2entity_state_entity_state_id_foreign');
             $table->foreign('entity_state_id')
                   ->references('id')
                   ->on('entity_states')
                   ->onDelete('cascade');
-
-            $table->string('direction')->nullable();
-
-            $table->timestamps();
         });
+    }
+
+    private function dropForeign(Blueprint $table, $name)
+    {
+        if (env('DB_CONNECTION') == 'sqlite') {
+            return;
+        }
+        $table->dropForeign($name);
     }
 
     /**
@@ -41,6 +43,8 @@ class CreateActivity2entityStateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity2entity_state');
+        Schema::table('activity2entity_state', function (Blueprint $table) {
+            //
+        });
     }
 }

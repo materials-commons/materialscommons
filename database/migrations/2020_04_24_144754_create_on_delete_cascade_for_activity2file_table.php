@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivity2fileTable extends Migration
+class CreateOnDeleteCascadeForActivity2fileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,25 +13,27 @@ class CreateActivity2fileTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity2file', function (Blueprint $table) {
-            $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('activity_id');
+        Schema::table('activity2file', function (Blueprint $table) {
+            $this->dropForeign($table, 'activity2file_activity_id_foreign');
             $table->foreign('activity_id')
                   ->references('id')
                   ->on('activities')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('file_id');
+            $this->dropForeign($table, 'activity2file_file_id_foreign');
             $table->foreign('file_id')
                   ->references('id')
                   ->on('files')
                   ->onDelete('cascade');
-
-            $table->string('direction')->nullable();
-
-            $table->timestamps();
         });
+    }
+
+    private function dropForeign(Blueprint $table, $name)
+    {
+        if (env('DB_CONNECTION') == 'sqlite') {
+            return;
+        }
+        $table->dropForeign($name);
     }
 
     /**
@@ -41,6 +43,8 @@ class CreateActivity2fileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity2file');
+        Schema::table('activity2file', function (Blueprint $table) {
+            //
+        });
     }
 }
