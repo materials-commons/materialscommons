@@ -9,6 +9,7 @@ use App\Http\Controllers\api\Projects\AttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateAttributesAPIController;
 use App\Http\Controllers\api\Projects\EntityStateFilesAPIController;
 use App\Http\Controllers\api\Projects\ValuesAPIController;
+use App\Http\Controllers\Api\Users\GetApiTokenApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,6 +67,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     // ETL
     require base_path('routes/api_routes/etl_api.php');
 });
+
+Route::post('/get_apitoken', GetApiTokenApiController::class);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
