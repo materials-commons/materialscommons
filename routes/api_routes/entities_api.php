@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Entities\CreateEntityApiController;
 use App\Http\Controllers\Api\Entities\DeleteEntityApiController;
+use App\Http\Controllers\Api\Entities\IndexEntitiesApiController;
 use App\Http\Controllers\Api\Entities\ShowEntityApiController;
 use App\Http\Controllers\Api\Entities\UpdateEntityApiController;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::put('/entities/{entity}', UpdateEntityApiController::class);
  * @apiDescription Delete an existing entity and all its relationships
  * @apiUse APITokenParam
  */
-Route::delete('/entitites/{entity}', DeleteEntityApiController::class);
+Route::delete('/project/{project}/entitites/{entity}', DeleteEntityApiController::class);
 
 /**
  * @api {get} /entities/{entity_id} Show an existing entity
@@ -47,4 +48,6 @@ Route::delete('/entitites/{entity}', DeleteEntityApiController::class);
  * @apiDescription Show details of a entity user has access to
  * @apiUse APITokenParam
  */
-Route::get('/entities/{entity}', ShowEntityApiController::class);
+Route::get('/projects/{project}/entities/{entity}', ShowEntityApiController::class);
+
+Route::get('/projects/{project}/entities', IndexEntitiesApiController::class);

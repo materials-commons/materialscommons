@@ -27,6 +27,7 @@ class UpdateActivityRequest extends FormRequest
     public function rules()
     {
         return [
+            'project_id'  => '->nullable',
             'name'        => 'string|max:80',
             'description' => 'nullable|string|max:2048',
         ];

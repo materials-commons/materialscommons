@@ -8,16 +8,7 @@ use App\Models\Activity;
 
 class DeleteActivityApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  DeleteActivityAction  $deleteActivityAction
-     * @param  Activity  $activity
-     *
-     * @return void
-     * @throws \Exception
-     */
-    public function __invoke(DeleteActivityAction $deleteActivityAction, Activity $activity)
+    public function __invoke(DeleteActivityAction $deleteActivityAction, $projectId, Activity $activity)
     {
         $deleteActivityAction($activity);
     }

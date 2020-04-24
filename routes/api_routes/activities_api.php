@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Activities\CreateActivityApiController;
 use App\Http\Controllers\Api\Activities\DeleteActivityApiController;
+use App\Http\Controllers\Api\Activities\IndexActivitiesApiController;
 use App\Http\Controllers\Api\Activities\ShowActivityApiController;
 use App\Http\Controllers\Api\Activities\UpdateActivityApiController;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +57,7 @@ Route::put('/activities/{activity}', UpdateActivityApiController::class);
  * does not delete the items the relationships point at.
  * @apiUse APITokenParam
  */
-Route::delete('/activities/{activity}', DeleteActivityApiController::class);
+Route::delete('/projects/{project}/activities/{activity}', DeleteActivityApiController::class);
 
 /**
  * @api {get} /activities/{activity_id} Show an existing activity
@@ -65,4 +66,6 @@ Route::delete('/activities/{activity}', DeleteActivityApiController::class);
  * @apiDescription Show an existing activity
  * @apiUse APITokenParam
  */
-Route::get('/activities/{activity}', ShowActivityApiController::class);
+Route::get('/projects/{project}/activities/{activity}', ShowActivityApiController::class);
+
+Route::get('/projects/{project}/activities', IndexActivitiesApiController::class);
