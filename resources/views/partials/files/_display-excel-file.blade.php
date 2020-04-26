@@ -17,6 +17,7 @@
                 editable: false,
                 allowFreezingColumns: true,
                 allowFreezingRows: true,
+                columnSelectorText: 'Show/hide columns',
             });
             grid.style.height = '100%';
             grid.style.width = '100%';
