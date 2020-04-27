@@ -8,14 +8,7 @@ use App\Models\File;
 
 class DeleteFileApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \App\Actions\Files\DeleteFileAction  $deleteFileAction
-     * @param  \App\Models\File  $file
-     * @return void
-     */
-    public function __invoke(DeleteFileAction $deleteFileAction, File $file)
+    public function __invoke(DeleteFileAction $deleteFileAction, $projectId, File $file)
     {
         $deleteFileAction($file);
     }

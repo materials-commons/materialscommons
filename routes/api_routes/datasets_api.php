@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Datasets\CreateDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
+use App\Http\Controllers\Api\Datasets\DownloadDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetsApiController;
 use App\Http\Controllers\Api\Datasets\PublishDatasetApiController;
 use App\Http\Controllers\Api\Datasets\ShowDatasetApiController;
@@ -32,6 +33,7 @@ Route::post('/datasets', CreateDatasetApiController::class);
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
 Route::put('/datasets/{dataset}/publish', PublishDatasetApiController::class);
 Route::put('/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
+Route::get('/datasets/{dataset}/download_zipfile', DownloadDatasetZipfileApiController::class);
 
 
 
