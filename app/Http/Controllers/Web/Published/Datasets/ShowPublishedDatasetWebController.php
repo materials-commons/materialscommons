@@ -8,6 +8,7 @@ use App\Models\Dataset;
 class ShowPublishedDatasetWebController extends Controller
 {
     use ViewsAndDownloads;
+    use GoogleDatasetAnnotations;
 
     public function __invoke($datasetId)
     {
@@ -17,6 +18,10 @@ class ShowPublishedDatasetWebController extends Controller
         // Datatables does case-insensitive sorting. The database is returning case sensitive, so
         // create a case insensitive list of the workflow items
         $workflows = $dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
-        return view('public.datasets.show', compact('dataset', 'workflows'));
+        return view('public.datasets.show', [
+            'dataset'      => $dataset,
+            'workflows'    => $workflows,
+            'dsAnnotation' => $this->jsonLDAnnotations($dataset),
+        ]);
     }
 }

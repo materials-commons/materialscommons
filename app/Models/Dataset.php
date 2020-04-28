@@ -17,10 +17,14 @@ use Spatie\Tags\HasTags;
  * @property string name
  * @property string uuid
  * @property string description
+ * @property string summary
+ * @property string license
+ * @property mixed $tags
  * @property integer project_id
  * @property mixed $communities
  * @property mixed $experiments
  * @property integer $owner_id
+ * @property mixed owner
  * @property array $file_selection
  * @property mixed entities
  * @property mixed activities
