@@ -1,0 +1,2 @@
+#!/bin/sh
+/home/gtarcea/bin/globus/globusconnectpersonal -start
