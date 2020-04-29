@@ -56,9 +56,9 @@ class CreateFilesTable extends Migration
 //                  ->on('files');
 
             $table->unsignedBigInteger('uses_id')->nullable();
-            $table->foreign('uses_id')
-                  ->references('id')
-                  ->on('files');
+//            $table->foreign('uses_id')
+//                  ->references('id')
+//                  ->on('files');
 
             $table->timestamps();
 
