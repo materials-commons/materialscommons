@@ -10,4 +10,6 @@ php artisan config:cache
 php artisan migrate
 cd ..
 chown -R nginx:nginx materialscommons
-systemctl restart supervisord
+systemctl stop supervisord
+sleep 10
+systemctl start supervisord
