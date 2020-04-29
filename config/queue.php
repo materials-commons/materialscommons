@@ -38,22 +38,22 @@ return [
             'driver'      => 'database',
             'table'       => 'jobs',
             'queue'       => 'default',
-            'retry_after' => 95,
-        ],
-
-        'database_globus' => [
-            'driver'      => 'database',
-            'table'       => 'jobs',
-            'queue'       => 'globus',
             'retry_after' => 3610,
         ],
 
-        'database_spreadsheets' => [
-            'driver'      => 'database',
-            'table'       => 'jobs',
-            'queue'       => 'spreadsheets',
-            'retry_after' => 910,
-        ],
+//        'database_globus' => [
+//            'driver'      => 'database',
+//            'table'       => 'jobs',
+//            'queue'       => 'globus',
+//            'retry_after' => 3610,
+//        ],
+//
+//        'database_spreadsheets' => [
+//            'driver'      => 'database',
+//            'table'       => 'jobs',
+//            'queue'       => 'spreadsheets',
+//            'retry_after' => 910,
+//        ],
 
         'beanstalkd' => [
             'driver'      => 'beanstalkd',
