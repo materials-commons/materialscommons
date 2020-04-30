@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Communities\DeleteCommunityWebController;
 use App\Http\Controllers\Web\Communities\DestroyCommunityWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityWebController;
 use App\Http\Controllers\Web\Communities\IndexCommunitiesWebController;
+use App\Http\Controllers\Web\Communities\ShowCommunityRecommendedPracticesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityWebController;
 use App\Http\Controllers\Web\Communities\StoreCommunityWebController;
 use App\Http\Controllers\Web\Communities\UpdateCommunityWebController;
@@ -21,6 +22,9 @@ Route::post('/communities', StoreCommunityWebController::class)
 
 Route::get('/communities/{community}', ShowCommunityWebController::class)
      ->name('communities.show');
+
+Route::get('/communities/{community}/practices', ShowCommunityRecommendedPracticesWebController::class)
+     ->name('communities.practices.show');
 
 Route::get('/communities/{community}/edit', EditCommunityWebController::class)
      ->name('communities.edit');

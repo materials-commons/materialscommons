@@ -44,7 +44,7 @@
         @endslot
 
         @slot('body')
-            @include('public.community._communities_table')
+            @include('public.communities._communities_table')
         @endslot
     @endcomponent
 

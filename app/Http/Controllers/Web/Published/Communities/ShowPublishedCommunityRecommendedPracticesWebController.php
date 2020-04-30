@@ -12,6 +12,6 @@ class ShowPublishedCommunityRecommendedPracticesWebController extends Controller
     {
         $community = Community::with('datasets.owner')->findOrFail($communityId);
         abort_unless($community->public, 404, "No such community");
-        return view('app.communities.show', ['community' => $community]);
+        return view('public.communities.show', ['community' => $community]);
     }
 }

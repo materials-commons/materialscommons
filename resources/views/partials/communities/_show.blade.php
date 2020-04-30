@@ -30,13 +30,13 @@
         </form>
 
         <br>
-        @include('app.communities.show-tabs.tabs')
+        @include('partials.communities.show-tabs.tabs')
         <br>
 
-        @if(Request::routeIs('public.communities.show'))
-            @include('app.communities.show-tabs.datasets')
-        @elseif (Request::routeIs('public.communities.practices.show'))
-            @include('app.communities.show-tabs.practices')
+        @if(Request::routeIs($showRouteName))
+            @include('partials.communities.show-tabs.datasets')
+        @elseif (Request::routeIs($practicesRouteName))
+            @include('partials.communities.show-tabs.practices')
         @endif
 
         <br>

@@ -12,6 +12,6 @@ class IndexPublishedCommunitiesWebController extends Controller
     {
         $communities = Community::with('owner')->withCount('datasets')
                                 ->where('public', true)->get();
-        return view('public.community.index', compact('communities'));
+        return view('public.communities.index', compact('communities'));
     }
 }
