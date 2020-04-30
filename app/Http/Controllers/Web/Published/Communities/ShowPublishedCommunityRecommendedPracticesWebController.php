@@ -10,7 +10,7 @@ class ShowPublishedCommunityRecommendedPracticesWebController extends Controller
 {
     public function __invoke(Request $request, $communityId)
     {
-        $community = Community::with('datasets.owner')->findOrFail($communityId);
+        $community = Community::with(['files.owner', 'links.owner'])->findOrFail($communityId);
         abort_unless($community->public, 404, "No such community");
         return view('public.communities.show', ['community' => $community]);
     }

@@ -10,7 +10,7 @@ class ShowCommunityRecommendedPracticesWebController extends Controller
     public function __invoke($communityId)
     {
         return view('app.communities.show', [
-            'community' => Community::with('datasets.owner')->findOrFail($communityId),
+            'community' => Community::with(['files.owner', 'links.owner'])->findOrFail($communityId),
         ]);
     }
 }
