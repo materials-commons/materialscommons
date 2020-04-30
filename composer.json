@@ -15,6 +15,7 @@
     "bensampo/laravel-enum": "^1.16",
     "bkwld/cloner": "^3.5",
     "davejamesmiller/laravel-breadcrumbs": "5.x",
+    "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.0",
     "freshbitsweb/laratables": "^2.1",
     "graham-campbell/markdown": "^12.0",
