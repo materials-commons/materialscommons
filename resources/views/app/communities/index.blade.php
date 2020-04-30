@@ -30,7 +30,7 @@
                 @foreach($communities as $community)
                     <tr>
                         <td>
-                            <a href="{{route('communities.show', [$community])}}" class="action-link">
+                            <a href="{{route('communities.show', [$community])}}" class="">
                                 {{$community->name}}
                             </a>
                         </td>

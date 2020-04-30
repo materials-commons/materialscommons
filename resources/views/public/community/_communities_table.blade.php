@@ -11,7 +11,7 @@
     @foreach($communities as $community)
         <tr>
             <td>
-                <a href="{{route('public.communities.datasets.index', $community)}}">{{$community->name}}</a>
+                <a href="{{route('public.communities.show', $community)}}">{{$community->name}}</a>
             </td>
             <td>{{$community->owner->name}}</td>
             <td>{{$community->summary}}</td>
