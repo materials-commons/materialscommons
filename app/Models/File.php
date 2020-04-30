@@ -76,6 +76,11 @@ class File extends Model implements Searchable
         return $this->belongsTo(File::class, 'directory_id');
     }
 
+    public function communities()
+    {
+        return $this->morphedByMany(Community::class, 'item', 'item2file');
+    }
+
     public function toHumanBytes()
     {
         return $this->formatBytes($this->size);

@@ -42,6 +42,16 @@ class Community extends Model implements Searchable
                     ->whereNotNull('published_at');
     }
 
+    public function links()
+    {
+        return $this->morphToMany(Link::class, 'item', 'item2link');
+    }
+
+    public function files()
+    {
+        return $this->morphToMany(File::class, 'item', 'item2file');
+    }
+
     public function getTypeAttribute()
     {
         return "community";
