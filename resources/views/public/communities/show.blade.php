@@ -11,5 +11,6 @@
         'doneRoute' => route('public.communities.index'),
         'showRouteName' => 'public.communities.show',
         'practicesRouteName' => 'public.communities.practices.show',
+        'datasetRouteName' => 'public.datasets.show',
     ])
 @stop
