@@ -21,16 +21,17 @@
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" id="name" value="{{$experiment->name}}" name="name">
+                    <input class="form-control" id="name" value="{{old('name', $experiment->name)}}" name="name">
                 </div>
                 <div class="form-group">
                     <label for="summary">Summary</label>
-                    <input class="form-control" id="summary" value="{{$experiment->summary}}" name="summary">
+                    <input class="form-control" id="summary" value="{{old('summary', $experiment->summary)}}"
+                           name="summary">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description"
-                              name="description">{{$experiment->description}}</textarea>
+                              name="description">{{old('description', $experiment->description)}}</textarea>
                 </div>
                 <input hidden name="project_id" value="{{$project->id}}">
                 <div class="float-right">

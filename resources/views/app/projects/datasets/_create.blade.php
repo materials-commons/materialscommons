@@ -2,27 +2,28 @@
     @csrf
     <div class="form-group">
         <label class="required" for="name">Name</label>
-        <input class="form-control" id="name" name="name" type="text" value=""
+        <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                placeholder="Name...">
     </div>
 
     <div class="form-group">
         <label for="authors">Authors and Affiliations</label>
         <input class="form-control" id="authors" name="authors" type="text"
-               value="{{$authorsAndAffiliations}}"
+               value="{{old('authors', $authorsAndAffiliations)}}"
                placeholder="Authors...">
     </div>
 
     <div class="form-group">
         <label for="summary">Summary</label>
-        <input class="form-control" id="summary" name="summary" type="text" placeholder="Summary...">
+        <input class="form-control" id="summary" name="summary" type="text" value="{{old('summary')}}"
+               placeholder="Summary...">
     </div>
 
     <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description" name="description" type="text"
                   value=""
-                  placeholder="Description..."></textarea>
+                  placeholder="Description...">{{old('description')}}</textarea>
     </div>
 
     <div class="form-group">
@@ -86,7 +87,7 @@
 
     <div class="form-group">
         <label for="tags">Tags</label>
-        <input class="form-control" id="tags" name="tags">
+        <input class="form-control" id="tags" name="tags" value="{{old('tags')}}">
     </div>
 
     <input hidden id="project_id" name="project_id" value="{{$project->id}}">

@@ -3,16 +3,18 @@
 
     <div class="form-group">
         <label for="name">Name</label>
-        <input class="form-control" id="name" name="name" type="text" placeholder="Workflow Name...">
+        <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
+               placeholder="Workflow Name...">
     </div>
     <div class="form-group">
         <label for="summary">Summary</label>
-        <input class="form-control" id="summary" name="summary" type="text" placeholder="Summary...">
+        <input class="form-control" id="summary" name="summary" type="text" value="{{old('summary')}}"
+               placeholder="Summary...">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description" name="description"
-                  placeholder="Description..."></textarea>
+                  placeholder="Description...">{{old('description')}}</textarea>
     </div>
 
     <div class="form-group">
