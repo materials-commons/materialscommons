@@ -11,6 +11,7 @@ class EditCommunityWebController extends Controller
     {
         return view('app.communities.edit', [
             'community' => Community::with('datasets')->findOrFail($communityId),
+            'user'      => auth()->user(),
         ]);
     }
 }

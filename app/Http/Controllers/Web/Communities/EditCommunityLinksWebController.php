@@ -11,6 +11,7 @@ class EditCommunityLinksWebController extends Controller
     {
         return view('app.communities.edit', [
             'community' => Community::with('links')->findOrFail($communityId),
+            'user'      => auth()->user(),
         ]);
     }
 }

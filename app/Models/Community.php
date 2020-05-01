@@ -13,6 +13,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer $id
  * @property string $uuid
  * @property string $name
+ * @property integer $owner_id
  * @property string $description
  * @property boolean $public
  * @property mixed $datasets

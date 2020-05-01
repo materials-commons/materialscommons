@@ -11,6 +11,7 @@ class EditCommunityFilesWebController extends Controller
     {
         return view('app.communities.edit', [
             'community' => Community::with('files')->findOrFail($communityId),
+            'user'      => auth()->user(),
         ]);
     }
 }
