@@ -18,18 +18,21 @@
                 @method('put')
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" id="name" name="name" value="{{$community->name}}" type="text"
+                    <input class="form-control" id="name" name="name" value="{{old('name', $community->name)}}"
+                           type="text"
                            placeholder="Name..." required>
                 </div>
 
                 <div class="form-group">
                     <label for="summary">Summary</label>
-                    <input class="form-control" id="summary" value="{{$community->summary}}" name="summary">
+                    <input class="form-control" id="summary" value="{{old('summary', $community->summary)}}"
+                           name="summary">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
-                              placeholder="Description..." required>{{$community->description}}</textarea>
+                              placeholder="Description..."
+                              required>{{old('description', $community->description)}}</textarea>
                 </div>
                 <div class="float-right">
                     <a href="{{route('communities.index')}}" class="action-link danger mr-3">
@@ -45,7 +48,7 @@
                     <label class="form-check-label mr-2" for="public">Public?</label>
                     <input type="hidden" name="public" value="0"/>
                     <input type="checkbox" class="form-check-input" id="public"
-                           value="1" name="public" {{$community->public ? 'checked' : ''}}>
+                           value="1" name="public" {{old('public', $community->public) ? 'checked' : ''}}>
                 </div>
             </form>
         @endslot
