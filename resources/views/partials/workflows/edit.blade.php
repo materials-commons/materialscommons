@@ -5,23 +5,24 @@
 
         <div class="form-group">
             <label for="name">Name</label>
-            <input class="form-control" id="name" name="name" type="text" value="{{$workflow->name}}"
+            <input class="form-control" id="name" name="name" type="text"
+                   value="{{old('name', $workflow->name)}}"
                    placeholder="Workflow Name...">
         </div>
         <div class="form-group">
             <label for="summary">Summary</label>
-            <input class="form-control" id="summary" value="{{$workflow->summary}}" name="summary">
+            <input class="form-control" id="summary" value="{{old('summary', $workflow->summary)}}" name="summary">
         </div>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description"
-                      placeholder="Description...">{{$workflow->description}}</textarea>
+                      placeholder="Description...">{{old('description', $workflow->description)}}</textarea>
         </div>
 
         <div class="form-group">
             <label for="workflowcode">Workflow</label>
             <textarea id="workflowcode" class="form-control"
-                      name="workflow">{{$workflow->workflow}}</textarea>
+                      name="workflow">{{old('workflow', $workflow->workflow)}}</textarea>
         </div>
         <div class="float-right">
             <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>

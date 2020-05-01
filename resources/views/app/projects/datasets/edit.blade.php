@@ -23,19 +23,21 @@
 
                 <div class="form-group">
                     <label class="required" for="name">Name</label>
-                    <input class="form-control" id="name" name="name" type="text" value="{{$dataset->name}}"
+                    <input class="form-control" id="name" name="name" type="text"
+                           value="{{old('name', $dataset->name)}}"
                            placeholder="Name...">
                 </div>
 
                 <div class="form-group">
                     <label for="summary">Summary</label>
-                    <input class="form-control" id="summary" value="{{$dataset->summary}}" name="summary">
+                    <input class="form-control" id="summary" value="{{old('summary', $dataset->summary)}}"
+                           name="summary">
                 </div>
 
                 <div class="form-group">
                     <label for="authors">Authors and Affiliations</label>
                     <input class="form-control" id="authors" name="authors" type="text"
-                           value="{{$dataset->authors}}"
+                           value="{{old('authors', $dataset->authors)}}"
                            placeholder="Authors...">
                 </div>
 
@@ -43,7 +45,7 @@
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               value="{{$dataset->description}}"
-                              placeholder="Description...">{{$dataset->description}}</textarea>
+                              placeholder="Description...">{{old('descrition', $dataset->description)}}</textarea>
                 </div>
 
                 <div class="form-group">
@@ -64,7 +66,7 @@
                 <div class="form-group">
                     <label for="funding">Funding</label>
                     <input class="form-control" id="funding" name="funding" type="text"
-                           value="{{$dataset->funding}}"
+                           value="{{old('funding', $dataset->funding)}}"
                            placeholder="Funding...">
                 </div>
                 <div class="form-group">
@@ -121,7 +123,7 @@
 
                 <div class="form-group">
                     <label for="tags">Tags</label>
-                    <input class="form-control" id="tags" name="tags" value="{{$tagsList}}">
+                    <input class="form-control" id="tags" name="tags" value="{{old('tags', $tagsList)}}">
                 </div>
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">

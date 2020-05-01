@@ -19,22 +19,24 @@
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" id="name" value="{{$project->name}}" name="name">
+                    <input class="form-control" id="name" value="{{old('name', $project->name)}}"
+                           name="name">
                 </div>
                 <div class="form-group">
                     <label for="summary">Summary</label>
-                    <input class="form-control" id="summary" value="{{$project->summary}}" name="summary">
+                    <input class="form-control" id="summary" value="{{old('summary', $project->summary)}}"
+                           name="summary">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description"
-                              name="description">{{$project->description}}</textarea>
+                              name="description">{{old('description', $project->description)}}</textarea>
                 </div>
                 <div class="form-group form-check-inline">
                     <input type="hidden" name="default_project" value="0">
                     <input type="checkbox" class="form-check-input" id="default_project"
                            value="1" name="default_project"
-                            {{$project->default_project ? 'checked' : ''}}>
+                            {{old('default_project', $project->default_project) ? 'checked' : ''}}>
                     <label class="form-check-label" for="default_project">Default Project?</label>
                 </div>
                 <div class="form-group form-check-inline">
