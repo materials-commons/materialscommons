@@ -3,6 +3,9 @@
 use App\Http\Controllers\Web\Communities\CreateCommunityWebController;
 use App\Http\Controllers\Web\Communities\DeleteCommunityWebController;
 use App\Http\Controllers\Web\Communities\DestroyCommunityWebController;
+use App\Http\Controllers\Web\Communities\EditCommunityDatasetsWebController;
+use App\Http\Controllers\Web\Communities\EditCommunityFilesWebController;
+use App\Http\Controllers\Web\Communities\EditCommunityLinksWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityWebController;
 use App\Http\Controllers\Web\Communities\IndexCommunitiesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityRecommendedPracticesWebController;
@@ -28,6 +31,12 @@ Route::get('/communities/{community}/practices', ShowCommunityRecommendedPractic
 
 Route::get('/communities/{community}/edit', EditCommunityWebController::class)
      ->name('communities.edit');
+
+Route::get('/communities/{community}/edit/files', EditCommunityFilesWebController::class)
+     ->name('communities.files.edit');
+
+Route::get('/communities/{community}/edit/links', EditCommunityLinksWebController::class)
+     ->name('communities.links.edit');
 
 Route::put('/communities/{community}', UpdateCommunityWebController::class)
      ->name('communities.update');

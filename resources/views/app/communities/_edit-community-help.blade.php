@@ -29,9 +29,3 @@
     </p>
     @break
 @endswitch
-
-<p>
-    When you are done you can <a href="#">Review</a> your dataset. If you would like to edit the details,
-    such as tags, authors, etc... you can select the
-    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}">Edit Details</a> link.
-</p>

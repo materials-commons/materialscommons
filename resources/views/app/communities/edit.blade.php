@@ -51,6 +51,28 @@
                            value="1" name="public" {{old('public', $community->public) ? 'checked' : ''}}>
                 </div>
             </form>
+
+            <br>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-11">
+                    @include('app.communities._edit-community-help')
+                </div>
+            </div>
+
+            <br>
+            <br>
+            @include('app.communities.ce-tabs.tabs')
+            <br>
+
+            @if(Request::routeIs('communities.edit'))
+                @include('app.communities.ce-tabs.datasets')
+            @elseif (Request::routeIs('communities.files.edit'))
+                @include('app.communities.ce-tabs.files')
+            @elseif(Request::routeIs('communities.links.edit'))
+                @include('app.communities.ce-tabs.links')
+            @endif
+
         @endslot
     @endcomponent
 
