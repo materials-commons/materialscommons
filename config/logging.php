@@ -43,13 +43,15 @@ return [
             'driver' => 'single',
             'path'   => storage_path('logs/laravel.log'),
             'level'  => 'emergency',
+            'permission' => 0777,
         ],
 
         'daily' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => 'debug',
-            'days' => 14,
+            'driver'     => 'daily',
+            'path'       => storage_path('logs/laravel.log'),
+            'level'      => 'debug',
+            'days'       => 14,
+            'permission' => 0777,
         ],
 
         'slack' => [
