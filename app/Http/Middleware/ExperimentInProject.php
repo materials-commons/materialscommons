@@ -6,7 +6,7 @@ use App\Models\Experiment;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureExperimentInProject
+class ExperimentInProject
 {
     use GetRequestParameterId;
 
@@ -20,13 +20,20 @@ class EnsureExperimentInProject
     public function handle($request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $experimentId = $this->getParameterId('experiment');
-            if ($experimentId != '') {
-                $count = Experiment::where('id', $experimentId)->where('project_id', $projectId)->count();
-                abort_if($count == 0, 404, 'No such dataset');
-            }
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        $experimentId = $this->getParameterId('experiment');
+        if ($experimentId == '') {
+            return $next($request);
+        }
+
+        $count = Experiment::where('id', $experimentId)
+                           ->where('project_id', $projectId)
+                           ->count();
+        abort_if($count == 0, 404, 'No such experiment');
+
         return $next($request);
     }
 }

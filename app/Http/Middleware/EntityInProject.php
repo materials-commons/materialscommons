@@ -6,7 +6,7 @@ use App\Models\Entity;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureEntityInProject
+class EntityInProject
 {
     use GetRequestParameterId;
 
@@ -20,13 +20,20 @@ class EnsureEntityInProject
     public function handle($request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $entityId = $this->getParameterId('entity');
-            if ($entityId != '') {
-                $count = Entity::where('id', $entityId)->where('project_id', $projectId)->count();
-                abort_if($count == 0, 404, 'No such entity');
-            }
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        $entityId = $this->getParameterId('entity');
+        if ($entityId == '') {
+            return $next($request);
+        }
+
+        $count = Entity::where('id', $entityId)
+                       ->where('project_id', $projectId)
+                       ->count();
+        abort_if($count == 0, 404, 'No such entity');
+
         return $next($request);
     }
 }

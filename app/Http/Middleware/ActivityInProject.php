@@ -6,7 +6,7 @@ use App\Models\Activity;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureActivityInProject
+class ActivityInProject
 {
     use GetRequestParameterId;
 
@@ -20,13 +20,20 @@ class EnsureActivityInProject
     public function handle($request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $activityId = $this->getParameterId('activity');
-            if ($activityId != '') {
-                $count = Activity::where('id', $activityId)->where('project_id', $projectId)->count();
-                abort_if($count == 0, 404, 'No such activity');
-            }
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        $activityId = $this->getParameterId('activity');
+        if ($activityId == '') {
+            return $next($request);
+        }
+
+        $count = Activity::where('id', $activityId)
+                         ->where('project_id', $projectId)
+                         ->count();
+        abort_if($count == 0, 404, 'No such activity');
+
         return $next($request);
     }
 }

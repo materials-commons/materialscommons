@@ -6,7 +6,7 @@ use App\Models\Dataset;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureDatasetInProject
+class DatasetInProject
 {
     use GetRequestParameterId;
 
@@ -20,13 +20,20 @@ class EnsureDatasetInProject
     public function handle($request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $datasetId = $this->getParameterId('dataset');
-            if ($datasetId != '') {
-                $count = Dataset::where('id', $datasetId)->where('project_id', $projectId)->count();
-                abort_if($count == 0, 404, 'No such dataset');
-            }
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        $datasetId = $this->getParameterId('dataset');
+        if ($datasetId == '') {
+            return $next($request);
+        }
+
+        $count = Dataset::where('id', $datasetId)
+                        ->where('project_id', $projectId)
+                        ->count();
+        abort_if($count == 0, 404, 'No such dataset');
+
         return $next($request);
     }
 }

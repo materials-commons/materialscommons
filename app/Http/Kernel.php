@@ -2,12 +2,12 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\EnsureActivityInProject;
-use App\Http\Middleware\EnsureDatasetInProject;
-use App\Http\Middleware\EnsureEntityInProject;
-use App\Http\Middleware\EnsureEntityStateInProject;
-use App\Http\Middleware\EnsureExperimentInProject;
-use App\Http\Middleware\EnsureFileInProject;
+use App\Http\Middleware\ActivityInProject;
+use App\Http\Middleware\DatasetInProject;
+use App\Http\Middleware\EntityInProject;
+use App\Http\Middleware\EntityStateInProject;
+use App\Http\Middleware\ExperimentInProject;
+use App\Http\Middleware\FileInProject;
 use App\Http\Middleware\UserCanAccessProject;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -43,24 +43,24 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             UserCanAccessProject::class,
-            EnsureFileInProject::class,
-            EnsureActivityInProject::class,
-            EnsureEntityInProject::class,
-            EnsureEntityStateInProject::class,
-            EnsureDatasetInProject::class,
-            EnsureExperimentInProject::class,
+            FileInProject::class,
+            ActivityInProject::class,
+            EntityInProject::class,
+            EntityStateInProject::class,
+            DatasetInProject::class,
+            ExperimentInProject::class,
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
             UserCanAccessProject::class,
-            EnsureFileInProject::class,
-            EnsureActivityInProject::class,
-            EnsureEntityInProject::class,
-            EnsureEntityStateInProject::class,
-            EnsureDatasetInProject::class,
-            EnsureExperimentInProject::class,
+            FileInProject::class,
+            ActivityInProject::class,
+            EntityInProject::class,
+            EntityStateInProject::class,
+            DatasetInProject::class,
+            ExperimentInProject::class,
         ],
     ];
 

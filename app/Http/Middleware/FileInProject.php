@@ -6,7 +6,7 @@ use App\Models\File;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureFileInProject
+class FileInProject
 {
     use GetRequestParameterId;
 
@@ -20,13 +20,20 @@ class EnsureFileInProject
     public function handle($request, Closure $next)
     {
         $projectId = $this->getParameterId('project');
-        if ($projectId != '') {
-            $fileId = $this->getFileId();
-            if ($fileId != '') {
-                $count = File::where('id', $fileId)->where('project_id', $projectId)->count();
-                abort_if($count == 0, 404, 'No such file');
-            }
+        if ($projectId == '') {
+            return $next($request);
         }
+
+        $fileId = $this->getFileId();
+        if ($fileId == '') {
+            return $next($request);
+        }
+
+        $count = File::where('id', $fileId)
+                     ->where('project_id', $projectId)
+                     ->count();
+        abort_if($count == 0, 404, 'No such file');
+
         return $next($request);
     }
 

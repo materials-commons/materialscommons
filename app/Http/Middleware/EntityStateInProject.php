@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Traits\GetRequestParameterId;
 use Closure;
 
-class EnsureEntityStateInProject
+class EntityStateInProject
 {
     use GetRequestParameterId;
 
