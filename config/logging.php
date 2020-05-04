@@ -46,11 +46,11 @@ return [
         ],
 
         'daily' => [
-            'driver'      => 'daily',
-            'path'        => storage_path('logs/laravel.log'),
-            'level'       => 'debug',
-            'days'        => 14,
-            'permissions' => 0777,
+            'driver'     => 'daily',
+            'path'       => storage_path('logs/laravel.log'),
+            'level'      => 'debug',
+            'days'       => 14,
+            'permission' => 0777,
         ],
 
         'slack' => [
