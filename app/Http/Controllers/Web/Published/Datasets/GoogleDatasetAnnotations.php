@@ -40,11 +40,7 @@ trait GoogleDatasetAnnotations
 
     private function getDescription(Dataset $dataset)
     {
-        if ($this->isBlank($dataset->summary)) {
-            return $dataset->description;
-        }
-
-        return $dataset->summary;
+        return $dataset->description ?: " ";
     }
 
     private function isBlank($what)
