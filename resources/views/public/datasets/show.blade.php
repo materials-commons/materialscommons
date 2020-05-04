@@ -107,7 +107,9 @@
         @endslot
     @endcomponent
 
-    @push('googleds')
-        @json($dsAnnotation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-    @endpush
+    @isset($dsAnnotation)
+        @push('googleds')
+            @json($dsAnnotation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        @endpush
+    @endisset
 @stop
