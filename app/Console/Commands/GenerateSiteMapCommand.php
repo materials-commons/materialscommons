@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Dataset;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sitemap\SitemapGenerator;
 
 class GenerateSiteMapCommand extends Command
@@ -42,10 +43,9 @@ class GenerateSiteMapCommand extends Command
         $sitemap = SitemapGenerator::create(config('app.url'))->getSitemap();
         Dataset::whereNotNull('published_at')->chunk(100, function ($datasets) use ($sitemap) {
             foreach ($datasets as $dataset) {
-                echo "add dataset {$dataset->name}\n";
                 $sitemap->add("/public/datasets/{$dataset->id}");
             }
         });
-        $sitemap->writeToFile(public_path('sitemap.xml'));
+        $sitemap->writeToFile(Storage::disk('etc')->path('sitemap.xml'));
     }
 }
