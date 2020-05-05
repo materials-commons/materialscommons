@@ -39,7 +39,9 @@ class GenerateSiteMapCommand extends Command
      */
     public function handle()
     {
-        SitemapGenerator::create(config('app.url'))
-                        ->writeToFile(Storage::disk('etc')->path('sitemap.xml'));
+        umask(0);
+        $siteMapPath = Storage::disk('etc')->path('sitemap.xml');
+        SitemapGenerator::create(config('app.url'))->writeToFile($siteMapPath);
+        chmod($siteMapPath, 0777);
     }
 }
