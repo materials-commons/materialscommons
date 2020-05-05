@@ -194,10 +194,7 @@ class EntityActivityImporter
     {
         $getFileByPathAction = new GetFileByPathAction();
         $fileAttributes->each(function (ColumnAttribute $attr) use (
-            $getFileByPathAction,
-            $entity,
-            $entityState,
-            $activity
+            $getFileByPathAction, $entity, $entityState, $activity
         ) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
             $path = "{$header->name}/{$attr->value}";
@@ -207,7 +204,13 @@ class EntityActivityImporter
             }
             $file = $getFileByPathAction($this->projectId, $path);
             if ($file !== null) {
-                $activity->files()->attach([$file->id => ['direction' => 'in']]);
+                if (!is_null($activity)) {
+                    $activity->files()->attach([$file->id => ['direction' => 'in']]);
+                }
+
+                if (!is_null($entity)) {
+                    $entity->files()->syncWithoutDetaching([$file->id]);
+                }
             }
         });
     }
