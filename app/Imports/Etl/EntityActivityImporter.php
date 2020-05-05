@@ -197,20 +197,24 @@ class EntityActivityImporter
             $getFileByPathAction, $entity, $entityState, $activity
         ) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
+
             $path = "{$header->name}/{$attr->value}";
             if (strpos($attr->value, "/") !== false) {
                 // Cell contains the path, no need to use the header
                 $path = $attr->value;
             }
-            $file = $getFileByPathAction($this->projectId, $path);
-            if ($file !== null) {
-                if (!is_null($activity)) {
-                    $activity->files()->attach([$file->id => ['direction' => 'in']]);
-                }
 
-                if (!is_null($entity)) {
-                    $entity->files()->syncWithoutDetaching([$file->id]);
-                }
+            $file = $getFileByPathAction($this->projectId, $path);
+            if (is_null($file)) {
+                return;
+            }
+
+            if (!is_null($activity)) {
+                $activity->files()->attach([$file->id => ['direction' => 'in']]);
+            }
+
+            if (!is_null($entity)) {
+                $entity->files()->syncWithoutDetaching([$file->id]);
             }
         });
     }
