@@ -44,12 +44,16 @@
                                 <a href="{{route('projects.edit', [$proj->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">
-                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                </a>
+                                @if(auth()->id() == $proj->owner_id)
+                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">
+                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                    </a>
+                                @endif
                             </div>
-                            @component('app.projects.delete-project', ['project' => $proj])
-                            @endcomponent
+                            @if(auth()->id() == $proj->owner_id)
+                                @component('app.projects.delete-project', ['project' => $proj])
+                                @endcomponent
+                            @endif
                         </td>
                     </tr>
                 @endforeach

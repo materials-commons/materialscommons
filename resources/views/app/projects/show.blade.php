@@ -17,12 +17,14 @@
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
-            <a data-toggle="modal" class="float-right action-link mr-4"
-               href="#project-delete-{{$project->id}}">
-                <i class="fas fa-trash-alt mr-2"></i>Delete
-            </a>
-            @component('app.projects.delete-project', ['project' => $project])
-            @endcomponent
+            @if ($project->owner_id == auth()->id())
+                <a data-toggle="modal" class="float-right action-link mr-4"
+                   href="#project-delete-{{$project->id}}">
+                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                </a>
+                @component('app.projects.delete-project', ['project' => $project])
+                @endcomponent
+            @endif
         @endslot
 
         @slot('body')
@@ -47,81 +49,49 @@
             <table id="experiments" class="table table-hover" style="width:100%">
                 <thead>
                 <th>Name</th>
-                <th>ID</th>
                 <th>Summary</th>
                 <th>Updated</th>
                 <th></th>
                 </thead>
+                <tbody>
+                @foreach($project->experiments as $experiment)
+                    <tr>
+                        <td>
+                            <a href="{{route('projects.experiments.show', [$project, $experiment])}}">
+                                {{$experiment->name}}
+                            </a>
+                        </td>
+                        <td>{{$experiment->summary}}</td>
+                        <td>{{$project->updated_at->diffForHumans()}}</td>
+                        <td>
+                            <div class="float-right">
+                                <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
+                                   class="action-link">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                                <a href="" class="action-link">
+                                    <i class="fas fa-fw fa-edit"></i>
+                                </a>
+                                @if(auth()->id() == $experiment->owner_id || auth()->id() == $project->owner_id)
+                                    <a href="{{route('projects.experiments.delete', [$project, $experiment])}}"
+                                       class="action-link">
+                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                    </a>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
-
-
         @endslot
     @endcomponent
 
     @push('scripts')
         <script>
             $(document).ready(() => {
-                let projectId = "{{$project->id}}";
                 $('#experiments').DataTable({
-                    serverSide: true,
-                    processing: true,
-                    response: true,
                     stateSave: true,
-                    ajax: "{{route('get_project_experiments', [$project->id])}}",
-                    columns: [
-                        {
-                            name: 'name',
-                            render: (data, type, row) => {
-                                if (type === 'display') {
-                                    let r = route('projects.experiments.show', {
-                                        project: "{{$project->id}}",
-                                        experiment: row["1"]
-                                    }).url();
-                                    return `<a href="` + r + `">` + data + `</a>`;
-                                }
-                                return data;
-                            }
-                        },
-                        {name: 'id'},
-                        {name: 'summary'},
-                        {
-                            name: 'updated_at',
-                            render: (data, type, row) => {
-                                if (type === 'display') {
-                                    return moment(data + "+0000", "YYYY-MM-DD HH:mm:ss Z").fromNow();
-                                }
-                                return data;
-                            }
-                        },
-                        {
-                            name: 'action',
-                            data: null,
-                            render: (data, type, row) => {
-                                let showRoute = route('projects.experiments.show', {
-                                    project: projectId,
-                                    experiment: row["1"]
-                                }).url();
-                                let editRoute = route('projects.experiments.edit', {
-                                    project: projectId,
-                                    experiment: row["1"]
-                                }).url();
-                                let deleteRoute = route('projects.experiments.delete', {
-                                    project: projectId,
-                                    experiment: row["1"]
-                                }).url();
-                                return `
-                                   <a href="${showRoute}" class="action-link"><i class="fas fa-fw fa-eye"></i></a>
-                                   <a href="${editRoute}" class="action-link"><i class="fas fa-fw fa-edit"></i></a>
-                                   <a href="${deleteRoute}" class="action-link"><i class="fas fa-fw fa-trash-alt"></i></a>`;
-                            }
-                        }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: [1],
-                            visible: false,
-                        }
-                    ]
                 });
             });
         </script>

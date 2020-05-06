@@ -12,7 +12,8 @@
     @component('components.card')
         @slot('header')
             Experiments for {{$project->name}}
-            <a class="action-link float-right" href="{{route('projects.experiments.create', ['project' => $project->id])}}">
+            <a class="action-link float-right"
+               href="{{route('projects.experiments.create', ['project' => $project->id])}}">
                 <i class="fas fa-plus mr-2"></i>Create Experiment
             </a>
         @endslot
@@ -44,10 +45,12 @@
                                class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
-                            <a href="{{route('projects.experiments.delete', [$project, $experiment])}}"
-                               class="action-link">
-                                <i class="fas fa-fw fa-trash-alt"></i>
-                            </a>
+                            @if(auth()->id() == $experiment->owner_id || auth()->id() == $project->owner_id)
+                                <a href="{{route('projects.experiments.delete', [$project, $experiment])}}"
+                                   class="action-link">
+                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

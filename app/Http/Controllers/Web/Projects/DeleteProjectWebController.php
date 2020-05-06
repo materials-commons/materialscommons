@@ -17,6 +17,7 @@ class DeleteProjectWebController extends Controller
      */
     public function __invoke(DeleteProjectAction $deleteProjectAction, Project $project)
     {
+        abort_unless(auth()->id() === $project->owner_id, 403, "Not project owner");
         $deleteProjectAction($project);
 
         return redirect(route('projects.index'));
