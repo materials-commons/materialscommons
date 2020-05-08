@@ -37,7 +37,7 @@ function makeHelpUrl($doc)
 {
     $base = config('help.site');
 
-    return "{$base}/{$doc}";
+    return "{$base}/{$doc}/";
 }
 
 function helpTitle()
