@@ -20,9 +20,9 @@
     @routes
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script type="application/ld+json">
-        @stack('googleds')
-    </script>
+
+@stack('googleds')
+
 
 {{--    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">--}}
 {{--    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">--}}
