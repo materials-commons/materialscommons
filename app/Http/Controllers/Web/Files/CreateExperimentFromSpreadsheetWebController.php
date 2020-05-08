@@ -18,7 +18,7 @@ class CreateExperimentFromSpreadsheetWebController extends Controller
         $validated['project_id'] = $project->id;
         $experiment = $createExperimentAction($validated);
         $ps = new ProcessSpreadsheetJob($project->id, $experiment->id, auth()->id(), $file->id);
-        dispatch($ps);
+        dispatch($ps)->onQueue('globus');
         return view('app.files.show', compact('project', 'file'));
     }
 }

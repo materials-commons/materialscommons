@@ -15,6 +15,7 @@
 
     <meta name="twitter:image:alt" content="">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="google-site-verification" content="{{config('google.site-verification')}}"/>
 
     <title>Materials Commons</title>
 

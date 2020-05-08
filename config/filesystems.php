@@ -65,6 +65,11 @@ return [
             'root'   => env('MCFS_BACKUP_DIR', '/mcfs/backups'),
         ],
 
+        'etc' => [
+            'driver' => 'local',
+            'root'   => env('ETC_DIR', 'app/etc'),
+        ],
+
         'local_backup' => [
             'driver' => 'local',
             'root'   => env('LOCAL_BACKUP_DIR', '/home/backups'),

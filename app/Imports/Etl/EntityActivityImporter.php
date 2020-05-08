@@ -194,55 +194,62 @@ class EntityActivityImporter
     {
         $getFileByPathAction = new GetFileByPathAction();
         $fileAttributes->each(function (ColumnAttribute $attr) use (
-            $getFileByPathAction,
-            $entity,
-            $entityState,
-            $activity
+            $getFileByPathAction, $entity, $entityState, $activity
         ) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
+
             $path = "{$header->name}/{$attr->value}";
             if (strpos($attr->value, "/") !== false) {
                 // Cell contains the path, no need to use the header
                 $path = $attr->value;
             }
+
             $file = $getFileByPathAction($this->projectId, $path);
-            if ($file !== null) {
+            if (is_null($file)) {
+                return;
+            }
+
+            if (!is_null($activity)) {
                 $activity->files()->attach([$file->id => ['direction' => 'in']]);
+            }
+
+            if (!is_null($entity)) {
+                $entity->files()->syncWithoutDetaching([$file->id]);
             }
         });
     }
 
     private function addToExistingEntity(RowTracker $row)
     {
-        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
-        if ($activity === null) {
-            // There is no matching activity so we need to do the following
-            // 1. Create a new entity state and add it to the entity
-            // 2. Add all entity attributes to that entity state
-            // 3. Create the new activity and associate it with that entity/entity state.
-            $entity = $this->entityTracker->getEntity($row->entityName);
-            $state = EntityState::create([
-                'owner_id'  => $this->userId,
-                'entity_id' => $entity->id,
-                'current'   => true,
-            ]);
-            $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
-            $activity = $this->addNewActivity($entity, $state, $row);
-            $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
-            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
-        } else {
-            // Matching activity found, so add attribute values as additional values on existing
-            // measurements for this entity. To do this first get the entity state that is associated
-            // with the entity for this activity. Then add the attributes.
-            $entity = $this->entityTracker->getEntity($row->entityName);
-            $entityStates = $activity->entityStates()->get();
-            $entityState = $entityStates->firstWhere('entity_id', $entity->id);
-            if (is_null($entityState)) {
-                return;
-            }
-            $this->addValuesToEntityStateAttributes($row->entityAttributes, $entityState);
-            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $entityState, $activity);
-        }
+//        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
+//        if ($activity === null) {
+        // There is no matching activity so we need to do the following
+        // 1. Create a new entity state and add it to the entity
+        // 2. Add all entity attributes to that entity state
+        // 3. Create the new activity and associate it with that entity/entity state.
+        $entity = $this->entityTracker->getEntity($row->entityName);
+        $state = EntityState::create([
+            'owner_id'  => $this->userId,
+            'entity_id' => $entity->id,
+            'current'   => true,
+        ]);
+        $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
+        $activity = $this->addNewActivity($entity, $state, $row);
+        $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
+        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
+//        } else {
+//            // Matching activity found, so add attribute values as additional values on existing
+//            // measurements for this entity. To do this first get the entity state that is associated
+//            // with the entity for this activity. Then add the attributes.
+//            $entity = $this->entityTracker->getEntity($row->entityName);
+//            $entityStates = $activity->entityStates()->get();
+//            $entityState = $entityStates->firstWhere('entity_id', $entity->id);
+//            if (is_null($entityState)) {
+//                return;
+//            }
+//            $this->addValuesToEntityStateAttributes($row->entityAttributes, $entityState);
+//            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $entityState, $activity);
+//        }
     }
 
     private function addValuesToEntityStateAttributes(Collection $attributes, EntityState $entityState)

@@ -29,7 +29,7 @@
         @break
 
         @default
-        <span class="ml-3">Unable to display files of type {{$fileExtension}}</span>
+        <span class="ml-3">Unable to display files of type {{$fileType}}</span>
     @endswitch
 @else
     <span class="ml-3">Unable to display file, it may not exist or have been converted yet</span>

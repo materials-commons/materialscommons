@@ -54,10 +54,18 @@ class RowTracker
                 $this->relatedActivityName = $value;
             } else {
                 $header = $headerTracker->getHeaderByIndex($index - 2);
+
+                if (is_null($header)) {
+                    // Break out of look when looking up a header that doesn't exist. That means the
+                    // cell contains a value, but there is no associated header.
+                    break;
+                }
+
                 if ($header->attrType === "ignore" || $header->attrType === "unknown") {
                     $index++;
                     continue;
                 }
+
                 $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index);
                 switch ($header->attrType) {
                     case "entity":

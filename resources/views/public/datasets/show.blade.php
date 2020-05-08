@@ -109,7 +109,9 @@
 
     @isset($dsAnnotation)
         @push('googleds')
-            @json($dsAnnotation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            <script type="application/ld+json">
+                @json($dsAnnotation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            </script>
         @endpush
     @endisset
 @stop
