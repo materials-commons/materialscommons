@@ -25,7 +25,7 @@
 
     @default
     <p>
-        This should never appear.
+        Add or select datasets to include in your community.
     </p>
     @break
 @endswitch
