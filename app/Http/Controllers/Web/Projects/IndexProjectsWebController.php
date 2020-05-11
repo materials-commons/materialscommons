@@ -11,7 +11,7 @@ class IndexProjectsWebController extends Controller
      */
     public function __invoke()
     {
-        $projects = auth()->user()->projects()->get();
+        $projects = auth()->user()->projects()->with(['owner'])->get();
 
         return view('app.projects.index', compact('projects'));
     }

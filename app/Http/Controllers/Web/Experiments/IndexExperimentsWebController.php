@@ -7,8 +7,10 @@ use App\Models\Project;
 
 class IndexExperimentsWebController extends Controller
 {
-    public function __invoke(Project $project)
+    public function __invoke($projectId)
     {
-        return view('app.projects.experiments.index', ['project' => $project]);
+        return view('app.projects.experiments.index', [
+            'project' => Project::with('experiments.owner')->findOrFail($projectId),
+        ]);
     }
 }

@@ -50,6 +50,7 @@
                 <thead>
                 <th>Name</th>
                 <th>Summary</th>
+                <th>Owner</th>
                 <th>Updated</th>
                 <th></th>
                 </thead>
@@ -62,6 +63,7 @@
                             </a>
                         </td>
                         <td>{{$experiment->summary}}</td>
+                        <td>{{$experiment->owner->name}}</td>
                         <td>{{$project->updated_at->diffForHumans()}}</td>
                         <td>
                             <div class="float-right">
