@@ -10,17 +10,25 @@ trait GoogleDatasetAnnotations
 {
     public function jsonLDAnnotations(Dataset $dataset)
     {
+        $description = $this->getDescription($dataset);
+
+//        if (strlen($description) < 50) {
+//            return null;
+//        }
+//
+//        if ($this->isBlank($dataset->license)) {
+//            return null;
+//        }
+
         $jsonld = [
             "@context"    => "https://schema.org/",
             "@type"       => "Dataset",
             "name"        => $dataset->name,
-            "description" => $this->getDescription($dataset),
+            "description" => $description,
             "url"         => config('app.url')."/public/datasets/{$dataset->id}",
         ];
 
-        if (!$this->isBlank($dataset->license)) {
-            $jsonld["license"] = $this->getLicenseUrl($dataset->license);
-        }
+        $jsonld["license"] = $this->getLicenseUrl($dataset->license);
 
         if (!$this->isBlank($dataset->doi)) {
             $jsonld["identifier"] = $this->getDoiUrl($dataset->doi);
@@ -58,6 +66,10 @@ trait GoogleDatasetAnnotations
 
     private function getLicenseUrl($license)
     {
+        if (is_null($license)) {
+            return "unknown";
+        }
+
         switch ($license) {
             case "Public Domain Dedication and License (PDDL)":
                 return "https://opendatacommons.org/licenses/pddl/index.html";
