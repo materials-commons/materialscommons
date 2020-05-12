@@ -4,6 +4,7 @@
         <th>Experiment</th>
         <th>Summary</th>
         <th>Updated</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
             </td>
             <td>{{$experiment->summary}}</td>
             <td>{{$experiment->updated_at->diffForHumans()}}</td>
+            <td>{{$experiment->updated_at}}</td>
         </tr>
     @endforeach
     </tbody>
@@ -24,6 +26,10 @@
         $(document).ready(() => {
             $('#experiments').DataTable({
                 stateSave: true,
+                columnDefs: [
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false, searchable: false},
+                ]
             });
         });
     </script>

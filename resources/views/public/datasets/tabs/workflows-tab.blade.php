@@ -5,6 +5,7 @@
             <th>Workflow</th>
             <th>Description</th>
             <th>Updated</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -16,6 +17,7 @@
                 </td>
                 <td>{{$workflow->description}}</td>
                 <td>{{$workflow->updated_at->diffForHumans()}}</td>
+                <td>{{$workflow->updated_at}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -34,6 +36,10 @@
                 pageLength: 4,
                 order: [[0, 'desc']],
                 lengthMenu: [4],
+                columnDefs: [
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false, searchable: false},
+                ]
             });
             @if(sizeof($workflows) !== 0)
             showWorkflow(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');

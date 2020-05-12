@@ -22,6 +22,7 @@
                     <th>Tags</th>
                     <th>Published</th>
                     <th>Updated</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                             <td>{{$dataset->published_at->diffForHumans()}}</td>
                         @endif
                         <td>{{$dataset->updated_at->diffForHumans()}}</td>
+                        <td>{{$dataset->updated_at}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -55,6 +57,10 @@
             $(document).ready(() => {
                 $('#datasets').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [6], targets: [5]},
+                        {targets: [6], visible: false, searchable: false},
+                    ]
                 });
             });
         </script>

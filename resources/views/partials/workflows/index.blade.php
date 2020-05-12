@@ -4,6 +4,7 @@
         <th>Workflow</th>
         <th>Summary</th>
         <th>Updated</th>
+        <th>Date</th>
         @if(isset($editExperimentWorkflowRoute))
             <th></th>
         @elseif(isset($editProjectWorkflowRoute))
@@ -20,6 +21,7 @@
             </td>
             <td>{{$workflow->summary}}</td>
             <td>{{$workflow->updated_at->diffForHumans()}}</td>
+            <td>{{$workflow->updated_at}}</td>
             @if(isset($editExperimentWorkflowRoute))
                 <td>
                     <a href="{{route($editExperimentWorkflowRoute, [$project, $experiment, $workflow])}}"
@@ -55,6 +57,10 @@
                 pageLength: 4,
                 order: [[0, 'desc']],
                 lengthMenu: [4],
+                columnDefs: [
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false, searchable: false},
+                ]
             });
             let oTable = $('#workflows').dataTable();
             let item = oTable.fnGetData($('#workflows tbody tr:eq(0)')[0]);

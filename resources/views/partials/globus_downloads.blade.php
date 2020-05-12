@@ -2,13 +2,13 @@
     <thead>
     <tr>
         <th>Name</th>
-        {{--        <th>Description</th>--}}
         <th>Link</th>
         @if($showProject)
             <th>Project</th>
         @endif
         <th>Who</th>
-        <th>Last Updated</th>
+        <th>Updated</th>
+        <th>Date</th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -17,7 +17,6 @@
     @foreach($globusDownloads as $download)
         <tr>
             <td>{{$download->name}}</td>
-            {{--            <td>{{$download->description}}</td>--}}
             <td>
                 @if ($download->status == \App\Enums\GlobusStatus::Done && $user->id == $download->owner_id)
                     <a href="{{$download->globus_url}}" target="_blank">Goto Globus</a>
@@ -28,6 +27,7 @@
             @endif
             <td>{{$download->owner->name}}</td>
             <td>{{$download->updated_at->diffForHumans()}}</td>
+            <td>{{$download->updated_at}}</td>
             <td>
                 @if ($download->status == \App\Enums\GlobusStatus::NotStarted)
                     Waiting to start creating project download
@@ -52,6 +52,21 @@
 
 @push('scripts')
     <script>
-        mcutil.setupDatatableOnDocumentReady('globus-downloads');
+        $(document).ready(() => {
+            $('#globus-downloads').DataTable({
+                stateSave: true,
+                @if($showProject)
+                columnDefs: [
+                    {orderData: [5], targets: [4]},
+                    {targets: [5], visible: false, searchable: false},
+                ]
+                @else
+                columnDefs: [
+                    {orderData: [4], targets: [3]},
+                    {targets: [4], visible: false, searchable: false},
+                ]
+                @endif
+            });
+        });
     </script>
 @endpush

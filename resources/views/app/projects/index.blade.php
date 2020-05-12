@@ -26,6 +26,7 @@
                     <th>Summary</th>
                     <th>Owner</th>
                     <th>Updated</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -38,6 +39,7 @@
                         <td>{{$proj->summary}}</td>
                         <td>{{$proj->owner->name}}</td>
                         <td>{{$proj->updated_at->diffForHumans()}}</td>
+                        <td>{{$proj->updated_at}}</td>
                         <td>
                             <div class="float-right">
                                 <a href="{{route('projects.show', [$proj->id])}}" class="action-link">
@@ -73,6 +75,10 @@
                 }
                 $('#projects').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [4], targets: [3]},
+                        {targets: [4], visible: false, searchable: false},
+                    ]
                 });
             });
         </script>

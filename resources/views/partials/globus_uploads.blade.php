@@ -2,13 +2,13 @@
     <thead>
     <tr>
         <th>Name</th>
-{{--        <th>Description</th>--}}
         <th>Link</th>
         @if($showProject)
             <th>Project</th>
         @endif
         <th>Who</th>
-        <th>Last Updated</th>
+        <th>Updated</th>
+        <th>Date</th>
         <th>Status</th>
         <th></th>
     </tr>
@@ -28,6 +28,7 @@
             @endif
             <td>{{$upload->owner->name}}</td>
             <td>{{$upload->updated_at->diffForHumans()}}</td>
+            <td>{{$upload->updated_at}}</td>
             <td>
                 @if($upload->status == \App\Enums\GlobusStatus::Uploading)
                     Open for Uploads/Uploading files
@@ -56,6 +57,21 @@
 
 @push('scripts')
     <script>
-        mcutil.setupDatatableOnDocumentReady('globus-uploads');
+        $(document).ready(() => {
+            $('#globus-uploads').DataTable({
+                stateSave: true,
+                @if($showProject)
+                columnDefs: [
+                    {orderData: [5], targets: [4]},
+                    {targets: [5], visible: false, searchable: false},
+                ]
+                @else
+                columnDefs: [
+                    {orderData: [4], targets: [3]},
+                    {targets: [4], visible: false, searchable: false},
+                ]
+                @endif
+            });
+        });
     </script>
 @endpush
