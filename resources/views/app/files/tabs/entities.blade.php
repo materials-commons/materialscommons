@@ -4,6 +4,7 @@
         <th>Sample</th>
         <th>Summary</th>
         <th>Updated</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
             </td>
             <td>{{$entity->summary}}</td>
             <td>{{$entity->updated_at->diffForHumans()}}</td>
+            <td>{{$entity->updated_at}}</td>
         </tr>
     @endforeach
     </tbody>
@@ -26,6 +28,10 @@
         $(document).ready(() => {
             $('#entities').DataTable({
                 stateSave: true,
+                columnDefs: [
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false, searchable: false},
+                ]
             });
         });
     </script>

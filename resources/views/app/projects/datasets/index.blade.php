@@ -26,6 +26,7 @@
                     <th>Tags</th>
                     <th>Published</th>
                     <th>Updated</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -47,6 +48,7 @@
                             <td>{{$dataset->published_at->diffForHumans()}}</td>
                         @endif
                         <td>{{$dataset->updated_at->diffForHumans()}}</td>
+                        <td>{{$dataset->updated_at}}</td>
                         <td>
                             <div class="float-right">
                                 <a href="{{route('projects.datasets.show', [$project, $dataset])}}" class="action-link">
@@ -73,6 +75,10 @@
             $(document).ready(() => {
                 $('#datasets').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [5], targets: [4]},
+                        {targets: [5], visible: false, searchable: false},
+                    ]
                 });
             });
         </script>

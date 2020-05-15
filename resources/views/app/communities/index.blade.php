@@ -22,6 +22,7 @@
                     <th>Community</th>
                     <th>Summary</th>
                     <th>Updated</th>
+                    <th>Date</th>
                     <th>Public?</th>
                     <th></th>
                 </tr>
@@ -36,6 +37,7 @@
                         </td>
                         <td>{{$community->summary}}</td>
                         <td>{{$community->updated_at->diffForHumans()}}</td>
+                        <td>{{$community->updated_at}}</td>
                         <td>{{$community->public ? "Yes" : "No"}}</td>
                         <td>
                             @include('partials.table_row_controls', [
@@ -53,7 +55,15 @@
 
     @push('scripts')
         <script>
-            mcutil.setupDatatableOnDocumentReady('#communities');
+            $(document).ready(() => {
+                $('#communities').DataTable({
+                    stateSave: true,
+                    columnDefs: [
+                        {orderData: [3], targets: [2]},
+                        {targets: [3], visible: false, searchable: false},
+                    ]
+                });
+            });
         </script>
     @endpush
 @stop

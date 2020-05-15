@@ -24,7 +24,9 @@
                 <tr>
                     <th>Experiment</th>
                     <th>Summary</th>
+                    <th>Owner</th>
                     <th>Updated</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -35,7 +37,9 @@
                             <a href="{{route('projects.experiments.show', ['project' => $project->id, 'experiment' => $experiment->id])}}">{{$experiment->name}}</a>
                         </td>
                         <td>{{$experiment->summary}}</td>
+                        <td>{{$experiment->owner->name}}</td>
                         <td>{{$experiment->updated_at->diffForHumans()}}</td>
+                        <td>{{$experiment->updated_at}}</td>
                         <td>
                             <a href="{{route('projects.experiments.show', ['project' => $project->id, 'experiment' => $experiment->id])}}"
                                class="action-link">
@@ -64,6 +68,10 @@
             $(document).ready(() => {
                 $('#experiments').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [4], targets: [3]},
+                        {targets: [4], visible: false, searchable: false},
+                    ]
                 });
             });
         </script>
