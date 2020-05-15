@@ -24,7 +24,6 @@ class UpdateCommunityDatasetRequest extends FormRequest
     public function rules()
     {
         return [
-            'community_id' => 'required',
             'dataset_id'   => 'required',
         ];
     }

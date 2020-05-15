@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Communities\CreateCommunityWebController;
+use App\Http\Controllers\Web\Communities\Datasets\UpdateCommunityDatasetsWebController;
 use App\Http\Controllers\Web\Communities\DeleteCommunityWebController;
 use App\Http\Controllers\Web\Communities\DestroyCommunityWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityDatasetsWebController;
@@ -37,6 +38,9 @@ Route::get('/communities/{community}/edit/files', EditCommunityFilesWebControlle
 
 Route::get('/communities/{community}/edit/links', EditCommunityLinksWebController::class)
      ->name('communities.links.edit');
+
+Route::get('/communities/{community}/update/datasets', UpdateCommunityDatasetsWebController::class)
+     ->name('communities.datasets.update');
 
 Route::put('/communities/{community}', UpdateCommunityWebController::class)
      ->name('communities.update');

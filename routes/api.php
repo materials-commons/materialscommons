@@ -66,6 +66,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // ETL
     require base_path('routes/api_routes/etl_api.php');
+
+    // Communities
+    require base_path('routes/api_routes/communities_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
