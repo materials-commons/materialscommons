@@ -8,6 +8,10 @@ use App\Http\Controllers\Web\Communities\EditCommunityDatasetsWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityFilesWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityLinksWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityWebController;
+use App\Http\Controllers\Web\Communities\Files\DownloadCommunityFileWebController;
+use App\Http\Controllers\Web\Communities\Files\ShowCommunityFileWebController;
+use App\Http\Controllers\Web\Communities\Files\StoreFilesForCommunityWebController;
+use App\Http\Controllers\Web\Communities\Files\UploadFilesToCommunityWebController;
 use App\Http\Controllers\Web\Communities\IndexCommunitiesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityRecommendedPracticesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityWebController;
@@ -36,6 +40,12 @@ Route::get('/communities/{community}/edit', EditCommunityWebController::class)
 Route::get('/communities/{community}/edit/files', EditCommunityFilesWebController::class)
      ->name('communities.files.edit');
 
+Route::get('/communities/{community}/files/{file}/download', DownloadCommunityFileWebController::class)
+     ->name('communities.files.download');
+
+Route::get('/communities/{community}/files/{file}/show', ShowCommunityFileWebController::class)
+     ->name('communities.files.show');
+
 Route::get('/communities/{community}/edit/links', EditCommunityLinksWebController::class)
      ->name('communities.links.edit');
 
@@ -50,6 +60,12 @@ Route::get('/communities/{community}/delete', DeleteCommunityWebController::clas
 
 Route::delete('/communities/{community}', DestroyCommunityWebController::class)
      ->name('communities.destroy');
+
+Route::get('/communities/{community}/files/upload', UploadFilesToCommunityWebController::class)
+     ->name('communities.files.upload');
+
+Route::post('/communities/{community}/files/upload/store', StoreFilesForCommunityWebController::class)
+     ->name('communities.files.upload.store');
 
 
 

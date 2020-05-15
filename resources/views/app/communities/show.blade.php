@@ -14,27 +14,3 @@
         'practicesRouteName' => 'communities.practices.show',
     ])
 @stop
-
-
-{{--                        <h3>Datasets in Community</h3>--}}
-{{--                        <br>--}}
-{{--                        <table id="datasets" class="table table-hover">--}}
-{{--                            <thead>--}}
-{{--                            <tr>--}}
-{{--                                <th>Dataset</th>--}}
-{{--                                <th>Description</th>--}}
-{{--                                <th>Owner</th>--}}
-{{--                                <th>Updated</th>--}}
-{{--                            </tr>--}}
-{{--                            </thead>--}}
-{{--                            <tbody>--}}
-{{--                            @foreach($community->datasets as $dataset)--}}
-{{--                                <tr>--}}
-{{--                                    <td>{{$dataset->name}}</td>--}}
-{{--                                    <td>{{$dataset->description}}</td>--}}
-{{--                                    <td>{{$dataset->owner->name}}</td>--}}
-{{--                                    <td>{{$dataset->updated_at->diffForHumans()}}</td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                            </tbody>--}}
-{{--                        </table>--}}

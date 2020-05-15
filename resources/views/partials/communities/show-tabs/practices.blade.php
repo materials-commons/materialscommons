@@ -19,9 +19,9 @@
             <td>
                 <a href="">{{$file->name}}</a>
             </td>
-            <td>{{$dataset->summary}}</td>
-            <td>{{$dataset->owner->name}}</td>
-            <td>{{$dataset->updated_at->diffForHumans()}}</td>
+            <td>{{$file->summary}}</td>
+            <td>{{$file->owner->name}}</td>
+            <td>{{$file->updated_at->diffForHumans()}}</td>
         </tr>
     @endforeach
     </tbody>

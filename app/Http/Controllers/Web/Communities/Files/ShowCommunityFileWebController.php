@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Communities\Files;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UploadFileToCommunityWebController extends Controller
+class ShowCommunityFileWebController extends Controller
 {
     /**
      * Handle the incoming request.

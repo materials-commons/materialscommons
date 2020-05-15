@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Communities\Files;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class StoreFileForCommunityWebController extends Controller
+class DownloadCommunityFileWebController extends Controller
 {
     /**
      * Handle the incoming request.
