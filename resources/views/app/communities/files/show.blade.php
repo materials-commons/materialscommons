@@ -11,7 +11,7 @@
         @slot('header')
             File: {{$file->name}} for Community: {{$community->name}}
             <a class="action-link float-right mr-4"
-               href="{{route('communities.files.download', [$project, $file])}}">
+               href="{{route('communities.files.download', [$community, $file])}}">
                 <i class="fas fa-download mr-2"></i>Download File
             </a>
         @endslot

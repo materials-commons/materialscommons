@@ -17,7 +17,7 @@
     @foreach($community->files as $file)
         <tr>
             <td>
-                <a href="">{{$file->name}}</a>
+                <a href="{{route('communities.files.show', [$community, $file])}}">{{$file->name}}</a>
             </td>
             <td>{{$file->summary}}</td>
             <td>{{$file->owner->name}}</td>
