@@ -10,9 +10,13 @@
     @component('components.card')
         @slot('header')
             File: {{$file->name}} for Community: {{$community->name}}
-            <a class="action-link float-right mr-4"
+            <a class="action-link float-right"
                href="{{route('communities.files.download', [$community, $file])}}">
                 <i class="fas fa-download mr-2"></i>Download File
+            </a>
+
+            <a class="action-link float-right mr-4" href="{{route('communities.files.delete', [$community, $file])}}">
+                <i class="fas fa-trash mr-2"></i> Delete File
             </a>
         @endslot
 
@@ -22,7 +26,9 @@
             @endcomponent
             <hr>
             <br>
-            @include('partials.files._display-file')
+            @include('partials.files._display-file', [
+                'displayRoute' => route('communities.files.display', [$community, $file])
+            ])
         @endslot
     @endcomponent
 @stop

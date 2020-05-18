@@ -19,7 +19,7 @@
             @foreach($community->files as $file)
                 <tr>
                     <td>
-                        <a href="#">
+                        <a href="{{route('communities.files.show', [$community, $file])}}">
                             <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
                         </a>
                     </td>
