@@ -10,13 +10,12 @@ use App\Models\Project;
 
 class StoreGlobusDownloadProjectWebController extends Controller
 {
-    public function __invoke(CreateGlobusProjectUploadDownloadRequest $request, Project $project)
+    public function __invoke(CreateGlobusProjectUploadDownloadRequest $request,
+        CreateGlobusDownloadForProjectAction $createGlobusDownloadForProjectAction, Project $project)
     {
         $validated = $request->validated();
-        $createGlobusDownloadForProjectAction = new CreateGlobusDownloadForProjectAction();
         $globusDownload = $createGlobusDownloadForProjectAction($validated, $project->id, auth()->user());
-        $createGlobusProjectDownloadDirsJob = new CreateGlobusProjectDownloadDirsJob($globusDownload, auth()->user());
-        dispatch($createGlobusProjectDownloadDirsJob)->onQueue('globus');
-        return redirect(route('projects.globus.downloads.show', [$project, $globusDownload]));
+        CreateGlobusProjectDownloadDirsJob::dispatch($globusDownload, auth()->user())->onQueue('globus');
+        return redirect(route('projects.globus.downloads.index', [$project]));
     }
 }
