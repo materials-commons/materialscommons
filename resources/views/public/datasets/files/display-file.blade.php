@@ -1,6 +1,6 @@
-@if($fileExists)
+@if($fileExists($file))
     <p>File preview:</p>
-    @switch($fileType)
+    @switch($fileType($file))
         @case("image")
         <div class="col-lg-10">
             <img src="{{route('public.datasets.files.display', [$dataset, $file])}}" class="img-fluid">
@@ -9,7 +9,7 @@
 
         @case("text")
         <div class="ml-3">
-            <pre>{{$fileContents}}</pre>
+            <pre>{{$fileContents($file)}}</pre>
         </div>
         @break
 
@@ -21,7 +21,7 @@
         @break
 
         @case("excel")
-        @include('partials.files._display-excel-file', ['fileContents' => $fileContents])
+        @include('partials.files._display-excel-file')
         @break
 
         @case("office")
@@ -32,7 +32,7 @@
         @break
 
         @default
-        <span class="ml-3">Unable to display files of type {{$fileType}}</span>
+        <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch
 @else
     <span class="ml-3">Unable to display file, it may not exist or have been converted yet</span>

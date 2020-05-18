@@ -5,7 +5,7 @@
     <script>
         let workbook, grid;
         $(document).ready(() => {
-            let fileContents = "{!!$fileContentsBase64!!}";
+            let fileContents = "{!!$fileContentsBase64($file)!!}";
             workbook = xlsx.read(fileContents, {type: "base64"});
             let first_sheet_name = workbook.SheetNames[0];
             createSheetTabs(workbook.SheetNames);
@@ -36,7 +36,6 @@
         }
 
         function createSheetTabs(sheets) {
-            console.log(sheets);
             let sheetTabs = document.getElementById('sheet-tabs');
 
             for (let i = 0; i < sheets.length; i++) {
