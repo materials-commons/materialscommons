@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Actions\Projects;
+namespace App\Actions\Datasets;
 
-use App\Actions\Datasets\DatasetFileSelection;
 use App\Actions\Directories\CreateDirectoryAction;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\Actions\Projects;
+namespace Tests\Feature\Actions\Datasets;
 
-use App\Actions\Projects\ImportPublishedDatasetIntoProjectAction;
+use App\Actions\Datasets\ImportPublishedDatasetIntoProjectAction;
 use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\DatasetFactory;
