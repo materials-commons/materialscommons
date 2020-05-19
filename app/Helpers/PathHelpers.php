@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Str;
+
 class PathHelpers
 {
     /**
@@ -16,6 +18,6 @@ class PathHelpers
         $patterns     = ['~/{2,}~', '~/(\./)+~', '~([^/\.]+/(?R)*\.{2,}/)~', '~\.\./~'];
         $replacements = ['/', '/', '', ''];
 
-        return preg_replace($patterns, $replacements, $path);
+        return Str::of(preg_replace($patterns, $replacements, $path))->rtrim('/')->__toString();
     }
 }

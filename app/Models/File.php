@@ -18,6 +18,8 @@ use Spatie\Searchable\SearchResult;
  * @property string $mime_type
  * @property integer $project_id
  * @property integer $directory_id;
+ * @property integer owner_id
+ * @property boolean current
  *
  * @mixin Builder
  */

@@ -13,7 +13,7 @@ class StoreFolderWebController extends Controller
         Project $project)
     {
         $validated = $request->validated();
-        $directory = $createDirectoryAction($validated);
+        $directory = $createDirectoryAction->execute($validated, auth()->id());
         return redirect(route('projects.folders.show', [$project, $directory]));
     }
 }
