@@ -9,7 +9,7 @@ use App\Models\File;
 use App\Models\Project;
 use Ramsey\Uuid\Uuid;
 
-class ImportPublishedDatasetIntoProjectAction
+class ImportDatasetIntoProjectAction
 {
     /**
      * @var CreateDirectoryAction
@@ -23,11 +23,6 @@ class ImportPublishedDatasetIntoProjectAction
 
     public function execute(Dataset $dataset, Project $project, $rootDirName)
     {
-        if (!$dataset->isPublished()) {
-            // Can't import a dataset that has not been published
-            return false;
-        }
-
         $this->importDatasetFilesIntoProject($dataset, $project, $rootDirName);
         $project->importedDatasets()->attach($dataset);
 

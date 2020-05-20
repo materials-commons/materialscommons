@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Datasets;
 
-use App\Actions\Datasets\ImportPublishedDatasetIntoProjectAction;
+use App\Actions\Datasets\ImportDatasetIntoProjectAction;
 use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\DatasetFactory;
@@ -11,35 +11,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
-class ImportPublishedDatasetIntoProjectActionTest extends TestCase
+class ImportDatasetIntoProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function it_does_not_import_unpublished_datasets()
-    {
-        $user = factory(User::class)->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $dataset = DatasetFactory::ownedBy($user)->create();
-        $dataset->update(['published_at' => null]);
-        $importPublishedDatasetIntoProjectAction = new ImportPublishedDatasetIntoProjectAction();
-        $imported = $importPublishedDatasetIntoProjectAction->execute($dataset, $project, "importedDS");
-        $this->assertFalse($imported);
-    }
-
-    /** @test */
-    public function it_imports_a_published_dataset()
-    {
-        $user = factory(User::class)->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $dataset = DatasetFactory::ownedBy($user)->create();
-        $importPublishedDatasetIntoProjectAction = new ImportPublishedDatasetIntoProjectAction();
-        $imported = $importPublishedDatasetIntoProjectAction->execute($dataset, $project, "importedDS");
-        $this->assertTrue($imported);
-    }
-
-    /** @test */
-    public function it_imports_a_published_datasets_files()
+    public function it_imports_a_datasets_files()
     {
         $user = factory(User::class)->create();
         $project = ProjectFactory::ownedBy($user)->create();
@@ -51,7 +28,7 @@ class ImportPublishedDatasetIntoProjectActionTest extends TestCase
         $fileSelection["include_files"] = "/d1/test.txt";
         $dataset->update(['file_selection' => $fileSelection]);
 
-        $importPublishedDatasetIntoProjectAction = new ImportPublishedDatasetIntoProjectAction();
+        $importPublishedDatasetIntoProjectAction = new ImportDatasetIntoProjectAction();
         $imported = $importPublishedDatasetIntoProjectAction->execute($dataset, $project, "importedDS");
         $this->assertTrue($imported);
 

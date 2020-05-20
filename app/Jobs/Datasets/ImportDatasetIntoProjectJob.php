@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Datasets;
 
-use App\Actions\Datasets\ImportPublishedDatasetIntoProjectAction;
+use App\Actions\Datasets\ImportDatasetIntoProjectAction;
 use App\Models\Dataset;
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
@@ -45,7 +45,7 @@ class ImportDatasetIntoProjectJob implements ShouldQueue
      */
     public function handle()
     {
-        $importPublishedDatasetIntoProjectAction = new ImportPublishedDatasetIntoProjectAction();
+        $importPublishedDatasetIntoProjectAction = new ImportDatasetIntoProjectAction();
         $importPublishedDatasetIntoProjectAction->execute($this->dataset, $this->project, $this->dirName);
     }
 }

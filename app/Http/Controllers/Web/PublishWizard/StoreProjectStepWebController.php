@@ -11,7 +11,7 @@ class StoreProjectStepWebController extends Controller
     public function __invoke(CreateProjectRequest $request, CreateProjectAction $createProjectAction)
     {
         $validated = $request->validated();
-        $rv = $createProjectAction($validated);
+        $rv = $createProjectAction->execute($validated, auth()->id());
         $project = $rv['project'];
         return redirect(route('projects.datasets.create', [$project]));
     }
