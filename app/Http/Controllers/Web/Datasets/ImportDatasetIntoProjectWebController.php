@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Datasets;
 
-use App\Actions\Projects\CreateProjectAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Datasets\ImportDatasetIntoProjectRequest;
 use App\Jobs\Datasets\ImportDatasetIntoProjectJob;
@@ -12,26 +11,12 @@ use App\Models\User;
 
 class ImportDatasetIntoProjectWebController extends Controller
 {
-    use ImportDataset;
-
-    public function __invoke(ImportDatasetIntoProjectRequest $request, Dataset $dataset)
+    public function __invoke(ImportDatasetIntoProjectRequest $request, Project $p, Dataset $dataset)
     {
         $validated = $request->validated();
-        $project = $this->getOrCreateProject($validated);
-        abort_unless($this->allowedToImportDataset($dataset, $project), 403);
-        ImportDatasetIntoProjectJob::dispatch($dataset, $project, $validated['directory_name'])->onQueue('globus');
-        return redirect(route('projects.show', [$project]));
-    }
-
-    private function getOrCreateProject(array $validated)
-    {
-        if (isset($validated['project_id'])) {
-            return Project::findOrFail($validated['project_id']);
-        }
-
-        $createProjectAction = new CreateProjectAction();
-        $rv = $createProjectAction->execute(['name' => $validated['project_name']], auth()->id());
-        return $rv['project'];
+        abort_unless($this->allowedToImportDataset($dataset, $p), 403);
+        ImportDatasetIntoProjectJob::dispatch($dataset, $p, $validated['directory'])->onQueue('globus');
+        return redirect(route('projects.show', [$p]));
     }
 
     private function allowedToImportDataset(Dataset $dataset, Project $project)

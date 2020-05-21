@@ -13,11 +13,43 @@
         @slot('header')
             Dataset: {{$dataset->name}}
             @auth
-                @if($dataset->owner_id == auth()->user()->id || auth()->user()->is_admin)
-                    <a class="action-link float-right"
+                @if($dataset->canEdit())
+                    <a class="action-link float-right mr-4"
                        href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">
                         <i class="fas fa-edit mr-2"></i>Edit
                     </a>
+                @endif
+
+                <div class="dropdown float-right mr-4">
+                    <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-file-import mr-2"></i>Import Into Project
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="projectsDropdown">
+                        @foreach(auth()->user()->projects as $project)
+                            @if($project->owner_id == auth()->id())
+                                <a class="dropdown-item td-none"
+                                   href="{{route('public.datasets.import-into-project', [$dataset, $project])}}">
+                                    {{$project->name}}
+                                </a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
+
+                @if(auth()->user()->hasCommunities())
+                    <div class="dropdown float-right mr-4">
+                        <a class="action-link dropdown-toggle" id="communitiesDropdown"
+                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-plus mr-2"></i>Add To Community
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">
+                            @foreach(auth()->user()->communities as $community)
+                                <a class="dropdown-item td-none" href="#">{{$community->name}}</a>
+                            @endforeach
+                        </div>
+                    </div>
                 @endif
             @endauth
         @endslot

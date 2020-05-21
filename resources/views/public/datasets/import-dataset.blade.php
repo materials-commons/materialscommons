@@ -7,5 +7,8 @@
 @stop
 
 @section('content')
-    @include('partials.datasets._import-dataset')
+    @include('partials.datasets._import-dataset', [
+        'cancelImportRoute' => route('public.datasets.show', [$dataset]),
+        'importDatasetRoute' => route('projects.datasets.import', [$project, $dataset])
+])
 @stop

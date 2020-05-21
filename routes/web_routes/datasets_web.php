@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowWebController;
+use App\Http\Controllers\Web\Datasets\ImportDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
@@ -137,6 +138,10 @@ Route::get('/projects/{project}/datasets/{dataset}/publish', PublishDatasetWebCo
 
 Route::get('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetWebController::class)
      ->name('projects.datasets.unpublish');
+
+// Don't use {project} because we don't want middleware to run that checks that dataset is in project
+Route::post('/projects/{p}/datasets/{dataset}/import', ImportDatasetIntoProjectWebController::class)
+     ->name('projects.datasets.import');
 
 
 

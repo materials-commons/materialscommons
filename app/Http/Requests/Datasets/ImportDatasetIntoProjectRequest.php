@@ -25,9 +25,7 @@ class ImportDatasetIntoProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id'     => 'nullable|integer',
-            'project_name'   => 'nullable|string|max:80',
-            'directory_name' => ['required', 'string', 'max:80', new IsValidFileName()],
+            'directory' => ['required', 'string', 'max:80', new IsValidFileName()],
         ];
     }
 }

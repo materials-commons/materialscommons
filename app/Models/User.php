@@ -20,6 +20,7 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property string $api_token
  * @property boolean is_admin
  * @property string email
+ * @property mixed communities
  *
  * @mixin Builder
  */
@@ -71,5 +72,10 @@ class User extends Authenticatable
     public function globusUploads()
     {
         return $this->hasMany(GlobusUploadDownload::class, 'owner_id');
+    }
+
+    public function hasCommunities()
+    {
+        return $this->communities->count() > 0;
     }
 }

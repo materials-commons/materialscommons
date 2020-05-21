@@ -63,6 +63,10 @@ class DatasetFileSelection
 
         $dirName = dirname($path);
         for (; ;) {
+            if (blank($dirName)) {
+                return false;
+            }
+
             if ($includeDirs->has($dirName)) {
                 return true;
             }

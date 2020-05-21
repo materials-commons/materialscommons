@@ -125,6 +125,11 @@ class Dataset extends Model implements Searchable
         return "dataset";
     }
 
+    public function canEdit()
+    {
+        return $this->owner_id == auth()->user()->id || auth()->user()->is_admin;
+    }
+
     public function getSearchResult(): SearchResult
     {
         $url = route('projects.datasets.show', [$this->project_id, $this]);
@@ -179,5 +184,16 @@ class Dataset extends Model implements Searchable
     public function isPublished()
     {
         return !is_null($this->published_at);
+    }
+
+    public function importDirectory()
+    {
+        $now = now()->toIso8601String();
+        return Str::of("importedDataset-{$now}-{$this->name}")
+                  ->slug()
+                  ->limit(60)
+                  ->rtrim('.')
+                  ->rtrim('-')
+                  ->__toString();
     }
 }

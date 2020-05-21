@@ -60,7 +60,6 @@ class ImportDatasetIntoProjectAction
             return $dir;
         }
 
-        echo "path = {$path}\n";
         $parent = $this->getDirectory($rootDir->name, dirname($path), $project->id);
 
         return $this->makeDirInProject($parent, $path, $project);
@@ -69,7 +68,6 @@ class ImportDatasetIntoProjectAction
     private function getDirectory($rootDirName, $path, int $projectId)
     {
         $pathToUse = PathHelpers::normalizePath("/{$rootDirName}$path");
-        echo "getDirectory ({$path}) {$pathToUse}\n";
         return File::where('project_id', $projectId)
                    ->where('path', $pathToUse)
                    ->where('mime_type', 'directory')
@@ -121,20 +119,3 @@ class ImportDatasetIntoProjectAction
         $f->save();
     }
 }
-
-
-/*
-$project = Project::with('activities')->findOrFail(1);
-
-
-$proj2 = $project->replicate()->fill(['uuid' => Uuid::uuid4()->toString()]);
-$proj2->name = "replicated project 4";
-$proj2->save();
-$proj2->fresh();
-$proj2->activities->each->fill(['uuid' => Uuid::uuid4()->toString(), 'project_id' => $proj2->id]);
-$proj2->push();
-$proj2->fresh();
-
-$user = User::findOrFail($proj2->owner_id);
-$user->projects()->attach($proj2);
-*/

@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetFileWebController
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowImportPublishedDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
@@ -50,6 +51,11 @@ Route::get('/datasets/{dataset}/comments', ShowPublishedDatasetCommentsWebContro
 
 Route::get('/datasets/{dataset}/communities', ShowPublishedDatasetCommunitiesWebController::class)
      ->name('datasets.communities.index');
+
+// Don't use {project} because we don't want the middleware to run that checks that the dataset is in the project
+Route::get('/datasets/{dataset}/import-into/projects/{p}',
+    ShowImportPublishedDatasetIntoProjectWebController::class)
+     ->name('datasets.import-into-project');
 
 // Entity
 
