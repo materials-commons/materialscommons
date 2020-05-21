@@ -19,7 +19,7 @@ class CreateDirectoryApiController extends Controller
     public function __invoke(CreateDirectoryRequest $request, CreateDirectoryAction $createDirectoryAction)
     {
         $validated = $request->validated();
-        $directory = $createDirectoryAction($validated);
+        $directory = $createDirectoryAction->execute($validated, auth()->id());
         return new DirectoryResource($directory);
     }
 }

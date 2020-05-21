@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class CreateProjectAction
 {
-    public function __invoke($data)
+    public function execute($data, $ownerId)
     {
-        $ownerId = auth()->id();
         $project = Project::where('name', $data['name'])->where('owner_id', $ownerId)->first();
         if ($project !== null) {
             return ['project' => $project, 'created' => false];

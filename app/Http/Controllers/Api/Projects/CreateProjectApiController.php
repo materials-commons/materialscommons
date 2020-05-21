@@ -30,7 +30,7 @@ class CreateProjectApiController extends Controller
     public function __invoke(CreateProjectRequest $request, CreateProjectAction $createProjectAction)
     {
         $validated = $request->validated();
-        $data = $createProjectAction($validated);
+        $data = $createProjectAction->execute($validated, auth()->id());
         $project = $data['project'];
         $statusCode = $data['created'] ? 201 : 200;
         return (new ProjectResource($project))->response()->setStatusCode($statusCode);

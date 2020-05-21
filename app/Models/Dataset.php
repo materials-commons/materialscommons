@@ -79,6 +79,11 @@ class Dataset extends Model implements Searchable
         return $this->belongsToMany(Activity::class, 'dataset2activity', 'dataset_id', 'activity_id');
     }
 
+    public function usedInProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project2imported_dataset', 'dataset_id', 'project_id');
+    }
+
     public function files()
     {
         return $this->belongsToMany(File::class, 'dataset2file', 'dataset_id', 'file_id');
@@ -169,5 +174,10 @@ class Dataset extends Model implements Searchable
     public function privateGlobusPathPartial()
     {
         return "__datasets/{$this->uuid}";
+    }
+
+    public function isPublished()
+    {
+        return !is_null($this->published_at);
     }
 }

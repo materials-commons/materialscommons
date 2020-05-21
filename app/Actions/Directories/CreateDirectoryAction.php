@@ -7,20 +7,13 @@ use App\Models\File;
 
 class CreateDirectoryAction
 {
-    /**
-     * Create a directory
-     *
-     * @param $data
-     * @return mixed
-     */
-    public function __invoke($data)
+    public function execute($data, $ownerId)
     {
-        $data['owner_id'] = auth()->id();
+        $data['owner_id'] = $ownerId;
         $data['mime_type'] = 'directory';
         $data['media_type_description'] = 'directory';
         $parent = File::findOrFail($data['directory_id']);
         $data['path'] = PathHelpers::normalizePath("{$parent->path}/{$data['name']}");
-        $directory = File::create($data);
-        return $directory;
+        return File::create($data);
     }
 }
