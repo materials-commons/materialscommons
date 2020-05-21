@@ -27,6 +27,7 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetExperimentsWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWorkflowsWebController;
+use App\Http\Controllers\Web\Datasets\ShowImportDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWithDoiWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWorkflowFromEditWebController;
@@ -142,6 +143,9 @@ Route::get('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetW
 // Don't use {project} because we don't want middleware to run that checks that dataset is in project
 Route::post('/projects/{p}/datasets/{dataset}/import', ImportDatasetIntoProjectWebController::class)
      ->name('projects.datasets.import');
+
+Route::get('/projects/{p}/datasets/{dataset}/import', ShowImportDatasetIntoProjectWebController::class)
+     ->name('projects.datasets.import-into-project');
 
 
 

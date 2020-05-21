@@ -27,7 +27,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectsDropdown">
                         @foreach(auth()->user()->projects as $project)
-                            @if($project->owner_id == auth()->id())
+                            @if($project->owner_id == auth()->id() && $project->id != $dataset->project_id)
                                 <a class="dropdown-item td-none"
                                    href="{{route('public.datasets.import-into-project', [$dataset, $project])}}">
                                     {{$project->name}}
@@ -46,7 +46,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="communitiesDropdown">
                             @foreach(auth()->user()->communities as $community)
-                                <a class="dropdown-item td-none" href="#">{{$community->name}}</a>
+                                @if(!$dataset->isInCommunity($community->id))
+                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>
+                                @endif
                             @endforeach
                         </div>
                     </div>

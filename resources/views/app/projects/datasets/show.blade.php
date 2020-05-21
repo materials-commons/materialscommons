@@ -33,6 +33,23 @@
                     <i class="fas fa-file-export mr-2"></i>Publish
                 </a>
             @endif
+
+            <div class="dropdown float-right mr-4">
+                <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-file-import mr-2"></i>Import Into Project
+                </a>
+                <div class="dropdown-menu" aria-labelledby="projectsDropdown">
+                    @foreach(auth()->user()->projects as $p)
+                        @if($p->owner_id == auth()->id() && $p->id != $dataset->project_id)
+                            <a class="dropdown-item td-none"
+                               href="{{route('projects.datasets.import-into-project', [$p, $dataset])}}">
+                                {{$p->name}}
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
         @endslot
 
         @slot('body')

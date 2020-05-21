@@ -196,4 +196,11 @@ class Dataset extends Model implements Searchable
                   ->rtrim('-')
                   ->__toString();
     }
+
+    public function isInCommunity($communityId)
+    {
+        $this->communities->contains(function (Community $community) use ($communityId) {
+            return $community->id == $communityId;
+        });
+    }
 }
