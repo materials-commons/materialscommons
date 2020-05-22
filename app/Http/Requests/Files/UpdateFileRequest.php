@@ -28,6 +28,7 @@ class UpdateFileRequest extends FormRequest
     {
         return [
             'description' => 'string|max:2048',
+            'summary'     => 'string|max:100',
         ];
     }
 

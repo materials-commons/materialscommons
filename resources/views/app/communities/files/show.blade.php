@@ -12,11 +12,16 @@
             File: {{$file->name}} for Community: {{$community->name}}
             <a class="action-link float-right"
                href="{{route('communities.files.download', [$community, $file])}}">
-                <i class="fas fa-download mr-2"></i>Download File
+                <i class="fas fa-download mr-2"></i>Download
+            </a>
+
+            <a class="action-link float-right mr-4"
+               href="{{route('communities.files.edit-file', [$community, $file])}}">
+                <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
             <a class="action-link float-right mr-4" href="{{route('communities.files.delete', [$community, $file])}}">
-                <i class="fas fa-trash mr-2"></i> Delete File
+                <i class="fas fa-trash mr-2"></i> Delete
             </a>
         @endslot
 

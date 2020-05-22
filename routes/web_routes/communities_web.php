@@ -12,8 +12,10 @@ use App\Http\Controllers\Web\Communities\Files\DeleteFileForCommunityWebControll
 use App\Http\Controllers\Web\Communities\Files\DestroyFileForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Files\DisplayCommunityFileWebController;
 use App\Http\Controllers\Web\Communities\Files\DownloadCommunityFileWebController;
+use App\Http\Controllers\Web\Communities\Files\EditFileForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Files\ShowCommunityFileWebController;
 use App\Http\Controllers\Web\Communities\Files\StoreFilesForCommunityWebController;
+use App\Http\Controllers\Web\Communities\Files\UpdateFileForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Files\UploadFilesToCommunityWebController;
 use App\Http\Controllers\Web\Communities\IndexCommunitiesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityRecommendedPracticesWebController;
@@ -57,6 +59,12 @@ Route::delete('/communities/{community}/files/{file}/destroy', DestroyFileForCom
 
 Route::get('/communities/{community}/files/{file}/show', ShowCommunityFileWebController::class)
      ->name('communities.files.show');
+
+Route::get('/communities/{community}/files/{file}/edit', EditFileForCommunityWebController::class)
+     ->name('communities.files.edit-file');
+
+Route::put('/communities/{community}/files/{file}/update', UpdateFileForCommunityWebController::class)
+     ->name('communities.files.update-file');
 
 Route::get('/communities/{community}/edit/links', EditCommunityLinksWebController::class)
      ->name('communities.links.edit');
