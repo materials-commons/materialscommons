@@ -8,6 +8,10 @@
 
 @section('content')
     <div class="row justify-content-center">
+        <p class="col-10">
+            Maximum file size is 70M. If you need to upload a larger files please use
+            <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>
+        </p>
         <div class="col-10">
             <h4>Adding files to directory {{$directory->path}}</h4>
         </div>

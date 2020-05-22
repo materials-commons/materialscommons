@@ -7,6 +7,10 @@
 @stop
 
 @section('content')
+    <p class="col-10">
+        Maximum file size is 70M. If you need to upload a larger files please use
+        <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>
+    </p>
     <p>
         Please select a directory to upload your excel files to. Once you have selected a directory you will
         be able to upload files. You may change directories at any time.

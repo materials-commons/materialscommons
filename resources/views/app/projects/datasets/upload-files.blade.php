@@ -7,6 +7,10 @@
 @stop
 @section('content')
     <div class="row mb-10">
+        <p class="col-10">
+            Maximum file size is 70M. If you need to upload a larger files please use
+            <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>
+        </p>
         <div class="col-8">
             <a class="btn btn-primary float-right"
                href="{{route('projects.datasets.create-data', [$project, $dataset, $directory])}}">
