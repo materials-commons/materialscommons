@@ -40,11 +40,14 @@ class DatasetFactory
 
     public function createFile($dataset, $dir, $name, $content)
     {
-        return ProjectFactory::createFile($dataset->project, $dir, $name, $content);
+        $file = ProjectFactory::createFile($dataset->project, $dir, $name, $content);
+        $dataset->files()->attach($file);
+        return $file;
     }
 
     public function createFilePointingAt($dataset, $file, $name)
     {
-        return ProjectFactory::createFilePointingAt($dataset->project, $file, $name);
+        $f = ProjectFactory::createFilePointingAt($dataset->project, $file, $name);
+        $dataset->files()->attach($f);
     }
 }
