@@ -38,7 +38,7 @@ class ImportDatasetIntoProjectAction
         $dsFileSelection = new DatasetFileSelection($dataset->file_selection);
         foreach ($this->getFilesCursorForProject($dataset->project_id) as $file) {
             if ($this->isIncludedFile($dsFileSelection, $file)) {
-                if ($dataset->hasFile($file->id)) {
+                if ($this->canImportFile($dataset, $file)) {
                     $dir = $this->getDirectoryOrCreateIfDoesNotExist($rootDir, $file->directory->path, $project);
                     $this->importFileIntoDir($dir, $file);
                 }
@@ -58,6 +58,17 @@ class ImportDatasetIntoProjectAction
         return $this->createDirectoryAction->execute($data, $project->owner_id);
     }
 
+    private function canImportFile($dataset, $file)
+    {
+        if (is_null($dataset->published_at)) {
+            // Dataset not published, so only import current files
+            return $file->current;
+        }
+
+        // Published dataset only import files that are in the dataset
+        return $dataset->hasFile($file->id);
+    }
+
     private function getDirectoryOrCreateIfDoesNotExist(File $rootDir, string $path, Project $project)
     {
         $dir = $this->getDirectory($rootDir->name, $path, $project->id);
@@ -65,9 +76,9 @@ class ImportDatasetIntoProjectAction
             return $dir;
         }
 
-        $parent = $this->getDirectory($rootDir->name, dirname($path), $project->id);
+        $this->makeDirPathInProject($rootDir, $path, $project);
 
-        return $this->makeDirInProject($parent, $path, $project);
+        return $this->getDirectory($rootDir->name, $path, $project->id);
     }
 
     private function getDirectory($rootDirName, $path, int $projectId)
@@ -77,6 +88,28 @@ class ImportDatasetIntoProjectAction
                    ->where('path', $pathToUse)
                    ->where('mime_type', 'directory')
                    ->first();
+    }
+
+    /**
+     * makeDirPathInProject will break a path into its individual parts and then create the
+     * whole chain of directories. It checks if each part already exists.
+     * @param  \App\Models\File  $rootDir
+     * @param  string  $path
+     * @param  \App\Models\Project  $project
+     */
+    private function makeDirPathInProject(File $rootDir, string $path, Project $project)
+    {
+        $pathToCreate = "";
+        foreach (explode('/', $path) as $pathItem) {
+            if (blank($pathItem)) {
+                continue;
+            }
+            $pathToCreate = "{$pathToCreate}/{$pathItem}";
+            if ($this->getDirectory($rootDir->name, $pathToCreate, $project->id) == null) {
+                $parent = $this->getDirectory($rootDir->name, dirname($pathToCreate), $project->id);
+                $this->makeDirInProject($parent, $pathToCreate, $project);
+            }
+        }
     }
 
     private function makeDirInProject(File $parentDir, string $path, Project $project)
