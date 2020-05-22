@@ -22,13 +22,16 @@
         let r = "{{route('communities.files.upload.store', [$community])}}";
         let communityEditUrl = "{{route('communities.files.edit', [$community])}}";
 
-        const uppy = Uppy().use(UppyDashboard, {
+        const uppy = Uppy({
+            restrictions: {
+                maxFileSize: 70 * 1024 * 1024,
+            }
+        }).use(UppyDashboard, {
             trigger: '#file-upload',
             inline: true,
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
-        })
-            .use(UppyXHRUpload, {endpoint: r});
+        }).use(UppyXHRUpload, {endpoint: r});
 
         uppy.on('file-added', () => {
             uppy.setMeta({_token: csrf});
