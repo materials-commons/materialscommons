@@ -203,4 +203,9 @@ class Dataset extends Model implements Searchable
             return $community->id == $communityId;
         });
     }
+
+    public function hasFile($fileId)
+    {
+        return $this->files()->where('file_id', $fileId)->count() != 0;
+    }
 }
