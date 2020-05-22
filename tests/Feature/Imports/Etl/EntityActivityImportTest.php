@@ -249,17 +249,17 @@ class EntityActivityImportTest extends TestCase
 
         $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'd1']);
         $this->assertEquals(1, Entity::count());
-        $this->assertEquals(1, EntityState::count());
-        $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertEquals(2, EntityState::count());
+        $this->assertEquals(8, Attribute::where('attributable_type', EntityState::class)->count());
         $entityAttributes = Attribute::where('attributable_type', EntityState::class)->get();
         $entityAttributeIds = $entityAttributes->map(function (Attribute $attr) {
             return $attr->id;
         });
         $this->assertEquals(10, AttributeValue::whereIn('attribute_id', $entityAttributeIds->toArray())->count());
         $beadWidthAttr = Attribute::where('name', 'bead width')->first();
-        $this->assertEquals(4, AttributeValue::where('attribute_id', $beadWidthAttr->id)->count());
+        $this->assertEquals(2, AttributeValue::where('attribute_id', $beadWidthAttr->id)->count());
         $wireCompAttr = Attribute::where('name', 'wire composition')->first();
-        $this->assertEquals(2, AttributeValue::where('attribute_id', $wireCompAttr->id)->count());
+        $this->assertEquals(1, AttributeValue::where('attribute_id', $wireCompAttr->id)->count());
     }
 
     /** @test */
