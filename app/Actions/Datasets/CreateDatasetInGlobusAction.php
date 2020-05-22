@@ -7,6 +7,7 @@ use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\GetProjectFiles;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 class CreateDatasetInGlobusAction
 {
     use PathForFile;
+    use GetProjectFiles;
 
     private $globusApi;
     private $endpointId;
@@ -34,7 +36,7 @@ class CreateDatasetInGlobusAction
         }
 
         $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
-        foreach (File::with('directory')->where('project_id', $dataset->project_id)->cursor() as $file) {
+        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
             if ($this->isIncludedFile($datasetFileSelection, $file)) {
                 $dirPath = "{$datasetDir}{$file->directory->path}";
                 if (!file_exists($dirPath)) {

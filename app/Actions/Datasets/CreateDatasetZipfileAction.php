@@ -5,6 +5,7 @@ namespace App\Actions\Datasets;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Models\File;
+use App\Traits\GetProjectFiles;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -15,6 +16,7 @@ use ZipArchive;
 class CreateDatasetZipfileAction
 {
     use PathForFile;
+    use GetProjectFiles;
 
     public function __invoke($datasetId, $createDatasetFilesTable)
     {
@@ -36,7 +38,7 @@ class CreateDatasetZipfileAction
         $zip->open($zipfile, ZipArchive::CREATE) or die("Could not open archive");
 
         $maxFileCountBeforeReopen = 200;
-        foreach (File::with('directory')->where('project_id', $dataset->project_id)->cursor() as $file) {
+        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
             if ($this->isFileEntry($file)) {
                 $filePath = "{$file->directory->path}/{$file->name}";
                 if ($datasetFileSelection->isIncludedFile($filePath)) {

@@ -7,10 +7,13 @@ use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\GetProjectFiles;
 use Ramsey\Uuid\Uuid;
 
 class ImportDatasetIntoProjectAction
 {
+    use GetProjectFiles;
+
     /**
      * @var CreateDirectoryAction
      */
@@ -33,7 +36,7 @@ class ImportDatasetIntoProjectAction
     {
         $rootDir = $this->createRootDirForDataset($rootDirName, $project);
         $dsFileSelection = new DatasetFileSelection($dataset->file_selection);
-        foreach (File::with('directory')->where('project_id', $dataset->project_id)->cursor() as $file) {
+        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
             if ($this->isIncludedFile($dsFileSelection, $file)) {
                 $dir = $this->getDirectoryOrCreateIfDoesNotExist($rootDir, $file->directory->path, $project);
                 $this->importFileIntoDir($dir, $file);
