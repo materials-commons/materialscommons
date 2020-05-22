@@ -36,10 +36,12 @@ class ImportDatasetIntoProjectAction
     {
         $rootDir = $this->createRootDirForDataset($rootDirName, $project);
         $dsFileSelection = new DatasetFileSelection($dataset->file_selection);
-        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
+        foreach ($this->getFilesCursorForProject($dataset->project_id) as $file) {
             if ($this->isIncludedFile($dsFileSelection, $file)) {
-                $dir = $this->getDirectoryOrCreateIfDoesNotExist($rootDir, $file->directory->path, $project);
-                $this->importFileIntoDir($dir, $file);
+                if ($dataset->hasFile($file->id)) {
+                    $dir = $this->getDirectoryOrCreateIfDoesNotExist($rootDir, $file->directory->path, $project);
+                    $this->importFileIntoDir($dir, $file);
+                }
             }
         }
     }
