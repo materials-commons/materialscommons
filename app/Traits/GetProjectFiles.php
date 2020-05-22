@@ -14,4 +14,11 @@ trait GetProjectFiles
                    ->where('current', true)
                    ->cursor();
     }
+
+    public function getFilesCursorForProject($projectId)
+    {
+        return File::with('directory')
+                   ->where('project_id', $projectId)
+                   ->cursor();
+    }
 }
