@@ -29,14 +29,16 @@
             project: "{{$project->id}}",
             file: "{{$directory->id}}"
         }).url();
-        const uppy = Uppy()
-            .use(UppyDashboard, {
-                trigger: '#file-upload',
-                inline: true,
-                showProgressDetails: true,
-                proudlyDisplayPoweredByUppy: false,
-            })
-            .use(UppyXHRUpload, {endpoint: r});
+        const uppy = Uppy({
+            restrictions: {
+                maxFileSize: 70 * 1024 * 1024
+            }
+        }).use(UppyDashboard, {
+            trigger: '#file-upload',
+            inline: true,
+            showProgressDetails: true,
+            proudlyDisplayPoweredByUppy: false,
+        }).use(UppyXHRUpload, {endpoint: r});
 
         uppy.on('file-added', () => {
             uppy.setMeta({_token: csrf});

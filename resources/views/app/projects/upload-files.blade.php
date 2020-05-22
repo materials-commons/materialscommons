@@ -49,7 +49,11 @@
                 uppy.close();
             }
 
-            uppy = Uppy().use(UppyDashboard, {
+            uppy = Uppy({
+                restrictions: {
+                    maxFileSize: 70 * 1024 * 1024
+                }
+            }).use(UppyDashboard, {
                 trigger: '#file-upload',
                 inline: true,
                 showProgressDetails: true,

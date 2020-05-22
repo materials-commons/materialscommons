@@ -43,7 +43,8 @@
 
             uppy = Uppy({
                 restrictions: {
-                    allowedFileTypes: ['.xlsx']
+                    allowedFileTypes: ['.xlsx'],
+                    maxFileSize: 70 * 1024 * 1024
                 }
             }).use(UppyDashboard, {
                 trigger: '#file-upload',
