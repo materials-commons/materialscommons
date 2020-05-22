@@ -7,6 +7,10 @@
 @stop
 @section('content')
     <div class="row mb-10">
+        <p class="col-10">
+            Maximum file size is 70M. If you need to upload a larger files please use
+            <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>
+        </p>
         <div class="col-8">
             <a class="btn btn-primary float-right"
                href="{{route('public.publish.wizard.create_workflow', [$project])}}">
@@ -29,14 +33,16 @@
             project: "{{$project->id}}",
             file: "{{$directory->id}}"
         }).url();
-        const uppy = Uppy()
-            .use(UppyDashboard, {
-                trigger: '#file-upload',
-                inline: true,
-                showProgressDetails: true,
-                proudlyDisplayPoweredByUppy: false,
-            })
-            .use(UppyXHRUpload, {endpoint: r});
+        const uppy = Uppy({
+            restrictions: {
+                maxFileSize: 70 * 1024 * 1024
+            }
+        }).use(UppyDashboard, {
+            trigger: '#file-upload',
+            inline: true,
+            showProgressDetails: true,
+            proudlyDisplayPoweredByUppy: false,
+        }).use(UppyXHRUpload, {endpoint: r});
 
         uppy.on('file-added', () => {
             uppy.setMeta({_token: csrf});
