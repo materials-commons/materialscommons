@@ -19,6 +19,7 @@ use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowWebController;
 use App\Http\Controllers\Web\Datasets\IndexDatasetsWebController;
 use App\Http\Controllers\Web\Datasets\PublishDatasetWebController;
+use App\Http\Controllers\Web\Datasets\RefreshPublishedDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetAndFolderWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetCommunitiesWebController;
@@ -134,6 +135,9 @@ Route::post('/projects/{project}/datasets/create-doi', StoreDatasetWithDoiWebCon
 
 Route::get('/projects/{project}/datasets/{dataset}/publish', PublishDatasetWebController::class)
      ->name('projects.datasets.publish');
+
+Route::get('/projects/{project}/datasets/{dataset}/refresh', RefreshPublishedDatasetWebController::class)
+     ->name('projects.datasets.refresh');
 
 Route::get('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetWebController::class)
      ->name('projects.datasets.unpublish');

@@ -24,6 +24,11 @@
 
             @if (isset($dataset->published_at))
                 <a class="float-right action-link mr-4"
+                   href="{{route('projects.datasets.refresh', [$project, $dataset])}}">
+                    <i class="fas fa-sync mr-2"></i> Refresh
+                </a>
+
+                <a class="float-right action-link mr-4"
                    href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
                     <i class="fas fa-minus-circle mr-2"></i>Unpublish
                 </a>
