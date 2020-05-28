@@ -26,8 +26,12 @@ Route::put('/datasets/{dataset}/activities/selection', UpdateDatasetActivitySele
 Route::put('/datastes/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
      ->name('api.projects.datasets.workflows');
 
-Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class);
-Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class);
+Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class)
+     ->name('api.projects.datasets.show');
+
+Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class)
+     ->name('api.projects.datasets.index');
+
 Route::put('/datasets/{dataset}', UpdateDatasetApiController::class);
 Route::post('/datasets', CreateDatasetApiController::class);
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
