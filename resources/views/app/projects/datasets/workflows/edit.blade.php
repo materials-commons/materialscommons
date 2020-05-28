@@ -16,8 +16,8 @@
 
         @slot('body')
             @include('partials.workflows.edit', [
-                'updateMethod' => 'post',
-                'updateRoute' => route('projects.datasets.workflows.edit.store', [$project, $dataset, $workflow]),
+                'updateMethod' => 'put',
+                'updateRoute' => route('projects.datasets.workflows.edit.update', [$project, $dataset, $workflow]),
                 'cancelRoute' => route('projects.datasets.workflows.edit', [$project, $dataset])
             ])
         @endslot

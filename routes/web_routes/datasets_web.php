@@ -34,6 +34,7 @@ use App\Http\Controllers\Web\Datasets\StoreDatasetWithDoiWebController;
 use App\Http\Controllers\Web\Datasets\StoreDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
+use App\Http\Controllers\Web\Datasets\UpdateDatasetWorkflowFromEditWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/{project}/datasets', IndexDatasetsWebController::class)
@@ -65,6 +66,10 @@ Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/create',
 Route::post('/projects/{project}/datasets/{dataset}/edit/workflows/store',
     StoreDatasetWorkflowFromEditWebController::class)
      ->name('projects.datasets.workflows.edit.store');
+
+Route::put('/projects/{project}/datasets/{dataset}/edit/workflows/{workflow}/update',
+    UpdateDatasetWorkflowFromEditWebController::class)
+     ->name('projects.datasets.workflows.edit.update');
 
 Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/{workflow}', EditDatasetWorkflowWebController::class)
      ->name('projects.datasets.workflows.edit.workflow');
