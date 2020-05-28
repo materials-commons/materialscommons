@@ -13,7 +13,7 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function testExample()
+    public function it_can_add_and_remove_entities_from_dataset()
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();

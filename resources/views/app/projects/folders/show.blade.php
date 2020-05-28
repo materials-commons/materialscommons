@@ -27,9 +27,25 @@
             {{--                <i class="fas fa-trash mr-2"></i>Delete Files--}}
             {{--            </a>--}}
 
-            <a class="float-right action-link" href="{{route('projects.folders.move', [$project, $directory])}}">
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.folders.move', [$project, $directory])}}">
                 <i class="fas fa-angle-double-right mr-2"></i>Move Files
             </a>
+
+            {{--            @if($directory->name == "/")--}}
+            {{--                <a class="float-right action-link mr-4"--}}
+            {{--                   href="{{route('projects.folders.move', [$project, $directory])}}">--}}
+            {{--                    <i class="fas fa-angle-double-right mr-2"></i>Move Files--}}
+            {{--                </a>--}}
+            {{--            @else--}}
+            {{--                <a class="float-right action-link mr-4" href="#">--}}
+            {{--                    <i class="fas fa-trash mr-2"></i> Delete Directory--}}
+            {{--                </a>--}}
+            {{--                <a class="float-right action-link"--}}
+            {{--                   href="{{route('projects.folders.move', [$project, $directory])}}">--}}
+            {{--                    <i class="fas fa-angle-double-right mr-2"></i>Move Files--}}
+            {{--                </a>--}}
+            {{--            @endif--}}
 
             <a class="float-right action-link mr-4"
                href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
