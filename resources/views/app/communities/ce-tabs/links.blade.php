@@ -1,7 +1,7 @@
 @component('components.card')
     @slot('header')
         Recommend Practices Links
-        <a class="float-right action-link mr-2" href="">
+        <a class="float-right action-link mr-2" href="{{route('communities.links.create', [$community])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>Add Link
         </a>
     @endslot
