@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Url</label>
+                    <label for="url">Url</label>
                     <input class="form-control" id="url" name="url" value="{{old('url')}}" type="url"
                            placeholder="Url..." required>
                 </div>
