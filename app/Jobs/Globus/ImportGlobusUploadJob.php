@@ -34,6 +34,7 @@ class ImportGlobusUploadJob implements ShouldQueue
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $globusApi = GlobusApi::createGlobusApi();
         $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($this->globusUpload,
             $this->maxItemsToProcess, $globusApi);
