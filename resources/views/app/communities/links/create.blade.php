@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label for="summary">Summary</label>
                     <input class="form-control" id="summary" name="summary" type="text" value="{{old('summary')}}"
-                           placeholder="Summary...">
+                           placeholder="Summary..." required>
                 </div>
 
                 <div class="form-group">
