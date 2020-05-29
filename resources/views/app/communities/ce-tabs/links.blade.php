@@ -7,12 +7,12 @@
     @endslot
 
     @slot('body')
-        <table id="files" class="table table-hover" style="width:100%">
+        <table id="links" class="table table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Selected</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -20,16 +20,17 @@
                 <tr>
                     <td>
                         <a href="{{$link->url}}" target="_blank">
-                            <i class="fa-fw fas mr-2 fa-file"></i>{{$link->name}}
+                            <i class="fa-fw fas mr-2 fa-external-link-alt"></i>{{$link->name}}
                         </a>
                     </td>
                     <td>{{$link->summary}}</td>
                     <td>
-                        <div class="form-group form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="{{$link->uuid}}"
-                                   {{$link->selected ? 'checked' : ''}}
-                                   onclick="updateSelection({{$link}}, this)">
-                        </div>
+                        <a class="action-link" href="{{route('communities.links.edit-link', [$community, $link])}}">
+                            <i class="fas fa-fw fa-edit"></i>
+                        </a>
+                        <a class="action-link" href="{{route('communities.links.delete', [$community, $link])}}">
+                            <i class="fas fa-fw fa-trash-alt"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach
@@ -40,69 +41,10 @@
 
 @push('scripts')
     <script>
-        let projectId = "";
-        let datasetId = "";
-        let route = "";
-        let apiToken = "{{$user->api_token}}";
-
         $(document).ready(() => {
-            $('#files').DataTable({
+            $('#links').DataTable({
                 stateSave: true,
             });
         });
-
-        function updateSelection(file, checkbox) {
-            if (checkbox.checked) {
-                if (file.mime_type === 'directory') {
-                    addDirectory(file);
-                } else {
-                    addFile(file);
-                }
-
-            } else {
-                if (file.mime_type === 'directory') {
-                    removeDirectory(file);
-                } else {
-                    removeFile(file);
-                }
-            }
-        }
-
-        function addDirectory(dir) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                include_dir: `${dir.path}`
-            }).then(
-                () => null
-            );
-        }
-
-        function addFile(file) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                include_file: `${directoryPath}/${file.name}`
-            }).then(
-                () => null
-            );
-        }
-
-        function removeDirectory(dir) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                remove_include_dir: `${dir.path}`
-            }).then(
-                () => null
-            );
-        }
-
-        function removeFile(file) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                remove_include_file: `${directoryPath}/${file.name}`
-            }).then(
-                () => null
-            );
-        }
-
     </script>
 @endpush

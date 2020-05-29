@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Web\Communities\Links;
 
 use App\Actions\Links\CreateLinkAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Links\CreateLinkRequest;
+use App\Http\Requests\Links\CreateUpdateLinkRequest;
 use App\Models\Community;
 
 class StoreLinkForCommunityWebController extends Controller
 {
-    public function __invoke(CreateLinkRequest $request, CreateLinkAction $createLinkAction, Community $community)
+    public function __invoke(CreateUpdateLinkRequest $request, CreateLinkAction $createLinkAction, Community $community)
     {
         $validated = $request->validated();
         $link = $createLinkAction->execute($validated, auth()->id());
