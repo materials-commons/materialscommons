@@ -2,6 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Globus\GlobusApi;
+use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
+use App\Enums\GlobusStatus;
+use App\Models\GlobusUploadDownload;
 use Illuminate\Console\Command;
 
 class ImportGlobusUploadCommand extends Command
@@ -11,7 +15,7 @@ class ImportGlobusUploadCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:import-globus-upload';
+    protected $signature = 'mc:import-globus-upload {uploadId : Globus Upload Id}';
 
     /**
      * The console command description.
@@ -37,6 +41,13 @@ class ImportGlobusUploadCommand extends Command
      */
     public function handle()
     {
-        //
+        ini_set("memory_limit", "4096M");
+        $upload = GlobusUploadDownload::findOrFail($this->argument("uploadId"));
+        $upload->update(['status' => GlobusStatus::Loading]);
+        $maxItemsToProcess = config('globus.max_items');
+        $globusApi = GlobusApi::createGlobusApi();
+        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, $maxItemsToProcess,
+            $globusApi);
+        $loadGlobusUploadInProjectAction();
     }
 }

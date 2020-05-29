@@ -2,7 +2,6 @@
 
 namespace App\Actions\Globus\Uploads;
 
-use App\Enums\GlobusStatus;
 use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
@@ -42,10 +41,10 @@ class LoadGlobusUploadIntoProjectAction
         // Start off with root dir and then adjust as needed
         $currentDir = File::where('project_id', $this->globusUpload->project->id)->where('name', '/')->first();
         foreach ($dirIterator as $path => $finfo) {
-            if ($fileCount >= $this->maxItemsToProcess) {
-                $this->globusUpload->update(['status' => GlobusStatus::Done]);
-                return;
-            }
+//            if ($fileCount >= $this->maxItemsToProcess) {
+//                $this->globusUpload->update(['status' => GlobusStatus::Done]);
+//                return;
+//            }
 
             if (Str::endsWith($path, "/.") || Str::endsWith($path, "/..")) {
                 continue;
