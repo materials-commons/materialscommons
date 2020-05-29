@@ -12,8 +12,10 @@
             Edit Link {{$link->name}} In Community {{$community->name}}
         @endslot
         @slot('body')
-            <form method="post" action="{{route('communities.links.update-link', [$community])}}" id="update-link">
+            <form method="post" action="{{route('communities.links.update-link', [$community, $link])}}"
+                  id="update-link">
                 @csrf
+                @method('put')
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -24,7 +26,7 @@
                 <div class="form-group">
                     <label for="summary">Summary</label>
                     <input class="form-control" id="summary" name="summary" type="text"
-                           value="{{old('summary', $link->summary)}}" placeholder="Summary...">
+                           value="{{old('summary', $link->summary)}}" placeholder="Summary..." required>
                 </div>
 
                 <div class="form-group">
