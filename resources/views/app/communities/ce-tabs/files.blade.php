@@ -1,6 +1,6 @@
 @component('components.card')
     @slot('header')
-        Recommended Practices Files
+        Community Files
         <a class="float-right action-link mr-2" href="{{route('communities.files.upload', [$community])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>Add Files
         </a>

@@ -7,7 +7,7 @@
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($practicesRouteName)}}"
            href="{{route($practicesRouteName, [$community])}}">
-            Recommended Practices
+            Community Files and Links
         </a>
     </li>
 </ul>

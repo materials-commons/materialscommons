@@ -1,7 +1,3 @@
-<p>
-    These are the recommended practices and templates for the community.
-</p>
-<br>
 <h3>Files</h3>
 <br>
 <table id="files" class="table table-hover">

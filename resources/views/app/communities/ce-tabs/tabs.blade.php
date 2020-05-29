@@ -8,13 +8,13 @@
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('communities.files.edit')}}"
            href="{{route('communities.files.edit', [$community])}}">
-            Recommended Practices Files
+            Community Files
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('communities.links.edit')}}"
            href="{{route('communities.links.edit', [$community])}}">
-            Recommended Practices Links
+            Community Links
         </a>
     </li>
 </ul>
