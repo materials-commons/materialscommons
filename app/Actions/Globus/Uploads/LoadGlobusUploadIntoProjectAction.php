@@ -87,7 +87,9 @@ class LoadGlobusUploadIntoProjectAction
     {
         $pathPart = Storage::disk('mcfs')->path("__globus_uploads/{$this->globusUpload->uuid}");
         $dirPath = Str::replaceFirst($pathPart, "", $path);
-        $dir = File::where('project_id', $this->globusUpload->project->id)->where('path', $dirPath)->first();
+        $parentDir = File::where('project_id', $this->globusUpload->project_id)->where('path',
+            dirname($dirPath))->first();
+        $dir = File::where('project_id', $this->globusUpload->project_id)->where('path', $dirPath)->first();
         if ($dir !== null) {
             return $dir;
         }
@@ -98,7 +100,7 @@ class LoadGlobusUploadIntoProjectAction
             'mime_type'    => 'directory',
             'owner_id'     => $this->globusUpload->owner->id,
             'project_id'   => $this->globusUpload->project->id,
-            'directory_id' => $currentDir->id,
+            'directory_id' => $parentDir->id,
         ]);
     }
 
@@ -128,9 +130,18 @@ class LoadGlobusUploadIntoProjectAction
                 return null;
             }
         } else {
-            // Matching file found, so point at it.
+            // Matching file found, so point at it and remove the uploaded file on disk. If the uploaded
+            // file isn't removed then it could be processed a second time if the first run doesn't complete
+            // processing of all files.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
+            try {
+                if (!unlink($path)) {
+                    echo "unlink failed\n";
+                }
+            } catch (\Exception $e) {
+                // unlink through an exception
+            }
         }
 
         $fileEntry->save();
