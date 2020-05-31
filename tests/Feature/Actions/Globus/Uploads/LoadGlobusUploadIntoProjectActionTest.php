@@ -29,9 +29,6 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
     {
         $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
         $this->Mkdir($globusUploadsPath);
-        $from = Storage::disk('test_data')->path('globus/test1');
-        $cmd = "cp -r {$from} {$globusUploadsPath}";
-        exec($cmd);
 
         $user = factory(User::class)->create();
 
@@ -48,8 +45,13 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
         $globusUpload = factory(GlobusUploadDownload::class)->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
-            'path'       => Storage::disk('mcfs')->path("__globus_uploads/test1"),
+//            'path'       => Storage::disk('mcfs')->path("__globus_uploads/test1"),
         ]);
+
+        $from = Storage::disk('test_data')->path('globus/test1');
+        $cmd = "cp -r {$from} {$globusUploadsPath}/{$globusUpload->uuid}";
+        exec($cmd);
+        $globusUpload->update(['path' => Storage::disk('mcfs')->path("__globus_uploads/{$globusUpload->uuid}")]);
 
         $globusApiMock = GlobusMockUtils::createGlobusApiMock();
         $loadGlobusUploadIntoProjectAction = new LoadGlobusUploadIntoProjectAction($globusUpload, 10, $globusApiMock);
@@ -76,7 +78,7 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
 
     private function Mkdir($path)
     {
-        if ( ! is_dir($path)) {
+        if (!is_dir($path)) {
             mkdir($path);
         }
     }

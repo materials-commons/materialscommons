@@ -110,9 +110,18 @@ class LoadGlobusUploadIntoProjectAction
             // Just save physical file and insert into database
             $this->moveFileIntoProject($path, $fileEntry);
         } else {
-            // Matching file found, so point at it.
+            // Matching file found, so point at it and remove the uploaded file on disk. If the uploaded
+            // file isn't removed then it could be processed a second time if the first run doesn't complete
+            // processing of all files.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
+            try {
+                if (!unlink($path)) {
+                    echo "unlink failed\n";
+                }
+            } catch (\Exception $e) {
+                // unlink through an exception
+            }
         }
 
         $fileEntry->save();
