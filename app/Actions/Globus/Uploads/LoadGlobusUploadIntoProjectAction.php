@@ -40,9 +40,13 @@ class LoadGlobusUploadIntoProjectAction
         $fileCount = 0;
 
         // Start off with root dir and then adjust as needed
-        $currentDir = File::where('project_id', $this->globusUpload->project->id)->where('name', '/')->first();
+        $currentDir = File::where('project_id', $this->globusUpload->project_id)
+                          ->where('name', '/')
+                          ->first();
         foreach ($dirIterator as $path => $finfo) {
-            if ($fileCount >= $this->maxItemsToProcess) {
+            if ($this->maxItemsProcessed($fileCount)) {
+                // Mark job as done so that it will be picked up again and processed. This way
+                // we break a large upload into chunks.
                 $this->globusUpload->update(['status' => GlobusStatus::Done]);
                 return;
             }
@@ -55,7 +59,11 @@ class LoadGlobusUploadIntoProjectAction
                 // assign current dir here
                 $currentDir = $this->processDir($path, $currentDir);
             } else {
-                $this->processFile($path, $finfo, $currentDir);
+                if (is_null($this->processFile($path, $finfo, $currentDir))) {
+                    // processing file failed, so stop let job be processed later
+                    $this->globusUpload->update(['status' => GlobusStatus::Done]);
+                    return;
+                }
                 $fileCount++;
             }
         }
@@ -63,6 +71,16 @@ class LoadGlobusUploadIntoProjectAction
         $this->removeAcl();
         $this->globusUpload->delete();
         Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$this->globusUpload->uuid}");
+    }
+
+    private function maxItemsProcessed($fileCount)
+    {
+        // if maxItemsToProcess less than one then there is no limit
+        if ($this->maxItemsToProcess < 1) {
+            return false;
+        }
+
+        return $fileCount >= $this->maxItemsToProcess;
     }
 
     private function processDir($path, File $currentDir): File
@@ -108,7 +126,9 @@ class LoadGlobusUploadIntoProjectAction
 
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
-            $this->moveFileIntoProject($path, $fileEntry);
+            if (!$this->moveFileIntoProject($path, $fileEntry)) {
+                return null;
+            }
         } else {
             // Matching file found, so point at it and remove the uploaded file on disk. If the uploaded
             // file isn't removed then it could be processed a second time if the first run doesn't complete
@@ -140,18 +160,22 @@ class LoadGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $file)
     {
-        $uuid = $this->getUuid($file);
-        $to = $this->getDirPathForFile($file)."/{$uuid}";
-        $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
-        $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
+        try {
+            $uuid = $this->getUuid($file);
+            $to = $this->getDirPathForFile($file)."/{$uuid}";
+            $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
+            $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
-        if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
-            $status = Storage::disk('mcfs')->copy($filePath, $to);
-            $fpath = Storage::disk('mcfs')->path($to);
-            chmod($fpath, 0777);
-            unlink($path);
+            if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
+                $status = Storage::disk('mcfs')->copy($filePath, $to);
+                $fpath = Storage::disk('mcfs')->path($to);
+                chmod($fpath, 0777);
+                unlink($path);
 
-            return $status;
+                return $status;
+            }
+        } catch (\Exception $e) {
+            return false;
         }
 
         return true;

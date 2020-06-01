@@ -17,6 +17,8 @@ class ImportGlobusUploadCommand extends Command
      */
     protected $signature = 'mc:import-globus-upload {uploadId : Globus Upload Id}';
 
+    const ProcessAllFilesInUpload = -1;
+
     /**
      * The console command description.
      *
@@ -44,9 +46,8 @@ class ImportGlobusUploadCommand extends Command
         ini_set("memory_limit", "4096M");
         $upload = GlobusUploadDownload::findOrFail($this->argument("uploadId"));
         $upload->update(['status' => GlobusStatus::Loading]);
-        $maxItemsToProcess = config('globus.max_items');
         $globusApi = GlobusApi::createGlobusApi();
-        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, $maxItemsToProcess,
+        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, self::ProcessAllFilesInUpload,
             $globusApi);
         $loadGlobusUploadInProjectAction();
     }
