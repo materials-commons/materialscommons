@@ -4,6 +4,7 @@ namespace App\Jobs\Globus;
 
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
+use App\Enums\GlobusStatus;
 use App\Models\GlobusUploadDownload;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,5 +40,10 @@ class ImportGlobusUploadJob implements ShouldQueue
         $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($this->globusUpload,
             $this->maxItemsToProcess, $globusApi);
         $loadGlobusUploadInProjectAction();
+    }
+
+    public function fail($exception = null)
+    {
+        $this->globusUpload->update(['status' => GlobusStatus::Done]);
     }
 }

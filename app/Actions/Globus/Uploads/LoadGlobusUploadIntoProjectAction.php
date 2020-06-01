@@ -35,6 +35,47 @@ class LoadGlobusUploadIntoProjectAction
 
     public function __invoke()
     {
+        $this->removeAclIfExists();
+
+        if (!$this->importUploadedFiles()) {
+            // Did not complete importing uploaded files
+            return;
+        }
+
+        $this->cleanupAfterProcessingAllFiles();
+    }
+
+    // ACL Handling
+
+    private function removeAclIfExists()
+    {
+        if ($this->aclAlreadyRemoved()) {
+            return;
+        }
+
+        try {
+            $this->globusApi->deleteEndpointAclRule($this->globusUpload->globus_endpoint_id,
+                $this->globusUpload->globus_acl_id);
+            $this->markAclAsRemoved();
+        } catch (\Exception $e) {
+            // do nothing
+        }
+    }
+
+    private function aclAlreadyRemoved()
+    {
+        return is_null($this->globusUpload->globus_acl_id);
+    }
+
+    private function markAclAsRemoved()
+    {
+        $this->globusUpload->update(['globus_acl_id' => null]);
+    }
+
+    // File and Directory Importing
+
+    private function importUploadedFiles()
+    {
         $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->globusUpload->path),
             RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;
@@ -48,9 +89,10 @@ class LoadGlobusUploadIntoProjectAction
                 // Mark job as done so that it will be picked up again and processed. This way
                 // we break a large upload into chunks.
                 $this->globusUpload->update(['status' => GlobusStatus::Done]);
-                return;
+                return false;
             }
 
+            // Don't process entries that end with /. or /..
             if (Str::endsWith($path, "/.") || Str::endsWith($path, "/..")) {
                 continue;
             }
@@ -62,15 +104,13 @@ class LoadGlobusUploadIntoProjectAction
                 if (is_null($this->processFile($path, $finfo, $currentDir))) {
                     // processing file failed, so stop let job be processed later
                     $this->globusUpload->update(['status' => GlobusStatus::Done]);
-                    return;
+                    return false;
                 }
                 $fileCount++;
             }
         }
 
-        $this->removeAcl();
-        $this->globusUpload->delete();
-        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$this->globusUpload->uuid}");
+        return true;
     }
 
     private function maxItemsProcessed($fileCount)
@@ -181,13 +221,11 @@ class LoadGlobusUploadIntoProjectAction
         return true;
     }
 
-    private function removeAcl()
+    // Cleanup
+
+    private function cleanupAfterProcessingAllFiles()
     {
-        try {
-            $this->globusApi->deleteEndpointAclRule($this->globusUpload->globus_endpoint_id,
-                $this->globusUpload->globus_acl_id);
-        } catch (\Exception $e) {
-            // do nothing
-        }
+        $this->globusUpload->delete();
+        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$this->globusUpload->uuid}");
     }
 }

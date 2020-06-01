@@ -45,7 +45,6 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
         $globusUpload = factory(GlobusUploadDownload::class)->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
-//            'path'       => Storage::disk('mcfs')->path("__globus_uploads/test1"),
         ]);
 
         $from = Storage::disk('test_data')->path('globus/test1');
