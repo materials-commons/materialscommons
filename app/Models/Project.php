@@ -90,6 +90,11 @@ class Project extends Model implements Searchable
         return $this->hasMany(Dataset::class, 'project_id');
     }
 
+    public function publishedDatasets()
+    {
+        return $this->hasMany(Dataset::class, 'project_id')->whereNotNull('published_at');
+    }
+
     public function rootDir()
     {
         return $this->hasOne(File::class, 'project_id')
