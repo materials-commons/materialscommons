@@ -24,9 +24,10 @@ class ProcessFinishedGlobusUploadsAction
                 dispatch($importGlobusUploadJob)->onQueue('globus');
             } else {
                 $globusApi = GlobusApi::createGlobusApi();
-                $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, $maxItemsToProcess,
+                $importGlobusUploadInProjectAction = new ImportGlobusUploadIntoProjectAction($upload,
+                    $maxItemsToProcess,
                     $globusApi);
-                $loadGlobusUploadInProjectAction();
+                $importGlobusUploadInProjectAction();
             }
         }
     }

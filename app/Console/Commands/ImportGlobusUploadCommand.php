@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Actions\Globus\GlobusApi;
-use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
+use App\Actions\Globus\Uploads\ImportGlobusUploadIntoProjectAction;
 use App\Enums\GlobusStatus;
 use App\Models\GlobusUploadDownload;
 use Illuminate\Console\Command;
@@ -47,8 +47,8 @@ class ImportGlobusUploadCommand extends Command
         $upload = GlobusUploadDownload::findOrFail($this->argument("uploadId"));
         $upload->update(['status' => GlobusStatus::Loading]);
         $globusApi = GlobusApi::createGlobusApi();
-        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($upload, self::ProcessAllFilesInUpload,
+        $importAction = new ImportGlobusUploadIntoProjectAction($upload, self::ProcessAllFilesInUpload,
             $globusApi);
-        $loadGlobusUploadInProjectAction();
+        $importAction();
     }
 }

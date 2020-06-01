@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Globus\Uploads;
 
-use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
+use App\Actions\Globus\Uploads\ImportGlobusUploadIntoProjectAction;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Tests\Utils\GlobusMockUtils;
 
-class LoadGlobusUploadIntoProjectActionTest extends TestCase
+class ImportGlobusUploadIntoProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -53,8 +53,9 @@ class LoadGlobusUploadIntoProjectActionTest extends TestCase
         $globusUpload->update(['path' => Storage::disk('mcfs')->path("__globus_uploads/{$globusUpload->uuid}")]);
 
         $globusApiMock = GlobusMockUtils::createGlobusApiMock();
-        $loadGlobusUploadIntoProjectAction = new LoadGlobusUploadIntoProjectAction($globusUpload, 10, $globusApiMock);
-        $loadGlobusUploadIntoProjectAction();
+        $importGlobusUploadIntoProjectAction = new ImportGlobusUploadIntoProjectAction($globusUpload, 10,
+            $globusApiMock);
+        $importGlobusUploadIntoProjectAction();
 
         $filesCount = File::where('project_id', $project->id)->whereNull('path')->count();
         $this->assertEquals(3, $filesCount);

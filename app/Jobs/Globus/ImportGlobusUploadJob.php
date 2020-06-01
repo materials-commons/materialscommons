@@ -3,7 +3,7 @@
 namespace App\Jobs\Globus;
 
 use App\Actions\Globus\GlobusApi;
-use App\Actions\Globus\Uploads\LoadGlobusUploadIntoProjectAction;
+use App\Actions\Globus\Uploads\ImportGlobusUploadIntoProjectAction;
 use App\Enums\GlobusStatus;
 use App\Models\GlobusUploadDownload;
 use Illuminate\Bus\Queueable;
@@ -37,9 +37,9 @@ class ImportGlobusUploadJob implements ShouldQueue
     {
         ini_set("memory_limit", "4096M");
         $globusApi = GlobusApi::createGlobusApi();
-        $loadGlobusUploadInProjectAction = new LoadGlobusUploadIntoProjectAction($this->globusUpload,
+        $importGlobusUploadInProjectAction = new ImportGlobusUploadIntoProjectAction($this->globusUpload,
             $this->maxItemsToProcess, $globusApi);
-        $loadGlobusUploadInProjectAction();
+        $importGlobusUploadInProjectAction();
     }
 
     public function fail($exception = null)

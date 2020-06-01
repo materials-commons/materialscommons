@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class LoadGlobusUploadIntoProjectAction
+class ImportGlobusUploadIntoProjectAction
 {
     use PathForFile;
 
