@@ -24,7 +24,8 @@ class RenameFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:80',
+            'name'       => 'required|string|max:80',
+            'project_id' => 'required|integer',
         ];
     }
 }

@@ -27,8 +27,9 @@ class UpdateFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'string|max:2048',
-            'summary'     => 'string|max:100',
+            'description' => 'nullable|string|max:2048',
+            'summary'     => 'nullable|string|max:100',
+            'project_id'  => 'nullable|integer',
         ];
     }
 

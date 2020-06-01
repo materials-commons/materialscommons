@@ -25,6 +25,7 @@ class MoveFileRequest extends FormRequest
     {
         return [
             'directory_id' => 'required|integer',
+            'project_id'   => 'required|integer',
         ];
     }
 }
