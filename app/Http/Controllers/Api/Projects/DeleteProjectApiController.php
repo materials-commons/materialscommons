@@ -19,6 +19,9 @@ class DeleteProjectApiController extends Controller
      */
     public function __invoke(DeleteProjectAction $deleteProjectAction, Project $project)
     {
+        abort_unless(auth()->id() === $project->owner_id, 403, "Not project owner");
+        abort_unless($project->publishedDatasets()->count() == 0, 403,
+            "Cannot delete projects with published datasets");
         $deleteProjectAction($project);
     }
 }
