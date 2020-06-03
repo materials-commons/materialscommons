@@ -105,8 +105,10 @@ class CreateGlobusProjectDownloadDirsAction
         foreach ($dirsToKeep as $dir) {
             try {
                 $path = "{$basePath}{$dir}";
-                mkdir($path, 0777, true);
-            } catch (Exception $e) {
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+            } catch (\Exception $e) {
                 // ignore
             }
         }
