@@ -24,8 +24,9 @@
             @endcomponent
             <hr>
             <br>
-
-            @include('public.datasets.files.display-file')
+            @include('partials.files._display-file', [
+                'displayRoute' => route('public.datasets.files.display', [$dataset, $file])
+            ])
         @endslot
     @endcomponent
 @endsection

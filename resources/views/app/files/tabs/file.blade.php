@@ -1,0 +1,1 @@
+@include('partials.files._display-file', [ 'displayRoute' => route('projects.files.display', [$project, $file]) ])

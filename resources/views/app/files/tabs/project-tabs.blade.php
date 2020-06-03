@@ -14,7 +14,7 @@
 <br>
 
 @if(Request::routeIs('projects.files.show'))
-    @include('app.files.tabs.display-file')
+    @include('app.files.tabs.file')
 @elseif (Request::routeIs('projects.files.entities'))
     @include('app.files.tabs.entities')
 @elseif (Request::routeIs('projects.files.activities'))
