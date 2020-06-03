@@ -8,7 +8,7 @@
 
         @case("text")
         <div class="ml-3">
-            <pre>{{$fileContents($file)}}</pre>
+            <pre>{!!$fileContents($file)!!}</pre>
         </div>
         @break
 
