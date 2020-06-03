@@ -11,13 +11,12 @@ trait FileType
 
         // Word documents
         "application/msword"                                                        => true,
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"   => true,
     ];
 
     protected $excelTypes = [
         "application/vnd.ms-excel"                                          => true,
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => true,
-        "text/csv",
     ];
     protected $imageTypes = [
         "image/gif"      => true,
