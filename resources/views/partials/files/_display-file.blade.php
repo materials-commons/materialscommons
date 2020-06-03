@@ -1,8 +1,16 @@
 @if($fileExists($file))
     @switch($fileType($file))
         @case("image")
-        <div class="col-lg-10">
-            <img src="{{$displayRoute}}" class="img-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="text-center">
+                        <a href="{{$displayRoute}}">
+                            <img src="{{$displayRoute}}" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         @break
 
