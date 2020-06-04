@@ -55,7 +55,6 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
-                let projectId = "{{$project->id}}";
                 $('#entities').DataTable({
                     stateSave: true,
                     scrollX: true,
