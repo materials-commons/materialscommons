@@ -23,7 +23,7 @@
 
         @slot('body')
             <br>
-            <table id="entities" class="table table-hover" width="100%">
+            <table id="entities" class="table table-hover">
                 <thead>
                 <th>Name</th>
                 @foreach($activities as $activity)
@@ -58,6 +58,7 @@
                 let projectId = "{{$project->id}}";
                 $('#entities').DataTable({
                     stateSave: true,
+                    scrollX: true,
                 });
             });
         </script>
