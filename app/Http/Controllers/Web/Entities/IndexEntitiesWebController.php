@@ -15,11 +15,23 @@ class IndexEntitiesWebController extends Controller
                         ->select('name')
                         ->where('project_id', $project->id)
                         ->distinct()
+                        ->orderBy('name')
                         ->get();
+
         $entities = Entity::with('activities')
                           ->where('project_id', $project->id)
                           ->get();
 
+        return view('app.projects.entities.index', [
+            'project'        => $project,
+            'activities'     => $activities,
+            'entities'       => $entities,
+            'usedActivities' => $this->createUsedActivities($entities, $activities),
+        ]);
+    }
+
+    private function createUsedActivities($entities, $activities)
+    {
         $usedActivitiesForEntities = [];
         foreach ($entities as $entity) {
             $usedActivitiesForEntities[$entity->id] = [];
@@ -32,13 +44,7 @@ class IndexEntitiesWebController extends Controller
             }
         }
 
-
-        return view('app.projects.entities.index', [
-            'project'                   => $project,
-            'activities'                => $activities,
-            'entities'                  => $entities,
-            'usedActivitiesForEntities' => $usedActivitiesForEntities,
-        ]);
+        return $usedActivitiesForEntities;
     }
 
     private function entityHasActivity($entity, $name)

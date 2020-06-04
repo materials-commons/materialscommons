@@ -38,7 +38,7 @@
                                 {{$entity->name}}
                             </a>
                         </td>
-                        @foreach($usedActivitiesForEntities[$entity->id] as $used)
+                        @foreach($usedActivities[$entity->id] as $used)
                             @if($used)
                                 <td>X</td>
                             @else
