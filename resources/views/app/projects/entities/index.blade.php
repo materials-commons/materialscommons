@@ -26,10 +26,28 @@
             <table id="entities" class="table table-hover" width="100%">
                 <thead>
                 <th>Name</th>
-                <th>ID</th>
-                <th>Summary</th>
-                <th>Updated</th>
+                @foreach($activities as $activity)
+                    <th>{{$activity->name}}</th>
+                @endforeach
                 </thead>
+                <tbody>
+                @foreach($entities as $entity)
+                    <tr>
+                        <td>
+                            <a href="{{route('projects.entities.show', [$project, $entity])}}">
+                                {{$entity->name}}
+                            </a>
+                        </td>
+                        @foreach($usedActivitiesForEntities[$entity->id] as $used)
+                            @if($used)
+                                <td>X</td>
+                            @else
+                                <td></td>
+                            @endif
+                        @endforeach
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
         @endslot
     @endcomponent
@@ -39,41 +57,7 @@
             $(document).ready(() => {
                 let projectId = "{{$project->id}}";
                 $('#entities').DataTable({
-                    serverSide: true,
-                    processing: true,
-                    response: true,
                     stateSave: true,
-                    ajax: "{{route('dt_get_project_entities', [$project->id])}}",
-                    columns: [
-                        {
-                            name: 'name',
-                            render: (data, type, row) => {
-                                if (type !== 'display') {
-                                    return data;
-                                }
-                                let r = route('projects.entities.show',
-                                    {project: "{{$project->id}}", entity: row["1"]}).url();
-                                return `<a href="${r}">${data}</a>`;
-                            }
-                        },
-                        {name: 'id'},
-                        {name: 'summary'},
-                        {
-                            name: 'updated_at',
-                            render: (data, type, row) => {
-                                if (type !== 'display') {
-                                    return data;
-                                }
-                                return moment(data + "+0000", "YYYY-MM-DD HH:mm:ss Z").fromNow();
-                            }
-                        }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: [1],
-                            visible: false,
-                        }
-                    ]
                 });
             });
         </script>
