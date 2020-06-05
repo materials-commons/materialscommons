@@ -20,6 +20,7 @@ class ShowEntityWebController extends Controller
         $activityIds = $entity->activities->pluck('id')->toArray();
         $activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                               ->whereIn('id', $activityIds)
+                              ->orderBy('name')
                               ->get();
         return view('app.projects.entities.show2', [
             'project'    => $project,

@@ -15,12 +15,14 @@ class CompareEntitiesWebController extends Controller
         $activityIds = $entity1->activities->pluck('id')->toArray();
         $entity1Activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                                      ->whereIn('id', $activityIds)
+                                     ->orderBy('name')
                                      ->get();
 
         $entity2 = Entity::with(['activities'])->findOrFail($entityId2);
         $activityIds = $entity2->activities->pluck('id')->toArray();
         $entity2Activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                                      ->whereIn('id', $activityIds)
+                                     ->orderBy('name')
                                      ->get();
 
         return view('app.projects.entities.compare', [
