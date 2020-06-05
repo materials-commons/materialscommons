@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Entities;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\Project;
@@ -12,6 +13,21 @@ use Illuminate\Http\Request;
 class ShowEntityWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
+    {
+        $entityId = $request->route('entity');
+        $entity = Entity::with(['activities'])->findOrFail($entityId);
+        $activityIds = $entity->activities->pluck('id')->toArray();
+        $activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
+                              ->whereIn('id', $activityIds)
+                              ->get();
+        return view('app.projects.entities.show2', [
+            'project'    => $project,
+            'entity'     => $entity,
+            'activities' => $activities,
+        ]);
+    }
+
+    private function originalInvoke(Request $request, Project $project)
     {
         $entityId = $request->route('entity');
         $entity = Entity::with('activities')->where('id', $entityId)->first();
