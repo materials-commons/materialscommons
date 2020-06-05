@@ -12,8 +12,9 @@ use Illuminate\Http\Request;
 
 class ShowEntityWebController extends Controller
 {
-    public function __invoke(Request $request, Project $project)
+    public function __invoke(Request $request, $projectId)
     {
+        $project = Project::with('entities')->findOrFail($projectId);
         $entityId = $request->route('entity');
         $entity = Entity::with(['activities'])->findOrFail($entityId);
         $activityIds = $entity->activities->pluck('id')->toArray();
