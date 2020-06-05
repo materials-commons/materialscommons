@@ -2,14 +2,14 @@
     <h5>File Types ({{sizeof($fileTypes)}}):</h5>
     <ul>
         @foreach($fileDescriptionTypes as $type => $count)
-            @if($loop->iteration < 3)
+            @if($loop->iteration < 12)
                 <li>{{$type}} ({{$count}})</li>
             @else
                 <li class="hidden-file-type" hidden>{{$type}} ({{$count}})</li>
             @endif
         @endforeach
-        @if(sizeof($fileTypes) > 3)
-            <a href="#" onclick="toggleFileTypesShown()" id="hidden-file-types-text">See {{sizeof($fileTypes)-3}} more
+        @if(sizeof($fileTypes) > 12)
+            <a href="#" onclick="toggleFileTypesShown()" id="hidden-file-types-text">See {{sizeof($fileTypes)-12}} more
                 file types...</a>
         @endif
     </ul>
@@ -17,7 +17,7 @@
 
 @push('scripts')
     <script>
-        let fileTypesCount = {{sizeof($fileTypes)-3}};
+        let fileTypesCount = {{sizeof($fileTypes)-12}};
 
         function toggleFileTypesShown() {
             $('.hidden-file-type').attr('hidden', (_, attr) => !attr);
