@@ -45,12 +45,17 @@ trait FileView
         $dirPath = "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
         $fileName = $uuid;
 
-        if (array_key_exists($file->mime_type, $this->convertibleImageTypes)) {
+        if ($this->inTable($file->mime_type, $this->convertibleImageTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".jpg";
         }
 
-        if (array_key_exists($file->mime_type, $this->officeTypes)) {
+        if ($this->inTable($file->mime_type, $this->wordTypes)) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".pdf";
+        }
+
+        if ($this->inTable($file->mime_type, $this->powerpointTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".pdf";
         }

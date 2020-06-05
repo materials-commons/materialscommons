@@ -33,75 +33,19 @@
                     {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
                 </a>
             @endcomponent
+
+            <h5>There are {{$objectCounts->filesCount}} files totalling {{formatBytes($projectSize)}}.</h5>
+            <div class="row ml-1">
+                <div class="col-4 bg-grey-9">
+                    @include('app.projects._process-types')
+                </div>
+                <div class="col-3 bg-grey-9 ml-2">
+                    @include('app.projects._object-types')
+                </div>
+                <div class="col-4 bg-grey-9 ml-2">
+                    @include('app.projects._file-types')
+                </div>
+            </div>
         @endslot
     @endcomponent
-
-    @component('components.card')
-        @slot('header')
-            Experiments
-            <a class="float-right action-link" href="{{route('projects.experiments.create', ['project' => $project])}}">
-                <i class="fas fa-plus mr-2"></i>Create Experiment
-            </a>
-        @endslot
-
-        @slot('body')
-
-            <table id="experiments" class="table table-hover" style="width:100%">
-                <thead>
-                <th>Name</th>
-                <th>Summary</th>
-                <th>Owner</th>
-                <th>Updated</th>
-                <th>Date</th>
-                <th></th>
-                </thead>
-                <tbody>
-                @foreach($project->experiments as $experiment)
-                    <tr>
-                        <td>
-                            <a href="{{route('projects.experiments.show', [$project, $experiment])}}">
-                                {{$experiment->name}}
-                            </a>
-                        </td>
-                        <td>{{$experiment->summary}}</td>
-                        <td>{{$experiment->owner->name}}</td>
-                        <td>{{$project->updated_at->diffForHumans()}}</td>
-                        <td>{{$project->updated_at}}</td>
-                        <td>
-                            <div class="float-right">
-                                <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
-                                   class="action-link">
-                                    <i class="fas fa-fw fa-eye"></i>
-                                </a>
-                                <a href="" class="action-link">
-                                    <i class="fas fa-fw fa-edit"></i>
-                                </a>
-                                @if(auth()->id() == $experiment->owner_id || auth()->id() == $project->owner_id)
-                                    <a href="{{route('projects.experiments.delete', [$project, $experiment])}}"
-                                       class="action-link">
-                                        <i class="fas fa-fw fa-trash-alt"></i>
-                                    </a>
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        @endslot
-    @endcomponent
-
-    @push('scripts')
-        <script>
-            $(document).ready(() => {
-                $('#experiments').DataTable({
-                    stateSave: true,
-                    columnDefs: [
-                        {orderData: [4], targets: [3]},
-                        {targets: [4], visible: false, searchable: false},
-                    ]
-                });
-            });
-        </script>
-    @endpush
 @endsection
