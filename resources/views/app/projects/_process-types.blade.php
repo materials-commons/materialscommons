@@ -8,8 +8,8 @@
                 <li class="hidden-process" hidden>{{$ag->name}} ({{$ag->count}})</li>
             @endif
         @endforeach
-        @if(sizeof($activitiesGroup) > 12)
-            <a href="#" onclick="toggleProcessesShown()" id="hidden-process-text">See {{sizeof($activitiesGroup)-12}}
+        @if(sizeof($activitiesGroup) >= 12)
+            <a href="#" onclick="toggleProcessesShown()" id="hidden-process-text">See {{sizeof($activitiesGroup)-11}}
                 more processes...</a>
         @endif
     </ul>
@@ -17,7 +17,7 @@
 
 @push('scripts')
     <script>
-        let activitiesCount = {{sizeof($activitiesGroup)-12}};
+        let activitiesCount = {{sizeof($activitiesGroup)-11}};
 
         function toggleProcessesShown() {
             $('.hidden-process').attr('hidden', (_, attr) => !attr);
