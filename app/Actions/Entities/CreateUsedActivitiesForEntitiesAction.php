@@ -2,6 +2,7 @@
 
 namespace App\Actions\Entities;
 
+use App\Models\Activity;
 use App\Models\Entity;
 use Illuminate\Support\Facades\DB;
 
@@ -19,8 +20,8 @@ class CreateUsedActivitiesForEntitiesAction
                                ->get();
 
         $items->entities = Entity::with('activities')
-                                 ->where('project_id', $projectId)
-                                 ->get();
+            ->where('project_id', $projectId)
+            ->get();
         $items->usedActivities = $this->createdUsedActivities($items->entities, $items->activities);
         return $items;
     }
@@ -31,11 +32,7 @@ class CreateUsedActivitiesForEntitiesAction
         foreach ($entities as $entity) {
             $usedActivitiesForEntities[$entity->id] = [];
             foreach ($activities as $activity) {
-                if ($this->entityHasActivity($entity, $activity->name)) {
-                    array_push($usedActivitiesForEntities[$entity->id], true);
-                } else {
-                    array_push($usedActivitiesForEntities[$entity->id], false);
-                }
+                array_push($usedActivitiesForEntities[$entity->id], $this->entityHasActivity($entity, $activity->name));
             }
         }
 
@@ -44,6 +41,8 @@ class CreateUsedActivitiesForEntitiesAction
 
     private function entityHasActivity($entity, $name)
     {
-        return $entity->activities->contains('name', $name);
+        return $entity->activities->filter(function (Activity $activity) use ($name) {
+            return $activity->name === $name;
+        })->count();
     }
 }
