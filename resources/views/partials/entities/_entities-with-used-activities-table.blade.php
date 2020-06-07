@@ -15,7 +15,9 @@
             </td>
             @foreach($usedActivities[$entity->id] as $used)
                 @if($used)
-                    <td>{{$entity->name}} ({{$used}})</td>
+                    <td>X</td>
+                    {{--                    <td>{{$entity->name}}</td>--}}
+                    {{--                    <td>{{$entity->name}} ({{$used}})</td>--}}
                 @else
                     <td></td>
                 @endif
