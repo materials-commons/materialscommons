@@ -27,6 +27,12 @@
     @component('components.card')
         @slot('header')
             Experiment {{$experiment->name}}
+            @if($excelFilesCount !== 0)
+                <a class="action-link float-right"
+                   href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
+                    <i class="fas fa-plus mr-2"></i>Reload Experiment
+                </a>
+            @endif
         @endslot
 
         @slot('body')

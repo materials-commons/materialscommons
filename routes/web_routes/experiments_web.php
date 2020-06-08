@@ -7,7 +7,9 @@ use App\Http\Controllers\Web\Experiments\DeleteExperimentWebController;
 use App\Http\Controllers\Web\Experiments\DestroyExperimentWebController;
 use App\Http\Controllers\Web\Experiments\EditExperimentWebController;
 use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
+use App\Http\Controllers\Web\Experiments\ReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
+use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\StoreExperimentWebController;
 use App\Http\Controllers\Web\Experiments\UpdateExperimentWebController;
 use App\Http\Controllers\Web\Experiments\UploadExcelFileWebController;
@@ -36,12 +38,28 @@ Route::prefix('/projects/{project}')->group(function () {
         DestroyExperimentWebController::class)->name('projects.experiments.destroy');
 
     Route::get('/experiments/{experiment}/entities-tab', function (Project $project, Experiment $experiment) {
-        return view('app.projects.experiments.show', compact('project', 'experiment'));
+        $excelFilesCount = $project->files()
+                                   ->where('mime_type',
+                                       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                                   ->where('current', true)
+                                   ->count();
+        return view('app.projects.experiments.show', compact('project', 'experiment', 'excelFilesCount'));
     })->name('projects.experiments.entities-tab');
 
     Route::get('/experiments/{experiment}/activities-tab', function (Project $project, Experiment $experiment) {
-        return view('app.projects.experiments.show', compact('project', 'experiment'));
+        $excelFilesCount = $project->files()
+                                   ->where('mime_type',
+                                       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                                   ->where('current', true)
+                                   ->count();
+        return view('app.projects.experiments.show', compact('project', 'experiment', 'excelFilesCount'));
     })->name('projects.experiments.activities-tab');
+
+    Route::get('/experiments/{experiment}/reload', ShowReloadExperimentWebController::class)
+         ->name('projects.experiments.show-reload');
+
+    Route::put('/experiments/{experiment}/reload', ReloadExperimentWebController::class)
+         ->name('projects.experiments.reload');
 
     Route::get('/experiments/{experiment}/datables/entities', GetExperimentEntitiesDatatableWebController::class)
          ->name('dt_get_experiment_entities');
