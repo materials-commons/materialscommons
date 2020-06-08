@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-
         factory(Project::class, 3)->create([
             'owner_id' => $user->id,
         ]);
