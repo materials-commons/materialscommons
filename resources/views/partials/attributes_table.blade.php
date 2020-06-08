@@ -19,7 +19,7 @@
                         </td>
                         <td>{{$attribute->description}}</td>
                         <td>{{$attribute->updated_at->diffForHumans()}}</td>
-                        <td>@json($value->val["value"])</td>
+                        <td>@json($value->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</td>
                         <td>{{$value->unit}}</td>
                     </tr>
                 @else
@@ -29,7 +29,7 @@
                         </td>
                         <td><span hidden>{{$attribute->description}}</span></td>
                         <td><span hidden>{{$attribute->updated_at->diffForHumans()}}</span></td>
-                        <td>@json($value->val["value"])</td>
+                        <td>@json($value->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</td>
                         <td>{{$value->unit}}</td>
                     </tr>
                 @endif
