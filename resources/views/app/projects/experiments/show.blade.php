@@ -30,7 +30,7 @@
             @if($excelFilesCount !== 0)
                 <a class="action-link float-right"
                    href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
-                    <i class="fas fa-plus mr-2"></i>Reload Experiment
+                    <i class="fas fa-sync-alt mr-2"></i>Reload Experiment
                 </a>
             @endif
         @endslot
