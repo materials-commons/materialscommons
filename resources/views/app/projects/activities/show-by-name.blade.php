@@ -15,18 +15,13 @@
         @endslot
 
         @slot('body')
-            <ul>
+            <div class="row ml-1">
                 @foreach($activities as $activity)
-                    <li>
-                        {{$activity->name}}
-                        <ul>
-                            @foreach($activity->entities as $entity)
-                                <li>{{$entity->name}}</li>
-                            @endforeach
-                        </ul>
-                    </li>
+                    <div class="col-lg-3 col-md-5 col-sm-5 ml-2 bg-grey-9 mt-2">
+                        @include('partials.activities.activity-card-with-entities', ['activity' => $activity])
+                    </div>
                 @endforeach
-            </ul>
+            </div>
         @endslot
     @endcomponent
 @stop

@@ -10,6 +10,8 @@
         </form>
     @endisset
     @include('partials.activities._activity-attributes', ['activity' => $activity])
+    <h6>Samples</h6>
+    @include('partials.activities._activity-entities', ['entities' => $activity->entities, 'project' => $project])
     <h6>Measurements</h6>
     @include('partials.activities._activity-measurements', ['activity' => $activity])
     <h6>Files</h6>

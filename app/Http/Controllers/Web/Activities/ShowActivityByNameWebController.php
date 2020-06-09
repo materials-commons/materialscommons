@@ -12,7 +12,7 @@ class ShowActivityByNameWebController extends Controller
     {
         return view('app.projects.activities.show-by-name', [
             'project'    => $project,
-            'activities' => Activity::with('entities')
+            'activities' => Activity::with(['attributes.values', 'entityStates.attributes.values', 'files', 'entities'])
                                     ->where('project_id', $project->id)
                                     ->where('name', $name)
                                     ->get(),
