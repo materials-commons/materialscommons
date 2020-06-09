@@ -22,10 +22,27 @@
             <table id="activities" class="table table-hover" width="100%">
                 <thead>
                 <th>Name</th>
-                <th>ID</th>
-                <th>Summary</th>
-                <th>Updated</th>
+                <th>Samples</th>
                 </thead>
+                <tbody>
+                @foreach($activityEntities as $name => $entities)
+                    @if($name != "")
+                        <tr>
+                            <td>
+                                <a href="{{route('projects.activities.show-by-name', [$project, $name])}}">{{$name}}</a>
+                            </td>
+                            <td>
+                                @foreach($entities as $entity)
+                                    <a href="{{route('projects.entities.show', [$project, $entity->id])}}">
+                                        {{$entity->name}}
+                                    </a>
+                                    {{!$loop->last ? ", " : ""}}
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+                </tbody>
             </table>
         @endslot
     @endcomponent
@@ -35,43 +52,7 @@
             $(document).ready(() => {
                 let projectId = "{{$project->id}}";
                 $('#activities').DataTable({
-                    serverSide: true,
-                    processing: true,
-                    response: true,
                     stateSave: true,
-                    ajax: "{{route('dt_get_project_activities', [$project->id])}}",
-                    columns: [
-                        {
-                            name: 'name',
-                            render: (data, type, row) => {
-                                if (type !== 'display') {
-                                    return data;
-                                }
-                                let r = route("projects.activities.show", {
-                                    project: "{{$project->id}}",
-                                    activity: row["1"]
-                                }).url();
-                                return `<a href="${r}">${data}</a>`;
-                            }
-                        },
-                        {name: 'id'},
-                        {name: 'summary'},
-                        {
-                            name: 'updated_at',
-                            render: (data, type, row) => {
-                                if (type !== 'display') {
-                                    return data;
-                                }
-                                return moment(data + "+0000", "YYYY-MM-DD HH:mm:ss Z").fromNow();
-                            }
-                        }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: [1],
-                            visible: false,
-                        }
-                    ]
                 });
             });
         </script>
