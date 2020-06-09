@@ -2,10 +2,10 @@
     <thead>
     <tr>
         <th>Attribute</th>
-        <th>Description</th>
-        <th>Updated</th>
         <th>Value</th>
         <th>Unit</th>
+        <th>Description</th>
+        <th>Updated</th>
     </tr>
     </thead>
     <tbody>
@@ -17,20 +17,21 @@
                         <td>
                             {{$attribute->name}}
                         </td>
-                        <td>{{$attribute->description}}</td>
-                        <td>{{$attribute->updated_at->diffForHumans()}}</td>
                         <td>@json($value->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</td>
                         <td>{{$value->unit}}</td>
+                        <td>{{$attribute->description}}</td>
+                        <td>{{$attribute->updated_at->diffForHumans()}}</td>
                     </tr>
                 @else
                     <tr>
                         <td>
                             <span class="ml-3">{{$attribute->name}}</span>
                         </td>
-                        <td><span hidden>{{$attribute->description}}</span></td>
-                        <td><span hidden>{{$attribute->updated_at->diffForHumans()}}</span></td>
                         <td>@json($value->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</td>
                         <td>{{$value->unit}}</td>
+                        <td><span hidden>{{$attribute->description}}</span></td>
+                        <td><span hidden>{{$attribute->updated_at->diffForHumans()}}</span></td>
+
                     </tr>
                 @endif
             @endforeach
