@@ -11,6 +11,7 @@ public/css/app.css
 /storage/*.key
 /vendor
 .env
+.env.beta
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
