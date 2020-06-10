@@ -26,17 +26,23 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command("mc:process-finished-globus-tasks --background")
-                 ->everyFiveMinutes()
-                 ->runInBackground()
-                 ->withoutOverlapping();
-
-        if (config('backup.backup.run_backups') != 0) {
-            $schedule->command('backup:clean')->daily()->at('01:00');
-            $schedule->command('backup:run')->daily()->at('01:30');
+        if (config('app.beta') != 1) {
+            $schedule->command("mc:process-finished-globus-tasks --background")
+                     ->everyFiveMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
-        $schedule->command('mc:generate-site-map')->daily()->at('3:00');
+        if (config('backup.backup.run_backups') != 0) {
+            if (config('app.beta') != 1) {
+                $schedule->command('backup:clean')->daily()->at('01:00');
+                $schedule->command('backup:run')->daily()->at('01:30');
+            }
+        }
+
+        if (config('app.beta') != 1) {
+            $schedule->command('mc:generate-site-map')->daily()->at('3:00');
+        }
     }
 
     /**
