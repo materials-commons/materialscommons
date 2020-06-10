@@ -1,4 +1,4 @@
-<table id="entities-with-used-activities" class="table table-hover">
+<table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
     @foreach($activities as $activity)
