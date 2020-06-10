@@ -3,7 +3,7 @@
         @case("image")
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-6">
                     <div class="text-center">
                         <a href="{{$displayRoute}}">
                             <img src="{{$displayRoute}}" class="img-fluid">
