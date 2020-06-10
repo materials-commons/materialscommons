@@ -1,5 +1,5 @@
 <ul>
     @foreach($activity->files as $f)
-        <li>{{$file->name}}</li>
+        <li>{{$f->name}}</li>
     @endforeach
 </ul>
