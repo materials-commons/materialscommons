@@ -18,14 +18,34 @@ class GetFileByPathAction
         if ($filePath[0] !== "/") {
             $pathWithoutProject = $this->removeProjectNameFromPath($filePath, strlen($project->name));
         }
-        $fileName = basename($pathWithoutProject);
-        $dirName = dirname($pathWithoutProject);
+
+        if ($this->isForRoot($pathWithoutProject)) {
+            return $this->getRootDir($projectId);
+        }
+
+        return $this->getFileOrDirAtPath($pathWithoutProject, $projectId);
+    }
+
+    private function isForRoot($path)
+    {
+        return $path == "/";
+    }
+
+    private function getRootDir($projectId)
+    {
+        return File::where('project_id', $projectId)->where('path', '/')->first();
+    }
+
+    private function getFileOrDirAtPath($path, $projectId)
+    {
+        $fileName = basename($path);
+        $dirName = dirname($path);
         $dir = File::where('project_id', $projectId)->where('path', $dirName)->first();
         if (is_null($dir)) {
             return null;
         }
+
         return File::where('directory_id', $dir->id)->where('name', $fileName)
                    ->where('current', true)->first();
     }
-
 }
