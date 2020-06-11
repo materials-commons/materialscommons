@@ -69,6 +69,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // Communities
     require base_path('routes/api_routes/communities_api.php');
+
+    // Users
+    require base_path('routes/api_routes/users_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
