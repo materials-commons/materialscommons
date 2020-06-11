@@ -39,7 +39,7 @@ Route::put('/entities/{entity}', UpdateEntityApiController::class);
  * @apiDescription Delete an existing entity and all its relationships
  * @apiUse APITokenParam
  */
-Route::delete('/project/{project}/entitites/{entity}', DeleteEntityApiController::class);
+Route::delete('/projects/{project}/entitites/{entity}', DeleteEntityApiController::class);
 
 /**
  * @api {get} /entities/{entity_id} Show an existing entity

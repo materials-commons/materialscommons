@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/files', CreateFileApiController::class);
 Route::put('/files/{file}', UpdateFileApiController::class);
-Route::delete('/project/{project}/files/{file}', DeleteFileApiController::class);
+Route::delete('/projects/{project}/files/{file}', DeleteFileApiController::class);
 Route::get('/projects/{project}/files/{file}', ShowFileApiController::class);
 Route::post('/files/{file}/move', MoveFileApiController::class);
 Route::post('/files/{file}/rename', RenameFileApiController::class);
