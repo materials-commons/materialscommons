@@ -2,60 +2,71 @@
 
 use Illuminate\Support\Facades\Storage;
 
-function errorBannersExist()
-{
-    return bannerFileExists("errors.txt");
-}
-
-function errorBannerMessages()
-{
-    return bannerFileToCollection("errors.txt");
-}
-
-function warningBannersExist()
-{
-    return bannerFileExists("warnings.txt");
-}
-
-function warnBannerMessages()
-{
-    return bannerFileToCollection("warnings.txt");
-}
-
-function bannerFileExists($bannerFile)
-{
-    $partialPath = "banners/{$bannerFile}";
-
-    if (!Storage::disk('mcfs')->exists($partialPath)) {
-        return false;
+if (!function_exists("errorsBannersExist")) {
+    function errorBannersExist()
+    {
+        return bannerFileExists("errors.txt");
     }
-
-    if (Storage::disk('mcfs')->size($partialPath) == 0) {
-        return false;
-    }
-
-    return true;
 }
 
-function bannerFileToCollection($bannerFile)
-{
-    $partialPath = "banners/{$bannerFile}";
-    $lines = collect();
+if (!function_exists("errorsBannersExist")) {
+    function errorBannerMessages()
+    {
+        return bannerFileToCollection("errors.txt");
+    }
+}
 
-    if (bannerFileExists($bannerFile)) {
-        $handle = fopen(Storage::disk('mcfs')->path($partialPath), "r");
-        while (!feof($handle)) {
-            $line = trim(fgets($handle));
-            if ($line != "") {
-                $lines->push($line);
-            }
+if (!function_exists("errorsBannersExist")) {
+    function warningBannersExist()
+    {
+        return bannerFileExists("warnings.txt");
+    }
+}
+
+if (!function_exists("errorsBannersExist")) {
+    function warnBannerMessages()
+    {
+        return bannerFileToCollection("warnings.txt");
+    }
+}
+
+if (!function_exists("errorsBannersExist")) {
+    function bannerFileExists($bannerFile)
+    {
+        $partialPath = "banners/{$bannerFile}";
+
+        if (!Storage::disk('mcfs')->exists($partialPath)) {
+            return false;
         }
 
-        fclose($handle);
-    }
+        if (Storage::disk('mcfs')->size($partialPath) == 0) {
+            return false;
+        }
 
-    return $lines;
+        return true;
+    }
 }
 
+if (!function_exists("errorsBannersExist")) {
+    function bannerFileToCollection($bannerFile)
+    {
+        $partialPath = "banners/{$bannerFile}";
+        $lines = collect();
+
+        if (bannerFileExists($bannerFile)) {
+            $handle = fopen(Storage::disk('mcfs')->path($partialPath), "r");
+            while (!feof($handle)) {
+                $line = trim(fgets($handle));
+                if ($line != "") {
+                    $lines->push($line);
+                }
+            }
+
+            fclose($handle);
+        }
+
+        return $lines;
+    }
+}
 
 
