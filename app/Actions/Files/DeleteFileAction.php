@@ -42,6 +42,8 @@ class DeleteFileAction
     private function filesPointAtFile(File $file)
     {
         if (isset($file->uses_uuid)) {
+            // This file has a uses_uuid so nothing points at it as its not a file
+            // with an underlying physical file. Instead it points at something itself.
             return false;
         }
 
