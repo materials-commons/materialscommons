@@ -7,13 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Datasets\DatasetRequest;
 use App\Http\Resources\Datasets\DatasetResource;
 use App\Models\Dataset;
-use Illuminate\Support\Arr;
+use App\Models\Project;
 
 class UpdateDatasetApiController extends Controller
 {
-    public function __invoke(DatasetRequest $request, UpdateDatasetAction $updateDatasetAction, Dataset $dataset)
+    public function __invoke(DatasetRequest $request, UpdateDatasetAction $updateDatasetAction, Project $project,
+        Dataset $dataset)
     {
-        $attrs = Arr::except($request->validated(), ['project_id']);
-        return new DatasetResource($updateDatasetAction($attrs, $dataset));
+        return new DatasetResource($updateDatasetAction($request->validated(), $dataset));
     }
 }

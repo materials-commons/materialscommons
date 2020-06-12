@@ -11,14 +11,7 @@ class CreateDatasetAction
 {
     use HasTagsInRequest;
 
-    private $userId;
-
-    public function __construct($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    public function __invoke($data)
+    public function execute($data, $projectId, $userId)
     {
         $communities = null;
         if (array_key_exists('communities', $data)) {
@@ -35,16 +28,9 @@ class CreateDatasetAction
         $this->loadTagsFromData($data);
         unset($data['tags']);
 
-//        $tags = [];
-//        if (array_key_exists('tags', $data)) {
-//            $tags = collect($data['tags'])->map(function ($tag) {
-//                return $tag["value"];
-//            })->toArray();
-//            unset($data['tags']);
-//        }
-
         $dataset = new Dataset($data);
-        $dataset->owner_id = $this->userId;
+        $dataset->owner_id = $userId;
+        $dataset->project_id = $projectId;
         $dataset->file_selection = [
             'include_files' => [],
             'exclude_files' => [],

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Datasets\CreateDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DownloadDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetsApiController;
+use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetsApiController;
 use App\Http\Controllers\Api\Datasets\PublishDatasetApiController;
 use App\Http\Controllers\Api\Datasets\ShowDatasetApiController;
 use App\Http\Controllers\Api\Datasets\UnpublishDatasetApiController;
@@ -23,7 +24,7 @@ Route::put('/datasets/{dataset}/entities', UpdateDatasetEntitySelectionApiContro
 Route::put('/datasets/{dataset}/activities/selection', UpdateDatasetActivitySelectionApiController::class)
      ->name('api.projects.datasets.activities.selection');
 
-Route::put('/datastes/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
+Route::put('/datasets/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
      ->name('api.projects.datasets.workflows');
 
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class)
@@ -32,12 +33,16 @@ Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::c
 Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class)
      ->name('api.projects.datasets.index');
 
-Route::put('/datasets/{dataset}', UpdateDatasetApiController::class);
-Route::post('/datasets', CreateDatasetApiController::class);
+Route::put('/projects/{project}/datasets/{dataset}', UpdateDatasetApiController::class);
+Route::post('/projects/{project}/datasets', CreateDatasetApiController::class);
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
 Route::put('/datasets/{dataset}/publish', PublishDatasetApiController::class);
 Route::put('/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
 Route::get('/datasets/{dataset}/download_zipfile', DownloadDatasetZipfileApiController::class);
+
+// Published datasets
+
+Route::get('/datasets/published', IndexPublishedDatasetsApiController::class);
 
 
 

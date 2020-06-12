@@ -22,7 +22,6 @@ class UpdateDatasetWebController extends Controller
             if ($public) {
                 return redirect(route('public.datasets.show', [$dataset]));
             }
-
             return redirect(route('projects.datasets.show', [$project, $dataset]));
         } elseif ($action === "files") {
             return redirect(route('projects.datasets.files.edit', [$project, $dataset]));

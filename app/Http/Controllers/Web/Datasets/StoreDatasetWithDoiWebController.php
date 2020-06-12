@@ -10,15 +10,14 @@ use App\Models\Project;
 
 class StoreDatasetWithDoiWebController extends Controller
 {
-    public function __invoke(DatasetRequest $request, Project $project)
+    public function __invoke(DatasetRequest $request, CreateDatasetAction $createDatasetAction,
+        AssignDoiToDatasetAction $assignDoiToDatasetAction, Project $project)
     {
-        $createDatasetAction = new CreateDatasetAction(auth()->id());
         $validated = $request->validated();
-        $action = $validated["action"];
+//        $action = $validated["action"];
         unset($validated["action"]);
-        $dataset = $createDatasetAction($validated);
-        $assignDoiToDatasetAction = new AssignDoiToDatasetAction();
         $user = auth()->user();
+        $dataset = $createDatasetAction->execute($validated, $project->id, $user->id);
         $assignDoiToDatasetAction($dataset, $user);
         return redirect(route('projects.datasets.edit', [$project, $dataset]));
     }

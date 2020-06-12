@@ -9,13 +9,12 @@ use App\Models\Project;
 
 class StoreDatasetWebController extends Controller
 {
-    public function __invoke(DatasetRequest $request, Project $project)
+    public function __invoke(DatasetRequest $request, CreateDatasetAction $createDatasetAction, Project $project)
     {
-        $createDatasetAction = new CreateDatasetAction(auth()->id());
         $validated = $request->validated();
         $action = $validated["action"];
         unset($validated["action"]);
-        $dataset = $createDatasetAction($validated);
+        $dataset = $createDatasetAction->execute($validated, $project->id, auth()->id());
         if ($action === "save") {
             return redirect(route('projects.datasets.index', [$project]));
         } else {
