@@ -22,6 +22,22 @@ class DatasetResource extends JsonResource
 
     public function toArray($request)
     {
-        return $this->loadFromFields();
+        $ds = $this->loadFromFields();
+
+        if (!is_null($this['published_at'])) {
+            $ds = $this->loadZipfileFields($ds);
+        }
+
+        return $ds;
+    }
+
+    private function loadZipfileFields(array $ds)
+    {
+        $zipfilePath = $this->zipfilePath();
+        if (file_exists($zipfilePath)) {
+            $ds['zipfile_size'] = filesize($zipfilePath);
+        }
+
+        return $ds;
     }
 }

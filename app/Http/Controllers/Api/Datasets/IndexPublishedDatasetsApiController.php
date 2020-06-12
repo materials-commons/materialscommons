@@ -10,6 +10,6 @@ class IndexPublishedDatasetsApiController extends Controller
 {
     public function __invoke()
     {
-        return DatasetResource::collection(Dataset::whereNotNull('published_at'));
+        return DatasetResource::collection(Dataset::whereNotNull('published_at')->get());
     }
 }
