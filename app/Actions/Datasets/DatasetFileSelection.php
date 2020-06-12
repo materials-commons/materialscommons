@@ -32,6 +32,10 @@ class DatasetFileSelection
 
     public function isIncludedFile($filePath)
     {
+        if (blank($filePath)) {
+            return false;
+        }
+
         $path = PathHelpers::normalizePath($filePath);
         $includeFiles = $this->selection->get('include_files');
         $excludeFiles = $this->selection->get('exclude_files');
