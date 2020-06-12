@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Directories;
 
 use App\Actions\Directories\DeleteDirectoryAction;
 use App\Http\Controllers\Controller;
+use App\Models\File;
 
 class DeleteDirectoryApiController extends Controller
 {
