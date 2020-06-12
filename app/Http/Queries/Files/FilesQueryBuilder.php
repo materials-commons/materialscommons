@@ -11,7 +11,7 @@ class FilesQueryBuilder extends QueryBuilder
     public function __construct(Builder $builder, ?Request $request = null)
     {
         parent::__construct($builder, $request);
-        $this->allowedFields(['name', 'id', 'uuid', 'description'])
+        $this->allowedFields(['name', 'id', 'uuid', 'description', 'size', 'checksum', 'mime_type'])
              ->allowedIncludes(['entities', 'activities', 'projects']);
     }
 }
