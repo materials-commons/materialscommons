@@ -13,10 +13,12 @@ class CreateFileAction
     public function __invoke($projectId, $directoryId, $description, $file)
     {
         umask(0);
+        $mimeType = mime_content_type($file->getRealPath());
         $fileEntry = new File([
             'uuid'         => Uuid::uuid4()->toString(),
             'checksum'     => md5_file($file->getRealPath()),
-            'mime_type'    => $file->getClientMimeType(),
+//            'mime_type'    => $file->getClientMimeType(),
+            'mime_type'    => $mimeType,
             'size'         => $file->getSize(),
             'name'         => $file->getClientOriginalName(),
             'owner_id'     => auth()->id(),
@@ -29,7 +31,7 @@ class CreateFileAction
         $existing = File::where('directory_id', $directoryId)->where('name', $fileEntry->name)->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
 
-        if ( ! $matchingFileChecksum) {
+        if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             $this->saveFile($file, $fileEntry->uuid);
         } else {
