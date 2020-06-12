@@ -12,6 +12,7 @@ public/css/app.css
 /vendor
 .env
 .env.beta
+.env.sqlite
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
