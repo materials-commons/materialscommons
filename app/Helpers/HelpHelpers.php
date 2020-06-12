@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Request;
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("helpRoutes")) {
     function helpRoutes()
     {
         return [
@@ -20,7 +20,7 @@ if (!function_exists("errorsBannersExist")) {
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("helpUrl")) {
     function helpUrl()
     {
         foreach (helpRoutes() as $helpRoute) {
@@ -32,14 +32,14 @@ if (!function_exists("errorsBannersExist")) {
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("helpGettingStarted")) {
     function helpGettingStarted()
     {
         return makeHelpUrl("getting-started");
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("makeHelpUrl")) {
     function makeHelpUrl($doc)
     {
         $base = config('help.site');
@@ -48,7 +48,7 @@ if (!function_exists("errorsBannersExist")) {
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("helpTitle")) {
     function helpTitle()
     {
         foreach (helpRoutes() as $helpRoute) {

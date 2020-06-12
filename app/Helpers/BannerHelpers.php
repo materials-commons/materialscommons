@@ -9,28 +9,28 @@ if (!function_exists("errorsBannersExist")) {
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("errorsBannerMessages")) {
     function errorBannerMessages()
     {
         return bannerFileToCollection("errors.txt");
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("warningBannersExist")) {
     function warningBannersExist()
     {
         return bannerFileExists("warnings.txt");
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("warnBannerMessages")) {
     function warnBannerMessages()
     {
         return bannerFileToCollection("warnings.txt");
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("bannerFileExists")) {
     function bannerFileExists($bannerFile)
     {
         $partialPath = "banners/{$bannerFile}";
@@ -47,7 +47,7 @@ if (!function_exists("errorsBannersExist")) {
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("bannerFileToCollection")) {
     function bannerFileToCollection($bannerFile)
     {
         $partialPath = "banners/{$bannerFile}";

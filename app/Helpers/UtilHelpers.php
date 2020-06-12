@@ -2,14 +2,14 @@
 
 use Illuminate\Pipeline\Pipeline;
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("pipe")) {
     function pipe()
     {
         return app(Pipeline::class);
     }
 }
 
-if (!function_exists("errorsBannersExist")) {
+if (!function_exists("formatBytes")) {
     function formatBytes($bytes, $precision = 2)
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
