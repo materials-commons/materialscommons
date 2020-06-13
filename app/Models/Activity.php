@@ -24,6 +24,11 @@ class Activity extends Model implements Searchable
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'owner_id'   => 'integer',
+        'project_id' => 'integer',
+    ];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');

@@ -15,6 +15,11 @@ class Lab extends Model
 
     protected $guarded = ['id', 'uuid'];
 
+    protected $casts = [
+        'default_lab' => 'boolean',
+        'owner_id'    => 'integer',
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'lab2user', 'lab_id', 'user_id');

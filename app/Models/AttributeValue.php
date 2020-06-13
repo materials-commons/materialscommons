@@ -22,7 +22,8 @@ class AttributeValue extends Model
 
     protected $guarded = ['id'];
     protected $casts = [
-        'val' => 'array',
+        'val'          => 'array',
+        'attribute_id' => 'integer',
     ];
 
     public function attribute()

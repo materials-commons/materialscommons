@@ -15,8 +15,11 @@ class EntityState extends Model
 
     protected $table = 'entity_states';
     protected $guarded = ['id'];
+
     protected $casts = [
-        'current' => 'boolean',
+        'current'   => 'boolean',
+        'owner_id'  => 'integer',
+        'entity_id' => 'integer',
     ];
 
 

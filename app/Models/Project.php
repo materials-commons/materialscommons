@@ -32,6 +32,7 @@ class Project extends Model implements Searchable
         'is_active'       => 'boolean',
         'owner_id'        => 'integer',
         'entities_count'  => 'integer',
+        'is_public'       => 'boolean',
     ];
 
     public function users()

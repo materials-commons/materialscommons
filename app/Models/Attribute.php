@@ -20,6 +20,11 @@ class Attribute extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'attributable_id' => 'integer',
+        'best_value_id'   => 'integer',
+    ];
+
     public function attributable()
     {
         return $this->morphTo();

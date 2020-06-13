@@ -33,6 +33,13 @@ class GlobusUploadDownload extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'type'       => 'integer',
+        'status'     => 'integer',
+        'project_id' => 'integer',
+        'owner_id'   => 'integer',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);

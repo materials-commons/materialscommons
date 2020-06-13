@@ -11,6 +11,10 @@ class Link extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'owner_id' => 'integer',
+    ];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');

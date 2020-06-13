@@ -25,6 +25,12 @@ class Experiment extends Model implements Searchable
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'project_id' => 'integer',
+        'owner_id'   => 'integer',
+        'loading'    => 'boolean',
+    ];
+
     public function project()
     {
         return $this->belongsTo(Project::class);

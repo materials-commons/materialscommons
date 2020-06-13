@@ -52,6 +52,8 @@ class Dataset extends Model implements Searchable
 
     protected $casts = [
         'file_selection' => 'array',
+        'owner_id'       => 'integer',
+        'project_id'     => 'integer',
     ];
 
     public function owner()

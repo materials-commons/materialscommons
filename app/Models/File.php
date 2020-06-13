@@ -31,6 +31,15 @@ class File extends Model implements Searchable
 
     protected $appends = ['selected'];
 
+    protected $casts = [
+        'size'         => 'integer',
+        'current'      => 'boolean',
+        'owner_id'     => 'integer',
+        'project_id'   => 'integer',
+        'is_shortcut'  => 'boolean',
+        'directory_id' => 'integer',
+    ];
+
     private $selected;
 
     public function project()

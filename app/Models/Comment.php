@@ -15,6 +15,11 @@ class Comment extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'owner_id'       => 'integer',
+        'commentable_id' => 'integer',
+    ];
+
     public function commentable()
     {
         return $this->morphTo();

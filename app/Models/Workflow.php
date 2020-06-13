@@ -26,6 +26,12 @@ class Workflow extends Model implements Searchable
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'project_id' => 'integer',
+        'file_id'    => 'integer',
+        'owner_id'   => 'integer',
+    ];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');

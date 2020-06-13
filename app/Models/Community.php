@@ -27,6 +27,11 @@ class Community extends Model implements Searchable
 
     protected $guarded = ['id', 'uuid'];
 
+    protected $casts = [
+        'owner_id' => 'integer',
+        'public'   => 'boolean',
+    ];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
