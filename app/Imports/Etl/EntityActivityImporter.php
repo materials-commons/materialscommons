@@ -219,6 +219,15 @@ class EntityActivityImporter
         });
     }
 
+    /*
+     * if (Str::of($attr->value)->contains(['*', '?'])) {
+     *    matchOnRegex();
+     *    return;
+     * }
+     *
+     * matchOnFileOrDir();
+     */
+
     private function addToExistingEntity(RowTracker $row)
     {
 //        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
