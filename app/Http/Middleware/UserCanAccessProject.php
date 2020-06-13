@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Traits\GetRequestParameterId;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserCanAccessProject
 {
@@ -25,13 +26,34 @@ class UserCanAccessProject
             return $next($request);
         }
 
+        if ($this->isPublicPath()) {
+            abort_unless($this->isPublicProject($projectId), 404, 'No such project');
+            return $next($request);
+        }
+
         if (auth()->user()->is_admin) {
             return $next($request);
         }
 
-        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
-        abort_unless($count == 1, 404, 'No such project');
+        abort_unless($this->canAccessPrivateProject($projectId), 404, 'No such project');
 
         return $next($request);
+    }
+
+    private function isPublicPath()
+    {
+        return Str::startsWith(request()->getBasePath(), "/public");
+    }
+
+    private function isPublicProject($projectId)
+    {
+        $count = auth()->user()->projects()->where('project_id', $projectId)->where('is_public', true)->count();
+        return $count == 1;
+    }
+
+    private function canAccessPrivateProject($projectId)
+    {
+        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
+        return $count == 1;
     }
 }
