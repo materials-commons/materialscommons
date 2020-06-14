@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Project;
 use App\Traits\GetRequestParameterId;
 use Closure;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class UserCanAccessProject
             return $next($request);
         }
 
-        if (auth()->user()->is_admin) {
+        if (optional(auth()->user())->is_admin) {
             return $next($request);
         }
 
@@ -42,12 +43,12 @@ class UserCanAccessProject
 
     private function isPublicPath()
     {
-        return Str::startsWith(request()->getBasePath(), "/public");
+        return Str::contains(request()->url(), "/public");
     }
 
     private function isPublicProject($projectId)
     {
-        $count = auth()->user()->projects()->where('project_id', $projectId)->where('is_public', true)->count();
+        $count = Project::where('id', $projectId)->where('is_public', true)->count();
         return $count == 1;
     }
 
