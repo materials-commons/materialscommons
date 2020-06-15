@@ -10,8 +10,10 @@ use App\Models\User;
 
 class AddUserToProjectApiController extends Controller
 {
-    public function __invoke(AddUserToProjectAction $addUserToProjectAction, Project $project, User $user)
+    public function __invoke(AddUserToProjectAction $addUserToProjectAction, $projectId, User $user)
     {
+        $project = Project::with('rootDir')->findOrFail($projectId);
+
         $this->authorize('updateUsers', $project);
         return new ProjectResource($addUserToProjectAction($project, $user));
     }

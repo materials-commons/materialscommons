@@ -18,9 +18,10 @@ class UpdateProjectApiController extends Controller
      * @param  Project  $project
      * @return ProjectResource
      */
-    public function __invoke(UpdateProjectRequest $request, UpdateProjectAction $updateProjectAction, Project $project)
+    public function __invoke(UpdateProjectRequest $request, UpdateProjectAction $updateProjectAction, $projectId)
     {
         $validated = $request->validated();
+        $project = Project::with('rootDir')->findOrFail($projectId);
         $project = $updateProjectAction($validated, $project);
         return new ProjectResource($project);
     }
