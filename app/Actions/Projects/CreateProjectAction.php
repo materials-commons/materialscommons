@@ -10,7 +10,11 @@ class CreateProjectAction
 {
     public function execute($data, $ownerId)
     {
-        $project = Project::where('name', $data['name'])->where('owner_id', $ownerId)->first();
+        $project = Project::with('rootDir')
+                          ->where('name', $data['name'])
+                          ->where('owner_id', $ownerId)
+                          ->first();
+
         if ($project !== null) {
             return ['project' => $project, 'created' => false];
         }
@@ -31,6 +35,7 @@ class CreateProjectAction
             auth()->user()->projects()->attach($project);
         });
 
-        return ['project' => $project->fresh(), 'created' => true];
+        $project->fresh();
+        return ['project' => Project::with('rootDir')->find($project->id), 'created' => true];
     }
 }
