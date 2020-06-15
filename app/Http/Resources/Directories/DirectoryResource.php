@@ -8,8 +8,8 @@ class DirectoryResource extends JsonResource
 {
     protected $fields = [
         'id', 'uuid', 'name', 'path', 'description', 'created_at', 'updated_at',
-        'owner_id', 'directory_id', 'mime_type', 'media_type_description',
-        'files_count', 'entities_count', 'activities_count'
+        'owner_id', 'directory_id', 'mime_type', 'media_type_description', 'size', 'checksum',
+        'files_count', 'entities_count', 'activities_count',
     ];
 
     /**
