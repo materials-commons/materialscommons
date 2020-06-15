@@ -52,7 +52,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:300,1',
             'bindings',
             UserCanAccessProject::class,
             FileInProject::class,
