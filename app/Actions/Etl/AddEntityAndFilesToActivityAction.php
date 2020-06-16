@@ -15,7 +15,7 @@ class AddEntityAndFilesToActivityAction
         $fileEntries = collect();
         $projectId = $data["project_id"];
         foreach ($data["files_by_name"] as $f) {
-            $file = $getFileByPathAction($projectId, $f["path"]);
+            $file = $getFileByPathAction->execute($projectId, $f["path"]);
             if ($file !== null) {
                 $fileEntries->put($file->id, ['direction' => $f["direction"]]);
             }

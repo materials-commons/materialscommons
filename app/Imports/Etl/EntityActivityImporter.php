@@ -10,7 +10,9 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Entity;
 use App\Models\EntityState;
+use App\Models\File;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
@@ -28,6 +30,7 @@ class EntityActivityImporter
     private $rowNumber;
     private $rows;
     private $currentSheetRows;
+    private $getFileByPathAction;
 
     public function __construct($projectId, $experimentId, $userId)
     {
@@ -40,6 +43,7 @@ class EntityActivityImporter
 
         $this->entityTracker = new EntityTracker();
         $this->activityTracker = new HashedActivityTracker();
+        $this->getFileByPathAction = new GetFileByPathAction();
     }
 
     public function execute($spreadsheetPath)
@@ -192,10 +196,7 @@ class EntityActivityImporter
     private function addFilesToActivityAndEntity(Collection $fileAttributes, Entity $entity, EntityState $entityState,
         Activity $activity)
     {
-        $getFileByPathAction = new GetFileByPathAction();
-        $fileAttributes->each(function (ColumnAttribute $attr) use (
-            $getFileByPathAction, $entity, $entityState, $activity
-        ) {
+        $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $entityState, $activity) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
 
             $path = "{$header->name}/{$attr->value}";
@@ -204,19 +205,53 @@ class EntityActivityImporter
                 $path = $attr->value;
             }
 
-            $file = $getFileByPathAction($this->projectId, $path);
-            if (is_null($file)) {
+            if ($this->isWildCard($path)) {
+                $this->addWildCardFiles($path, $entity, $activity);
                 return;
             }
 
-            if (!is_null($activity)) {
-                $activity->files()->attach([$file->id => ['direction' => 'in']]);
+            if (($dir = $this->isDirectory($path)) !== null) {
+                $this->addDirectoryFiles($dir, $entity, $activity);
+                return;
             }
 
-            if (!is_null($entity)) {
-                $entity->files()->syncWithoutDetaching([$file->id]);
-            }
+            $this->addSingleFile($path, $entity, $activity);
         });
+    }
+
+    private function isWildCard($path)
+    {
+        return Str::contains($path, ['*', '?']);
+    }
+
+    private function addWildCardFiles($path, Entity $entity, Activity $activity)
+    {
+    }
+
+    private function isDirectory($path)
+    {
+        $dir = $this->getFileByPathAction->execute($this->projectId, $path);
+        return optional($dir)->mime_type == "directory" ? $dir : null;
+    }
+
+    private function addDirectoryFiles(File $dir, Entity $entity, Activity $activity)
+    {
+    }
+
+    private function addSingleFile($path, Entity $entity, Activity $activity)
+    {
+        $file = $this->getFileByPathAction->execute($this->projectId, $path);
+        if (is_null($file)) {
+            return;
+        }
+
+        if (!is_null($activity)) {
+            $activity->files()->attach([$file->id => ['direction' => 'in']]);
+        }
+
+        if (!is_null($entity)) {
+            $entity->files()->syncWithoutDetaching([$file->id]);
+        }
     }
 
     /*

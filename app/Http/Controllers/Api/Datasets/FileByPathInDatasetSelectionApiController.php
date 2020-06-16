@@ -16,7 +16,7 @@ class FileByPathInDatasetSelectionApiController extends Controller
     {
         $filePath = $request->input("file_path");
         abort_if($filePath == "", 400, "file_path is required");
-        $file = $getFileByPathAction($project->id, $filePath);
+        $file = $getFileByPathAction->execute($project->id, $filePath);
         abort_if(is_null($file), 400, "No such file");
         $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
         return [

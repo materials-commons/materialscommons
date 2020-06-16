@@ -11,7 +11,7 @@ class GetFileByPathAction
 
     // Look up file by path. This controller expects the path to start with the project name. This is done
     // to retain compatibility with the old NodeJS based API.
-    public function __invoke($projectId, $filePath)
+    public function execute($projectId, $filePath)
     {
         $project = Project::findOrFail($projectId);
         $pathWithoutProject = $filePath;
