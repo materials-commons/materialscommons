@@ -163,7 +163,7 @@ class EntityActivityImporter
         // Add a new activity
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
-        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
+        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state)
@@ -193,10 +193,9 @@ class EntityActivityImporter
         });
     }
 
-    private function addFilesToActivityAndEntity(Collection $fileAttributes, Entity $entity, EntityState $entityState,
-        Activity $activity)
+    private function addFilesToActivityAndEntity(Collection $fileAttributes, ?Entity $entity, ?Activity $activity)
     {
-        $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $entityState, $activity) {
+        $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $activity) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
 
             $path = "{$header->name}/{$attr->value}";
@@ -224,7 +223,7 @@ class EntityActivityImporter
         return Str::contains($path, ['*', '?']);
     }
 
-    private function addWildCardFiles($path, Entity $entity, Activity $activity)
+    private function addWildCardFiles($path, ?Entity $entity, ?Activity $activity = null)
     {
         $dirPath = dirname($path);
         $expression = basename($path);
@@ -253,7 +252,7 @@ class EntityActivityImporter
         return optional($dir)->mime_type == "directory" ? $dir : null;
     }
 
-    private function addDirectoryFiles(File $dir, Entity $entity, Activity $activity)
+    private function addDirectoryFiles(File $dir, ?Entity $entity, ?Activity $activity)
     {
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
@@ -262,13 +261,13 @@ class EntityActivityImporter
             });
     }
 
-    private function addSingleFile($path, Entity $entity, Activity $activity)
+    private function addSingleFile($path, ?Entity $entity, ?Activity $activity)
     {
         $file = $this->getFileByPathAction->execute($this->projectId, $path);
         $this->addFileToActivityAndEntity($file, $activity, $entity);
     }
 
-    private function addFileToActivityAndEntity(File $file, Activity $activity, Entity $entity)
+    private function addFileToActivityAndEntity(?File $file, ?Activity $activity, ?Entity $entity)
     {
         if (is_null($file)) {
             return;
@@ -278,7 +277,7 @@ class EntityActivityImporter
         $this->addFileToEntity($file, $entity);
     }
 
-    private function addFileToActivity(File $file, Activity $activity)
+    private function addFileToActivity(?File $file, ?Activity $activity)
     {
         if (is_null($file)) {
             return;
@@ -291,7 +290,7 @@ class EntityActivityImporter
         $activity->files()->attach([$file->id => ['direction' => 'in']]);
     }
 
-    private function addFileToEntity(File $file, Entity $entity)
+    private function addFileToEntity(?File $file, ?Entity $entity)
     {
         if (is_null($file)) {
             return;
@@ -330,7 +329,7 @@ class EntityActivityImporter
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
-        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $state, $activity);
+        $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
 //        } else {
 //            // Matching activity found, so add attribute values as additional values on existing
 //            // measurements for this entity. To do this first get the entity state that is associated
