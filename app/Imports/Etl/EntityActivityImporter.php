@@ -226,6 +226,25 @@ class EntityActivityImporter
 
     private function addWildCardFiles($path, Entity $entity, Activity $activity)
     {
+        $dirPath = dirname($path);
+        $expression = basename($path);
+        $dir = File::where('path', $dirPath)
+                   ->where('project_id', $this->projectId)
+                   ->get();
+
+        if (is_null($dir)) {
+            return;
+        }
+
+        File::where('directory_id', $dir->id)
+            ->where('mime_type', '<>', 'directory')
+            ->chunk(100, function (File $file) use ($entity, $activity, $expression) {
+                if (!fnmatch($expression, $file->name)) {
+                    return;
+                }
+
+                $this->addFileToActivityAndEntity($file, $activity, $entity);
+            });
     }
 
     private function isDirectory($path)
@@ -236,22 +255,53 @@ class EntityActivityImporter
 
     private function addDirectoryFiles(File $dir, Entity $entity, Activity $activity)
     {
+        File::where('directory_id', $dir->id)
+            ->where('mime_type', '<>', 'directory')
+            ->chunk(100, function (File $file) use ($entity, $activity) {
+                $this->addFileToActivityAndEntity($file, $activity, $entity);
+            });
     }
 
     private function addSingleFile($path, Entity $entity, Activity $activity)
     {
         $file = $this->getFileByPathAction->execute($this->projectId, $path);
+        $this->addFileToActivityAndEntity($file, $activity, $entity);
+    }
+
+    private function addFileToActivityAndEntity(File $file, Activity $activity, Entity $entity)
+    {
         if (is_null($file)) {
             return;
         }
 
-        if (!is_null($activity)) {
-            $activity->files()->attach([$file->id => ['direction' => 'in']]);
+        $this->addFileToActivity($file, $activity);
+        $this->addFileToEntity($file, $entity);
+    }
+
+    private function addFileToActivity(File $file, Activity $activity)
+    {
+        if (is_null($file)) {
+            return;
         }
 
-        if (!is_null($entity)) {
-            $entity->files()->syncWithoutDetaching([$file->id]);
+        if (is_null($activity)) {
+            return;
         }
+
+        $activity->files()->attach([$file->id => ['direction' => 'in']]);
+    }
+
+    private function addFileToEntity(File $file, Entity $entity)
+    {
+        if (is_null($file)) {
+            return;
+        }
+
+        if (is_null($entity)) {
+            return;
+        }
+
+        $entity->files()->syncWithoutDetaching([$file->id]);
     }
 
     /*
