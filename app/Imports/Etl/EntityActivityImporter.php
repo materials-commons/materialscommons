@@ -198,6 +198,8 @@ class EntityActivityImporter
         $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $activity) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
 
+            // Multiple files can be specified in a cell when they are separated by a semi-colon (;), eg
+            // file1.txt;file2.txt
             foreach (explode(";", $attr->value) as $value) {
                 if ($value == "") {
                     continue;
