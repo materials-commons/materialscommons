@@ -201,11 +201,11 @@ class EntityActivityImporter
             // Multiple files can be specified in a cell when they are separated by a semi-colon (;), eg
             // file1.txt;file2.txt
             foreach (explode(";", $attr->value) as $value) {
+                $value = trim($value);
+
                 if ($value == "") {
                     continue;
                 }
-
-                $value = Str::of($value)->trim()->__toString();
 
                 $path = "{$header->name}/{$value}";
                 if (strpos($value, "/") !== false) {
