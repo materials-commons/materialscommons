@@ -198,23 +198,31 @@ class EntityActivityImporter
         $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $activity) {
             $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
 
-            $path = "{$header->name}/{$attr->value}";
-            if (strpos($attr->value, "/") !== false) {
-                // Cell contains the path, no need to use the header
-                $path = $attr->value;
-            }
+            foreach (explode(";", $attr->value) as $value) {
+                if ($value == "") {
+                    continue;
+                }
 
-            if ($this->isWildCard($path)) {
-                $this->addWildCardFiles($path, $entity, $activity);
-                return;
-            }
+                $value = Str::of($value)->trim()->__toString();
 
-            if (($dir = $this->isDirectory($path)) !== null) {
-                $this->addDirectoryFiles($dir, $entity, $activity);
-                return;
-            }
+                $path = "{$header->name}/{$value}";
+                if (strpos($value, "/") !== false) {
+                    // Cell contains the path, no need to use the header
+                    $path = $value;
+                }
 
-            $this->addSingleFile($path, $entity, $activity);
+                if ($this->isWildCard($path)) {
+                    $this->addWildCardFiles($path, $entity, $activity);
+                    return;
+                }
+
+                if (($dir = $this->isDirectory($path)) !== null) {
+                    $this->addDirectoryFiles($dir, $entity, $activity);
+                    return;
+                }
+
+                $this->addSingleFile($path, $entity, $activity);
+            }
         });
     }
 
