@@ -12,6 +12,7 @@ use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -288,7 +289,7 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
-    public function test_file_associations()
+    public function test_single_file_associations()
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
@@ -367,6 +368,62 @@ class EntityActivityImportTest extends TestCase
 
         $entity = Entity::where('name', 'G181030g')->first();
         $this->assertEquals(5, $entity->files()->count());
+    }
+
+    /** @test */
+    public function test_directory_file_associations()
+    {
+        // Setup
+        $project = ProjectFactory::create();
+        $root = $project->rootDir;
+        $d1 = ProjectFactory::createDirectory($project, $root, "d1");
+        ProjectFactory::createFakeFile($project, $d1, "f1.txt");
+        ProjectFactory::createFakeFile($project, $d1, "f2.txt");
+        $d2 = ProjectFactory::createDirectory($project, $root, "d2");
+        $d3 = ProjectFactory::createDirectory($project, $d2, "d3");
+        ProjectFactory::createFakeFile($project, $d3, "f3.txt");
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $project->owner_id,
+            'project_id' => $project->id,
+        ]);
+
+        // Run importer
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $project->owner_id);
+        $importer->execute(Storage::disk('test_data')->path('etl/single_with_dir.xlsx'));
+
+        // Asserts
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(3, $activity->files()->count());
+
+        $entity = Entity::where('name', 'G181030g')->first();
+        $this->assertEquals(3, $entity->files()->count());
+    }
+
+    /** @test */
+    public function test_wildcard_file_associations()
+    {
+        // Setup
+        $project = ProjectFactory::create();
+        $root = $project->rootDir;
+        $d1 = ProjectFactory::createDirectory($project, $root, "d1");
+        ProjectFactory::createFakeFile($project, $d1, "f1.txt");
+        ProjectFactory::createFakeFile($project, $d1, "f2.txt");
+        ProjectFactory::createFakeFile($project, $d1, "f3.jpeg");
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $project->owner_id,
+            'project_id' => $project->id,
+        ]);
+
+        // Run importer
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $project->owner_id);
+        $importer->execute(Storage::disk('test_data')->path('etl/single_with_file_wildcard.xlsx'));
+
+        // Asserts
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(2, $activity->files()->count());
+
+        $entity = Entity::where('name', 'G181030g')->first();
+        $this->assertEquals(2, $entity->files()->count());
     }
 
     /** @test */

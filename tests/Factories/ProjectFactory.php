@@ -74,6 +74,17 @@ class ProjectFactory
         return $file;
     }
 
+    public function createFakeFile($project, $dir, $name)
+    {
+        return factory(File::class)->create([
+            'project_id'   => $project->id,
+            'name'         => $name,
+            'directory_id' => $dir->id,
+            'owner_id'     => $project->owner_id,
+            'mime_type'    => 'text',
+        ]);
+    }
+
     public function createFilePointingAt($project, $file, $name)
     {
         return factory(File::class)->create([

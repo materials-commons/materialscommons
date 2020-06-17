@@ -229,7 +229,7 @@ class EntityActivityImporter
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
                    ->where('project_id', $this->projectId)
-                   ->get();
+                   ->first();
 
         if (is_null($dir)) {
             return;
@@ -237,12 +237,14 @@ class EntityActivityImporter
 
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
-            ->chunk(100, function (File $file) use ($entity, $activity, $expression) {
-                if (!fnmatch($expression, $file->name)) {
-                    return;
-                }
+            ->chunk(100, function ($files) use ($entity, $activity, $expression) {
+                $files->each(function (File $file) use ($entity, $activity, $expression) {
+                    if (!fnmatch($expression, $file->name)) {
+                        return;
+                    }
 
-                $this->addFileToActivityAndEntity($file, $activity, $entity);
+                    $this->addFileToActivityAndEntity($file, $activity, $entity);
+                });
             });
     }
 
@@ -256,8 +258,10 @@ class EntityActivityImporter
     {
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
-            ->chunk(100, function (File $file) use ($entity, $activity) {
-                $this->addFileToActivityAndEntity($file, $activity, $entity);
+            ->chunk(100, function ($files) use ($entity, $activity) {
+                $files->each(function (File $file) use ($entity, $activity) {
+                    $this->addFileToActivityAndEntity($file, $activity, $entity);
+                });
             });
     }
 
