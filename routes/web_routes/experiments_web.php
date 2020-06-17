@@ -37,7 +37,7 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::delete('/experiments/{experiment}',
         DestroyExperimentWebController::class)->name('projects.experiments.destroy');
 
-    Route::get('/experiments/{experiment}/entities-tab', function (Project $project, Experiment $experiment) {
+    Route::get('/experiments/{experiment}/entities', function (Project $project, Experiment $experiment) {
         $excelFilesCount = $project->files()
                                    ->where('mime_type',
                                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
