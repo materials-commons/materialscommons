@@ -17,10 +17,14 @@
         @slot('body')
             @component('components.item-details', ['item' => $entity])
             @endcomponent
-            <br>
-            <h4>Sample Attributes</h4>
-            <hr>
-            @include('partials.attributes_table', ['attributes' => $attributes])
+
+            <div class="row ml-1">
+                @foreach($activities as $activity)
+                    <div class="col-lg-3 col-md-5 col-sm-5 ml-2 bg-grey-9 mt-2">
+                        @include('public.datasets.entities.activity-card', ['activity' => $activity])
+                    </div>
+                @endforeach
+            </div>
         @endslot
     @endcomponent
 @stop

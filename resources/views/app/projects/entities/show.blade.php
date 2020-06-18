@@ -39,7 +39,6 @@
                     </div>
                 @endforeach
             </div>
-
         @endslot
     @endcomponent
 @endsection
