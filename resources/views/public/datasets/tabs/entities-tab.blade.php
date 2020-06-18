@@ -1,19 +1,27 @@
-<table id="entities" class="table table-hover" style="width:100%">
+<table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
     <thead>
-    <th>Sample</th>
-    <th>Description</th>
-    <th>Updated</th>
-    <th>Date</th>
+    <th>Name</th>
+    @foreach($activities as $activity)
+        <th>{{$activity->name}}</th>
+    @endforeach
     </thead>
     <tbody>
-    @foreach($dataset->entities as $entity)
+    @foreach($entities as $entity)
         <tr>
             <td>
-                <a href="{{route('public.datasets.entities.show', [$dataset, $entity])}}">{{$entity->name}}</a>
+                <a href="{{route('public.datasets.entities.show', [$dataset, $entity])}}">
+                    {{$entity->name}}
+                </a>
             </td>
-            <td>{{$entity->description}}</td>
-            <td>{{$entity->updated_at->diffForHumans()}}</td>
-            <td>{{$entity->updated_at}}</td>
+            @foreach($usedActivities[$entity->id] as $used)
+                @if($used)
+                    <td>X</td>
+                    {{--                    <td>{{$entity->name}}</td>--}}
+                    {{--                    <td>{{$entity->name}} ({{$used}})</td>--}}
+                @else
+                    <td></td>
+                @endif
+            @endforeach
         </tr>
     @endforeach
     </tbody>
@@ -22,12 +30,9 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('#entities').DataTable({
+            $('#entities-with-used-activities').DataTable({
                 stateSave: true,
-                columnDefs: [
-                    {orderData: [3], targets: [2]},
-                    {targets: [3], visible: false, searchable: false},
-                ]
+                scrollX: true,
             });
         });
     </script>

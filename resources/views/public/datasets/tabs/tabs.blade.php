@@ -11,12 +11,12 @@
             Samples
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('public.datasets.activities')}}"
-           href="{{route('public.datasets.activities.index', ['dataset' => $dataset])}}">
-            Processes
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('public.datasets.activities')}}"--}}
+    {{--           href="{{route('public.datasets.activities.index', ['dataset' => $dataset])}}">--}}
+    {{--            Processes--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('public.datasets.files')}}"
            href="{{route('public.datasets.files.index', ['dataset' => $dataset])}}">
