@@ -17,9 +17,9 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName($processesRouteName)}}" href="{{$processesRoute}}">
-            Processes
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName($processesRouteName)}}" href="{{$processesRoute}}">--}}
+    {{--            Processes--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 </ul>
