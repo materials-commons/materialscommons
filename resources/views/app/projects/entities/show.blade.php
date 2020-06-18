@@ -9,14 +9,52 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.entities.show', $project, $entity))
 
 @section('content')
-    @include('partials.entities._show', [
-        'showRouteName' => 'projects.entities.show',
-        'showRoute' => route('projects.entities.show', [$project, $entity]),
-        'attributesRouteName' => 'projects.entities.attributes',
-        'attributesRoute' => route('projects.entities.attributes', [$project, $entity]),
-        'filesRouteName' => 'projects.entities.files',
-        'filesRoute' => route('projects.entities.files', [$project, $entity]),
-        'showActivityRoute' => $showActivityRoute ?? '',
-        'showFileRoute' => $showFileRoute ?? ''
-    ])
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col col-lg-4 float-right">
+                <select class="selectpicker col-lg-10" data-live-search="true" title="Compare Samples">
+                    @foreach($project->entities as $entry)
+                        @if ($entry->name != $entity->name)
+                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    @component('components.card')
+        @slot('header')
+            Sample: {{$entity->name}}
+        @endslot
+
+        @slot('body')
+            @component('components.item-details', ['item' => $entity])
+            @endcomponent
+
+            <div class="row ml-1">
+                @foreach($activities as $activity)
+                    <div class="col-lg-3 col-md-5 col-sm-5 ml-2 bg-grey-9 mt-2">
+                        @include('partials.activities.activity-card', ['activity' => $activity])
+                    </div>
+                @endforeach
+            </div>
+
+        @endslot
+    @endcomponent
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(() => {
+            $('select').on('change', () => {
+                let selected = $('.selectpicker option:selected').val();
+                window.location.href = route('projects.entities.compare', {
+                    project: "{{$project->id}}",
+                    entity1: "{{$entity->id}}",
+                    entity2: selected
+                }).url();
+            });
+        });
+    </script>
+@endpush
