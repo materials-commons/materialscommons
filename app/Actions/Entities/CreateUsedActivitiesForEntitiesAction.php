@@ -17,14 +17,15 @@ class CreateUsedActivitiesForEntitiesAction
         foreach ($entities as $entity) {
             $usedActivitiesForEntities[$entity->id] = [];
             foreach ($activities as $activity) {
-                array_push($usedActivitiesForEntities[$entity->id], $this->entityHasActivity($entity, $activity->name));
+                array_push($usedActivitiesForEntities[$entity->id],
+                    $this->countActivityInEntity($activity->name, $entity));
             }
         }
 
         return $usedActivitiesForEntities;
     }
 
-    private function entityHasActivity($entity, $name)
+    private function countActivityInEntity($name, $entity)
     {
         return $entity->activities->filter(function (Activity $activity) use ($name) {
             return $activity->name === $name;
