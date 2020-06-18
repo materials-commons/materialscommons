@@ -1,6 +1,7 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.experiments.show')}}" href="{{route('projects.experiments.show', [$project, $experiment])}}">
+        <a class="nav-link {{setActiveNavByName('projects.experiments.show')}}"
+           href="{{route('projects.experiments.show', [$project, $experiment])}}">
             Workflow
         </a>
     </li>
@@ -10,12 +11,12 @@
             Samples
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.experiments.activities-tab')}}"
-           href="{{route('projects.experiments.activities-tab', [$project, $experiment])}}">
-            Processes
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('projects.experiments.activities-tab')}}"--}}
+    {{--           href="{{route('projects.experiments.activities-tab', [$project, $experiment])}}">--}}
+    {{--            Processes--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
     {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link" href="#">Files</a>--}}
     {{--    </li>--}}

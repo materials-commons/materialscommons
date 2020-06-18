@@ -8,15 +8,13 @@ use App\Models\Project;
 
 class ShowExperimentWebController extends Controller
 {
+    use ExcelFilesCount;
+
     public function __invoke($projectId, $experimentId)
     {
         $project = Project::with('experiments')->findOrFail($projectId);
         $experiment = Experiment::with('workflows')->findOrFail($experimentId);
-        $excelFilesCount = $project->files()
-                                   ->where('mime_type',
-                                       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                                   ->where('current', true)
-                                   ->count();
+        $excelFilesCount = $this->getExcelFilesCount($project);
 
         // Datatables does case-insensitive sorting. The database is returning case sensitive, so
         // create a case insensitive list of the workflow items

@@ -22,6 +22,7 @@ class IndexEntitiesWebController extends Controller
         $entities = Entity::with('activities')
                           ->where('project_id', $project->id)
                           ->get();
+
         return view('app.projects.entities.index', [
             'project'        => $project,
             'activities'     => $activities,
