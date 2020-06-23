@@ -26,6 +26,10 @@
     @component('components.card')
         @slot('header')
             Sample: {{$entity->name}}
+
+            <a class="float-right action-link" href="{{route('projects.entities.show', [$project, $entity])}}">
+                <i class="fas fa-object-group mr-2"></i>Group By Process Type
+            </a>
         @endslot
 
         @slot('body')

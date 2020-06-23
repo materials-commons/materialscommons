@@ -26,6 +26,10 @@
     @component('components.card')
         @slot('header')
             Sample: {{$entity->name}}
+
+            <a class="float-right action-link" href="{{route('projects.entities.show-spread', [$project, $entity])}}">
+                <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
+            </a>
         @endslot
 
         @slot('body')
