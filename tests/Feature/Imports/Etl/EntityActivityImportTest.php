@@ -491,4 +491,31 @@ class EntityActivityImportTest extends TestCase
         $attrValue = AttributeValue::where('attribute_id', $attr->id)->first();
         $this->assertEquals("03/05/20", $attrValue->val["value"]);
     }
+
+    /** @test */
+    public function test_loading_spreadsheet_with_global_settings()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = factory(Experiment::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id);
+        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_global_settings.xlsx"));
+        $this->assertEquals(4, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'voltage', 'attributable_type' => Activity::class]);
+        $attr = Attribute::where('name', 'voltage')->first();
+        $attrValue = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals(10, $attrValue->val["value"]);
+        $this->assertEquals("v", $attrValue->unit);
+
+        $attr = Attribute::where('name', 'magnification')->first();
+        $attrValue = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals(5, $attrValue->val["value"]);
+    }
 }

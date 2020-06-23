@@ -14,10 +14,14 @@ use App\Models\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class EntityActivityImporter
 {
+    const GLOBAL_WORKSHEET_NAME = 'constants';
+
     private $projectId;
     private $experimentId;
     private $userId;
@@ -31,6 +35,7 @@ class EntityActivityImporter
     private $rows;
     private $currentSheetRows;
     private $getFileByPathAction;
+    private $globalSettings;
 
     public function __construct($projectId, $experimentId, $userId)
     {
@@ -44,35 +49,67 @@ class EntityActivityImporter
         $this->entityTracker = new EntityTracker();
         $this->activityTracker = new HashedActivityTracker();
         $this->getFileByPathAction = new GetFileByPathAction();
+        $this->globalSettings = new GlobalSettingsLoader();
     }
 
     public function execute($spreadsheetPath)
     {
+        $spreadsheet = $this->loadSpreadsheet($spreadsheetPath);
+        $this->loadGlobalSettingsIfExists($spreadsheet);
+        $this->processWorksheets($spreadsheet);
+        $this->afterImport();
+    }
+
+    private function loadSpreadsheet($path)
+    {
         $reader = new Xlsx();
         $reader->setReadEmptyCells(true);
         $reader->setReadDataOnly(false);
-        $spreadsheet = $reader->load($spreadsheetPath);
-        $worksheets = $spreadsheet->getAllSheets();
-        $blankRowCount = 0;
-        foreach ($worksheets as $worksheet) {
-            $this->beforeSheet($worksheet);
-            foreach ($worksheet->getRowIterator() as $row) {
-                if (!$this->onRow($row)) {
-                    // saw blank row
-                    $blankRowCount++;
-                } else {
-                    // Not a blank row so reset blankRowCount
-                    $blankRowCount = 0;
-                }
-                if ($blankRowCount >= 10) {
-                    // when we've seen 10 or more consecutive blank rows then
-                    // we stop processing data
-                    break;
-                }
-            }
-            $this->afterSheet();
+        return $reader->load($path);
+    }
+
+    private function loadGlobalSettingsIfExists(Spreadsheet $spreadsheet)
+    {
+        $worksheet = $spreadsheet->getSheetByName(self::GLOBAL_WORKSHEET_NAME);
+        if (is_null($worksheet)) {
+            return;
         }
-        $this->afterImport();
+        $this->globalSettings->loadGlobalWorksheet($worksheet);
+    }
+
+    private function processWorksheets(Spreadsheet $spreadsheet)
+    {
+        foreach ($spreadsheet->getAllSheets() as $worksheet) {
+            if ($worksheet->getTitle() == self::GLOBAL_WORKSHEET_NAME) {
+                // Skip processing the global worksheet as the sheet has already been processed
+                // and is used to hold settings that apply across sheets. A "normal" worksheet
+                // contains samples for the processing step, while the global worksheet contains
+                // settings to apply with processing steps.
+                continue;
+            }
+            $this->processWorksheet($worksheet);
+        }
+    }
+
+    private function processWorksheet(Worksheet $worksheet)
+    {
+        $blankRowCount = 0;
+        $this->beforeSheet($worksheet);
+        foreach ($worksheet->getRowIterator() as $row) {
+            if (!$this->onRow($row)) {
+                // saw blank row
+                $blankRowCount++;
+            } else {
+                // Not a blank row so reset blankRowCount
+                $blankRowCount = 0;
+            }
+            if ($blankRowCount >= 10) {
+                // when we've seen 10 or more consecutive blank rows then
+                // we stop processing data
+                break;
+            }
+        }
+        $this->afterSheet();
     }
 
     private function beforeSheet($worksheet)
@@ -383,6 +420,16 @@ class EntityActivityImporter
             ];
         })->toArray();
 
+        // Add global settings for worksheet (activity)
+        $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
+        foreach ($globalAttributes as $globalAttribute) {
+            array_push($attributes, [
+                'name'  => $globalAttribute->attributeHeader->name,
+                'unit'  => $globalAttribute->attributeHeader->unit,
+                'value' => $globalAttribute->value,
+            ]);
+        }
+
         $activity = $createActivityAction([
             'name'          => $rowTracker->activityName,
             'project_id'    => $this->projectId,
@@ -410,8 +457,9 @@ class EntityActivityImporter
                 $entity = $activity->entities()->where('name', $row->entityName)->first();
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
-                    $entityState = $ea->entityStates()->where('entity_id', $entity->id)->where('direction',
-                        'out')->first();
+                    $entityState = $ea->entityStates()->where('entity_id', $entity->id)
+                                      ->where('direction', 'out')
+                                      ->first();
                     $activity->entityStates()->attach($entityState, ['direction' => 'in']);
                 });
             });
