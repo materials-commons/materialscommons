@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebC
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
-use App\Http\Controllers\Web\Entities\ShowEntityWebController;
+use App\Http\Controllers\Web\Entities\ShowEntitySpreadWebController;
 use App\Http\Controllers\Web\Entities\StoreProjectEntityWebController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,14 +26,14 @@ Route::get('/projects/{project}/entitites/create', CreateProjectEntityWebControl
 Route::post('/projects/{project}/entities', StoreProjectEntityWebController::class)
      ->name('projects.entities.store');
 
-Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::class)
+Route::get('/projects/{project}/entities/{entity}', ShowEntitySpreadWebController::class)
      ->name('projects.entities.show');
 Route::get('/projects/{project}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.entities.files');
 Route::get('/projects/{project}/entities/{entity}/attributes', ShowEntityAttributesWebController::class)
      ->name('projects.entities.attributes');
 
-Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}', ShowEntityWebController::class)
+Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}', ShowEntitySpreadWebController::class)
      ->name('projects.experiments.entities.show');
 Route::get('/projects/{project}/experiments/{experiment}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.experiments.entities.files');
