@@ -1,6 +1,6 @@
 <div class="mt-2">
     <h5>
-        <a href="#">{{$activityType->name}} ({{$activityType->count}})</a>
+        {{$activityType->name}} ({{$activityType->count}})
     </h5>
     {{--    @isset($activity->description)--}}
     {{--        <form>--}}

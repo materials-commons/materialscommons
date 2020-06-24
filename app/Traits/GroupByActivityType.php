@@ -30,6 +30,10 @@ trait GroupByActivityType
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
+                 ->map(function ($attr) {
+                     $attr->val = json_decode($attr->val, true);
+                     return $attr;
+                 })
                  ->groupBy('name');
     }
 
@@ -58,8 +62,13 @@ trait GroupByActivityType
                           ->where('attributable_type', EntityState::class);
                  })
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->orderBy('attr_name')
                  ->distinct()
                  ->get()
+                 ->map(function ($attr) {
+                     $attr->val = json_decode($attr->val, true);
+                     return $attr;
+                 })
                  ->groupBy('name');
     }
 }
