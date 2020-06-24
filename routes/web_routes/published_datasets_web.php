@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatata
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetFileWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWebController;
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
+use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntitySpreadWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowImportPublishedDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
@@ -58,6 +59,9 @@ Route::get('/datasets/{dataset}/import-into/projects/{p}',
      ->name('datasets.import-into-project');
 
 // Entity
+
+Route::get('/datasets/{dataset}/entities/{entity}/spread', ShowPublishedDatasetEntitySpreadWebController::class)
+     ->name('datasets.entities.show-spread');
 
 Route::get('/datasets/{dataset}/entities/{entity}', ShowPublishedDatasetEntityWebController::class)
      ->name('datasets.entities.show');
