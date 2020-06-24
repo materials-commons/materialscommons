@@ -20,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class EntityActivityImporter
 {
-    const GLOBAL_WORKSHEET_NAME = 'constants';
+    const GLOBAL_WORKSHEET_NAME = 'mc constants';
 
     private $projectId;
     private $experimentId;
