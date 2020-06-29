@@ -3,7 +3,9 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
+use App\Models\File;
 use App\Traits\GetProjectFiles;
+use Ramsey\Uuid\Uuid;
 
 class CreateDatasetFilesTableAction
 {
@@ -25,13 +27,23 @@ class CreateDatasetFilesTableAction
             if (!$datasetFileSelection->isIncludedFile($filePath)) {
                 continue;
             }
-
-            $dataset->files()->attach($file->id);
+            $f = $this->duplicateFile($file);
+            $dataset->files()->attach($f->id);
         }
     }
 
     private function clearDatasetFiles(Dataset $dataset)
     {
         $dataset->files()->detach();
+    }
+
+    private function duplicateFile(File $file)
+    {
+        $f = $file->replicate(['project_id'])->fill([
+            'uuid'      => Uuid::uuid4()->toString(),
+            'uses_uuid' => blank($file->uses_uuid) ? $file->uuid : $file->uses_uuid,
+        ]);
+        $f->save();
+        return $f->refresh();
     }
 }
