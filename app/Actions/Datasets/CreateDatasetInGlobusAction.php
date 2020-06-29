@@ -26,10 +26,9 @@ class CreateDatasetInGlobusAction
         $this->endpointId = config('globus.endpoint');
     }
 
-    public function __invoke($datasetId, $isPrivate)
+    public function __invoke(Dataset $dataset, $isPrivate)
     {
         umask(0);
-        $dataset = Dataset::find($datasetId);
         $datasetDir = $this->getDatasetDir($dataset, $isPrivate);
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0700, true);

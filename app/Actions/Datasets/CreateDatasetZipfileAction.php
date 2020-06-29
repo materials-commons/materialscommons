@@ -18,14 +18,9 @@ class CreateDatasetZipfileAction
     use PathForFile;
     use GetProjectFiles;
 
-    public function __invoke($datasetId, $createDatasetFilesTable)
+    public function __invoke(Dataset $dataset)
     {
         umask(0);
-        $dataset = Dataset::find($datasetId);
-
-        if ($createDatasetFilesTable) {
-            $dataset->files()->detach();
-        }
 
         $datasetDir = $dataset->zipfileDir();
         if (!file_exists($datasetDir)) {
@@ -46,10 +41,6 @@ class CreateDatasetZipfileAction
                         echo "close and reopen\n";
                         $zip->close();
                         $zip->open($zipfile) or die("Error: Could not reopen Zip");
-                    }
-
-                    if ($createDatasetFilesTable) {
-                        $dataset->files()->attach($file->id);
                     }
 
                     $uuidPath = $this->getFilePathForFile($file);

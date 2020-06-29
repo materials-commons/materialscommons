@@ -106,6 +106,11 @@ class File extends Model implements Searchable
         return false;
     }
 
+    public function isFile()
+    {
+        return !$this->isDir();
+    }
+
     public function getSelectedAttribute()
     {
         return $this->selected;

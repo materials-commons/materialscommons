@@ -30,10 +30,8 @@ trait PathForFile
 
     public function getUuid(File $file)
     {
-        if (isset($file->uses_uuid)) {
-            if ($file->uses_uuid != "") {
-                return $file->uses_uuid;
-            }
+        if (!blank($file->uses_uuid)) {
+            return $file->uses_uuid;
         }
 
         return $file->uuid;
