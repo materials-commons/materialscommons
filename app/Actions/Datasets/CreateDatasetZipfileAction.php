@@ -4,7 +4,6 @@ namespace App\Actions\Datasets;
 
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
-use App\Models\File;
 use App\Traits\GetProjectFiles;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Storage;
@@ -29,32 +28,21 @@ class CreateDatasetZipfileAction
 
         $zip = new ZipArchive();
         $zipfile = $dataset->zipfilePath();
-        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
         $zip->open($zipfile, ZipArchive::CREATE) or die("Could not open archive");
 
         $maxFileCountBeforeReopen = 200;
-        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
-            if ($this->isFileEntry($file)) {
-                $filePath = "{$file->directory->path}/{$file->name}";
-                if ($datasetFileSelection->isIncludedFile($filePath)) {
-                    if ($zip->numFiles == $maxFileCountBeforeReopen) {
-                        echo "close and reopen\n";
-                        $zip->close();
-                        $zip->open($zipfile) or die("Error: Could not reopen Zip");
-                    }
-
-                    $uuidPath = $this->getFilePathForFile($file);
-                    $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
-                    $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
-                    $zip->addFile($fullPath, $pathInZipfile);
-                }
+        foreach ($dataset->files()->with('directory')->cursor() as $file) {
+            if ($zip->numFiles == $maxFileCountBeforeReopen) {
+                echo "close and reopen\n";
+                $zip->close();
+                $zip->open($zipfile) or die("Error: Could not reopen Zip");
             }
+
+            $uuidPath = $this->getFilePathForFile($file);
+            $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
+            $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
+            $zip->addFile($fullPath, $pathInZipfile);
         }
         $zip->close();
-    }
-
-    private function isFileEntry(File $file)
-    {
-        return $file->mime_type !== 'directory';
     }
 }

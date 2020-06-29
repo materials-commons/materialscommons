@@ -5,7 +5,6 @@ namespace App\Actions\Datasets;
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
-use App\Models\File;
 use App\Models\Project;
 use App\Traits\GetProjectFiles;
 use App\Traits\PathForFile;
@@ -34,26 +33,23 @@ class CreateDatasetInGlobusAction
             mkdir($datasetDir, 0700, true);
         }
 
-        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
-        foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
-            if ($this->isIncludedFile($datasetFileSelection, $file)) {
-                $dirPath = "{$datasetDir}{$file->directory->path}";
-                if (!file_exists($dirPath)) {
-                    mkdir($dirPath, 0777, true);
-                }
+        foreach ($dataset->files()->with('directory')->cursor() as $file) {
+            $dirPath = "{$datasetDir}{$file->directory->path}";
+            if (!file_exists($dirPath)) {
+                mkdir($dirPath, 0777, true);
+            }
 
-                $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
-                $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
-                try {
-                    if (!link($uuidPath, $filePath)) {
-                        Log::error("Unable to link {$uuidPath} to {$filePath}");
-                        echo "Unable to link {$uuidPath} to {$filePath}\n";
-                    }
-                } catch (\Exception $e) {
+            $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
+            $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
+            try {
+                if (!link($uuidPath, $filePath)) {
                     Log::error("Unable to link {$uuidPath} to {$filePath}");
-                    $msg = $e->getMessage();
-                    echo "Unable to link {$uuidPath} to {$filePath}: {$msg}\n";
+                    echo "Unable to link {$uuidPath} to {$filePath}\n";
                 }
+            } catch (\Exception $e) {
+                Log::error("Unable to link {$uuidPath} to {$filePath}");
+                $msg = $e->getMessage();
+                echo "Unable to link {$uuidPath} to {$filePath}: {$msg}\n";
             }
         }
 
@@ -67,21 +63,6 @@ class CreateDatasetInGlobusAction
         }
 
         return Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}");
-    }
-
-    private function isIncludedFile(DatasetFileSelection $datasetFileSelection, File $file)
-    {
-        if (!$this->isFileEntry($file)) {
-            return false;
-        }
-
-        $filePath = "{$file->directory->path}/{$file->name}";
-        return $datasetFileSelection->isIncludedFile($filePath);
-    }
-
-    private function isFileEntry(File $file)
-    {
-        return $file->mime_type !== 'directory';
     }
 
     private function setAcl(Dataset $dataset, $isPrivate)
