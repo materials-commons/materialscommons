@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CreateDatasetZipfile::class,
+        Commands\CreateDatasetZipfileCommand::class,
         Commands\ImportGlobusUploadCommand::class,
         Commands\ProcessFinishedGlobusTasksCommand::class,
     ];

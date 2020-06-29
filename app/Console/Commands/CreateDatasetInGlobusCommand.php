@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Datasets\CreateDatasetFilesTableAction;
 use App\Actions\Datasets\CreateDatasetInGlobusAction;
 use App\Actions\Globus\GlobusApi;
+use App\Models\Dataset;
 use Illuminate\Console\Command;
 
 class CreateDatasetInGlobusCommand extends Command
@@ -14,7 +16,8 @@ class CreateDatasetInGlobusCommand extends Command
      * @var string
      */
     protected $signature = 'mc:create-dataset-in-globus {datasetId : Dataset to place in globus}
-                                                        {--private : Make dataset private}';
+                                                        {--private : Make dataset private}
+                                                        {--create-dataset-files-table}';
 
     /**
      * The console command description.
@@ -40,10 +43,13 @@ class CreateDatasetInGlobusCommand extends Command
      */
     public function handle()
     {
-        $datasetId = $this->argument('datasetId');
-        $isPrivate = $this->option('private');
-        $globusApi = GlobusApi::createGlobusApi();
-        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($globusApi);
-        $createDatasetInGlobusAction($datasetId, $isPrivate);
+        $dataset = Dataset::findOrFail($this->argument('datasetId'));
+
+        if ($this->option('create-dataset-files-table')) {
+            (new CreateDatasetFilesTableAction())->execute($dataset);
+        }
+
+        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction(GlobusApi::createGlobusApi());
+        $createDatasetInGlobusAction($dataset, $this->option('private'));
     }
 }
