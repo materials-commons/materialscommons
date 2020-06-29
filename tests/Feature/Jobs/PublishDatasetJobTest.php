@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Jobs;
 
-use App\Jobs\PublishDatasetJob;
+use App\Jobs\Datasets\PublishDatasetJob;
 use App\Models\Activity;
 use App\Models\Dataset;
 use App\Models\Entity;

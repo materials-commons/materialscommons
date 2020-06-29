@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Datasets\DatasetResource;
-use App\Jobs\PublishDatasetJob;
+use App\Jobs\Datasets\PublishDatasetJob;
 use App\Models\Dataset;
 use Carbon\Carbon;
 

@@ -2,7 +2,7 @@
 
 namespace App\Actions\Datasets;
 
-use App\Jobs\PublishDatasetJob;
+use App\Jobs\Datasets\PublishDatasetJob;
 use App\Models\Dataset;
 use Carbon\Carbon;
 

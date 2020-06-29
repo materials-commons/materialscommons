@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Datasets;
 
 use App\Actions\Datasets\CreateDatasetInGlobusAction;
 use App\Actions\Datasets\CreateDatasetZipfileAction;
