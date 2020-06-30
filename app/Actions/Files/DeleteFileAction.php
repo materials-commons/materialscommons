@@ -41,12 +41,13 @@ class DeleteFileAction
 
     private function filesPointAtFile(File $file)
     {
-        if (isset($file->uses_uuid)) {
+        if (!blank($file->uses_uuid)) {
             // This file has a uses_uuid so nothing points at it as its not a file
             // with an underlying physical file. Instead it points at something itself.
             return false;
         }
 
+        // Count how many files have their uses_uuid set to this files uuid.
         $count = File::where('uses_uuid', $file->uuid)->count();
 
         return $count != 0;
