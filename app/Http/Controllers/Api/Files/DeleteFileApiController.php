@@ -8,8 +8,33 @@ use App\Models\File;
 
 class DeleteFileApiController extends Controller
 {
-    public function __invoke(DeleteFileAction $deleteFileAction, $projectId, File $file)
+    public function __invoke(DeleteFileAction $deleteFileAction, $projectId, $fileId)
     {
+        $file = File::withCount(['entityStates', 'activities', 'entities'])->findOrFail($fileId);
+        $force = request()->input('force', false);
+
+        // If no force flag then check if there are related objects and abort if true
+        if (!$force) {
+            abort_if($this->hasRelatedObjects($file), 400, "File has related objects");
+        }
+
         $deleteFileAction($file);
+    }
+
+    private function hasRelatedObjects(File $file)
+    {
+        if ($file->entity_states_count > 0) {
+            return true;
+        }
+
+        if ($file->activities_count > 0) {
+            return true;
+        }
+
+        if ($file->entities_count > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
