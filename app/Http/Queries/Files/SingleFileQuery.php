@@ -21,7 +21,7 @@ class SingleFileQuery extends FilesQueryBuilder
         $query = File::where('id', $fileId)
                      ->where('mime_type', '!=', 'directory')
                      ->with('directory')
-                     ->withCount(['entityStates', 'activities', 'entities', 'experiments']);
+                     ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
         parent::__construct($query, $request);
     }
 }
