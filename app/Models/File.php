@@ -32,12 +32,16 @@ class File extends Model implements Searchable
     protected $appends = ['selected'];
 
     protected $casts = [
-        'size'         => 'integer',
-        'current'      => 'boolean',
-        'owner_id'     => 'integer',
-        'project_id'   => 'integer',
-        'is_shortcut'  => 'boolean',
-        'directory_id' => 'integer',
+        'size'                => 'integer',
+        'current'             => 'boolean',
+        'owner_id'            => 'integer',
+        'project_id'          => 'integer',
+        'is_shortcut'         => 'boolean',
+        'directory_id'        => 'integer',
+        'experiments_count'   => 'integer',
+        'entities_count'      => 'integer',
+        'activities_count'    => 'integer',
+        'entity_states_count' => 'integer',
     ];
 
     private $selected;
@@ -69,7 +73,7 @@ class File extends Model implements Searchable
 
     public function previousVersions()
     {
-        return File::where('directory_id', $this->directory_id)->where('name', $this->name);
+        return $this->hasMany(File::class, 'directory_id')->where('name', $this->name);
     }
 
     public function datasets()
