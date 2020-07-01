@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Files;
 
 use App\Actions\Files\MoveFileAction;
 use App\Http\Controllers\Controller;
-use App\Http\Queries\Traits\GetFileQuery;
 use App\Http\Requests\Files\MoveFileRequest;
 use App\Http\Resources\Files\FileResource;
 use App\Models\File;
