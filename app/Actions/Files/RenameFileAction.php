@@ -27,6 +27,6 @@ class RenameFileAction
             }
         );
 
-        return $file->fresh();
+        return $file;
     }
 }

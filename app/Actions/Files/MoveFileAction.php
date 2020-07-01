@@ -29,6 +29,6 @@ class MoveFileAction
             }
         });
 
-        return $file->fresh();
+        return $file;
     }
 }

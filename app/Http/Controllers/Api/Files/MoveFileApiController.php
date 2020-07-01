@@ -4,24 +4,18 @@ namespace App\Http\Controllers\Api\Files;
 
 use App\Actions\Files\MoveFileAction;
 use App\Http\Controllers\Controller;
+use App\Http\Queries\Traits\GetFileQuery;
 use App\Http\Requests\Files\MoveFileRequest;
 use App\Http\Resources\Files\FileResource;
-use App\Models\File;
 
 class MoveFileApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  MoveFileRequest  $request
-     * @param  MoveFileAction  $moveFileAction
-     * @param  File  $file
-     * @return FileResource
-     */
-    public function __invoke(MoveFileRequest $request, MoveFileAction $moveFileAction, File $file)
+    use GetFileQuery;
+
+    public function __invoke(MoveFileRequest $request, MoveFileAction $moveFileAction, $fileId)
     {
         $toDirectoryId = $request->input('directory_id');
-        $file          = $moveFileAction($file, $toDirectoryId);
+        $file = $moveFileAction($this->findOrFail($fileId), $toDirectoryId);
         return new FileResource($file);
     }
 }
