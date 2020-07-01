@@ -73,7 +73,9 @@ class File extends Model implements Searchable
 
     public function previousVersions()
     {
-        return $this->hasMany(File::class, 'directory_id')->where('name', $this->name);
+        return $this->hasMany(File::class, 'directory_id', 'directory_id')
+                    ->where('name', $this->name)
+                    ->where('id', '<>', $this->id);
     }
 
     public function datasets()
@@ -95,6 +97,16 @@ class File extends Model implements Searchable
     {
         return $this->morphedByMany(Community::class, 'item', 'item2file');
     }
+
+    // Scopes
+
+    public function scopeWithCommon($query)
+    {
+        return $query->with('directory')
+                     ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
+    }
+
+    // Utility methods
 
     public function toHumanBytes()
     {

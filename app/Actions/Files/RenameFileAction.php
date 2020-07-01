@@ -22,7 +22,7 @@ class RenameFileAction
             function () use ($file, $previousVersions, $name) {
                 $file->update(['name' => $name]);
                 if ($previousVersions->isNotEmpty()) {
-                    File::whereIn('id', $previousVersions->pluck('id'))->update(['name' => $name]);
+                    File::whereIn('id', $previousVersions->pluck('id')->toArray())->update(['name' => $name]);
                 }
             }
         );
