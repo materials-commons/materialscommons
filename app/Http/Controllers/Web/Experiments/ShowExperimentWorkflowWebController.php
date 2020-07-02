@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
 
-class ShowExperimentWebController extends Controller
+class ShowExperimentWorkflowWebController extends Controller
 {
     use ExcelFilesCount;
 

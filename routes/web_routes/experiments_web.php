@@ -10,7 +10,7 @@ use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
-use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
+use App\Http\Controllers\Web\Experiments\ShowExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\StoreExperimentWebController;
 use App\Http\Controllers\Web\Experiments\UpdateExperimentWebController;
@@ -25,7 +25,6 @@ Route::prefix('/projects/{project}')->group(function () {
          ->name('projects.experiments.upload-excel');
 
     Route::get('/experiments', IndexExperimentsWebController::class)->name('projects.experiments.index');
-    Route::get('/experiments/{experiment}', ShowExperimentWebController::class)->name('projects.experiments.show');
 
     Route::patch('/experiments/{experiment}',
         UpdateExperimentWebController::class)->name('projects.experiments.update');
@@ -37,8 +36,11 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::delete('/experiments/{experiment}',
         DestroyExperimentWebController::class)->name('projects.experiments.destroy');
 
-    Route::get('/experiments/{experiment}/entities', ShowExperimentEntitiesWebController::class)
-         ->name('projects.experiments.entities-tab');
+    Route::get('/experiments/{experiment}',
+        ShowExperimentEntitiesWebController::class)->name('projects.experiments.show');
+
+    Route::get('/experiments/{experiment}/workflow', ShowExperimentWorkflowWebController::class)
+         ->name('projects.experiments.workflow');
 
     Route::get('/experiments/{experiment}/data-dictionary', ShowExperimentDataDictionaryWebController::class)
          ->name('projects.experiments.data-dictionary');
