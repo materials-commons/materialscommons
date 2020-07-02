@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\EntityState;
 use App\Models\Project;
-use App\ViewModels\DataDictionary\ShowDataDictionaryViewModel;
+use App\ViewModels\DataDictionary\ShowProjectDataDictionaryViewModel;
 use Illuminate\Support\Facades\DB;
 
 class IndexDataDictionaryForProjectWebController extends Controller
 {
     public function __invoke(Project $project)
     {
-        $viewModel = (new ShowDataDictionaryViewModel())
+        $viewModel = (new ShowProjectDataDictionaryViewModel())
             ->withProject($project)
             ->withActivityAttributes($this->getUniqueActivityAttributes($project->id))
             ->withEntityAttributes($this->getUniqueEntityAttributes($project->id));

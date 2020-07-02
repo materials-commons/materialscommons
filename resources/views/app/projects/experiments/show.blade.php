@@ -52,6 +52,8 @@
                 @include('app.projects.experiments.tabs.entities-tab')
                 {{--            @elseif (Request::routeIs('projects.experiments.activities-tab'))--}}
                 {{--                @include('app.projects.experiments.tabs.activities-tab')--}}
+            @elseif(Request::routeIs('projects.experiments.data-dictionary'))
+                @include('app.projects.experiments.tabs.data-dictionary')
             @endif
 
         @endslot

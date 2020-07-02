@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Experiments\DestroyExperimentWebController;
 use App\Http\Controllers\Web\Experiments\EditExperimentWebController;
 use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ReloadExperimentWebController;
+use App\Http\Controllers\Web\Experiments\ShowExperimentDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWebController;
 use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
@@ -38,6 +39,9 @@ Route::prefix('/projects/{project}')->group(function () {
 
     Route::get('/experiments/{experiment}/entities', ShowExperimentEntitiesWebController::class)
          ->name('projects.experiments.entities-tab');
+
+    Route::get('/experiments/{experiment}/data-dictionary', ShowExperimentDataDictionaryWebController::class)
+         ->name('projects.experiments.data-dictionary');
 
 //    Route::get('/experiments/{experiment}/activities', function (Project $project, Experiment $experiment) {
 //        $excelFilesCount = $project->files()

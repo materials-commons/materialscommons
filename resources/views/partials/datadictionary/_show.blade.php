@@ -4,7 +4,7 @@
     @endslot
 
     @slot('body')
-        <h5>Process Data Dictionary</h5>
+        <h5>Processes Data Dictionary</h5>
         <br>
         <table id="activities-dd" class="table table-hover" style="width:100%">
             <thead>
@@ -37,7 +37,7 @@
         <hr>
         <br>
 
-        <h5>Sample Data Dictionary</h5>
+        <h5>Samples Data Dictionary</h5>
         <br>
         <table id="entities-dd" class="table table-hover" style="width:100%">
             <thead>

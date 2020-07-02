@@ -1,24 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Web\DataDictionary;
+namespace App\Http\Controllers\Web\Experiments;
 
-use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\EntityState;
 use App\Models\Experiment;
 use App\Models\Project;
-use App\ViewModels\DataDictionary\ShowProjectDataDictionaryViewModel;
+use App\ViewModels\DataDictionary\ShowExperimentDataDictionaryViewModel;
 use Illuminate\Support\Facades\DB;
 
-class IndexDataDictionaryForExperimentWebController extends Controller
+class ShowExperimentDataDictionaryWebController
 {
+    use ExcelFilesCount;
+
     public function __invoke(Project $project, Experiment $experiment)
     {
-        $viewModel = (new ShowProjectDataDictionaryViewModel())
+        $viewModel = (new ShowExperimentDataDictionaryViewModel())
             ->withProject($project)
+            ->withExperiment($experiment)
+            ->withExcelFilesCount($this->getExcelFilesCount($project))
             ->withActivityAttributes($this->getUniqueActivityAttributes($experiment->id))
             ->withEntityAttributes($this->getUniqueEntityAttributes($experiment->id));
-        return view('app.projects.data-dictionary.index', $viewModel);
+        return view('app.projects.experiments.show', $viewModel);
     }
 
     private function getUniqueActivityAttributes($experimentId)
