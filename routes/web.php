@@ -112,6 +112,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/dashboard_web.php');
     require base_path('routes/web_routes/users_web.php');
     require base_path('routes/web_routes/data_dictionary_web.php');
+    require base_path('routes/web_routes/attributes_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 
@@ -119,7 +120,6 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
         [ProjectsDatatableController::class, 'getProjectExperiments'])->name('get_project_experiments');
 
     Route::name('projects.')->group(function () {
-
         Route::get('/projects/{project}/settings', [ProjectSettingsController::class, 'index'])->name('settings.index');
 
         // Route::resource('/projects', ProjectsController::class);

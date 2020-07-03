@@ -46,4 +46,16 @@ class ShowProjectDataDictionaryViewModel extends ViewModel
     {
         return $this->activityAttributes;
     }
+
+    public function activityAttributeRoute($attrName)
+    {
+        return route('projects.activity-attributes.show',
+            [$this->project, 'attribute' => $attrName]);
+    }
+
+    public function entityAttributeRoute($attrName)
+    {
+        return route('projects.entity-attributes.show',
+            [$this->project, 'attribute' => $attrName]);
+    }
 }

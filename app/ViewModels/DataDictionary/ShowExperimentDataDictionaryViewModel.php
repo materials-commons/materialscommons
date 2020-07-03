@@ -70,6 +70,18 @@ class ShowExperimentDataDictionaryViewModel extends ViewModel
         return $this->experiment;
     }
 
+    public function activityAttributeRoute($attrName)
+    {
+        return route('projects.experiments.activity-attributes.show',
+            [$this->project, $this->experiment, 'attribute' => $attrName]);
+    }
+
+    public function entityAttributeRoute($attrName)
+    {
+        return route('projects.experiments.entity-attributes.show',
+            [$this->project, $this->experiment, 'attribute' => $attrName]);
+    }
+
     public function excelFilesCount()
     {
         return $this->excelFilesCount;
