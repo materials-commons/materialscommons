@@ -15,7 +15,7 @@
                 <th>Max</th>
                 <th>Median</th>
                 <th>Mode</th>
-                <th>#</th>
+                <th># Values</th>
             </tr>
             </thead>
             <tbody>
@@ -48,7 +48,7 @@
                 <th>Max</th>
                 <th>Median</th>
                 <th>Mode</th>
-                <th>#</th>
+                <th># Values</th>
             </tr>
             </thead>
             <tbody>
