@@ -15,6 +15,7 @@
                 <th>Min</th>
                 <th>Max</th>
                 <th>Median</th>
+                <th>Avg</th>
                 <th>Mode</th>
                 <th># Values</th>
             </tr>
@@ -27,8 +28,9 @@
                     <td>{{$min($attrs)}}</td>
                     <td>{{$max($attrs)}}</td>
                     <td>{{$median($attrs)}}</td>
+                    <td>{{$average($attrs)}}</td>
                     <td>{{$mode($attrs)}}</td>
-                    <td>{{$numberOfMeasurements($attrs)}}</td>
+                    <td>{{$attrs->count()}}</td>
                 </tr>
             @endforeach
             </tbody>
