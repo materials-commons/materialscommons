@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\Datasets\RefreshPublishedDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetAndFolderWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetCommunitiesWebController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetDataDictionaryWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetExperimentsWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
@@ -121,6 +122,9 @@ Route::get('/projects/{project}/datasets/{dataset}/communities', ShowDatasetComm
 
 Route::get('/projects/{project}/datasets/{dataset}/experiments', ShowDatasetExperimentsWebController::class)
      ->name('projects.datasets.show.experiments');
+
+Route::get('/projects/{project}/datasets/{dataset}/data-dictionary', ShowDatasetDataDictionaryWebController::class)
+     ->name('projects.datasets.show.data-dictionary');
 
 Route::patch('/projects/{project}/datasets/{dataset}', UpdateDatasetWebController::class)
      ->name('projects.datasets.update');

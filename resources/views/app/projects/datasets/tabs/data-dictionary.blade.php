@@ -1,0 +1,1 @@
+@include('partials.datadictionary._show', ['name' => $dataset->name])

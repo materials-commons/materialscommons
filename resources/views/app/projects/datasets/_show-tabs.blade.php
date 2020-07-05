@@ -16,4 +16,6 @@
     @include('app.projects.datasets.tabs.experiments')
 @elseif(Request::routeIs('projects.datasets.show.communities'))
     @include('app.projects.datasets.tabs.communities')
+@elseif(Request::routeIs('projects.datasets.show.data-dictionary'))
+    @include('app.projects.datasets.tabs.data-dictionary')
 @endif
