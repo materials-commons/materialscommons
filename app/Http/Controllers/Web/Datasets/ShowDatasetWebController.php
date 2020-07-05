@@ -12,7 +12,7 @@ class ShowDatasetWebController extends Controller
 {
     public function __invoke(Request $request, Project $project, $datasetId)
     {
-        $dataset = Dataset::with('experiments', 'tags')->find($datasetId);
+        $dataset = Dataset::with('tags')->find($datasetId);
         $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);
         $filesAndDir = $getDatasetFilesAction($project->id, '/');
         $directory = $filesAndDir["directory"];

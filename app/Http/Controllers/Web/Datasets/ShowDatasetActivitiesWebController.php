@@ -10,7 +10,7 @@ class ShowDatasetActivitiesWebController extends Controller
 {
     public function __invoke(Project $project, $datasetId)
     {
-        $dataset = Dataset::with(['experiments', 'activities'])->find($datasetId);
+        $dataset = Dataset::with(['tags', 'activities'])->find($datasetId);
         return view('app.projects.datasets.show', compact('project', 'dataset'));
     }
 }

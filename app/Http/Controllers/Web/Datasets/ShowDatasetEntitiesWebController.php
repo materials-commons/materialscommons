@@ -12,7 +12,7 @@ class ShowDatasetEntitiesWebController extends Controller
 {
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, Project $project, $datasetId)
     {
-        $dataset = Dataset::with(['experiments', 'entities.activities'])->find($datasetId);
+        $dataset = Dataset::with(['experiments', 'entities.activities', 'tags'])->find($datasetId);
         $activities = DB::table('dataset2entity')
                         ->where('dataset_id', $datasetId)
                         ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')

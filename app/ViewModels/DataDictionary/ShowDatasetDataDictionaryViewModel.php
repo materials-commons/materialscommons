@@ -2,18 +2,26 @@
 
 namespace App\ViewModels\DataDictionary;
 
+use App\Models\Dataset;
 use App\Models\Project;
 
-class ShowProjectDataDictionaryViewModel extends AbstractShowDataDictionaryViewModel
+class ShowDatasetDataDictionaryViewModel extends AbstractShowDataDictionaryViewModel
 {
-    use AttributeStatistics;
-
     /** @var \App\Models\Project */
     private $project;
+
+    /** @var \App\Models\Dataset */
+    private $dataset;
 
     public function withProject(Project $project)
     {
         $this->project = $project;
+        return $this;
+    }
+
+    public function withDataset(Dataset $dataset)
+    {
+        $this->dataset = $dataset;
         return $this;
     }
 
@@ -22,15 +30,18 @@ class ShowProjectDataDictionaryViewModel extends AbstractShowDataDictionaryViewM
         return $this->project;
     }
 
+    public function dataset()
+    {
+        return $this->dataset;
+    }
+
     public function activityAttributeRoute($attrName)
     {
-        return route('projects.activity-attributes.show',
-            [$this->project, 'attribute' => $attrName]);
+        return "#";
     }
 
     public function entityAttributeRoute($attrName)
     {
-        return route('projects.entity-attributes.show',
-            [$this->project, 'attribute' => $attrName]);
+        return "#";
     }
 }

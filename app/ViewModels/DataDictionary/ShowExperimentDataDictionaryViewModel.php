@@ -4,9 +4,8 @@ namespace App\ViewModels\DataDictionary;
 
 use App\Models\Experiment;
 use App\Models\Project;
-use Spatie\ViewModels\ViewModel;
 
-class ShowExperimentDataDictionaryViewModel extends ViewModel
+class ShowExperimentDataDictionaryViewModel extends AbstractShowDataDictionaryViewModel
 {
     use AttributeStatistics;
 
@@ -16,8 +15,6 @@ class ShowExperimentDataDictionaryViewModel extends ViewModel
     /** @var \App\Models\Experiment */
     private $experiment;
 
-    private $entityAttributes;
-    private $activityAttributes;
     private $excelFilesCount;
 
     public function withProject(Project $project)
@@ -32,18 +29,6 @@ class ShowExperimentDataDictionaryViewModel extends ViewModel
         return $this;
     }
 
-    public function withEntityAttributes($entityAttributes)
-    {
-        $this->entityAttributes = $entityAttributes;
-        return $this;
-    }
-
-    public function withActivityAttributes($activityAttributes)
-    {
-        $this->activityAttributes = $activityAttributes;
-        return $this;
-    }
-
     public function withExcelFilesCount($excelFilesCount)
     {
         $this->excelFilesCount = $excelFilesCount;
@@ -53,16 +38,6 @@ class ShowExperimentDataDictionaryViewModel extends ViewModel
     public function project()
     {
         return $this->project;
-    }
-
-    public function entityAttributes()
-    {
-        return $this->entityAttributes;
-    }
-
-    public function activityAttributes()
-    {
-        return $this->activityAttributes;
     }
 
     public function experiment()

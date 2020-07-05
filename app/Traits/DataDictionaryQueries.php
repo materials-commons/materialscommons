@@ -159,4 +159,41 @@ trait DataDictionaryQueries
                  ->get()
                  ->groupBy('name');
     }
+
+    private function getUniqueActivityAttributesForDataset($datasetId)
+    {
+        return DB::table('attributes')
+                 ->select('name', 'unit', 'val')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('dataset2activity')
+                       ->select('activity_id')
+                       ->where('dataset_id', $datasetId)
+                 )
+                 ->where('attributable_type', Activity::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->orderBy('name')
+                 ->distinct()
+                 ->get()
+                 ->groupBy('name');
+    }
+
+    private function getUniqueEntityAttributesForDataset($datasetId)
+    {
+        return DB::table('attributes')
+                 ->select('name', 'unit', 'val')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('dataset2entity')
+                       ->select('entity_states.id')
+                       ->where('dataset_id', $datasetId)
+                       ->join('entity_states', 'dataset2entity.entity_id', '=', 'entity_states.entity_id')
+
+                 )
+                 ->where('attributable_type', EntityState::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->distinct()
+                 ->get()
+                 ->groupBy('name');
+    }
 }
