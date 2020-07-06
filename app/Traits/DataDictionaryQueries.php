@@ -166,9 +166,10 @@ trait DataDictionaryQueries
                  ->select('name', 'unit', 'val')
                  ->whereIn(
                      'attributable_id',
-                     DB::table('dataset2activity')
-                       ->select('activity_id')
+                     DB::table('dataset2entity')
+                       ->select('activity2entity.activity_id')
                        ->where('dataset_id', $datasetId)
+                       ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                  )
                  ->where('attributable_type', Activity::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
