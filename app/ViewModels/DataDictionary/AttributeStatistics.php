@@ -70,6 +70,11 @@ trait AttributeStatistics
                      return $decoded["value"];
                  })
                  ->mode();
-        return is_null($val) ? $val : $val[0];
+
+        if (is_null($val)) {
+            return $val;
+        }
+
+        return $c->count() === sizeof($val) ? null : implode(", ", $val);
     }
 }
