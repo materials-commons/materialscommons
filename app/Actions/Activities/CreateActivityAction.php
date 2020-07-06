@@ -26,6 +26,7 @@ class CreateActivityAction
                     'name'              => $attribute['name'],
                     'attributable_type' => Activity::class,
                     'attributable_id'   => $activity->id,
+                    'eindex'            => array_key_exists('eindex', $attribute) ? $attribute['eindex'] : null,
                 ]);
                 $unit = '';
                 if (array_key_exists('unit', $attribute)) {

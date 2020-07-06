@@ -36,6 +36,7 @@ class EntityActivityImporter
     private $currentSheetRows;
     private $getFileByPathAction;
     private $globalSettings;
+    private $currentSheetPosition;
 
     public function __construct($projectId, $experimentId, $userId)
     {
@@ -45,6 +46,7 @@ class EntityActivityImporter
         $this->rowNumber = 0;
         $this->rows = collect();
         $this->currentSheetRows = collect();
+        $this->currentSheetPosition = 1;
 
         $this->entityTracker = new EntityTracker();
         $this->activityTracker = new HashedActivityTracker();
@@ -79,6 +81,7 @@ class EntityActivityImporter
 
     private function processWorksheets(Spreadsheet $spreadsheet)
     {
+        $this->currentSheetPosition = 1;
         foreach ($spreadsheet->getAllSheets() as $worksheet) {
             if ($worksheet->getTitle() == self::GLOBAL_WORKSHEET_NAME) {
                 // Skip processing the global worksheet as the sheet has already been processed
@@ -88,6 +91,7 @@ class EntityActivityImporter
                 continue;
             }
             $this->processWorksheet($worksheet);
+            $this->currentSheetPosition++;
         }
     }
 
@@ -206,7 +210,8 @@ class EntityActivityImporter
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state)
     {
         $seenAttributes = collect();
-        $entityAttributes->each(function ($attr) use ($state, $seenAttributes, $entity) {
+        $attributePosition = 1;
+        $entityAttributes->each(function ($attr) use ($state, $entity, $seenAttributes, &$attributePosition) {
             if ($seenAttributes->has($attr->name)) {
                 $a = $seenAttributes->get($attr->name);
                 AttributeValue::create([
@@ -218,6 +223,7 @@ class EntityActivityImporter
                 $a = Attribute::create([
                     'name'              => $attr->name,
                     'attributable_id'   => $state->id,
+                    'eindex'            => $attributePosition,
                     'attributable_type' => EntityState::class,
                 ]);
                 AttributeValue::create([
@@ -226,6 +232,7 @@ class EntityActivityImporter
                     'val'          => ['value' => $attr->value],
                 ]);
                 $seenAttributes->put($attr->name, $a);
+                $attributePosition++;
             }
         });
     }
@@ -412,11 +419,13 @@ class EntityActivityImporter
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)
     {
         $createActivityAction = new CreateActivityAction();
-        $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) {
+        $attributePosition = 1;
+        $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) use (&$attributePosition) {
             return [
-                'name'  => $attr->name,
-                'value' => $attr->value,
-                'unit'  => $attr->unit,
+                'name'   => $attr->name,
+                'value'  => $attr->value,
+                'unit'   => $attr->unit,
+                'eindex' => $attributePosition++,
             ];
         })->toArray();
 
@@ -424,9 +433,10 @@ class EntityActivityImporter
         $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
         foreach ($globalAttributes as $globalAttribute) {
             array_push($attributes, [
-                'name'  => $globalAttribute->attributeHeader->name,
-                'unit'  => $globalAttribute->attributeHeader->unit,
-                'value' => $globalAttribute->value,
+                'name'   => $globalAttribute->attributeHeader->name,
+                'unit'   => $globalAttribute->attributeHeader->unit,
+                'value'  => $globalAttribute->value,
+                'eindex' => $attributePosition++,
             ]);
         }
 
@@ -435,6 +445,7 @@ class EntityActivityImporter
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
             'attributes'    => $attributes,
+            'eindex'        => $this->currentSheetPosition,
         ], $this->userId);
 
         $activity->entities()->attach($entity);
