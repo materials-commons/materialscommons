@@ -3,13 +3,17 @@
 namespace App\Jobs\Etl;
 
 use App\Imports\Etl\EntityActivityImporter;
+use App\Mail\SpreadsheetLoadFinishedMail;
+use App\Models\Experiment;
 use App\Models\File;
+use App\Models\Project;
 use App\Traits\PathForFile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ProcessSpreadsheetJob implements ShouldQueue
@@ -42,5 +46,8 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
         $importer->execute($filePath);
+        Mail::to('gtarcea@umich.edu')
+            ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId),
+                Experiment::findOrFail($this->experimentId)));
     }
 }

@@ -27,6 +27,10 @@ use App\Http\Controllers\Web2\Published\PublicDataProjectsController;
 use App\Http\Controllers\Web2\TasksController;
 use App\Http\Controllers\Web2\UsersController;
 use App\Mail\AnnouncementMail;
+use App\Mail\SpreadsheetLoadFinishedMail;
+use App\Models\Experiment;
+use App\Models\File;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 
@@ -69,6 +73,10 @@ Route::get('preview-mc-email', function () {
     $user = App\Models\User::where('email', 'admin@admin.org')->first();
 //    Mail::bcc($user->email)->send(new AnnouncementMail($user));
     return new AnnouncementMail($user);
+});
+
+Route::get('/preview-spreadsheet-email', function () {
+    return new SpreadsheetLoadFinishedMail(File::findOrFail(1), Project::findOrFail(1), Experiment::findOrFail(3));
 });
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');

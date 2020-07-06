@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 trait DataDictionaryQueries
 {
-    private function getUniqueActivityAttributesForExperiment($experimentId)
+    public function getUniqueActivityAttributesForExperiment($experimentId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -26,7 +26,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getActivityAttributeForExperiment($experimentId, $attrName)
+    public function getActivityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -45,7 +45,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getUniqueEntityAttributesForExperiment($experimentId)
+    public function getUniqueEntityAttributesForExperiment($experimentId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -64,7 +64,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getEntityAttributeForExperiment($experimentId, $attrName)
+    public function getEntityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -84,7 +84,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getUniqueActivityAttributesForProject($projectId)
+    public function getUniqueActivityAttributesForProject($projectId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -102,7 +102,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getActivityAttributeForProject($projectId, $attrName)
+    public function getActivityAttributeForProject($projectId, $attrName)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -121,7 +121,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getUniqueEntityAttributesForProject($projectId)
+    public function getUniqueEntityAttributesForProject($projectId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -140,7 +140,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getEntityAttributeForProject($projectId, $attrName)
+    public function getEntityAttributeForProject($projectId, $attrName)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -160,7 +160,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getUniqueActivityAttributesForDataset($datasetId)
+    public function getUniqueActivityAttributesForDataset($datasetId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -179,7 +179,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    private function getUniqueEntityAttributesForDataset($datasetId)
+    public function getUniqueEntityAttributesForDataset($datasetId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
