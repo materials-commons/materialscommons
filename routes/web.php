@@ -28,6 +28,7 @@ use App\Http\Controllers\Web2\TasksController;
 use App\Http\Controllers\Web2\UsersController;
 use App\Mail\AnnouncementMail;
 use App\Mail\SpreadsheetLoadFinishedMail;
+use App\Models\EtlRun;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
@@ -76,7 +77,8 @@ Route::get('preview-mc-email', function () {
 });
 
 Route::get('/preview-spreadsheet-email', function () {
-    return new SpreadsheetLoadFinishedMail(File::findOrFail(1), Project::findOrFail(1), Experiment::findOrFail(3));
+    return new SpreadsheetLoadFinishedMail(File::findOrFail(2), Project::findOrFail(1), Experiment::findOrFail(2),
+        EtlRun::findOrFail(1));
 });
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');

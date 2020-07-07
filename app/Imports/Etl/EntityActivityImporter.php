@@ -37,8 +37,9 @@ class EntityActivityImporter
     private $getFileByPathAction;
     private $globalSettings;
     private $currentSheetPosition;
+    private $etlState;
 
-    public function __construct($projectId, $experimentId, $userId)
+    public function __construct($projectId, $experimentId, $userId, EtlState $etlState)
     {
         $this->projectId = $projectId;
         $this->experimentId = $experimentId;
@@ -52,6 +53,7 @@ class EntityActivityImporter
         $this->activityTracker = new HashedActivityTracker();
         $this->getFileByPathAction = new GetFileByPathAction();
         $this->globalSettings = new GlobalSettingsLoader();
+        $this->etlState = $etlState;
     }
 
     public function execute($spreadsheetPath)
@@ -82,7 +84,9 @@ class EntityActivityImporter
     private function processWorksheets(Spreadsheet $spreadsheet)
     {
         $this->currentSheetPosition = 1;
-        foreach ($spreadsheet->getAllSheets() as $worksheet) {
+        $worksheets = $spreadsheet->getAllSheets();
+        $this->etlState->etlRun->n_sheets = sizeof($worksheets);
+        foreach ($worksheets as $worksheet) {
             if ($worksheet->getTitle() == self::GLOBAL_WORKSHEET_NAME) {
                 // Skip processing the global worksheet as the sheet has already been processed
                 // and is used to hold settings that apply across sheets. A "normal" worksheet
@@ -91,6 +95,7 @@ class EntityActivityImporter
                 continue;
             }
             $this->processWorksheet($worksheet);
+            $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
         }
     }
@@ -141,6 +146,7 @@ class EntityActivityImporter
         // All sheets processed and loaded, now build relationships
         // from parent column.
         $this->createActivityRelationships();
+        $this->etlState->done();
     }
 
     private function onRow(Row $row)
@@ -199,6 +205,9 @@ class EntityActivityImporter
             'experiment_id' => $this->experimentId,
         ], $this->userId);
         $this->entityTracker->addEntity($entity);
+        $this->etlState->etlRun->n_entities++;
+
+        /** @var EntityState $state */
         $state = $entity->entityStates()->first();
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
         // Add a new activity
@@ -450,6 +459,7 @@ class EntityActivityImporter
 
         $activity->entities()->attach($entity);
         $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
+        $this->etlState->etlRun->n_activities++;
 
         return $activity;
     }

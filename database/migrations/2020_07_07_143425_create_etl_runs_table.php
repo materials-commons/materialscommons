@@ -26,6 +26,7 @@ class CreateEtlRunsTable extends Migration
             $table->unsignedInteger('n_entity_attribute_values')->nullable();
 
             $table->unsignedInteger('n_sheets')->nullable();
+            $table->unsignedBigInteger('n_sheets_processed')->nullable();
 
             $table->unsignedInteger('n_files')->nullable();
             $table->unsignedInteger('n_files_not_found')->nullable();

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @mixin Builder
+ *
+ * @property integer $id
  */
 class EntityState extends Model
 {

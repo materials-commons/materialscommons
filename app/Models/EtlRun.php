@@ -3,8 +3,29 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin Builder
+ *
+ * @property integer $id
+ * @property integer $owner_id
+ * @property integer $n_activities
+ * @property integer $n_activity_attributes
+ * @property integer $n_activity_attribute_values
+ * @property integer $n_entities
+ * @property integer $n_entity_attributes
+ * @property integer $n_entity_attribute_values
+ * @property integer $n_sheets
+ * @property integer $n_sheets_processed
+ * @property integer $n_files
+ * @property integer $n_files_not_found
+ * @property string $files_not_found
+ * @property integer $n_columns
+ * @property integer $n_columns_skipped
+ * @property string $columns_skipped
+ */
 class EtlRun extends Model
 {
     use HasUUID;
@@ -26,6 +47,7 @@ class EtlRun extends Model
 
         // sheets
         'n_sheets'                    => 'integer',
+        'n_sheets_processed'          => 'integer',
 
         // files
         'n_files'                     => 'integer',
@@ -35,6 +57,16 @@ class EtlRun extends Model
         'n_columns'                   => 'integer',
         'n_columns_skipped'           => 'integer',
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function etlable()
+    {
+        return $this->morphTo('etlable');
+    }
 
     public function files()
     {

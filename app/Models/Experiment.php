@@ -10,6 +10,7 @@ use Spatie\Searchable\SearchResult;
 
 /**
  * @property integer $id
+ * @property integer $project_id
  * @property string name
  * @property integer owner_id
  * @property integer status
@@ -64,6 +65,11 @@ class Experiment extends Model implements Searchable
     public function datasets()
     {
         return $this->belongsToMany(Dataset::class, 'dataset2experiment', 'experiment_id', 'dataset_id');
+    }
+
+    public function etlruns()
+    {
+        return $this->morphMany(EtlRun::class, 'etlable');
     }
 
     public static function laratablesCustomAction($experiment)

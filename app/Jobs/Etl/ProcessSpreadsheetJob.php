@@ -3,6 +3,7 @@
 namespace App\Jobs\Etl;
 
 use App\Imports\Etl\EntityActivityImporter;
+use App\Imports\Etl\EtlState;
 use App\Mail\SpreadsheetLoadFinishedMail;
 use App\Models\Experiment;
 use App\Models\File;
@@ -44,10 +45,13 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $file = File::find($this->fileId);
         $uuidPath = $this->getFilePathForFile($file);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId);
+        $etlState = new EtlState($this->userId);
+        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
         $importer->execute($filePath);
+        $experiment = Experiment::findOrFail($this->experimentId);
+        $experiment->etlruns()->save($etlState->etlRun);
         Mail::to('gtarcea@umich.edu')
-            ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId),
-                Experiment::findOrFail($this->experimentId)));
+            ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId), $experiment,
+                $etlState->etlRun));
     }
 }
