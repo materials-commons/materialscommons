@@ -39,4 +39,9 @@ class Attribute extends Model
     {
         return $this->hasOne(AttributeValue::class, 'attribute_id', 'best_value_id');
     }
+
+    public function etlruns()
+    {
+        return $this->morphedByMany(EtlRun::class, 'item', 'item2attribute');
+    }
 }

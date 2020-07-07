@@ -78,6 +78,11 @@ class Activity extends Model implements Searchable
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
+    public function etlruns()
+    {
+        return $this->morphedByMany(EtlRun::class, 'item', 'item2activity');
+    }
+
     public function getTypeAttribute()
     {
         return "process";
