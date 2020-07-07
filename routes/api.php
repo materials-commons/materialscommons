@@ -72,6 +72,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // Users
     require base_path('routes/api_routes/users_api.php');
+
+    // Globus
+    require base_path('routes/api_routes/globus_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
