@@ -8,6 +8,7 @@ use App\Mail\SpreadsheetLoadFinishedMail;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
+use App\Models\User;
 use App\Traits\PathForFile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -50,7 +51,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $importer->execute($filePath);
         $experiment = Experiment::findOrFail($this->experimentId);
         $experiment->etlruns()->save($etlState->etlRun);
-        Mail::to('gtarcea@umich.edu')
+        Mail::to(User::findOrFail($this->userId))
             ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId), $experiment,
                 $etlState->etlRun));
     }

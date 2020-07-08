@@ -45,6 +45,6 @@ class SpreadsheetLoadFinishedMail extends Mailable
             ->withExperiment($this->experiment)
             ->withEntityAttributes($this->getUniqueEntityAttributesForExperiment($this->experiment->id))
             ->withActivityAttributes($this->getUniqueActivityAttributesForExperiment($this->experiment->id));
-        return $this->subject('Spreadsheet Load')->view('email.etl.finished', compact('viewModel'));
+        return $this->subject("Finished Loading {$this->file->name}")->view('email.etl.finished', compact('viewModel'));
     }
 }
