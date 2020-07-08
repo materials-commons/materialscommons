@@ -46,6 +46,7 @@ class ShowProjectWebController extends Controller
         return DB::table('files')
                  ->select('mime_type', DB::raw('count(*) as count'))
                  ->where('project_id', $projectId)
+                 ->where('mime_type', '<>', 'directory')
                  ->groupBy('mime_type')
                  ->orderBy('mime_type')
                  ->get();
