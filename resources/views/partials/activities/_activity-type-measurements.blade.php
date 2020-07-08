@@ -1,8 +1,7 @@
 <ul>
     @foreach($measurements as $attribute)
         <li>
-            {{$attribute->attr_name}}
-            : @json($attribute->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            {{$attribute->attr_name}}: {{$attribute->val["value"]}}
             @if ($attribute->unit != "")
                 {{$attribute->unit}}
             @endif
