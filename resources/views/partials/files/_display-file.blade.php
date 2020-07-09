@@ -16,7 +16,11 @@
 
         @case("text")
         <div class="ml-3">
-            <pre>{!!$fileContents($file)!!}</pre>
+            @if($file->size > 2000000)
+                <span class="ml-3">File too large to display</span>
+            @else
+                <pre>{!!$fileContents($file)!!}</pre>
+            @endif
         </div>
         @break
 
@@ -28,7 +32,11 @@
         @break
 
         @case("excel")
-        @include('partials.files._display-excel-file')
+        @if($file->size > 2000000)
+            <span class="ml-3">Excel file too large to display</span>
+        @else
+            @include('partials.files._display-excel-file')
+        @endif
         @break
 
         @case("office")
