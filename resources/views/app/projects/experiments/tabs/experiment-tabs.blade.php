@@ -5,12 +5,12 @@
             Samples
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.experiments.data-dictionary')}}"
-           href="{{route('projects.experiments.data-dictionary', [$project, $experiment])}}">
-            Data Dictionary
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('projects.experiments.data-dictionary')}}"--}}
+    {{--           href="{{route('projects.experiments.data-dictionary', [$project, $experiment])}}">--}}
+    {{--            Data Dictionary--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.workflow')}}"
            href="{{route('projects.experiments.workflow', [$project, $experiment])}}">

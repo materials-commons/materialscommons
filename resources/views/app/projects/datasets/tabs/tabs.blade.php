@@ -22,12 +22,12 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.data-dictionary')}}"
-           href="{{route('projects.datasets.show.data-dictionary', [$project, $dataset])}}">
-            Data Dictionary
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('projects.datasets.show.data-dictionary')}}"--}}
+    {{--           href="{{route('projects.datasets.show.data-dictionary', [$project, $dataset])}}">--}}
+    {{--            Data Dictionary--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.datasets.show.workflows')}}"
