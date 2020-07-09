@@ -44,8 +44,8 @@ class ConvertDatasetFilesCommand extends Command
             foreach ($dataset->files()->where('project_id', $dataset->project_id)->cursor() as $file) {
                 $f = $this->duplicateFile($file);
                 $dataset->files()->attach($f->id);
+                $dataset->files()->detach($file->id);
             }
-            $dataset->files()->where('project_id', $dataset->project_id)->detach();
         }
     }
 
