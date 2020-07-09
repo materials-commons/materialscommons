@@ -41,6 +41,7 @@
         @slot('body')
             @component('components.item-details', ['item' => $file])
                 <span class="ml-4">Mediatype: {{$file->mime_type}}</span>
+                <span class="ml-4">Size: {{$file->toHumanBytes()}}</span>
             @endcomponent
             <hr>
             <br>
