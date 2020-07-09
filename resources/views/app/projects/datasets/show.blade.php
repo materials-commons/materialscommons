@@ -17,10 +17,12 @@
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.datasets.delete', [$project, $dataset])}}">
-                <i class="fas fa-trash-alt mr-2"></i>Delete
-            </a>
+            @if(is_null($dataset->published_at))
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.datasets.delete', [$project, $dataset])}}">
+                    <i class="fas fa-trash-alt mr-2"></i>Delete
+                </a>
+            @endif
 
             @if (isset($dataset->published_at))
                 <a class="float-right action-link mr-4"

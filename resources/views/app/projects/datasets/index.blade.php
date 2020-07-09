@@ -57,10 +57,12 @@
                                 <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a href="{{route('projects.datasets.delete', [$project, $dataset])}}"
-                                   class="action-link">
-                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                </a>
+                                @if(is_null($dataset->published_at))
+                                    <a href="{{route('projects.datasets.delete', [$project, $dataset])}}"
+                                       class="action-link">
+                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                    </a>
+                                @endif
                             </div>
                         </td>
                     </tr>
