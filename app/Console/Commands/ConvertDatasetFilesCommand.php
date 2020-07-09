@@ -41,12 +41,14 @@ class ConvertDatasetFilesCommand extends Command
     public function handle()
     {
         foreach (Dataset::whereNotNull('published_at')->get() as $dataset) {
+            echo "Converting dataset {$dataset->name}...\n";
             foreach ($dataset->files()->where('project_id', $dataset->project_id)->cursor() as $file) {
                 $f = $this->duplicateFile($file);
                 $dataset->files()->attach($f->id);
                 $dataset->files()->detach($file->id);
             }
         }
+        echo "Done.\n";
     }
 
     private function duplicateFile(File $file)
