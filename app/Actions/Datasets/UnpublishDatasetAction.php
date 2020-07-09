@@ -25,6 +25,7 @@ class UnpublishDatasetAction
         }
 
         $dataset->update(['published_at' => null]);
+        $dataset->files()->delete();
         Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
         Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
 
