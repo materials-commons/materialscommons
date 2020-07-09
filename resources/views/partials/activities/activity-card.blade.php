@@ -2,7 +2,7 @@
     <h5>
         <a href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
     </h5>
-    @isset($activity->description)
+    @if(!blank($activity->description))
         <form>
             <div class="form-group">
                 <textarea class="form-control" readonly>{{$activity->description}}</textarea>
