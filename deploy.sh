@@ -13,3 +13,4 @@ chown -R nginx:nginx materialscommons
 systemctl stop supervisord
 sleep 10
 systemctl start supervisord
+systemctl status supervisord
