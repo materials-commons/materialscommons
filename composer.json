@@ -27,7 +27,7 @@
     "league/commonmark-extras": "^1.0",
     "maatwebsite/excel": "^3.1",
     "mavinoo/laravel-batch": "^2.0",
-    "santigarcor/laratrust": "5.2.*",
+    "santigarcor/laratrust": "^6.0",
     "spatie/laravel-backup": "^6.8",
     "spatie/laravel-json-api-paginate": "^1.5",
     "spatie/laravel-query-builder": "^2.0",
