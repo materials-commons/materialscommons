@@ -6,6 +6,7 @@ use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\Uploads\CreateGlobusUploadAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Globus\CreateGlobusProjectUploadDownloadRequest;
+use App\Http\Resources\Globus\GlobusUploadDownloadResource;
 use Illuminate\Support\Arr;
 
 class CreateGlobusUploadApiController extends Controller
@@ -16,6 +17,7 @@ class CreateGlobusUploadApiController extends Controller
         $validated = $request->validated();
         $projectId = $validated['project_id'];
         $createGlobusUploadAction = new CreateGlobusUploadAction(GlobusApi::createGlobusApi());
-        return $createGlobusUploadAction(Arr::except($validated, ['project_id']), $projectId, auth()->user());
+        return new GlobusUploadDownloadResource($createGlobusUploadAction(Arr::except($validated, ['project_id']),
+            $projectId, auth()->user()));
     }
 }

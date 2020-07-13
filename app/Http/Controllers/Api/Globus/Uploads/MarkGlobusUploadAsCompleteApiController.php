@@ -6,6 +6,7 @@ use App\Actions\Globus\GlobusApi;
 use App\Enums\GlobusStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Globus\GlobusRequest;
+use App\Http\Resources\Globus\GlobusUploadDownloadResource;
 use App\Models\GlobusUploadDownload;
 use Illuminate\Support\Facades\Log;
 
@@ -21,5 +22,6 @@ class MarkGlobusUploadAsCompleteApiController extends Controller
         }
 
         $globusUpload->update(['status' => GlobusStatus::Done]);
+        return new GlobusUploadDownloadResource($globusUpload);
     }
 }
