@@ -6,7 +6,6 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * @property integer $id
@@ -26,7 +25,6 @@ use Laratrust\Traits\LaratrustUserTrait;
  */
 class User extends Authenticatable
 {
-    use LaratrustUserTrait;
     use Notifiable;
     use HasUUID;
 
