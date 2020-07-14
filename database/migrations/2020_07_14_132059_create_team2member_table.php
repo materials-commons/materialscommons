@@ -19,7 +19,7 @@ class CreateTeam2memberTable extends Migration
             $table->unsignedBigInteger('team_id');
             $table->foreign('team_id')
                   ->references('id')
-                  ->on('labs')
+                  ->on('teams')
                   ->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');

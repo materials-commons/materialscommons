@@ -123,6 +123,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/users_web.php');
     require base_path('routes/web_routes/data_dictionary_web.php');
     require base_path('routes/web_routes/attributes_web.php');
+    require base_path('routes/web_routes/teams_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 

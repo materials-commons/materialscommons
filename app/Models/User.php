@@ -67,6 +67,16 @@ class User extends Authenticatable
         return $this->hasMany(Community::class, 'owner_id');
     }
 
+    public function adminTeams()
+    {
+        return $this->belongsToMany(Team::class, 'team2admin', 'user_id', 'team_id');
+    }
+
+    public function memberOfTeams()
+    {
+        return $this->belongsToMany(Team::class, 'team2member', 'user_id', 'team_id');
+    }
+
     public function globusUploads()
     {
         return $this->hasMany(GlobusUploadDownload::class, 'owner_id');

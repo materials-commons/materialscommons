@@ -15,6 +15,8 @@ use Spatie\Searchable\SearchResult;
  * @property integer $owner_id
  * @property array $home_page_files
  * @property array $home_page_sections
+ * @property \Illuminate\Support\Collection $members
+ * @property \Illuminate\Support\Collection $admins
  */
 class Team extends Model implements Searchable
 {
@@ -37,7 +39,7 @@ class Team extends Model implements Searchable
 
     public function projects()
     {
-        return $this->morphToMany(Project::class, 'item', 'item2team');
+        return $this->morphedByMany(Project::class, 'item', 'item2team');
     }
 
     public function members()
