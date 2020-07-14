@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProjectsTable extends Migration
+class CreateTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('teams', function (Blueprint $table) {
+            $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('disk')->nullable()->default('local');
             $table->text('description')->nullable();
-            $table->text('summary')->nullable();
-            $table->boolean('default_project')->default(false);
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_public')->default(false);
+            $table->json('home_page_files')->nullable();
+            $table->json('home_page_sections')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
@@ -43,6 +40,6 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('teams');
     }
 }

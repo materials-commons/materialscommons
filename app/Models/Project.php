@@ -46,6 +46,11 @@ class Project extends Model implements Searchable
         return $this->belongsToMany(Lab::class, 'lab2project', 'project_id', 'lab_id');
     }
 
+    public function teams()
+    {
+        return $this->morphToMany(Team::class, 'item2team');
+    }
+
     public function importedDatasets()
     {
         return $this->belongsToMany(Dataset::class, 'project2imported_dataset', 'project_id', 'dataset_id');
