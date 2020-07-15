@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Teams\DeleteTeamWebController;
 use App\Http\Controllers\Web\Teams\DestroyTeamWebController;
 use App\Http\Controllers\Web\Teams\EditTeamWebController;
 use App\Http\Controllers\Web\Teams\IndexTeamsWebController;
+use App\Http\Controllers\Web\Teams\ModifyTeamsUsersAndProjectsWebController;
 use App\Http\Controllers\Web\Teams\ShowTeamWebController;
 use App\Http\Controllers\Web\Teams\StoreTeamWebController;
 use App\Http\Controllers\Web\Teams\UpdateTeamWebController;
@@ -26,6 +27,9 @@ Route::get('/teams/{team}/edit', EditTeamWebController::class)
      ->name('teams.edit');
 Route::put('/teams/{team}/update', UpdateTeamWebController::class)
      ->name('teams.update');
+
+Route::get('/teams/{team}/modify-users-projects', ModifyTeamsUsersAndProjectsWebController::class)
+     ->name('teams.modify-users-projects');
 
 Route::get('/teams/{team}/delete', DeleteTeamWebController::class)
      ->name('teams.delete');

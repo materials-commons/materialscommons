@@ -159,6 +159,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
+                    <i class="fa-fw fas fa-users mr-2"></i>
+                    My Teams
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}" href="{{route('accounts.show')}}">
                     <i class="fa-fw fas fa-user mr-2"></i>
                     Account

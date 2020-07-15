@@ -16,16 +16,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
-                    <i class="fa-fw fas fa-users mr-2"></i>
-                    My Teams
+                <a class="nav-link fs-11" href="{{route('public.index')}}">
+                    <i class="fa-fw fas fa-globe mr-2"></i>
+                    Public Data
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11" href="{{route('public.index')}}">
-                    <i class="fa-fw fas fa-globe mr-2"></i>
-                    Public Data
+                <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
+                    <i class="fa-fw fas fa-users mr-2"></i>
+                    My Teams
                 </a>
             </li>
 

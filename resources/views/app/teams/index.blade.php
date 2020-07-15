@@ -10,6 +10,10 @@
     @component('components.card')
         @slot('header')
             Teams
+            <a class="action-link float-right"
+               href="{{route('teams.create')}}">
+                <i class="fas fa-plus mr-2"></i>Create Team
+            </a>
         @endslot
 
         @slot('body')
@@ -35,7 +39,21 @@
                         <td>{{$team->updated_at->diffForHumans()}}</td>
                         <td>{{$team->members->count() + $team->admins->count()}}</td>
                         <td>{{$team->projects->count()}}</td>
-                        <td></td>
+                        <td>
+                            <div class="float-right">
+                                <a href="{{route('teams.show', [$team])}}" class="action-link">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                                <a href="{{route('teams.modify-users-projects', [$team])}}" class="action-link">
+                                    <i class="fas fa-fw fa-edit"></i>
+                                </a>
+                                {{--                                @if(auth()->id() == $proj->owner_id)--}}
+                                {{--                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">--}}
+                                {{--                                        <i class="fas fa-fw fa-trash-alt"></i>--}}
+                                {{--                                    </a>--}}
+                                {{--                                @endif--}}
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
