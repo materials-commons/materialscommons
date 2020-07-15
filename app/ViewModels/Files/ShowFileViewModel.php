@@ -49,6 +49,10 @@ class ShowFileViewModel extends ViewModel
     public function fileExtension()
     {
         $pathinfo = pathinfo($this->file->name);
-        return $pathinfo["extension"];
+        if (isset($pathinfo["extension"])) {
+            return $pathinfo["extension"];
+        }
+
+        return "";
     }
 }
