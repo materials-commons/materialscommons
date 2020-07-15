@@ -39,6 +39,7 @@ class GenerateSiteMapCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         umask(0);
         $siteMapPath = Storage::disk('etc')->path('sitemap.xml');
         SitemapGenerator::create(config('app.url'))->writeToFile($siteMapPath);
