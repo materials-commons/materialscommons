@@ -37,13 +37,20 @@ class RefreshPublishedDatasetAction
 
     private function buildDatasetFiles(Dataset $dataset)
     {
+        $dataset->files()->delete();
+        Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
+        Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
+
         $syncActivitiesToPublishedDatasetAction = new SyncActivitiesToPublishedDatasetAction();
         $syncActivitiesToPublishedDatasetAction($dataset->id);
 
+        $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
+        $createDatasetFilesTableAction->execute($dataset);
+
         $createDatasetZipfileAction = new CreateDatasetZipfileAction();
-        $createDatasetZipfileAction($dataset->id, true);
+        $createDatasetZipfileAction($dataset);
 
         $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($this->globusApi);
-        $createDatasetInGlobusAction($dataset->id, false);
+        $createDatasetInGlobusAction($dataset, false);
     }
 }
