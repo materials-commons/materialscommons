@@ -68,7 +68,7 @@
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
+            <li class="nav-item mt-2">
                 <span class="ml-5">Organization</span>
             </li>
 
@@ -88,7 +88,7 @@
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
+            <li class="nav-item mt-2">
                 <span class="ml-5">Actions</span>
             </li>
 
@@ -147,7 +147,7 @@
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
+            <li class="nav-item mt-2">
                 <span class="ml-5">Settings</span>
             </li>
 
