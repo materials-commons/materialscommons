@@ -24,6 +24,74 @@
                 </a>
             </li>
 
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datadicitionary')}}"--}}
+            {{--                   href="{{route('projects.datadictionary.index', [$project])}}">--}}
+            {{--                    <i class="fa-fw fas fa-file-invoice mr-2"></i>--}}
+            {{--                    Data Dictionary--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
+
+            <li class="nav-item">
+                <span class="ml-5">Data</span>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
+                   href="{{route('projects.folders.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-folder mr-2"></i>
+                    Files
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
+                   href="{{route('projects.entities.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-cubes mr-2 "></i>
+                    Samples
+                </a>
+            </li>
+
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities')}}"--}}
+            {{--                   href="{{route('projects.activities.index', ['project' => $project->id])}}">--}}
+            {{--                    <i class="fa-fw fas fa-code-branch mr-2"></i>--}}
+            {{--                    Processes--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5"
+                   href="{{route('projects.workflows.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
+                    Workflows
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <span class="ml-5">Organization</span>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
+                   href="{{route('projects.experiments.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-flask mr-2"></i>
+                    Experiments
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
+                   href="{{route('projects.datasets.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-book mr-2"></i>
+                    Datasets
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <span class="ml-5">Actions</span>
+            </li>
+
             <li class="nav-item">
                 <div class="dropdown">
                     <a class="nav-link fs-11 ml-5 dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -56,54 +124,6 @@
                 </div>
             </li>
 
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datadicitionary')}}"--}}
-            {{--                   href="{{route('projects.datadictionary.index', [$project])}}">--}}
-            {{--                    <i class="fa-fw fas fa-file-invoice mr-2"></i>--}}
-            {{--                    Data Dictionary--}}
-            {{--                </a>--}}
-            {{--            </li>--}}
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
-                   href="{{route('projects.experiments.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-flask mr-2"></i>
-                    Experiments
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
-                   href="{{route('projects.entities.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-cubes mr-2 "></i>
-                    Samples
-                </a>
-            </li>
-
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities')}}"--}}
-            {{--                   href="{{route('projects.activities.index', ['project' => $project->id])}}">--}}
-            {{--                    <i class="fa-fw fas fa-code-branch mr-2"></i>--}}
-            {{--                    Processes--}}
-            {{--                </a>--}}
-            {{--            </li>--}}
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5"
-                   href="{{route('projects.workflows.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
-                    Workflows
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
-                   href="{{route('projects.folders.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-folder mr-2"></i>
-                    Files
-                </a>
-            </li>
-
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.uploads.index')}}"
                    href="{{route('projects.globus.uploads.index', [$project])}}">
@@ -121,18 +141,14 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
-                   href="{{route('projects.datasets.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-book mr-2"></i>
-                    Datasets
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link fs-11 ml-5" href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
                     Publish
                 </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <span class="ml-5">Settings</span>
             </li>
 
             <li class="nav-item">
