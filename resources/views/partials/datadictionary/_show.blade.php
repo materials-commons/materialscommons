@@ -13,9 +13,9 @@
                 <th>Units</th>
                 <th>Min</th>
                 <th>Max</th>
-                <th>Median</th>
-                <th>Avg</th>
-                <th>Mode</th>
+                {{--                <th>Median</th>--}}
+                {{--                <th>Avg</th>--}}
+                {{--                <th>Mode</th>--}}
                 <th># Values</th>
             </tr>
             </thead>
@@ -28,9 +28,9 @@
                     <td>{{$units($attrs)}}</td>
                     <td>{{$min($attrs)}}</td>
                     <td>{{$max($attrs)}}</td>
-                    <td>{{$median($attrs)}}</td>
-                    <td>{{$average($attrs)}}</td>
-                    <td>{{$mode($attrs)}}</td>
+                    {{--                    <td>{{$median($attrs)}}</td>--}}
+                    {{--                    <td>{{$average($attrs)}}</td>--}}
+                    {{--                    <td>{{$mode($attrs)}}</td>--}}
                     <td>{{$attrs->count()}}</td>
                 </tr>
             @endforeach
@@ -50,9 +50,9 @@
                 <th>Units</th>
                 <th>Min</th>
                 <th>Max</th>
-                <th>Median</th>
-                <th>Avg</th>
-                <th>Mode</th>
+                {{--                <th>Median</th>--}}
+                {{--                <th>Avg</th>--}}
+                {{--                <th>Mode</th>--}}
                 <th># Values</th>
             </tr>
             </thead>
@@ -65,9 +65,9 @@
                     <td>{{$units($attrs)}}</td>
                     <td>{{$min($attrs)}}</td>
                     <td>{{$max($attrs)}}</td>
-                    <td>{{$median($attrs)}}</td>
-                    <td>{{$average($attrs)}}</td>
-                    <td>{{$mode($attrs)}}</td>
+                    {{--                    <td>{{$median($attrs)}}</td>--}}
+                    {{--                    <td>{{$average($attrs)}}</td>--}}
+                    {{--                    <td>{{$mode($attrs)}}</td>--}}
                     <td>{{$attrs->count()}}</td>
                 </tr>
             @endforeach

@@ -6,7 +6,12 @@ trait AttributeStatistics
 {
     public function units($c)
     {
-        return implode(",", $c->pluck('unit')->unique()->toArray());
+        return implode(", ", $c->pluck('unit')
+                               ->filter(function ($u) {
+                                   return !blank($u);
+                               })
+                               ->unique()
+                               ->toArray());
     }
 
     public function min($c)
