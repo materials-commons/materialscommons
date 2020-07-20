@@ -42,7 +42,10 @@ class ImportGlobusUploadJob implements ShouldQueue
         $importGlobusUploadInProjectAction();
     }
 
-    public function fail($exception = null)
+    /**
+     * When the job fails mark it as done so that it will be picked up and processed again.
+     */
+    public function failed($exception = null)
     {
         $this->globusUpload->update(['status' => GlobusStatus::Done]);
     }

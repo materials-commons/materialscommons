@@ -21,7 +21,7 @@ trait GroupByActivityType
     private function getAttributesByActivityType($activityIds)
     {
         return DB::table('activities')
-                 ->select('activities.name', 'attributes.name as attr_name', 'unit', 'val')
+                 ->select('activities.name', 'attributes.name as attr_name', 'unit', 'val', 'attributes.eindex')
                  ->whereIn('activities.id', $activityIds)
                  ->join('attributes', function ($join) {
                      $join->on('attributes.attributable_id', '=', 'activities.id')
@@ -29,6 +29,7 @@ trait GroupByActivityType
                  })
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
+                 ->orderBy('attributes.eindex')
                  ->get()
                  ->map(function ($attr) {
                      $attr->val = json_decode($attr->val, true);
@@ -52,7 +53,7 @@ trait GroupByActivityType
     private function getMeasurementsByActivityType($activityIds)
     {
         return DB::table('activities')
-                 ->select('activities.name', 'attributes.name as attr_name', 'unit', 'val')
+                 ->select('activities.name', 'attributes.name as attr_name', 'unit', 'val', 'attributes.eindex')
                  ->whereIn('activities.id', $activityIds)
                  ->join('activity2entity_state', 'activities.id', '=',
                      'activity2entity_state.activity_id')
@@ -62,7 +63,7 @@ trait GroupByActivityType
                           ->where('attributable_type', EntityState::class);
                  })
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
-                 ->orderBy('attr_name')
+                 ->orderBy('attributes.eindex')
                  ->distinct()
                  ->get()
                  ->map(function ($attr) {

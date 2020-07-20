@@ -67,7 +67,7 @@ trait DataDictionaryQueries
     public function getEntityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
-                 ->select('name', 'unit', 'val')
+                 ->select('name', 'unit', 'val', 'attributes.id')
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2entity')
@@ -82,6 +82,11 @@ trait DataDictionaryQueries
                  ->distinct()
                  ->get()
                  ->groupBy('name');
+    }
+
+    public function getEntityAttributeEntitiesForExperiment($experimentId, $attrName)
+    {
+        // TBD Not sure what the query is...
     }
 
     public function getUniqueActivityAttributesForProject($projectId)
