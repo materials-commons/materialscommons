@@ -1,6 +1,6 @@
 @component('components.card')
     @slot('header')
-        Attribute Name here
+        Attribute: {{$attributeName}}
     @endslot
 
     @slot('body')
@@ -14,9 +14,9 @@
                 <th>Units</th>
                 <th>Min</th>
                 <th>Max</th>
-                <th>Median</th>
-                <th>Avg</th>
-                <th>Mode</th>
+                {{--                <th>Median</th>--}}
+                {{--                <th>Avg</th>--}}
+                {{--                <th>Mode</th>--}}
                 <th># Values</th>
             </tr>
             </thead>
@@ -27,9 +27,9 @@
                     <td>{{$units($attrs)}}</td>
                     <td>{{$min($attrs)}}</td>
                     <td>{{$max($attrs)}}</td>
-                    <td>{{$median($attrs)}}</td>
-                    <td>{{$average($attrs)}}</td>
-                    <td>{{$mode($attrs)}}</td>
+                    {{--                    <td>{{$median($attrs)}}</td>--}}
+                    {{--                    <td>{{$average($attrs)}}</td>--}}
+                    {{--                    <td>{{$mode($attrs)}}</td>--}}
                     <td>{{$attrs->count()}}</td>
                 </tr>
             @endforeach
@@ -48,8 +48,8 @@
             <tr>
                 <th>Value</th>
                 <th>Unit</th>
-                <th>Samples</th>
-                <th>Processes</th>
+                {{--                <th>Samples</th>--}}
+                {{--                <th>Processes</th>--}}
             </tr>
             </thead>
             <tbody>
@@ -60,8 +60,8 @@
                             @json($value($attr->val), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
                         </td>
                         <td>{{$attr->unit}}</td>
-                        <td>Samples here</td>
-                        <td>Processes here</td>
+                        {{--                        <td>Samples here</td>--}}
+                        {{--                        <td>Processes here</td>--}}
                     </tr>
                 @endforeach
             @endforeach

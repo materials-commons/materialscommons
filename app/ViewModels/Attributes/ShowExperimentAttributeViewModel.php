@@ -19,6 +19,8 @@ class ShowExperimentAttributeViewModel extends ViewModel
 
     private $attributeValues;
 
+    private $attributeName;
+
     public function withProject(Project $project)
     {
         $this->project = $project;
@@ -37,6 +39,12 @@ class ShowExperimentAttributeViewModel extends ViewModel
         return $this;
     }
 
+    public function withAttributeName($name)
+    {
+        $this->attributeName = $name;
+        return $this;
+    }
+
     public function project()
     {
         return $this->project;
@@ -50,6 +58,11 @@ class ShowExperimentAttributeViewModel extends ViewModel
     public function attributeValues()
     {
         return $this->attributeValues;
+    }
+
+    public function attributeName()
+    {
+        return $this->attributeName;
     }
 
     public function value($attrVal)
