@@ -64,7 +64,7 @@
                                 </td>
                                 <td>{{$user->affiliations}}</td>
                                 <td>
-                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}">
+                                    <a href="#">
                                         <i class="fa fa-fw fa-plus"></i>
                                     </a>
                                 </td>
@@ -74,9 +74,9 @@
                     </table>
                 </div>
                 <div class="col-6">
-                    <h4>Project Users</h4>
+                    <h4>Team Users</h4>
                     <br>
-                    <table id="project-users" class="table table-hover">
+                    <table id="team-users" class="table table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -85,7 +85,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($project->users as $puser)
+                        @foreach($team->users as $puser)
                             <tr>
                                 <td>
                                     <a href="{{route('projects.users.show', [$project, $puser])}}">{{$puser->name}}</a>
@@ -95,7 +95,7 @@
                                     @if($project->owner->id === $puser->id)
                                         (Project Owner)
                                     @else
-                                        <a href="{{route('projects.users.remove', [$project->id, $puser->id])}}">
+                                        <a href="#">
                                             <i class="fa fa-fw fa-trash"></i>
                                         </a>
                                     @endif

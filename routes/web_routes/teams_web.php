@@ -22,6 +22,11 @@ Route::post('/teams', StoreTeamWebController::class)
 
 Route::get('/teams/{team}', ShowTeamWebController::class)
      ->name('teams.show');
+Route::get('/teams/{team}/members', ShowTeamWebController::class)
+     ->name('teams.members.show');
+Route::get('/teams/{team}/admins', ShowTeamWebController::class)
+     ->name('teams.admins.show');
+
 
 Route::get('/teams/{team}/edit', EditTeamWebController::class)
      ->name('teams.edit');
