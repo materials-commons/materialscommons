@@ -209,14 +209,15 @@ class EntityActivityImporter
 
         /** @var EntityState $state */
         $state = $entity->entityStates()->first();
-        $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
+        $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
         // Add a new activity
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
 
-    private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state)
+    private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
+        RowTracker $rowTracker)
     {
         $seenAttributes = collect();
         $attributePosition = 1;
@@ -244,6 +245,23 @@ class EntityActivityImporter
                 $attributePosition++;
             }
         });
+        $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
+        foreach ($globalAttributes as $globalAttribute) {
+            if ($globalAttribute->attributeHeader->attrType === "entity") {
+                $a = Attribute::create([
+                    'name'              => $globalAttribute->attributeHeader->name,
+                    'attributable_id'   => $state->id,
+                    'eindex'            => $attributePosition,
+                    'attributable_type' => EntityState::class,
+                ]);
+                AttributeValue::create([
+                    'attribute_id' => $a->id,
+                    'unit'         => $globalAttribute->attributeHeader->unit,
+                    'val'          => ['value' => $globalAttribute->value],
+                ]);
+                $attributePosition++;
+            }
+        }
     }
 
     private function addFilesToActivityAndEntity(Collection $fileAttributes, ?Entity $entity, ?Activity $activity)
@@ -393,7 +411,7 @@ class EntityActivityImporter
             'entity_id' => $entity->id,
             'current'   => true,
         ]);
-        $this->addAttributesToEntity($row->entityAttributes, $entity, $state);
+        $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
@@ -441,12 +459,14 @@ class EntityActivityImporter
         // Add global settings for worksheet (activity)
         $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
         foreach ($globalAttributes as $globalAttribute) {
-            array_push($attributes, [
-                'name'   => $globalAttribute->attributeHeader->name,
-                'unit'   => $globalAttribute->attributeHeader->unit,
-                'value'  => $globalAttribute->value,
-                'eindex' => $attributePosition++,
-            ]);
+            if ($globalAttribute->attributeHeader->attrType === "activity") {
+                array_push($attributes, [
+                    'name'   => $globalAttribute->attributeHeader->name,
+                    'unit'   => $globalAttribute->attributeHeader->unit,
+                    'value'  => $globalAttribute->value,
+                    'eindex' => $attributePosition++,
+                ]);
+            }
         }
 
         $activity = $createActivityAction([

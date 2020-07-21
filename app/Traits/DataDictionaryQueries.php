@@ -19,7 +19,7 @@ trait DataDictionaryQueries
                        ->where('experiment_id', $experimentId)
                  )
                  ->where('attributable_type', Activity::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -38,7 +38,7 @@ trait DataDictionaryQueries
                  )
                  ->where('attributable_type', Activity::class)
                  ->where('name', $attrName)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -58,7 +58,7 @@ trait DataDictionaryQueries
 
                  )
                  ->where('attributable_type', EntityState::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
@@ -78,7 +78,7 @@ trait DataDictionaryQueries
                  )
                  ->where('attributable_type', EntityState::class)
                  ->where('name', $attrName)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
@@ -100,7 +100,7 @@ trait DataDictionaryQueries
                        ->where('project_id', $projectId)
                  )
                  ->where('attributable_type', Activity::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -119,7 +119,7 @@ trait DataDictionaryQueries
                  )
                  ->where('attributable_type', Activity::class)
                  ->where('name', $attrName)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -139,7 +139,7 @@ trait DataDictionaryQueries
 
                  )
                  ->where('attributable_type', EntityState::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
@@ -159,7 +159,7 @@ trait DataDictionaryQueries
                  )
                  ->where('attributable_type', EntityState::class)
                  ->where('name', $attrName)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
@@ -177,7 +177,7 @@ trait DataDictionaryQueries
                        ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                  )
                  ->where('attributable_type', Activity::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -197,7 +197,7 @@ trait DataDictionaryQueries
 
                  )
                  ->where('attributable_type', EntityState::class)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.id')
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
