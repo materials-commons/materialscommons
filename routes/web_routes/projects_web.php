@@ -28,9 +28,11 @@ use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
+use App\Http\Controllers\Web\Projects\Users\AddAdminToProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddUserToProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\IndexProjectUsersWebController;
 use App\Http\Controllers\Web\Projects\Users\ModifyProjectUsersWebController;
+use App\Http\Controllers\Web\Projects\Users\RemoveAdminFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +59,12 @@ Route::get('/projects/{project}/users/{user}/remove', RemoveUserFromProjectWebCo
 
 Route::get('/projects/{project}/users/{user}/add', AddUserToProjectWebController::class)
      ->name('projects.users.add');
+
+Route::get('/projects/{project}/admins/{user}/remove', RemoveAdminFromProjectWebController::class)
+     ->name('projects.admins.remove');
+
+Route::get('/projects/{project}/admins/{user}/add', AddAdminToProjectWebController::class)
+     ->name('projects.admins.add');
 
 Route::get('/projects/{project}/users', IndexProjectUsersWebController::class)
      ->name('projects.users.index');

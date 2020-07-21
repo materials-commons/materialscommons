@@ -40,8 +40,9 @@ class CreateTeamsForProjectsCommand extends Command
             echo "Creating team for {$project->name}\n";
             DB::transaction(function () use ($project) {
                 $team = Team::create([
-                    'name'     => "Team for {$project->name}",
-                    'owner_id' => $project->owner_id,
+                    'name'       => "Team for {$project->name}",
+                    'owner_id'   => $project->owner_id,
+                    'project_id' => $project->id,
                 ]);
 
                 $users = $project->users->filter(function (User $user) use ($project) {
