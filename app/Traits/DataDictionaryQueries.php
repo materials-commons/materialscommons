@@ -29,7 +29,7 @@ trait DataDictionaryQueries
     public function getActivityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
-                 ->select('name', 'unit', 'val', 'attribute_values.id')
+                 ->select('name', 'unit', 'val')
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2activity')
