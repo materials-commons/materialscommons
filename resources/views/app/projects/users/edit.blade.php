@@ -34,9 +34,25 @@
                                 </td>
                                 <td>{{$user->affiliations}}</td>
                                 <td>
-                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}">
-                                        <i class="fa fa-fw fa-plus"></i>
-                                    </a>
+                                    <div class="dropdown">
+                                        <a class="nav-link fs-11 ml-5 dropdown-toggle td-none" href="#" role="button"
+                                           id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa-fw fas fa-plus mr-2"></i>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item td-none"
+                                               href="{{route('projects.users.add', [$project, $user->id])}}">
+                                                As User
+                                            </a>
+                                            <a class="dropdown-item td-none" href="#">
+                                                As Admin
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {{--                                    <a href="{{route('projects.users.add', [$project->id, $user->id])}}">--}}
+                                    {{--                                        <i class="fa fa-fw fa-plus"></i>--}}
+                                    {{--                                    </a>--}}
                                 </td>
                             </tr>
                         @endforeach
