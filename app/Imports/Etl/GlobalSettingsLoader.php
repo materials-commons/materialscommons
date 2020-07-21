@@ -95,10 +95,6 @@ class GlobalSettingsLoader
                 case self::ATTRIBUTE_HEADER_CELL:
                     // Attribute type, name and optional unit
                     $globalSetting->attributeHeader = AttributeHeader::parse($value);
-                    if ($globalSetting->attributeHeader->attrType !== "activity") {
-                        // Only activity headers supported
-                        return;
-                    }
                     break;
 
                 case self::ATTRIBUTE_VALUE_CELL:
