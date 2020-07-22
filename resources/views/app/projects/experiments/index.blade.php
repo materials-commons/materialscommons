@@ -34,18 +34,20 @@
                 @foreach($project->experiments as $experiment)
                     <tr>
                         <td>
-                            <a href="{{route('projects.experiments.show', ['project' => $project->id, 'experiment' => $experiment->id])}}">{{$experiment->name}}</a>
+                            <a href="{{route('projects.experiments.show', [$project, $experiment])}}">
+                                {{$experiment->name}}
+                            </a>
                         </td>
                         <td>{{$experiment->summary}}</td>
                         <td>{{$experiment->owner->name}}</td>
                         <td>{{$experiment->updated_at->diffForHumans()}}</td>
                         <td>{{$experiment->updated_at}}</td>
                         <td>
-                            <a href="{{route('projects.experiments.show', ['project' => $project->id, 'experiment' => $experiment->id])}}"
+                            <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
                                class="action-link">
                                 <i class="fas fa-fw fa-eye"></i>
                             </a>
-                            <a href="{{route('projects.experiments.edit', ['project' => $project->id, 'experiment' => $experiment->id])}}"
+                            <a href="{{route('projects.experiments.edit', [$project, $experiment])}}"
                                class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>

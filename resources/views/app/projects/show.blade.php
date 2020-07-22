@@ -34,7 +34,7 @@
                 </a>
             @endcomponent
 
-            <h5>There are {{$objectCounts->filesCount}} files totalling {{formatBytes($projectSize)}}.</h5>
+            <h5>There are {{$objectCounts->filesCount}} files totalling {{formatBytes($totalFilesSize)}}.</h5>
             <div class="row ml-1">
                 <div class="col-4 bg-grey-9">
                     @include('app.projects._process-types')
