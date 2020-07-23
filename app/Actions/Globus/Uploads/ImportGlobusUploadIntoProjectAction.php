@@ -177,10 +177,11 @@ class ImportGlobusUploadIntoProjectAction
             $fileEntry->uses_id = $matchingFileChecksum->id;
             try {
                 if (!unlink($path)) {
-                    echo "unlink failed\n";
+                    return null;
                 }
             } catch (\Exception $e) {
                 // unlink through an exception
+                return null;
             }
         }
 
