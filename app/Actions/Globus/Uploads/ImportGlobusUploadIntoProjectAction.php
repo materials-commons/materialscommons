@@ -186,7 +186,6 @@ class ImportGlobusUploadIntoProjectAction
             }
         }
 
-
         $fileEntry->save();
 
         if ($existing->isNotEmpty()) {
