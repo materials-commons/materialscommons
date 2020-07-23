@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProcessFinishedGlobusUploadsAction
 {
-    public function __invoke($processUploadsInBackground, $dryRun)
+    public function __invoke($processUploadsInBackground, $dryRun, $logProcessing)
     {
         $getFinishedGlobusUploadsAction = new GetFinishedGlobusUploadsAction();
         $finishedUploads = $getFinishedGlobusUploadsAction();
@@ -23,15 +23,18 @@ class ProcessFinishedGlobusUploadsAction
             return;
         }
 
-        $this->processJobs($uniqueByProjectUploads, $processUploadsInBackground);
+        $this->processJobs($uniqueByProjectUploads, $processUploadsInBackground, $logProcessing);
     }
 
-    private function processJobs($uniqueByProjectUploads, $processUploadsInBackground)
+    private function processJobs($uniqueByProjectUploads, $processUploadsInBackground, $logProcessing)
     {
         $maxItemsToProcess = config('globus.max_items');
         foreach ($uniqueByProjectUploads as $upload) {
             $upload->update(['status' => GlobusStatus::Loading]);
             if ($processUploadsInBackground) {
+                if ($logProcessing) {
+                    echo "Processing job in background: {$upload->id} for project {$upload->project_id} {$maxItemsToProcess}\n";
+                }
                 $importGlobusUploadJob = new ImportGlobusUploadJob($upload, $maxItemsToProcess);
                 dispatch($importGlobusUploadJob)->onQueue('globus');
             } else {

@@ -12,7 +12,7 @@ class ProcessFinishedGlobusTasksCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:process-finished-globus-tasks {--background} {--dry-run}';
+    protected $signature = 'mc:process-finished-globus-tasks {--background} {--dry-run} {--log}';
 
     /**
      * The console command description.
@@ -39,6 +39,8 @@ class ProcessFinishedGlobusTasksCommand extends Command
     public function handle()
     {
         $processFinishedGlobusUploadsAction = new ProcessFinishedGlobusUploadsAction();
-        $processFinishedGlobusUploadsAction($this->option('background'), $this->option('dry-run'));
+        $processFinishedGlobusUploadsAction($this->option('background'),
+            $this->option('dry-run'),
+            $this->option('log'));
     }
 }
