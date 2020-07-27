@@ -7,7 +7,7 @@ use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Console\Command;
 
-class RefereshPublishedDatasetCommand extends Command
+class RefreshPublishedDatasetCommand extends Command
 {
     /**
      * The name and signature of the console command.
