@@ -188,6 +188,19 @@ class Dataset extends Model implements Searchable
         return !is_null($this->published_at);
     }
 
+    public function hasSelectedFiles()
+    {
+        if (sizeof($this->file_selection["include_files"]) !== 0) {
+            return true;
+        }
+
+        if (sizeof($this->file_selection["include_dirs"]) !== 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function importDirectory()
     {
         $now = now()->toIso8601String();

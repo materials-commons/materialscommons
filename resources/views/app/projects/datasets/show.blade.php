@@ -34,7 +34,7 @@
                    href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
                     <i class="fas fa-minus-circle mr-2"></i>Unpublish
                 </a>
-            @else
+            @elseif($dataset->hasSelectedFiles())
                 <a class="float-right action-link mr-4"
                    href="{{route('projects.datasets.publish', [$project, $dataset])}}">
                     <i class="fas fa-file-export mr-2"></i>Publish
@@ -68,7 +68,7 @@
                     <a class="action-link" href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
                         Done And Unpublish
                     </a>
-                @else
+                @elseif($dataset->hasSelectedFiles())
                     <a class="action-link" href="{{route('projects.datasets.publish', [$project, $dataset])}}">
                         Done And Publish
                     </a>
