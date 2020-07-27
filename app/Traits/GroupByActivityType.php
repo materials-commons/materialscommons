@@ -41,7 +41,7 @@ trait GroupByActivityType
     private function getFilesByActivityType($activityIds)
     {
         return DB::table('activities')
-                 ->select('activities.name', 'files.name as fname', 'files.id as fid')
+                 ->select('activities.name', 'files.name as fname', 'files.id as fid', 'files.mime_type as mime_type')
                  ->whereIn('activities.id', $activityIds)
                  ->join('activity2file', 'activity2file.activity_id', '=', 'activities.id')
                  ->join('files', 'activity2file.file_id', '=', 'files.id')
