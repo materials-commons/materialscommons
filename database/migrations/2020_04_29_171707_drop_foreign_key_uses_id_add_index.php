@@ -26,6 +26,7 @@ class DropForeignKeyUsesIdAddIndex extends Migration
         if (env('DB_CONNECTION') == 'sqlite') {
             return;
         }
+
         try {
             DB::statement("ALTER TABLE files DROP FOREIGN KEY {$name}");
         } catch (QueryException $e) {
