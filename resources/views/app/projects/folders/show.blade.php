@@ -65,6 +65,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Size</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,6 +84,14 @@
                         </td>
                         <td>{{$file->mime_type}}</td>
                         <td>{{$file->toHumanBytes()}}</td>
+                        <td class="col-lg-2">
+                            @if($file->isImage())
+                                <a href="{{route('projects.files.display', [$project, $file])}}">
+                                    <img src="{{route('projects.files.display', [$project, $file])}}"
+                                         class="img-fluid">
+                                </a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

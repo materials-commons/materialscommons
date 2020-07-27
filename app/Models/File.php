@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FileType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ use Spatie\Searchable\SearchResult;
 class File extends Model implements Searchable
 {
     use HasUUID;
+    use FileType;
 
     protected $guarded = ['id'];
 
@@ -74,8 +76,8 @@ class File extends Model implements Searchable
     public function previousVersions()
     {
         return $this->hasMany(File::class, 'directory_id', 'directory_id')
-                    ->where('name', $this->name)
-                    ->where('id', '<>', $this->id);
+            ->where('name', $this->name)
+            ->where('id', '<>', $this->id);
     }
 
     public function datasets()
@@ -108,7 +110,7 @@ class File extends Model implements Searchable
     public function scopeWithCommon($query)
     {
         return $query->with('directory')
-                     ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
+            ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
     // Utility methods
@@ -214,6 +216,11 @@ class File extends Model implements Searchable
         }
 
         return $this->isConvertibleOfficeDocument();
+    }
+
+    public function isImage()
+    {
+        return $this->fileType($this) === "image";
     }
 
     public function shouldBeConverted()
