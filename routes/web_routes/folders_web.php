@@ -3,6 +3,8 @@
 use App\Http\Controllers\Web\Folders\CreateFolderWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
+use App\Http\Controllers\Web\Folders\DeleteFolderWebController;
+use App\Http\Controllers\Web\Folders\DestroyFolderWebController;
 use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
@@ -39,6 +41,11 @@ Route::get('/projects/{project}/getRootFolder',
     GetRootFolderDatatableWebController::class)->name('projects.get_root_folder');
 Route::get('/projects/{project}/folder/{folder}/getFolder', GetFolderDatatableWebController::class)
      ->name('projects.get_folder');
+
+Route::get('/projects/{project}/folders/{dir}/delete', DeleteFolderWebController::class)
+     ->name('projects.folders.delete');
+Route::delete('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
+     ->name('projects.folders.destroy');
 
 
 
