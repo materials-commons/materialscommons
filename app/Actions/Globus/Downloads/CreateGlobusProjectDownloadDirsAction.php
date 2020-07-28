@@ -11,7 +11,6 @@ use App\Models\GlobusUploadDownload;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class CreateGlobusProjectDownloadDirsAction
 {
@@ -19,11 +18,13 @@ class CreateGlobusProjectDownloadDirsAction
 
     private $globusApi;
     private $endpointId;
+    private $knownDirectories;
 
     public function __construct(GlobusApi $globusApi)
     {
         $this->globusApi = $globusApi;
         $this->endpointId = config('globus.endpoint');
+        $this->knownDirectories = [];
     }
 
     public function __invoke(GlobusUploadDownload $globusDownload, $user)
@@ -33,27 +34,25 @@ class CreateGlobusProjectDownloadDirsAction
         $allDirs = File::where('project_id', $globusDownload->project_id)
                        ->where('mime_type', 'directory')
                        ->orderBy('path')
-                       ->get();
+                       ->cursor();
 
         $baseDir = Storage::disk('mcfs')->path("__globus_downloads/{$globusDownload->uuid}");
         $globusPath = "/__globus_downloads/{$globusDownload->uuid}/";
 
-        $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
-        $this->createDirs($dirsToCreate, $baseDir);
+//        $dirsToCreate = $this->determineMinimumSetOfDirsToCreate($allDirs);
+//        $this->createDirs($dirsToCreate, $baseDir);
 
         foreach ($allDirs as $dir) {
             $files = File::where('directory_id', $dir->id)
                          ->where('current', true)
                          ->whereNull('path')
-                         ->get();
+                         ->cursor();
             foreach ($files as $file) {
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     $dirPathForFilePartial = "__globus_downloads/{$globusDownload->uuid}{$dir->path}";
-                    if (!Storage::disk('mcfs')->exists($dirPathForFilePartial)) {
-                        Storage::disk('mcfs')->makeDirectory($dirPathForFilePartial);
-                    }
+                    $this->createDirIfNotExists($dirPathForFilePartial);
                     if (!link($uuidPath, $filePath)) {
                         echo "Unable to link {$uuidPath} to {$filePath}\n";
                         Log::error("Unable to link {$uuidPath} to {$filePath}");
@@ -79,40 +78,57 @@ class CreateGlobusProjectDownloadDirsAction
         return $globusDownload->fresh();
     }
 
-    private function determineMinimumSetOfDirsToCreate($allDirs)
+    private function createDirIfNotExists($dirPath)
     {
-        $dirsToKeep = collect();
-        $previousDir = $allDirs[0];
-        foreach ($allDirs as $dir) {
-            if (Str::startsWith($dir->path, $previousDir->path)) {
-                $previousDir = $dir;
-            } else {
-                $dirsToKeep->put($previousDir->path, true);
-                $previousDir = $dir;
-            }
+        if (array_key_exists($dirPath, $this->knownDirectories)) {
+            return;
         }
 
-        $lastDir = $allDirs->last();
-        if (!$dirsToKeep->contains($lastDir->path)) {
-            $dirsToKeep->put($lastDir->path, true);
+        if (Storage::disk('mcfs')->exists($dirPath)) {
+            $this->knownDirectories[$dirPath] = true;
+            return;
         }
 
-        return $dirsToKeep->keys()->all();
+        Storage::disk('mcfs')->makeDirectory($dirPath);
+        $p = Storage::disk('mcfs')->path($dirPath);
+        chmod($p, 0777);
+        $this->knownDirectories[$dirPath] = true;
     }
 
-    private function createDirs($dirsToKeep, $basePath)
-    {
-        foreach ($dirsToKeep as $dir) {
-            try {
-                $path = "{$basePath}{$dir}";
-                if (!file_exists($path)) {
-                    mkdir($path, 0777, true);
-                }
-            } catch (\Exception $e) {
-                // ignore
-            }
-        }
-    }
+//    private function determineMinimumSetOfDirsToCreate($allDirs)
+//    {
+//        $dirsToKeep = collect();
+//        $previousDir = $allDirs[0];
+//        foreach ($allDirs as $dir) {
+//            if (Str::startsWith($dir->path, $previousDir->path)) {
+//                $previousDir = $dir;
+//            } else {
+//                $dirsToKeep->put($previousDir->path, true);
+//                $previousDir = $dir;
+//            }
+//        }
+//
+//        $lastDir = $allDirs->last();
+//        if (!$dirsToKeep->contains($lastDir->path)) {
+//            $dirsToKeep->put($lastDir->path, true);
+//        }
+//
+//        return $dirsToKeep->keys()->all();
+//    }
+//
+//    private function createDirs($dirsToKeep, $basePath)
+//    {
+//        foreach ($dirsToKeep as $dir) {
+//            try {
+//                $path = "{$basePath}{$dir}";
+//                if (!file_exists($path)) {
+//                    mkdir($path, 0777, true);
+//                }
+//            } catch (\Exception $e) {
+//                // ignore
+//            }
+//        }
+//    }
 
     private function setAclOnPath($globusPath, $globusUserId)
     {
