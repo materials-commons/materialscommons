@@ -39,7 +39,7 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
         Queue::assertNothingPushed();
 
         $processFinishedGlobusUploadsAction = new ProcessFinishedGlobusUploadsAction();
-        $processFinishedGlobusUploadsAction(true);
+        $processFinishedGlobusUploadsAction(true, false, false);
         Queue::assertNothingPushed();
     }
 
@@ -71,7 +71,7 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
         Queue::fake();
         Queue::assertNothingPushed();
         $processFinishedGlobusUploadsAction = new ProcessFinishedGlobusUploadsAction();
-        $processFinishedGlobusUploadsAction(true);
+        $processFinishedGlobusUploadsAction(true, false, false);
         Queue::assertPushedOn('globus', ImportGlobusUploadJob::class);
         $this->assertEquals(1, Queue::size('globus'));
         Queue::assertPushed(ImportGlobusUploadJob::class, 1);
