@@ -163,7 +163,9 @@ class ImportGlobusUploadIntoProjectAction
         ]);
 
         $existing = File::where('directory_id', $currentDir->id)->where('name', $fileEntry->name)->get();
-        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
+        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
+                                    ->whereNull('uses_uuid')
+                                    ->first();
 
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
@@ -176,6 +178,11 @@ class ImportGlobusUploadIntoProjectAction
             // processing of all files.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
+            if (!$matchingFileChecksum->realFileExists()) {
+                if (!$this->moveFileIntoProject($path, $matchingFileChecksum)) {
+                    return null;
+                }
+            }
             try {
                 if (!unlink($path)) {
                     return null;

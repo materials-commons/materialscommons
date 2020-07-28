@@ -38,6 +38,9 @@ class CreateFileAction
             // Matching file found, so point at it.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
+            if (!$matchingFileChecksum->realFileExists()) {
+                $this->saveFile($matchingFileChecksum, $matchingFileChecksum->uuid);
+            }
         }
 
         $fileEntry->save();
