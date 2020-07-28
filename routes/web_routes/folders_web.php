@@ -7,11 +7,13 @@ use App\Http\Controllers\Web\Folders\DeleteFolderWebController;
 use App\Http\Controllers\Web\Folders\DestroyFolderWebController;
 use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
+use App\Http\Controllers\Web\Folders\RenameFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowRootFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Folders\StoreFolderWebController;
 use App\Http\Controllers\Web\Folders\UpdateMoveFilesWebController;
+use App\Http\Controllers\Web\Folders\UpdateRenameFolderWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/{project}/folders/{folder}/create', CreateFolderWebController::class)
@@ -46,6 +48,11 @@ Route::get('/projects/{project}/folders/{dir}/delete', DeleteFolderWebController
      ->name('projects.folders.delete');
 Route::delete('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
      ->name('projects.folders.destroy');
+
+Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController::class)
+     ->name('projects.folder.rename');
+Route::put('/projects/{project}/folders/{dir}/rename', UpdateRenameFolderWebController::class)
+     ->name('projects.folder.rename.update');
 
 
 
