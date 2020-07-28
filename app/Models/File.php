@@ -176,6 +176,11 @@ class File extends Model implements Searchable
         return "{$dirPath}/{$uuid}";
     }
 
+    public function realFileExists()
+    {
+        return Storage::disk('mcfs')->exists($this->realPathPartial());
+    }
+
     public function getFileUuidToUse()
     {
         $uuid = $this->uuid;
