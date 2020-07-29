@@ -50,9 +50,9 @@ Route::delete('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebContr
      ->name('projects.folders.destroy');
 
 Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController::class)
-     ->name('projects.folder.rename');
+     ->name('projects.folders.rename');
 Route::put('/projects/{project}/folders/{dir}/rename', UpdateRenameFolderWebController::class)
-     ->name('projects.folder.rename.update');
+     ->name('projects.folders.rename.update');
 
 
 

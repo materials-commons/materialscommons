@@ -60,7 +60,14 @@
             @if(sizeof($dirPaths) !== 1 && $files->count() === 0)
                 <a class="float-right action-link mr-4"
                    href="{{route('projects.folders.delete', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-trash mr-2"></i>Delete Directory
+                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                </a>
+            @endif
+
+            @if(sizeof($dirPaths) !== 1)
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.folders.rename', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
             @endif
         @endslot
