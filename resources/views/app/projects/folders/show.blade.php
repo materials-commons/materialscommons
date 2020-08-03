@@ -98,14 +98,16 @@
                         </td>
                         <td>{{$file->mime_type}}</td>
                         <td>{{$file->toHumanBytes()}}</td>
-                        <td class="col-lg-2">
+                        <td>
                             @if($file->isImage())
                                 <a href="{{route('projects.files.display', [$project, $file])}}">
+
                                     <img src="{{route('projects.files.display', [$project, $file])}}"
-                                         class="img-fluid">
+                                         style="width: 12rem">
                                 </a>
                             @endif
                         </td>
+
                     </tr>
                 @endforeach
                 </tbody>
