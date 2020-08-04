@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Traits\GetRequestParameterId;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UserCanAccessProject
@@ -54,7 +55,34 @@ class UserCanAccessProject
 
     private function canAccessPrivateProject($projectId)
     {
-        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
-        return $count == 1;
+        if ($this->userIsMember($projectId)) {
+            return true;
+        }
+
+        return $this->userIsProjectAdmin($projectId);
+//        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
+//        return $count == 1;
+    }
+
+    private function userIsMember($projectId)
+    {
+        $count = DB::table('team2member')
+                   ->whereIn('team_id', function ($q) use ($projectId) {
+                       $q->select('team_id')->from('projects')->where('id', $projectId);
+                   })
+                   ->where('user_id', auth()->id())
+                   ->count();
+        return $count != 0;
+    }
+
+    private function userIsProjectAdmin($projectId)
+    {
+        $count = DB::table('team2admin')
+                   ->whereIn('team_id', function ($q) use ($projectId) {
+                       $q->select('team_id')->from('projects')->where('id', $projectId);
+                   })
+                   ->where('user_id', auth()->id())
+                   ->count();
+        return $count != 0;
     }
 }

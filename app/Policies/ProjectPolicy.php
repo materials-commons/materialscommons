@@ -27,10 +27,23 @@ class ProjectPolicy
             return true;
         }
 
-        return $this->userIsProjectTeamAdmin($user->id, $project->id);
+        $project->load('team.admins');
+
+        if ($this->userIsAdminForProject($user, $project)) {
+            return true;
+        }
+
+        return $this->userIsAdminInTeamThatContainsProject($user->id, $project->id);
     }
 
-    private function userIsProjectTeamAdmin($userId, $projectId)
+    public function userIsAdminForProject(User $user, Project $project)
+    {
+        return $project->team->admins->contains(function ($admin) use ($user) {
+            return $user->id === $admin->id;
+        });
+    }
+
+    private function userIsAdminInTeamThatContainsProject($userId, $projectId)
     {
         $count = DB::table('team2admin')
                    ->where('user_id', $userId)
