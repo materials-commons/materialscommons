@@ -21,12 +21,6 @@ class CreateTeamsTable extends Migration
             $table->json('home_page_files')->nullable();
             $table->json('home_page_sections')->nullable();
 
-            $table->unsignedBigInteger('project_id')->nullable();
-            $table->foreign('project_id')
-                  ->references('id')
-                  ->on('projects')
-                  ->onDelete('cascade');
-
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                   ->references('id')

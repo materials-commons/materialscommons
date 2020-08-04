@@ -22,6 +22,14 @@ class AddTeamToProjectsTable extends Migration
         });
     }
 
+    private function dropForeign(Blueprint $table, $name)
+    {
+        if (env('DB_CONNECTION') == 'sqlite') {
+            return;
+        }
+        $table->dropForeign($name);
+    }
+
     /**
      * Reverse the migrations.
      *
@@ -30,7 +38,8 @@ class AddTeamToProjectsTable extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            //
+            $this->dropForeign($table, 'projects_team_id_foreign');
+            $table->dropColumn('team_id');
         });
     }
 }

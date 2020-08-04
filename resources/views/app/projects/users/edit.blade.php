@@ -45,7 +45,8 @@
                                                href="{{route('projects.users.add', [$project, $user->id])}}">
                                                 As User
                                             </a>
-                                            <a class="dropdown-item td-none" href="#">
+                                            <a class="dropdown-item td-none"
+                                               href="{{route('projects.admins.add', [$project, $user->id])}}">
                                                 As Admin
                                             </a>
                                         </div>
@@ -60,7 +61,7 @@
                     </table>
                 </div>
                 <div class="col-6">
-                    <h4>Project Users</h4>
+                    <h4>Project Members</h4>
                     <table id="project-users" class="table table-hover">
                         <thead>
                         <tr>
@@ -70,17 +71,45 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($project->users as $puser)
+                        @foreach($project->team->members as $member)
                             <tr>
                                 <td>
-                                    <a href="{{route('projects.users.show', [$project, $puser])}}">{{$puser->name}}</a>
+                                    <a href="{{route('projects.users.show', [$project, $member])}}">{{$member->name}}</a>
                                 </td>
-                                <td>{{$puser->affiliations}}</td>
+                                <td>{{$member->affiliations}}</td>
                                 <td>
-                                    @if($project->owner->id === $puser->id)
+                                    <a href="{{route('projects.users.remove', [$project, $member])}}">
+                                        <i class="fa fa-fw fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <br>
+                    <hr>
+                    <br>
+                    <h4>Project Admins</h4>
+                    <table id="project-admins" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Affiliations</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($project->team->admins as $admin)
+                            <tr>
+                                <td>
+                                    <a href="{{route('projects.users.show', [$project, $admin])}}">{{$admin->name}}</a>
+                                </td>
+                                <td>{{$admin->affiliations}}</td>
+                                <td>
+                                    @if($project->owner_id === $admin->id)
                                         (Project Owner)
                                     @else
-                                        <a href="{{route('projects.users.remove', [$project->id, $puser->id])}}">
+                                        <a href="{{route('projects.admins.remove', [$project, $admin])}}">
                                             <i class="fa fa-fw fa-trash"></i>
                                         </a>
                                     @endif
@@ -102,6 +131,10 @@
                 });
 
                 $('#project-users').DataTable({
+                    stateSave: true,
+                });
+
+                $('#project-admins').DataTable({
                     stateSave: true,
                 });
             });

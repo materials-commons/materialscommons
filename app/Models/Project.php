@@ -41,9 +41,9 @@ class Project extends Model implements Searchable
             'user_id');
     }
 
-    public function labs()
+    public function team()
     {
-        return $this->belongsToMany(Lab::class, 'lab2project', 'project_id', 'lab_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function teams()

@@ -8,14 +8,24 @@ use Illuminate\Support\Facades\DB;
 
 class ModifyProjectUsersWebController extends Controller
 {
-    public function __invoke($projectId)
+    public function __invoke(Project $project)
     {
-        $project = Project::with('users')->findOrFail($projectId);
         $this->authorize('updateUsers', $project);
-        $users = DB::table('users')->select('*')
-                   ->whereNotIn('id', function($q) use ($project) {
-                       $q->select('user_id')->from('project2user')->where('project_id', $project->id);
-                   })->get();
-        return view('app.projects.users.edit', compact('project', 'users'));
+        $project->load('team.admins', 'team.members');
+        return view('app.projects.users.edit', [
+            'project' => $project,
+            'users'   => $this->getUsersNotInProject($project),
+        ]);
+    }
+
+    private function getUsersNotInProject(Project $project)
+    {
+        $userIdsInProject = $project->team->admins->pluck('id')
+                                                  ->merge($project->team->members->pluck('id'))
+                                                  ->toArray();
+        return DB::table('users')
+                 ->select('*')
+                 ->whereNotIn('id', $userIdsInProject)
+                 ->get();
     }
 }

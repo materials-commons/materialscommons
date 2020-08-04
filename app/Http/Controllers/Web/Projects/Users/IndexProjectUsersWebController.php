@@ -9,7 +9,7 @@ class IndexProjectUsersWebController extends Controller
 {
     public function __invoke($projectId)
     {
-        $project = Project::with('users')->findOrFail($projectId);
+        $project = Project::with('team.members', 'team.admins')->findOrFail($projectId);
         return view('app.projects.users.index', ['project' => $project]);
     }
 }

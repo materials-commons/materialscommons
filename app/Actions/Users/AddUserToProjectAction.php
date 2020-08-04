@@ -9,7 +9,8 @@ class AddUserToProjectAction
 {
     public function __invoke(Project $project, User $userToAdd)
     {
-        $project->users()->syncWithoutDetaching($userToAdd);
+        $team = $project->team;
+        $team->members()->syncWithoutDetaching($userToAdd);
         return $project;
     }
 }
