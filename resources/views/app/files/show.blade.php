@@ -34,6 +34,10 @@
                    href="{{route('projects.files.download', [$project, $file])}}">
                     <i class="fas fa-download mr-2"></i>Download File
                 </a>
+
+                <a class="action-link float-right mr-4" href="{{route('projects.files.delete', [$project, $file])}}">
+                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                </a>
             @endisset
 
         @endslot

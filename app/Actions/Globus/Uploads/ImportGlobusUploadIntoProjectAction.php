@@ -80,10 +80,6 @@ class ImportGlobusUploadIntoProjectAction
             RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;
 
-        // Start off with root dir and then adjust as needed
-        $currentDir = File::where('project_id', $this->globusUpload->project_id)
-                          ->where('name', '/')
-                          ->first();
         foreach ($dirIterator as $path => $finfo) {
             if ($this->maxItemsProcessed($fileCount)) {
                 // Mark job as done so that it will be picked up again and processed. This way
@@ -98,10 +94,9 @@ class ImportGlobusUploadIntoProjectAction
             }
 
             if ($finfo->isDir()) {
-                // assign current dir here
-                $currentDir = $this->processDir($path, $currentDir);
+                $this->processDir($path);
             } else {
-                if (is_null($this->processFile($path, $finfo, $currentDir))) {
+                if (is_null($this->processFile($path, $finfo))) {
                     // processing file failed, so stop let job be processed later
                     $this->globusUpload->update(['status' => GlobusStatus::Done]);
                     return false;
@@ -123,10 +118,14 @@ class ImportGlobusUploadIntoProjectAction
         return $fileCount >= $this->maxItemsToProcess;
     }
 
-    private function processDir($path, File $currentDir): File
+    // Look up or create directory
+    private function processDir($path): File
     {
         $pathPart = Storage::disk('mcfs')->path("__globus_uploads/{$this->globusUpload->uuid}");
         $dirPath = Str::replaceFirst($pathPart, "", $path);
+        if (blank($dirPath)) {
+            $dirPath = "/";
+        }
         $parentDir = File::where('project_id', $this->globusUpload->project_id)->where('path',
             dirname($dirPath))->first();
         $dir = File::where('project_id', $this->globusUpload->project_id)->where('path', $dirPath)->first();
@@ -140,12 +139,14 @@ class ImportGlobusUploadIntoProjectAction
             'mime_type'    => 'directory',
             'owner_id'     => $this->globusUpload->owner->id,
             'project_id'   => $this->globusUpload->project->id,
-            'directory_id' => $parentDir->id,
+            'directory_id' => optional($parentDir)->id,
         ]);
     }
 
-    private function processFile($path, \SplFileInfo $finfo, File $currentDir)
+    private function processFile($path, \SplFileInfo $finfo)
     {
+        // Find or create directory file is in
+        $currentDir = $this->processDir(dirname($path));
         $finfo->getSize();
         mime_content_type($path);
         $fileEntry = new File([
@@ -162,7 +163,9 @@ class ImportGlobusUploadIntoProjectAction
         ]);
 
         $existing = File::where('directory_id', $currentDir->id)->where('name', $fileEntry->name)->get();
-        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
+        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
+                                    ->whereNull('uses_uuid')
+                                    ->first();
 
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
@@ -175,12 +178,18 @@ class ImportGlobusUploadIntoProjectAction
             // processing of all files.
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
+            if (!$matchingFileChecksum->realFileExists()) {
+                if (!$this->moveFileIntoProject($path, $matchingFileChecksum)) {
+                    return null;
+                }
+            }
             try {
                 if (!unlink($path)) {
-                    echo "unlink failed\n";
+                    return null;
                 }
             } catch (\Exception $e) {
                 // unlink through an exception
+                return null;
             }
         }
 

@@ -10,7 +10,5 @@ php artisan config:cache
 php artisan migrate
 cd ..
 chown -R nginx:nginx materialscommons
-systemctl stop supervisord
-sleep 10
-systemctl start supervisord
-systemctl status supervisord
+cd /home/gtarcea/workspace/src/github.com/materials-commons/materialscommons
+php artisan queue:restart

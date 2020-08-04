@@ -10,16 +10,16 @@ use Illuminate\Support\Facades\Storage;
 
 class DeleteGlobusUploadApiController extends Controller
 {
-    public function __invoke($projectId, GlobusUploadDownload $globusUpload)
+    public function __invoke($projectId, GlobusUploadDownload $globus)
     {
         try {
             $globusApi = GlobusApi::createGlobusApi();
-            $globusApi->deleteEndpointAclRule($globusUpload->globus_endpoint_id, $globusUpload->globus_acl_id);
+            $globusApi->deleteEndpointAclRule($globus->globus_endpoint_id, $globus->globus_acl_id);
         } catch (\Exception $e) {
             Log::error("Unable to delete acl");
         }
 
-        $globusUpload->delete();
-        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$globusUpload->uuid}");
+        $globus->delete();
+        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$globus->uuid}");
     }
 }

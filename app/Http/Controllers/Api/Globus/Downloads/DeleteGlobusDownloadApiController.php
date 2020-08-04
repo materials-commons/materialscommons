@@ -10,9 +10,9 @@ use App\Models\GlobusUploadDownload;
 class DeleteGlobusDownloadApiController extends Controller
 {
 
-    public function __invoke($projectId, GlobusUploadDownload $globusDownload)
+    public function __invoke($projectId, GlobusUploadDownload $globus)
     {
         $deleteGlobusDownloadAction = new DeleteGlobusDownloadAction(GlobusApi::createGlobusApi());
-        $deleteGlobusDownloadAction($globusDownload);
+        $deleteGlobusDownloadAction($globus);
     }
 }

@@ -15,6 +15,7 @@ class ReloadExperimentAction
             DB::transaction(function () use ($project, $experiment, $fileId, $userId) {
                 $experiment->activities()->delete();
                 $experiment->entities()->delete();
+                $experiment->files()->detach();
                 ProcessSpreadsheetJob::dispatch($project->id, $experiment->id, $userId, $fileId)->onQueue('globus');
             });
 

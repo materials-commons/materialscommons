@@ -56,6 +56,20 @@
                href="{{route('projects.folders.create', [$project, $directory])}}">
                 <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
             </a>
+
+            @if(sizeof($dirPaths) !== 1 && $files->count() === 0)
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.folders.delete', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                </a>
+            @endif
+
+            @if(sizeof($dirPaths) !== 1)
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.folders.rename', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
+                </a>
+            @endif
         @endslot
 
         @slot('body')
@@ -65,6 +79,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Size</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,6 +98,16 @@
                         </td>
                         <td>{{$file->mime_type}}</td>
                         <td>{{$file->toHumanBytes()}}</td>
+                        <td>
+                            @if($file->isImage())
+                                <a href="{{route('projects.files.display', [$project, $file])}}">
+
+                                    <img src="{{route('projects.files.display', [$project, $file])}}"
+                                         style="width: 12rem">
+                                </a>
+                            @endif
+                        </td>
+
                     </tr>
                 @endforeach
                 </tbody>

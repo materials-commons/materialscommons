@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
 use App\Traits\GetProjectFolderFiles;
+use App\ViewModels\Folders\ShowFolderViewModel;
 
 class ShowRootFolderWebController extends Controller
 {
@@ -15,6 +16,7 @@ class ShowRootFolderWebController extends Controller
     {
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         $files = $this->getProjectFolderFiles($project->id, '/');
-        return view('app.projects.folders.show', compact('project', 'directory', 'files'));
+        $viewModel = new ShowFolderViewModel($project, $directory, $files);
+        return view('app.projects.folders.show', $viewModel);
     }
 }

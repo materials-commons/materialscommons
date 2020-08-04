@@ -60,14 +60,6 @@
             {{--                </a>--}}
             {{--            </li>--}}
 
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5"
-                   href="{{route('projects.workflows.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
-                    Workflows
-                </a>
-            </li>
-
             <li class="nav-item mt-2">
                 <span class="ml-5">Organization</span>
             </li>
@@ -85,6 +77,14 @@
                    href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
                     Datasets
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5"
+                   href="{{route('projects.workflows.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
+                    Workflows
                 </a>
             </li>
 

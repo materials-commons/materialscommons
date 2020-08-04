@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Web\Files\CreateExperimentFromSpreadsheetWebController;
+use App\Http\Controllers\Web\Files\DeleteFileWebController;
+use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
@@ -37,6 +39,11 @@ Route::get('/projects/{project}/files/{file}/download', DownloadFileWebControlle
 Route::get('/projects/{project}/files/{file}/create-experiment', function (Project $project, File $file) {
     return view('app.files.import', compact('project', 'file'));
 });
+
+Route::get('/projects/{project}/files/{file}/delete', DeleteFileWebController::class)
+     ->name('projects.files.delete');
+Route::delete('/projects/{project}/files/{file}/destroy', DestroyFileWebController::class)
+     ->name('projects.files.destroy');
 
 //Route::get('/projects/{project}/file_path/{path}', function (Project $project, $path) {
 //    dd($path);

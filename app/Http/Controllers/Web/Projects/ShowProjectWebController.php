@@ -19,7 +19,7 @@ class ShowProjectWebController extends Controller
             ->withActivitiesGroup($this->getActivitiesGroup($project->id))
             ->withFileTypes($this->getFileTypesGroup($project->id))
             ->withObjectCounts($this->getObjectTypes($project->id))
-            ->withProjectSize($this->getProjectSize($project->id));
+            ->withTotalFilesSize($this->getProjectSize($project->id));
         return view('app.projects.show', $showProjectViewModel);
     }
 

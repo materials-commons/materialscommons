@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         if (config('app.beta') != 1) {
             $schedule->command("mc:process-finished-globus-tasks --background")
-                     ->everyFiveMinutes()
+                     ->everyMinute()
                      ->runInBackground()
                      ->withoutOverlapping();
         }

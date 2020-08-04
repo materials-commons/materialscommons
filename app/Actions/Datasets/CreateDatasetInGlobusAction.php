@@ -30,7 +30,7 @@ class CreateDatasetInGlobusAction
         umask(0);
         $datasetDir = $this->getDatasetDir($dataset, $isPrivate);
         if (!file_exists($datasetDir)) {
-            mkdir($datasetDir, 0700, true);
+            mkdir($datasetDir, 0777, true);
         }
 
         foreach ($dataset->files()->with('directory')->cursor() as $file) {

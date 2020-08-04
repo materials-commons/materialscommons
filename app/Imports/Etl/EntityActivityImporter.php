@@ -10,6 +10,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Entity;
 use App\Models\EntityState;
+use App\Models\Experiment;
 use App\Models\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -24,6 +25,9 @@ class EntityActivityImporter
 
     private $projectId;
     private $experimentId;
+
+    /** @var \App\Models\Experiment */
+    private $experiment;
     private $userId;
 
     private $sawHeader = false;
@@ -58,6 +62,7 @@ class EntityActivityImporter
 
     public function execute($spreadsheetPath)
     {
+        $this->experiment = Experiment::findOrFail($this->experimentId);
         $spreadsheet = $this->loadSpreadsheet($spreadsheetPath);
         $this->loadGlobalSettingsIfExists($spreadsheet);
         $this->processWorksheets($spreadsheet);
@@ -350,6 +355,11 @@ class EntityActivityImporter
     {
         $file = $this->getFileByPathAction->execute($this->projectId, $path);
         $this->addFileToActivityAndEntity($file, $activity, $entity);
+        if (is_null($file)) {
+            return;
+        }
+
+        $this->experiment->files()->syncWithoutDetaching($file);
     }
 
     private function addFileToActivityAndEntity(?File $file, ?Activity $activity, ?Entity $entity)

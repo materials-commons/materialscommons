@@ -5,7 +5,6 @@ namespace App\Actions\Files;
 use App\Models\File;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class DeleteFileAction
 {
@@ -29,14 +28,17 @@ class DeleteFileAction
         });
 
         // Need to make sure nothing points at this file
-        if ( ! $this->filesPointAtFile($file)) {
-            Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
-        }
-        $previousVersions->each(function ($file) {
-            if ( ! $this->filesPointAtFile($file)) {
-                Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
-            }
-        });
+        // ** For now don't delete. There is a possible race condition here. **
+        // ** Uncomment these lines once there is a solution in place for handling this. **
+
+//        if ( ! $this->filesPointAtFile($file)) {
+//            Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
+//        }
+//        $previousVersions->each(function ($file) {
+//            if ( ! $this->filesPointAtFile($file)) {
+//                Storage::disk('mcfs')->delete($this->getFilePathForFile($file));
+//            }
+//        });
     }
 
     private function filesPointAtFile(File $file)

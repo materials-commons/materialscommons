@@ -46,7 +46,7 @@
             <a href="#" onclick="toggleAPIToken()" id="apitokenlink">Show API Token</a>
             <div class="form-group" id="apitoken" style="display:none">
                 <label for="apitokeninput">API Token</label>
-                <input id="apitokeninput" value="{{$user->api_token}}" readonly>
+                <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
             </div>
 
             <br>
