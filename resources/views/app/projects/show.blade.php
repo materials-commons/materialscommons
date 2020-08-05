@@ -30,7 +30,10 @@
         @slot('body')
             @component('components.item-details', ['item' => $project])
                 <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
-                    {{$project->users_count-1}} @choice("Member|Members", $project->users_count-1)
+                    {{$project->team->members->count()}} @choice("Member|Members", $project->team->members->count())
+                </a>
+                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
+                    {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
                 </a>
             @endcomponent
 
