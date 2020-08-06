@@ -63,12 +63,12 @@
                                value="{{$dataset->doi}}" readonly>
                     @endif
                 </div>
-                <div class="form-group">
-                    <label for="funding">Funding</label>
-                    <input class="form-control" id="funding" name="funding" type="text"
-                           value="{{old('funding', $dataset->funding)}}"
-                           placeholder="Funding...">
-                </div>
+                {{--                <div class="form-group">--}}
+                {{--                    <label for="funding">Funding</label>--}}
+                {{--                    <input class="form-control" id="funding" name="funding" type="text"--}}
+                {{--                           value="{{old('funding', $dataset->funding)}}"--}}
+                {{--                           placeholder="Funding...">--}}
+                {{--                </div>--}}
                 <div class="form-group">
                     <label for="license">License</label>
                     <select name="license" class="selectpicker col-lg-8" data-live-search="true"
