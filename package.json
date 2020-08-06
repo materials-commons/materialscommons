@@ -32,11 +32,10 @@
     "@uppy/dashboard": "^1.10.1",
     "@uppy/xhr-upload": "^1.6.0",
     "@yaireo/tagify": "^3.11.3",
+    "alpinejs": "^2.5.0",
     "canvas-datagrid": "^0.22.13",
     "flowchart.js": "^1.13.0",
-    "intercooler": "^1.2.3",
     "laravel-mix-purgecss": "^4.2.0",
-    "turbolinks": "^5.2.0",
     "xlsx": "^0.15.6"
   }
 }
