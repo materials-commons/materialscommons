@@ -8,25 +8,10 @@
                 <li class="hidden-process" hidden>{{$ag->name}} ({{$ag->count}})</li>
             @endif
         @endforeach
-        @if(sizeof($activitiesGroup) >= 12)
-            <a href="#" onclick="toggleProcessesShown()" id="hidden-process-text">See {{sizeof($activitiesGroup)-11}}
-                more processes...</a>
-        @endif
+        @include('common.show-more-control', [
+            'items'    => $activitiesGroup,
+            'attrName' => 'hidden-process',
+            'msg'      => 'processes...'
+        ])
     </ul>
 </div>
-
-@push('scripts')
-    <script>
-        let activitiesCount = {{sizeof($activitiesGroup)-11}};
-
-        function toggleProcessesShown() {
-            $('.hidden-process').attr('hidden', (_, attr) => !attr);
-            let text = $('#hidden-process-text').text();
-            if (text.startsWith("See")) {
-                $('#hidden-process-text').text(`Hide ${activitiesCount} more processes...`);
-            } else {
-                $('#hidden-process-text').text(`See ${activitiesCount} more processes...`);
-            }
-        }
-    </script>
-@endpush

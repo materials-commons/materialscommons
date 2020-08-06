@@ -21,8 +21,20 @@ function autosizeTextareas() {
     });
 }
 
+function toggleShow(count, attrClass, msg) {
+    $(`.${attrClass}`).attr('hidden', (_, attr) => !attr);
+    let text = $(`#${attrClass}-text`).text().trim();
+    console.log(`text = '${text}`);
+    if (text.startsWith("See")) {
+        $(`#${attrClass}-text`).text(`Hide ${count} ${msg}`);
+    } else {
+        $(`#${attrClass}-text`).text(`See ${count} more ${msg}`);
+    }
+}
+
 module.exports = {
     setupDatatable,
     setupDatatableOnDocumentReady,
     autosizeTextareas,
+    toggleShow,
 };

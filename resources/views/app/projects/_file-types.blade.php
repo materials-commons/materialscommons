@@ -9,7 +9,9 @@
             @endif
         @endforeach
         @if(sizeof($fileDescriptionTypes) >= 12)
-            <a href="#" onclick="toggleFileTypesShown()" id="hidden-file-types-text">
+            <a href="#"
+               onclick="mcutil.toggleShow({{sizeof($fileDescriptionTypes)}}, 'hidden-file-type', 'more file types...')"
+               id="hidden-file-types-text">
                 See {{sizeof($fileDescriptionTypes)-11}} more file types...
             </a>
         @endif
@@ -22,9 +24,9 @@
 
         function toggleFileTypesShown() {
             $('.hidden-file-type').attr('hidden', (_, attr) => !attr);
-            let text = $('#hidden-file-type').text();
+            let text = $('#hidden-file-type-text').text();
             if (text.startsWith("See")) {
-                $('#hidden-file-types-text').text(`Hide ${fileDescriptionTypesCount} more file-types...`);
+                $('#hidden-file-types-text').text(`Hide ${fileDescriptionTypesCount} more file types...`);
             } else {
                 $('#hidden-file-types-text').text(`See ${fileDescriptionTypesCount} more file types...`);
             }
