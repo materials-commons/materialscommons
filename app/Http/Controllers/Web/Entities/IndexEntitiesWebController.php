@@ -13,11 +13,11 @@ class IndexEntitiesWebController extends Controller
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, Project $project)
     {
         $activities = DB::table('activities')
-                        ->select('name')
+                        ->select('name', 'eindex')
                         ->where('project_id', $project->id)
                         ->where('name', '<>', 'Create Samples')
                         ->distinct()
-                        ->orderBy('name')
+                        ->orderByRaw('case when eindex is null then name else eindex end')
                         ->get();
         $entities = Entity::with('activities')
                           ->where('project_id', $project->id)
