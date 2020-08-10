@@ -4,7 +4,9 @@
         <li>Processes ({{$objectCounts->activitiesCount}})</li>
         <li>Samples ({{$objectCounts->entitiesCount}})</li>
         <li>Files ({{$objectCounts->filesCount}})</li>
-        <li>Experiments ({{$objectCounts->experimentsCount}})</li>
+        @isset($objectCounts->experimentsCount)
+            <li>Experiments ({{$objectCounts->experimentsCount}})</li>
+        @endisset
         <li>Published Datasets ({{$objectCounts->publishedDatasetsCount}})</li>
         <li>Unpublished Datasets ({{$objectCounts->unpublishedDatasetsCount}})</li>
     </ul>

@@ -54,6 +54,7 @@ class ShowExperimentOverviewWebController extends Controller
     private function getFileTypesGroup($experimentId)
     {
         return DB::table('files')
+                 ->select('mime_type', DB::raw('count(*) as count'))
                  ->whereIn('id',
                      DB::Table('experiment2file')
                        ->select('file_id')
@@ -69,7 +70,9 @@ class ShowExperimentOverviewWebController extends Controller
     {
         $query = "select (select count(*) from entities where id in (select entity_id from experiment2entity where experiment_id = {$experimentId})) as entitiesCount,".
             "(select count(*) from activities where id in (select activity_id from experiment2activity where experiment_id = {$experimentId})) as activitiesCount,".
-            "(select count(*) from files where id in (select file_id from experiment2file where experiment_id = {$experimentId}) and mime_type <> 'directory') as filesCount";
+            "(select count(*) from files where id in (select file_id from experiment2file where experiment_id = {$experimentId}) and mime_type <> 'directory') as filesCount,".
+            "(select count(*) from datasets where id in (select dataset_id from dataset2experiment where experiment_id = {$experimentId}) and published_at is null) as unpublishedDatasetsCount,".
+            "(select count(*) from datasets where id in (select dataset_id from dataset2experiment where experiment_id = {$experimentId}) and published_at is not null) as publishedDatasetsCount";
         $results = DB::select(DB::raw($query));
         return $results[0];
     }

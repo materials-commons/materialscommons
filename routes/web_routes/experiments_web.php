@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
+use App\Http\Controllers\Web\Experiments\ShowExperimentOverviewWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
 use App\Http\Controllers\Web\Experiments\StoreExperimentWebController;
@@ -36,8 +37,11 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::delete('/experiments/{experiment}',
         DestroyExperimentWebController::class)->name('projects.experiments.destroy');
 
-    Route::get('/experiments/{experiment}',
-        ShowExperimentEntitiesWebController::class)->name('projects.experiments.show');
+    Route::get('/experiments/{experiment}', ShowExperimentOverviewWebController::class)
+         ->name('projects.experiments.show');
+
+    Route::get('/experiments/{experiment}/entities', ShowExperimentEntitiesWebController::class)
+         ->name('projects.experiments.entities');
 
     Route::get('/experiments/{experiment}/workflow', ShowExperimentWorkflowWebController::class)
          ->name('projects.experiments.workflow');

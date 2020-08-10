@@ -47,6 +47,8 @@
             <br>
 
             @if (Request::routeIs('projects.experiments.show*'))
+                @include('app.projects.experiments.tabs.overview-tab')
+            @elseif(Request::routeIs('projects.experiments.entities'))
                 @include('app.projects.experiments.tabs.entities-tab')
             @elseif(Request::routeIs('projects.experiments.data-dictionary'))
                 @include('app.projects.experiments.tabs.data-dictionary-tab')

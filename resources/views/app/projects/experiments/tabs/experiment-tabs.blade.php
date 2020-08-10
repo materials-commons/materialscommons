@@ -2,6 +2,12 @@
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.show')}}"
            href="{{route('projects.experiments.show', [$project, $experiment])}}">
+            Overview
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{setActiveNavByName('projects.experiments.entities')}}"
+           href="{{route('projects.experiments.entities', [$project, $experiment])}}">
             Samples
         </a>
     </li>
