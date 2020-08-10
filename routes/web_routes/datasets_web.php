@@ -27,6 +27,7 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetCommunitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetDataDictionaryWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetExperimentsWebController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetOverviewWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\ShowImportDatasetIntoProjectWebController;
@@ -103,8 +104,11 @@ Route::post('/projects/{project}/datasets/{dataset}/store-directory',
     CreateDataStoreCreateDirectoryWebController::class)
      ->name('projects.datasets.create-data.store-directory');
 
-Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetWebController::class)
-     ->name('projects.datasets.show');
+Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetOverviewWebController::class)
+     ->name('projects.datasets.show.overview');
+
+Route::get('/projects/{project}/datasets/{dataset}/files', ShowDatasetWebController::class)
+     ->name('projects.datasets.show.files');
 Route::get('/projects/{project}/datasets/{dataset}/next/{folder}', ShowDatasetAndFolderWebController::class)
      ->name('projects.datasets.show.next');
 

@@ -6,7 +6,7 @@
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.datasets.show', $project, $dataset))
+@section('breadcrumbs', Breadcrumbs::render('projects.datasets.show.overview', $project, $dataset))
 
 @section('content')
     @component('components.card')

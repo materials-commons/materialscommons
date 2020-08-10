@@ -1,15 +1,22 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        @if(Request::routeIs('projects.datasets.show'))
-            <a class="nav-link active" href="{{route('projects.datasets.show', [$project, $dataset])}}">
+        <a class="nav-link {{setActiveNavByName('projects.datasets.show.overview')}}"
+           href="{{route('projects.datasets.show.overview', [$project, $dataset])}}">
+            Overview
+        </a>
+    </li>
+
+    <li class="nav-item">
+        @if(Request::routeIs('projects.datasets.show.files'))
+            <a class="nav-link active" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @elseif(Request::routeIs('projects.datasets.show.next'))
-            <a class="nav-link active" href="{{route('projects.datasets.show', [$project, $dataset])}}">
+            <a class="nav-link active" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @else
-            <a class="nav-link" href="{{route('projects.datasets.show', [$project, $dataset])}}">
+            <a class="nav-link" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @endif

@@ -34,7 +34,7 @@
                 @foreach($datasets as $dataset)
                     <tr>
                         <td>
-                            <a href="{{route('projects.datasets.show', [$project, $dataset])}}">{{$dataset->name}}</a>
+                            <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}">{{$dataset->name}}</a>
                         </td>
                         <td>{{$dataset->summary}}</td>
                         <td>
@@ -51,7 +51,8 @@
                         <td>{{$dataset->updated_at}}</td>
                         <td>
                             <div class="float-right">
-                                <a href="{{route('projects.datasets.show', [$project, $dataset])}}" class="action-link">
+                                <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}"
+                                   class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
                                 <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link">

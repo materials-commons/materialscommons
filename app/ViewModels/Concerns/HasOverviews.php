@@ -16,7 +16,7 @@ trait HasOverviews
     private $fileTypes = [];
 
     /** @var array */
-    private $fileDescriptionTypes = [];
+    private $fileDescriptionTypes = null;
 
     private $objectCounts = [];
     private $totalFilesSize = 0;

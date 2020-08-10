@@ -1,12 +1,16 @@
-<h5>There are {{$objectCounts->filesCount}} files totalling {{formatBytes($totalFilesSize)}}.</h5>
+@isset($objectCounts->filesCount)
+    <h5>There are {{$objectCounts->filesCount}} files totalling {{formatBytes($totalFilesSize)}}.</h5>
+@endisset
 <div class="row ml-1">
-    <div class="col-4 bg-grey-9">
+    <div class="@isset($fileDescriptionTypes) col-4 @else col-5 @endisset bg-grey-9">
         @include('partials.overview._process-types')
     </div>
-    <div class="col-3 bg-grey-9 ml-2">
+    <div class="@isset($fileDescriptionTypes) col-3 @else col-5 @endisset bg-grey-9 ml-2">
         @include('partials.overview._object-types')
     </div>
-    <div class="col-4 bg-grey-9 ml-2">
-        @include('partials.overview._file-types')
-    </div>
+    @isset($fileDescriptionTypes)
+        <div class="col-4 bg-grey-9 ml-2">
+            @include('partials.overview._file-types')
+        </div>
+    @endisset
 </div>
