@@ -132,9 +132,19 @@ Breadcrumbs::for('public.datasets.show', function ($trail, $dataset) {
     $trail->push($dataset->name, route('public.datasets.show', [$dataset]));
 });
 
+Breadcrumbs::for('public.datasets.overview.show', function ($trail, $dataset) {
+    $trail->parent('public.datasets.show', $dataset);
+    $trail->push('Overview', route('public.datasets.overview.show', [$dataset]));
+});
+
 Breadcrumbs::for('public.datasets.files.index', function ($trail, $dataset) {
     $trail->parent('public.datasets.show', $dataset);
     $trail->push('Files', route('public.datasets.files.index', [$dataset]));
+});
+
+Breadcrumbs::for('public.datasets.workflows.index', function ($trail, $dataset) {
+    $trail->parent('public.datasets.show', $dataset);
+    $trail->push('Workflows', route('public.datasets.workflows.index', [$dataset]));
 });
 
 Breadcrumbs::for('public.datasets.activities.index', function ($trail, $dataset) {

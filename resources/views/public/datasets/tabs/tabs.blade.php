@@ -1,7 +1,13 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('public.datasets.show')}}"
-           href="{{route('public.datasets.show', ['dataset' => $dataset])}}">
+        <a class="nav-link {{setActiveNavByName('public.datasets.overview')}}"
+           href="{{route('public.datasets.overview.show', ['dataset' => $dataset])}}">
+            Overview
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{setActiveNavByName('public.datasets.workflows')}}"
+           href="{{route('public.datasets.workflows.index', ['dataset' => $dataset])}}">
             Workflow
         </a>
     </li>

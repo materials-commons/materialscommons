@@ -21,13 +21,20 @@ use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebC
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebController;
-use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetOverviewWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Published\Files\DisplayPublishedFileWebController;
 use App\Http\Controllers\Web\Published\Files\ShowPublishedFileWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
+Route::get('/datasets/{dataset}', ShowPublishedDatasetWorkflowsWebController::class)
      ->name('datasets.show');
+
+Route::get('/datasets/{dataset}/overview', ShowPublishedDatasetOverviewWebController::class)
+     ->name('datasets.overview.show');
+
+Route::get('/datasets/{dataset}/workflows', ShowPublishedDatasetWorkflowsWebController::class)
+     ->name('datasets.workflows.index');
 
 Route::get('/datasets/{dataset}/zipfile', DownloadDatasetZipfileWebController::class)
      ->name('datasets.download_zipfile');

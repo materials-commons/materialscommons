@@ -126,7 +126,9 @@
 
             <br>
 
-            @if (Request::routeIs('public.datasets.show*'))
+            @if (Request::routeIs('public.datasets.overview*'))
+                @include('public.datasets.tabs.overview-tab')
+            @elseif (Request::routeIs('public.datasets.workflows*'))
                 @include('public.datasets.tabs.workflows-tab')
             @elseif (Request::routeIs('public.datasets.entities*'))
                 @include('public.datasets.tabs.entities-tab')
