@@ -102,8 +102,10 @@
                             <label>Download Files</label>
                             <div class="row ml-2">
                                 @if(file_exists($dataset->zipfilePath()))
-                                    <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">Download Dataset
-                                        Zipfile</a>
+                                    <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">
+                                        Download Dataset Zipfile
+                                    </a>
+                                    <span class="ml-1">({{formatBytes($dataset->zipfileSize())}})</span>
                                 @endif
 
                                 @if(file_exists($dataset->publishedGlobusPath()))

@@ -147,6 +147,15 @@ class Dataset extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->zipfilePathPartial());
     }
 
+    public function zipfileSize()
+    {
+        if (Storage::disk('mcfs')->exists($this->zipfilePathPartial())) {
+            return Storage::disk('mcfs')->size($this->zipfilePathPartial());
+        }
+
+        return 0;
+    }
+
     public function zipfileDir()
     {
         return Storage::disk('mcfs')->path($this->zipfileDirPartial());
