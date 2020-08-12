@@ -22,12 +22,12 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">
-                    <i class="fa-fw fas fa-users mr-2"></i>
-                    My Teams
-                </a>
-            </li>
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 {{setActiveNav('teams')}}" href="{{route('teams.index')}}">--}}
+            {{--                    <i class="fa-fw fas fa-users mr-2"></i>--}}
+            {{--                    My Teams--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             {{--            <li class="nav-item">--}}
             {{--                <a class="nav-link fs-11 {{setActiveNav('tasks')}}" href="{{route('tasks.index')}}">--}}
