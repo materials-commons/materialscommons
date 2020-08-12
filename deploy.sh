@@ -12,3 +12,4 @@ cd ..
 chown -R nginx:nginx materialscommons
 cd /home/gtarcea/workspace/src/github.com/materials-commons/materialscommons
 php artisan queue:restart
+systemctl status supervisord
