@@ -202,4 +202,41 @@ trait DataDictionaryQueries
                  ->get()
                  ->groupBy('name');
     }
+
+    public function getUniqueEntityAttributesForProjects($projectIds)
+    {
+        return DB::table('attributes')
+                 ->select('name', 'unit', 'val')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('entities')
+                       ->select('entity_states.id')
+                       ->whereIn('project_id', $projectIds)
+                       ->join('entity_states', 'entities.id', '=', 'entity_states.entity_id')
+
+                 )
+                 ->where('attributable_type', EntityState::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->distinct()
+                 ->get()
+                 ->groupBy('name');
+    }
+
+    public function getUniqueActivityAttributesForProjects($projectIds)
+    {
+        return DB::table('attributes')
+                 ->select('name', 'unit', 'val')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('activities')
+                       ->select('id')
+                       ->whereIn('project_id', $projectIds)
+                 )
+                 ->where('attributable_type', Activity::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->orderBy('name')
+                 ->distinct()
+                 ->get()
+                 ->groupBy('name');
+    }
 }

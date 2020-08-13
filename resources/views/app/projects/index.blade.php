@@ -19,6 +19,8 @@
         @endslot
 
         @slot('body')
+            <h4>Projects</h4>
+            <br>
             <table id="projects" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
@@ -49,7 +51,8 @@
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
                                 @if(auth()->id() == $proj->owner_id)
-                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">
+                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+                                       class="action-link">
                                         <i class="fas fa-fw fa-trash-alt"></i>
                                     </a>
                                 @endif
@@ -59,6 +62,46 @@
                                 @endcomponent
                             @endif
                         </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endslot
+    @endcomponent
+
+    @component('components.card')
+        @slot('header')
+            Published Datasets
+        @endslot
+        @slot('body')
+            <h4>Published Datasets</h4>
+            <br>
+            <table id="datasets" class="table table-hover" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Dataset</th>
+                    <th>Summary</th>
+                    <th>Published</th>
+                    <th>Date</th>
+                    <th>Views</th>
+                    <th>Downloads</th>
+                    <th>Comments</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($publishedDatasets as $ds)
+                    <tr>
+                        <td>
+                            <a class="action-link" href="{{route('public.datasets.show', [$ds])}}">
+                                {{$ds->name}}
+                            </a>
+                        </td>
+                        <td>{{$ds->summary}}</td>
+                        <td>{{$ds->published_at->diffForHumans()}}</td>
+                        <td>{{$ds->published_at}}</td>
+                        <td>{{$ds->views_count}}</td>
+                        <td>{{$ds->downloads_count}}</td>
+                        <td>{{$ds->comments_count}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -78,6 +121,14 @@
                     columnDefs: [
                         {orderData: [4], targets: [3]},
                         {targets: [4], visible: false, searchable: false},
+                    ]
+                });
+
+                $('#datasets').DataTable({
+                    stateSave: true,
+                    columnDefs: [
+                        {orderData: [3], targets: [2]},
+                        {targets: [3], visible: false, searchable: false},
                     ]
                 });
             });

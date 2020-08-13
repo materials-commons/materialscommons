@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects;
+namespace App\Http\Controllers\Web\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use Illuminate\Http\Request;
 
-class IndexProjectsWebController extends Controller
+class ShowDashboardPublishedDatasetsWebController extends Controller
 {
-    /**
-     * List users projects
-     */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        return view('app.projects.index', [
-            'projects'          => auth()->user()->projects()->with(['owner'])->get(),
+        return view('app.dashboard.index', [
             'publishedDatasets' => $this->getPublishedDatasets(),
         ]);
     }

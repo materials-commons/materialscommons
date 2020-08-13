@@ -13,8 +13,15 @@
         @endslot
 
         @slot('body')
-            <h4 class="mb-2">Outstanding Globus Uploads</h4>
-            @include('partials.globus_uploads', ['showProject' => true])
+            @include('app.dashboard.tabs.tabs')
+            <br>
+            @if (Request::routeIs('dashboard.projects.show'))
+                @include('app.dashboard.tabs.projects')
+            @elseif (Request::routeIs('dashboard.published-datasets.show'))
+                @include('app.dashboard.tabs.published-datasets')
+            @elseif (Request::routeIs('dashboard.data-dictionary.show'))
+                @include('app.dashboard.tabs.data-dictionary')
+            @endif
         @endslot
     @endcomponent
 @endsection
