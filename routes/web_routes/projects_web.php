@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
+use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsAttributesWebController;
+use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsFilesWebController;
+use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsProcessStepsWebController;
+use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsUnitsWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\CreateProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\DeleteGlobusDownloadWebController;
@@ -56,6 +60,18 @@ Route::get('/projects/{project}', ShowProjectWebController::class)
      ->name('projects.show');
 Route::get('/projects/{project}/documents', ShowProjectDocumentsWebController::class)
      ->name('projects.documents.show');
+
+// Document sub routes
+Route::get('/projects/{project}/documents/files', ShowProjectDocumentsFilesWebController::class)
+     ->name('projects.documents.show.files');
+Route::get('/projects/{project}/documents/process-steps', ShowProjectDocumentsProcessStepsWebController::class)
+     ->name('projects.documents.show.process-steps');
+Route::get('/projects/{project}/documents/attributes', ShowProjectDocumentsAttributesWebController::class)
+     ->name('projects.documents.show.attributes');
+Route::get('/projects/{project}/documents/units', ShowProjectDocumentsUnitsWebController::class)
+     ->name('projects.documents.show.units');
+
+//
 
 Route::patch('/projects/{project}', UpdateProjectWebController::class)
      ->name('projects.update');

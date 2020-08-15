@@ -9,7 +9,7 @@
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.documents.show')}}"
            href="{{route('projects.documents.show', [$project])}}">
-            Documents
+            Documentation
         </a>
     </li>
 </ul>

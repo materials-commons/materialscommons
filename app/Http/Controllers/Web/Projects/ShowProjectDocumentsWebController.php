@@ -9,6 +9,6 @@ class ShowProjectDocumentsWebController extends Controller
 {
     public function __invoke(Project $project)
     {
-        return view('app.projects.show', ['project' => $project]);
+        return redirect(route('projects.documents.show.files', [$project]));
     }
 }

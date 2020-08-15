@@ -33,7 +33,13 @@
             <br>
             @if(Request::routeIs('projects.show'))
                 @include('app.projects.tabs.overview')
-            @elseif(Request::routeIs('projects.documents.show'))
+            @elseif(Request::routeIs('projects.documents.show.files'))
+                @include('app.projects.tabs.documents')
+            @elseif(Request::routeIs('projects.documents.show.process-steps'))
+                @include('app.projects.tabs.documents')
+            @elseif(Request::routeIs('projects.documents.show.attributes'))
+                @include('app.projects.tabs.documents')
+            @elseif(Request::routeIs('projects.documents.show.units'))
                 @include('app.projects.tabs.documents')
             @endif
         @endslot
