@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\Projects\Globus\Uploads\UpdateGlobusAccountForUploa
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectDocumentsWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -37,22 +38,32 @@ use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/projects/create', CreateProjectWebController::class)->name('projects.create');
-Route::post('/projects', StoreProjectWebController::class)->name('projects.store');
+Route::get('/projects/create', CreateProjectWebController::class)
+     ->name('projects.create');
+Route::post('/projects', StoreProjectWebController::class)
+     ->name('projects.store');
 
-Route::get('/projects', IndexProjectsWebController::class)->name('projects.index');
+Route::get('/projects', IndexProjectsWebController::class)
+     ->name('projects.index');
 
 Route::get('/projects/{project}/upload', ShowUploadFilesWebController::class)
      ->name('projects.upload-files');
 
-Route::post('/projects/search', SearchAcrossProjectsWebController::class)->name('projects.search_all');
+Route::post('/projects/search', SearchAcrossProjectsWebController::class)
+     ->name('projects.search_all');
 
-Route::get('/projects/{project}', ShowProjectWebController::class)->name('projects.show');
+Route::get('/projects/{project}', ShowProjectWebController::class)
+     ->name('projects.show');
+Route::get('/projects/{project}/documents', ShowProjectDocumentsWebController::class)
+     ->name('projects.documents.show');
 
-Route::patch('/projects/{project}', UpdateProjectWebController::class)->name('projects.update');
-Route::get('/projects/{project}/edit', EditProjectWebController::class)->name('projects.edit');
+Route::patch('/projects/{project}', UpdateProjectWebController::class)
+     ->name('projects.update');
+Route::get('/projects/{project}/edit', EditProjectWebController::class)
+     ->name('projects.edit');
 
-Route::delete('/projects/{project}', DeleteProjectWebController::class)->name('projects.destroy');
+Route::delete('/projects/{project}', DeleteProjectWebController::class)
+     ->name('projects.destroy');
 
 Route::get('/projects/{project}/users/{user}/remove', RemoveUserFromProjectWebController::class)
      ->name('projects.users.remove');

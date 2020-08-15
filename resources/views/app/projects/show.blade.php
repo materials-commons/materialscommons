@@ -28,16 +28,14 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $project])
-                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
-                    {{$project->team->members->count()}} @choice("Member|Members", $project->team->members->count())
-                </a>
-                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
-                    {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
-                </a>
-            @endcomponent
+            @include('app.projects.tabs.tabs')
 
-            @include('partials.overview._overview')
+            <br>
+            @if(Request::routeIs('projects.show'))
+                @include('app.projects.tabs.overview')
+            @elseif(Request::routeIs('projects.documents.show'))
+                @include('app.projects.tabs.documents')
+            @endif
         @endslot
     @endcomponent
 @endsection
