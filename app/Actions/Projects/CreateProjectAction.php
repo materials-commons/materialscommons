@@ -4,6 +4,7 @@ namespace App\Actions\Projects;
 
 use App\Models\File;
 use App\Models\Project;
+use App\Models\Team;
 use Illuminate\Support\Facades\DB;
 
 class CreateProjectAction
@@ -32,7 +33,13 @@ class CreateProjectAction
                 'media_type_description' => 'directory',
                 'owner_id'               => $ownerId,
             ]);
-            auth()->user()->projects()->attach($project);
+            $team = Team::create([
+                'name'     => "Team for {$project->name}",
+                'owner_id' => $project->owner_id,
+            ]);
+
+            $project->update(['team_id' => $team->id]);
+            $team->admins()->attach($project->owner);
         });
 
         $project->fresh();

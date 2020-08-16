@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Api\Projects;
 
 use App\Http\Controllers\Controller;
-use App\Http\Queries\Projects\AllProjectsForUserQuery;
 use App\Http\Resources\Projects\ProjectResource;
+use App\Traits\Projects\UserProjects;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class IndexProjectsApiController extends Controller
 {
-    /**
-     * List all projects the user has access to.
-     *
-     * @param  Request  $request
-     * @param  AllProjectsForUserQuery  $query
-     * @return AnonymousResourceCollection
-     */
-    public function __invoke(Request $request, AllProjectsForUserQuery $query)
+    use UserProjects;
+
+    public function __invoke(Request $request)
     {
-        return ProjectResource::collection($query->jsonPaginate());
+        $projects = $this->getUserProjects(auth()->id());
+        return ProjectResource::collection($projects);
     }
 }
