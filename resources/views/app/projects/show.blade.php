@@ -28,20 +28,16 @@
         @endslot
 
         @slot('body')
-            @include('app.projects.tabs.tabs')
+            @component('components.item-details', ['item' => $project])
+                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
+                    {{$project->team->members->count()}} @choice("Member|Members", $project->team->members->count())
+                </a>
+                <a class="ml-4 action-link" href="{{route('projects.users.index', [$project])}}">
+                    {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
+                </a>
+            @endcomponent
 
-            <br>
-            @if(Request::routeIs('projects.show'))
-                @include('app.projects.tabs.overview')
-            @elseif(Request::routeIs('projects.documents.show.files'))
-                @include('app.projects.tabs.documents')
-            @elseif(Request::routeIs('projects.documents.show.process-steps'))
-                @include('app.projects.tabs.documents')
-            @elseif(Request::routeIs('projects.documents.show.attributes'))
-                @include('app.projects.tabs.documents')
-            @elseif(Request::routeIs('projects.documents.show.units'))
-                @include('app.projects.tabs.documents')
-            @endif
+            @include('partials.overview._overview')
         @endslot
     @endcomponent
 @endsection
