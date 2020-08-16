@@ -37,22 +37,24 @@ class CreateTeamsForProjectsCommand extends Command
     public function handle()
     {
         foreach (Project::with('users', 'owner')->cursor() as $project) {
-            echo "Creating team for {$project->name}\n";
-            DB::transaction(function () use ($project) {
-                $team = Team::create([
-                    'name'     => "Team for {$project->name}",
-                    'owner_id' => $project->owner_id,
-                ]);
+            if (is_null($project->team_id)) {
+                echo "Creating team for {$project->name}\n";
+                DB::transaction(function () use ($project) {
+                    $team = Team::create([
+                        'name'     => "Team for {$project->name}",
+                        'owner_id' => $project->owner_id,
+                    ]);
 
-                $project->update(['team_id' => $team->id]);
+                    $project->update(['team_id' => $team->id]);
 
-                $users = $project->users->filter(function (User $user) use ($project) {
-                    return $user->id !== $project->owner_id;
+                    $users = $project->users->filter(function (User $user) use ($project) {
+                        return $user->id !== $project->owner_id;
+                    });
+
+                    $team->members()->attach($users);
+                    $team->admins()->attach($project->owner);
                 });
-
-                $team->members()->attach($users);
-                $team->admins()->attach($project->owner);
-            });
+            }
         }
     }
 }
