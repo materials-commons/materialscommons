@@ -6,8 +6,8 @@ use App\Enums\GlobusStatus;
 use App\Jobs\Globus\CreateGlobusProjectDownloadDirsJob;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
-use App\Models\Project;
 use App\Models\User;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
@@ -25,7 +25,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',
@@ -33,7 +34,7 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
             'mime_type'  => 'directory',
             'owner_id'   => $user->id,
         ]);
-        $user->projects()->attach($project);
+
         $this->actingAs($user);
         $this->post(route('projects.globus.downloads.store', [$project]), [
             'name' => 'test download',
@@ -56,7 +57,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',
@@ -64,7 +66,7 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
             'mime_type'  => 'directory',
             'owner_id'   => $user->id,
         ]);
-        $user->projects()->attach($project);
+
         $this->actingAs($user);
         $this->post(route('projects.globus.downloads.store', [$project]), [
             'name' => 'test download',
@@ -89,7 +91,8 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',
@@ -97,7 +100,7 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
             'mime_type'  => 'directory',
             'owner_id'   => $user->id,
         ]);
-        $user->projects()->attach($project);
+
         $this->actingAs($user);
         $this->post(route('projects.globus.downloads.store', [$project]), [
             'name' => 'test download',
