@@ -43,6 +43,7 @@ class CreateGlobusProjectDownloadDirsAction
 //        $this->createDirs($dirsToCreate, $baseDir);
 
         foreach ($allDirs as $dir) {
+            $this->createDirIfNotExists("__globus_downloads/{$globusDownload->uuid}{$dir->path}");
             $files = File::where('directory_id', $dir->id)
                          ->where('current', true)
                          ->whereNull('path')
@@ -84,6 +85,7 @@ class CreateGlobusProjectDownloadDirsAction
             return;
         }
 
+        $fullPath = Storage::disk('mcfs')->path($dirPath);
         if (Storage::disk('mcfs')->exists($dirPath)) {
             $this->knownDirectories[$dirPath] = true;
             return;
