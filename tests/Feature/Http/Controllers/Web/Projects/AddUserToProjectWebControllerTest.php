@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Web\Projects;
 
-use App\Models\Project;
 use App\Models\User;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -17,17 +17,14 @@ class AddUserToProjectWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
 
-        $user->projects()->attach($project);
         $userToAdd = factory(User::class)->create();
 
         $this->actingAs($user);
         $this->get(route('projects.users.add', [$project, $userToAdd]))
              ->assertStatus(302);
-        $this->assertDatabaseHas('project2user', ['project_id' => $project->id, 'user_id' => $userToAdd->id]);
+        $this->assertDatabaseHas('team2member', ['team_id' => $project->team->id, 'user_id' => $userToAdd->id]);
     }
 
     /** @test */
@@ -39,18 +36,14 @@ class AddUserToProjectWebControllerTest extends TestCase
         $member = $users[1];
         $userToAdd = $users[2];
 
-        $project = factory(Project::class)->create([
-            'owner_id' => $owner->id,
-        ]);
-
-        $project->users()->attach($owner);
-        $project->users()->attach($member);
+        $project = ProjectFactory::ownedBy($owner)->create();
+        ProjectFactory::addMemberToProject($member, $project);
 
         $this->actingAs($member);
 
         $this->get(route('projects.users.add', [$project, $userToAdd]))
              ->assertStatus(403);
-        $this->assertDatabaseMissing('project2user', ['project_id' => $project->id, 'user_id' => $userToAdd->id]);
+        $this->assertDatabaseMissing('team2member', ['team_id' => $project->team->id, 'user_id' => $userToAdd->id]);
     }
 
     /** @test */
@@ -58,11 +51,8 @@ class AddUserToProjectWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
 
-        $user->projects()->attach($project);
         $userToAdd = factory(User::class)->create();
 
         $this->actingAs($user);
@@ -70,8 +60,8 @@ class AddUserToProjectWebControllerTest extends TestCase
              ->assertStatus(302);
         $this->get(route('projects.users.add', [$project, $userToAdd]))
              ->assertStatus(302);
-        $count = DB::table('project2user')->where('user_id', $userToAdd->id)
-                   ->where('project_id', $project->id)->count();
+        $count = DB::table('team2member')->where('user_id', $userToAdd->id)
+                   ->where('team_id', $project->team->id)->count();
         $this->assertEquals(1, $count);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Projects;
 
-use App\Models\Project;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,7 +15,6 @@ class IndexProjectsApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
-        $allProjects = Project::all();
 
         $this->actingAs($project->owner, 'api');
         $this->json('get', '/api/projects')
@@ -27,10 +25,7 @@ class IndexProjectsApiControllerTest extends TestCase
     /** @test */
     public function a_guest_user_cannot_see_projects()
     {
-        $user = factory('App\Models\User')->create();
-        factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::create();
 
         $this->json('get', '/api/projects')
              ->assertStatus(401);

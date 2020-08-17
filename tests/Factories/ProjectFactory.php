@@ -44,6 +44,12 @@ class ProjectFactory
         return $project;
     }
 
+    public function addMemberToProject($user, $project)
+    {
+        $team = $project->team;
+        $team->members()->syncWithoutDetaching($user);
+    }
+
     public function createDirectory($project, $parent, $name)
     {
         $parentPath = $parent->path == '/' ? '' : $parent->path;
