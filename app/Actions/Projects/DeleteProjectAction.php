@@ -3,6 +3,7 @@
 namespace App\Actions\Projects;
 
 use App\Models\Project;
+use Illuminate\Support\Facades\DB;
 
 class DeleteProjectAction
 {
@@ -15,6 +16,10 @@ class DeleteProjectAction
      */
     public function __invoke(Project $project)
     {
-        $project->delete();
+        DB::transaction(function () use ($project) {
+            $team = $project->team;
+            $project->delete();
+            $team->delete();
+        });
     }
 }
