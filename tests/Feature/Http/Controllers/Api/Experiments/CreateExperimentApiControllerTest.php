@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Experiments;
 
-use App\Models\File;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,17 +15,7 @@ class CreateExperimentApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
-        $rootDir = factory(File::class)->create([
-            'project_id' => $project->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-        ]);
-        $user->projects()->sync($project);
+        $project = ProjectFactory::ownedBy($user)->create();
 
         $this->actingAs($user, 'api');
 

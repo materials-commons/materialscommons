@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Web\Datasets;
 
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,11 +15,7 @@ class StoreDatasetWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
-
-        $user->projects()->attach($project);
+        $project = ProjectFactory::ownedBy($user)->create();
 
         $this->actingAs($user)->post(route('projects.datasets.store', [$project]), [
             'name'       => 'ds1',

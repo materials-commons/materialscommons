@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Files;
 
-use App\Models\File;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -17,17 +17,8 @@ class CreateFileApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
-        $rootDir = factory(File::class)->create([
-            'project_id' => $project->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-        ]);
-        $user->projects()->sync($project);
+        $project = ProjectFactory::ownedBy($user)->create();
+        $rootDir = $project->rootDir;
 
         $this->actingAs($user, 'api');
 

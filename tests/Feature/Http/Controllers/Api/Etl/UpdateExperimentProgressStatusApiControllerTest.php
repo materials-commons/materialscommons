@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Etl;
 
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,16 +17,12 @@ class UpdateExperimentProgressStatusApiControllerTest extends TestCase
 
         $user = factory('App\Models\User')->create();
 
-        $project = factory('App\Models\Project')->create([
-            'owner_id' => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
 
         $experiment = factory('App\Models\Experiment')->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);
-
-        $user->projects()->sync($project);
 
         $this->actingAs($user, 'api');
 
