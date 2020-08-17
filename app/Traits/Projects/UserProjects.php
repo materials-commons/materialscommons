@@ -10,13 +10,13 @@ trait UserProjects
     public function getUserProjects($userId)
     {
         $memberTeams = DB::table('team2member')
-                         ->where('user_id', 130)
+                         ->where('user_id', $userId)
                          ->select('team_id')
                          ->get()
                          ->pluck('team_id')
                          ->toArray();
         $adminTeams = DB::table('team2admin')
-                        ->where('user_id', 130)
+                        ->where('user_id', $userId)
                         ->select('team_id')
                         ->get()
                         ->pluck('team_id')

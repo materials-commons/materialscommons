@@ -4,6 +4,7 @@ namespace Tests\Factories;
 
 use App\Models\File;
 use App\Models\Project;
+use App\Models\Team;
 use App\Models\User;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,13 @@ class ProjectFactory
     {
         $user = $this->user ?? factory(User::class)->create();
         $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $user->projects()->attach($project);
+        $team = Team::create([
+            'name'     => "Team for {$project->name}",
+            'owner_id' => $project->owner_id,
+        ]);
+
+        $project->update(['team_id' => $team->id]);
+        $team->admins()->attach($project->owner);
         factory(File::class)->create([
             'project_id' => $project->id,
             'name'       => '/',
