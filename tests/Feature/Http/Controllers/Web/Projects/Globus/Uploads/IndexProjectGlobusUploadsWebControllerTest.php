@@ -4,8 +4,8 @@ namespace Tests\Feature\Http\Controllers\Web\Projects\Globus\Uploads;
 
 use App\Enums\GlobusStatus;
 use App\Models\GlobusUploadDownload;
-use App\Models\Project;
 use App\Models\User;
+use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,8 +21,8 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $user->projects()->attach($project);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         $this->actingAs($user);
         $response = $this->post(route('projects.globus.uploads.store', [$project]), [
             'name' => 'test upload',
@@ -42,8 +42,8 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $user->projects()->attach($project);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         $this->actingAs($user);
         $this->post(route('projects.globus.uploads.store', [$project]), [
             'name' => 'test upload',
@@ -64,8 +64,8 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
         $user = factory(User::class)->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $user->projects()->attach($project);
+        $project = ProjectFactory::ownedBy($user)->create();
+
         $this->actingAs($user);
         $this->post(route('projects.globus.uploads.store', [$project]), [
             'name' => 'test upload',
