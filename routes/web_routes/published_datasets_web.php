@@ -22,12 +22,13 @@ use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommunitiesW
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetOverviewWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Published\Files\DisplayPublishedFileWebController;
 use App\Http\Controllers\Web\Published\Files\ShowPublishedFileWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/datasets/{dataset}', ShowPublishedDatasetWorkflowsWebController::class)
+Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
      ->name('datasets.show');
 
 Route::get('/datasets/{dataset}/overview', ShowPublishedDatasetOverviewWebController::class)
