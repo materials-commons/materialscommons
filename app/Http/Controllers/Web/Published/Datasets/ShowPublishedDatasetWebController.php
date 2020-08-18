@@ -8,6 +8,6 @@ class ShowPublishedDatasetWebController extends Controller
 {
     public function __invoke($datasetId)
     {
-        return redirect(route('public.datasets.workflows.index', [$datasetId]));
+        return redirect(route('public.datasets.overview.show', [$datasetId]));
     }
 }
