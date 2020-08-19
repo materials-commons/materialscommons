@@ -6,12 +6,17 @@ use App\Actions\Experiments\DeleteExperimentAction;
 use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
+use App\Traits\Experiments\SharedDatasets;
 
 class DestroyExperimentWebController extends Controller
 {
+    use SharedDatasets;
+
     public function __invoke(DeleteExperimentAction $deleteExperimentAction, Project $project, Experiment $experiment)
     {
         abort_unless($this->canDelete($project, $experiment), 403, "Not experiment owner");
+        abort_if($this->hasAffectedPublishedDatasets($experiment), 403,
+            "Samples from experiment used in published datasets");
         $deleteExperimentAction($experiment);
         return redirect(route('projects.show', [$project]));
     }

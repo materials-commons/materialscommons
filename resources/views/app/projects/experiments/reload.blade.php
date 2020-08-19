@@ -51,8 +51,7 @@
                     <br>
                     <p>
                         The following unpublished datasets share samples with this experiment. If you choose to reload
-                        the
-                        experiments then the shared samples will need to manually be added back to the datasets.
+                        the experiment then the shared samples will need to manually be added back to the datasets.
                     </p>
                     <h5>Affected Unpublished Datasets</h5>
                     <ul>
