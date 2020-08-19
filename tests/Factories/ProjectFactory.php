@@ -2,6 +2,7 @@
 
 namespace Tests\Factories;
 
+use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Team;
@@ -14,11 +15,17 @@ class ProjectFactory
     use PathForFile;
 
     protected $user;
+    protected $createExperiment;
 
     public function ownedBy($user)
     {
         $this->user = $user;
+        return $this;
+    }
 
+    public function withExperiment()
+    {
+        $this->createExperiment = true;
         return $this;
     }
 
@@ -40,6 +47,12 @@ class ProjectFactory
             'mime_type'  => 'directory',
             'owner_id'   => $user->id,
         ]);
+
+        if ($this->createExperiment) {
+            factory(Experiment::class)->create([
+                'project_id' => $project->id,
+            ]);
+        }
 
         return $project;
     }
@@ -107,6 +120,13 @@ class ProjectFactory
             'owner_id'     => $project->owner_id,
             'mime_type'    => 'text',
             'uses_uuid'    => $file->uuid,
+        ]);
+    }
+
+    public function createExperimentInProject($project)
+    {
+        return factory(Experiment::class)->create([
+            'project_id' => $project->id,
         ]);
     }
 }
