@@ -68,13 +68,62 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
     /** @test */
     public function existing_directories_should_not_be_recreated()
     {
-        $this->fail("Not implemented");
+        $project = ProjectFactory::create();
+        $globusUpload = $this->setupGlobusUpload('globus/test1', $project->id, $project->owner_id);
+
+        // There is a directory /d1 that will be uploaded. Lets create an existing one to make sure that a
+        // second one is not created.
+        $d1 = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
+
+        $globusApiMock = GlobusMockUtils::createGlobusApiMock();
+        $importGlobusUploadIntoProjectAction = new ImportGlobusUploadIntoProjectAction($globusUpload, 10,
+            $globusApiMock);
+        $importGlobusUploadIntoProjectAction();
+
+        // Ensure that d1 still exists and that there is only one directory named d1 (a second was *not* created)
+
+        // Existence check
+        $this->assertDatabaseHas('files', [
+            'id'           => $d1->id,
+            'mime_type'    => 'directory',
+            'project_id'   => $project->id,
+            'directory_id' => $project->rootDir->id,
+        ]);
+
+        // Ensure that only 1 d1 exists
+        $this->assertEquals(1,
+            File::where('name', 'd1')
+                ->where('project_id', $project->id)
+                ->count());
     }
 
     /** @test */
     public function existing_files_should_have_new_versions()
     {
-        $this->fail("Not implemented");
+        $project = ProjectFactory::create();
+        $globusUpload = $this->setupGlobusUpload('globus/test1', $project->id, $project->owner_id);
+
+        // There is a file named root.txt. So lets create a fake one, and then upload. At that point we should
+        // have two files named root.txt. Only one is current, and it shouldn't be the one that we just created.
+        $originalRootFile = ProjectFactory::createFakeFile($project, $project->rootDir, "root.txt");
+
+        $globusApiMock = GlobusMockUtils::createGlobusApiMock();
+        $importGlobusUploadIntoProjectAction = new ImportGlobusUploadIntoProjectAction($globusUpload, 10,
+            $globusApiMock);
+        $importGlobusUploadIntoProjectAction();
+
+        // Check if root.txt has a new version and if it is correct
+        $this->assertEquals(2,
+            File::where('name', 'root.txt')
+                ->where('project_id', $project->id)
+                ->count());
+        $originalRootFile->fresh();
+        $this->assertNull($originalRootFile->current);
+        $newRootFile = File::where('name', 'root.txt')
+                           ->where('id', '<>', $originalRootFile->id)
+                           ->first();
+        $this->assertNotNull($newRootFile);
+        $this->assertTrue($newRootFile->current);
     }
 
     /** @test */
