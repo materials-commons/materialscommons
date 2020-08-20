@@ -60,7 +60,7 @@
                 <br>
                 <p>
                     This experiment cannot be delete. It contains published datasets that would be affected
-                    by the reload.
+                    by the delete.
                 </p>
                 <h5>Affected Published Datasets</h5>
                 <ul>
