@@ -14,7 +14,7 @@ class DestroyExperimentWebController extends Controller
 
     public function __invoke(DeleteExperimentAction $deleteExperimentAction, Project $project, Experiment $experiment)
     {
-        abort_unless($this->canDelete($project, $experiment), 403, "Not experiment owner");
+        $this->authorize('canDeleteExperiment', [$project, $experiment]);
         abort_if($this->hasAffectedPublishedDatasets($experiment), 403,
             "Samples from experiment used in published datasets");
         $deleteExperimentAction($experiment);

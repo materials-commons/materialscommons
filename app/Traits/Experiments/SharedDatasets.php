@@ -50,6 +50,6 @@ trait SharedDatasets
             return false;
         }
 
-        return $this->getAffectedUnpublishedDatasets($datasetsIds)->isNotEmpty();
+        return $this->getAffectedPublishedDatasets($datasetsIds)->isNotEmpty();
     }
 }

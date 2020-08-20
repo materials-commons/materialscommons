@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -53,5 +54,19 @@ class ProjectPolicy
                          ->where('project_id', $projectId)
                    )->count();
         return $count !== 0;
+    }
+
+    public function canDeleteExperiment(User $user, Project $project, Experiment $experiment)
+    {
+//        echo "in canDeleteExperiment {$user->id}/{$project->owner_id}/{$experiment->owner_id}\n";
+        if ($experiment->owner_id == $user->id) {
+            return true;
+        }
+
+        if ($project->owner_id == $user->id) {
+            return true;
+        }
+
+        return false;
     }
 }

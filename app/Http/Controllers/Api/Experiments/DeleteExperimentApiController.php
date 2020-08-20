@@ -14,7 +14,7 @@ class DeleteExperimentApiController extends Controller
 
     public function __invoke(DeleteExperimentAction $deleteExperimentAction, Project $project, Experiment $experiment)
     {
-        $this->authorize('canDeleteExperiment', $project, $experiment);
+        $this->authorize('canDeleteExperiment', [$project, $experiment]);
         abort_if($this->hasAffectedPublishedDatasets($experiment), 403,
             "Samples from experiment used in published datasets");
         $deleteExperimentAction($experiment);

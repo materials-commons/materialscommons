@@ -123,10 +123,11 @@ class ProjectFactory
         ]);
     }
 
-    public function createExperimentInProject($project)
+    public function createExperimentInProject($project, $userId = null)
     {
         return factory(Experiment::class)->create([
             'project_id' => $project->id,
+            'owner_id'   => $userId ?? $project->owner_id,
         ]);
     }
 }

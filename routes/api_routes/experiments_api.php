@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/projects/{project}/experiments', IndexExperimentsApiController::class);
 Route::post('/experiments', CreateExperimentApiController::class);
 Route::put('/experiments/{experiment}', UpdateExperimentApiController::class);
-Route::delete('/projects/{project}/experiments/{experiment}', DeleteExperimentApiController::class);
+Route::delete('/projects/{project}/experiments/{experiment}', DeleteExperimentApiController::class)
+     ->name('api.projects.experiments.delete');
 Route::get('/experiments/{experiment}', ShowExperimentApiController::class);
 
 Route::put('/experiments/{experiment}/workflows/selection', UpdateExperimentWorkflowSelectionApiController::class)
