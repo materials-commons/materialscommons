@@ -15,8 +15,10 @@ class ShowDatasetApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $ds = DatasetFactory::create();
+        $ds2 = DatasetFactory::inProject($ds->project)->create();
         $this->actingAs($ds->owner, 'api');
-        $response = $this->json('get', route('api.projects.datasets.show', [$ds->project_id, $ds->id]));
+        $response = $this->json('get', route('api.projects.datasets.show', [$ds->project_id, $ds2->id]));
+        $response->assertJsonFragment(['id' => $ds2->id]);
         $response->assertStatus(200);
     }
 }
