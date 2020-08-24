@@ -27,6 +27,7 @@ class Activity extends Model implements Searchable
     protected $casts = [
         'owner_id'   => 'integer',
         'project_id' => 'integer',
+        'copied_at'  => 'datetime',
     ];
 
     public function owner()
