@@ -15,18 +15,40 @@ class DatasetFileSelection
         $this->selection->put('exclude_files', collect());
         $this->selection->put('include_dirs', collect());
         $this->selection->put('exclude_dirs', collect());
+        $this->selection->put('file_dirs', collect());
 
         $this->loadSelectionEntry($datasetSelection, "include_files");
         $this->loadSelectionEntry($datasetSelection, "exclude_files");
         $this->loadSelectionEntry($datasetSelection, "include_dirs");
         $this->loadSelectionEntry($datasetSelection, "exclude_dirs");
+        $this->loadFileDirs();
     }
 
     private function loadSelectionEntry($datasetSelection, $selectionKey)
     {
         $includeEntries = $this->selection->get($selectionKey);
-        collect($datasetSelection[$selectionKey])->each(function($path) use ($includeEntries) {
+        collect($datasetSelection[$selectionKey])->each(function ($path) use ($includeEntries) {
             $includeEntries->put($path, true);
+        });
+    }
+
+    private function loadFileDirs()
+    {
+        $this->selection->get('include_files')->each(function ($fpath) {
+            $dirName = dirname($fpath);
+            for (; ;) {
+                if (blank($dirName)) {
+                    break;
+                }
+
+                if ($dirName === "/") {
+                    break;
+                }
+
+                if (!$this->selection['file_dirs']->has($dirName)) {
+                    $this->selection['file_dirs']->put($dirName, true);
+                }
+            }
         });
     }
 
@@ -85,6 +107,15 @@ class DatasetFileSelection
 
             $dirName = dirname($dirName);
         }
+    }
+
+    public function showDir($dirpath)
+    {
+        if ($this->isIncludedDir($dirpath)) {
+            return true;
+        }
+
+        return $this->selection['file_dirs']->has($dirpath);
     }
 
     /*
