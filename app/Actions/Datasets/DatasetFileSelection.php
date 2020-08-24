@@ -34,7 +34,7 @@ class DatasetFileSelection
 
     private function loadFileDirs()
     {
-        $this->selection->get('include_files')->each(function ($fpath) {
+        $this->selection->get('include_files')->each(function ($ignore, $fpath) {
             $dirName = dirname($fpath);
             for (; ;) {
                 if (blank($dirName)) {
@@ -48,6 +48,8 @@ class DatasetFileSelection
                 if (!$this->selection['file_dirs']->has($dirName)) {
                     $this->selection['file_dirs']->put($dirName, true);
                 }
+
+                $dirName = dirname($dirName);
             }
         });
     }
