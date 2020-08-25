@@ -3,7 +3,6 @@
 namespace App\Actions\Activities;
 
 use App\Models\Activity;
-use App\Models\Attribute;
 use Illuminate\Support\Facades\DB;
 
 class DeleteActivityAction
@@ -16,9 +15,7 @@ class DeleteActivityAction
     public function __invoke(Activity $activity)
     {
         DB::transaction(function () use ($activity) {
-            $activity->attributes()->get()->each(function (Attribute $attribute) {
-                $attribute->delete();
-            });
+            $activity->attributes()->delete();
             $activity->delete();
         });
     }
