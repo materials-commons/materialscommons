@@ -64,9 +64,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Datasets
     require base_path('routes/api_routes/datasets_api.php');
 
-    // Published Datasets
-    require base_path('routes/api/published_datasets_api.php');
-
     // Communities
     require base_path('routes/api_routes/communities_api.php');
 
@@ -78,6 +75,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
+
+// Published Datasets
+require base_path('routes/api_routes/published_datasets_api.php');
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();

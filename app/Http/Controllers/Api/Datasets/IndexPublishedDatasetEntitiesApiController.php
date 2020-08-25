@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Api\Datasets;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Resources\Entities\EntityResource;
+use App\Models\Dataset;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexPublishedDatasetEntitiesApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Dataset $dataset)
     {
-        //
+        abort_if(is_null($dataset->published_at), 404);
+        $query = $dataset->entities()->with('entityStates.attributes.values')->getQuery();
+        return EntityResource::collection(QueryBuilder::for($query)->get());
     }
 }
