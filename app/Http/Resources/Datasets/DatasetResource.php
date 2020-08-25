@@ -33,10 +33,14 @@ class DatasetResource extends JsonResource
 
     private function loadZipfileFields(array $ds)
     {
-//        $zipfilePath = $this->zipfilePath();
-//        if (file_exists($zipfilePath)) {
-//            $ds['zipfile_size'] = filesize($zipfilePath);
-//        }
+        if (is_null($ds['published_at'])) {
+            return $ds;
+        }
+
+        $zipfilePath = $this->zipfilePath();
+        if (file_exists($zipfilePath)) {
+            $ds['zipfile_size'] = filesize($zipfilePath);
+        }
 
         return $ds;
     }
