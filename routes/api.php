@@ -64,8 +64,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Datasets
     require base_path('routes/api_routes/datasets_api.php');
 
-    // ETL
-    require base_path('routes/api_routes/etl_api.php');
+    // Published Datasets
+    require base_path('routes/api/published_datasets_api.php');
 
     // Communities
     require base_path('routes/api_routes/communities_api.php');
