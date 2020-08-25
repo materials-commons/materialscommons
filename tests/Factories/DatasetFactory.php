@@ -45,6 +45,13 @@ class DatasetFactory
         return $file;
     }
 
+    public function createFakeFile($dataset, $dir, $name)
+    {
+        $file = ProjectFactory::createFakeFile($dataset->project, $dir, $name);
+        $dataset->files()->attach($file);
+        return $file;
+    }
+
     public function createFilePointingAt($dataset, $file, $name)
     {
         $f = ProjectFactory::createFilePointingAt($dataset->project, $file, $name);

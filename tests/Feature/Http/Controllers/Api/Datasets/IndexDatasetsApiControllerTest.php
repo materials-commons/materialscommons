@@ -19,4 +19,21 @@ class IndexDatasetsApiControllerTest extends TestCase
         $response = $this->json('get', route('api.projects.datasets.index', [$ds->project_id]));
         $response->assertStatus(200);
     }
+
+    /** @test */
+    public function datasets_contain_counts()
+    {
+        $this->withoutExceptionHandling();
+        $ds = DatasetFactory::create();
+        $this->actingAs($ds->owner, 'api')
+             ->json('get', route('api.projects.datasets.index', [$ds->project_id]))
+             ->assertJsonFragment([
+                 'files_count'       => 0,
+                 'activities_count'  => 0,
+                 'entities_count'    => 0,
+                 'experiments_count' => 0,
+                 'comments_count'    => 0,
+                 'workflows_count'   => 0,
+             ]);
+    }
 }

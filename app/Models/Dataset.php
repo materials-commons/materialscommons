@@ -51,9 +51,15 @@ class Dataset extends Model implements Searchable
     ];
 
     protected $casts = [
-        'file_selection' => 'array',
-        'owner_id'       => 'integer',
-        'project_id'     => 'integer',
+        'file_selection'    => 'array',
+        'owner_id'          => 'integer',
+        'project_id'        => 'integer',
+        'files_count'       => 'integer',
+        'activities_count'  => 'integer',
+        'entities_count'    => 'integer',
+        'experiments_count' => 'integer',
+        'comments_count'    => 'integer',
+        'workflows_count'   => 'integer',
     ];
 
     public function owner()
@@ -121,6 +127,15 @@ class Dataset extends Model implements Searchable
     {
         return $this->morphMany(Download::class, 'downloadable');
     }
+
+    // Scopes
+
+    public function scopeWithCounts($query)
+    {
+        return $query->withCount('files', 'entities', 'activities', 'experiments', 'comments', 'workflows');
+    }
+
+    //
 
     public function getTypeAttribute()
     {
