@@ -12,7 +12,7 @@ set -x
 SRC_DIR=$(pwd)
 
 DEPLOY_DATE=$(date +'%Y-%m-%dT%H:%M:%S.%Z')
-CURRENT_VERSION=$(grep MC_SERVER_VERSION .env.junk | sed 's/MC_SERVER_VERSION=//')
+CURRENT_VERSION=$(grep MC_SERVER_VERSION .env | sed 's/MC_SERVER_VERSION=//')
 
 cp .env .env.save
 LAST_VERSION_NUMBER=$(echo $CURRENT_VERSION | cut -d. -f3)
