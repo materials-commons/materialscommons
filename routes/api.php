@@ -79,6 +79,9 @@ Route::post('/get_apitoken', GetApiTokenApiController::class);
 // Published Datasets
 require base_path('routes/api_routes/published_datasets_api.php');
 
+// Server
+require base_path('routes/api_routes/server_api.php');
+
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

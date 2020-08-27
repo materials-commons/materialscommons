@@ -9,6 +9,21 @@ fi
 
 set -x
 
+SRC_DIR=$(pwd)
+
+DEPLOY_DATE=$(date  +'%Y-%m-%dT%H:%M:%S.%Z')
+CURRENT_VERSION=$(grep MC_SERVER_VERSION .env.junk | sed 's/MC_SERVER_VERSION=//')
+
+cp .env .env.save
+LAST_VERSION_NUMBER=$(echo $CURRENT_VERSION | cut -d. -f3)
+NEXT_V=$(($LAST_VERSION_NUMBER+1))
+FIRST_V=$(echo $CURRENT_VERSION | cut -d. -f1)
+SECOND_V=$(echo $CURRENT_VERSION | cut -d. -f2)
+cat .env | grep -v MC_SERVER_VERSION | grep -v MC_SERVER_LAST_UPDATED_AT > .env.tmp
+echo "MC_SERVER_LAST_UPDATED_AT=${DEPLOY_DATE}" >> .env.tmp
+echo "MC_SERVER_VERSION=${FIRST_V}.${SECOND_V}.${NEXT_V}" >> .env.tmp
+mv .env.tmp .env
+
 rm -rf /var/www/html/materialscommons.old
 mv /var/www/html/materialscommons /var/www/html/materialscommons.old
 cd ..
@@ -20,6 +35,6 @@ php artisan config:cache
 php artisan migrate
 cd ..
 chown -R nginx:nginx materialscommons
-cd /home/gtarcea/workspace/src/github.com/materials-commons/materialscommons
+cd "${SRC_DIR}"
 php artisan queue:restart
 systemctl status supervisord
