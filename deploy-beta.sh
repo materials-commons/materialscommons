@@ -36,7 +36,7 @@ php artisan config:cache
 cd ..
 chown -R nginx:nginx beta
 cd "${SRC_DIR}"
-chown gtarcea .env.beta
+chown gtarcea:umuser .env.beta
 #systemctl stop supervisord
 #sleep 10
 #systemctl start supervisord

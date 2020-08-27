@@ -36,6 +36,6 @@ php artisan migrate
 cd ..
 chown -R nginx:nginx materialscommons
 cd "${SRC_DIR}"
-chown gtarcea .env .env.save
+chown gtarcea:umuser .env .env.save
 php artisan queue:restart
 systemctl status supervisord
