@@ -25,7 +25,12 @@ class DatasetFileSelection
     private function loadSelectionEntry($datasetSelection, $selectionKey)
     {
         $includeEntries = $this->selection->get($selectionKey);
-        collect($datasetSelection[$selectionKey])->each(function($path) use ($includeEntries) {
+
+        if (!isset($datasetSelection[$selectionKey])) {
+            $datasetSelection[$selectionKey] = [];
+        }
+
+        collect($datasetSelection[$selectionKey])->each(function ($path) use ($includeEntries) {
             $includeEntries->put($path, true);
         });
     }
@@ -86,30 +91,4 @@ class DatasetFileSelection
             $dirName = dirname($dirName);
         }
     }
-
-    /*
-     *    // isIncludedDir checks if the directory is in the include or exclude directories lists. If its
-    // not then it returns parent.selected as that will denote the child state.
-    isIncludedDir(dirPath, parent) {
-        if ((dirPath in this.state.selection.include_dirs)) {
-            return true;
-        } else if ((dirPath in this.state.selection.exclude_dirs)) {
-            return false;
-        }
-
-        return parent.selected;
-    }
-
-    // isIncludedFile checks if the file is in the include or exclude lists. If not then
-    // it checks whether the directory the file is has been selected.
-    isIncludedFile(filePath, dir) {
-        if ((filePath in this.state.selection.include_files)) {
-            return true;
-        } else if ((filePath in this.state.selection.exclude_files)) {
-            return false;
-        } else {
-            return dir.selected;
-        }
-    }
-     */
 }

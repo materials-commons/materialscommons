@@ -15,8 +15,12 @@ class PathHelpers
      */
     static function normalizePath($path)
     {
-        $patterns     = ['~/{2,}~', '~/(\./)+~', '~([^/\.]+/(?R)*\.{2,}/)~', '~\.\./~'];
+        $patterns = ['~/{2,}~', '~/(\./)+~', '~([^/\.]+/(?R)*\.{2,}/)~', '~\.\./~'];
         $replacements = ['/', '/', '', ''];
+
+        if ($path === "/") {
+            return "/";
+        }
 
         return Str::of(preg_replace($patterns, $replacements, $path))->rtrim('/')->__toString();
     }

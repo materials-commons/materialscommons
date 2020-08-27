@@ -26,4 +26,20 @@ class DatasetFileSelectionTest extends TestCase
 
         $this->assertTrue($fs->isIncludedFile("{$f1->directory->path}/{$f1->name}"));
     }
+
+    /** @test */
+    public function selecting_root_selects_all_other_files()
+    {
+        $fs = new DatasetFileSelection(['include_dirs' => '/']);
+        $this->assertTrue($fs->isIncludedFile("/f1.txt"));
+        $this->assertTrue($fs->isIncludedFile("/f1/f2/f3.txt"));
+    }
+
+    /** @test */
+    public function selecting_root_and_excluding_a_subdir_excludes_files_in_subdir()
+    {
+        $fs = new DatasetFileSelection(['include_dirs' => '/', 'exclude_dirs' => '/f2/f3']);
+        $this->assertTrue($fs->isIncludedFile('/f2/f1.txt'));
+        $this->assertFalse($fs->isIncludedFile('/f2/f3/f3.txt'));
+    }
 }
