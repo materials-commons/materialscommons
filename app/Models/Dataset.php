@@ -193,8 +193,13 @@ class Dataset extends Model implements Searchable
 
     public function zipfilePathPartial()
     {
-        $dsNameSlug = Str::slug($this->name);
+        $dsNameSlug = $this->zipfileName();
         return "zipfiles/{$this->uuid}/{$dsNameSlug}.zip";
+    }
+
+    public function zipfileName()
+    {
+        return Str::slug($this->name);
     }
 
     public function zipfileDirPartial()

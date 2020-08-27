@@ -41,6 +41,7 @@ class DatasetResource extends JsonResource
         $zipfilePath = $this->zipfilePath();
         if (file_exists($zipfilePath)) {
             $ds['zipfile_size'] = filesize($zipfilePath);
+            $ds['zipfile_name'] = $this->zipfileName();
         }
 
         return $ds;
