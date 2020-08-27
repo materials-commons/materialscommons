@@ -15,6 +15,7 @@ public/css/app.css
 .env.sqlite
 .env.save
 .env.mysql
+.env.tmp
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
