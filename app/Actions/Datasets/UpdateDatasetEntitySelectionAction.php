@@ -2,33 +2,50 @@
 
 namespace App\Actions\Datasets;
 
+use App\Models\Dataset;
+use Illuminate\Support\Facades\DB;
+
 class UpdateDatasetEntitySelectionAction
 {
-    public function __invoke($entity, $dataset, $remove = false)
+    public function __invoke($entity, $dataset)
     {
-        if (!$remove) {
-            $this->addEntityToSelection($dataset, $entity);
+        $experiment = $entity->experiments()->first();
+        $count = $this->getCount($dataset, $entity, $experiment);
+        if ($count === 0) {
+            $this->addEntityToSelection($dataset, $entity, $experiment);
         } else {
-            $this->removeEntityFromSelection($dataset, $entity);
+            $this->removeEntityFromSelection($dataset, $entity, $experiment);
         }
 
-//        $dataset->entities()->toggle($entity);
         return $dataset;
     }
 
-    private function addEntityToSelection($dataset, $entity)
+    private function addEntityToSelection($dataset, $entity, $experiment)
     {
-        $dataset->update([
-            'entity_selection' => collect($dataset->entity_selection)->merge($entity->name)->unique()->toArray(),
+        DB::table('item2entity_selection')->insert([
+            'item_type'     => Dataset::class,
+            'item_id'       => $dataset->id,
+            'entity_name'   => $entity->name,
+            'experiment_id' => $experiment->id,
         ]);
     }
 
-    private function removeEntityFromSelection($dataset, $entity)
+    private function removeEntityFromSelection($dataset, $entity, $experiment)
     {
-        $dataset->update([
-            'entity_selection' => collect($dataset->entity_selection)->reject(function ($name) use ($entity) {
-                return $entity->name === $name;
-            }),
-        ])->toArray();
+        $this->createQuery($dataset, $entity, $experiment)->delete();
+    }
+
+    private function getCount($dataset, $entity, $experiment)
+    {
+        return $this->createQuery($dataset, $entity, $experiment)->count();
+    }
+
+    private function createQuery($dataset, $entity, $experiment)
+    {
+        return DB::table('item2entity_selection')
+                 ->where('item_type', Dataset::class)
+                 ->where('item_id', $dataset->id)
+                 ->where('entity_name', $entity->name)
+                 ->where('experiment_id', $experiment->id);
     }
 }
