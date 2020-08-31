@@ -21,4 +21,21 @@ class ShowDatasetApiControllerTest extends TestCase
         $response->assertJsonFragment(['id' => $ds2->id]);
         $response->assertStatus(200);
     }
+
+    /** @test */
+    public function dataset_contains_counts()
+    {
+        $this->withoutExceptionHandling();
+        $ds = DatasetFactory::create();
+        $this->actingAs($ds->owner, 'api')
+             ->json('get', route('api.projects.datasets.show', [$ds->project_id, $ds->id]))
+             ->assertJsonFragment([
+                 'files_count'       => 0,
+                 'activities_count'  => 0,
+                 'entities_count'    => 0,
+                 'experiments_count' => 0,
+                 'comments_count'    => 0,
+                 'workflows_count'   => 0,
+             ]);
+    }
 }

@@ -15,18 +15,23 @@ class DatasetFileSelection
         $this->selection->put('exclude_files', collect());
         $this->selection->put('include_dirs', collect());
         $this->selection->put('exclude_dirs', collect());
-        $this->selection->put('file_dirs', collect());
+//        $this->selection->put('file_dirs', collect());
 
         $this->loadSelectionEntry($datasetSelection, "include_files");
         $this->loadSelectionEntry($datasetSelection, "exclude_files");
         $this->loadSelectionEntry($datasetSelection, "include_dirs");
         $this->loadSelectionEntry($datasetSelection, "exclude_dirs");
-        $this->loadFileDirs();
+//        $this->loadFileDirs();
     }
 
     private function loadSelectionEntry($datasetSelection, $selectionKey)
     {
         $includeEntries = $this->selection->get($selectionKey);
+
+        if (!isset($datasetSelection[$selectionKey])) {
+            $datasetSelection[$selectionKey] = [];
+        }
+
         collect($datasetSelection[$selectionKey])->each(function ($path) use ($includeEntries) {
             $includeEntries->put($path, true);
         });
@@ -111,38 +116,12 @@ class DatasetFileSelection
         }
     }
 
-    public function showDir($dirpath)
-    {
-        if ($this->isIncludedDir($dirpath)) {
-            return true;
-        }
-
-        return $this->selection['file_dirs']->has($dirpath);
-    }
-
-    /*
-     *    // isIncludedDir checks if the directory is in the include or exclude directories lists. If its
-    // not then it returns parent.selected as that will denote the child state.
-    isIncludedDir(dirPath, parent) {
-        if ((dirPath in this.state.selection.include_dirs)) {
-            return true;
-        } else if ((dirPath in this.state.selection.exclude_dirs)) {
-            return false;
-        }
-
-        return parent.selected;
-    }
-
-    // isIncludedFile checks if the file is in the include or exclude lists. If not then
-    // it checks whether the directory the file is has been selected.
-    isIncludedFile(filePath, dir) {
-        if ((filePath in this.state.selection.include_files)) {
-            return true;
-        } else if ((filePath in this.state.selection.exclude_files)) {
-            return false;
-        } else {
-            return dir.selected;
-        }
-    }
-     */
+//    public function showDir($dirpath)
+//    {
+//        if ($this->isIncludedDir($dirpath)) {
+//            return true;
+//        }
+//
+//        return $this->selection['file_dirs']->has($dirpath);
+//    }
 }

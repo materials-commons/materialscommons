@@ -5,8 +5,10 @@ use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DownloadDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\FileByPathInDatasetSelectionApiController;
 use App\Http\Controllers\Api\Datasets\FileInDatasetSelectionApiController;
+use App\Http\Controllers\Api\Datasets\IndexDatasetActivitiesApiController;
+use App\Http\Controllers\Api\Datasets\IndexDatasetEntitiesApiController;
+use App\Http\Controllers\Api\Datasets\IndexDatasetFilesApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetsApiController;
-use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetsApiController;
 use App\Http\Controllers\Api\Datasets\PublishDatasetApiController;
 use App\Http\Controllers\Api\Datasets\ShowDatasetApiController;
 use App\Http\Controllers\Api\Datasets\UnpublishDatasetApiController;
@@ -32,6 +34,10 @@ Route::put('/datasets/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiCon
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class)
      ->name('api.projects.datasets.show');
 
+Route::get('/projects/{project}/datasets/{dataset}/files', IndexDatasetFilesApiController::class);
+Route::get('/projects/{project}/datasets/{dataset}/entities', IndexDatasetEntitiesApiController::class);
+Route::get('/projects/{project}/datasets/{dataset}/activities', IndexDatasetActivitiesApiController::class);
+
 Route::get('/projects/{project}/datasets', IndexDatasetsApiController::class)
      ->name('api.projects.datasets.index');
 
@@ -47,10 +53,6 @@ Route::get('/projects/{project}/datasets/{dataset}/files/{file}/check_selection'
 
 Route::post('/projects/{project}/datasets/{dataset}/check_select_by_path',
     FileByPathInDatasetSelectionApiController::class);
-
-// Published datasets
-
-Route::get('/datasets/published', IndexPublishedDatasetsApiController::class);
 
 
 

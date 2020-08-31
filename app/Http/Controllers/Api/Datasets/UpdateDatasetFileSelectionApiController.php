@@ -14,6 +14,7 @@ class UpdateDatasetFileSelectionApiController extends Controller
         $validated = $request->validated();
         $updateDatasetFileSelectionAction = new UpdateDatasetFileSelectionAction();
         $dataset = $updateDatasetFileSelectionAction($validated, $dataset);
+        $dataset->globus_acl_id = null;
         return $dataset;
     }
 }

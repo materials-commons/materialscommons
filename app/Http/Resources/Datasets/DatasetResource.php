@@ -14,10 +14,11 @@ class DatasetResource extends JsonResource
      */
 
     protected $fields = [
-        'id', 'uuid', 'name', 'summary', 'description', 'owner_id',
-        'created_at', 'updated_at', 'published_at', 'files_count',
-        'activities_count', 'entities_count', 'experiments_count',
-        'comments_count', 'workflows_count',
+        'id', 'uuid', 'name', 'license', 'license_link', 'summary', 'description',
+        'doi', 'published_at', 'authors', 'file_selection', 'globus_endpoint_id',
+        'globus_path', 'owner_id', 'created_at', 'updated_at', 'files_count',
+        'activities_count', 'entities_count', 'experiments_count', 'comments_count',
+        'workflows_count',
     ];
 
     public function toArray($request)
@@ -33,9 +34,14 @@ class DatasetResource extends JsonResource
 
     private function loadZipfileFields(array $ds)
     {
+        if (is_null($ds['published_at'])) {
+            return $ds;
+        }
+
         $zipfilePath = $this->zipfilePath();
         if (file_exists($zipfilePath)) {
             $ds['zipfile_size'] = filesize($zipfilePath);
+            $ds['zipfile_name'] = $this->zipfileName();
         }
 
         return $ds;

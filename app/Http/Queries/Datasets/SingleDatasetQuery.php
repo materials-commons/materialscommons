@@ -13,7 +13,7 @@ class SingleDatasetQuery extends DatasetsQueryBuilder
     public function __construct(?Request $request = null)
     {
         $datasetId = $this->getParameterId('dataset');
-        $query = Dataset::where('id', $datasetId);
+        $query = Dataset::withCounts()->where('id', $datasetId);
         parent::__construct($query, $request);
     }
 }

@@ -14,6 +14,7 @@ class UpdateDatasetActivitySelectionApiController extends Controller
     {
         $validated = $request->validated();
         $dataset = $updateDatasetActivitySelectionAction($validated["activity_id"], $dataset);
+        $dataset->globus_acl_id = null;
         return $dataset;
     }
 }
