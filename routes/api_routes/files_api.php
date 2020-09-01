@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Files\RenameFileApiController;
 use App\Http\Controllers\Api\Files\ShowFileApiController;
 use App\Http\Controllers\Api\Files\UpdateFileApiController;
 use App\Http\Controllers\Api\Files\UploadFileApiController;
+use App\Http\Controllers\Api\Files\UploadFileNamedApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/files', CreateFileApiController::class);
@@ -21,3 +22,5 @@ Route::get('/projects/{project}/files/{file}/download', DownloadFileApiControlle
 Route::post('/files/by_path', GetFileByPathApiController::class);
 Route::post('/projects/{project}/files/{file}/upload', UploadFileApiController::class)
      ->name('api.projects.files.upload');
+Route::post('/projects/{project}/files/{file}/upload/{name}', UploadFileNamedApiController::class)
+     ->name('api.projects.files.upload.named');

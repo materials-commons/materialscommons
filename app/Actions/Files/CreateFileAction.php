@@ -10,7 +10,7 @@ class CreateFileAction
 {
     use SaveFile;
 
-    public function __invoke($projectId, $directoryId, $description, $file)
+    public function __invoke($projectId, $directoryId, $description, $file, $name = null)
     {
         umask(0);
         $mimeType = mime_content_type($file->getRealPath());
@@ -20,7 +20,7 @@ class CreateFileAction
 //            'mime_type'    => $file->getClientMimeType(),
             'mime_type'    => $mimeType,
             'size'         => $file->getSize(),
-            'name'         => $file->getClientOriginalName(),
+            'name'         => $name ?? $file->getClientOriginalName(),
             'owner_id'     => auth()->id(),
             'current'      => true,
             'description'  => $description,
