@@ -31,3 +31,15 @@ class ShowDatasetEntitiesWebController extends Controller
         ]);
     }
 }
+/*
+ * Example query to get entities for a dataset
+ *
+ select * from entities e where e.id in (
+select entity_id from experiment2entity where experiment_id in (
+    select experiment_id from item2entity_selection where item_id = 130
+))
+and e.name in
+    (select entity_name from item2entity_selection
+    where item_id = 130 and experiment_id in
+                            (select experiment_id from item2entity_selection where item_id = 130))
+ */
