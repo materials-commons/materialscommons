@@ -130,6 +130,31 @@ class Dataset extends Model implements Searchable
         return $this->morphMany(Download::class, 'downloadable');
     }
 
+    public function entitiesFromTemplate()
+    {
+        return Entity::whereIn('id', function ($query) {
+            $query->select('entity_id')
+                  ->from('experiment2entity')
+                  ->whereIn('experiment_id', function ($query) {
+                      $query->select('experiment_id')
+                            ->from('item2entity_selection')
+                            ->where('item_id', $this->id)
+                            ->where('item_type', Dataset::class);
+                  });
+        })->whereIn('name', function ($query) {
+            $query->select('entity_name')
+                  ->from('item2entity_selection')
+                  ->where('item_id', $this->id)
+                  ->where('item_type', Dataset::class)
+                  ->whereIn('experiment_id', function ($query) {
+                      $query->select('experiment_id')
+                            ->from('item2entity_selection')
+                            ->where('item_id', $this->id)
+                            ->where('item_type', Dataset::class);
+                  });
+        })->get();
+    }
+
     // Scopes
 
     public function scopeWithCounts($query)
