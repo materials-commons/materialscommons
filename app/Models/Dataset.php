@@ -152,6 +152,11 @@ class Dataset extends Model implements Searchable
                             ->where('item_id', $this->id)
                             ->where('item_type', Dataset::class);
                   });
+        })->orWhereIn('id', function ($query) {
+            $query->select('entity_id')
+                  ->from('item2entity_selection')
+                  ->where('item_id', $this->id)
+                  ->where('item_type', Dataset::class);
         })->get();
     }
 
