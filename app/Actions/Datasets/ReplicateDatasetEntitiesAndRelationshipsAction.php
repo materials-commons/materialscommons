@@ -20,7 +20,7 @@ class ReplicateDatasetEntitiesAndRelationshipsAction
 
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
-        $dataset->entitiesFromTemplate()->each(function (Entity $entity) {
+        $dataset->entitiesFromTemplate()->each(function (Entity $entity) use ($dataset) {
             $entity->load('entityStates.attributes.values', 'activities.attributes.values');
             $e = $entity->replicate()->fill([
                 'uuid'      => $this->uuid(),
@@ -28,6 +28,7 @@ class ReplicateDatasetEntitiesAndRelationshipsAction
                 'copied_id' => $entity->id,
             ]);
             $e->save();
+            $dataset->entities()->attach($e);
             $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e);
             $this->replicateActivitiesAndRelationshipsForEntity($entity, $e);
         });
