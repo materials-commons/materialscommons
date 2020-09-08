@@ -19,10 +19,17 @@ class PublishDatasetAction2
 
     public function execute(Dataset $dataset)
     {
+        $this->syncActivities($dataset);
         $this->replicateFiles($dataset);
         $this->replicateEntitiesAndRelatedItems($dataset);
         $this->buildGlobusDownload($dataset);
         $this->buildZipfile($dataset);
+    }
+
+    private function syncActivities(Dataset $dataset)
+    {
+        $syncAction = new SyncActivitiesToPublishedDatasetAction();
+        $syncAction($dataset->id);
     }
 
     private function replicateFiles(Dataset $dataset)

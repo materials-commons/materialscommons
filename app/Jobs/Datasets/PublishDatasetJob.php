@@ -2,10 +2,7 @@
 
 namespace App\Jobs\Datasets;
 
-use App\Actions\Datasets\CreateDatasetFilesTableAction;
-use App\Actions\Datasets\CreateDatasetInGlobusAction;
-use App\Actions\Datasets\CreateDatasetZipfileAction;
-use App\Actions\Datasets\SyncActivitiesToPublishedDatasetAction;
+use App\Actions\Datasets\PublishDatasetAction2;
 use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Bus\Queueable;
@@ -33,16 +30,7 @@ class PublishDatasetJob implements ShouldQueue
     public function handle()
     {
         $dataset = Dataset::findOrFail($this->datasetId);
-        $syncActivitiesToPublishedDatasetAction = new SyncActivitiesToPublishedDatasetAction();
-        $syncActivitiesToPublishedDatasetAction($dataset->id);
-
-        $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
-        $createDatasetFilesTableAction->execute($dataset);
-
-        $createDatasetZipfileAction = new CreateDatasetZipfileAction();
-        $createDatasetZipfileAction($dataset);
-
-        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction(GlobusApi::createGlobusApi());
-        $createDatasetInGlobusAction($dataset, false);
+        $publishAction = new PublishDatasetAction2(GlobusApi::createGlobusApi());
+        $publishAction->execute($dataset);
     }
 }
