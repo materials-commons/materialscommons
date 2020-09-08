@@ -17,7 +17,8 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = factory('App\Models\User')->create();
-        $project = ProjectFactory::ownedBy($user)->create();
+        $project = ProjectFactory::ownedBy($user)->withExperiment()->create();
+        $experiment = $project->experiments()->first();
         $dataset = factory(Dataset::class)->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
@@ -26,6 +27,7 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
+        $experiment->entities()->attach($entity);
 
         $this->actingAs($user, 'api');
 
@@ -36,7 +38,12 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
              ->assertStatus(200);
 
         // Make sure entity is added to dataset
-        $this->assertDatabaseHas('dataset2entity', ['dataset_id' => $dataset->id, 'entity_id' => $entity->id]);
+        $this->assertDatabaseHas('item2entity_selection', [
+            'item_id'       => $dataset->id,
+            'item_type'     => Dataset::class,
+            'entity_name'   => $entity->name,
+            'experiment_id' => $experiment->id,
+        ]);
 
         // Issue the same call, which should remove the entity from the dataset
         $this->json('put', "/api/datasets/{$dataset->id}/entities", [
@@ -45,6 +52,11 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
         ])
              ->assertStatus(200);
 
-        $this->assertDatabaseMissing('dataset2entity', ['dataset_id' => $dataset->id, 'entity_id' => $entity->id]);
+        $this->assertDatabaseMissing('dataset2entity', [
+            'item_id'       => $dataset->id,
+            'item_type'     => Dataset::class,
+            'entity_name'   => $entity->name,
+            'experiment_id' => $experiment->id,
+        ]);
     }
 }
