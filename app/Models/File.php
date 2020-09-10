@@ -21,6 +21,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer $directory_id;
  * @property integer owner_id
  * @property boolean current
+ * @property string checksum
  *
  * @mixin Builder
  */

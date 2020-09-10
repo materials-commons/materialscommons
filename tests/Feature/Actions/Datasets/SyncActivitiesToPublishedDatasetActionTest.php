@@ -44,7 +44,7 @@ class SyncActivitiesToPublishedDatasetActionTest extends TestCase
         $dataset->entities()->attach($entity);
 
         $syncActivities = new SyncActivitiesToPublishedDatasetAction();
-        $syncActivities($dataset->id);
+        $syncActivities->execute($dataset);
 
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());

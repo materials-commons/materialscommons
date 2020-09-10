@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Datasets;
 
-use App\Actions\Datasets\ReplicateDatasetEntitiesAndRelationshipsAction;
+use App\Actions\Datasets\ReplicateDatasetEntitiesAndRelationshipsForPublishingAction;
 use App\Actions\Datasets\UpdateDatasetEntitySelectionAction;
 use App\Actions\Entities\CreateEntityAction;
 use App\Actions\Experiments\DeleteExperimentAction;
@@ -18,7 +18,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class ReplicateDatasetEntitiesAndRelationshipsActionTest extends TestCase
+class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -42,7 +42,7 @@ class ReplicateDatasetEntitiesAndRelationshipsActionTest extends TestCase
         $this->assertEquals(1, Entity::count());
 
         // Now replicate
-        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsAction();
+        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
         $replicateAction->execute($dataset);
 
         // After replication we should have the original and the replicated entity (so 2)
@@ -79,7 +79,7 @@ class ReplicateDatasetEntitiesAndRelationshipsActionTest extends TestCase
         $this->assertEquals(1, AttributeValue::count());
 
         // Replicate
-        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsAction();
+        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
         $replicateAction->execute($dataset);
 
         // After replication there should be 2 entities, 2 states, 2 attributes and 2
@@ -119,7 +119,7 @@ class ReplicateDatasetEntitiesAndRelationshipsActionTest extends TestCase
         $updateSelection($entity, $dataset);
 
         // Replicate
-        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsAction();
+        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
         $replicateAction->execute($dataset);
 
         // All we are going to test is that the activity, its attribute and the attribute value are replicated.
@@ -163,7 +163,7 @@ class ReplicateDatasetEntitiesAndRelationshipsActionTest extends TestCase
         $updateSelection($entity, $dataset);
 
         // Replicate
-        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsAction();
+        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
         $replicateAction->execute($dataset);
 
         // Make sure there are 2

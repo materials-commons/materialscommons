@@ -29,6 +29,14 @@ class UnpublishDatasetAction
         Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
         Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
 
+        $this->removeDatasetRelationships($dataset);
+
         return $dataset->fresh();
+    }
+
+    private function removeDatasetRelationships(Dataset $dataset)
+    {
+        $dataset->entities()->detach();
+        $dataset->activities()->detach();
     }
 }

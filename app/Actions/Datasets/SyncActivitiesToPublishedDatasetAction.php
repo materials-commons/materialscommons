@@ -2,15 +2,13 @@
 
 namespace App\Actions\Datasets;
 
-use App\Models\Dataset;
 use Illuminate\Support\Facades\DB;
 
 class SyncActivitiesToPublishedDatasetAction
 {
     // Run this only as a background task
-    public function __invoke($datasetId)
+    public function execute($dataset)
     {
-        $dataset = Dataset::with('entities')->findOrFail($datasetId);
         $dataset->activities()
                 ->sync(
                     DB::table('dataset2entity')

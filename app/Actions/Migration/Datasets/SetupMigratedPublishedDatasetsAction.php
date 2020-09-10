@@ -21,14 +21,11 @@ class SetupMigratedPublishedDatasetsAction
 
     public function __invoke($runZipLinker, $runGlobus)
     {
-        echo "{$runZipLinker}/{$runGlobus}\n";
         $publishedDatasets = Dataset::whereNotNull('published_at')->get();
         $publishedDatasets->each(function (Dataset $dataset) use ($runZipLinker, $runGlobus) {
             try {
-                echo "Processing {$dataset->name}\n";
                 foreach (Storage::disk('mcfs')->allFiles($dataset->zipfileDirPartial()) as $zipfile) {
                     if ($runZipLinker) {
-                        echo "  Running zipfile linker\n";
                         $this->linkExistingDatasetZipfileToNewName($zipfile, $dataset);
                     }
                 }
@@ -39,12 +36,9 @@ class SetupMigratedPublishedDatasetsAction
             }
             try {
                 if ($runGlobus) {
-                    echo "  Running globus\n";
                     if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
-                        echo "    Globus directory exists, setting up access...\n";
                         $this->setupGlobusAccessForDataset($dataset);
                     } else {
-                        echo "    Globus directory does NOT exist, creating...\n";
                         ($this->createDatsetInGlobusAction)($dataset->id, false);
                     }
                 }
@@ -61,7 +55,6 @@ class SetupMigratedPublishedDatasetsAction
         $existingZipfilePath = Storage::disk('mcfs')->path($zipfile);
         if (Storage::disk('mcfs')->exists($dataset->zipfilePathPartial())) {
             // No need to link old zipfile to new zipfile
-            echo "No need to link, zipfile already exists.\n";
             return;
         }
         $newZipfilePath = $dataset->zipfilePath();

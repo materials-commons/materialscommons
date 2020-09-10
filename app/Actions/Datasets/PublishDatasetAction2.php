@@ -4,6 +4,7 @@ namespace App\Actions\Datasets;
 
 use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
+use Illuminate\Support\Carbon;
 
 class PublishDatasetAction2
 {
@@ -19,17 +20,11 @@ class PublishDatasetAction2
 
     public function execute(Dataset $dataset)
     {
-        $this->syncActivities($dataset);
+        $dataset->update(['published_at' => Carbon::now()]);
         $this->replicateFiles($dataset);
         $this->replicateEntitiesAndRelatedItems($dataset);
         $this->buildGlobusDownload($dataset);
         $this->buildZipfile($dataset);
-    }
-
-    private function syncActivities(Dataset $dataset)
-    {
-        $syncAction = new SyncActivitiesToPublishedDatasetAction();
-        $syncAction($dataset->id);
     }
 
     private function replicateFiles(Dataset $dataset)
@@ -40,7 +35,7 @@ class PublishDatasetAction2
 
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
-        $replicator = new ReplicateDatasetEntitiesAndRelationshipsAction();
+        $replicator = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
         $replicator->execute($dataset);
     }
 

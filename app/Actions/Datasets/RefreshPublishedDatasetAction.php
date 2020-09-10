@@ -4,8 +4,6 @@ namespace App\Actions\Datasets;
 
 use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class RefreshPublishedDatasetAction
 {
@@ -19,38 +17,15 @@ class RefreshPublishedDatasetAction
 
     public function execute(Dataset $dataset)
     {
-        $this->removeDatasetFiles($dataset);
-        $this->buildDatasetFiles($dataset);
+        $unpublishDatasetAction = new UnpublishDatasetAction(GlobusApi::createGlobusApi());
+        $unpublishDatasetAction($dataset);
+        $this->publishDataset($dataset);
     }
 
-    private function removeDatasetFiles(Dataset $dataset)
+
+    private function publishDataset(Dataset $dataset)
     {
-        try {
-            $this->globusApi->deleteEndpointAclRule($dataset->globus_endpoint_id, $dataset->globus_acl_id);
-        } catch (\Exception $e) {
-            Log::error("Unable to delete acl");
-        }
-
-        Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
-        Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
-    }
-
-    private function buildDatasetFiles(Dataset $dataset)
-    {
-        $dataset->files()->delete();
-        Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
-        Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());
-
-        $syncActivitiesToPublishedDatasetAction = new SyncActivitiesToPublishedDatasetAction();
-        $syncActivitiesToPublishedDatasetAction($dataset->id);
-
-        $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
-        $createDatasetFilesTableAction->execute($dataset);
-
-        $createDatasetZipfileAction = new CreateDatasetZipfileAction();
-        $createDatasetZipfileAction($dataset);
-
-        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction($this->globusApi);
-        $createDatasetInGlobusAction($dataset, false);
+        $publishAction = new PublishDatasetAction2(GlobusApi::createGlobusApi());
+        $publishAction->execute($dataset);
     }
 }

@@ -8,20 +8,23 @@ use App\Models\AttributeValue;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\EntityState;
+use App\Models\File;
 use Illuminate\Support\Carbon;
 use Ramsey\Uuid\Uuid;
 
-class ReplicateDatasetEntitiesAndRelationshipsAction
+class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 {
     public function execute(Dataset $dataset)
     {
         $this->replicateEntitiesAndRelatedItems($dataset);
+        $syncAction = new SyncActivitiesToPublishedDatasetAction();
+        $syncAction->execute($dataset);
     }
 
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
         $dataset->entitiesFromTemplate()->each(function (Entity $entity) use ($dataset) {
-            $entity->load('entityStates.attributes.values', 'activities.attributes.values');
+            $entity->load('entityStates.attributes.values', 'activities.attributes.values', 'files');
             $e = $entity->replicate()->fill([
                 'uuid'      => $this->uuid(),
                 'copied_at' => Carbon::now(),
@@ -29,8 +32,21 @@ class ReplicateDatasetEntitiesAndRelationshipsAction
             ]);
             $e->save();
             $dataset->entities()->attach($e);
+            $this->attachReplicatedFilesToEntity($entity, $e, $dataset);
             $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e);
-            $this->replicateActivitiesAndRelationshipsForEntity($entity, $e);
+            $this->replicateActivitiesAndRelationshipsForEntity($entity, $e, $dataset);
+        });
+    }
+
+    private function attachReplicatedFilesToEntity(Entity $entity, Entity $e, Dataset $dataset)
+    {
+        $entity->files->each(function (File $file) use ($e, $dataset) {
+            $f = File::where('checksum', $file->checksum)->whereIn('id', function ($query) use ($dataset) {
+                $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
+            })->first();
+            if (!is_null($f)) {
+                $e->files()->attach($f);
+            }
         });
     }
 
@@ -59,9 +75,9 @@ class ReplicateDatasetEntitiesAndRelationshipsAction
         });
     }
 
-    private function replicateActivitiesAndRelationshipsForEntity(Entity $entity, Entity $e)
+    private function replicateActivitiesAndRelationshipsForEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
-        $entity->activities->each(function (Activity $activity) use ($e) {
+        $entity->activities->each(function (Activity $activity) use ($e, $dataset) {
             $newActivity = $activity->replicate()->fill([
                 'uuid'      => $this->uuid(),
                 'copied_at' => Carbon::now(),
@@ -83,6 +99,21 @@ class ReplicateDatasetEntitiesAndRelationshipsAction
                     $av->save();
                 });
             });
+            $this->attachReplicatedFilesToActivity($activity, $newActivity, $dataset);
+        });
+    }
+
+    private function attachReplicatedFilesToActivity(Activity $activity, Activity $newActivity, Dataset $dataset)
+    {
+        $activity->load('files');
+        $activity->files->each(function (File $file) use ($newActivity, $dataset) {
+            $f = File::where('checksum', $file->checksum)
+                     ->whereIn('id', function ($query) use ($dataset) {
+                         $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
+                     })->first();
+            if (!is_null($f)) {
+                $newActivity->files()->attach($f);
+            }
         });
     }
 
