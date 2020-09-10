@@ -24,6 +24,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
         $dataset->entitiesFromTemplate()->each(function (Entity $entity) use ($dataset) {
+            echo "replicating entity {$entity->id}\n";
             $entity->load('entityStates.attributes.values', 'activities.attributes.values', 'files');
             $e = $entity->replicate()->fill([
                 'uuid'      => $this->uuid(),
@@ -32,8 +33,11 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
             ]);
             $e->save();
             $dataset->entities()->attach($e);
+            echo "  replicating its files\n";
             $this->attachReplicatedFilesToEntity($entity, $e, $dataset);
+            echo "   replicating its states\n";
             $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e);
+            echo "   replicating its activities and their files\n";
             $this->replicateActivitiesAndRelationshipsForEntity($entity, $e, $dataset);
         });
     }
@@ -78,6 +82,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function replicateActivitiesAndRelationshipsForEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
         $entity->activities->each(function (Activity $activity) use ($e, $dataset) {
+            echo "      replication activity {$activity->id}\n";
             $newActivity = $activity->replicate()->fill([
                 'uuid'      => $this->uuid(),
                 'copied_at' => Carbon::now(),
@@ -99,6 +104,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
                     $av->save();
                 });
             });
+            echo "           replicating activity files\n";
             $this->attachReplicatedFilesToActivity($activity, $newActivity, $dataset);
         });
     }
@@ -106,13 +112,14 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function attachReplicatedFilesToActivity(Activity $activity, Activity $newActivity, Dataset $dataset)
     {
         $activity->load('files');
+//        $numberOfFiles = $activity->files->count();
         $activity->files->each(function (File $file) use ($newActivity, $dataset) {
             $f = File::where('checksum', $file->checksum)
                      ->whereIn('id', function ($query) use ($dataset) {
                          $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
                      })->first();
             if (!is_null($f)) {
-                $newActivity->files()->attach($f);
+                $newActivity->files()->syncWithoutDetaching([$f]);
             }
         });
     }

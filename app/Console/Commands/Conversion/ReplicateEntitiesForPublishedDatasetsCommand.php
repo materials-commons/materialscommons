@@ -62,8 +62,8 @@ class ReplicateEntitiesForPublishedDatasetsCommand extends Command
 
     private function createEntityTemplate(Dataset $dataset)
     {
-        $dataset->entities->each(function (Entity $entity) use ($dataset) {
-            $experiment = $entity->experiments->first();
+        $dataset->entities()->whereNull('copied_id')->each(function (Entity $entity) use ($dataset) {
+            $experiment = $entity->experiments()->first();
             if (!is_null($experiment)) {
                 DB::table('item2entity_selection')->insert([
                     'item_type'     => Dataset::class,
