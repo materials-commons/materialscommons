@@ -8,8 +8,8 @@ use App\Models\AttributeValue;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\EntityState;
-use App\Models\File;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
@@ -44,14 +44,29 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 
     private function attachReplicatedFilesToEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
-        $entity->files->each(function (File $file) use ($e, $dataset) {
-            $f = File::where('checksum', $file->checksum)->whereIn('id', function ($query) use ($dataset) {
-                $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
-            })->first();
-            if (!is_null($f)) {
-                $e->files()->attach($f);
-            }
-        });
+        $numberOfFiles = $entity->files->count();
+        echo "         Adding entity {$entity->id} files ({$numberOfFiles})\n";
+        $checksums = $entity->files->pluck('checksum')->toArray();
+        DB::table('files')
+          ->select('id', 'checksum')
+          ->whereNull('project_id')
+          ->whereIn('checksum', $checksums)
+          ->distinct('checksum')
+          ->get()
+          ->pluck('id')
+          ->chunk(1000)
+          ->each(function ($ids) use ($e) {
+              $e->files()->syncWithoutDetaching($ids);
+          });
+        echo "       Done adding entity files\n";
+//        $entity->files->each(function (File $file) use ($e, $dataset) {
+//            $f = File::where('checksum', $file->checksum)->whereIn('id', function ($query) use ($dataset) {
+//                $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
+//            })->first();
+//            if (!is_null($f)) {
+//                $e->files()->attach($f);
+//            }
+//        });
     }
 
     private function replicateEntityStatesAndRelationshipsForEntity(Entity $entity, Entity $e)
@@ -112,17 +127,43 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function attachReplicatedFilesToActivity(Activity $activity, Activity $newActivity, Dataset $dataset)
     {
         $activity->load('files');
+        $numberOfFiles = $activity->files->count();
+        echo "         Adding activity {$activity->id} files ({$numberOfFiles})\n";
+        $checksums = $activity->files->pluck('checksum')->toArray();
+        DB::table('files')
+          ->select('id', 'checksum')
+          ->whereNull('project_id')
+          ->whereIn('checksum', $checksums)
+          ->distinct('checksum')
+          ->get()
+          ->pluck('id')
+          ->chunk(1000)
+          ->each(function ($ids) use ($newActivity) {
+              $newActivity->files()->syncWithoutDetaching($ids);
+          });
+        echo "          Done adding files to activity\n";
 //        $numberOfFiles = $activity->files->count();
-        $activity->files->each(function (File $file) use ($newActivity, $dataset) {
-            $f = File::where('checksum', $file->checksum)
-                     ->whereIn('id', function ($query) use ($dataset) {
-                         $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
-                     })->first();
-            if (!is_null($f)) {
-                $newActivity->files()->syncWithoutDetaching([$f]);
-            }
-        });
+//        $activity->files->each(function (File $file) use ($newActivity, $dataset) {
+//            $f = File::where('checksum', $file->checksum)
+//                     ->whereIn('id', function ($query) use ($dataset) {
+//                         $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
+//                     })->first();
+//            if (!is_null($f)) {
+//                $newActivity->files()->syncWithoutDetaching([$f]);
+//            }
+//        });
     }
+
+    // $checksums = Activity::with('files')
+//     ->find(494)
+//     ->files->pluck('checksum')
+//     ->toArray();
+
+// DB::table('files')
+//   ->select('id', 'name', 'project_id', 'checksum')
+//   ->whereNull('project_id')
+//   ->whereIn('checksum', $checksums)
+//   ->get();
 
     private function uuid()
     {
