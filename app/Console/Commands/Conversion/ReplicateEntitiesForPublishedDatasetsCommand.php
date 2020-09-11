@@ -45,6 +45,7 @@ class ReplicateEntitiesForPublishedDatasetsCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         // For all datasets create an entity template for it
         Dataset::with('entities.experiments')->cursor()->each(function (Dataset $dataset) {
             $this->info("Creating entity template for dataset {$dataset->name}/{$dataset->id}\n");

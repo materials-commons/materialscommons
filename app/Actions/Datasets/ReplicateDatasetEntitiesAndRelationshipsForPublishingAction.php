@@ -3,10 +3,12 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Activity;
+use App\Models\Activity2File;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Dataset;
 use App\Models\Entity;
+use App\Models\Entity2File;
 use App\Models\EntityState;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +46,11 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 
     private function attachReplicatedFilesToEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
+        $columns = [
+            'entity_id',
+            'file_id',
+        ];
+        $model = new Entity2File();
         $numberOfFiles = $entity->files->count();
         echo "         Adding entity {$entity->id} files ({$numberOfFiles})\n";
         $checksums = $entity->files->pluck('checksum')->toArray();
@@ -54,9 +61,12 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
           ->distinct('checksum')
           ->get()
           ->pluck('id')
-          ->chunk(1000)
-          ->each(function ($ids) use ($e) {
-              $e->files()->syncWithoutDetaching($ids);
+          ->chunk(500)
+          ->each(function ($ids) use ($e, $model, $columns) {
+              $values = array_values($ids->map(function ($id) use ($e) {
+                  return [$e->id, $id];
+              })->all());
+              \Batch::insert($model, $columns, $values);
           });
         echo "       Done adding entity files\n";
 //        $entity->files->each(function (File $file) use ($e, $dataset) {
@@ -126,6 +136,12 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 
     private function attachReplicatedFilesToActivity(Activity $activity, Activity $newActivity, Dataset $dataset)
     {
+        $columns = [
+            'activity_id',
+            'file_id',
+            'direction',
+        ];
+        $model = new Activity2File();
         $activity->load('files');
         $numberOfFiles = $activity->files->count();
         echo "         Adding activity {$activity->id} files ({$numberOfFiles})\n";
@@ -137,21 +153,14 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
           ->distinct('checksum')
           ->get()
           ->pluck('id')
-          ->chunk(1000)
-          ->each(function ($ids) use ($newActivity) {
-              $newActivity->files()->syncWithoutDetaching($ids);
+          ->chunk(500)
+          ->each(function ($ids) use ($newActivity, $model, $columns) {
+              $values = array_values($ids->map(function ($id) use ($newActivity) {
+                  return [$newActivity->id, $id, "in"];
+              })->all());
+              \Batch::insert($model, $columns, $values);
           });
         echo "          Done adding files to activity\n";
-//        $numberOfFiles = $activity->files->count();
-//        $activity->files->each(function (File $file) use ($newActivity, $dataset) {
-//            $f = File::where('checksum', $file->checksum)
-//                     ->whereIn('id', function ($query) use ($dataset) {
-//                         $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
-//                     })->first();
-//            if (!is_null($f)) {
-//                $newActivity->files()->syncWithoutDetaching([$f]);
-//            }
-//        });
     }
 
     // $checksums = Activity::with('files')
