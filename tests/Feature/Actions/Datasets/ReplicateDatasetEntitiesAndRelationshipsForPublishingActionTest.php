@@ -145,6 +145,40 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
     }
 
     /** @test */
+    public function it_replicates_activity_and_entity_state()
+    {
+        $project = ProjectFactory::withExperiment()->create();
+        $experiment = $project->experiments->first();
+        $dataset = DatasetFactory::inProject($project)->create();
+
+        // Creates an entity with a state, attribute, and attribute value
+        $entity = ExperimentFactory::createEntityForExperiment($experiment);
+
+        // Creates an activity, attribute and attribute value
+        $activity = ExperimentFactory::createActivityForExperiment($experiment);
+        $activity->entities()->attach($entity);
+
+        // Attach the entity state to the activity
+        $entityState = $entity->entityStates()->first();
+        $activity->entityStates()->attach($entityState);
+
+        // Add entity template to dataset
+        $updateSelection = new UpdateDatasetEntitySelectionAction();
+        $updateSelection($entity, $dataset);
+
+        // Replicate
+        $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
+        $replicateAction->execute($dataset);
+
+        // Get the replicated activity
+        $replicatedActivity = Activity::where('copied_id', $activity->id)->first();
+
+        // The replicated activity should have one entity state associated with
+        $replicatedActivityEntityStatesCount = $replicatedActivity->entityStates()->count();
+        $this->assertEquals(1, $replicatedActivityEntityStatesCount);
+    }
+
+    /** @test */
     public function replicated_entities_and_activities_are_not_deleted_when_experiment_is_deleted()
     {
         $project = ProjectFactory::withExperiment()->create();

@@ -115,6 +115,11 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
             ]);
             $newActivity->save();
             $e->activities()->attach($newActivity);
+
+            // Attach up the entity states to the new activity
+            $e->entityStates()->get()->each(function (EntityState $es) use ($newActivity) {
+                $newActivity->entityStates()->attach($es);
+            });
             $activity->attributes->each(function (Attribute $attribute) use ($newActivity) {
                 $a = $attribute->replicate()->fill([
                     'uuid'            => $this->uuid(),
