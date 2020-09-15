@@ -11,6 +11,15 @@ class CreateUsedActivitiesForEntitiesAction
         return $this->createdUsedActivities($entities, $activities);
     }
 
+    /*
+     * Loop through entities and for each entity create a map of the list of activities and their count.
+     * For example, if activites = [a,b], and entities in = [e1 (id 1), e2 (id 2)], and only e1 is using activities a and b, then
+     * you end up with:
+     * $usedActivitiesForEntities = [
+     *     1 => [1,1],
+     *     2 => [0,0]
+     * ]
+     */
     private function createdUsedActivities($entities, $activities)
     {
         $usedActivitiesForEntities = [];
