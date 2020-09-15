@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -32,6 +33,19 @@ class Entity extends Model implements Searchable
         'project_id' => 'integer',
         'copied_at'  => 'datetime',
     ];
+
+    public static function activityNamesForEntities($entities)
+    {
+        $entityIds = $entities->pluck('id')->all();
+        return DB::table('activity2entity')
+                 ->whereIn('entity_id', $entityIds)
+                 ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
+                 ->where('activities.name', '<>', 'Create Samples')
+                 ->select('activities.name')
+                 ->distinct()
+                 ->orderBy('activities.name')
+                 ->get();
+    }
 
     public function owner()
     {
