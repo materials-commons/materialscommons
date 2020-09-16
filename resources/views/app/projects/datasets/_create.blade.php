@@ -7,10 +7,27 @@
     </div>
 
     <div class="form-group">
-        <label for="authors">Authors and Affiliations</label>
+        <label for="authors">Authors</label>
+        <ul class="list-unstyled">
+            <li>
+                <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
+                {{$project->owner->name}}
+                <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
+            </li>
+            @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
+                <li id="{{$author->uuid}}">
+                    @if($author->id != auth()->id())
+                        <a href="#" onclick="removeAuthor('{{$author->uuid}}')" class="ml-3"><i
+                                    class="fa fas fa-fw fa-trash"></i></a>
+                        {{$author->name}}
+                        <input name="mc_authors[]" value="{{$author->id}}" type="text" hidden>
+                    @endif
+                </li>
+            @endforeach
+        </ul>
         <input class="form-control" id="authors" name="authors" type="text"
-               value="{{old('authors', $authorsAndAffiliations)}}"
-               placeholder="Authors...">
+               value=""
+               placeholder="Additional Authors...">
     </div>
 
     <div class="form-group">
@@ -149,6 +166,10 @@
             $('#action').val('save');
             document.forms.dataset_create.action = "{{route('projects.datasets.create-doi', [$project])}}";
             document.forms.dataset_create.submit();
+        }
+
+        function removeAuthor(id) {
+            $(`#${id}`).remove();
         }
 
     </script>

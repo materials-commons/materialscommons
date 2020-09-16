@@ -12,6 +12,7 @@ class StoreDatasetWebController extends Controller
     public function __invoke(DatasetRequest $request, CreateDatasetAction $createDatasetAction, Project $project)
     {
         $validated = $request->validated();
+        dd($validated);
         $action = $validated["action"];
         unset($validated["action"]);
         $dataset = $createDatasetAction->execute($validated, $project->id, auth()->id());

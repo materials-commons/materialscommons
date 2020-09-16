@@ -34,6 +34,7 @@ class DatasetRequest extends FormRequest
             'communities'  => 'nullable|array',
             'tags'         => 'nullable|array',
             'tags.*.value' => 'required|string',
+            'mc_authors'   => 'required|array',
         ];
     }
 
