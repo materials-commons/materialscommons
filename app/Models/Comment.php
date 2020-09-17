@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property integer $id
+ * @property string uuid
+ * @property string name
+ * @property string email
+ * @property string affiliations
+ *
  * @mixin Builder
  */
 class Comment extends Model

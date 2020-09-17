@@ -35,9 +35,7 @@
         <label for="additional_authors">Additional Authors</label>
         <div class="form-controlx">
             <a href="#" onclick="addAdditionalAuthor()"><i class="fa fas fa-fw fa-plus"></i>Add Author</a>
-            <ul class="list-unstyled" id="additional_authors">
-
-            </ul>
+            <ul class="list-unstyled" id="additional_authors"></ul>
         </div>
     </div>
 
@@ -131,12 +129,12 @@
             Cancel
         </a>
 
-        <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
+        <a class="action-link mr-3" href="#" id="save-button" onclick="validateSetActionAndSubmit('save')">
             Save
         </a>
 
         <a class="action-link mr-3" href="#" id="add-assets-button"
-           onclick="setActionAndSubmit('assets')">
+           onclick="validateSetActionAndSubmit('assets')">
             Save And Add Data
         </a>
     </div>
@@ -156,11 +154,33 @@
         });
 
         function validate() {
-            if ($('#name').val().length > 0) {
+            if (isValid()) {
                 setNextButtonsDisabled(false);
             } else {
                 setNextButtonsDisabled(true);
             }
+        }
+
+        function isValid() {
+            let formData = $('#dataset_create').serializeArray();
+            for (let i = 100; i > nextAdditionalAuthorId; i++) {
+                let nameValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][name]`);
+                let emailValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][email]`);
+                let affiliationsValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][affiliations]`);
+                if (nameValue === "") {
+                    return false;
+                }
+
+                if (emailValue === "") {
+                    return false;
+                }
+
+                if (affiliationsValue === "") {
+                    return false;
+                }
+            }
+            let additionalAuthors;
+            return ($('#name').val().length > 0);
         }
 
         function setNextButtonsDisabled(disable) {
@@ -173,7 +193,10 @@
             }
         }
 
-        function setActionAndSubmit(action) {
+        function validateSetActionAndSubmit(action) {
+            if (!isValid()) {
+                return;
+            }
             $('#action').val(action);
             document.getElementById('dataset_create').submit();
         }
@@ -193,13 +216,13 @@
                 <div class="form-row mt-2">
                     <a href="#" onclick="removeAuthor('${nextAdditionalAuthorId}')"><i class="fa fas fa-fw fa-trash"></i></a>
                     <div class="col">
-                        <input class="form-control" name="addition_authors_name[]" type="text" placeholder="Name...">
+                        <input class="form-control" name="additional_authors['id_${nextAdditionalAuthorId}'][name]" type="text" placeholder="Name...(Required)" required>
                     </div>
                     <div class="col">
-                        <input class="form-control" name="addition_authors_email[]" type="email" placeholder="Email...">
+                        <input class="form-control" name="additional_authors['id_${nextAdditionalAuthorId}'][email]" type="email" placeholder="Email...(Required)" required>
                     </div>
                     <div class="col">
-                        <input class="form-control" name="addition_authors_organization[]" type="text" placeholder="Organization...">
+                        <input class="form-control" name="additional_authors['id_${nextAdditionalAuthorId}'][affiliations]" type="text" placeholder="Organization...(Required)" required>
                     </div>
                 </div>
             </li>`);

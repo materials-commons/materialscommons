@@ -4,6 +4,7 @@ namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Experiment;
+use App\Models\ExternalUser;
 use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +32,12 @@ class CreateDatasetAction
             unset($data['mc_authors']);
         }
 
+        $additionalAuthors = null;
+        if (array_key_exists('additional_authors', $data)) {
+            $additionalAuthors = $this->createAdditionalAuthors($data);
+            unset($data['additional_authors']);
+        }
+
         $this->loadTagsFromData($data);
         unset($data['tags']);
 
@@ -44,7 +51,7 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments, $mcAuthors) {
+        DB::transaction(function () use ($dataset, $communities, $experiments, $mcAuthors, $additionalAuthors) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -60,10 +67,21 @@ class CreateDatasetAction
             }
 
             $dataset->authors()->syncWithoutDetaching($mcAuthors);
+            $additionalAuthors->each(function (ExternalUser $user) use ($dataset) {
+                $user->save();
+                $dataset->externalAuthors()->attach($user);
+            });
 
             $dataset->attachTags($this->tags);
         });
 
         return $dataset->fresh();
+    }
+
+    private function createAdditionalAuthors($data)
+    {
+        return collect($data['additional_authors'])->map(function ($userData) {
+            return new ExternalUser($userData);
+        })->values();
     }
 }

@@ -135,6 +135,11 @@ class Dataset extends Model implements Searchable
         return $this->morphedByMany(User::class, 'item', 'item2dataset');
     }
 
+    public function externalAuthors()
+    {
+        return $this->morphedByMany(ExternalUser::class, 'item', 'item2dataset');
+    }
+
     public function entitiesFromTemplate()
     {
         return Entity::whereIn('id', function ($query) {
