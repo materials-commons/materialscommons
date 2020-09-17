@@ -24,7 +24,7 @@
                 @foreach($tags as $tag => $count)
                     <tr>
                         <td>
-                            <a class="badge badge-success fs-11"
+                            <a class="badge badge-success fs-11 td-none"
                                href="{{route('public.tags.search', ['tag' => $tag])}}">
                                 {{$tag}}
                             </a>
