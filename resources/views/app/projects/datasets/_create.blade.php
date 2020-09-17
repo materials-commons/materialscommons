@@ -11,23 +11,34 @@
         <ul class="list-unstyled">
             <li>
                 <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
-                {{$project->owner->name}}
+                {{$project->owner->name}} (Owner)
                 <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
             </li>
             @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
                 <li id="{{$author->uuid}}">
                     @if($author->id != auth()->id())
-                        <a href="#" onclick="removeAuthor('{{$author->uuid}}')" class="ml-3"><i
-                                    class="fa fas fa-fw fa-trash"></i></a>
-                        {{$author->name}}
-                        <input name="mc_authors[]" value="{{$author->id}}" type="text" hidden>
+                        <div style="margin-left: 2.15rem;">
+                            <input type="checkbox" class="form-check-input" id="is_active"
+                                   value="{{$author->id}}" name="mc_authors[]" checked>
+                            {{$author->name}}
+                        </div>
                     @endif
                 </li>
             @endforeach
         </ul>
-        <input class="form-control" id="authors" name="authors" type="text"
-               value=""
-               placeholder="Additional Authors...">
+        {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
+        {{--               value=""--}}
+        {{--               placeholder="Additional Authors...">--}}
+    </div>
+
+    <div class="form-group">
+        <label for="additional_authors">Additional Authors</label>
+        <div class="form-controlx">
+            <a href="#" onclick="addAdditionalAuthor()"><i class="fa fas fa-fw fa-plus"></i>Add Author</a>
+            <ul class="list-unstyled" id="additional_authors">
+
+            </ul>
+        </div>
     </div>
 
     <div class="form-group">
@@ -46,11 +57,11 @@
     <div class="form-group">
         <label for="doi">DOI</label>
         <span class="col-8">
-                            None
-                            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
-                                Assign DOI
-                            </a>
-                        </span>
+            None
+            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
+                Assign DOI
+            </a>
+        </span>
     </div>
 
     <div class="form-group">
@@ -76,6 +87,10 @@
 
     @if($experiments->isNotEmpty())
         <div class="form-group">
+            <p>
+                Selecting experiments will automatically add all the samples for the experiments to
+                the dataset
+            </p>
             <label for="experiments">Experiments</label>
             <select name="experiments[]" class="selectpicker col-lg-8"
                     title="experiments"
@@ -131,6 +146,7 @@
 
 @push('scripts')
     <script>
+        let nextAdditionalAuthorId = 100;
         $(document).ready(() => {
             validate();
             $('#name').change(validate).keypress(() => validate());
@@ -170,6 +186,24 @@
 
         function removeAuthor(id) {
             $(`#${id}`).remove();
+        }
+
+        function addAdditionalAuthor() {
+            $('#additional_authors').append(`<li id="${nextAdditionalAuthorId}">
+                <div class="form-row mt-2">
+                    <a href="#" onclick="removeAuthor('${nextAdditionalAuthorId}')"><i class="fa fas fa-fw fa-trash"></i></a>
+                    <div class="col">
+                        <input class="form-control" name="addition_authors_name[]" type="text" placeholder="Name...">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="addition_authors_email[]" type="email" placeholder="Email...">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="addition_authors_organization[]" type="text" placeholder="Organization...">
+                    </div>
+                </div>
+            </li>`);
+            nextAdditionalAuthorId++;
         }
 
     </script>

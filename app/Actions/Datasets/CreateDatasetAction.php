@@ -25,6 +25,12 @@ class CreateDatasetAction
             unset($data['experiments']);
         }
 
+        $mcAuthors = null;
+        if (array_key_exists('mc_authors', $data)) {
+            $mcAuthors = $data['mc_authors'];
+            unset($data['mc_authors']);
+        }
+
         $this->loadTagsFromData($data);
         unset($data['tags']);
 
@@ -38,7 +44,7 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments) {
+        DB::transaction(function () use ($dataset, $communities, $experiments, $mcAuthors) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -52,6 +58,8 @@ class CreateDatasetAction
                     $dataset->entities()->syncWithoutDetaching($experiment->entities);
                 }
             }
+
+            $dataset->authors()->syncWithoutDetaching($mcAuthors);
 
             $dataset->attachTags($this->tags);
         });
