@@ -92,7 +92,11 @@
                         <label for="tags">Tags</label>
                         <div class="form-control" id="tags" readonly>
                             @foreach($dataset->tags as $tag)
-                                <span class="badge badge-success fs-11">{{$tag->name}}</span>
+                                <a class="badge badge-success fs-11 td-none"
+                                   href="{{route('public.tags.search', ['tag' => $tag->name])}}">
+                                    {{$tag->name}}
+                                </a>
+                                {{--                                <span class="badge badge-success fs-11">{{$tag->name}}</span>--}}
                             @endforeach
                         </div>
                     </div>
