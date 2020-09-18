@@ -7,33 +7,83 @@
     </div>
 
     <div class="form-group">
-        <label for="authors">Authors</label>
-        <ul class="list-unstyled">
-            <li>
-                <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
-                {{$project->owner->name}} (Owner)
-                <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
-            </li>
-            @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
-                <li id="{{$author->uuid}}">
-                    @if($author->id != auth()->id())
-                        <div style="margin-left: 2.15rem;">
-                            <input type="checkbox" class="form-check-input" id="is_active"
-                                   value="{{$author->id}}" name="mc_authors[]" checked>
-                            {{$author->name}}
-                        </div>
-                    @endif
-                </li>
-            @endforeach
-        </ul>
-        {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
-        {{--               value=""--}}
-        {{--               placeholder="Additional Authors...">--}}
+        <div class="row">
+            <label for="authors">Authors</label>
+            <div class="drag-and-drop col-12" x-data="{adding: false, removing: false}">
+                <div class="drag-and-drop__container drag-and-drop__container--from">
+                    <h3 class="drag-and-drop__title">Project Members</h3>
+                    <ul class="drag-and-drop__items list-unstyled"
+                        :class="{'drag-and-drop__items--removing': removing}"
+                        x-on:drop="removing = false"
+                        x-on:drop.prevent="
+                        const id = event.dataTransfer.getData('text/plain');
+                        const target = event.target.closest('ul');
+                        const element = document.getElementById(id);
+                        target.appendChild(element);
+                    "
+                        x-on:dragover.prevent="removing = true"
+                        x-on:dragleave.prevent="removing = false">
+                        <li id="{{$project->owner->uuid}}"
+                            class="drag-and-drop__item"
+                            :class="{'drag-and-drop__item--dragging': dragging}"
+                            x-data="{dragging: false}"
+                            x-on:dragstart.self="
+                            dragging = true;
+                            event.dataTransfer.effectAllowed = 'move';
+                            event.dataTransfer.setData('text/plain', event.target.id);
+                        "
+                            x-on:dragend="dragging = false"
+                            draggable="true">
+                            <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
+                            {{$project->owner->name}} (Owner)
+                            <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
+                        </li>
+                        @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
+                            @if($author->id != auth()->id())
+                                <li id="{{$author->uuid}}"
+                                    class="drag-and-drop__item"
+                                    :class="{'drag-and-drop__item--dragging': dragging}"
+                                    x-data="{dragging: false}"
+                                    x-on:dragstart.self="
+                                    dragging = true;
+                                    event.dataTransfer.effectAllowed = 'move';
+                                    event.dataTransfer.setData('text/plain', event.target.id);
+                                "
+                                    x-on:dragend="dragging = false"
+                                    draggable="true">
+
+                                    <div style="margin-left: 2.15rem;">
+                                        {{$author->name}}
+                                        <input name="mc_authors[]" value="{{$author->id}}" type="text" hidden>
+                                    </div>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="drag-and-drop__divider">⇄</div>
+                <div class="drag-and-drop__container drag-and-drop__container--to">
+                    <h3 class="drag-and-drop__title">Dataset Authors</h3>
+                    <ul class="drag-and-drop__items list-unstyled"
+                        :class="{'drag-and-drop__items--adding': adding}"
+                        x-on:drop="adding = false"
+                        x-on:drop.prevent="
+                        const target = event.target.closest('ul');
+                        const element = document.getElementById(event.dataTransfer.getData('text/plain'));
+                        target.appendChild(element);
+                    "
+                        x-on:dragover.prevent="adding = true" ,
+                        x-on:dragleave.prevent="adding = false"
+                        id="dataset-authors">
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="additional_authors">Additional Authors</label>
-        <div class="form-controlx">
+        <div class="">
             <a href="#" onclick="addAdditionalAuthor()"><i class="fa fas fa-fw fa-plus"></i>Add Author</a>
             <ul class="list-unstyled" id="additional_authors"></ul>
         </div>
@@ -212,7 +262,17 @@
         }
 
         function addAdditionalAuthor() {
-            $('#additional_authors').append(`<li id="${nextAdditionalAuthorId}">
+            $('#dataset-authors').append(`<li id="${nextAdditionalAuthorId}"
+                                        x-data="{dragging: false}"
+                                        class="drag-and-drop__item"
+                                        :class="{ 'drag-and-drop__item--dragging': dragging}"
+                                        x-on:dragstart.self="
+                                            dragging = true;
+                                            event.dataTransfer.effectAllowed = 'move';
+                                            event.dataTransfer.setData('text/plain', event.target.id);
+                                        "
+                                        x-on:dragend="dragging = false"
+                                        draggable="true">
                 <div class="form-row mt-2">
                     <a href="#" onclick="removeAuthor('${nextAdditionalAuthorId}')"><i class="fa fas fa-fw fa-trash"></i></a>
                     <div class="col">

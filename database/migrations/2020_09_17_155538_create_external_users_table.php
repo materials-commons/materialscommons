@@ -17,7 +17,7 @@ class CreateExternalUsersTable extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->text('affiliations');
 
             $table->unsignedBigInteger('mc_user')->nullable();
