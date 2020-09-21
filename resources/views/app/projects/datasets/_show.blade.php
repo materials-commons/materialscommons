@@ -1,9 +1,6 @@
 @component('components.item-details', ['item' => $dataset])
     @slot('top')
-        <div class="form-group">
-            <label for="authors">Authors and Affiliations</label>
-            <input class="form-control" value="{{$dataset->authors}}" id="authors" type="text" readonly>
-        </div>
+        <x-datasets.show-authors-list :dataset="$dataset"></x-datasets.show-authors-list>
     @endslot
 
 

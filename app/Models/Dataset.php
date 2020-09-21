@@ -263,11 +263,15 @@ class Dataset extends Model implements Searchable
 
     public function hasSelectedFiles()
     {
-        if (sizeof($this->file_selection["include_files"]) !== 0) {
+        if (is_null($this->file_selection)) {
+            return false;
+        }
+
+        if (isset($this->file_selection['include_files']) && sizeof($this->file_selection["include_files"]) !== 0) {
             return true;
         }
 
-        if (sizeof($this->file_selection["include_dirs"]) !== 0) {
+        if (isset($this->file_selection['include_dirs']) && sizeof($this->file_selection["include_dirs"]) !== 0) {
             return true;
         }
 
