@@ -38,6 +38,7 @@ class DatasetRequest extends FormRequest
             'additional_authors.*.name'         => 'required|string',
             'additional_authors.*.email'        => 'required|email',
             'additional_authors.*.affiliations' => 'required|string',
+            'author_order'                      => 'required|array',
         ];
     }
 

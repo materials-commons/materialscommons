@@ -26,6 +26,7 @@ use Spatie\Tags\HasTags;
  * @property integer $owner_id
  * @property mixed owner
  * @property array $file_selection
+ * @property array $author_order
  * @property array $entity_selection
  * @property mixed entities
  * @property mixed activities
@@ -52,6 +53,7 @@ class Dataset extends Model implements Searchable
     ];
 
     protected $casts = [
+        'author_order'      => 'array',
         'file_selection'    => 'array',
         'entity_selection'  => 'array',
         'owner_id'          => 'integer',

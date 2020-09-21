@@ -5,6 +5,7 @@ namespace App\Actions\Datasets;
 use App\Models\Dataset;
 use App\Models\Experiment;
 use App\Models\ExternalUser;
+use App\Models\User;
 use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -33,8 +34,11 @@ class CreateDatasetAction
         }
 
         $additionalAuthors = null;
+        $mcAuthorsFromAdditionalAuthors = null;
         if (array_key_exists('additional_authors', $data)) {
-            $additionalAuthors = $this->createAdditionalAuthors($data);
+            $mcAuthorsFromAdditionalAuthors = $this->getMCAuthorIdsFromAdditionalAuthors($data['additional_authors']);
+            $additionalAuthors = $this->createAdditionalAuthors($data['additional_authors'],
+                $mcAuthorsFromAdditionalAuthors);
             unset($data['additional_authors']);
         }
 
@@ -51,7 +55,9 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments, $mcAuthors, $additionalAuthors) {
+        DB::transaction(function () use (
+            $dataset, $communities, $experiments, $mcAuthors, $additionalAuthors, $mcAuthorsFromAdditionalAuthors
+        ) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -67,6 +73,10 @@ class CreateDatasetAction
             }
 
             $dataset->authors()->syncWithoutDetaching($mcAuthors);
+            $additionalMCUserIds = $mcAuthorsFromAdditionalAuthors->map(function (User $user) {
+                return $user->id;
+            })->all();
+            $dataset->authors()->syncWithoutDetaching($additionalMCUserIds);
             $additionalAuthors->each(function (ExternalUser $user) use ($dataset) {
                 $user->save();
                 $dataset->externalAuthors()->attach($user);
@@ -78,10 +88,26 @@ class CreateDatasetAction
         return $dataset->fresh();
     }
 
-    private function createAdditionalAuthors($data)
+    private function createAdditionalAuthors($additionalAuthors, $mcAuthorsFromAdditionalAuthors)
     {
-        return collect($data['additional_authors'])->map(function ($userData) {
-            return new ExternalUser($userData);
-        })->values();
+        return collect($additionalAuthors)
+            ->filter(function ($userData) use ($mcAuthorsFromAdditionalAuthors) {
+                $email = $userData['email'];
+                // Filter out existing mc users by email from the additionalAuthors list
+                return !$mcAuthorsFromAdditionalAuthors->contains(function (User $user) use ($email) {
+                    return $user->email == $email;
+                });
+            })
+            ->map(function ($userData) {
+                return new ExternalUser($userData);
+            })
+            ->values();
+    }
+
+    private function getMCAuthorIdsFromAdditionalAuthors($additionalAuthors)
+    {
+        return collect($additionalAuthors)->map(function ($userData) {
+            return User::firstWhere('email', $userData['email']);
+        })->filter();
     }
 }
