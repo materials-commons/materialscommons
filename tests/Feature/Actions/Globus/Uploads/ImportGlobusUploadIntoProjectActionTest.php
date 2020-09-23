@@ -129,6 +129,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
     /** @test */
     public function uploading_a_file_with_same_name_as_directory_should_skip_processing_the_file()
     {
+        $this->fail("bug not fixed - waiting for future work on Globus");
         $project = ProjectFactory::create();
         $globusUpload = $this->setupGlobusUpload('globus/test1', $project->id, $project->owner_id);
 
@@ -165,8 +166,9 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
     }
 
     /** @test */
-    public function uploading_a_directory_with_the_name_name_as_a_file_should_skip_processing_the_directory()
+    public function uploading_a_directory_with_the_same_name_as_a_file_should_skip_processing_the_directory()
     {
+        $this->fail("bug not fixed - waiting for future work on Globus");
         $project = ProjectFactory::create();
         $globusUpload = $this->setupGlobusUpload('globus/test1', $project->id, $project->owner_id);
 
