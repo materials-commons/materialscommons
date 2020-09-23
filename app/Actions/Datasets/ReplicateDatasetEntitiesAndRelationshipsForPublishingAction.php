@@ -26,7 +26,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
         $dataset->entitiesFromTemplate()->each(function (Entity $entity) use ($dataset) {
-            echo "replicating entity {$entity->id}\n";
+//            echo "replicating entity {$entity->id}\n";
             $entity->load('entityStates.attributes.values', 'activities.attributes.values', 'files');
             $e = $entity->replicate()->fill([
                 'uuid'      => $this->uuid(),
@@ -35,11 +35,11 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
             ]);
             $e->save();
             $dataset->entities()->attach($e);
-            echo "  replicating its files\n";
+//            echo "  replicating its files\n";
             $this->attachReplicatedFilesToEntity($entity, $e, $dataset);
-            echo "   replicating its states\n";
+//            echo "   replicating its states\n";
             $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e);
-            echo "   replicating its activities and their files\n";
+//            echo "   replicating its activities and their files\n";
             $this->replicateActivitiesAndRelationshipsForEntity($entity, $e, $dataset);
         });
     }
@@ -52,7 +52,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         ];
         $model = new Entity2File();
         $numberOfFiles = $entity->files->count();
-        echo "         Adding entity {$entity->id} files ({$numberOfFiles})\n";
+//        echo "         Adding entity {$entity->id} files ({$numberOfFiles})\n";
         $checksums = $entity->files->pluck('checksum')->toArray();
         DB::table('files')
           ->select('id', 'checksum')
@@ -68,7 +68,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
               })->all());
               \Batch::insert($model, $columns, $values);
           });
-        echo "       Done adding entity files\n";
+//        echo "       Done adding entity files\n";
 //        $entity->files->each(function (File $file) use ($e, $dataset) {
 //            $f = File::where('checksum', $file->checksum)->whereIn('id', function ($query) use ($dataset) {
 //                $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
@@ -107,7 +107,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function replicateActivitiesAndRelationshipsForEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
         $entity->activities->each(function (Activity $activity) use ($e, $dataset) {
-            echo "      replication activity {$activity->id}\n";
+//            echo "      replication activity {$activity->id}\n";
             $newActivity = $activity->replicate()->fill([
                 'uuid'      => $this->uuid(),
                 'copied_at' => Carbon::now(),
@@ -134,7 +134,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
                     $av->save();
                 });
             });
-            echo "           replicating activity files\n";
+//            echo "           replicating activity files\n";
             $this->attachReplicatedFilesToActivity($activity, $newActivity, $dataset);
         });
     }
@@ -149,7 +149,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         $model = new Activity2File();
         $activity->load('files');
         $numberOfFiles = $activity->files->count();
-        echo "         Adding activity {$activity->id} files ({$numberOfFiles})\n";
+//        echo "         Adding activity {$activity->id} files ({$numberOfFiles})\n";
         $checksums = $activity->files->pluck('checksum')->toArray();
         DB::table('files')
           ->select('id', 'checksum')
@@ -165,7 +165,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
               })->all());
               \Batch::insert($model, $columns, $values);
           });
-        echo "          Done adding files to activity\n";
+//        echo "          Done adding files to activity\n";
     }
 
     // $checksums = Activity::with('files')
