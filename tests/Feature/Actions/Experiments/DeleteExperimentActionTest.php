@@ -3,13 +3,13 @@
 namespace Tests\Feature\Actions\Experiments;
 
 use App\Actions\Datasets\PublishDatasetAction;
+use App\Actions\Datasets\UpdateDatasetEntitySelectionAction;
 use App\Actions\Experiments\DeleteExperimentAction;
 use App\Models\Dataset;
 use App\Models\Entity;
 use Facades\Tests\Factories\ExperimentFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class DeleteExperimentActionTest extends TestCase
@@ -70,13 +70,12 @@ class DeleteExperimentActionTest extends TestCase
             'project_id' => $project->id,
         ]);
         $experiment->entities()->attach($entity);
-        $dataset->entities()->attach($entity);
+
+        // Add entity template to dataset
+        $updateSelection = new UpdateDatasetEntitySelectionAction();
+        $updateSelection($entity, $dataset);
 
         // Call the publish dataset action, then run delete and check that the dataset still has samples
-
-        // Don't run jobs for now because we know this test will fail and the jobs don't do anything that
-        // would prevent it.
-        Queue::fake();
 
         $publishAction = new PublishDatasetAction();
         $publishAction($dataset);
