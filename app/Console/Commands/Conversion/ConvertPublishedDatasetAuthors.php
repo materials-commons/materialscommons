@@ -32,11 +32,6 @@ class ConvertPublishedDatasetAuthors extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         Dataset::with('project.team.members', 'project.team.admins')
@@ -73,301 +68,363 @@ class ConvertPublishedDatasetAuthors extends Command
                     $this->externalUser("", ""),
                     $this->externalUser("", ""),
                 ],
-                [
-                    "id"       => 2,
-                    "users"    => [34, 65, 173, 304, 118, 47, 274, 198, 113, 196],
-                    "external" => [
-                        $this->externalUser("Anton van der Ven", "University of California, Santa Barbara"),
-                    ],
+                "order"    => [
+                    150, "Ge Zhao", 228, "Bin Bin", "Tyler Del Rose",
+                    "Quian Zhao", "Qun Zu", "Yang Chen", "Xuekun Sun", "Maarten de Jong", 258,
                 ],
-                [
-                    "id"       => 6,
-                    "users"    => [16, 173],
-                    "external" => [
-                        $this->externalUser("Darren Pagan", "Cornell High Energy Synchrotron Source"),
-                        $this->externalUser("Armand Beaudoin", "Cornell High Energy Synchrotron Source"),
-                        $this->externalUser("Matthew Miller", "Cornell University"),
-                    ],
+            ],
+            [
+                "id"       => 2,
+                "users"    => [34, 65, 173, 304, 118, 47, 274, 198, 113, 196],
+                "external" => [
+                    $this->externalUser("Anton van der Ven", "University of California, Santa Barbara"),
                 ],
-                [
-                    "id"       => 8,
-                    "users"    => [298],
-                    "external" => [
-                    ],
+                "order"    => [
+                    304, 118, 34, 47, 274, 198, 65, 113, "Anton van der Ven", 196, 173,
                 ],
-                [
-                    "id"       => 9,
-                    "users"    => [298],
-                    "external" => [
-                    ],
+            ],
+            [
+                "id"       => 6,
+                "users"    => [16, 173],
+                "external" => [
+                    $this->externalUser("Darren Pagan", "Cornell High Energy Synchrotron Source"),
+                    $this->externalUser("Armand Beaudoin", "Cornell High Energy Synchrotron Source"),
+                    $this->externalUser("Matthew Miller", "Cornell University"),
                 ],
-                [
-                    "id"       => 15,
-                    "users"    => [290, 174, 173],
-                    "external" => [
-                        $this->externalUser("Sinsar A. Hsie", "University of Michigan"),
-                    ],
+                "order"    => [
+                    16, 173, "Darren Pagan", "Armand Beaudoin", "Matthew Miller",
                 ],
-                [
-                    "id"       => 16,
-                    "users"    => [108, 316, 173],
-                    "external" => [
-                    ],
+            ],
+            [
+                "id"       => 8,
+                "users"    => [298],
+                "external" => [
                 ],
-                [
-                    "id"       => 26,
-                    "users"    => [327],
-                    "external" => [
-                    ],
+                "order"    => [298],
+            ],
+            [
+                "id"       => 9,
+                "users"    => [298],
+                "external" => [
                 ],
-                [
-                    "id"       => 29,
-                    "users"    => [65],
-                    "external" => [
-                    ],
+                "order"    => [298],
+            ],
+            [
+                "id"       => 15,
+                "users"    => [290, 174, 173],
+                "external" => [
+                    $this->externalUser("Sinsar A. Hsie", "University of Michigan"),
                 ],
-                [
-                    "id"       => 75,
-                    "users"    => [65],
-                    "external" => [
-                    ],
+                "order"    => [
+                    290, "Sinsar A. Hsie", 174, 173,
                 ],
-                [
-                    "id"       => 36,
-                    "users"    => [196, 327],
-                    "external" => [
-                    ],
+            ],
+            [
+                "id"       => 16,
+                "users"    => [108, 316, 173],
+                "external" => [
                 ],
-                [
-                    "id"       => 37,
-                    "users"    => [316, 108, 173],
-                    "external" => [
-                        $this->externalUser("Mei Li", "Ford Motor Company"),
-                    ],
+                "order"    => [108, 316, 173],
+            ],
+            [
+                "id"       => 26,
+                "users"    => [327],
+                "external" => [
                 ],
-                [
-                    "id"       => 39,
-                    "users"    => [184, 113],
-                    "external" => [
-                    ],
+                "order"    => [327],
+            ],
+            [
+                "id"       => 29,
+                "users"    => [65],
+                "external" => [
                 ],
-                [
-                    "id"       => 42,
-                    "users"    => [298],
-                    "external" => [
-                    ],
+                "order"    => [65],
+            ],
+            [
+                "id"       => 75,
+                "users"    => [65],
+                "external" => [
                 ],
-                [
-                    "id"       => 45,
-                    "users"    => [327, 196],
-                    "external" => [
-                    ],
+                "order"    => [65],
+            ],
+            [
+                "id"       => 36,
+                "users"    => [196, 327],
+                "external" => [
                 ],
-                [
-                    "id"       => 47,
-                    "users"    => [184, 253, 113],
-                    "external" => [
-                        $this->externalUser("Carlos Levi", "University of California, Santa Barbara"),
-                    ],
+                "order"    => [327, 196],
+            ],
+            [
+                "id"       => 37,
+                "users"    => [316, 108, 173],
+                "external" => [
+                    $this->externalUser("Mei Li", "Ford Motor Company"),
                 ],
-                [
-                    "id"       => 50,
-                    "users"    => [],
-                    "external" => [
-                        $this->externalUser("Mei Li", "Ford Motor Company"),
-                    ],
+                "order"    => [
+                    316, 108, "Mei Li", 173,
                 ],
-                [
-                    "id"       => 52,
-                    "users"    => [150, 81, 228, 258],
-                    "external" => [
-                        $this->externalUser("Zhao Ge", "Department of Statistics, Pennsylvania State University"),
-                        $this->externalUser("Baiyu Zhang",
-                            "Department of Materials Science and Engineering, Texas A&M University"),
-                        $this->externalUser("Zi-Kui Liu",
-                            "Department of Materials Science and Engineering, Pennsylvania State University"),
-                        $this->externalUser("Xiaofeng Qian",
-                            "Department of Materials Science and Engineering, Texas A&M University"),
-                    ],
+            ],
+            [
+                "id"       => 39,
+                "users"    => [184, 113],
+                "external" => [
                 ],
-                [
-                    "id"       => 58,
-                    "users"    => [19, 299, 355, 173, 322, 365],
-                    "external" => [
-                    ],
+                "order"    => [184, 113],
+            ],
+            [
+                "id"       => 42,
+                "users"    => [298],
+                "external" => [
                 ],
-                [
-                    "id"       => 59,
-                    "users"    => [343, 299, 735, 11, 274, 173, 322],
-                    "external" => [
-                    ],
+                "order"    => [298],
+            ],
+            [
+                "id"       => 45,
+                "users"    => [327, 196],
+                "external" => [
                 ],
-                [
-                    "id"       => 64,
-                    "users"    => [239, 11, 322, 173],
-                    "external" => [
-                    ],
+                "order"    => [327, 196],
+            ],
+            [
+                "id"       => 47,
+                "users"    => [184, 253, 113],
+                "external" => [
+                    $this->externalUser("Carlos Levi", "University of California, Santa Barbara"),
                 ],
-                [
-                    "id"       => 70,
-                    "users"    => [34, 118, 65, 113],
-                    "external" => [
-                        $this->externalUser("Anton Van der Ven", "University of Michigan"),
-                    ],
+                "order"    => [
+                    184, 253, "Carlos Levi", 113,
                 ],
-                [
-                    "id"       => 75,
-                    "users"    => [253, 113],
-                    "external" => [
-                        $this->externalUser("Etienne Le Mire", "University of Michigan"),
-                    ],
+            ],
+            [
+                "id"       => 50,
+                "users"    => [226, 173],
+                "external" => [
+                    $this->externalUser("Mei Li", "Ford Motor Company"),
                 ],
-                [
-                    "id"       => 77,
-                    "users"    => [298],
-                    "external" => [
-                    ],
+                "order"    => [226, "Mei Li", 173],
+            ],
+            [
+                "id"       => 52,
+                "users"    => [150, 81, 228, 258],
+                "external" => [
+                    $this->externalUser("Zhao Ge", "Department of Statistics, Pennsylvania State University"),
+                    $this->externalUser("Baiyu Zhang",
+                        "Department of Materials Science and Engineering, Texas A&M University"),
+                    $this->externalUser("Zi-Kui Liu",
+                        "Department of Materials Science and Engineering, Pennsylvania State University"),
+                    $this->externalUser("Xiaofeng Qian",
+                        "Department of Materials Science and Engineering, Texas A&M University"),
                 ],
-                [
-                    "id"       => 79,
-                    "users"    => [29, 329, 173],
-                    "external" => [
-                    ],
+                "order"    => [
+                    150, "Zhao Ge", "Baiyu Zhang", 81, 228, "Zi-Kui Liu", "Xiaofeng Qian", 258,
                 ],
-                [
-                    "id"       => 83,
-                    "users"    => [184, 253, 113],
-                    "external" => [
-                    ],
+            ],
+            [
+                "id"       => 58,
+                "users"    => [19, 299, 355, 173, 322, 365],
+                "external" => [
                 ],
-                [
-                    "id"       => 84,
-                    "users"    => [286],
-                    "external" => [
-                    ],
+                "order"    => [19, 299, 355, 173, 322, 365],
+            ],
+            [
+                "id"       => 59,
+                "users"    => [343, 299, 735, 11, 274, 173, 322],
+                "external" => [
                 ],
-                [
-                    "id"       => 87,
-                    "users"    => [304, 118, 34, 47, 274, 198, 65, 113, 196, 173],
-                    "external" => [
-                        $this->externalUser("Anton van der Ven", "University of California, Santa Barbara"),
-                    ],
+                "order"    => [343, 299, 735, 11, 274, 173, 322],
+            ],
+            [
+                "id"       => 64,
+                "users"    => [239, 11, 322, 173],
+                "external" => [
+                    $this->externalUser("Amit Misra", ""),
                 ],
-                [
-                    "id"       => 91,
-                    "users"    => [304],
-                    "external" => [
-                    ],
+                "order"    => [239, 11, 322, 173, "Amit Misra"],
+            ],
+            [
+                "id"       => 70,
+                "users"    => [34, 118, 65, 113],
+                "external" => [
+                    $this->externalUser("Anton Van der Ven", "University of Michigan"),
                 ],
-                [
-                    "id"       => 94,
-                    "users"    => [298],
-                    "external" => [
-                    ],
+                "order"    => [34, 118, 65, 113, "Anton Van der Ven"],
+            ],
+            [
+                "id"       => 75,
+                "users"    => [253, 113],
+                "external" => [
+                    $this->externalUser("Etienne Le Mire", "University of Michigan"),
                 ],
-                [
-                    "id"       => 95,
-                    "users"    => [327, 196],
-                    "external" => [
-                    ],
+                "order"    => [253, "Etienne Le Mire", 113],
+            ],
+            [
+                "id"       => 77,
+                "users"    => [298],
+                "external" => [
                 ],
-                [
-                    "id"       => 99,
-                    "users"    => [304, 274, 101, 327, 196],
-                    "external" => [
-                    ],
+                "order"    => [298],
+            ],
+            [
+                // Showed no authors
+                "id"       => 79,
+                "users"    => [29, 329, 173],
+                "external" => [
                 ],
-                [
-                    "id"       => 106,
-                    "users"    => [327, 196, 187],
-                    "external" => [
-                        $this->externalUser("Peter Voorhees", "Northwestern University"),
-                    ],
+                "order"    => [29, 329, 173],
+            ],
+            [
+                "id"       => 83,
+                "users"    => [184, 253, 113],
+                "external" => [
                 ],
-                [
-                    "id"       => 109,
-                    "users"    => [159, 173, 174],
-                    "external" => [
-                    ],
+                "order"    => [184, 253, 113],
+            ],
+            [
+                "id"       => 84,
+                "users"    => [286],
+                "external" => [
                 ],
-                [
-                    "id"       => 115,
-                    "users"    => [355, 365],
-                    "external" => [
-                    ],
+                "order"    => [286],
+            ],
+            [
+                "id"       => 87,
+                "users"    => [304, 118, 34, 47, 274, 198, 65, 113, 196, 173],
+                "external" => [
+                    $this->externalUser("Anton van der Ven", "University of California, Santa Barbara"),
                 ],
-                [
-                    "id"       => 118,
-                    "users"    => [343],
-                    "external" => [
-                    ],
+                "order"    => [304, 118, 34, 47, 274, 198, 65, 113, "Anton van der Ven", 196, 173],
+            ],
+            [
+                "id"       => 91,
+                "users"    => [304],
+                "external" => [
                 ],
-                [
-                    "id"       => 119,
-                    "users"    => [295, 196],
-                    "external" => [
-                    ],
+                "order"    => [304],
+            ],
+            [
+                "id"       => 94,
+                "users"    => [298],
+                "external" => [
                 ],
-                [
-                    "id"       => 121,
-                    "users"    => [113],
-                    "external" => [
-                    ],
+                "order"    => [298],
+            ],
+            [
+                "id"       => 95,
+                "users"    => [327, 196],
+                "external" => [
                 ],
-                [
-                    "id"       => 123,
-                    "users"    => [239, 11, 322, 173, 30],
-                    "external" => [
-                    ],
+                "order"    => [327, 196],
+            ],
+            [
+                "id"       => 99,
+                "users"    => [304, 274, 101, 327, 196],
+                "external" => [
                 ],
-                [
-                    "id"       => 124,
-                    "users"    => [82],
-                    "external" => [
-                        $this->externalUser("Daniel H. Bechetti",
-                            "Naval Surface Warfare Center, Carderock Division [NSWCCD]"),
-                        $this->externalUser("Jennifer K. Semple",
-                            "Naval Surface Warfare Center, Carderock Division [NSWCCD]"),
-                        $this->externalUser("Wei Zhang", "Ohio State University [OSU]"),
-                    ],
+                "order"    => [304, 274, 101, 327, 196],
+            ],
+            [
+                "id"       => 106,
+                "users"    => [327, 196, 187],
+                "external" => [
+                    $this->externalUser("Peter Voorhees", "Northwestern University"),
                 ],
-                [
-                    "id"       => 125,
-                    "users"    => [290, 316, 173],
-                    "external" => [
-                        $this->externalUser("Yang Huo", "Ford Motor Company"),
-                        $this->externalUser("Bita Ghaffari", "Ford Motor Company"),
-                        $this->externalUser("Mei Li", "Ford Motor Company"),
-                    ],
+                "order"    => [327, 196, "Peter Voorhees", 187],
+            ],
+            [
+                "id"       => 109,
+                "users"    => [159, 173, 174],
+                "external" => [
                 ],
-                [
-                    "id"       => 126,
-                    "users"    => [299, 343, 19, 355, 365, 173, 322],
-                    "external" => [
-                    ],
+                "order"    => [159, 173, 174],
+            ],
+            [
+                "id"       => 115,
+                "users"    => [355, 365],
+                "external" => [
                 ],
-                [
-                    "id"       => 127,
-                    "users"    => [345],
-                    "external" => [
-                    ],
+                "order"    => [355, 365],
+            ],
+            [
+                "id"       => 118,
+                "users"    => [343],
+                "external" => [
                 ],
-                [
-                    "id"       => 130,
-                    "users"    => [355, 755],
-                    "external" => [
-                    ],
+                "order"    => [343],
+            ],
+            [
+                "id"       => 119,
+                "users"    => [295, 196],
+                "external" => [
                 ],
+                "order"    => [295, 196],
+            ],
+            [
+                "id"       => 121,
+                "users"    => [113],
+                "external" => [
+                ],
+                "order"    => [113],
+            ],
+            [
+                "id"       => 123,
+                "users"    => [239, 11, 322, 173, 30],
+                "external" => [
+                ],
+                "order"    => [239, 11, 322, 173, 30],
+            ],
+            [
+                "id"       => 124,
+                "users"    => [82],
+                "external" => [
+                    $this->externalUser("Daniel H. Bechetti",
+                        "Naval Surface Warfare Center, Carderock Division [NSWCCD]"),
+                    $this->externalUser("Jennifer K. Semple",
+                        "Naval Surface Warfare Center, Carderock Division [NSWCCD]"),
+                    $this->externalUser("Wei Zhang", "Ohio State University [OSU]"),
+                ],
+                "order"    => [82, "Daniel H. Bechetti", "Jennifer K. Semple", "Wei Zhang"],
+            ],
+            [
+                "id"       => 125,
+                "users"    => [290, 316, 173],
+                "external" => [
+                    $this->externalUser("Yang Huo", "Ford Motor Company"),
+                    $this->externalUser("Bita Ghaffari", "Ford Motor Company"),
+                    $this->externalUser("Mei Li", "Ford Motor Company"),
+                ],
+                "order"    => [290, "Yang Huo", 316, "Bita Ghaffari", "Mei Li", 173],
+            ],
+            [
+                "id"       => 126,
+                "users"    => [299, 343, 19, 355, 365, 173, 322],
+                "external" => [
+                ],
+                "order"    => [299, 343, 19, 355, 365, 173, 322],
+            ],
+            [
+                "id"       => 127,
+                "users"    => [345],
+                "external" => [
+                ],
+                "order"    => [345],
+            ],
+            [
+                "id"       => 130,
+                "users"    => [355, 755],
+                "external" => [
+                ],
+                "order"    => [355, 755],
             ],
         ];
     }
 
-    private function externalUser($name, $affiliations)
+    private function externalUser($name, $affiliations, $email = null)
     {
-        // TODO: Look up existing external user by name
+        $emailToUse = $email ?? $name;
         return [
             "name"         => $name,
             "affiliations" => $affiliations,
+            "email"        => $emailToUse,
         ];
     }
 }
