@@ -24,21 +24,16 @@ class DatasetRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                              => 'required|string|max:200',
-            'description'                       => 'nullable|string|max:8192',
-            'summary'                           => 'nullable|string|max:100',
-            'license'                           => 'nullable|string|max:256',
-            'action'                            => 'nullable|string',
-            'experiments'                       => 'nullable|array',
-            'communities'                       => 'nullable|array',
-            'tags'                              => 'nullable|array',
-            'tags.*.value'                      => 'required|string',
-            'mc_authors'                        => 'required|array',
-            'additional_authors'                => 'nullable|array',
-            'additional_authors.*.name'         => 'required|string',
-            'additional_authors.*.email'        => 'required|email',
-            'additional_authors.*.affiliations' => 'required|string',
-            'author_order'                      => 'required|array',
+            'name'         => 'required|string|max:200',
+            'description'  => 'nullable|string|max:8192',
+            'summary'      => 'nullable|string|max:100',
+            'license'      => 'nullable|string|max:256',
+            'authors'      => 'nullable|string|max:2048',
+            'action'       => 'nullable|string',
+            'experiments'  => 'nullable|array',
+            'communities'  => 'nullable|array',
+            'tags'         => 'nullable|array',
+            'tags.*.value' => 'required|string',
         ];
     }
 

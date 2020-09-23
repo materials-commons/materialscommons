@@ -29,8 +29,6 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetExperimentsWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetOverviewWebController;
-use App\Http\Controllers\Web\Datasets\ShowDatasetsForExternalUserWebController;
-use App\Http\Controllers\Web\Datasets\ShowDatasetsForUserWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWorkflowsWebController;
 use App\Http\Controllers\Web\Datasets\ShowImportDatasetIntoProjectWebController;
@@ -162,11 +160,6 @@ Route::get('/projects/{project}/datasets/{dataset}/refresh', RefreshPublishedDat
 
 Route::get('/projects/{project}/datasets/{dataset}/unpublish', UnpublishDatasetWebController::class)
      ->name('projects.datasets.unpublish');
-
-Route::get('/datasets/user/{user}', ShowDatasetsForUserWebController::class)
-     ->name('datasets.user.published.show');
-Route::get('/datasets/external_user/{user}', ShowDatasetsForExternalUserWebController::class)
-     ->name('datasets.external_user.published.show');
 
 // Don't use {project} because we don't want middleware to run that checks that dataset is in project
 Route::post('/projects/{p}/datasets/{dataset}/import', ImportDatasetIntoProjectWebController::class)

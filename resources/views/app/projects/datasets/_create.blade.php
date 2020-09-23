@@ -6,7 +6,12 @@
                placeholder="Name...">
     </div>
 
-    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>
+    <div class="form-group">
+        <label for="authors">Authors and Affiliations</label>
+        <input class="form-control" id="authors" name="authors" type="text"
+               value="{{old('authors', $authorsAndAffiliations)}}"
+               placeholder="Authors...">
+    </div>
 
     <div class="form-group">
         <label for="summary">Summary</label>
@@ -24,11 +29,11 @@
     <div class="form-group">
         <label for="doi">DOI</label>
         <span class="col-8">
-            None
-            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
-                Assign DOI
-            </a>
-        </span>
+                            None
+                            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
+                                Assign DOI
+                            </a>
+                        </span>
     </div>
 
     <div class="form-group">
@@ -54,10 +59,6 @@
 
     @if($experiments->isNotEmpty())
         <div class="form-group">
-            <p>
-                Selecting experiments will automatically add all the samples for the experiments to
-                the dataset
-            </p>
             <label for="experiments">Experiments</label>
             <select name="experiments[]" class="selectpicker col-lg-8"
                     title="experiments"
@@ -98,12 +99,12 @@
             Cancel
         </a>
 
-        <a class="action-link mr-3" href="#" id="save-button" onclick="validateSetActionAndSubmit('save')">
+        <a class="action-link mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
             Save
         </a>
 
         <a class="action-link mr-3" href="#" id="add-assets-button"
-           onclick="validateSetActionAndSubmit('assets')">
+           onclick="setActionAndSubmit('assets')">
             Save And Add Data
         </a>
     </div>
@@ -122,33 +123,11 @@
         });
 
         function validate() {
-            if (isValid()) {
+            if ($('#name').val().length > 0) {
                 setNextButtonsDisabled(false);
             } else {
                 setNextButtonsDisabled(true);
             }
-        }
-
-        function isValid() {
-            // let formData = $('#dataset_create').serializeArray();
-            // for (let i = 100; i > nextAdditionalAuthorId; i++) {
-            //     let nameValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][name]`);
-            //     let emailValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][email]`);
-            //     let affiliationsValue = formData.find((item) => item['name'] === `additional_authors['id_${i}'][affiliations]`);
-            //     if (nameValue === "") {
-            //         return false;
-            //     }
-            //
-            //     if (emailValue === "") {
-            //         return false;
-            //     }
-            //
-            //     if (affiliationsValue === "") {
-            //         return false;
-            //     }
-            // }
-            // let additionalAuthors;
-            return ($('#name').val().length > 0);
         }
 
         function setNextButtonsDisabled(disable) {
@@ -161,10 +140,7 @@
             }
         }
 
-        function validateSetActionAndSubmit(action) {
-            if (!isValid()) {
-                return;
-            }
+        function setActionAndSubmit(action) {
             $('#action').val(action);
             document.getElementById('dataset_create').submit();
         }
@@ -174,5 +150,6 @@
             document.forms.dataset_create.action = "{{route('projects.datasets.create-doi', [$project])}}";
             document.forms.dataset_create.submit();
         }
+
     </script>
 @endpush
