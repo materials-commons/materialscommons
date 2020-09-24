@@ -5,7 +5,7 @@ use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/dashboard', '/dashboard/projects');
+Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
 
 Route::get('/dashboard/projects', ShowDashboardProjectsWebController::class)
      ->name('dashboard.projects.show');
