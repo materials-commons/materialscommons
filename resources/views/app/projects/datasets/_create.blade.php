@@ -36,6 +36,8 @@
                         </span>
     </div>
 
+    <x-datasets.create-papers-list></x-datasets.create-papers-list>
+
     <div class="form-group">
         <label for="license">License</label>
         <select name="license" class="selectpicker col-lg-8" data-live-search="true"
