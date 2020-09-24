@@ -131,6 +131,11 @@ class Dataset extends Model implements Searchable
         return $this->morphMany(Download::class, 'downloadable');
     }
 
+    public function papers()
+    {
+        return $this->morphedByMany(Paper::class, 'item', 'item2dataset');
+    }
+
     public function entitiesFromTemplate()
     {
         return Entity::whereIn('id', function ($query) {
