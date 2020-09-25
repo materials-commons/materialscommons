@@ -1,39 +1,25 @@
 <form>
-    <div class="form-row">
-        <div class="col h6">
-            <div class="form-control">
-                <span>Owner: {{$item->owner->name}}</span>
-                <span class="ml-4">Last Updated {{$item->updated_at->diffForHumans()}}</span>
+    <div class="row">
+        <div class="col mb-2">
+            <div class="">
+                <span class="fs-9 grey-5">Last Updated {{$item->updated_at->diffForHumans()}}</span>
                 {{$slot}}
+                <span class="ml-4 fs-9 grey-5">Owner: {{$item->owner->name}}</span>
             </div>
         </div>
     </div>
 
-    {{$top ?? ''}}
+    <div class="align-items-center">
+        {{$top ?? ''}}
+    </div>
 
     @isset($item->summary)
-        <div class="form-group">
-            <label for="summary">Summary</label>
-            <input class="form-control" id="summary" value="{{$item->summary}}" readonly>
-        </div>
+        @if(blank($item->description))
+            <x-show-summary :summary="$item->summary"></x-show-summary>
+        @endif
     @endisset
 
-    <div class="form-group">
-        @isset($item->description)
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" type="text"
-                      placeholder="Description..." readonly>{{$item->description}}</textarea>
-            {{--            <div class="markdown-area mb-2" id="description">--}}
-            {{--                @markdown($item->description)--}}
-            {{--            </div>--}}
-        @else
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" type="text"
-                          placeholder="Description..." readonly>{{$item->description}}</textarea>
-            </div>
-        @endif
-    </div>
+    <x-show-description :description="$item->description"></x-show-description>
 
     {{$bottom ?? ''}}
 

@@ -16,13 +16,11 @@ class CreatePapersTable extends Migration
         Schema::create('papers', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $this->string('name');
+
+            $table->text('name');
+            $table->text('reference');
             $table->string('doi')->nullable();
             $table->string('url')->nullable();
-            $table->string('authors_text')->nullable();
-            $table->string('publisher')->nullable();
-            $table->string('journal')->nullable();
-            $table->datetime('published_at')->nullable();
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')

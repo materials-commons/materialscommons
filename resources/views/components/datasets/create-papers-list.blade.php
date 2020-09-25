@@ -4,29 +4,38 @@
         <a href="#" @click.prevent="addPaper()">
             <i class="fa fas fa-fw fa-plus"></i>Add Paper
         </a>
+
         <ul class="list-unstyled" id="dataset-papers">
             <template x-for="paper in papers" :key="paper.id">
-                <li>
-                    <div class="form-row mt-2 align-items-center">
-                        <div class="col-auto col-lg-auto">
-                            <input class="form-control mb-2" type="text"
-                                   x-bind:name="`papers[${paper.id}][name]`"
-                                   placeholder="Title... (Required)" required>
+                <li class="mb-4 mt-2">
+                    <div class="form-row align-items-center">
+                        <div class="col-5">
+                            <textarea class="form-control mb-2" type="text"
+                                      x-model="paper.name"
+                                      x-bind:name="`papers[${paper.id}][name]`"
+                                      placeholder="Title... (Required)" required>
+                            </textarea>
                         </div>
-                        <div class="col-auto col-lg-auto">
-                            <input class="form-control mb-2" type="text"
-                                   x-bind:name="`papers[${paper.id}][authors]`"
-                                   placeholder="Authors... (Required)" required>
+                        <div class="col-5">
+                            <textarea class="form-control mb-2" type="text"
+                                      x-model="paper.reference"
+                                      x-bind:name="`papers[${paper.id}][reference]`"
+                                      placeholder="Reference... (Required)" required>
+                            </textarea>
                         </div>
-                        <div class="col-auto col-lg-auto">
+                    </div>
+                    <div class="form-row mt-1 align-items-center">
+                        {{--                        <div class="col-5">--}}
+                        {{--                            <input class="form-control mb-2" type="text"--}}
+                        {{--                                   x-model="paper.doi"--}}
+                        {{--                                   x-bind:name="`papers[${paper.id}][doi]`"--}}
+                        {{--                                   placeholder="DOI...">--}}
+                        {{--                        </div>--}}
+                        <div class="col-10">
                             <input class="form-control mb-2" type="text"
-                                   x-bind:name="`papers[${paper.id}][journal]`"
-                                   placeholder="Journal... (Required)" required>
-                        </div>
-                        <div class="col-auto col-lg-auto">
-                            <input class="form-control mb-2" type="text"
-                                   x-bind:name="`papers[${paper.id}][doi]`"
-                                   placeholder="DOI...">
+                                   x-model="paper.url"
+                                   x-bind:name="`papers[${paper.id}][url]`"
+                                   placeholder="URL...">
                         </div>
                         <a href="#" @click.prevent="removePaper(paper)">
                             <i class="fa fas fa-fw fa-trash"></i>
@@ -35,7 +44,6 @@
                 </li>
             </template>
         </ul>
-
     </div>
 </div>
 
@@ -43,14 +51,27 @@
     <script>
         function initPapers() {
             return {
-                newPaperName: 'hello',
-                papers: [],
+                papers: [
+                        @if(old('papers'))
+                        @foreach(old('papers') as $key => $value)
+                    {
+                        id: {{$key}},
+                        name: "{{$value['name']}}",
+                        reference: "{{$value['reference']}}",
+                        doi: "{{$value['doi']}}",
+                        url: "{{$value['url']}}"
+                    },
+                    @endforeach
+                    @endif
+                ],
                 addPaper() {
                     this.papers.push({
                         id: this.papers.length + 1,
-                        name: `${this.newPaperName}_${this.papers.length}`,
+                        name: '',
+                        reference: '',
+                        doi: '',
+                        url: ''
                     });
-                    // this.newPaperName = '';
                 },
                 removePaper(paper) {
                     let index = this.papers.indexOf(p => p.id === paper.id);

@@ -59,14 +59,11 @@
         @slot('body')
             @component('components.item-details', ['item' => $dataset])
                 @slot('top')
-                    <div class="form-group">
-                        <label for="authors">Authors and Affiliations</label>
-                        <input class="form-control" value="{{$dataset->authors}}" id="authors" type="text" readonly>
-                    </div>
+                    <x-datasets.show-authors :authors="$dataset->authors"></x-datasets.show-authors>
                 @endslot
 
 
-                <span class="ml-4">Published:
+                <span class="ml-4 fs-9 grey-5">Published:
                     @isset($dataset->published_at)
                         {{$dataset->published_at->diffForHumans()}}
                     @else
@@ -74,32 +71,16 @@
                     @endisset
                 </span>
 
-                <span class="ml-4">Views: {{$dataset->views_count}}</span>
-                <span class="ml-4">Downloads: {{$dataset->downloads_count}}</span>
+                <span class="ml-4 fs-9 grey-5">Views: {{$dataset->views_count}}</span>
+                <span class="ml-4 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
+                <x-datasets.show-doi :doi="$dataset->doi"></x-datasets.show-doi>
+                <x-datasets.show-license :license="$dataset->license"
+                                         :license-link="$dataset->license_link"></x-datasets.show-license>
 
                 @slot('bottom')
-                    <div class="form-group">
-                        <label for="doi">DOI</label>
-                        <input class="form-control" id="doi" type="text" value="{{$dataset->doi}}" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="license">License</label>
-                        <input class="form-control" id="license" type="text"
-                               value="{{$dataset->license ? $dataset->license : "No License"}}" readonly>
-                    </div>
+                    <x-datasets.show-papers-list :papers="$dataset->papers"></x-datasets.show-papers-list>
 
-                    <div class="form-group">
-                        <label for="tags">Tags</label>
-                        <div class="form-control" id="tags" readonly>
-                            @foreach($dataset->tags as $tag)
-                                <a class="badge badge-success fs-11 td-none"
-                                   href="{{route('public.tags.search', ['tag' => $tag->name])}}">
-                                    {{$tag->name}}
-                                </a>
-                                {{--                                <span class="badge badge-success fs-11">{{$tag->name}}</span>--}}
-                            @endforeach
-                        </div>
-                    </div>
+                    <x-datasets.show-tags :tags="$dataset->tags"></x-datasets.show-tags>
 
                     @if(file_exists($dataset->zipfilePath()) || file_exists($dataset->publishedGlobusPath()))
                         <div class="form-group">

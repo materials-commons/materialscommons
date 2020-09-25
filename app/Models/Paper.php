@@ -10,13 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property string $uuid
  * @property integer $owner_id
- * @property string $name
+ * @property string name
+ * @property string $reference
  * @property string $doi
  * @property string $url
- * @property string $authors_text
- * @property string $journal
- * @property string $publisher
- * @property mixed $published_at
  *
  * @mixin Builder
  */
@@ -25,10 +22,6 @@ class Paper extends Model
     use HasUUID;
 
     protected $guarded = ['id'];
-
-    protected $dates = [
-        'published_at',
-    ];
 
     public function owner()
     {

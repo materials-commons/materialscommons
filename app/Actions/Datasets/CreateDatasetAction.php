@@ -4,6 +4,7 @@ namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Experiment;
+use App\Models\Paper;
 use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,12 @@ class CreateDatasetAction
             unset($data['experiments']);
         }
 
+        $papers = collect();
+        if (array_key_exists('papers', $data)) {
+            $papers = $this->getPapers($data['papers'], $userId);
+            unset($data['papers']);
+        }
+
         $this->loadTagsFromData($data);
         unset($data['tags']);
 
@@ -38,7 +45,7 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
-        DB::transaction(function () use ($dataset, $communities, $experiments) {
+        DB::transaction(function () use ($dataset, $communities, $experiments, $papers) {
             $dataset->save();
             if ($communities !== null) {
                 $dataset->communities()->attach($communities);
@@ -53,9 +60,22 @@ class CreateDatasetAction
                 }
             }
 
+            $papers->each(function (Paper $paper) use ($dataset) {
+                $paper->save();
+                $dataset->papers()->attach($paper);
+            });
+
             $dataset->attachTags($this->tags);
         });
 
         return $dataset->fresh();
+    }
+
+    private function getPapers($papers, $userId)
+    {
+        return collect($papers)->map(function ($paper) use ($userId) {
+            $paper['owner_id'] = $userId;
+            return new Paper($paper);
+        })->values();
     }
 }
