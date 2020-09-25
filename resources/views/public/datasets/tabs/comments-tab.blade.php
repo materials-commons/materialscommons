@@ -1,3 +1,4 @@
+<x-datasets.show-published-overview :dataset="$dataset"></x-datasets.show-published-overview>
 @auth
     <a class="action-link float-right"
        href="{{route('public.datasets.comments.create', [$dataset])}}">

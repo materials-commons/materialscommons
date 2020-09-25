@@ -57,53 +57,7 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $dataset])
-                @slot('top')
-                    <x-datasets.show-authors :authors="$dataset->authors"></x-datasets.show-authors>
-                @endslot
 
-
-                <span class="ml-4 fs-9 grey-5">Published:
-                    @isset($dataset->published_at)
-                        {{$dataset->published_at->diffForHumans()}}
-                    @else
-                        Not Published
-                    @endisset
-                </span>
-
-                <span class="ml-4 fs-9 grey-5">Views: {{$dataset->views_count}}</span>
-                <span class="ml-4 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
-                <x-datasets.show-doi :doi="$dataset->doi"></x-datasets.show-doi>
-                <x-datasets.show-license :license="$dataset->license"
-                                         :license-link="$dataset->license_link"></x-datasets.show-license>
-
-                @slot('bottom')
-                    <x-datasets.show-papers-list :papers="$dataset->papers"></x-datasets.show-papers-list>
-
-                    <x-datasets.show-tags :tags="$dataset->tags"></x-datasets.show-tags>
-
-                    @if(file_exists($dataset->zipfilePath()) || file_exists($dataset->publishedGlobusPath()))
-                        <div class="form-group">
-                            <label>Download Files</label>
-                            <div class="row ml-2">
-                                @if(file_exists($dataset->zipfilePath()))
-                                    <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">
-                                        Download Dataset Zipfile
-                                    </a>
-                                    <span class="ml-1">({{formatBytes($dataset->zipfileSize())}})</span>
-                                @endif
-
-                                @if(file_exists($dataset->publishedGlobusPath()))
-                                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-4"
-                                       target="_blank">
-                                        Download Using Globus
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-                @endslot
-            @endcomponent
 
             <br>
 

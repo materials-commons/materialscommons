@@ -1,3 +1,4 @@
+<x-datasets.show-published-overview :dataset="$dataset"></x-datasets.show-published-overview>
 <div class="ml-2">
     <table id="workflows" class="table table-hover">
         <thead>

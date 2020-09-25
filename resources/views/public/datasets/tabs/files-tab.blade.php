@@ -1,3 +1,4 @@
+<x-datasets.show-published-overview :dataset="$dataset"></x-datasets.show-published-overview>
 <table id="files" class="table table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
