@@ -58,12 +58,7 @@
 
         @slot('body')
 
-
-            <br>
-
             @include('public.datasets.tabs.tabs')
-
-            <br>
 
             @if (Request::routeIs('public.datasets.overview*'))
                 @include('public.datasets.tabs.overview-tab')
