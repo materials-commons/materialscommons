@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group mt-2">
     <label for="authors">Authors and Affiliations</label>
     <ul class="list-inline">
         @foreach(explode(";", $authors) as $author)
