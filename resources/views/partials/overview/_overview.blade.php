@@ -11,7 +11,7 @@
         </div>
     @endslot
 
-    <span class="ml-4 fs-9 grey-5">Published:
+    <span class="ml-3 fs-9 grey-5">Published:
                     @isset($dataset->published_at)
             {{$dataset->published_at->diffForHumans()}}
         @else
@@ -19,8 +19,8 @@
         @endisset
                 </span>
 
-    <span class="ml-4 fs-9 grey-5">Views: {{$dataset->views_count}}</span>
-    <span class="ml-4 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
+    <span class="ml-3 fs-9 grey-5">Views: {{$dataset->views_count}}</span>
+    <span class="ml-3 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
     <x-datasets.show-doi :doi="$dataset->doi"></x-datasets.show-doi>
     <x-datasets.show-license :license="$dataset->license"
                              :license-link="$dataset->license_link"></x-datasets.show-license>

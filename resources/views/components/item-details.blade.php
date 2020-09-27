@@ -5,7 +5,7 @@
                 {{$slotStart ?? ''}}
                 <span class="fs-9 grey-5">Last Updated {{$item->updated_at->diffForHumans()}}</span>
                 {{$slot}}
-                <span class="ml-4 fs-9 grey-5">Owner: {{$item->owner->name}}</span>
+                <span class="ml-3 fs-9 grey-5">Owner: {{$item->owner->name}}</span>
                 {{$slotEnd ?? ''}}
             </div>
         </div>
