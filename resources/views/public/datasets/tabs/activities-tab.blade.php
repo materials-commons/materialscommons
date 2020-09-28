@@ -1,10 +1,4 @@
-<form>
-    <x-datasets.show-overview :dataset="$dataset"/>
-    <x-datasets.show-authors :authors="$dataset->authors"/>
-    <x-show-summary :summary="$dataset->summary"/>
-</form>
-<hr/>
-<br/>
+@include('public.datasets.tabs._short-overview')
 <table id="activities" class="table table-hover" width="100%">
     <thead>
     <th>Process</th>
