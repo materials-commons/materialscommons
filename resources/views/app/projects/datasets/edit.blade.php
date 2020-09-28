@@ -44,8 +44,13 @@
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
-                              value="{{$dataset->description}}"
-                              placeholder="Description...">{{old('descrition', $dataset->description)}}</textarea>
+                              placeholder="Description...">{{old('description', $dataset->description)}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="funding">Funding</label>
+                    <textarea class="form-control" id="funding" name="funding" type="text"
+                              placeholder="Funding...">{{old('funding', $dataset->funding)}}</textarea>
                 </div>
 
                 <div class="form-group">
