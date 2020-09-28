@@ -1,9 +1,2 @@
-@component('components.card')
-    @slot('header')
-        Samples
-    @endslot
-
-    @slot('body')
-        @include('partials.entities._entities-with-used-activities-table')
-    @endslot
-@endcomponent
+@include('app.projects.datasets.tabs._short-overview')
+@include('partials.entities._entities-with-used-activities-table')

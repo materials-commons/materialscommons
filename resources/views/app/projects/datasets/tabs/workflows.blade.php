@@ -1,9 +1,2 @@
-@component('components.card')
-    @slot('header')
-        Workflows
-    @endslot
-
-    @slot('body')
-        @include('partials.workflows.index', ['workflows' => $workflows])
-    @endslot
-@endcomponent
+@include('app.projects.datasets.tabs._short-overview')
+@include('partials.workflows.index', ['workflows' => $workflows])

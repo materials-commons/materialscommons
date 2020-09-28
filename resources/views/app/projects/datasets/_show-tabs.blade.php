@@ -1,6 +1,4 @@
-<br>
 @include('app.projects.datasets.tabs.tabs')
-<br>
 
 @if(Request::routeIs('projects.datasets.show.overview'))
     @include('app.projects.datasets.tabs.overview')
