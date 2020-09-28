@@ -15,8 +15,7 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $activity])
-            @endcomponent
+            <x-show-standard-details :item="$activity"/>
             <br>
 
             <h4>Process Attributes</h4>

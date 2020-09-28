@@ -20,8 +20,7 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $entity])
-            @endcomponent
+            <x-show-standard-details :item="$entity"/>
 
             <div class="row ml-1">
                 @foreach($activities as $activity)

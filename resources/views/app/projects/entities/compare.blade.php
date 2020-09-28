@@ -16,8 +16,7 @@
             <div class="row">
                 <div class="col-6">
                     <h4>{{$entity1->name}}</h4>
-                    @component('components.item-details', ['item' => $entity1])
-                    @endcomponent
+                    <x-show-standard-details :item="$entity1"/>
 
                     <div class="row ml-1">
                         @foreach($entity1Activities as $e1activity)
@@ -29,8 +28,7 @@
                 </div>
                 <div class="col-6">
                     <h4>{{$entity2->name}}</h4>
-                    @component('components.item-details', ['item' => $entity2])
-                    @endcomponent
+                    <x-show-standard-details :item="$entity2"/>
 
                     <div class="row ml-1">
                         @foreach($entity2Activities as $e2activity)

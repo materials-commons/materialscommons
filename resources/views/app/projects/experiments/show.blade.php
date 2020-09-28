@@ -36,8 +36,7 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $experiment])
-            @endcomponent
+            <x-show-standard-details :item="$experiment"/>
 
             <hr>
             <br>

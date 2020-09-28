@@ -11,8 +11,7 @@
     @endslot
 
     @slot('body')
-        @component('components.item-details', ['item' => $entity])
-        @endcomponent
+        <x-show-standard-details :item="$entity"/>
 
         <br>
         @include('partials.entities.tabs._tabs', [

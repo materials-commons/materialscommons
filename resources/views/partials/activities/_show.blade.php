@@ -11,8 +11,7 @@
     @endslot
 
     @slot('body')
-        @component('components.item-details', ['item' => $activity])
-        @endcomponent
+        <x-show-standard-details :item="$activity"/>
         <br>
         @include('partials.activities.tabs._tabs', [
             'showRouteName' => $showRouteName,

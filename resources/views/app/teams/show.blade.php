@@ -13,8 +13,7 @@
         @endslot
 
         @slot('body')
-            @component('components.item-details', ['item' => $team])
-            @endcomponent
+            <x-show-standard-details :item="$team"/>
 
             <hr>
             <br>
