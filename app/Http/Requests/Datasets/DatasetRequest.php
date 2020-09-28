@@ -29,6 +29,7 @@ class DatasetRequest extends FormRequest
             'summary'            => 'nullable|string|max:100',
             'license'            => 'nullable|string|max:256',
             'authors'            => 'nullable|string|max:2048',
+            'funding'            => 'nullable|string|max:8192',
             'action'             => 'nullable|string',
             'experiments'        => 'nullable|array',
             'communities'        => 'nullable|array',

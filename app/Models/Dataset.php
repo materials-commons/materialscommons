@@ -19,6 +19,7 @@ use Spatie\Tags\HasTags;
  * @property string description
  * @property string summary
  * @property string license
+ * @property string funding
  * @property mixed $tags
  * @property integer project_id
  * @property mixed $communities

@@ -27,6 +27,12 @@
     </div>
 
     <div class="form-group">
+        <label for="funding">Funding</label>
+        <textarea class="form-control" id="funding" name="funding"
+                  type="text" placeholder="Funding...">{{old('funding')}}</textarea>
+    </div>
+
+    <div class="form-group">
         <label for="doi">DOI</label>
         <span class="col-8">
                             None
