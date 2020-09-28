@@ -1,4 +1,10 @@
-<x-datasets.show-published-overview :dataset="$dataset"></x-datasets.show-published-overview>
+<form>
+    <x-datasets.show-overview :dataset="$dataset"/>
+    <x-datasets.show-authors :authors="$dataset->authors"/>
+    <x-show-summary :summary="$dataset->summary"/>
+</form>
+<hr/>
+<br/>
 @auth
     <a class="action-link float-right"
        href="{{route('public.datasets.comments.create', [$dataset])}}">

@@ -1,7 +1,7 @@
-@if(!blank($license))
+@if(!blank($dataset->license))
     <span class="ml-3 fs-9 grey-5">
-        License: <a href="{{$licenseLink}}" target="_blank">
-            <i class="fa fas fa-fw fa-external-link-alt"></i> {{$license}}
+        License: <a href="{{$licenseUrl()}}" target="_blank">
+            <i class="fa fas fa-fw fa-external-link-alt"></i> {{$dataset->license}}
         </a>
     </span>
 @else

@@ -1,4 +1,10 @@
-<x-datasets.show-published-overview :dataset="$dataset"></x-datasets.show-published-overview>
+<form>
+    <x-datasets.show-overview :dataset="$dataset"/>
+    <x-datasets.show-authors :authors="$dataset->authors"/>
+    <x-show-summary :summary="$dataset->summary"/>
+</form>
+<hr/>
+<br/>
 <table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
