@@ -20,6 +20,7 @@ class ShowPublishedDate extends Component
 
     public function publishedDate()
     {
-        return $this->published ? $this->published->diffForHumans() : "Not Published";
+        $publishedDate = $this->published ? $this->published->diffForHumans() : "Not Published";
+        return $this->published ? "Published: {$publishedDate}" : "Not Published";
     }
 }
