@@ -35,11 +35,11 @@
     <div class="form-group">
         <label for="doi">DOI</label>
         <span class="col-8">
-                            None
-                            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
-                                Assign DOI
-                            </a>
-                        </span>
+            None
+            <a href="#" onclick="changeActionAndSubmit()" style="margin-left: 8px">
+                Assign DOI
+            </a>
+        </span>
     </div>
 
     <x-datasets.create-papers-list></x-datasets.create-papers-list>
