@@ -11,6 +11,8 @@
         'editCommunityRoute' => route('communities.edit', [$community]),
         'doneRoute' => route('communities.index'),
         'showRouteName' => 'communities.show',
-        'practicesRouteName' => 'communities.practices.show',
+        'filesRouteName' => 'communities.files.show-files',
+        'linksRouteName' => 'communities.links.show-links',
+        'datasetsRouteName' => 'communities.datasets.show-datasets',
     ])
 @stop

@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunityDatasetsWebController;
-use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityRecommendedPracticesWebController;
+use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityFilesWebController;
+use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityLinksWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::get('/communities/{community}/datasets', IndexPublishedCommunityDatasetsW
 Route::get('/communities/{community}', ShowPublishedCommunityWebController::class)
      ->name('communities.show');
 
-Route::get('/communities/{community}/practices', ShowPublishedCommunityRecommendedPracticesWebController::class)
-     ->name('communities.practices.show');
+Route::get('/communities/{community}/files', ShowPublishedCommunityFilesWebController::class)
+     ->name('communities.files.show');
+
+Route::get('/communities/{community}/links', ShowPublishedCommunityLinksWebController::class)
+     ->name('communities.links.show');
 

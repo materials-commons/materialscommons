@@ -1,3 +1,4 @@
+@include('partials.communities.show-tabs._show-overview')
 <table id="datasets" class="table table-hover">
     <thead>
     <tr>

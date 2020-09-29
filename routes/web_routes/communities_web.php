@@ -24,6 +24,9 @@ use App\Http\Controllers\Web\Communities\Links\DestroyLinkForCommunityWebControl
 use App\Http\Controllers\Web\Communities\Links\EditLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\StoreLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\UpdateLinkForCommunityWebController;
+use App\Http\Controllers\Web\Communities\ShowCommunityDatasetsWebController;
+use App\Http\Controllers\Web\Communities\ShowCommunityFilesWebController;
+use App\Http\Controllers\Web\Communities\ShowCommunityLinksWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityRecommendedPracticesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityWebController;
 use App\Http\Controllers\Web\Communities\StoreCommunityWebController;
@@ -42,6 +45,15 @@ Route::post('/communities', StoreCommunityWebController::class)
 
 Route::get('/communities/{community}', ShowCommunityWebController::class)
      ->name('communities.show');
+
+Route::get('/communities/{community}/files', ShowCommunityFilesWebController::class)
+     ->name('communities.files.show-files');
+
+Route::get('/communities/{community}/links', ShowCommunityLinksWebController::class)
+     ->name('communities.links.show-links');
+
+Route::get('/communities/{community}/datasets', ShowCommunityDatasetsWebController::class)
+     ->name('communities.datasets.show-datasets');
 
 Route::get('/communities/{community}/practices', ShowCommunityRecommendedPracticesWebController::class)
      ->name('communities.practices.show');
