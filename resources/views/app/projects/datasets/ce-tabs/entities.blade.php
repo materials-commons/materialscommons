@@ -1,37 +1,34 @@
-@component('components.card')
-    @slot('header')
-        Samples
-    @endslot
-
-    @slot('body')
-        <table id="entities" class="table table-hover" style="width:100%">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Experiments</th>
-                <th>Selected</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($project->entities as $entity)
-                <tr>
-                    <td>
-                        <a href="#">{{$entity->name}}</a>
-                    </td>
-                    <td>{{$entityExperiments($entity)}}</td>
-                    <td>
-                        <div class="form-group form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="{{$entity->uuid}}"
-                                   {{$entityInDataset($entity) ? 'checked' : ''}}
-                                   onclick="updateEntitySelection({{$entity}}, this)">
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    @endslot
-@endcomponent
+@include('app.projects.datasets.ce-tabs._short-overview')
+<h5>
+    Samples will be added or removed automatically as you select them.
+</h5>
+<br>
+<table id="entities" class="table table-hover" style="width:100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Experiments</th>
+        <th>Selected</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($project->entities as $entity)
+        <tr>
+            <td>
+                <a href="#">{{$entity->name}}</a>
+            </td>
+            <td>{{$entityExperiments($entity)}}</td>
+            <td>
+                <div class="form-group form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="{{$entity->uuid}}"
+                           {{$entityInDataset($entity) ? 'checked' : ''}}
+                           onclick="updateEntitySelection({{$entity}}, this)">
+                </div>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 
 @push('scripts')
     <script>

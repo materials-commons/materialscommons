@@ -42,7 +42,7 @@
         </span>
     </div>
 
-    <x-datasets.create-papers-list></x-datasets.create-papers-list>
+    <x-datasets.create-papers-list :existing="null"/>
 
     <div class="form-group">
         <label for="license">License</label>

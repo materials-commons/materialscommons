@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataStoreCreateDirectoryWebControlle
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
+use App\Http\Controllers\Web\Datasets\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetWorkflowsWebController;
@@ -59,7 +60,10 @@ Route::get('/projects/{project}/datasets/{dataset}/edit/activities', EditDataset
 Route::get('/projects/{project}/datasets/{dataset}/edit/workflows', EditDatasetWorkflowsWebController::class)
      ->name('projects.datasets.workflows.edit');
 
-Route::get('/projects/{project}/datasets/{dataset}/edit/{folder?}', EditDatasetWebController::class)
+Route::get('/projects/{project}/datasets/{dataset}/edit/files/{folder?}', EditDatasetFilesWebController::class)
+     ->name('projects.datasets.files.edit');
+
+Route::get('/projects/{project}/datasets/{dataset}/edit', EditDatasetWebController::class)
      ->name('projects.datasets.edit');
 
 Route::get('/projects/{project}/datasets/{dataset}/edit/workflows/create',
