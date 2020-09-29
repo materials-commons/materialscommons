@@ -20,6 +20,12 @@ trait FileType
         "application/vnd.ms-excel"                                          => true,
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => true,
     ];
+
+    protected $videoTypes = [
+        'video/webm' => true,
+        'video/mp4'  => true,
+    ];
+
     protected $imageTypes = [
         "image/gif"      => true,
         "image/jpeg"     => true,
@@ -82,6 +88,10 @@ trait FileType
 
         if ($this->inTable($mime, $this->textTypes)) {
             return "text";
+        }
+
+        if ($this->inTable($mime, $this->videoTypes)) {
+            return "video";
         }
 
         return "unknown";

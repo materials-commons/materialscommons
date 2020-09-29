@@ -46,6 +46,16 @@
         </div>
         @break
 
+        @case("video")
+        <div class="col-10">
+            <a href="{{$displayRoute}}" class="mt-2">
+                Display Full Screen
+            </a>
+            <video controls width="100%" src="{{$displayRoute}}" class="mt-2">
+            </video>
+        </div>
+        @break
+
         @default
         <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch
