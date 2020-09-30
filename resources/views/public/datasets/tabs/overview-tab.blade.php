@@ -3,6 +3,8 @@
 
     <x-datasets.show-authors :authors="$dataset->authors"/>
 
+    <x-datasets.show-tags :tags="$dataset->tags"/>
+
     @if(!blank($dataset->description))
         <x-show-description :description="$dataset->description"/>
     @elseif (!blank($dataset->summary))
@@ -13,9 +15,6 @@
 
     <x-datasets.show-papers-list :papers="$dataset->papers"/>
 
-    <x-datasets.show-tags :tags="$dataset->tags"/>
+    @include('partials.overview._overview')
 </form>
-<hr>
-<br>
 
-@include('partials.overview._overview')

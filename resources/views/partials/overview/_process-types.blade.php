@@ -1,17 +1,11 @@
-<div class="mt-2">
-    <h5>Process Types ({{sizeof($activitiesGroup)}}):</h5>
-    <ul id="process-types">
+<div class="form-group">
+    <label for="process-types">Process Types ({{sizeof($activitiesGroup)}})</label>
+    <ul class="list-inline">
         @foreach($activitiesGroup as $ag)
-            @if($loop->iteration < 12)
-                <li>{{$ag->name}} ({{$ag->count}})</li>
-            @else
-                <li class="hidden-process" hidden>{{$ag->name}} ({{$ag->count}})</li>
-            @endif
+            <li class="list-inline-item mt-1">
+                {{--                <span class="badge badge-light fs-11">{{$ag->name}} ({{$ag->count}})</span>--}}
+                <span class="grey-5 fs-9">{{$ag->name}} ({{$ag->count}})</span>
+            </li>
         @endforeach
-        @include('common.show-more-control', [
-            'items'    => $activitiesGroup,
-            'attrName' => 'hidden-process',
-            'msg'      => 'processes...'
-        ])
     </ul>
 </div>

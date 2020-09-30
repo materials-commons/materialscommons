@@ -21,6 +21,8 @@ class ShowPublishedDatasetOverviewWebController extends Controller
             ->withDataset($dataset)
             ->withDsAnnotation($this->jsonLDAnnotations($dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
+            ->withFileTypes($this->getFileTypesGroup($dataset->id))
+            ->withTotalFilesSize($this->getDatasetTotalFilesSize($dataset->id))
             ->withObjectCounts($this->getObjectTypes($datasetId));
         return view('public.datasets.show', $showPublishedDatasetOverviewViewModel);
     }
@@ -28,17 +30,17 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     private function getActivitiesGroup($datasetId)
     {
         return DB::table('activities')
-                 ->select('name', DB::raw('count(*) as count'))
-                 ->whereIn('id',
+            ->select('name', DB::raw('count(*) as count'))
+            ->whereIn('id',
                      DB::table('dataset2entity')
                        ->where('dataset_id', $datasetId)
                        ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                        ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
                        ->select('activities.id')
                  )
-                 ->groupBy('name')
-                 ->orderBy('name')
-                 ->get();
+            ->groupBy('name')
+            ->orderBy('name')
+            ->get();
     }
 
     private function getObjectTypes($datasetId)
@@ -47,5 +49,28 @@ class ShowPublishedDatasetOverviewWebController extends Controller
             "(select count(*) from activities where id in (select activity_id from dataset2activity where dataset_id = {$datasetId})) as activitiesCount";
         $results = DB::select(DB::raw($query));
         return $results[0];
+    }
+
+    private function getFileTypesGroup($datasetId)
+    {
+        return DB::table('dataset2file')
+                 ->where('dataset_id', $datasetId)
+                 ->join('files', 'files.id', '=', 'dataset2file.file_id')
+                 ->where('files.mime_type', '<>', 'directory')
+                 ->select('files.mime_type', DB::raw('count(*) as count'))
+                 ->groupBy('mime_type')
+                 ->orderBy('mime_type')
+                 ->get();
+    }
+
+    private function getDatasetTotalFilesSize($datasetId)
+    {
+        return DB::table('dataset2file')
+                 ->where('dataset_id', $datasetId)
+                 ->join('files', 'files.id', '=', 'dataset2file.file_id')
+                 ->where('files.mime_type', '<>', 'directory')
+                 ->distinct()
+                 ->select('files.size', 'file.id')
+                 ->sum('files.size');
     }
 }
