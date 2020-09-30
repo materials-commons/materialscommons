@@ -56,7 +56,7 @@ class ReplicateEntitiesForPublishedDatasetsCommand extends Command
 
         // For published datasets clean out existing entity and activity relationships and then sync
         Dataset::whereNotNull('published_at')->get()->each(function (Dataset $dataset) {
-            $this->info("Replicating entities and activites for published dataset {$dataset->name}/{$dataset->id}\n");
+            $this->info("Replicating entities and activities for published dataset {$dataset->name}/{$dataset->id}\n");
             $this->replicateAction->execute($dataset);
         });
     }
