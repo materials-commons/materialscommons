@@ -1,7 +1,7 @@
 @if(file_exists($dataset->zipfilePath()) || file_exists($dataset->publishedGlobusPath()))
     <ul class="list-inline mt-2" style="margin-bottom: 3px">
+        <li class="list-inline-item">Download:</li>
         @if(file_exists($dataset->zipfilePath()))
-            <li class="list-inline-item">Download:</li>
             <li class="list-inline-item">
                 <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">
                     Zipfile
