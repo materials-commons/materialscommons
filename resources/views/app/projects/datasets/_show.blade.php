@@ -14,5 +14,4 @@
     <x-datasets.show-papers-list :papers="$dataset->papers"/>
 
     <x-datasets.show-tags :tags="$dataset->tags"/>
-    @include('app.projects.datasets._edit-controls')
 </form>

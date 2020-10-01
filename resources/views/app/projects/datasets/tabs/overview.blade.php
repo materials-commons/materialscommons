@@ -1,4 +1,3 @@
 @include('app.projects.datasets._show')
-<br>
-<hr>
 @include('partials.overview._overview')
+@include('app.projects.datasets._edit-controls')
