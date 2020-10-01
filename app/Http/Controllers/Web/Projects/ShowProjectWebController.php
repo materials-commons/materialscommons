@@ -12,6 +12,8 @@ class ShowProjectWebController extends Controller
     public function __invoke($projectId)
     {
         $project = Project::with(['owner', 'team.members', 'team.admins'])
+                          ->withCount('experiments', 'entities', 'publishedDatasets', 'unpublishedDatasets',
+                              'onlyFiles')
                           ->where('id', $projectId)
                           ->first();
         $showProjectViewModel = (new ShowProjectViewModel($project))

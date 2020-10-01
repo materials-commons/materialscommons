@@ -98,7 +98,20 @@ class Project extends Model implements Searchable
 
     public function publishedDatasets()
     {
-        return $this->hasMany(Dataset::class, 'project_id')->whereNotNull('published_at');
+        return $this->hasMany(Dataset::class, 'project_id')
+                    ->whereNotNull('published_at');
+    }
+
+    public function unpublishedDatasets()
+    {
+        return $this->hasMany(Dataset::class, 'project_id')
+                    ->whereNull('published_at');
+    }
+
+    public function onlyFiles()
+    {
+        return $this->hasMany(File::class, 'project_id')
+                    ->where('mime_type', '<>', 'directory');
     }
 
     public function rootDir()
@@ -107,10 +120,19 @@ class Project extends Model implements Searchable
                     ->where('path', '/');
     }
 
+    // Attributes
+
     public function getTypeAttribute()
     {
         return "project";
     }
+
+    public function getTotalFilesSizeAttribute()
+    {
+        return $this->files()->select('size')->sum('size');
+    }
+
+    //
 
     public function getSearchResult(): SearchResult
     {
