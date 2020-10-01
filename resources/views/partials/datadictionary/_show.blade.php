@@ -1,82 +1,11 @@
-<h5>Processes Data Dictionary</h5>
+<h5>Processes Attributes</h5>
 <br>
-<table id="activities-dd" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Attribute</th>
-        <th>Units</th>
-        <th>Min</th>
-        <th>Max</th>
-        {{--                <th>Median</th>--}}
-        {{--                <th>Avg</th>--}}
-        {{--                <th>Mode</th>--}}
-        <th># Values</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($activityAttributes as $name => $attrs)
-        <tr>
-            <td>
-                <a href="{{$activityAttributeRoute($name)}}">{{$name}}</a>
-            </td>
-            <td>{{$units($attrs)}}</td>
-            <td>{{$min($attrs)}}</td>
-            <td>{{$max($attrs)}}</td>
-            {{--                    <td>{{$median($attrs)}}</td>--}}
-            {{--                    <td>{{$average($attrs)}}</td>--}}
-            {{--                    <td>{{$mode($attrs)}}</td>--}}
-            <td>{{$attrs->count()}}</td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+@include('partials.datadictionary._activity_attributes')
 
 <br>
 <hr>
 <br>
 
-<h5>Samples Data Dictionary</h5>
+<h5>Samples Attributes</h5>
 <br>
-<table id="entities-dd" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Attribute</th>
-        <th>Units</th>
-        <th>Min</th>
-        <th>Max</th>
-        {{--                <th>Median</th>--}}
-        {{--                <th>Avg</th>--}}
-        {{--                <th>Mode</th>--}}
-        <th># Values</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($entityAttributes as $name => $attrs)
-        <tr>
-            <td>
-                <a href="{{$entityAttributeRoute($name)}}">{{$name}}</a>
-            </td>
-            <td>{{$units($attrs)}}</td>
-            <td>{{$min($attrs)}}</td>
-            <td>{{$max($attrs)}}</td>
-            {{--                    <td>{{$median($attrs)}}</td>--}}
-            {{--                    <td>{{$average($attrs)}}</td>--}}
-            {{--                    <td>{{$mode($attrs)}}</td>--}}
-            <td>{{$attrs->count()}}</td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
-
-@push('scripts')
-    <script>
-        $(document).ready(() => {
-            $('#activities-dd').DataTable({
-                stateSave: true
-            });
-            $('#entities-dd').DataTable({
-                stateSave: true
-            });
-        });
-    </script>
-@endpush
+@include('partials.datadictionary._entity_attributes')
