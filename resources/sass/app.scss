@@ -231,7 +231,7 @@ a.reference-link {
 
 a.reference-link:hover {
   color: #1a202c;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 a.action-link.danger:hover {
@@ -269,6 +269,10 @@ label.required:after {
   margin-left: 1px;
   content: "*";
   color: $red;
+}
+
+.border-blue {
+  border-color: #bee3f8;
 }
 
 p {
