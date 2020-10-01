@@ -1,3 +1,6 @@
+<x-show-standard-details :item="$experiment"/>
+<hr>
+<br>
 <div class="ml-2">
     <div class="float-right mr-2">
         <a href="{{route('projects.experiments.workflows.create', [$project, $experiment])}}" class="action-link">
