@@ -1,15 +1,15 @@
-<ul>
+<ul class="list-unstyled mb-2">
     @foreach($activity->files as $f)
         @if($loop->iteration < 12)
             <li>
                 <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
-                @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
+                @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="text-center">
-                                    <a href="{{route('projects.files.display', [$project, $file])}}">
-                                        <img src="{{route('projects.files.display', [$project, $file])}}"
+                                <div class="text-center mb-2 mt-2">
+                                    <a href="{{route('projects.files.display', [$project, $f])}}">
+                                        <img src="{{route('projects.files.display', [$project, $f])}}"
                                              class="img-fluid">
                                     </a>
                                 </div>
@@ -21,13 +21,13 @@
         @else
             <li class="{{$activity->uuid}}" hidden>
                 <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
-                @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
+                @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="text-center">
-                                    <a href="{{route('projects.files.display', [$project, $file])}}">
-                                        <img src="{{route('projects.files.display', [$project, $file])}}"
+                                <div class="text-center mb-2 mt-2">
+                                    <a href="{{route('projects.files.display', [$project, $f])}}">
+                                        <img src="{{route('projects.files.display', [$project, $f])}}"
                                              class="img-fluid">
                                     </a>
                                 </div>
@@ -38,7 +38,7 @@
             </li>
         @endif
         @include('common.show-more-control', [
-            'items' => $files,
+            'items' => $activity->files,
             'attrName' => $activity->uuid,
             'msg' => 'files...'
         ])
