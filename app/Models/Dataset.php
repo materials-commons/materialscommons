@@ -171,15 +171,23 @@ class Dataset extends Model implements Searchable
 
     public function scopeWithCounts($query)
     {
-        return $query->withCount('files', 'entities', 'activities', 'experiments', 'comments', 'workflows');
+        return $query->withCount('files', 'entities', 'activities', 'experiments', 'comments', 'workflows',
+            'communities');
     }
 
-    //
+    // Attributes
 
     public function getTypeAttribute()
     {
         return "dataset";
     }
+
+    public function getTotalFilesSizeAttribute()
+    {
+        return $this->files()->select('size')->sum('size');
+    }
+
+    //
 
     public function canEdit()
     {

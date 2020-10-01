@@ -15,32 +15,34 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     public function __invoke($datasetId)
     {
         $this->incrementViews($datasetId);
-        $dataset = Dataset::with(['workflows', 'tags'])->withCount(['views', 'downloads'])->findOrFail($datasetId);
+        $dataset = Dataset::with(['workflows', 'tags'])
+                          ->withCount(['views', 'downloads'])
+                          ->withCounts()
+                          ->findOrFail($datasetId);
 
         $showPublishedDatasetOverviewViewModel = (new ShowPublishedDatasetOverviewViewModel())
             ->withDataset($dataset)
             ->withDsAnnotation($this->jsonLDAnnotations($dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
             ->withFileTypes($this->getFileTypesGroup($dataset->id))
-            ->withTotalFilesSize($this->getDatasetTotalFilesSize($dataset->id))
-            ->withObjectCounts($this->getObjectTypes($datasetId));
+            ->withTotalFilesSize($this->getDatasetTotalFilesSize($dataset->id));
         return view('public.datasets.show', $showPublishedDatasetOverviewViewModel);
     }
 
     private function getActivitiesGroup($datasetId)
     {
         return DB::table('activities')
-            ->select('name', DB::raw('count(*) as count'))
-            ->whereIn('id',
+                 ->select('name', DB::raw('count(*) as count'))
+                 ->whereIn('id',
                      DB::table('dataset2entity')
                        ->where('dataset_id', $datasetId)
                        ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                        ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
                        ->select('activities.id')
                  )
-            ->groupBy('name')
-            ->orderBy('name')
-            ->get();
+                 ->groupBy('name')
+                 ->orderBy('name')
+                 ->get();
     }
 
     private function getObjectTypes($datasetId)

@@ -11,6 +11,7 @@
             <span class="ml-3 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
             <x-datasets.show-doi :doi="$dataset->doi"/>
             <x-datasets.show-license :dataset="$dataset"/>
+            {{$slot ?? ''}}
         </div>
     </div>
 </div>

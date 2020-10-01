@@ -11,9 +11,10 @@ class ShowPublishedDatasetEntitiesWebController extends Controller
 {
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, $datasetId)
     {
-        $dataset = Dataset::with(['entities.activities', 'tags'])->withCount([
-            'views', 'downloads',
-        ])->findOrFail($datasetId);
+        $dataset = Dataset::with(['entities.activities', 'tags'])
+                          ->withCount(['views', 'downloads'])
+                          ->withCounts()
+                          ->findOrFail($datasetId);
         $activities = DB::table('dataset2entity')
                         ->where('dataset_id', $datasetId)
                         ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
