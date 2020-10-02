@@ -5,22 +5,26 @@ namespace App\Http\Controllers\Web\Experiments;
 use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
+use App\Traits\DataDictionaryQueries;
 use App\ViewModels\Experiments\ShowExperimentViewModel;
 use Illuminate\Support\Facades\DB;
 
 class ShowExperimentOverviewWebController extends Controller
 {
     use ExcelFilesCount;
+    use DataDictionaryQueries;
 
-    public function __invoke($projectId, Experiment $experiment)
+    public function __invoke($projectId, $experimentId)
     {
+        $experiment = Experiment::withCount('entities', 'activities', 'workflows')->findOrFail($experimentId);
         $showExperimentViewModel = (new ShowExperimentViewModel())
             ->withProject($project = Project::with('experiments')->findOrFail($projectId))
             ->withExperiment($experiment)
             ->withExcelFilesCount($this->getExcelFilesCount($project))
             ->withActivitiesGroup($this->getActivitiesGroup($experiment->id))
             ->withFileTypes($this->getFileTypesGroup($experiment->id))
-            ->withObjectCounts($this->getObjectTypes($experiment->id))
+            ->withActivityAttributesCount($this->getUniqueActivityAttributesForExperiment($experiment->id)->count())
+            ->withEntityAttributesCount($this->getUniqueEntityAttributesForExperiment($experiment->id)->count())
             ->withTotalFilesSize($this->getExperimentFilesTotalSize($experiment->id));
         return view('app.projects.experiments.show', $showExperimentViewModel);
     }

@@ -8,28 +8,28 @@
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.entities')}}"
            href="{{route('projects.experiments.entities', [$project, $experiment])}}">
-            Samples
+            Samples ({{$experiment->entities_count}})
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.data-dictionary.entities')}}"
            href="{{route('projects.experiments.data-dictionary.entities', [$project, $experiment])}}">
-            Sample Attributes
+            Sample Attributes ({{$entityAttributesCount}})
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.data-dictionary.activities')}}"
            href="{{route('projects.experiments.data-dictionary.activities', [$project, $experiment])}}">
-            Process Attributes
+            Process Attributes ({{$activityAttributesCount}})
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.experiments.workflow')}}"
            href="{{route('projects.experiments.workflow', [$project, $experiment])}}">
-            Workflows
+            Workflows ({{$experiment->workflows_count}})
         </a>
     </li>
 </ul>

@@ -61,4 +61,14 @@ class ShowExperimentDataDictionaryViewModel extends AbstractShowDataDictionaryVi
     {
         return $this->excelFilesCount;
     }
+
+    public function entityAttributesCount()
+    {
+        return $this->entityAttributes->count();
+    }
+
+    public function activityAttributesCount()
+    {
+        return $this->activityAttributes->count();
+    }
 }

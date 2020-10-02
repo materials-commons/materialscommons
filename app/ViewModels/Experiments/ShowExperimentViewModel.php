@@ -19,6 +19,16 @@ class ShowExperimentViewModel extends ViewModel
 
     private $excelFilesCount;
 
+    private $activityAttributesCount;
+
+    private $entityAttributesCount;
+
+    public function __construct()
+    {
+        $this->activityAttributesCount = 0;
+        $this->entityAttributesCount = 0;
+    }
+
     public function withProject(Project $project)
     {
         $this->project = $project;
@@ -50,5 +60,27 @@ class ShowExperimentViewModel extends ViewModel
     public function excelFilesCount()
     {
         return $this->excelFilesCount;
+    }
+
+    public function withActivityAttributesCount($count)
+    {
+        $this->activityAttributesCount = $count;
+        return $this;
+    }
+
+    public function activityAttributesCount()
+    {
+        return $this->activityAttributesCount;
+    }
+
+    public function withEntityAttributesCount($count)
+    {
+        $this->entityAttributesCount = $count;
+        return $this;
+    }
+
+    public function entityAttributesCount()
+    {
+        return $this->entityAttributesCount;
     }
 }
