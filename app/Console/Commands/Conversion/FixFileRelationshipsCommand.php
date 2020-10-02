@@ -44,6 +44,7 @@ class FixFileRelationshipsCommand extends Command
         $this->fixActivities();
         $this->fixEntities();
         $this->fixExperiments();
+        echo "Done!\n";
         return 0;
     }
 
