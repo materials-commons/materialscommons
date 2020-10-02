@@ -7,14 +7,14 @@
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($entitiesRouteName)}}" href="{{$entitiesRoute}}">
-            Samples
+            Samples ({{$file->entities_count}})
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($activitiesRouteName)}}"
            href="{{$activitiesRoute}}">
-            Processes
+            Processes ({{$file->activities_count}})
         </a>
     </li>
 
@@ -22,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link {{setActiveNavByName($experimentsRouteName)}}"
                href="{{$experimentsRoute}}">
-                Experiments
+                Experiments ({{$file->experiments_count}})
             </a>
         </li>
     @endisset

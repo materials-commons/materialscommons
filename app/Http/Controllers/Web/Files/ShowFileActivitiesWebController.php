@@ -16,11 +16,14 @@ class ShowFileActivitiesWebController extends Controller
         $experiment = null;
 
         $fileId = $request->route('file');
-        $file = File::with('activities')->where('id', $fileId)->first();
+        $file = File::withCount('entities', 'activities', 'experiments')
+                    ->with('activities')
+                    ->findOrFail($fileId);
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);
         }
+
         return view('app.files.show', compact('project', 'file', 'experiment'));
     }
 }

@@ -16,7 +16,9 @@ class ShowFileExperimentsWebController extends Controller
         $experiment = null;
 
         $fileId = $request->route('file');
-        $file = File::with('experiments')->where('id', $fileId)->first();
+        $file = $file = File::withCount('entities', 'activities', 'experiments')
+                            ->with('experiments')
+                            ->findOrFail($fileId);
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);

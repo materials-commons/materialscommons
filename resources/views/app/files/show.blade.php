@@ -43,13 +43,6 @@
         @endslot
 
         @slot('body')
-            <x-show-standard-details :item="$file">
-                <span class="ml-3 fs-9 grey-5">Mediatype: {{$file->mime_type}}</span>
-                <span class="ml-3 fs-9 grey-5">Size: {{$file->toHumanBytes()}}</span>
-            </x-show-standard-details>
-            <hr>
-            <br>
-
             @isset($project)
                 @include('app.files.tabs.project-tabs')
             @endisset

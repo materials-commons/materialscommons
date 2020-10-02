@@ -9,8 +9,9 @@ use App\ViewModels\Files\ShowFileViewModel;
 
 class ShowFileWebController extends Controller
 {
-    public function __invoke(Project $project, File $file)
+    public function __invoke(Project $project, $fileId)
     {
+        $file = File::withCount('entities', 'activities', 'experiments')->findOrFail($fileId);
         $viewModel = new ShowFileViewModel($file, $project);
         return view('app.files.show', $viewModel);
     }
