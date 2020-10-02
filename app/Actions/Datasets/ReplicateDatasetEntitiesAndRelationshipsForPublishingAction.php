@@ -68,15 +68,6 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
               })->all());
               \Batch::insert($model, $columns, $values);
           });
-//        echo "       Done adding entity files\n";
-//        $entity->files->each(function (File $file) use ($e, $dataset) {
-//            $f = File::where('checksum', $file->checksum)->whereIn('id', function ($query) use ($dataset) {
-//                $query->select('file_id')->from('dataset2file')->where('dataset_id', $dataset->id);
-//            })->first();
-//            if (!is_null($f)) {
-//                $e->files()->attach($f);
-//            }
-//        });
     }
 
     private function replicateEntityStatesAndRelationshipsForEntity(Entity $entity, Entity $e)
@@ -148,7 +139,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         ];
         $model = new Activity2File();
         $activity->load('files');
-        $numberOfFiles = $activity->files->count();
+//        $numberOfFiles = $activity->files->count();
 //        echo "         Adding activity {$activity->id} files ({$numberOfFiles})\n";
         $checksums = $activity->files->pluck('checksum')->toArray();
         DB::table('files')
@@ -168,16 +159,6 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 //        echo "          Done adding files to activity\n";
     }
 
-    // $checksums = Activity::with('files')
-//     ->find(494)
-//     ->files->pluck('checksum')
-//     ->toArray();
-
-// DB::table('files')
-//   ->select('id', 'name', 'project_id', 'checksum')
-//   ->whereNull('project_id')
-//   ->whereIn('checksum', $checksums)
-//   ->get();
 
     private function uuid()
     {
