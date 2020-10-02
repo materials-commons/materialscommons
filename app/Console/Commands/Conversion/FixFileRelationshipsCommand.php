@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Conversion;
 
 use App\Models\Activity;
+use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\File;
@@ -41,9 +42,11 @@ class FixFileRelationshipsCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $this->fixActivities();
         $this->fixEntities();
         $this->fixExperiments();
+        $this->fixDatasets();
         echo "Done!\n";
         return 0;
     }
@@ -65,6 +68,13 @@ class FixFileRelationshipsCommand extends Command
     private function fixExperiments()
     {
         foreach (Experiment::cursor() as $experiment) {
+            $this->fixFileRelationshipsForItem($experiment);
+        }
+    }
+
+    private function fixDatasets()
+    {
+        foreach (Dataset::cursor() as $experiment) {
             $this->fixFileRelationshipsForItem($experiment);
         }
     }
