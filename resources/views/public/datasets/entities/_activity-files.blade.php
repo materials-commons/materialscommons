@@ -1,8 +1,8 @@
-<ul>
+<ul class="list-unstyled mb-2">
     @foreach($activity->files as $f)
         @if($loop->iteration < 12)
-            <li>
-                <a href="{{route('public.datasets.files.show', [$dataset, $f])}}">{{$f->name}}</a>
+            <li class="mt-2">
+                <a href="{{route('public.datasets.files.show', [$dataset, $f])}}" class="fs-9">{{$f->name}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
@@ -19,8 +19,8 @@
                 @endif
             </li>
         @else
-            <li class="{{$activity->uuid}}" hidden>
-                <a href="{{route('public.datasets.files.show', [$dataset, $f])}}">{{$f->name}}</a>
+            <li class="{{$activity->uuid}} mt-2" hidden>
+                <a href="{{route('public.datasets.files.show', [$dataset, $f])}}" class="fs-9">{{$f->name}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">

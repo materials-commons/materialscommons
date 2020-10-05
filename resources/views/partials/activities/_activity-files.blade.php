@@ -1,7 +1,7 @@
 <ul class="list-unstyled mb-2">
     @foreach($activity->files as $f)
         @if($loop->iteration < 12)
-            <li>
+            <li class="mt-2">
                 <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
                 @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
@@ -19,7 +19,7 @@
                 @endif
             </li>
         @else
-            <li class="{{$activity->uuid}}" hidden>
+            <li class="{{$activity->uuid}} mt-2" hidden>
                 <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
                 @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
