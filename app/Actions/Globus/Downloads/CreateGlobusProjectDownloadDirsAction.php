@@ -97,41 +97,6 @@ class CreateGlobusProjectDownloadDirsAction
         $this->knownDirectories[$dirPath] = true;
     }
 
-//    private function determineMinimumSetOfDirsToCreate($allDirs)
-//    {
-//        $dirsToKeep = collect();
-//        $previousDir = $allDirs[0];
-//        foreach ($allDirs as $dir) {
-//            if (Str::startsWith($dir->path, $previousDir->path)) {
-//                $previousDir = $dir;
-//            } else {
-//                $dirsToKeep->put($previousDir->path, true);
-//                $previousDir = $dir;
-//            }
-//        }
-//
-//        $lastDir = $allDirs->last();
-//        if (!$dirsToKeep->contains($lastDir->path)) {
-//            $dirsToKeep->put($lastDir->path, true);
-//        }
-//
-//        return $dirsToKeep->keys()->all();
-//    }
-//
-//    private function createDirs($dirsToKeep, $basePath)
-//    {
-//        foreach ($dirsToKeep as $dir) {
-//            try {
-//                $path = "{$basePath}{$dir}";
-//                if (!file_exists($path)) {
-//                    mkdir($path, 0777, true);
-//                }
-//            } catch (\Exception $e) {
-//                // ignore
-//            }
-//        }
-//    }
-
     private function setAclOnPath($globusPath, $globusUserId)
     {
         $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", $this->endpointId);
