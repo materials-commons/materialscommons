@@ -42,9 +42,11 @@ class CreateDatasetInGlobusAction
             $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
             $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
             try {
-                if (!link($uuidPath, $filePath)) {
-                    Log::error("Unable to link {$uuidPath} to {$filePath}");
-                    echo "Unable to link {$uuidPath} to {$filePath}\n";
+                if (!file_exists($filePath)) {
+                    if (!link($uuidPath, $filePath)) {
+                        Log::error("Unable to link {$uuidPath} to {$filePath}");
+                        echo "Unable to link {$uuidPath} to {$filePath}\n";
+                    }
                 }
             } catch (\Exception $e) {
                 Log::error("Unable to link {$uuidPath} to {$filePath}");
