@@ -19,6 +19,7 @@ class EditDatasetSamplesWebController extends Controller
         $experiments = $project->experiments()->get();
         $viewModel = new EditOrCreateDataDatasetViewModel($project, $dataset, $user);
         $viewModel->withCommunities($communities)
+                  ->withDatasetEntities($dataset->entitiesFromTemplate())
                   ->withExperiments($experiments);
         return view('app.projects.datasets.edit', $viewModel);
     }

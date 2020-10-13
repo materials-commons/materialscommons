@@ -22,7 +22,7 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
     private $files;
     private $directory;
     private $dirPaths;
-    private $isPublic;
+    private $datasetEntities;
 
     public function __construct(Project $project, Dataset $dataset, $user)
     {
@@ -35,6 +35,7 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
         $this->files = collect();
         $this->directory = null;
         $this->dirPaths = [];
+        $this->datasetEntities = collect();
     }
 
     public function project()
@@ -45,6 +46,12 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
     public function dataset()
     {
         return $this->dataset;
+    }
+
+    public function withDatasetEntities($datasetEntities)
+    {
+        $this->datasetEntities = $datasetEntities;
+        return $this;
     }
 
     public function user()
@@ -158,7 +165,7 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
 
     public function entityInDataset(Entity $entity)
     {
-        return $this->dataset->entities->contains($entity->id);
+        return $this->datasetEntities->contains($entity->id);
     }
 
     public function entityExperiments(Entity $entity)
