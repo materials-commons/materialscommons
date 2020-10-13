@@ -5,11 +5,13 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName($filesRouteName)}}" href="{{$filesRoute}}">
-            Files
-        </a>
-    </li>
+    @isset($filesRouteName)
+        <li class="nav-item">
+            <a class="nav-link {{setActiveNavByName($filesRouteName)}}" href="{{$filesRoute}}">
+                Files
+            </a>
+        </li>
+    @endisset
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName($samplesRouteName)}}" href="{{$samplesRoute}}">
