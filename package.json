@@ -33,6 +33,7 @@
     "@uppy/xhr-upload": "^1.6.0",
     "@yaireo/tagify": "^3.11.3",
     "alpinejs": "^2.5.0",
+    "bootstrap-steps": "^1.0.3",
     "canvas-datagrid": "^0.22.13",
     "flowchart.js": "^1.13.0",
     "laravel-mix-purgecss": "^4.2.0",

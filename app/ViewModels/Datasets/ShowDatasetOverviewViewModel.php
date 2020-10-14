@@ -17,6 +17,11 @@ class ShowDatasetOverviewViewModel extends ViewModel
     /** @var \App\Models\Dataset */
     private $dataset;
 
+    public function __construct()
+    {
+        $this->entities = collect();
+    }
+
     public function withProject(Project $project)
     {
         $this->project = $project;

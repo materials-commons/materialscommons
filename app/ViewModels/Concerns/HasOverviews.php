@@ -18,6 +18,9 @@ trait HasOverviews
     /** @var array */
     private $fileDescriptionTypes = [];
 
+    /** @var \Illuminate\Database\Eloquent\Collection */
+    private $entities;
+
     private $objectCounts = [];
     private $totalFilesSize = 0;
 
@@ -32,6 +35,17 @@ trait HasOverviews
     {
         $this->activitiesGroup = $activitiesGroup;
         return $this;
+    }
+
+    public function withEntities($entities)
+    {
+        $this->entities = $entities;
+        return $this;
+    }
+
+    public function entities()
+    {
+        return $this->entities;
     }
 
     public function withObjectCounts($objectCounts)
