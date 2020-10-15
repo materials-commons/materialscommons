@@ -38,7 +38,6 @@ class ShowProjectWebController extends Controller
     {
         return DB::table('files')
                  ->where('project_id', $projectId)
-                 ->where('mime_type', '<>', 'directory')
                  ->sum('size');
     }
 

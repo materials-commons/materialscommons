@@ -39,6 +39,6 @@ class LoginController extends Controller
             return route('public.publish.wizard.choose_create_or_select_project');
         }
 
-        return route('projects.index');
+        return route('dashboard');
     }
 }

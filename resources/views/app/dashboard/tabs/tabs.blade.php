@@ -12,10 +12,10 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('dashboard.data-dictionary.show')}}"
-           href="{{route('dashboard.data-dictionary.show')}}">
-            Data Dictionary
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('dashboard.data-dictionary.show')}}"--}}
+    {{--           href="{{route('dashboard.data-dictionary.show')}}">--}}
+    {{--            Data Dictionary--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 </ul>

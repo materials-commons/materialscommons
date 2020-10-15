@@ -1,19 +1,19 @@
 <nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10 sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
-            {{--                        <li class="nav-item">--}}
-            {{--                            <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">--}}
-            {{--                                <i class="fa-fw fas fa-tachometer-alt mr-2"></i>--}}
-            {{--                                Dashboard--}}
-            {{--                            </a>--}}
-            {{--                        </li>--}}
-
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">
-                    <i class="fa-fw fas fa-layer-group mr-2 "></i>
-                    Projects
+                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
+                    <i class="fa-fw fas fa-tachometer-alt mr-2"></i>
+                    Dashboard
                 </a>
             </li>
+
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">--}}
+            {{--                    <i class="fa-fw fas fa-layer-group mr-2 "></i>--}}
+            {{--                    Projects--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
             <li class="nav-item">
                 <a class="nav-link fs-11" href="{{route('public.index')}}">

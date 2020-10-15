@@ -47,13 +47,13 @@
 
         <div class="flex flex-1 justify-end items-center text-right md:pl-10">
             @auth
-                <a href="{{route('projects.index')}}"
+                <a href="{{route('dashboard')}}"
                    class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
                     {{auth()->user()->email}}
                 </a>
-                <a href="{{route('projects.index')}}"
+                <a href="{{route('dashboard')}}"
                    class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
-                    Goto Projects
+                    Goto Dashboard
                 </a>
             @else
                 <a href="{{route('login')}}"
