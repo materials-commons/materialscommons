@@ -27,19 +27,7 @@ class FileObserver
                     return;
                 }
 
-                if ($file->mime_type === 'directory') {
-                    $project->directory_count++;
-                    $project->save();
-                } else {
-                    $project->file_count++;
-                    $project->size = $project->size + $file->size;
-                    $fileTypes = $this->incrementFileType($project, $file);
-                    $project->update([
-                        'file_count' => $project->file_count,
-                        'size'       => $project->size,
-                        'file_types' => $fileTypes,
-                    ]);
-                }
+                $this->addToCounts($project, $file);
             }
         });
     }
@@ -55,6 +43,11 @@ class FileObserver
         DB::transaction(function () use ($file) {
             if ($file->mime_type === 'directory') {
                 // Nothing to do for directories
+                return;
+            }
+
+            if (is_null($file->project_id)) {
+                // No project so ignore
                 return;
             }
 
@@ -77,27 +70,12 @@ class FileObserver
             // Now determine how to apply update. If $current is false, then we decrement size,
             // if it is true then we increment the size.
             if ($file->current) {
-                // add file size to project
-                $project->size = $project->size + $file->size;
-                $project->file_count++;
-                $fileTypes = $this->incrementFileType($project, $file);
-                $project->update([
-                    'file_count' => $project->file_count,
-                    'size'       => $project->size,
-                    'file_types' => $fileTypes,
-                ]);
+                // file was changed to current so increment
+                $this->addToCounts($project, $file);
             } else {
                 // File was changed to not current, so decrement the size
-                $project->size = $project->size - $file->size;
-                $project->file_count--;
-                $fileTypes = $this->decrementFileType($project, $file);
-                $project->update([
-                    'file_count' => $project->file_count,
-                    'size'       => $project->size,
-                    'file_types' => $fileTypes,
-                ]);
+                $this->subtractFromCounts($project, $file);
             }
-
         });
     }
 
@@ -117,19 +95,7 @@ class FileObserver
                     return;
                 }
 
-                if ($file->mime_type === 'directory') {
-                    $project->directory_count--;
-                    $project->save();
-                } else {
-                    $project->file_count--;
-                    $project->size = $project->size - $file->size;
-                    $fileTypes = $this->decrementFileType($project, $file);
-                    $project->update([
-                        'file_count' => $project->file_count,
-                        'size'       => $project->size,
-                        'file_types' => $fileTypes,
-                    ]);
-                }
+                $this->subtractFromCounts($project, $file);
             }
         });
     }
@@ -171,6 +137,23 @@ class FileObserver
         return true;
     }
 
+    private function addToCounts(Project $project, File $file)
+    {
+        if ($file->mime_type === 'directory') {
+            $project->directory_count++;
+            $project->save();
+        } else {
+            $project->size = $project->size + $file->size;
+            $project->file_count++;
+            $fileTypes = $this->incrementFileType($project, $file);
+            $project->update([
+                'file_count' => $project->file_count,
+                'size'       => $project->size,
+                'file_types' => $fileTypes,
+            ]);
+        }
+    }
+
     private function incrementFileType(Project $project, File $file)
     {
         $fileType = $this->fileTypeFromMime($file->mime_type);
@@ -183,6 +166,23 @@ class FileObserver
             $fileTypes[$fileType] = $currentCount;
         }
         return $fileTypes;
+    }
+
+    private function subtractFromCounts(Project $project, File $file)
+    {
+        if ($file->mime_type === 'directory') {
+            $project->directory_count--;
+            $project->save();
+        } else {
+            $project->file_count--;
+            $project->size = $project->size - $file->size;
+            $fileTypes = $this->decrementFileType($project, $file);
+            $project->update([
+                'file_count' => $project->file_count,
+                'size'       => $project->size,
+                'file_types' => $fileTypes,
+            ]);
+        }
     }
 
     private function decrementFileType(Project $project, File $file)
