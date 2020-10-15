@@ -35,7 +35,7 @@
                 <a class="ml-3 fs-9" href="{{route('projects.users.index', [$project])}}">
                     {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
                 </a>
-                <span class="ml-3 fs-9 grey-5">Size: {{formatBytes($project->total_files_size)}}</span>
+                <span class="ml-3 fs-9 grey-5">Size: {{formatBytes($project->size)}}</span>
             </x-show-standard-details>
             <form>
                 <div class="form-group">

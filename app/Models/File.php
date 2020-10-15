@@ -20,6 +20,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer $project_id
  * @property integer $directory_id;
  * @property integer owner_id
+ * @property integer size
  * @property boolean current
  * @property string checksum
  *

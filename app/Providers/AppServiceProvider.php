@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Sanitizers\DirectoryPathSanitizer;
+use App\Models\File;
 use App\Models\Project;
+use App\Observers\FileObserver;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use YlsIdeas\FeatureFlags\Facades\Features;
@@ -26,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
             return false;
         });
+
+        File::observe(FileObserver::class);
     }
 
     /**
