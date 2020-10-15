@@ -42,7 +42,10 @@
                     <label for="counts">Counts</label>
                     <ul class="list-inline">
                         <li class="list-inline-item mt-1">
-                            <span class="fs-9 grey-5">Files ({{$project->only_files_count}})</span>
+                            <span class="fs-9 grey-5">Files ({{$project->file_count}})</span>
+                        </li>
+                        <li class="list-inline-item mt-1">
+                            <span class="fs-9 grey-5">Directories ({{$project->directory_count}})</span>
                         </li>
                         <li class="list-inline-item mt-1">
                             <span class="fs-9 grey-5">Samples ({{$project->entities_count}})</span>

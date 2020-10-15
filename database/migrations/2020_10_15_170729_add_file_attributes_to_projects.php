@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSizeColumnToProject extends Migration
+class AddFileAttributesToProjects extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,9 @@ class AddSizeColumnToProject extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->unsignedBigInteger('size')->nullable();
+            $table->unsignedInteger('file_count')->nullable();
+            $table->unsignedInteger('directory_count')->nullable();
+            $table->json('file_types')->nullable();
         });
     }
 

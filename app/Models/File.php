@@ -25,6 +25,8 @@ use Spatie\Searchable\SearchResult;
  * @property string checksum
  *
  * @mixin Builder
+ *
+ * Also see App\Observers\FileObserver
  */
 class File extends Model implements Searchable
 {

@@ -17,6 +17,9 @@ use Spatie\Searchable\SearchResult;
  * @property mixed experiments
  * @property integer owner_id
  * @property integer size
+ * @property integer file_count
+ * @property integer directory_count
+ * @property array file_types
  *
  * @mixin Builder
  */
@@ -34,6 +37,10 @@ class Project extends Model implements Searchable
         'owner_id'        => 'integer',
         'entities_count'  => 'integer',
         'is_public'       => 'boolean',
+        'size'            => 'integer',
+        'file_count'      => 'integer',
+        'directory_count' => 'integer',
+        'file_types'      => 'array',
     ];
 
     public function users()
