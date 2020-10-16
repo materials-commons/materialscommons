@@ -17,9 +17,20 @@ class ShowDatasetOverviewViewModel extends ViewModel
     /** @var \App\Models\Dataset */
     private $dataset;
 
+    private $workflows;
+
+    private $activities;
+
+    private $usedActivities;
+
+    private $files;
+
+    private $directory;
+
     public function __construct()
     {
         $this->entities = collect();
+        $this->workflows = collect();
     }
 
     public function withProject(Project $project)
@@ -42,5 +53,60 @@ class ShowDatasetOverviewViewModel extends ViewModel
     public function dataset()
     {
         return $this->dataset;
+    }
+
+    public function withWorkflows($workflows)
+    {
+        $this->workflows = $workflows;
+        return $this;
+    }
+
+    public function workflows()
+    {
+        return $this->workflows;
+    }
+
+    public function withActivities($activities)
+    {
+        $this->activities = $activities;
+        return $this;
+    }
+
+    public function activities()
+    {
+        return $this->activities;
+    }
+
+    public function withUsedActivities($usedActivities)
+    {
+        $this->usedActivities = $usedActivities;
+        return $this;
+    }
+
+    public function usedActivities()
+    {
+        return $this->usedActivities;
+    }
+
+    public function withFiles($files)
+    {
+        $this->files = $files;
+        return $this;
+    }
+
+    public function files()
+    {
+        return $this->files;
+    }
+
+    public function withDirectory($directory)
+    {
+        $this->directory = $directory;
+        return $this;
+    }
+
+    public function directory()
+    {
+        return $this->directory;
     }
 }

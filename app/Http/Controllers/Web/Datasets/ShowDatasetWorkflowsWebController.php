@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Web\Datasets;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\Datasets\Traits\HasExtendedInfo;
 use App\Models\Dataset;
 use App\Models\Project;
+use App\ViewModels\Datasets\ShowDatasetOverviewViewModel;
 
 class ShowDatasetWorkflowsWebController extends Controller
 {
+    use HasExtendedInfo;
+
     public function __invoke(Project $project, $datasetId)
     {
         $dataset = Dataset::with(['tags', 'workflows'])->findOrFail($datasetId);
-        $workflows = $dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
-        return view('app.projects.datasets.show', compact('project', 'dataset', 'workflows'));
+        $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
+            ->withProject($project)
+            ->withDataset($dataset)
+            ->withWorkflows($dataset->workflows->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE))
+            ->withEntities($this->getEntitiesForDataset($dataset));
+        return view('app.projects.datasets.show', $showDatasetOverviewViewModel);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Datasets;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\Datasets\Traits\HasExtendedInfo;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\ViewModels\Datasets\ShowDatasetOverviewViewModel;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class ShowDatasetOverviewWebController extends Controller
 {
+    use HasExtendedInfo;
+
     public function __invoke(Project $project, $datasetId)
     {
         $dataset = Dataset::with('experiments', 'tags', 'workflows')->findOrFail($datasetId);
@@ -45,18 +48,5 @@ class ShowDatasetOverviewWebController extends Controller
             "(select count(*) from activities where id in (select activity_id from dataset2activity where dataset_id = {$datasetId})) as activitiesCount";
         $results = DB::select(DB::raw($query));
         return $results[0];
-    }
-
-    private function getEntitiesForDataset($dataset)
-    {
-        // unpublished dataset so get entities from template
-        if (is_null($dataset->published_at)) {
-            return $dataset->entitiesFromTemplate();
-        }
-
-        // published dataset so get the entities that were associated with
-        // the dataset from iterating through the template
-        $dataset->load('entities');
-        return $dataset->entities;
     }
 }
