@@ -27,6 +27,8 @@ class ShowDatasetOverviewViewModel extends ViewModel
 
     private $directory;
 
+    private $editRoute = '';
+
     public function __construct()
     {
         $this->entities = collect();
@@ -108,5 +110,16 @@ class ShowDatasetOverviewViewModel extends ViewModel
     public function directory()
     {
         return $this->directory;
+    }
+
+    public function withEditRoute($route)
+    {
+        $this->editRoute = $route;
+        return $this;
+    }
+
+    public function editRoute()
+    {
+        return $this->editRoute;
     }
 }

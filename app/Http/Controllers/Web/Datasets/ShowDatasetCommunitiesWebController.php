@@ -19,6 +19,7 @@ class ShowDatasetCommunitiesWebController extends Controller
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
             ->withDataset($dataset)
+            ->withEditRoute(route('projects.datasets.edit', [$project, $dataset]))
             ->withEntities($this->getEntitiesForDataset($dataset));
         return view('app.projects.datasets.show', $showDatasetOverviewViewModel);
     }

@@ -50,12 +50,12 @@
     {{--        </a>--}}
     {{--    </li>--}}
 
-    <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.experiments')}}"
-           href="{{route('projects.datasets.show.experiments', [$project, $dataset])}}">
-            Experiments
-        </a>
-    </li>
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link {{setActiveNavByName('projects.datasets.show.experiments')}}"--}}
+    {{--           href="{{route('projects.datasets.show.experiments', [$project, $dataset])}}">--}}
+    {{--            Experiments--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 
     <li class="nav-item">
         <a class="nav-link {{setActiveNavByName('projects.datasets.show.communities')}}"

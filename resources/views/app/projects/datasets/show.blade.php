@@ -13,7 +13,7 @@
         @slot('header')
             Dataset: {{$dataset->name}}
             <a class="float-right action-link"
-               href="{{route('projects.datasets.edit', [$project, $dataset])}}">
+               href="{{$editRoute}}">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 

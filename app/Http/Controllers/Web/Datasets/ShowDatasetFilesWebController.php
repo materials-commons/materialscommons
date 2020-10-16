@@ -22,6 +22,7 @@ class ShowDatasetFilesWebController extends Controller
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
             ->withDataset($dataset)
+            ->withEditRoute(route('projects.datasets.files.edit', [$project, $dataset]))
             ->withFiles($filesAndDir["files"])
             ->withDirectory($filesAndDir["directory"])
             ->withEntities($this->getEntitiesForDataset($dataset));

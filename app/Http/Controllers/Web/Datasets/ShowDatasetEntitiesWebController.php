@@ -22,6 +22,7 @@ class ShowDatasetEntitiesWebController extends Controller
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
             ->withDataset($dataset)
+            ->withEditRoute(route('projects.datasets.samples.edit', [$project, $dataset]))
             ->withActivities(Entity::activityNamesForEntities($entities))
             ->withUsedActivities($createUsedActivities->execute($activities, $entities))
             ->withEntities($this->getEntitiesForDataset($dataset));

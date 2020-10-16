@@ -22,6 +22,7 @@ class ShowDatasetOverviewWebController extends Controller
             ->withDataset($dataset)
             ->withEntities($this->getEntitiesForDataset($dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($dataset->id))
+            ->withEditRoute(route('projects.datasets.edit', [$project, $dataset]))
             ->withObjectCounts($this->getObjectTypes($dataset->id));
         return view('app.projects.datasets.show', $showDatasetOverviewViewModel);
     }
