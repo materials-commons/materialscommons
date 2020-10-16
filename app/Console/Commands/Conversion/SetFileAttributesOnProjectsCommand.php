@@ -107,7 +107,7 @@ class SetFileAttributesOnProjectsCommand extends Command
 
     private function incrementFileType($fileTypes, File $file)
     {
-        $fileType = $this->fileTypeFromMime($file->mime_type);
+        $fileType = $this->mimeTypeToDescription($file->mime_type);
         if (!array_key_exists($fileType, $fileTypes)) {
             $fileTypes[$fileType] = 1;
         } else {

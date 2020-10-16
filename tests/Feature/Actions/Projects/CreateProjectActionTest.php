@@ -12,6 +12,22 @@ class CreateProjectActionTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function created_project_is_setup_correctly()
+    {
+        $user = factory(User::class)->create();
+        $createAction = new CreateProjectAction();
+        $rv = $createAction->execute(['name' => 'proj1'], $user->id);
+        $project = $rv['project'];
+        $this->assertTrue($rv['created']);
+        $project->refresh();
+        $this->assertEquals(0, $project->size);
+        $this->assertEquals(0, $project->file_count);
+        $this->assertEquals(1, $project->directory_count);
+        $this->assertIsArray($project->file_types);
+        $this->assertEquals(0, sizeof($project->file_types));
+    }
+
+    /** @test */
     public function project_create_should_create_a_root_directory()
     {
         $user = factory(User::class)->create();

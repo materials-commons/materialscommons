@@ -124,13 +124,18 @@ class FileObserver
 
     private function fileShouldUpdateProject(File $file)
     {
-        if (!$file->current) {
-            // Nothing to do because this file isn't a part of the project size
+        if (is_null($file->project_id)) {
+            // Not a part of a project so ignore
             return false;
         }
 
-        if (is_null($file->project_id)) {
-            // Not a part of a project so ignore
+        if ($file->mime_type === 'directory') {
+            // current flag is ignored for directories
+            return true;
+        }
+
+        if (!$file->current) {
+            // Nothing to do because this file isn't a part of the project size
             return false;
         }
 
@@ -141,7 +146,7 @@ class FileObserver
     {
         if ($file->mime_type === 'directory') {
             $project->directory_count++;
-            $project->save();
+            $project->update(['directory_count' => $project->directory_count]);
         } else {
             $project->size = $project->size + $file->size;
             $project->file_count++;
@@ -156,7 +161,7 @@ class FileObserver
 
     private function incrementFileType(Project $project, File $file)
     {
-        $fileType = $this->fileTypeFromMime($file->mime_type);
+        $fileType = $this->mimeTypeToDescription($file->mime_type);
         $fileTypes = $project->file_types;
         if (!array_key_exists($fileType, $fileTypes)) {
             $fileTypes[$fileType] = 1;
@@ -172,7 +177,7 @@ class FileObserver
     {
         if ($file->mime_type === 'directory') {
             $project->directory_count--;
-            $project->save();
+            $project->update(['directory_count' => $project->directory_count]);
         } else {
             $project->file_count--;
             $project->size = $project->size - $file->size;
@@ -187,7 +192,7 @@ class FileObserver
 
     private function decrementFileType(Project $project, File $file)
     {
-        $fileType = $this->fileTypeFromMime($file->mime_type);
+        $fileType = $this->mimeTypeToDescription($file->mime_type);
         $fileTypes = $project->file_types;
         if (array_key_exists($fileType, $fileTypes)) {
             $currentCount = $fileTypes[$fileType];

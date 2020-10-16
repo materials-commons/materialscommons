@@ -54,6 +54,7 @@ class ProjectFactory
             ]);
         }
 
+        $project->refresh();
         return $project;
     }
 
@@ -83,12 +84,13 @@ class ProjectFactory
             'project_id'   => $project->id,
             'name'         => $name,
             'directory_id' => $dir->id,
+            'current'      => true,
             'owner_id'     => $project->owner_id,
-            'mime_type'    => 'text',
+            'mime_type'    => 'text/plain',
         ]);
 
         $dirPath = Storage::disk('mcfs')->path($this->getDirPathForFile($file));
-        if ( ! file_exists($dirPath)) {
+        if (!file_exists($dirPath)) {
             mkdir($dirPath, 0700, true);
         }
 
@@ -107,7 +109,8 @@ class ProjectFactory
             'name'         => $name,
             'directory_id' => $dir->id,
             'owner_id'     => $project->owner_id,
-            'mime_type'    => 'text',
+            'mime_type'    => 'text/plain',
+            'current'      => true,
         ]);
     }
 
