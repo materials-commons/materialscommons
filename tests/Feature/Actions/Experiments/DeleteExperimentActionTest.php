@@ -82,7 +82,7 @@ class DeleteExperimentActionTest extends TestCase
 
         $deleteExperiment = new DeleteExperimentAction();
         $deleteExperiment($experiment);
-        $dataset->fresh();
+        $dataset->refresh();
         $this->assertEquals(1, $dataset->entities()->count());
     }
 }

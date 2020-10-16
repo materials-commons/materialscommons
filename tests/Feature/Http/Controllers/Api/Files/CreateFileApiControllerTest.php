@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Files;
 
+use App\Models\File;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -36,6 +37,14 @@ class CreateFileApiControllerTest extends TestCase
         $fileUuid = $file["data"]["uuid"];
         $topFileDir = $this->topDirFromUuid($fileUuid);
         $fileDir = $this->dirFromUuid($fileUuid);
+
+        $f = File::firstWhere('uuid', $fileUuid);
+        // Ensure file counts stored on project were updated
+        $project->refresh();
+        $this->assertEquals($f->size, $project->size);
+        $this->assertEquals(1, $project->file_count);
+        $this->assertTrue(isset($project->file_types['Image']));
+        $this->assertEquals(1, $project->file_types['Image']);
 
         Storage::disk('mcfs')->assertExists("{$fileDir}/{$fileUuid}");
         Storage::deleteDirectory($topFileDir);

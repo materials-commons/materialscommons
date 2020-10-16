@@ -32,7 +32,7 @@ class CreateWorkflowAction
         $workflow->owner_id = $userId;
         $workflow->project_id = $projectId;
         $workflow->save();
-        $workflow->fresh();
+        $workflow->refresh();
         if ($experiment != null) {
             $experiment->workflows()->attach($workflow);
         }

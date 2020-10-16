@@ -117,8 +117,8 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
             File::where('name', 'root.txt')
                 ->where('project_id', $project->id)
                 ->count());
-        $originalRootFile->fresh();
-        $this->assertNull($originalRootFile->current);
+        $originalRootFile->refresh();
+        $this->assertFalse($originalRootFile->current);
         $newRootFile = File::where('name', 'root.txt')
                            ->where('id', '<>', $originalRootFile->id)
                            ->first();

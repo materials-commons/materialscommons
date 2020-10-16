@@ -15,5 +15,9 @@ $factory->define(App\Models\Project::class, function (Faker $faker) {
         'uuid'            => $faker->uuid,
         'default_project' => false,
         'is_active'       => true,
+        'file_types'      => [],
+        'size'            => 0,
+        'file_count'      => 0,
+        'directory_count' => 0,
     ];
 });

@@ -18,7 +18,7 @@ class CreateActivityAction
             $activity->experiments()->attach($data['experiment_id']);
         }
 
-        $activity->fresh();
+        $activity->refresh();
 
         if (array_key_exists('attributes', $data)) {
             foreach ($data['attributes'] as $attribute) {

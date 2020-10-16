@@ -20,7 +20,7 @@ class CreateExperimentAction
         $experiment->owner_id = auth()->id();
         $experiment->status = ExperimentStatus::InProgress;
         $experiment->save();
-        $experiment->fresh();
+        $experiment->refresh();
 
         if (array_key_exists('file_id', $data) && $data['file_id'] !== null) {
             $ps = new ProcessSpreadsheetJob($data['project_id'], $experiment->id, auth()->id(), $data['file_id']);

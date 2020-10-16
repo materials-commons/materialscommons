@@ -20,6 +20,10 @@ class CreateProjectAction
             return ['project' => $project, 'created' => false];
         }
 
+        $data['file_types'] = [];
+        $data['file_count'] = 0;
+        $data['directory_count'] = 0;
+        $data['size'] = 0;
         $project = new Project($data);
         $project->owner_id = $ownerId;
 
@@ -42,7 +46,7 @@ class CreateProjectAction
             $team->admins()->attach($project->owner);
         });
 
-        $project->fresh();
+        $project->refresh();
         return ['project' => Project::with('rootDir')->find($project->id), 'created' => true];
     }
 }
