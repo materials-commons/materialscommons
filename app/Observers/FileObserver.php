@@ -192,7 +192,11 @@ class FileObserver
         if (array_key_exists($fileType, $fileTypes)) {
             $currentCount = $fileTypes[$fileType];
             $currentCount--;
-            $fileTypes[$fileType] = $currentCount;
+            if ($currentCount == 0) {
+                unset($fileTypes[$fileType]);
+            } else {
+                $fileTypes[$fileType] = $currentCount;
+            }
         }
         return $fileTypes;
     }
