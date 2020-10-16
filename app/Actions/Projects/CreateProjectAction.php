@@ -46,7 +46,7 @@ class CreateProjectAction
             $team->admins()->attach($project->owner);
         });
 
-        $project->fresh();
+        $project->refresh();
         return ['project' => Project::with('rootDir')->find($project->id), 'created' => true];
     }
 }

@@ -53,7 +53,7 @@ class SetFileAttributesForProjectCommand extends Command
             'directory_count' => $this->getDirectoryCount($project),
             'file_types'      => [],
         ]);
-        $project->fresh();
+        $project->refresh();
         $this->info("  Adding file type counts...");
         $this->addFileTypes($project);
         $this->info(" ");

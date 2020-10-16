@@ -20,7 +20,7 @@ class CreateExperimentFromSpreadsheetCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:create-experiment-from-spreadsheet {projectId : ProjectId} 
+    protected $signature = 'mc:create-experiment-from-spreadsheet {projectId : ProjectId}
                                                                   {--experiment-name= : experiment name}
                                                                   {--file-id= : spreadsheet file id}';
 
@@ -62,7 +62,7 @@ class CreateExperimentFromSpreadsheetCommand extends Command
         $experiment->owner_id = $project->owner_id;
         $experiment->status = ExperimentStatus::InProgress;
         $experiment->save();
-        $experiment->fresh();
+        $experiment->refresh();
 
         $file = File::findOrFail($fileId);
         $uuidPath = $this->getFilePathForFile($file);
