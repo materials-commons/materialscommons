@@ -57,7 +57,7 @@
     @else
         <li class="step">
             <div class="step-content">
-                <span class="step-circle">4</span>
+                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
                 <span class="step-text">Workflow (Optional)</span>
             </div>
         </li>
@@ -66,7 +66,7 @@
     @if(is_null($dataset->published_at))
         <li class="step">
             <div class="step-content">
-                <span class="step-circle">5</span>
+                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
                 <span class="step-text">Published</span>
             </div>
         </li>
