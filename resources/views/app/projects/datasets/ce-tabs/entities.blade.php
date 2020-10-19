@@ -1,3 +1,4 @@
+@include('app.projects.datasets.ce-tabs._other-tabs-done')
 @include('app.projects.datasets.ce-tabs._short-overview')
 <h5>
     Samples will be added or removed automatically as you select them.

@@ -1,3 +1,19 @@
+<br>
+<div class="float-right">
+    <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
+       class="btn btn-danger mr-3">
+        Cancel
+    </a>
+
+    <a class="btn btn-info mr-3" href="#" id="save-button" onclick="setActionAndSubmit('save')">
+        Update
+    </a>
+
+    <a class="btn btn-success mr-3" href="#" id="done-button" onclick="setActionAndSubmit('done')">
+        Done
+    </a>
+</div>
+<br>
 <form method="post"
       action="{{route('projects.datasets.update', [$project, $dataset, 'public' => $isPublic])}}"
       id="dataset-update">

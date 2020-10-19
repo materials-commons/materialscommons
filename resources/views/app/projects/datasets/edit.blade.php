@@ -15,7 +15,6 @@
         @endslot
 
         @slot('body')
-
             @include('app.projects.datasets.ce-tabs.tabs',[
                 'defaultRoute' => route('projects.datasets.edit', [$project, $dataset, 'public' => $isPublic]),
                 'defaultRouteName' => 'projects.datasets.edit',
