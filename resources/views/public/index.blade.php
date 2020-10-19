@@ -24,6 +24,9 @@
                 <tr>
                     <th>Name</th>
                     <th>ID</th>
+                    <th>Views</th>
+                    <th>Downloads</th>
+                    <th>Published</th>
                     <th>Summary</th>
                     <th>Authors</th>
                 </tr>
@@ -71,8 +74,32 @@
                             }
                         },
                         {name: 'id'},
+                        {name: 'views_count'},
+                        {name: 'downloads_count'},
+                        {
+                            name: 'published_at',
+                            render: function (data, type, row) {
+                                let space = data.indexOf(' ');
+                                return data.substr(0, space);
+                            }
+                        },
                         {name: 'summary'},
-                        {name: 'authors'},
+                        {
+                            name: 'authors',
+                            render: function (data) {
+                                if (!data) {
+                                    return "";
+                                }
+                                return data.split(';').map(function (author) {
+                                    let openParen = author.indexOf('(');
+                                    if (openParen === -1) {
+                                        return author;
+                                    }
+
+                                    return author.substr(0, openParen).trim();
+                                }).join(', ');
+                            }
+                        },
                     ],
                     columnDefs: [
                         {
