@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.overview')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.overview')}}"
            href="{{route('projects.datasets.show.overview', [$project, $dataset])}}">
             Overview
         </a>
@@ -8,22 +8,24 @@
 
     <li class="nav-item">
         @if(Request::routeIs('projects.datasets.show.files'))
-            <a class="nav-link active" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
+            <a class="nav-link active no-underline"
+               href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @elseif(Request::routeIs('projects.datasets.show.next'))
-            <a class="nav-link active" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
+            <a class="nav-link active no-underline"
+               href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @else
-            <a class="nav-link" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
+            <a class="nav-link no-underline" href="{{route('projects.datasets.show.files', [$project, $dataset])}}">
                 Files
             </a>
         @endif
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.entities')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.entities')}}"
            href="{{route('projects.datasets.show.entities', [$project, $dataset])}}">
             Samples
         </a>
@@ -37,7 +39,7 @@
     {{--    </li>--}}
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.workflows')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.workflows')}}"
            href="{{route('projects.datasets.show.workflows', [$project, $dataset])}}">
             Workflows
         </a>
@@ -58,7 +60,7 @@
     {{--    </li>--}}
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.datasets.show.communities')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.communities')}}"
            href="{{route('projects.datasets.show.communities', [$project, $dataset])}}">
             Communities
         </a>

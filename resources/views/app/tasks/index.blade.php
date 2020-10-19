@@ -19,15 +19,15 @@
         @slot('body')
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link {{$show == 'open' ? 'active' : ''}}"
+                    <a class="nav-link no-underline {{$show == 'open' ? 'active' : ''}}"
                        href="{{route('tasks.index', ['show' => 'open'])}}">Open</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{$show == 'closed' ? 'active' : ''}}"
+                    <a class="nav-link no-underline {{$show == 'closed' ? 'active' : ''}}"
                        href="{{route('tasks.index', ['show' => 'closed'])}}">Closed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{$show == 'hold' ? 'active' : ''}}"
+                    <a class="nav-link no-underline {{$show == 'hold' ? 'active' : ''}}"
                        href="{{route('tasks.index', ['show' => 'hold'])}}">On Hold</a>
                 </li>
             </ul>

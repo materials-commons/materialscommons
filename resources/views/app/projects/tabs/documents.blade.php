@@ -3,28 +3,28 @@
 </p>
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.documents.show.files')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show.files')}}"
            href="{{route('projects.documents.show.files', [$project])}}">
             Files
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.documents.show.process-steps')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show.process-steps')}}"
            href="{{route('projects.documents.show.process-steps', [$project])}}">
             Process Steps
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.documents.show.attributes')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show.attributes')}}"
            href="{{route('projects.documents.show.attributes', [$project])}}">
             Attribute Descriptions
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('projects.documents.show.units')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show.units')}}"
            href="{{route('projects.documents.show.units', [$project])}}">
             Units
         </a>
