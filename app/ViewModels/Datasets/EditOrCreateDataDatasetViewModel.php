@@ -54,6 +54,17 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
         return $this;
     }
 
+    public function withEntities($entities)
+    {
+        $this->datasetEntities = $entities;
+        return $this;
+    }
+
+    public function entities()
+    {
+        return $this->datasetEntities;
+    }
+
     public function user()
     {
         return $this->user;

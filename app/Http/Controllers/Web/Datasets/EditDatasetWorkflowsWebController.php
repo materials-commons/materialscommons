@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Datasets;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\Datasets\Traits\HasExtendedInfo;
 use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Project;
@@ -10,6 +11,7 @@ use App\ViewModels\Datasets\EditOrCreateDataDatasetViewModel;
 
 class EditDatasetWorkflowsWebController extends Controller
 {
+    use HasExtendedInfo;
 
     public function __invoke($projectId, $datasetId)
     {
@@ -21,6 +23,7 @@ class EditDatasetWorkflowsWebController extends Controller
         $viewModel = new EditOrCreateDataDatasetViewModel($project, $dataset, auth()->user());
         $viewModel->withCommunities($communities)
                   ->withExperiments($experiments)
+                  ->withDatasetEntities($this->getEntitiesForDataset($dataset))
                   ->withWorkflows($workflows);
         return view('app.projects.datasets.edit', $viewModel);
     }

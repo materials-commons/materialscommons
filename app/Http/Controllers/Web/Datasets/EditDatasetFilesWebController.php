@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Datasets;
 
 use App\Actions\Datasets\GetDatasetFilesAction;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\Datasets\Traits\HasExtendedInfo;
 use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\File;
@@ -12,6 +13,8 @@ use App\ViewModels\Datasets\EditOrCreateDataDatasetViewModel;
 
 class EditDatasetFilesWebController extends Controller
 {
+    use HasExtendedInfo;
+
     public function __invoke(Project $project, $datasetId, $folderId = null)
     {
         $path = request()->input("path");
@@ -26,6 +29,7 @@ class EditDatasetFilesWebController extends Controller
         $viewModel = new EditOrCreateDataDatasetViewModel($project, $dataset, auth()->user());
         $viewModel->withCommunities($communities)
                   ->withExperiments($experiments)
+                  ->withDatasetEntities($this->getEntitiesForDataset($dataset))
                   ->withFiles($files)
                   ->withDirectory($directory);
 
