@@ -14,6 +14,7 @@
     </a>
 </div>
 <br>
+<br>
 <form method="post"
       action="{{route('projects.datasets.update', [$project, $dataset, 'public' => $isPublic])}}"
       id="dataset-update">
