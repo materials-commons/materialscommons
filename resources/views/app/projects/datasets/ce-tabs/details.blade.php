@@ -9,9 +9,11 @@
         Update
     </a>
 
-    <a class="btn btn-success mr-3" href="#" id="done-button" onclick="setActionAndSubmit('done')">
+    <a class="btn btn-success" href="#" id="done-button" onclick="setActionAndSubmit('done')">
         Done
     </a>
+
+    @include('app.projects.datasets.ce-tabs._done-and-publish-button')
 </div>
 <br>
 <br>
