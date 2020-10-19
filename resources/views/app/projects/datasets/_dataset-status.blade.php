@@ -70,12 +70,15 @@
                 <span class="step-text">Published</span>
             </div>
         </li>
-    @else
-        <li class="step step-success">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
-                <span class="step-text">Published</span>
-            </div>
-        </li>
-    @endif
+        @else
+            <li class="step step-success">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
+                    <span class="step-text">Published</span>
+                </div>
+            </li>
+        @endif
 </ul>
+
+@include('app.projects.datasets._dataset-issues')
+<br>
