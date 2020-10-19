@@ -1,14 +1,14 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('dashboard.projects.show')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.show')}}"
            href="{{route('dashboard.projects.show')}}">
-            Projects
+            Projects ({{$projectsCount}})
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{setActiveNavByName('dashboard.published-datasets.show')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('dashboard.published-datasets.show')}}"
            href="{{route('dashboard.published-datasets.show')}}">
-            Published Datasets
+            Published Datasets ({{$publishedDatasetsCount}})
         </a>
     </li>
 
