@@ -57,7 +57,6 @@
         @endslot
 
         @slot('body')
-            @include('public._add-data-and-publish-button')
             @include('public.datasets.tabs.tabs')
 
             @if (Request::routeIs('public.datasets.overview*'))
