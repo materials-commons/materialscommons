@@ -1,6 +1,11 @@
 @component('components.card')
     @slot('header')
         Published Datasets
+        <a href="{{route('public.publish.wizard.choose_create_or_select_project')}}"
+           title="Publish data"
+           class="action-link float-right">
+            <i class="fas fa-plus mr-2"></i> Upload and Publish Data
+        </a>
     @endslot
     @slot('body')
         <h4>Published Datasets</h4>
