@@ -5,12 +5,12 @@
                 <a href="{{route('public.publish.wizard.choose_create_or_select_project')}}"
                    title="Publish data"
                    class="btn btn-success float-rightx">
-                    <i class="fas fa-plus"></i> Upload and Publish Data
+                    <i class="fas fa-plus mr-2"></i> Upload and Publish Data
                 </a>
             @else
                 <a href="{{route('login-for-upload')}}" title="Publish data"
                    class="btn btn-success float-rightx">
-                    <i class="fas fa-plus"></i> Upload and Publish Data
+                    <i class="fas fa-plus mr-2"></i> Upload and Publish Data
                 </a>
             @endauth
         </div>
