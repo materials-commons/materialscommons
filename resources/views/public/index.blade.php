@@ -7,15 +7,17 @@
 @stop
 
 @section('content')
-    <p>
+    <br>
+    <h4>
         Welcome to Materials Commons published datasets. Here you will find data published by the Materials Science
         community.
         We provide many ways to explore and download the data. You can also easily publish your own data.
-    </p>
-
+    </h4>
+    <br>
     @component('components.card')
         @slot('header')
             Public Datasets
+            @include('public._add-data-and-publish')
         @endslot
 
         @slot('body')
