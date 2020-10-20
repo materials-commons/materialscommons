@@ -41,11 +41,11 @@
     @else
         <li class="step">
             <div class="step-content">
-                <span class="step-circle">3</span>
+                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
                 <span class="step-text">Samples (Optional)</span>
             </div>
         </li>
-    @endif
+        @endif
 
     @if($dataset->workflows->count() != 0)
         <li class="step step-success">
