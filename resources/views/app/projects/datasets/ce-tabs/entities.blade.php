@@ -42,6 +42,7 @@
         let datasetId = "{{$dataset->id}}";
         let apiToken = "{{$user->api_token}}";
         let route = "{{route('api.projects.datasets.entities', [$dataset])}}";
+        let samplesCount = {{$entitiesCountInDataset}};
 
         $(document).ready(() => {
             $('#entities').DataTable({
@@ -54,9 +55,11 @@
                 if (this.checked) {
                     return;
                 }
+                samplesCount++;
                 this.checked = true;
                 this.onclick();
             });
+            setSamplesStatusPositive();
         }
 
         function uncheckAllEntities() {
@@ -67,13 +70,23 @@
                 this.checked = false;
                 this.onclick();
             });
+            samplesCount = 0;
+            setSamplesStatusMissing();
         }
 
         function updateEntitySelection(entity, checkbox) {
             if (checkbox.checked) {
+                samplesCount++;
                 addEntity(entity);
             } else {
+                samplesCount--;
                 removeEntity(entity);
+            }
+
+            if (samplesCount > 0) {
+                setSamplesStatusPositive();
+            } else {
+                setSamplesStatusMissing();
             }
         }
 
@@ -89,6 +102,21 @@
                 project_id: projectId,
                 entity_id: entity.id,
             });
+        }
+
+        function setSamplesStatusPositive() {
+            // first clear classes, then add the classes we want
+            $('#samples-step').removeClass('step-success')
+                .addClass('step-success');
+            $('#samples-circle').removeClass('fa-check fa-circle')
+                .addClass('fa-check');
+        }
+
+        function setSamplesStatusMissing() {
+            // first clear classes, then add the classes we want
+            $('#samples-step').removeClass('step-success');
+            $('#samples-circle').removeClass('fa-check fa-circle')
+                .addClass('fa-circle');
         }
     </script>
 @endpush

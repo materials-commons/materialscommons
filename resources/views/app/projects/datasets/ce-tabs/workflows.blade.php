@@ -58,6 +58,7 @@
         let datasetId = "{{$dataset->id}}";
         let apiToken = "{{$user->api_token}}";
         let route = "{{route('api.projects.datasets.workflows', [$dataset])}}";
+        let workflowsCount = {{$dataset->workflows->count()}};
 
         $(document).ready(() => {
             $('#entities').DataTable({
@@ -67,9 +68,17 @@
 
         function updateWorkflowSelection(workflow, checkbox) {
             if (checkbox.checked) {
+                workflowsCount++;
                 addWorkflow(workflow);
             } else {
+                workflowsCount--;
                 removeWorkflow(workflow);
+            }
+
+            if (workflowsCount > 0) {
+                setWorkflowsStatusPositive();
+            } else {
+                setWorkflowsStatusMissing();
             }
         }
 
@@ -85,6 +94,21 @@
                 project_id: projectId,
                 workflow_id: workflow.id,
             });
+        }
+
+        function setWorkflowsStatusPositive() {
+            // first clear classes, then add the classes we want
+            $('#workflows-step').removeClass('step-success')
+                .addClass('step-success');
+            $('#workflows-circle').removeClass('fa-check fa-circle')
+                .addClass('fa-check');
+        }
+
+        function setWorkflowsStatusMissing() {
+            // first clear classes, then add the classes we want
+            $('#workflows-step').removeClass('step-success');
+            $('#workflows-circle').removeClass('fa-check fa-circle')
+                .addClass('fa-circle');
         }
     </script>
 @endpush

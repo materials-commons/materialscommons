@@ -179,6 +179,17 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
         return $this->datasetEntities->contains($entity->id);
     }
 
+    public function entitiesCountInDataset()
+    {
+        $count = 0;
+        $this->datasetEntities->each(function ($entity) use (&$count) {
+            if ($this->entityInDataset($entity)) {
+                $count++;
+            }
+        });
+        return $count;
+    }
+
     public function entityExperiments(Entity $entity)
     {
         $experimentNames = $entity->experiments->map(function (Experiment $e) {

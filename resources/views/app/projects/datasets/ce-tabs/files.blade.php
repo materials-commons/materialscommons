@@ -79,6 +79,19 @@
         let route = "{{route('projects.datasets.selection', [$dataset])}}";
         let apiToken = "{{$user->api_token}}";
 
+        let filesSelectedCount = 0;
+        @if(isset($dataset->file_selection['include_files']))
+            filesSelectedCount = {{sizeof($dataset->file_selection['include_files'])}};
+        @endif
+
+        let dirsSelectedCount = 0;
+        @if(isset($dataset->file_selection['include_dirs']))
+            dirsSelectedCount = {{sizeof($dataset->file_selection['include_dirs'])}};
+        @endif
+
+
+        let totalSelectedCount = filesSelectedCount + dirsSelectedCount;
+
         $(document).ready(() => {
             $('#files').DataTable({
                 stateSave: true,
@@ -87,6 +100,7 @@
 
         function updateSelection(file, checkbox) {
             if (checkbox.checked) {
+                totalSelectedCount++;
                 if (file.mime_type === 'directory') {
                     addDirectory(file);
                 } else {
@@ -94,11 +108,17 @@
                 }
 
             } else {
+                totalSelectedCount--;
                 if (file.mime_type === 'directory') {
                     removeDirectory(file);
                 } else {
                     removeFile(file);
                 }
+            }
+            if (totalSelectedCount > 0) {
+                setFileStatusPositive();
+            } else {
+                setFileStatusError();
             }
         }
 
@@ -136,6 +156,22 @@
             }).then(
                 () => null
             );
+        }
+
+        function setFileStatusPositive() {
+            // first clear classes, then add the classes we want
+            $('#files-step').removeClass('step-error step-success')
+                .addClass('step-success');
+            $('#files-circle').removeClass('fa-check fa-exclamation')
+                .addClass('fa-check');
+        }
+
+        function setFileStatusError() {
+            // first clear classes, then add the classes we want
+            $('#files-step').removeClass('step-success step-error')
+                .addClass('step-error');
+            $('#files-circle').removeClass('fa-check fa-exclamation')
+                .addClass('fa-exclamation');
         }
 
     </script>

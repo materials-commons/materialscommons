@@ -16,60 +16,60 @@
     @endif
 
     @if($dataset->hasSelectedFiles())
-        <li class="step step-success">
+        <li class="step step-success" id="files-step">
             <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
+                <span class="step-circle"><i class="fa fas fa-check fa-fw" id="files-circle"></i></span>
                 <span class="step-text">Files</span>
             </div>
         </li>
-    @else
-        <li class="step step-error">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-exclamation fa-fw"></i></span>
-                <span class="step-text">Files</span>
-            </div>
-        </li>
-    @endif
+        @else
+            <li class="step step-error" id="files-step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-exclamation fa-fw" id="files-circle"></i></span>
+                    <span class="step-text">Files</span>
+                </div>
+            </li>
+        @endif
 
     @if($entities->count() != 0)
-        <li class="step step-success">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
-                <span class="step-text">Samples (Optional)</span>
-            </div>
-        </li>
-    @else
-        <li class="step">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
-                <span class="step-text">Samples (Optional)</span>
-            </div>
-        </li>
+            <li class="step step-success" id="samples-step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-check fa-fw" id="samples-circle"></i></span>
+                    <span class="step-text">Samples (Optional)</span>
+                </div>
+            </li>
+        @else
+            <li class="step" id="samples-step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-circle fa-fw" id="samples-circle"></i></span>
+                    <span class="step-text">Samples (Optional)</span>
+                </div>
+            </li>
         @endif
 
     @if($dataset->workflows->count() != 0)
-        <li class="step step-success">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
-                <span class="step-text">Workflow (Optional)</span>
-            </div>
-        </li>
-    @else
-        <li class="step">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
-                <span class="step-text">Workflow (Optional)</span>
-            </div>
-        </li>
-    @endif
+            <li class="step step-success" id="workflows-step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-check fa-fw" id="workflows-circle"></i></span>
+                    <span class="step-text">Workflow (Optional)</span>
+                </div>
+            </li>
+        @else
+            <li class="step" id="workflows-step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-circle fa-fw" id="workflows-circle"></i></span>
+                    <span class="step-text">Workflow (Optional)</span>
+                </div>
+            </li>
+        @endif
 
-    @if(is_null($dataset->published_at))
-        <li class="step">
-            <div class="step-content">
-                <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
-                <span class="step-text">Published</span>
-            </div>
-        </li>
+        @if(is_null($dataset->published_at))
+            <li class="step">
+                <div class="step-content">
+                    <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
+                    <span class="step-text">Published</span>
+                </div>
+            </li>
         @else
             <li class="step step-success">
                 <div class="step-content">
