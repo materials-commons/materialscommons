@@ -164,6 +164,10 @@
                 .addClass('step-success');
             $('#files-circle').removeClass('fa-check fa-exclamation')
                 .addClass('fa-check');
+            let doneAndPublishButton = $('#done-and-publish');
+            if (doneAndPublishButton) {
+                doneAndPublishButton.show('fast');
+            }
         }
 
         function setFileStatusError() {
@@ -172,6 +176,10 @@
                 .addClass('step-error');
             $('#files-circle').removeClass('fa-check fa-exclamation')
                 .addClass('fa-exclamation');
+            let doneAndPublishButton = $('#done-and-publish');
+            if (doneAndPublishButton) {
+                doneAndPublishButton.hide('fast');
+            }
         }
 
     </script>
