@@ -41,24 +41,24 @@
                     atleast 50 characters otherwise your dataset won't show up in google dataset search.
                 </li>
             </template>
-            <template x-if="dataset.summary === ''">
-                <li class="mt-2">
-                    <x-warning-icon/>
-                    A summary shows up in the list of all datasets. It allows researchers to more
-                    easily find your dataset. It is recommended that you give your dataset a short summary.
-                </li>
-            </template>
-            <template x-if="dataset.license === ''">
-                <li class="mt-2">
-                    <x-warning-icon/>
-                    A license can control how your dataset is used. It is recommended that you
-                    choose a license for your dataset.
-                </li>
-            </template>
-            <template x-if="dataset.authors === ''">
-                <li class="mt-2">
-                    <x-warning-icon/>
-                    Your dataset has no authors. An authors list helps others evaluate your dataset.
+                <template x-if="dataset.summary === ''">
+                    <li class="mt-2">
+                        <x-warning-icon/>
+                        A summary shows up in the list of all datasets. It allows researchers to more
+                        easily find your dataset. It is recommended that you give your dataset a short summary.
+                    </li>
+                </template>
+                <template x-if="dataset.license === '' || dataset.license === 'No License'">
+                    <li class="mt-2">
+                        <x-warning-icon/>
+                        A license can control how your dataset is used. It is recommended that you
+                        choose a license for your dataset.
+                    </li>
+                </template>
+                <template x-if="dataset.authors === ''">
+                    <li class="mt-2">
+                        <x-warning-icon/>
+                        Your dataset has no authors. An authors list helps others evaluate your dataset.
                     It is recommended that you include authors.
                 </li>
             </template>
