@@ -14,7 +14,7 @@
             <thead>
             <tr>
                 <th>Project</th>
-                <th>Summary</th>
+{{--                <th>Summary</th>--}}
                 <th>Size</th>
                 <th>Files</th>
                 <th>Samples</th>
@@ -30,7 +30,7 @@
                     <td>
                         <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                     </td>
-                    <td>{{$proj->summary}}</td>
+                    {{--                    <td>{{$proj->summary}}</td>--}}
                     <td>{{formatBytes($proj->size)}}</td>
                     <td>{{number_format($proj->file_count)}}</td>
                     <td>{{number_format($proj->entities_count)}}</td>
