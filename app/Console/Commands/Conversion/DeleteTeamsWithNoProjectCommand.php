@@ -43,6 +43,7 @@ class DeleteTeamsWithNoProjectCommand extends Command
             $project = Project::with('owner')->firstWhere('team_id', $team->id);
             if (is_null($project)) {
                 $this->info("Team {$team->name}/{$team->id}/{$team->owner->email}/{$team->created_at} has no project");
+                $team->delete();
             }
         });
         return 0;
