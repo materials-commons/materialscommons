@@ -168,6 +168,7 @@
             if (doneAndPublishButton) {
                 doneAndPublishButton.show('fast');
             }
+            $('#error-files').hide('fast');
         }
 
         function setFileStatusError() {
@@ -180,6 +181,7 @@
             if (doneAndPublishButton) {
                 doneAndPublishButton.hide('fast');
             }
+            $('#error-files').show('fast');
         }
 
     </script>

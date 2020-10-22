@@ -5,11 +5,13 @@ namespace App\ViewModels\Datasets;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\ViewModels\Concerns\HasOverviews;
+use App\ViewModels\Datasets\Traits\HasErrorsAndWarnings;
 use Spatie\ViewModels\ViewModel;
 
 class ShowDatasetOverviewViewModel extends ViewModel
 {
     use HasOverviews;
+    use HasErrorsAndWarnings;
 
     /** @var \App\Models\Project */
     private $project;

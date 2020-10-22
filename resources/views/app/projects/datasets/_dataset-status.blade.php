@@ -81,4 +81,3 @@
 </ul>
 
 @include('app.projects.datasets._dataset-issues')
-<br>

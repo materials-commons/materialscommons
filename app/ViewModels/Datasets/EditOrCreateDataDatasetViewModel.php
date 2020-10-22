@@ -9,10 +9,13 @@ use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\Workflow;
+use App\ViewModels\Datasets\Traits\HasErrorsAndWarnings;
 use Spatie\ViewModels\ViewModel;
 
 class EditOrCreateDataDatasetViewModel extends ViewModel
 {
+    use HasErrorsAndWarnings;
+
     private $dataset;
     private $project;
     private $user;

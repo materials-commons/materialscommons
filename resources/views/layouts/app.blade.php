@@ -36,6 +36,8 @@
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
+@stack('styles')
+
 {{--    @stack('')--}}
 
 <!-- Custom styles for this template -->
