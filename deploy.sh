@@ -24,18 +24,4 @@ echo "MC_SERVER_LAST_UPDATED_AT=${DEPLOY_DATE}" >>.env.tmp
 echo "MC_SERVER_VERSION=${FIRST_V}.${SECOND_V}.${NEXT_V}" >>.env.tmp
 mv .env.tmp .env
 
-sudo rm -rf /var/www/html/materialscommons.old
-sudo mv /var/www/html/materialscommons /var/www/html/materialscommons.old
-cd ..
-sudo cp -r materialscommons /var/www/html/materialscommons
-sudo chcon -R -h -t httpd_sys_script_rw_t /var/www/html/materialscommons
-cd /var/www/html/materialscommons
-sudo /usr/local/bin/composer install --optimize-autoloader --no-dev
-sudo php artisan config:cache
-sudo php artisan migrate
-cd ..
-sudo chown -R nginx:nginx materialscommons
-cd "${SRC_DIR}"
-#chown gtarcea:umuser .env .env.save
-php artisan queue:restart
-sudo systemctl status supervisord
+sudo ./deploy2.sh
