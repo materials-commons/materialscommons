@@ -14,7 +14,6 @@
             <thead>
             <tr>
                 <th>Project</th>
-{{--                <th>Summary</th>--}}
                 <th>Size</th>
                 <th>Files</th>
                 <th>Samples</th>
@@ -30,7 +29,6 @@
                     <td>
                         <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                     </td>
-                    {{--                    <td>{{$proj->summary}}</td>--}}
                     <td>{{formatBytes($proj->size)}}</td>
                     <td>{{number_format($proj->file_count)}}</td>
                     <td>{{number_format($proj->entities_count)}}</td>
@@ -74,8 +72,8 @@
             $('#projects').DataTable({
                 stateSave: true,
                 columnDefs: [
-                    {orderData: [7], targets: [6]},
-                    {targets: [7], visible: false, searchable: false},
+                    {orderData: [6], targets: [5]},
+                    {targets: [6], visible: false, searchable: false},
                 ]
             });
         });
