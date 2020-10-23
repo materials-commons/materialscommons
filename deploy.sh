@@ -25,3 +25,6 @@ echo "MC_SERVER_VERSION=${FIRST_V}.${SECOND_V}.${NEXT_V}" >>.env.tmp
 mv .env.tmp .env
 
 sudo ./deploy2.sh
+php artisan queue:restart
+sudo systemctl status supervisord
+
