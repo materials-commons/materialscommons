@@ -13,7 +13,7 @@
         </p>
         <div class="col-8">
             <a class="btn btn-primary float-right"
-               href="{{route('projects.datasets.create-data', [$project, $dataset, $directory])}}">
+               href="{{route('projects.datasets.files.edit', [$project, $dataset, $directory])}}">
                 Done Uploading Files
             </a>
         </div>

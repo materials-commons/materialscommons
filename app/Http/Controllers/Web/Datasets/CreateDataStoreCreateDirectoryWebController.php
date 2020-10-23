@@ -15,6 +15,6 @@ class CreateDataStoreCreateDirectoryWebController extends Controller
     {
         $validated = $request->validated();
         $directory = $createDirectoryAction->execute($validated, auth()->id());
-        return redirect(route('projects.datasets.create-data', [$project, $dataset, $directory]));
+        return redirect(route('projects.datasets.files.edit', [$project, $dataset, $directory]));
     }
 }

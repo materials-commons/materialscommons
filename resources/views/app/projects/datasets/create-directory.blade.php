@@ -15,7 +15,7 @@
         @slot('body')
             @include('app.projects.folders._create', [
                 'storeDirectoryRoute' => route('projects.datasets.create-data.store-directory', [$project, $dataset]),
-                'cancelRoute' => route('projects.datasets.create-data', [$project, $dataset, $directory])
+                'cancelRoute' => route('projects.datasets.files.edit', [$project, $dataset, $directory])
             ])
             @include('common.errors')
         @endslot
