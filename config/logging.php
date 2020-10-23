@@ -40,9 +40,9 @@ return [
         ],
 
         'single' => [
-            'driver' => 'single',
-            'path'   => storage_path('logs/laravel.log'),
-            'level'  => 'emergency',
+            'driver'     => 'single',
+            'path'       => storage_path('logs/laravel.log'),
+            'level'      => 'debug',
             'permission' => 0777,
         ],
 
