@@ -76,8 +76,8 @@
                             }
                         },
                         {name: 'id'},
-                        {name: 'views_count'},
-                        {name: 'downloads_count'},
+                        {name: 'views_count', searchable: false},
+                        {name: 'downloads_count', searchable: false},
                         {
                             name: 'published_at',
                             render: function (data, type, row) {
