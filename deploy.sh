@@ -27,4 +27,3 @@ mv .env.tmp .env
 sudo ./deploy2.sh
 php artisan queue:restart
 sudo systemctl status supervisord
-
