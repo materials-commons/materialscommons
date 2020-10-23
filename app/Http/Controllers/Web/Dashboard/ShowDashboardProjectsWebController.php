@@ -13,9 +13,9 @@ class ShowDashboardProjectsWebController extends Controller
 
     public function __invoke(Request $request)
     {
-        $projects = auth()->user()->projects()->with(['owner'])->withCount('entities')->get();
+        $projects = $this->getUserProjects(auth()->id());
         return view('app.dashboard.index', [
-            'projects'               => $this->getUserProjects(auth()->id()),
+            'projects'               => $projects,
             'projectsCount'          => $projects->count(),
             'publishedDatasetsCount' => Dataset::whereNotNull('published_at')
                                                ->where('owner_id', auth()->id())
