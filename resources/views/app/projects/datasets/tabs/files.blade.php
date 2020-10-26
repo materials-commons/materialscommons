@@ -1,4 +1,4 @@
-@include('app.projects.datasets.tabs._short-overview')
+<br>
 @component('components.card')
     @slot('header')
         {{$directory->path}}

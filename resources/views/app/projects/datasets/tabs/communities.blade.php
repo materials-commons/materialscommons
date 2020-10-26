@@ -1,4 +1,4 @@
-@include('app.projects.datasets.tabs._short-overview')
+<br>
 <table id="communities" class="table table-hover" style="width:100%">
     <thead>
     <tr>

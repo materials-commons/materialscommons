@@ -1,2 +1,2 @@
-@include('app.projects.datasets.tabs._short-overview')
+<br>
 @include('partials.entities._entities-with-used-activities-table')
