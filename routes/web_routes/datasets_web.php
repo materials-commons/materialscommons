@@ -39,6 +39,7 @@ use App\Http\Controllers\Web\Datasets\StoreDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\UnpublishDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWorkflowFromEditWebController;
+use App\Http\Controllers\Web\Datasets\UploadFilesForDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/{project}/datasets', IndexDatasetsWebController::class)
@@ -100,6 +101,10 @@ Route::get('/projects/{project}/datasets/{dataset}/create-data/{folder?}', Creat
 Route::get('/projects/{project}/datasets/{dataset}/create-data/upload/{directory}',
     CreateDataShowUploadFilesWebController::class)
      ->name('projects.datasets.create-data.upload-files');
+
+Route::post('/projects/{project}/datasets/{dataset}/files/{file}/upload', UploadFilesForDatasetWebController::class)
+     ->name('projects.datasets.files.upload');
+
 
 Route::get('/projects/{project}/datasets/{dataset}/create-data/create-directory/{directory}',
     CreateDataShowCreateDirectoryWebController::class)

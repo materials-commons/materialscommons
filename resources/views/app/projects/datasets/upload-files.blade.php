@@ -29,8 +29,9 @@
 @push('scripts')
     <script>
         let csrf = "{{csrf_token()}}";
-        let r = route('projects.files.upload', {
+        let r = route('projects.datasets.files.upload', {
             project: "{{$project->id}}",
+            dataset: "{{$dataset->id}}",
             file: "{{$directory->id}}"
         }).url();
         const uppy = Uppy({
