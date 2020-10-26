@@ -15,7 +15,12 @@
         @endslot
 
         @slot('body')
-            @include('app.projects.datasets._dataset-status')
+            @include('app.projects.datasets._dataset-status', [
+                'defaultRoute' => route('projects.datasets.edit', [$project, $dataset, 'public' => $isPublic]),
+                'filesRoute' => route('projects.datasets.files.edit', [$project, $dataset, 'public' => $isPublic]),
+                'workflowsRoute' => route('projects.datasets.workflows.edit', [$project, $dataset, 'public' => $isPublic]),
+                'samplesRoute' => route('projects.datasets.samples.edit', [$project, $dataset, 'public' => $isPublic]),
+            ])
             <br>
             @include('app.projects.datasets.ce-tabs.tabs',[
                 'defaultRoute' => route('projects.datasets.edit', [$project, $dataset, 'public' => $isPublic]),

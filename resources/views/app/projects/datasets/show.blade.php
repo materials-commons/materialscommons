@@ -60,7 +60,12 @@
         @endslot
 
         @slot('body')
-            @include('app.projects.datasets._dataset-status')
+            @include('app.projects.datasets._dataset-status', [
+                'defaultRoute' => route('projects.datasets.show.overview', [$project, $dataset]),
+                'filesRoute' => route('projects.datasets.show.files', [$project, $dataset]),
+                'workflowsRoute' => route('projects.datasets.show.workflows', [$project, $dataset]),
+                'samplesRoute' => route('projects.datasets.show.entities', [$project, $dataset]),
+            ])
             <br>
             @include('app.projects.datasets._show-tabs')
         @endslot
