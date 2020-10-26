@@ -11,8 +11,16 @@ class DestroyDatasetWebController extends Controller
 {
     public function __invoke(DeleteDatasetAction $deleteDatasetAction, Project $project, Dataset $dataset)
     {
-        abort_unless(is_null($dataset->published_at), 400, "Cannot delete a published dataset");
-        abort_unless(is_null($dataset->doi), 400, "Cannot delete a dataset that has a DOI assigned");
+        if (!is_null($dataset->published_at)) {
+            flash("Cannot delete a published dataset")->error();
+            return redirect(route('projects.datasets.index', [$project]));
+        }
+
+        if (!is_null($dataset->doi)) {
+            flash("Cannot delete a dataset that has a DOI assigned")->error();
+            return redirect(route('projects.datasets.index', [$project]));
+        }
+
         $deleteDatasetAction->execute($dataset);
         return redirect(route('projects.datasets.index', [$project]));
     }
