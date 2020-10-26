@@ -19,7 +19,7 @@
 <br>
 <form method="post"
       action="{{route('projects.datasets.update', [$project, $dataset, 'public' => $isPublic])}}"
-      id="dataset-update">
+      id="dataset_update">
     @csrf
     @method('put')
 
@@ -60,8 +60,7 @@
         @if (empty($dataset->doi))
             <span class="col-6">
                 (None)
-                <a href="{{route('projects.datasets.assign-doi', [$project, $dataset])}}"
-                   class="ml-6 pl-6">
+                <a href="#" onclick="changeActionAndSubmit()" class="ml-6 pl-6">
                     Assign DOI
                 </a>
             </span>
@@ -188,7 +187,13 @@
 
         function setActionAndSubmit(action) {
             $('#action').val(action);
-            document.getElementById('dataset-update').submit();
+            document.getElementById('dataset_update').submit();
+        }
+
+        function changeActionAndSubmit() {
+            $('#action').val('save');
+            document.forms.dataset_update.action = "{{route('projects.datasets.assign-doi', [$project, $dataset])}}";
+            document.forms.dataset_update.submit();
         }
     </script>
 @endpush

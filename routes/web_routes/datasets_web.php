@@ -150,7 +150,7 @@ Route::get('/projects/{project}/datasets/{dataset}/delete', DeleteDatasetWebCont
 Route::delete('/projects/{project}/datasets/{dataset}', DestroyDatasetWebController::class)
      ->name('projects.datasets.destroy');
 
-Route::get('/projects/{project}/datasets/{dataset}/assign-doi', AssignDoiWebController::class)
+Route::put('/projects/{project}/datasets/{dataset}/assign-doi', AssignDoiWebController::class)
      ->name('projects.datasets.assign-doi');
 
 Route::post('/projects/{project}/datasets/create-doi', StoreDatasetWithDoiWebController::class)
