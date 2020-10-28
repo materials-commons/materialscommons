@@ -6,8 +6,22 @@ Breadcrumbs::for('projects.index', function ($trail) {
     $trail->push('Projects', route('projects.index'));
 });
 
+Breadcrumbs::for('dashboard', function ($trail) {
+    $trail->push('Dashboard', route('dashboard'));
+});
+
+Breadcrumbs::for('dashboard.projects.show', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Projects', route('dashboard.projects.show'));
+});
+
+Breadcrumbs::for('dashboard.published-datasets.show', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Published Datasets', route('dashboard.published-datasets.show'));
+});
+
 Breadcrumbs::for('projects.show', function ($trail, $project) {
-    $trail->parent('projects.index');
+    $trail->parent('dashboard.projects.show');
     $trail->push($project->name, route('projects.show', [$project]));
 });
 

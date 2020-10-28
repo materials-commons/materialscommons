@@ -6,6 +6,14 @@
     @include('layouts.navs.app')
 @stop
 
+@if (Request::routeIs('dashboard'))
+    @section('breadcrumbs', Breadcrumbs::render('dashboard'))
+@elseif(Request::routeIs('dashboard.projects.show'))
+    @section('breadcrumbs', Breadcrumbs::render('dashboard.projects.show'))
+@elseif(Request::routeIs('dashboard.published-datasets.show'))
+    @section('breadcrumbs', Breadcrumbs::render('dashboard.published-datasets.show'))
+@endif
+
 @section('content')
     @component('components.card')
         @slot('header')
