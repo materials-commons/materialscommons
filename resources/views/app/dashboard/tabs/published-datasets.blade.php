@@ -25,8 +25,9 @@
             <tbody>
             @foreach($publishedDatasets as $ds)
                 <tr>
+
                     <td>
-                        <a class="action-link" href="{{route('public.datasets.show', [$ds])}}">
+                        <a href="{{route('projects.datasets.show', [$ds->project_id, $ds])}}">
                             {{$ds->name}}
                         </a>
                     </td>
