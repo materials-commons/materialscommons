@@ -5,6 +5,7 @@
     <th>ID</th>
     <th>Type</th>
     <th>Size</th>
+    <th>Hidden Size</th>
     </thead>
 </table>
 
@@ -43,13 +44,13 @@
                             }
                             return data;
                         }
-                    }
+                    },
+                    {name: 'size'},
                 ],
                 columnDefs: [
-                    {
-                        targets: [1],
-                        visible: false
-                    }
+                    {targets: [1], visible: false},
+                    {orderData: [4], targets: [3]},
+                    {targets: [4], visible: false, searchable: false},
                 ]
             });
         });

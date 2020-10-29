@@ -13,12 +13,12 @@
         @slot('header')
             Dataset: {{$dataset->name}}
             @auth
-                @if($dataset->canEdit())
-                    <a class="action-link float-right mr-4"
-                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">
-                        <i class="fas fa-edit mr-2"></i>Edit
-                    </a>
-                @endif
+                {{--                @if($dataset->canEdit())--}}
+                {{--                    <a class="action-link float-right mr-4"--}}
+                {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
+                {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
+                {{--                    </a>--}}
+                {{--                @endif--}}
 
                 <div class="dropdown float-right mr-4">
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"

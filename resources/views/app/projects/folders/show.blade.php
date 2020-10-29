@@ -79,6 +79,7 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Size</th>
+                    <th>Real Size</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -98,6 +99,7 @@
                         </td>
                         <td>{{$file->mime_type}}</td>
                         <td>{{$file->toHumanBytes()}}</td>
+                        <td>{{$file->size}}</td>
                         <td>
                             @if($file->isImage())
                                 <a href="{{route('projects.files.display', [$project, $file])}}">
@@ -120,6 +122,10 @@
             $(document).ready(() => {
                 $('#files').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [3], targets: [2]},
+                        {targets: [3], visible: false},
+                    ]
                 });
             });
         </script>

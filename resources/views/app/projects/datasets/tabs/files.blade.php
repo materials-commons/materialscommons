@@ -11,6 +11,7 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Size</th>
+                <th>Hidden Size</th>
                 <th>Selected</th>
             </tr>
             </thead>
@@ -34,6 +35,7 @@
                     @else
                         <td>{{$file->toHumanBytes()}}</td>
                     @endif
+                    <td>{{$file->size}}</td>
                     <td>
                         <div class="form-group form-check-inline">
                             <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
@@ -53,6 +55,10 @@
             $(document).ready(() => {
                 $('#files').DataTable({
                     stateSave: true,
+                    columnDefs: [
+                        {orderData: [3], targets: [2]},
+                        {targets: [3], visible: false},
+                    ]
                 });
             });
         });

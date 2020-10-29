@@ -15,6 +15,7 @@
             <tr>
                 <th>Project</th>
                 <th>Size</th>
+                <th>Hidden Size</th>
                 <th>Files</th>
                 <th>Samples</th>
                 <th>Owner</th>
@@ -30,6 +31,7 @@
                         <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                     </td>
                     <td>{{formatBytes($proj->size)}}</td>
+                    <td>{{$proj->size}}</td>
                     <td>{{number_format($proj->file_count)}}</td>
                     <td>{{number_format($proj->entities_count)}}</td>
                     <td>{{$proj->owner->name}}</td>
@@ -74,6 +76,8 @@
                 columnDefs: [
                     {orderData: [6], targets: [5]},
                     {targets: [6], visible: false, searchable: false},
+                    {orderData: [2], targets: [1]},
+                    {targets: [2], visible: false},
                 ]
             });
         });
