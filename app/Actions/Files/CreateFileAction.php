@@ -39,7 +39,7 @@ class CreateFileAction
             $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
             $fileEntry->uses_id = $matchingFileChecksum->id;
             if (!$matchingFileChecksum->realFileExists()) {
-                $this->saveFile($matchingFileChecksum, $matchingFileChecksum->uuid);
+                $this->saveFile($file, $matchingFileChecksum->uuid);
             }
         }
 
