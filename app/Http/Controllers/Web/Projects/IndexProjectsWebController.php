@@ -14,10 +14,11 @@ class IndexProjectsWebController extends Controller
      */
     public function __invoke()
     {
-        return view('app.projects.index', [
-            'projects'          => $this->getUserProjects(auth()->id()),
-            'publishedDatasets' => $this->getPublishedDatasets(),
-        ]);
+        return redirect(route('dashboard.projects.show'));
+//        return view('app.projects.index', [
+//            'projects'          => $this->getUserProjects(auth()->id()),
+//            'publishedDatasets' => $this->getPublishedDatasets(),
+//        ]);
     }
 
     private function getPublishedDatasets()
