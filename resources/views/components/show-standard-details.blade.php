@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col mb-2">
             <div>
-                <span class="fs-9 grey-5">Last Updated: {{$item->updated_at->diffForHumans()}}</span>
-                <span class="ml-3 fs-9 grey-5">Owner: {{$item->owner->name}}</span>
+                <span class="fs-10 grey-5">Last Updated: {{$item->updated_at->diffForHumans()}}</span>
+                <span class="ml-3 fs-10 grey-5">Owner: {{$item->owner->name}}</span>
                 {{ $slot ?? '' }}
             </div>
         </div>

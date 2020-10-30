@@ -3,7 +3,7 @@
         @if($loop->iteration < 12)
             <li class="mt-2">
                 <a href="{{route('projects.files.show', [$project, $file->fid])}}"
-                   class="fs-9">{{$file->fname}}</a>
+                   class="fs-10">{{$file->fname}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
@@ -21,7 +21,7 @@
             </li>
         @else
             <li class="{{Illuminate\Support\Str::slug($activityType->name)}} mt-2" hidden>
-                <a href="{{route('projects.files.show', [$project, $file->fid])}}" class="fs-9">{{$file->fname}}</a>
+                <a href="{{route('projects.files.show', [$project, $file->fid])}}" class="fs-10">{{$file->fname}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">

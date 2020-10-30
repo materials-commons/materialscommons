@@ -3,7 +3,7 @@
         @if($loop->iteration < 12)
             <li class="mt-2">
                 <a href="{{route('public.datasets.files.show', [$dataset, $file->fid])}}"
-                   class="fs-9">{{$file->fname}}</a>
+                   class="fs-10">{{$file->fname}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">

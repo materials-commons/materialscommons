@@ -1,1 +1,1 @@
-<span class="fs-9 grey-5">{{$publishedDate()}}</span>
+<span class="fs-10 grey-5">{{$publishedDate()}}</span>

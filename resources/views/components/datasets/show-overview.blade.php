@@ -8,8 +8,8 @@
             </div>
             <x-datasets.show-published-date :published="$dataset->published_at"/>
             @if(!is_null($dataset->published_at))
-                <span class="ml-3 fs-9 grey-5">Views: {{$dataset->views_count}}</span>
-                <span class="ml-3 fs-9 grey-5">Downloads: {{$dataset->downloads_count}}</span>
+                <span class="ml-3 fs-10 grey-5">Views: {{$dataset->views_count}}</span>
+                <span class="ml-3 fs-10 grey-5">Downloads: {{$dataset->downloads_count}}</span>
             @endif
             <x-datasets.show-doi :doi="$dataset->doi"/>
             <x-datasets.show-license :dataset="$dataset"/>
