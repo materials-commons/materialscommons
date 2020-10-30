@@ -94,6 +94,7 @@ class ImportGlobusUploadIntoProjectAction
                 continue;
             }
 
+            echo "processing path: {$path}\n";
             if ($finfo->isDir()) {
                 $this->processDir($path);
             } else {
