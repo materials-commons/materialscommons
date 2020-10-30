@@ -17,11 +17,32 @@ class DeleteProjectWebController extends Controller
      */
     public function __invoke(DeleteProjectAction $deleteProjectAction, Project $project)
     {
-        abort_unless(auth()->id() === $project->owner_id, 403, "Not project owner");
-        abort_unless($project->publishedDatasets()->count() == 0, 403,
-            "Cannot delete projects with published datasets");
+        if (!$this->checkIfCanDelete($project)) {
+            return redirect(route('dashboard.projects.show'));
+        }
+
         $deleteProjectAction($project);
 
-        return redirect(route('projects.index'));
+        return redirect(route('dashboard.projects.show'));
+    }
+
+    private function checkIfCanDelete(Project $project)
+    {
+        if (auth()->id() !== $project->owner_id) {
+            flash("Not project owner")->error();
+            return false;
+        }
+
+        if ($project->publishedDatasets()->count() !== 0) {
+            flash("Cannot delete projects with published datasets")->error();
+            return false;
+        }
+
+        if ($project->file_count > 0) {
+            flash("You cannot delete a project that has files")->error();
+            return false;
+        }
+
+        return true;
     }
 }
