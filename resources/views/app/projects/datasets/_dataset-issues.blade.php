@@ -59,16 +59,16 @@
                     <li class="mt-2">
                         <x-warning-icon/>
                         Your dataset has no authors. An authors list helps others evaluate your dataset.
-                    It is recommended that you include authors.
-                </li>
-            </template>
-            <template x-if="dataset.funding === ''">
-                <li class="mt-2">
-                    <x-warning-icon/>
-                    Your dataset has no funding. If your research was funded through public or private
-                    means it is recommended that you include a reference to the funding agency.
-                </li>
-            </template>
+                        It is recommended that you include authors.
+                    </li>
+                </template>
+                <template x-if="dataset.funding === ''">
+                    <li class="mt-2">
+                        <x-warning-icon/>
+                        Your funding field is blank. If your research was funded through public or private
+                        means it is recommended that you include an acknowledgement.
+                    </li>
+                </template>
         </ul>
     </div>
 
