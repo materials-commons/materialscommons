@@ -39,6 +39,7 @@ class ImportGlobusUploadIntoProjectAction
 
         if (!$this->importUploadedFiles()) {
             // Did not complete importing uploaded files
+            echo "importUploadedFiles Failed\n";
             return;
         }
 
@@ -97,6 +98,7 @@ class ImportGlobusUploadIntoProjectAction
                 $this->processDir($path);
             } else {
                 if (is_null($this->processFile($path, $finfo))) {
+                    echo "processFile returned null\n";
                     // processing file failed, so stop let job be processed later
                     $this->globusUpload->update(['status' => GlobusStatus::Done]);
                     return false;
@@ -170,6 +172,7 @@ class ImportGlobusUploadIntoProjectAction
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             if (!$this->moveFileIntoProject($path, $fileEntry)) {
+                echo "moveFileIntoProject failed no matching checksum\n";
                 return null;
             }
         } else {
@@ -180,15 +183,19 @@ class ImportGlobusUploadIntoProjectAction
             $fileEntry->uses_id = $matchingFileChecksum->id;
             if (!$matchingFileChecksum->realFileExists()) {
                 if (!$this->moveFileIntoProject($path, $matchingFileChecksum)) {
+                    echo "moveFileIntoProject failed matching checksum\n";
                     return null;
                 }
             }
             try {
                 if (!unlink($path)) {
+                    echo "unlink failed\n";
                     return null;
                 }
             } catch (\Exception $e) {
-                // unlink through an exception
+                // unlink threw an exception
+                $msg = $e->getMessage();
+                echo "unlink exception: {$msg}\n";
                 return null;
             }
         }
@@ -224,6 +231,8 @@ class ImportGlobusUploadIntoProjectAction
                 return $status;
             }
         } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "moveFileIntoProject exception: ${msg}\n";
             return false;
         }
 
