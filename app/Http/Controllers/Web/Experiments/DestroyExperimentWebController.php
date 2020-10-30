@@ -18,7 +18,7 @@ class DestroyExperimentWebController extends Controller
         abort_if($this->hasAffectedPublishedDatasets($experiment), 403,
             "Samples from experiment used in published datasets");
         $deleteExperimentAction($experiment);
-        return redirect(route('projects.show', [$project]));
+        return redirect(route('projects.experiments.index', [$project]));
     }
 
     private function canDelete(Project $project, Experiment $experiment)
