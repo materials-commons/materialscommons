@@ -39,7 +39,6 @@ class ImportGlobusUploadIntoProjectAction
 
         if (!$this->importUploadedFiles()) {
             // Did not complete importing uploaded files
-            echo "importUploadedFiles Failed\n";
             return;
         }
 
@@ -94,12 +93,10 @@ class ImportGlobusUploadIntoProjectAction
                 continue;
             }
 
-            echo "processing path: {$path}\n";
             if ($finfo->isDir()) {
                 $this->processDir($path);
             } else {
                 if (is_null($this->processFile($path, $finfo))) {
-                    echo "processFile returned null\n";
                     // processing file failed, so stop let job be processed later
                     $currentErrors = $this->globusUpload->errors ?? 0;
                     $this->globusUpload->update([
@@ -177,7 +174,6 @@ class ImportGlobusUploadIntoProjectAction
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             if (!$this->moveFileIntoProject($path, $fileEntry)) {
-                echo "moveFileIntoProject failed no matching checksum\n";
                 return null;
             }
         } else {
@@ -188,19 +184,16 @@ class ImportGlobusUploadIntoProjectAction
             $fileEntry->uses_id = $matchingFileChecksum->id;
             if (!$matchingFileChecksum->realFileExists()) {
                 if (!$this->moveFileIntoProject($path, $matchingFileChecksum)) {
-                    echo "moveFileIntoProject failed matching checksum\n";
                     return null;
                 }
             }
             try {
                 if (!unlink($path)) {
-                    echo "unlink failed\n";
                     return null;
                 }
             } catch (\Exception $e) {
                 // unlink threw an exception
                 $msg = $e->getMessage();
-                echo "unlink exception: {$msg}\n";
                 return null;
             }
         }
@@ -221,14 +214,12 @@ class ImportGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $file)
     {
-        echo "moveFileInProject {$path}\n";
         try {
             $uuid = $this->getUuid($file);
             $to = $this->getDirPathForFile($file)."/{$uuid}";
             $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
             $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
-            echo "after replaceFirst filePath = {$filePath}\n";
             if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
                 $status = Storage::disk('mcfs')->copy($filePath, $to);
                 $fpath = Storage::disk('mcfs')->path($to);
@@ -239,7 +230,6 @@ class ImportGlobusUploadIntoProjectAction
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();
-            echo "moveFileIntoProject exception: ${msg}\n";
             return false;
         }
 
