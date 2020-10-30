@@ -101,7 +101,11 @@ class ImportGlobusUploadIntoProjectAction
                 if (is_null($this->processFile($path, $finfo))) {
                     echo "processFile returned null\n";
                     // processing file failed, so stop let job be processed later
-                    $this->globusUpload->update(['status' => GlobusStatus::Done]);
+                    $currentErrors = $this->globusUpload->errors ?? 0;
+                    $this->globusUpload->update([
+                        'status' => GlobusStatus::Done,
+                        'errors' => $currentErrors + 1,
+                    ]);
                     return false;
                 }
                 $fileCount++;

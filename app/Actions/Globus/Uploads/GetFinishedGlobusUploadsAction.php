@@ -14,6 +14,9 @@ class GetFinishedGlobusUploadsAction
     {
         return GlobusUploadDownload::where('status', GlobusStatus::Done)
                                    ->where('type', GlobusType::ProjectUpload)
+                                   ->where(function ($query) {
+                                       $query->whereNull('errors')->orWhere('errors', '<', 10);
+                                   })
                                    ->whereNotIn('project_id', function ($q) {
                                        $q->select('project_id')->from('globus_uploads_downloads')
                                          ->where('status', GlobusStatus::Loading);

@@ -28,6 +28,7 @@ class CreateGlobusUploadAction
         $data['owner_id'] = $user->id;
         $data['type'] = GlobusType::ProjectUpload;
         $data['status'] = GlobusStatus::Uploading;
+        $data['errors'] = 0;
         $globusUpload = GlobusUploadDownload::create($data);
 
         $path = Storage::disk('mcfs')->path("__globus_uploads/{$globusUpload->uuid}");

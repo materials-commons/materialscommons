@@ -51,4 +51,42 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
         $this->assertEquals($uploadToProcess->project_id, $finishedUploads[0]->project_id);
         $this->assertEquals($uploadToProcess->id, $finishedUploads[0]->id);
     }
+
+    /** @test */
+    public function upload_errors_are_handled_correctly_for_selection()
+    {
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+
+        // check null case on errors
+        $gld = factory(GlobusUploadDownload::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Done,
+        ]);
+        $getFinishedGlobusUploadsAction = new GetFinishedGlobusUploadsAction();
+        $finishedUploads = $getFinishedGlobusUploadsAction();
+        $this->assertEquals(1, $finishedUploads->count());
+
+        // check where it has errors but less than the amount we would ignore it on
+        $gld->update(['errors' => 2]);
+        $finishedUploads = $getFinishedGlobusUploadsAction();
+        $this->assertEquals(1, $finishedUploads->count());
+
+        // Check that it ignores when errors are set to 10
+        $gld->update(['errors' => 10]);
+        $finishedUploads = $getFinishedGlobusUploadsAction();
+        $this->assertEquals(0, $finishedUploads->count());
+
+        // Check that we get back an upload when a second one is added without errors
+        $gld2 = factory(GlobusUploadDownload::class)->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+            'type'       => GlobusType::ProjectUpload,
+            'status'     => GlobusStatus::Done,
+        ]);
+        $finishedUploads = $getFinishedGlobusUploadsAction();
+        $this->assertEquals(1, $finishedUploads->count());
+    }
 }
