@@ -217,12 +217,14 @@ class ImportGlobusUploadIntoProjectAction
 
     private function moveFileIntoProject($path, $file)
     {
+        echo "moveFileInProject {$path}\n";
         try {
             $uuid = $this->getUuid($file);
             $to = $this->getDirPathForFile($file)."/{$uuid}";
             $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
             $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
 
+            echo "after replaceFirst filePath = {$filePath}\n";
             if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
                 $status = Storage::disk('mcfs')->copy($filePath, $to);
                 $fpath = Storage::disk('mcfs')->path($to);
