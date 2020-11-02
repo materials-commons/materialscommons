@@ -12,28 +12,37 @@
         @component('components.card')
             @slot('header')
                 Compare sample {{$entity1->name}} to {{$entity2->name}}
-                <a class="action-link float-right" href="#" @click="showHideFilter()">
+                <a class="action-link float-right" href="#" @click="showFilter = !showFilter">
                     <i class="fas fa-filter mr-2"></i>Filter Processes
                 </a>
             @endslot
 
             @slot('body')
-                <div class="row mb-2" style="display: none" x-show="showFilter">
-                    <div class="col-5">
-                        <ul class="list-unstyled">
-                            @foreach($entity1Activities as $e1activity)
-                                <li>
-                                    <input type="checkbox" value="{{$e1activity->name}}">
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="col-5">
-                        @foreach($entity2Activities as $e2activity)
-                            <li>
-                                <input type="checkbox" value="{{$e2activity->name}}">
-                            </li>
-                        @endforeach
+                <div style="display: none" x-show="showFilter">
+                    <h4>Select/Deselect processes to show</h4>
+                    <div class="row mb-2 mt-3">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                @foreach($entity1Activities as $e1activity)
+                                    <li>
+                                        <input type="checkbox" value="{{$e1activity->uuid}}"
+                                               @click="toggleSample1Process($event)" checked>
+                                        <label>{{$e1activity->name}}</label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                @foreach($entity2Activities as $e2activity)
+                                    <li>
+                                        <input type="checkbox" value="{{$e2activity->uuid}}"
+                                               @click="toggleSample2Process($event)" checked>
+                                        <label>{{$e2activity->name}}</label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -43,7 +52,7 @@
 
                         <div class="row ml-1">
                             @foreach($entity1Activities as $e1activity)
-                                <div class="col-10 bg-grey-9 mt-2">
+                                <div class="col-10 bg-grey-9 mt-2" x-show="sample1Processes['{{$e1activity->uuid}}']">
                                     @include('partials.activities.activity-card', ['activity' => $e1activity])
                                 </div>
                             @endforeach
@@ -55,7 +64,7 @@
 
                         <div class="row ml-1">
                             @foreach($entity2Activities as $e2activity)
-                                <div class="col-10  bg-grey-9 mt-2">
+                                <div class="col-10 bg-grey-9 mt-2" x-show="sample2Processes['{{$e2activity->uuid}}']">
                                     @include('partials.activities.activity-card', ['activity' => $e2activity])
                                 </div>
                             @endforeach
@@ -71,29 +80,31 @@
 @push('scripts')
     <script>
         function initFilterProcesses() {
-            console.log('initFilterProcesses');
-            return {
+            let xdata = {
                 showFilter: false,
-                sample1Processes: [
-                        @foreach($entity2Activities as $e2activity)
-                    {
-                        name: "{{$e2activity->name}}"
-                    },
-                    @endforeach
-                ],
+                sample1Processes: {},
 
-                sample2Processes: [
-                        @foreach($entity2Activities as $e2activity)
-                    {
-                        name: "{{$e2activity->name}}"
-                    },
-                    @endforeach
-                ],
-                showHideFilter() {
-                    console.log('showHideFilter');
-                    this.showFilter = !this.showFilter;
+                sample2Processes: {},
+
+                toggleSample1Process(element) {
+                    this.sample1Processes[element.target.value] = !this.sample1Processes[element.target.value];
                 },
+
+                toggleSample2Process(element) {
+                    this.sample2Processes[element.target.value] = !this.sample2Processes[element.target.value];
+                }
             };
+
+            @foreach($entity1Activities as $e1activity)
+                xdata.sample1Processes["{{$e1activity->uuid}}"] = true;
+            @endforeach
+
+                    @foreach($entity2Activities as $e2activity)
+                xdata.sample2Processes["{{$e2activity->uuid}}"] = true;
+            @endforeach
+
+
+                return xdata;
         }
     </script>
 @endpush
