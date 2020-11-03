@@ -55,11 +55,12 @@ trait GroupByActivityType
         return DB::table('activities')
                  ->select('activities.name', 'attributes.name as attr_name', 'unit', 'val', 'attributes.eindex')
                  ->whereIn('activities.id', $activityIds)
-                 ->join('activity2entity_state', 'activities.id', '=',
-                     'activity2entity_state.activity_id')
+                 ->join('activity2entity_state', function ($join) {
+                     $join->on('activities.id', '=', 'activity2entity_state.activity_id')
+                          ->where('direction', '<>', 'in');
+                 })
                  ->join('attributes', function ($join) {
-                     $join->on('attributes.attributable_id', '=',
-                         'activity2entity_state.entity_state_id')
+                     $join->on('attributes.attributable_id', '=', 'activity2entity_state.entity_state_id')
                           ->where('attributable_type', EntityState::class);
                  })
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
