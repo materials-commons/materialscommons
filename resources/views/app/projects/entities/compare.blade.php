@@ -19,25 +19,36 @@
 
             @slot('body')
                 <div style="display: none" x-show="showFilter">
-                    <h4>Select/Deselect processes to show</h4>
+                    <h4>Select/Deselect processes to show <a href="#" class="ml-1"
+                                                             @click="showFilter = false">(Hide)</a></h4>
                     <div class="row mb-2 mt-3">
                         <div class="col-6">
+                            <div class="col-12 mb-3">
+                                <a href="#" @click="selectAllSample1()">Select All</a>
+                                <a href="#" class="ml-3" @click="deselectAllSample1()">Deselect All</a>
+                            </div>
                             <ul class="list-unstyled">
                                 @foreach($entity1Activities as $e1activity)
                                     <li>
                                         <input type="checkbox" value="{{$e1activity->uuid}}"
-                                               @click="toggleSample1Process($event)" checked>
+                                               @click="toggleSample1Process($event)"
+                                               x-bind:checked="sample1Processes['{{$e1activity->uuid}}']">
                                         <label>{{$e1activity->name}}</label>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                         <div class="col-6">
+                            <div class="col-12 mb-3">
+                                <a href="#" @click="selectAllSample2()">Select All</a>
+                                <a href="#" class="ml-3" @click="deselectAllSample2()">Deselect All</a>
+                            </div>
                             <ul class="list-unstyled">
                                 @foreach($entity2Activities as $e2activity)
                                     <li>
                                         <input type="checkbox" value="{{$e2activity->uuid}}"
-                                               @click="toggleSample2Process($event)" checked>
+                                               @click="toggleSample2Process($event)"
+                                               x-bind:checked="sample2Processes['{{$e2activity->uuid}}']">
                                         <label>{{$e2activity->name}}</label>
                                     </li>
                                 @endforeach
@@ -92,7 +103,31 @@
 
                 toggleSample2Process(element) {
                     this.sample2Processes[element.target.value] = !this.sample2Processes[element.target.value];
-                }
+                },
+
+                selectAllSample1() {
+                    for (const key in this.sample1Processes) {
+                        this.sample1Processes[key] = true;
+                    }
+                },
+
+                deselectAllSample1() {
+                    for (const key in this.sample1Processes) {
+                        this.sample1Processes[key] = false;
+                    }
+                },
+
+                selectAllSample2() {
+                    for (const key in this.sample2Processes) {
+                        this.sample2Processes[key] = true;
+                    }
+                },
+
+                deselectAllSample2() {
+                    for (const key in this.sample2Processes) {
+                        this.sample2Processes[key] = false;
+                    }
+                },
             };
 
             @foreach($entity1Activities as $e1activity)
