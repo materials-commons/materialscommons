@@ -45,7 +45,7 @@ class AddEntityFilesToDatasetCommand extends Command
         return 0;
     }
 
-    private function addDatasetEntityFilesToDataset(Dataset $dataset)
+    public function addDatasetEntityFilesToDataset(Dataset $dataset)
     {
         $entities = $dataset->entitiesFromTemplate();
         $datasetFileSelection = $dataset->file_selection;
@@ -58,7 +58,7 @@ class AddEntityFilesToDatasetCommand extends Command
                 $fileDirPath = $file->directory->path === "/" ? "" : $file->directory->path;
                 $filePath = "{$fileDirPath}/{$file->name}";
                 echo "  adding file {$filePath}\n";
-                if (!array_key_exists($filePath, $datasetFileSelection['include_files'])) {
+                if (!in_array($filePath, $datasetFileSelection['include_files'])) {
                     array_push($datasetFileSelection['include_files'], $filePath);
                 }
             });
