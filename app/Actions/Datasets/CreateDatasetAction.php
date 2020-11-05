@@ -45,6 +45,9 @@ class CreateDatasetAction
             'exclude_dirs'  => [],
         ];
 
+        $dataset->zipfile_size = 0;
+        $dataset->globus_path_exists = false;
+
         DB::transaction(function () use ($dataset, $communities, $experiments, $papers) {
             $dataset->save();
             if ($communities !== null) {

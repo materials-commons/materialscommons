@@ -56,6 +56,7 @@ class CreateDatasetInGlobusAction
         }
 
         $this->setAcl($dataset, $isPrivate);
+        $dataset->update(['globus_path_exists' => true]);
     }
 
     private function getDatasetDir(Dataset $dataset, $isPrivate)

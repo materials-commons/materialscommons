@@ -37,6 +37,8 @@ use Spatie\Tags\HasTags;
  * @property string $authors
  * @property mixed $published_at
  * @property string $doi
+ * @property integer zipfile_size
+ * @property boolean globus_path_exists
  *
  * @mixin Builder
  */
@@ -53,15 +55,17 @@ class Dataset extends Model implements Searchable
     ];
 
     protected $casts = [
-        'file_selection'    => 'array',
-        'owner_id'          => 'integer',
-        'project_id'        => 'integer',
-        'files_count'       => 'integer',
-        'activities_count'  => 'integer',
-        'entities_count'    => 'integer',
-        'experiments_count' => 'integer',
-        'comments_count'    => 'integer',
-        'workflows_count'   => 'integer',
+        'file_selection'     => 'array',
+        'owner_id'           => 'integer',
+        'project_id'         => 'integer',
+        'files_count'        => 'integer',
+        'activities_count'   => 'integer',
+        'entities_count'     => 'integer',
+        'experiments_count'  => 'integer',
+        'comments_count'     => 'integer',
+        'workflows_count'    => 'integer',
+        'zipfile_size'       => 'integer',
+        'globus_path_exists' => 'boolean',
     ];
 
     public function owner()

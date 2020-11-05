@@ -24,7 +24,7 @@ class UnpublishDatasetAction
             Log::error("Unable to delete acl");
         }
 
-        $dataset->update(['published_at' => null]);
+        $dataset->update(['published_at' => null, 'zipfile_size' => 0, 'globus_path_exists' => false]);
         $dataset->files()->delete();
         @Storage::disk('mcfs')->deleteDirectory($dataset->publishedGlobusPathPartial());
         @Storage::disk('mcfs')->deleteDirectory($dataset->zipfileDirPartial());

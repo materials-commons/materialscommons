@@ -44,5 +44,6 @@ class CreateDatasetZipfileAction
             $zip->addFile($fullPath, $pathInZipfile);
         }
         $zip->close();
+        $dataset->update(['zipfile_size' => $dataset->zipfileSize()]);
     }
 }

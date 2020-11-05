@@ -18,7 +18,7 @@ class DatasetResource extends JsonResource
         'doi', 'published_at', 'authors', 'file_selection', 'globus_endpoint_id',
         'globus_path', 'owner_id', 'created_at', 'updated_at', 'files_count',
         'activities_count', 'entities_count', 'experiments_count', 'comments_count',
-        'workflows_count',
+        'workflows_count', 'zipfile_size',
     ];
 
     public function toArray($request)
@@ -38,11 +38,7 @@ class DatasetResource extends JsonResource
             return $ds;
         }
 
-        $zipfilePath = $this->zipfilePath();
-        if (file_exists($zipfilePath)) {
-            $ds['zipfile_size'] = filesize($zipfilePath);
-            $ds['zipfile_name'] = $this->zipfileName();
-        }
+        $ds['zipfile_name'] = $this->zipfileName();
 
         return $ds;
     }
