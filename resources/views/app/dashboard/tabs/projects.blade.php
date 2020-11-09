@@ -74,8 +74,8 @@
             $('#projects').DataTable({
                 stateSave: true,
                 columnDefs: [
-                    {orderData: [6], targets: [5]},
-                    {targets: [6], visible: false, searchable: false},
+                    {orderData: [7], targets: [6]},
+                    {targets: [7], visible: false, searchable: false},
                     {orderData: [2], targets: [1]},
                     {targets: [2], visible: false},
                 ]
