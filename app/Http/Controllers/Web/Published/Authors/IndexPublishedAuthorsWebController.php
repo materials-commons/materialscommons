@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Published\Authors;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class IndexPublishedAuthorsWebController extends Controller
 {
@@ -15,6 +16,7 @@ class IndexPublishedAuthorsWebController extends Controller
         $authors = [];
         foreach ($datasets as $ds) {
             foreach (explode(';', $ds->authors) as $author) {
+                $author = Str::of($author)->before('(')->trim()->__toString();
                 if (isset($authors[$author])) {
                     $count = $authors[$author];
                     $count++;
@@ -25,7 +27,12 @@ class IndexPublishedAuthorsWebController extends Controller
             }
         }
 
-        $authors = collect($authors)->sortKeys()->toArray();
+        $authors = collect($authors)
+            ->filter(function ($value, $key) {
+                return $key !== '';
+            })
+            ->sortKeys()
+            ->toArray();
         return view('public.authors.index', compact('authors'));
     }
 }
