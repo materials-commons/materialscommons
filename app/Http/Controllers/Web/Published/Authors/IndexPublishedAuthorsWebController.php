@@ -12,7 +12,10 @@ class IndexPublishedAuthorsWebController extends Controller
     public function __invoke(Request $request)
     {
         // Not the most efficient way, but good enough for now.
-        $datasets = DB::table('datasets')->select('authors')->distinct()->get();
+        $datasets = DB::table('datasets')
+                      ->whereNotNull('published_at')
+                      ->select('authors')
+                      ->get();
         $authors = [];
         foreach ($datasets as $ds) {
             foreach (explode(';', $ds->authors) as $author) {
