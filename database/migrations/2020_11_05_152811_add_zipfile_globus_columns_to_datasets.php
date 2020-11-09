@@ -14,7 +14,7 @@ class AddZipfileGlobusColumnsToDatasets extends Migration
     public function up()
     {
         Schema::table('datasets', function (Blueprint $table) {
-            $table->unsignedInteger('zipfile_size')->nullable();
+            $table->unsignedBigInteger('zipfile_size')->nullable();
             $table->boolean('globus_path_exists')->nullable();
         });
     }
