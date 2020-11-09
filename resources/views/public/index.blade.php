@@ -37,22 +37,6 @@
         @endslot
     @endcomponent
 
-    <hr>
-
-    <p>
-        Communities are a way for our members to organize their data. A community is formed around common groups such as
-        DFT data or large Syncotron datasets. If you join Materials Commons you can even start your own community.
-    </p>
-    @component('components.card')
-        @slot('header')
-            Communities
-        @endslot
-
-        @slot('body')
-            @include('public.communities._communities_table')
-        @endslot
-    @endcomponent
-
     @push('scripts')
         <script>
             $(document).ready(() => {
