@@ -29,7 +29,9 @@ trait DataDictionaryQueries
     public function getActivityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
-                 ->select('name', 'unit', 'val')
+                 ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
+                     'activities.name as object_name', 'activities.id as object_id',
+                     DB::raw("'activity' as object_type"))
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2activity')
@@ -37,8 +39,9 @@ trait DataDictionaryQueries
                        ->where('experiment_id', $experimentId)
                  )
                  ->where('attributable_type', Activity::class)
-                 ->where('name', $attrName)
+                 ->where('attributes.name', $attrName)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->join('activities', 'attributes.attributable_id', '=', 'activities.id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -67,21 +70,26 @@ trait DataDictionaryQueries
     public function getEntityAttributeForExperiment($experimentId, $attrName)
     {
         return DB::table('attributes')
-                 ->select('name', 'unit', 'val', 'attributes.id')
+                 ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
+                     'entities.name as object_name', 'entities.id as object_id', DB::raw("'entity' as object_type"))
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2entity')
                        ->select('entity_states.id')
                        ->where('experiment_id', $experimentId)
-                       ->join('entity_states', 'experiment2entity.entity_id', '=', 'entity_states.entity_id')
-
+                       ->join('entity_states', 'experiment2entity.entity_id', '=',
+                           'entity_states.entity_id')
                  )
                  ->where('attributable_type', EntityState::class)
-                 ->where('name', $attrName)
-                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->where('attributes.name', $attrName)
+                 ->join('attribute_values', 'attributes.id', '=',
+                     'attribute_values.attribute_id')
+                 ->join('entity_states', 'attributes.attributable_id', '=',
+                     'entity_states.id')
+                 ->join('entities', 'entity_states.entity_id', '=', 'entities.id')
                  ->distinct()
                  ->get()
-                 ->groupBy('name');
+                 ->groupBy('attributes.name');
     }
 
     public function getEntityAttributeEntitiesForExperiment($experimentId, $attrName)

@@ -48,6 +48,7 @@
             <tr>
                 <th>Value</th>
                 <th>Unit</th>
+                <th>From</th>
                 {{--                <th>Samples</th>--}}
                 {{--                <th>Processes</th>--}}
             </tr>
@@ -62,6 +63,17 @@
                         <td>{{$attr->unit}}</td>
                         {{--                        <td>Samples here</td>--}}
                         {{--                        <td>Processes here</td>--}}
+                        <td>
+                            @if($attr->object_type === 'entity')
+                                <a href="{{route('projects.entities.show', [$project, $attr->object_id])}}">
+                                    {{$attr->object_name}}
+                                </a>
+                            @else
+                                <a href="{{route('projects.activities.show', [$project, $attr->object_id])}}">
+                                    {{$attr->object_name}}
+                                </a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             @endforeach
