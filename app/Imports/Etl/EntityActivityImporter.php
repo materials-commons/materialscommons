@@ -354,10 +354,11 @@ class EntityActivityImporter
     private function addSingleFile($path, ?Entity $entity, ?Activity $activity)
     {
         $file = $this->getFileByPathAction->execute($this->projectId, $path);
-        $this->addFileToActivityAndEntity($file, $activity, $entity);
         if (is_null($file)) {
+            $this->etlState->logError("Unable to find file {$path}");
             return;
         }
+        $this->addFileToActivityAndEntity($file, $activity, $entity);
 
         $this->experiment->files()->syncWithoutDetaching($file);
     }

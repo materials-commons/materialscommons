@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin Builder
  *
  * @property integer $id
+ * @property string $uuid
  * @property integer $owner_id
  * @property integer $n_activities
  * @property integer $n_activity_attributes

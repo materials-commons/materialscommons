@@ -36,6 +36,7 @@
     "bootstrap-steps": "^1.0.3",
     "canvas-datagrid": "^0.22.13",
     "flowchart.js": "^1.13.0",
+    "htmx.org": "^0.3.0",
     "laravel-mix-purgecss": "^4.2.0",
     "xlsx": "^0.15.6"
   }

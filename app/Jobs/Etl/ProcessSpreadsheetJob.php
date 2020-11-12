@@ -46,7 +46,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $file = File::find($this->fileId);
         $uuidPath = $this->getFilePathForFile($file);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-        $etlState = new EtlState($this->userId);
+        $etlState = new EtlState($this->userId, $file->id);
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
         $importer->execute($filePath);
         $experiment = Experiment::findOrFail($this->experimentId);

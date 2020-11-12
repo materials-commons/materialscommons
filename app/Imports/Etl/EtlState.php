@@ -3,15 +3,17 @@
 namespace App\Imports\Etl;
 
 use App\Models\EtlRun;
+use Illuminate\Support\Facades\Storage;
 
 class EtlState
 {
     /** @var \App\Models\EtlRun */
     public $etlRun;
 
-    public function __construct($ownerId)
+    public function __construct($ownerId, $fileId)
     {
         $this->etlRun = EtlRun::make([
+            'file_id'                     => $fileId,
             'owner_id'                    => $ownerId,
             // activities
             'n_activities'                => 0,
@@ -34,10 +36,32 @@ class EtlState
             'n_columns'                   => 0,
             'n_columns_skipped'           => 0,
         ]);
+
+        $this->etlRun->save();
     }
 
     public function done()
     {
         $this->etlRun->save();
+    }
+
+    public function logError($msg)
+    {
+        $this->writeToLog("Error: {$msg}");
+    }
+
+    public function logWarning($msg)
+    {
+        $this->writeToLog("Warning: {$msg}");
+    }
+
+    public function logProgress($msg)
+    {
+        $this->writeToLog($msg);
+    }
+
+    private function writeToLog($msg)
+    {
+        Storage::disk('mcfs')->append("etl_logs/{$this->etlRun->uuid}.log", $msg);
     }
 }

@@ -20,6 +20,7 @@ window.mcutil = require('./util');
 window.xlsx = require('xlsx');
 window.datagrid = require('canvas-datagrid');
 require('alpinejs');
+window.htmx = require('htmx.org');
 
 window.Uppy = require('@uppy/core');
 window.UppyXHRUpload = require('@uppy/xhr-upload');
