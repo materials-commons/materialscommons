@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Experiments\ShowExperimentActivitiesDataDictionaryW
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEtlRunLogWebController;
+use App\Http\Controllers\Web\Experiments\ShowExperimentEtlRunsWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentOverviewWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
@@ -47,6 +48,9 @@ Route::prefix('/projects/{project}')->group(function () {
 
     Route::get('/experiments/{experiment}/workflow', ShowExperimentWorkflowWebController::class)
          ->name('projects.experiments.workflow');
+
+    Route::get('/experiments/{experiment}/etl_runs', ShowExperimentEtlRunsWebController::class)
+         ->name('projects.experiments.etl_runs');
 
     Route::get('/experiments/{experiment}/data-dictionary/activities',
         ShowExperimentActivitiesDataDictionaryWebController::class)

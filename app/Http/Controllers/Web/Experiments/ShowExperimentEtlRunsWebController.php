@@ -19,7 +19,7 @@ class ShowExperimentEtlRunsWebController extends Controller
                                 ->with('etlRuns.files')
                                 ->findOrFail($experimentId);
         $excelFilesCount = $this->getExcelFilesCount($project);
-        return view('', [
+        return view('app.projects.experiments.show', [
             'project'                 => $project,
             'experiment'              => $experiment,
             'excelFilesCount'         => $excelFilesCount,

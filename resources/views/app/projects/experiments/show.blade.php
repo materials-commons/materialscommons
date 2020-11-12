@@ -50,6 +50,8 @@
                 @include('app.projects.experiments.tabs.workflows-tab')
                 {{--            @elseif (Request::routeIs('projects.experiments.activities-tab'))--}}
                 {{--                @include('app.projects.experiments.tabs.activities-tab')--}}
+            @elseif (Request::routeIs('projects.experiments.etl_runs'))
+                @include('app.projects.experiments.tabs.etl-runs-tab')
             @endif
 
         @endslot
