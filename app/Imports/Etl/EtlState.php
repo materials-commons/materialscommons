@@ -13,7 +13,6 @@ class EtlState
     public function __construct($ownerId, $fileId)
     {
         $this->etlRun = EtlRun::make([
-            'file_id'                     => $fileId,
             'owner_id'                    => $ownerId,
             // activities
             'n_activities'                => 0,
@@ -38,6 +37,7 @@ class EtlState
         ]);
 
         $this->etlRun->save();
+        $this->etlRun->files()->attach($fileId);
     }
 
     public function done()

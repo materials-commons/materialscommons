@@ -23,6 +23,8 @@ class ShowExperimentViewModel extends ViewModel
 
     private $entityAttributesCount;
 
+    private $etlRunsCount;
+
     public function __construct()
     {
         $this->activityAttributesCount = 0;
@@ -82,5 +84,16 @@ class ShowExperimentViewModel extends ViewModel
     public function entityAttributesCount()
     {
         return $this->entityAttributesCount;
+    }
+
+    public function withEtlRunsCount($count)
+    {
+        $this->etlRunsCount = $count;
+        return $this;
+    }
+
+    public function etlRunsCount()
+    {
+        return $this->etlRunsCount;
     }
 }

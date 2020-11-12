@@ -32,4 +32,10 @@
             Workflows ({{$experiment->workflows_count}})
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link no-underline" href="#">
+            ETL Runs
+        </a>
+    </li>
 </ul>
