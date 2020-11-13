@@ -47,10 +47,10 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $uuidPath = $this->getFilePathForFile($file);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
         $etlState = new EtlState($this->userId, $file->id);
-        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
-        $importer->execute($filePath);
         $experiment = Experiment::findOrFail($this->experimentId);
         $experiment->etlruns()->save($etlState->etlRun);
+        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
+        $importer->execute($filePath);
         Mail::to(User::findOrFail($this->userId))
             ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId), $experiment,
                 $etlState->etlRun));

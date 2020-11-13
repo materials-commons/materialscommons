@@ -109,6 +109,8 @@ class EntityActivityImporter
     {
         $blankRowCount = 0;
         $this->beforeSheet($worksheet);
+        $title = $worksheet->getTitle();
+        $this->etlState->logProgress("\nProcessing worksheet {$title}");
         foreach ($worksheet->getRowIterator() as $row) {
             if (!$this->onRow($row)) {
                 // saw blank row
@@ -209,6 +211,7 @@ class EntityActivityImporter
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
         ], $this->userId);
+        $this->etlState->logProgress("   Adding sample: {$entity->name}");
         $this->entityTracker->addEntity($entity);
         $this->etlState->etlRun->n_entities++;
 
@@ -318,6 +321,7 @@ class EntityActivityImporter
                    ->first();
 
         if (is_null($dir)) {
+            $this->etlState->logError("   Unable to find directory {$dirPath}");
             return;
         }
 
@@ -344,9 +348,12 @@ class EntityActivityImporter
     {
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
-            ->chunk(100, function ($files) use ($entity, $activity) {
-                $files->each(function (File $file) use ($entity, $activity) {
-                    $this->addFileToActivityAndEntity($file, $activity, $entity);
+            ->chunk(100, function ($files) use ($entity, $activity, $dir) {
+                $files->each(function (File $file) use ($entity, $activity, $dir) {
+                    if (!$this->addFileToActivityAndEntity($file, $activity, $entity)) {
+                        $dirPath = $dir->getDirPathForFormatting();
+                        $this->etlState->logError("   Unable to find file {$dirPath}/{$file->name}");
+                    }
                 });
             });
     }
@@ -355,7 +362,7 @@ class EntityActivityImporter
     {
         $file = $this->getFileByPathAction->execute($this->projectId, $path);
         if (is_null($file)) {
-            $this->etlState->logError("Unable to find file {$path}");
+            $this->etlState->logError("   Unable to find file {$path}");
             return;
         }
         $this->addFileToActivityAndEntity($file, $activity, $entity);
@@ -366,11 +373,12 @@ class EntityActivityImporter
     private function addFileToActivityAndEntity(?File $file, ?Activity $activity, ?Entity $entity)
     {
         if (is_null($file)) {
-            return;
+            return false;
         }
 
         $this->addFileToActivity($file, $activity);
         $this->addFileToEntity($file, $entity);
+        return true;
     }
 
     private function addFileToActivity(?File $file, ?Activity $activity)
@@ -488,6 +496,7 @@ class EntityActivityImporter
             'eindex'        => $this->currentSheetPosition,
         ], $this->userId);
 
+        $this->etlState->logProgress("   Adding process: {$activity->name} for sample {$entity->name}");
         $activity->entities()->attach($entity);
         $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
         $this->etlState->etlRun->n_activities++;

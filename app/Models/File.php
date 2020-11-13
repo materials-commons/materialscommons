@@ -14,6 +14,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer $id
  * @property string uuid
  * @property string uses_uuid
+ * @property string path
  * @property string $name
  * @property string $description
  * @property string $mime_type
@@ -264,5 +265,18 @@ class File extends Model implements Searchable
             default:
                 return false;
         }
+    }
+
+    public function getDirPathForFormatting()
+    {
+        if (is_null($this->path)) {
+            return "";
+        }
+
+        if ($this->path === "/") {
+            return "";
+        }
+
+        return $this->path;
     }
 }

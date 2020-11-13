@@ -4,6 +4,7 @@ namespace App\Imports\Etl;
 
 use App\Models\EtlRun;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EtlState
 {
@@ -47,21 +48,30 @@ class EtlState
 
     public function logError($msg)
     {
-        $this->writeToLog("Error: {$msg}");
+        $this->writeToLog($msg, "Error");
     }
 
     public function logWarning($msg)
     {
-        $this->writeToLog("Warning: {$msg}");
+        $this->writeToLog($msg, "Warning");
     }
 
     public function logProgress($msg)
     {
-        $this->writeToLog($msg);
+        $this->writeToLog($msg, "");
     }
 
-    private function writeToLog($msg)
+    private function writeToLog($msg, $msgType)
     {
-        Storage::disk('mcfs')->append("etl_logs/{$this->etlRun->uuid}.log", $msg);
+        // Determine how much to indent and what the message type is to add
+        $indentSize = strlen($msg) - strlen(ltrim($msg));
+        $str = Str::of($msg)
+                  ->ltrim()
+                  ->prepend(strlen($msgType) > 0 ? "{$msgType}: " : "")
+                  ->__toString();
+        for ($i = 0; $i < $indentSize; $i++) {
+            $str = ' '.$str;
+        }
+        Storage::disk('mcfs')->append("etl_logs/{$this->etlRun->uuid}.log", $str);
     }
 }
