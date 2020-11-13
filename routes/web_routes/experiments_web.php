@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesDataDictionaryWeb
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEtlRunLogWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEtlRunsWebController;
+use App\Http\Controllers\Web\Experiments\ShowExperimentEtlRunWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentOverviewWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentWorkflowWebController;
 use App\Http\Controllers\Web\Experiments\ShowReloadExperimentWebController;
@@ -81,6 +82,9 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::get('/experiments/{experiment}/datables/activities', GetExperimentActivitiesDatatableWebController::class)
          ->name('dt_get_experiment_activities');
 
-    Route::get('/experiments/{experiment}/etl_run/{etlRun}', ShowExperimentEtlRunLogWebController::class)
+    Route::get('/experiments/{experiment}/etl_run/{etlRun}/log', ShowExperimentEtlRunLogWebController::class)
+         ->name('projects.experiments.etl_run.show-log');
+
+    Route::get('/experiments/{experiment}/etl_run/{etlRun}', ShowExperimentEtlRunWebController::class)
          ->name('projects.experiments.etl_run.show');
 });
