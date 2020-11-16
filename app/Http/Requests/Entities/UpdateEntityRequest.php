@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Entities;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 
 class UpdateEntityRequest extends FormRequest
 {

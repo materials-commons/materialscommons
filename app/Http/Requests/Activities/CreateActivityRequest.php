@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Activities;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 
 class CreateActivityRequest extends FormRequest
 {

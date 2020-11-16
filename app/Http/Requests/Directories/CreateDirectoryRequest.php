@@ -4,7 +4,7 @@ namespace App\Http\Requests\Directories;
 
 use App\Rules\Files\IsValidFileName;
 use Illuminate\Foundation\Http\FormRequest;
-use Waavi\Sanitizer\Laravel\SanitizesInput;
+use Elegant\Sanitizer\Laravel\SanitizesInput;
 
 class CreateDirectoryRequest extends FormRequest
 {

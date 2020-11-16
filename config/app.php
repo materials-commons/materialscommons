@@ -180,7 +180,7 @@ return [
         /*
          * Waavi/Sanitizer
          */
-        Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class,
+        Elegant\Sanitizer\Laravel\SanitizerServiceProvider::class,
 
         /*
          * Batch Update

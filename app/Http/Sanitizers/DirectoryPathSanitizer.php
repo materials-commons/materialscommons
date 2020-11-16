@@ -3,7 +3,7 @@
 namespace App\Http\Sanitizers;
 
 use App\Helpers\PathHelpers;
-use Waavi\Sanitizer\Contracts\Filter;
+use Elegant\Sanitizer\Contracts\Filter;
 
 class DirectoryPathSanitizer implements Filter
 {
