@@ -25,11 +25,11 @@ class EntityActivityImportTest extends TestCase
     /** @test */
     public function test_spreadsheet_d1_headers()
     {
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -93,11 +93,11 @@ class EntityActivityImportTest extends TestCase
     public function test_simple_import_d1()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -127,11 +127,11 @@ class EntityActivityImportTest extends TestCase
     public function test_non_spreadsheet_named_file()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -161,11 +161,11 @@ class EntityActivityImportTest extends TestCase
     public function test_simple_import_of_2_entities()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -194,11 +194,11 @@ class EntityActivityImportTest extends TestCase
     public function test_simple_import_2_worksheets()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -222,11 +222,11 @@ class EntityActivityImportTest extends TestCase
     public function test_import_same_entity_and_activity_different_activity_attributes()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -246,11 +246,11 @@ class EntityActivityImportTest extends TestCase
     public function test_import_same_entity_and_activity_same_activity_attributes_different_entity_attribute_values()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -277,11 +277,11 @@ class EntityActivityImportTest extends TestCase
     public function test_import_with_parent_2_worksheets()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -302,13 +302,13 @@ class EntityActivityImportTest extends TestCase
     public function test_single_file_associations()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'name'     => 'P1',
             'owner_id' => $user->id,
         ]);
 
-        $rootDir = factory(File::class)->create([
+        $rootDir = File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -316,7 +316,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'   => $user->id,
         ]);
 
-        $d1Dir = factory(File::class)->create([
+        $d1Dir = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'D1',
             'path'         => '/D1',
@@ -325,7 +325,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f1 = factory(File::class)->create([
+        $f1 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'f1.txt',
             'mime_type'    => 'text',
@@ -333,7 +333,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f2 = factory(File::class)->create([
+        $f2 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'f2.txt',
             'mime_type'    => 'text',
@@ -341,7 +341,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f3 = factory(File::class)->create([
+        $f3 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'f3.txt',
             'mime_type'    => 'text',
@@ -349,7 +349,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f4 = factory(File::class)->create([
+        $f4 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'f4.txt',
             'mime_type'    => 'text',
@@ -357,7 +357,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $f5 = factory(File::class)->create([
+        $f5 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'f5.txt',
             'mime_type'    => 'text',
@@ -365,7 +365,7 @@ class EntityActivityImportTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -392,7 +392,7 @@ class EntityActivityImportTest extends TestCase
         $d2 = ProjectFactory::createDirectory($project, $root, "d2");
         $d3 = ProjectFactory::createDirectory($project, $d2, "d3");
         ProjectFactory::createFakeFile($project, $d3, "f3.txt");
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $project->owner_id,
             'project_id' => $project->id,
         ]);
@@ -420,7 +420,7 @@ class EntityActivityImportTest extends TestCase
         ProjectFactory::createFakeFile($project, $d1, "f1.txt");
         ProjectFactory::createFakeFile($project, $d1, "f2.txt");
         ProjectFactory::createFakeFile($project, $d1, "f3.jpeg");
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $project->owner_id,
             'project_id' => $project->id,
         ]);
@@ -447,7 +447,7 @@ class EntityActivityImportTest extends TestCase
         $d1 = ProjectFactory::createDirectory($project, $root, "d1");
         ProjectFactory::createFakeFile($project, $d1, "f1.txt");
         ProjectFactory::createFakeFile($project, $d1, "f2.txt");
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $project->owner_id,
             'project_id' => $project->id,
         ]);
@@ -469,11 +469,11 @@ class EntityActivityImportTest extends TestCase
     public function test_loading_ff_spreadsheet()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -488,11 +488,11 @@ class EntityActivityImportTest extends TestCase
     public function test_dates_load_properly()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
@@ -509,11 +509,11 @@ class EntityActivityImportTest extends TestCase
     public function test_loading_spreadsheet_with_global_settings()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);

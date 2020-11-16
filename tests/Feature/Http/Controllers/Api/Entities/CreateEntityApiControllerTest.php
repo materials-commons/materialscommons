@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Entities;
 
+use App\Models\Experiment;
+use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,9 +16,9 @@ class CreateEntityApiControllerTest extends TestCase
     public function it_should_create_an_entity()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
-        $experiment = factory('App\Models\Experiment')->create([
+        $experiment = Experiment::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);

@@ -15,7 +15,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
     public function project_owner_can_delete_users()
     {
         $this->withoutExceptionHandling();
-        $users = factory(User::class, 2)->create();
+        $users = User::factory()->count(2)->create();
         $project = ProjectFactory::ownedBy($users[0])->create();
         ProjectFactory::addMemberToProject($users[1], $project);
 
@@ -31,7 +31,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
     /** @test */
     public function project_owner_cannot_remove_themself()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
 
         $this->actingAs($user);
@@ -43,7 +43,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
     /** @test */
     public function project_members_cannot_delete_users()
     {
-        $users = factory(User::class, 3)->create();
+        $users = User::factory()->count(3)->create();
         $owner = $users[0];
         $member = $users[1];
         $memberToRemove = $users[2];

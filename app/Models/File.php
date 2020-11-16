@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\FileType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
@@ -33,6 +34,7 @@ class File extends Model implements Searchable
 {
     use HasUUID;
     use FileType;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

@@ -1,21 +1,29 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
 use App\Models\Entity;
-use Faker\Generator as Faker;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Entity::class, function (Faker $faker) {
-    return [
-        'name'        => "Sample {$faker->randomNumber()}",
-        'description' => "Sample description",
-        'summary'     => "Sample summary",
-        'uuid'        => $faker->uuid,
-        'owner_id'    => function () {
-            return factory(App\Models\User::class)->create()->id;
-        },
-        'project_id'  => function () {
-            return factory(App\Models\Project::class)->create()->id;
-        },
-    ];
-});
+class EntityFactory extends Factory
+{
+    protected $model = Entity::class;
+
+    public function definition()
+    {
+        return [
+            'name'        => "Sample {$this->faker->randomNumber()}",
+            'description' => "Sample description",
+            'summary'     => "Sample summary",
+            'uuid'        => $this->faker->uuid,
+            'owner_id'    => function () {
+                return User::factory()->create()->id;
+            },
+            'project_id'  => function () {
+                return Project::factory()->create()->id;
+            },
+        ];
+    }
+}

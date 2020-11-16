@@ -14,7 +14,7 @@ class CreateProjectActionTest extends TestCase
     /** @test */
     public function created_project_is_setup_correctly()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $createAction = new CreateProjectAction();
         $rv = $createAction->execute(['name' => 'proj1'], $user->id);
         $project = $rv['project'];
@@ -30,7 +30,7 @@ class CreateProjectActionTest extends TestCase
     /** @test */
     public function project_create_should_create_a_root_directory()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $createAction = new CreateProjectAction();
         $rv = $createAction->execute(['name' => 'proj1'], $user->id);
         $project = $rv['project'];
@@ -46,7 +46,7 @@ class CreateProjectActionTest extends TestCase
     /** @test */
     public function project_create_should_create_a_team()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $createAction = new CreateProjectAction();
         $rv = $createAction->execute(['name' => 'proj1'], $user->id);
         $project = $rv['project'];

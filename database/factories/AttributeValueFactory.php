@@ -1,17 +1,23 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
 use App\Models\Attribute;
 use App\Models\AttributeValue;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(AttributeValue::class, function (Faker $faker) {
-    return [
-        'attribute_id' => function () {
-            return factory(Attribute::class)->create()->id;
-        },
-        'unit'         => 'm',
-        'val'          => ['value' => 2],
-    ];
-});
+class AttributeValueFactory extends Factory
+{
+    protected $model = AttributeValue::class;
+
+    public function definition()
+    {
+        return [
+            'attribute_id' => function () {
+                return Attribute::factory()->create()->id;
+            },
+            'unit'         => 'm',
+            'val'          => ['value' => 2],
+        ];
+    }
+}

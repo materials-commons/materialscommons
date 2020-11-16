@@ -1,19 +1,25 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
 use App\Models\Attribute;
 use App\Models\EntityState;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Attribute::class, function (Faker $faker) {
-    return [
-        'name'              => $faker->sentence(6, true),
-        'description'       => "Attribute Description",
-        'uuid'              => $faker->uuid,
-        'attributable_id'   => function () {
-            return factory(EntityState::class)->create()->id;
-        },
-        'attributable_type' => EntityState::class,
-    ];
-});
+class AttributeFactory extends Factory
+{
+    protected $model = Attribute::class;
+
+    public function definition()
+    {
+        return [
+            'name'              => $this->faker->sentence(6, true),
+            'description'       => "Attribute Description",
+            'uuid'              => $this->faker->uuid,
+            'attributable_id'   => function () {
+                return EntityState::factory()->create()->id;
+            },
+            'attributable_type' => EntityState::class,
+        ];
+    }
+}

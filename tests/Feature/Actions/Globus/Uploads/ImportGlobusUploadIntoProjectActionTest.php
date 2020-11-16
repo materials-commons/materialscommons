@@ -31,11 +31,11 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
         $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
         $this->Mkdir($globusUploadsPath);
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
-        $rootDir = factory(File::class)->create([
+        $rootDir = File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -43,7 +43,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
             'owner_id'   => $user->id,
         ]);
 
-        $globusUpload = factory(GlobusUploadDownload::class)->create([
+        $globusUpload = GlobusUploadDownload::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);
@@ -216,7 +216,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
         $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
         $this->Mkdir($globusUploadsPath);
 
-        $globusUpload = factory(GlobusUploadDownload::class)->create([
+        $globusUpload = GlobusUploadDownload::factory()->create([
             'project_id' => $projectId,
             'owner_id'   => $userId,
         ]);

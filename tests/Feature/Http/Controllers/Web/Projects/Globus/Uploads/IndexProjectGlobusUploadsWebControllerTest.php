@@ -18,7 +18,7 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();
@@ -39,7 +39,7 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();
@@ -61,7 +61,7 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();

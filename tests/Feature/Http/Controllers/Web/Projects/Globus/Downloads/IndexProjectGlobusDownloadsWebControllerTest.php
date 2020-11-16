@@ -22,12 +22,12 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $this->withoutExceptionHandling();
         Bus::fake();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();
 
-        factory(File::class)->create([
+        File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -54,12 +54,12 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $this->withoutExceptionHandling();
         Bus::fake();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();
 
-        factory(File::class)->create([
+        File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -88,12 +88,12 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $this->withoutExceptionHandling();
         Bus::fake();
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'globus_user' => 'gtarcea@umich.edu',
         ]);
         $project = ProjectFactory::ownedBy($user)->create();
 
-        factory(File::class)->create([
+        File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',

@@ -18,11 +18,11 @@ class MoveDirectoryActionTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
-        $rootDir = factory(File::class)->create([
+        $rootDir = File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -30,7 +30,7 @@ class MoveDirectoryActionTest extends TestCase
             'owner_id'   => $user->id,
         ]);
 
-        $dir1 = factory(File::class)->create([
+        $dir1 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir1',
             'path'         => '/dir1',
@@ -39,7 +39,7 @@ class MoveDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir2 = factory(File::class)->create([
+        $dir2 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir2',
             'path'         => '/dir2',
@@ -48,7 +48,7 @@ class MoveDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir21 = factory(File::class)->create([
+        $dir21 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir21',
             'path'         => '/dir2/dir21',
@@ -57,7 +57,7 @@ class MoveDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir211 = factory(File::class)->create([
+        $dir211 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir211',
             'path'         => '/dir2/dir21/dir211',

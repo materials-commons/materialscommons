@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Projects;
 
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -13,7 +15,7 @@ class CreateProjectApiControllerTest extends TestCase
     public function it_should_create_a_project()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
+        $user = User::factory()->create();
         $this->actingAs($user, 'api');
         $this->json('post', '/api/projects', [
             'name' => 'p1',
@@ -26,8 +28,8 @@ class CreateProjectApiControllerTest extends TestCase
     public function it_should_return_an_existing_project()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
-        $project = factory('App\Models\Project')->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
             'name'     => 'p1',
         ]);

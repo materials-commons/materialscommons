@@ -31,8 +31,8 @@ class ProjectFactory
 
     public function create()
     {
-        $user = $this->user ?? factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $user = $this->user ?? User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
         $team = Team::create([
             'name'     => "Team for {$project->name}",
             'owner_id' => $project->owner_id,
@@ -40,7 +40,7 @@ class ProjectFactory
 
         $project->update(['team_id' => $team->id]);
         $team->admins()->attach($project->owner);
-        factory(File::class)->create([
+        File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -49,7 +49,7 @@ class ProjectFactory
         ]);
 
         if ($this->createExperiment) {
-            factory(Experiment::class)->create([
+            Experiment::factory()->create([
                 'project_id' => $project->id,
             ]);
         }
@@ -68,7 +68,7 @@ class ProjectFactory
     {
         $parentPath = $parent->path == '/' ? '' : $parent->path;
 
-        return factory(File::class)->create([
+        return File::factory()->create([
             'project_id'   => $project->id,
             'name'         => $name,
             'path'         => "{$parentPath}/{$name}",
@@ -80,7 +80,7 @@ class ProjectFactory
 
     public function createFile($project, $dir, $name, $content)
     {
-        $file = factory(File::class)->create([
+        $file = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => $name,
             'directory_id' => $dir->id,
@@ -104,7 +104,7 @@ class ProjectFactory
 
     public function createFakeFile($project, $dir, $name)
     {
-        return factory(File::class)->create([
+        return File::factory()->create([
             'project_id'   => $project->id,
             'name'         => $name,
             'directory_id' => $dir->id,
@@ -116,7 +116,7 @@ class ProjectFactory
 
     public function createFilePointingAt($project, $file, $name)
     {
-        return factory(File::class)->create([
+        return File::factory()->create([
             'project_id'   => $project->id,
             'name'         => $name,
             'directory_id' => $file->directory_id,
@@ -128,7 +128,7 @@ class ProjectFactory
 
     public function createExperimentInProject($project, $userId = null)
     {
-        return factory(Experiment::class)->create([
+        return Experiment::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $userId ?? $project->owner_id,
         ]);

@@ -16,10 +16,10 @@ class AddUserToProjectWebControllerTest extends TestCase
     public function owner_of_project_can_add_users_to_project()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
 
-        $userToAdd = factory(User::class)->create();
+        $userToAdd = User::factory()->create();
 
         $this->actingAs($user);
         $this->get(route('projects.users.add', [$project, $userToAdd]))
@@ -31,7 +31,7 @@ class AddUserToProjectWebControllerTest extends TestCase
     public function members_of_project_cannot_add_users_to_project()
     {
 //        $this->withoutExceptionHandling();
-        $users = factory(User::class, 3)->create();
+        $users = User::factory()->count(3)->create();
         $owner = $users[0];
         $member = $users[1];
         $userToAdd = $users[2];
@@ -50,10 +50,10 @@ class AddUserToProjectWebControllerTest extends TestCase
     public function users_are_only_added_once_to_a_project()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
 
-        $userToAdd = factory(User::class)->create();
+        $userToAdd = User::factory()->create();
 
         $this->actingAs($user);
         $this->get(route('projects.users.add', [$project, $userToAdd]))

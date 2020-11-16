@@ -18,15 +18,15 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
     /** @test */
     public function a_upload_for_a_project_that_has_a_upload_being_processed_should_not_be_shown()
     {
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUploadDownload::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
             'status'     => GlobusStatus::Done,
         ]);
-        factory(GlobusUploadDownload::class)->create([
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
@@ -38,8 +38,8 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
         $this->assertEquals(0, sizeof($finishedUploads));
 
         // Add an upload from a different project, and check that we get it back
-        $project2 = factory(Project::class)->create(['owner_id' => $user->id]);
-        $uploadToProcess = factory(GlobusUploadDownload::class)->create([
+        $project2 = Project::factory()->create(['owner_id' => $user->id]);
+        $uploadToProcess = GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project2->id,
             'type'       => GlobusType::ProjectUpload,
@@ -55,11 +55,11 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
     /** @test */
     public function upload_errors_are_handled_correctly_for_selection()
     {
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
         // check null case on errors
-        $gld = factory(GlobusUploadDownload::class)->create([
+        $gld = GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
@@ -80,7 +80,7 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
         $this->assertEquals(0, $finishedUploads->count());
 
         // Check that we get back an upload when a second one is added without errors
-        $gld2 = factory(GlobusUploadDownload::class)->create([
+        $gld2 = GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,

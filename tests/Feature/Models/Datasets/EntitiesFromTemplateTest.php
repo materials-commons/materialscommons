@@ -22,10 +22,10 @@ class EntitiesFromTemplateTest extends TestCase
 
         $dataset = DatasetFactory::inProject($project)->ownedBy($project->owner)->create();
         $experiment = $project->experiments->first();
-        $e1 = factory(Entity::class)->create([
+        $e1 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
-        $e2 = factory(Entity::class)->create([
+        $e2 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
 
@@ -45,10 +45,10 @@ class EntitiesFromTemplateTest extends TestCase
         $project = ProjectFactory::create();
 
         $dataset = DatasetFactory::inProject($project)->ownedBy($project->owner)->create();
-        $e1 = factory(Entity::class)->create([
+        $e1 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
-        $e2 = factory(Entity::class)->create([
+        $e2 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
 
@@ -75,10 +75,10 @@ class EntitiesFromTemplateTest extends TestCase
 
         $dataset = DatasetFactory::inProject($project)->ownedBy($project->owner)->create();
         $experiment = $project->experiments->first();
-        $e1 = factory(Entity::class)->create([
+        $e1 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
-        $e2 = factory(Entity::class)->create([
+        $e2 = Entity::factory()->create([
             'project_id' => $project->id,
         ]);
 

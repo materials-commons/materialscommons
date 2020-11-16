@@ -1,11 +1,16 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
+use App\Models\Team;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\Team::class, function (Faker $faker) {
-    return [
-        //
-    ];
-});
+class TeamFactory extends Factory
+{
+    protected $model = Team::class;
+
+    public function definition()
+    {
+        return [];
+    }
+}

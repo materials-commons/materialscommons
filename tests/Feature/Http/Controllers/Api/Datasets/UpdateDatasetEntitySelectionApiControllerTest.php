@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Entity;
+use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,14 +17,14 @@ class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
     public function it_can_add_and_remove_entities_from_dataset()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->withExperiment()->create();
         $experiment = $project->experiments()->first();
-        $dataset = factory(Dataset::class)->create([
+        $dataset = Dataset::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);
-        $entity = factory(Entity::class)->create([
+        $entity = Entity::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);

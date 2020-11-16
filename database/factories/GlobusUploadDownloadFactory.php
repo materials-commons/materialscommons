@@ -1,25 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Enums\GlobusStatus;
 use App\Enums\GlobusType;
 use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(GlobusUploadDownload::class, function (Faker $faker) {
-    return [
-        'uuid'       => $faker->uuid,
-        'name'       => "GlobusUpload {$faker->randomNumber()}",
-        'owner_id'   => function () {
-            return factory(User::class)->create()->id;
-        },
-        'project_id' => function () {
-            return factory(Project::class)->create()->id;
-        },
-        'status'     => GlobusStatus::Uploading,
-        'type'       => GlobusType::ProjectUpload,
-    ];
-});
+class GlobusUploadDownloadFactory extends Factory
+{
+    protected $model = GlobusUploadDownload::class;
+
+    public function definition()
+    {
+        return [
+            'uuid'       => $this->faker->uuid,
+            'name'       => "GlobusUpload {$this->faker->randomNumber()}",
+            'owner_id'   => function () {
+                return User::factory()->create()->id;
+            },
+            'project_id' => function () {
+                return Project::factory()->create()->id;
+            },
+            'status'     => GlobusStatus::Uploading,
+            'type'       => GlobusType::ProjectUpload,
+        ];
+    }
+}

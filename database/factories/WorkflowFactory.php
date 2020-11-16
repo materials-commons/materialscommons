@@ -1,29 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Workflow;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Workflow::class, function (Faker $faker) {
-    $workflow = <<<WORKFLOW
+class WorkflowFactory extends Factory
+{
+    protected $model = Workflow::class;
+
+    public function definition()
+    {
+        $workflow = <<<WORKFLOW
 Sand Sample(right)->Heat Treat?(yes, right)->HT 400c/2h(right)->HT 400c/2h(right)->HT 600c/1h(right)->HT 200c/3h(right)->sem
 Heat Treat?(no)->sem
 WORKFLOW;
 
-    return [
-        'name'        => $faker->sentence(6, true),
-        'description' => 'Workflow description',
-        'summary'     => 'Workflow summary',
-        'uuid'        => $faker->uuid,
-        'owner_id'    => function () {
-            return factory(User::class)->create()->id;
-        },
-        'project_id'  => function () {
-            return factory(Project::class)->create()->id;
-        },
-        'workflow'    => $workflow,
-    ];
-});
+        return [
+            'name'        => $this->faker->sentence(6, true),
+            'description' => 'Workflow description',
+            'summary'     => 'Workflow summary',
+            'uuid'        => $this->faker->uuid,
+            'owner_id'    => User::factory(),
+            'project_id'  => Project::factory(),
+            'workflow'    => $workflow,
+        ];
+    }
+}

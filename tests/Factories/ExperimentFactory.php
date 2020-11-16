@@ -44,13 +44,13 @@ class ExperimentFactory
 
     public function create()
     {
-        $owner = $this->experimentOwner ?? factory(User::class)->create();
+        $owner = $this->experimentOwner ?? User::factory()->create();
         $project = $this->project ?? ProjectFactory::create();
         if (!is_null($this->experimentOwner)) {
             $project->team->members()->syncWithoutDetaching($this->experimentOwner);
         }
         $experimentOwner = $this->experimentOwner ?? $project->owner;
-        $experiment = factory(Experiment::class)->create([
+        $experiment = Experiment::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $experimentOwner->id,
         ]);
@@ -68,19 +68,19 @@ class ExperimentFactory
 
     public function createEntityForExperiment(Experiment $experiment)
     {
-        $entity = factory(Entity::class)->create([
+        $entity = Entity::factory()->create([
             'project_id' => $experiment->project_id,
         ]);
-        $es = factory(EntityState::class)->create([
+        $es = EntityState::factory()->create([
             'entity_id' => $entity->id,
         ]);
 
-        $attr = factory(Attribute::class)->create([
+        $attr = Attribute::factory()->create([
             'attributable_type' => EntityState::class,
             'attributable_id'   => $es->id,
         ]);
 
-        factory(AttributeValue::class)->create([
+        AttributeValue::factory()->create([
             'attribute_id' => $attr->id,
         ]);
 
@@ -91,16 +91,16 @@ class ExperimentFactory
 
     public function createActivityForExperiment(Experiment $experiment)
     {
-        $activity = factory(Activity::class)->create([
+        $activity = Activity::factory()->create([
             'project_id' => $experiment->project_id,
         ]);
 
-        $attr = factory(Attribute::class)->create([
+        $attr = Attribute::factory()->create([
             'attributable_type' => Activity::class,
             'attributable_id'   => $activity->id,
         ]);
 
-        factory(AttributeValue::class)->create([
+        AttributeValue::factory()->create([
             'attribute_id' => $attr->id,
         ]);
 

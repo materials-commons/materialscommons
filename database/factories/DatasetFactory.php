@@ -1,32 +1,40 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
 use App\Models\Dataset;
-use Faker\Generator as Faker;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Dataset::class, function (Faker $faker) {
-    return [
-        'name'           => "Dataset {$faker->randomNumber()}",
-        'description'    => "Dataset description",
-        'summary'        => "Dataset summary",
-        'owner_id'       => function () {
-            return factory(App\Models\User::class)->create()->id;
-        },
-        'uuid'           => $faker->uuid,
-        'project_id'     => function () {
-            return factory(App\Models\Project::class)->create()->id;
-        },
-        'license'        => 'Public Domain Dedication and License (PDDL)',
-        'license_link'   => 'http://opendatacommons.org/licenses/pddl/summary/',
-        'doi'            => $faker->url,
-        'authors'        => $faker->name,
-        'published_at'   => $faker->dateTime,
-        'file_selection' => [
-            'include_files' => [],
-            'exclude_files' => [],
-            'include_dirs'  => [],
-            'exclude_dirs'  => [],
-        ],
-    ];
-});
+class DatasetFactory extends Factory
+{
+    protected $model = Dataset::class;
+
+    public function definition()
+    {
+        return [
+            'name'           => "Dataset {$this->faker->randomNumber()}",
+            'description'    => "Dataset description",
+            'summary'        => "Dataset summary",
+            'owner_id'       => function () {
+                return User::factory()->create()->id;
+            },
+            'uuid'           => $this->faker->uuid,
+            'project_id'     => function () {
+                return Project::factory()->create()->id;
+            },
+            'license'        => 'Public Domain Dedication and License (PDDL)',
+            'license_link'   => 'http://opendatacommons.org/licenses/pddl/summary/',
+            'doi'            => $this->faker->url,
+            'authors'        => $this->faker->name,
+            'published_at'   => $this->faker->dateTime,
+            'file_selection' => [
+                'include_files' => [],
+                'exclude_files' => [],
+                'include_dirs'  => [],
+                'exclude_dirs'  => [],
+            ],
+        ];
+    }
+}

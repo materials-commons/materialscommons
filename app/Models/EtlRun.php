@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
 class EtlRun extends Model
 {
     use HasUUID;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

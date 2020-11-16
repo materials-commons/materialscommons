@@ -20,15 +20,15 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
     /** @test */
     public function there_should_be_no_queued_jobs_when_only_uploads_with_projects_being_processed_are_available()
     {
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUploadDownload::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
             'status'     => GlobusStatus::Done,
         ]);
-        factory(GlobusUploadDownload::class)->create([
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
@@ -46,22 +46,22 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
     /** @test */
     public function only_the_upload_for_project_not_being_processed_should_be_queued()
     {
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        factory(GlobusUploadDownload::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
             'status'     => GlobusStatus::Done,
         ]);
-        factory(GlobusUploadDownload::class)->create([
+        GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
             'type'       => GlobusType::ProjectUpload,
             'status'     => GlobusStatus::Loading,
         ]);
-        $project2 = factory(Project::class)->create(['owner_id' => $user->id]);
-        $uploadToProcess = factory(GlobusUploadDownload::class)->create([
+        $project2 = Project::factory()->create(['owner_id' => $user->id]);
+        $uploadToProcess = GlobusUploadDownload::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project2->id,
             'type'       => GlobusType::ProjectUpload,

@@ -18,7 +18,7 @@ class DeleteExperimentApiControllerTest extends TestCase
     public function project_owner_can_delete_experiment()
     {
         $this->withoutExceptionHandling();
-        $member = factory(User::class)->create();
+        $member = User::factory()->create();
         $project = ProjectFactory::create();
         ProjectFactory::addMemberToProject($member, $project);
         $experiment = ProjectFactory::createExperimentInProject($project, $member->id);
@@ -32,7 +32,7 @@ class DeleteExperimentApiControllerTest extends TestCase
     public function experiment_owner_can_delete_experiment()
     {
         $this->withoutExceptionHandling();
-        $member = factory(User::class)->create();
+        $member = User::factory()->create();
         $project = ProjectFactory::create();
         ProjectFactory::addMemberToProject($member, $project);
         $experiment = ProjectFactory::createExperimentInProject($project, $member->id);
@@ -45,7 +45,7 @@ class DeleteExperimentApiControllerTest extends TestCase
     /** @test */
     public function user_who_is_not_owner_of_experiment_or_project_cannot_delete_experiment()
     {
-        $member = factory(User::class)->create();
+        $member = User::factory()->create();
         $project = ProjectFactory::withExperiment()->create();
         $experiment = $project->experiments->first();
         ProjectFactory::addMemberToProject($member, $project);
@@ -63,13 +63,13 @@ class DeleteExperimentApiControllerTest extends TestCase
         $experiment = $project->experiments->first();
 
         // Create dataset attached to project
-        $dataset = factory(Dataset::class)->create([
+        $dataset = Dataset::factory()->create([
             'owner_id'     => $project->owner_id,
             'published_at' => Carbon::now(),
         ]);
 
         // Create entity, attach to project, dataset, and experiment
-        $entity = factory(Entity::class)->create([
+        $entity = Entity::factory()->create([
             'owner_id'   => $project->owner_id,
             'project_id' => $project->id,
         ]);

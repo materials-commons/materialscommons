@@ -25,9 +25,9 @@ class DatasetFactory
 
     public function create()
     {
-        $user = $this->user ?? factory(User::class)->create();
+        $user = $this->user ?? User::factory()->create();
         $project = $this->project ?? ProjectFactory::ownedBy($user)->create();
-        return factory(Dataset::class)->create([
+        return Dataset::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);

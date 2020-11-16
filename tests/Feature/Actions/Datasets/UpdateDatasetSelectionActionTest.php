@@ -17,10 +17,10 @@ class UpdateDatasetSelectionActionTest extends TestCase
     public function it_should_uniquely_update_include_files()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
-        $dataset = factory(Dataset::class)->create([
+        $project = Project::factory()->create(['owner_id' => $user->id]);
+        $dataset = Dataset::factory()->create([
             'owner_id'   => $user->id,
             'project_id' => $project->id,
         ]);

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Experiments;
 
+use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class CreateExperimentApiControllerTest extends TestCase
     public function it_should_create_a_experiment()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
 
         $this->actingAs($user, 'api');

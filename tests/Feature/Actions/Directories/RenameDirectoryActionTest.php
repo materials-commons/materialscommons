@@ -17,11 +17,11 @@ class RenameDirectoryActionTest extends TestCase
     public function it_should_rename_the_directory_and_recursive_subdirs_including_path()
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
-        $rootDir = factory(File::class)->create([
+        $rootDir = File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
@@ -29,7 +29,7 @@ class RenameDirectoryActionTest extends TestCase
             'owner_id'   => $user->id,
         ]);
 
-        $dir1 = factory(File::class)->create([
+        $dir1 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir1',
             'path'         => '/dir1',
@@ -38,7 +38,7 @@ class RenameDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir11 = factory(File::class)->create([
+        $dir11 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir11',
             'path'         => '/dir1/dir11',
@@ -47,7 +47,7 @@ class RenameDirectoryActionTest extends TestCase
             'owner_id'     => $user->id,
         ]);
 
-        $dir111 = factory(File::class)->create([
+        $dir111 = File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir111',
             'path'         => '/dir1/dir11/dir111',

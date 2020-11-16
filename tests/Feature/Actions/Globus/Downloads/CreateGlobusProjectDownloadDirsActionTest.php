@@ -31,7 +31,7 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
         $rootDir = $project->rootDir;
         $user = $project->owner;
 
-        factory(File::class)->create([
+        File::factory()->create([
             'project_id'   => $project->id,
             'name'         => 'dir1',
             'path'         => '/dir1',

@@ -1,20 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Community;
 use App\Models\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Community::class, function (Faker $faker) {
-    return [
-        'name'        => "Community {$faker->randomNumber()}",
-        'description' => "Community description {$faker->randomNumber()}",
-        'summary'     => "Community summary",
-        'owner_id'    => function () {
-            return factory(User::class)->create()->id;
-        },
-        'uuid'        => $faker->uuid,
-        'public'      => true,
-    ];
-});
+class CommunityFactory extends Factory
+{
+    protected $model = Community::class;
+
+    public function definition()
+    {
+        return [
+            'name'        => "Community {$this->faker->randomNumber()}",
+            'description' => "Community description {$this->faker->randomNumber()}",
+            'summary'     => "Community summary",
+            'owner_id'    => function () {
+                return User::factory()->create()->id;
+            },
+            'uuid'        => $this->faker->uuid,
+            'public'      => true,
+        ];
+    }
+}

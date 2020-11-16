@@ -23,8 +23,8 @@ class CreateGlobusUploadActionTest extends TestCase
         $globusApiMock->shouldReceive("getIdentities")->andReturns(["identities" => [["id" => "user_id_abc123"]]]);
         $globusApiMock->shouldReceive("addEndpointAclRule")->andReturns(["access_id" => "acl_id_1234"]);
 
-        $user = factory(User::class)->create();
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
         $uploadData = [];
         $uploadData['name'] = 'globus upload';

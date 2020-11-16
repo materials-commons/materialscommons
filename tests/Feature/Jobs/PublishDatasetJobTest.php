@@ -21,23 +21,23 @@ class PublishDatasetJobTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $project = factory(Project::class)->create(['owner_id' => $user->id]);
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
-        $entity = factory(Entity::class)->create([
+        $entity = Entity::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);
 
-        $activity = factory(Activity::class)->create([
+        $activity = Activity::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);
 
         $activity->entities()->attach($entity);
 
-        $dataset = factory(Dataset::class)->create([
+        $dataset = Dataset::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);

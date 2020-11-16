@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 class AttributeValue extends Model
 {
     use HasUUID;
+    use HasFactory;
 
     protected $table = 'attribute_values';
 

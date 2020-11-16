@@ -1,25 +1,34 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
+use App\Models\File;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\File::class, function (Faker $faker) {
-    $fileName = $faker->word.'.'.$faker->fileExtension;
+class FileFactory extends Factory
+{
+    protected $model = File::class;
 
-    return [
-        'name'        => $fileName,
-        'description' => $faker->sentence,
-        'summary'     => 'File summary',
-        'uuid'        => $faker->uuid,
-        'checksum'    => $faker->md5,
-        'mime_type'   => $faker->mimeType,
-        'owner_id'    => function () {
-            return factory(App\Models\User::class)->create()->id;
-        },
-        'project_id'  => function () {
-            return factory(App\Models\Project::class)->create()->id;
-        },
-        'size'        => $faker->randomNumber(),
-    ];
-});
+    public function definition()
+    {
+        $fileName = $this->faker->word.'.'.$this->faker->fileExtension;
+
+        return [
+            'name'        => $fileName,
+            'description' => $this->faker->sentence,
+            'summary'     => 'File summary',
+            'uuid'        => $this->faker->uuid,
+            'checksum'    => $this->faker->md5,
+            'mime_type'   => $this->faker->mimeType,
+            'owner_id'    => function () {
+                return User::factory()->create()->id;
+            },
+            'project_id'  => function () {
+                return Project::factory()->create()->id;
+            },
+            'size'        => $this->faker->randomNumber(),
+        ];
+    }
+}

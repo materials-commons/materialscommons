@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -22,6 +23,7 @@ use Spatie\Searchable\SearchResult;
 class Activity extends Model implements Searchable
 {
     use HasUUID;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

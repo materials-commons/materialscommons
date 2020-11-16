@@ -59,13 +59,13 @@ class DeleteExperimentActionTest extends TestCase
         $experiment = $project->experiments->first();
 
         // Create dataset attached to project
-        $dataset = factory(Dataset::class)->create([
+        $dataset = Dataset::factory()->create([
             'owner_id'     => $project->owner_id,
             'published_at' => null,
         ]);
 
         // Create entity, attach to project, dataset, and experiment
-        $entity = factory(Entity::class)->create([
+        $entity = Entity::factory()->create([
             'owner_id'   => $project->owner_id,
             'project_id' => $project->id,
         ]);

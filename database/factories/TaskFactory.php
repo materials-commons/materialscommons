@@ -1,11 +1,16 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
+use App\Models\Task;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Models\Task::class, function (Faker $faker) {
-    return [
-        //
-    ];
-});
+class TaskFactory extends Factory
+{
+    protected $model = Task::class;
+
+    public function definition()
+    {
+        return [];
+    }
+}

@@ -1,24 +1,32 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
 use App\Enums\ExperimentStatus;
 use App\Models\Experiment;
-use Faker\Generator as Faker;
+use App\Models\Project;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Experiment::class, function (Faker $faker) {
-    return [
-        'name'        => "Experiment {$faker->randomNumber()}",
-        'description' => "Experiment description",
-        'summary'     => "Experiment summary",
-        'loading'     => false,
-        'status'      => ExperimentStatus::InProgress,
-        'owner_id'    => function () {
-            return factory(App\Models\User::class)->create()->id;
-        },
-        'uuid'        => $faker->uuid,
-        'project_id'  => function () {
-            return factory(App\Models\Project::class)->create()->id;
-        },
-    ];
-});
+class ExperimentFactory extends Factory
+{
+    protected $model = Experiment::class;
+
+    public function definition()
+    {
+        return [
+            'name'        => "Experiment {$this->faker->randomNumber()}",
+            'description' => "Experiment description",
+            'summary'     => "Experiment summary",
+            'loading'     => false,
+            'status'      => ExperimentStatus::InProgress,
+            'owner_id'    => function () {
+                return User::factory()->create()->id;
+            },
+            'uuid'        => $this->faker->uuid,
+            'project_id'  => function () {
+                return Project::factory()->create()->id;
+            },
+        ];
+    }
+}

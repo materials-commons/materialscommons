@@ -18,7 +18,7 @@ class ImportDatasetIntoProjectActionTest extends TestCase
     /** @test */
     public function it_imports_a_datasets_files()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
         $dataset = DatasetFactory::create();
         $dsDir = DatasetFactory::createDirectory($dataset, $dataset->project->rootDir, "d1");

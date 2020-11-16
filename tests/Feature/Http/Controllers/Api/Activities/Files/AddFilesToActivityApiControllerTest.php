@@ -17,24 +17,24 @@ class AddFilesToActivityApiControllerTest extends TestCase
     public function files_can_be_added_to_an_activity()
     {
         $this->withoutExceptionHandling();
-        $user    = factory(User::class)->create();
-        $project = factory(Project::class)->create([
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
             'owner_id' => $user->id,
         ]);
-        $rootDir = factory(File::class)->create([
+        $rootDir = File::factory()->create([
             'project_id' => $project->id,
             'name'       => '/',
             'path'       => '/',
             'mime_type'  => 'directory',
             'owner_id'   => $user->id,
         ]);
-        $file    = factory(File::class)->create([
+        $file = File::factory()->create([
             'project_id'   => $project->id,
             'directory_id' => $rootDir->id,
             'owner_id'     => $user->id,
         ]);
 
-        $activity = factory(Activity::class)->create([
+        $activity = Activity::factory()->create([
             'project_id' => $project->id,
             'owner_id'   => $user->id,
         ]);

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Web\Datasets;
 
+use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class StoreDatasetWebControllerTest extends TestCase
     public function a_user_can_create_a_dataset()
     {
         $this->withoutExceptionHandling();
-        $user = factory('App\Models\User')->create();
+        $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
 
         $this->actingAs($user)->post(route('projects.datasets.store', [$project]), [
