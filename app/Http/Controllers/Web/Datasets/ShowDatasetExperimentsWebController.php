@@ -15,7 +15,7 @@ class ShowDatasetExperimentsWebController extends Controller
 
     public function __invoke(Request $request, Project $project, $datasetId)
     {
-        $dataset = Dataset::with('experiments', 'tags')->find($datasetId);
+        $dataset = Dataset::with(['experiments', 'tags'])->find($datasetId);
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
             ->withDataset($dataset)

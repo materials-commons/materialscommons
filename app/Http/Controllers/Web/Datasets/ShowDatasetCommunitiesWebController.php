@@ -15,7 +15,7 @@ class ShowDatasetCommunitiesWebController extends Controller
 
     public function __invoke(Request $request, Project $project, $datasetId)
     {
-        $dataset = Dataset::with('communities', 'tags')->find($datasetId);
+        $dataset = Dataset::with(['communities', 'tags'])->find($datasetId);
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
             ->withDataset($dataset)
