@@ -43,10 +43,36 @@
         @endslot
 
         @slot('body')
-            @isset($project)
-                @include('app.files.tabs.project-tabs')
-            @endisset
+            @include('app.files.tabs.tabs', [
+                'showRouteName' => 'projects.files.show',
+                'showRoute' => route('projects.files.show', [$project, $file]),
+                'entitiesRouteName' => 'projects.files.entities',
+                'entitiesRoute' => route('projects.files.entities', [$project, $file]),
+                'activitiesRouteName' => 'projects.files.activities',
+                'activitiesRoute' => route('projects.files.activities', [$project, $file]),
+                'attributesRouteName' => 'projects.files.attributes',
+                'attributesRoute' => route('projects.files.attributes', [$project, $file]),
+                'experimentsRouteName' => 'projects.files.experiments',
+                'experimentsRoute' => route('projects.files.experiments', [$project, $file]),
+                'versionsRouteName' => 'projects.files.versions',
+                'versionsRoute' => route('projects.files.versions', [$project, $file]),
+            ])
 
+            <br>
+
+            @if(Request::routeIs('projects.files.show'))
+                @include('app.files.tabs.file')
+            @elseif (Request::routeIs('projects.files.entities'))
+                @include('app.files.tabs.entities')
+            @elseif (Request::routeIs('projects.files.activities'))
+                @include('app.files.tabs.activities')
+            @elseif (Request::routeIs('projects.files.attributes'))
+                @include('app.files.tabs.attributes')
+            @elseif (Request::routeIs('projects.files.experiments'))
+                @include('app.files.tabs.experiments')
+            @elseif (Request::routeIs('projects.files.versions'))
+                @include('app.files.tabs.versions')
+            @endif
         @endslot
     @endcomponent
 @endsection

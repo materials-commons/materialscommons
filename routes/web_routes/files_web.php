@@ -5,7 +5,11 @@ use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
+use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
+use App\Http\Controllers\Web\Files\ShowFileExperimentsWebController;
+use App\Http\Controllers\Web\Files\ShowFileVersionsWebController;
 use App\Http\Controllers\Web\Files\ShowFileWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
 use App\Models\File;
@@ -21,14 +25,17 @@ Route::get('/projects/{project}/files/{file}/show', ShowFileWebController::class
 Route::get('/projects/{project}/files/{file}/entities', ShowFileEntitiesWebController::class)
      ->name('projects.files.entities');
 
-Route::get('/projects/{project}/files/{file}/activities', ShowFileEntitiesWebController::class)
+Route::get('/projects/{project}/files/{file}/activities', ShowFileActivitiesWebController::class)
      ->name('projects.files.activities');
 
-Route::get('/projects/{project}/files/{file}/attributes', ShowFileEntitiesWebController::class)
+Route::get('/projects/{project}/files/{file}/attributes', ShowFileAttributesWebController::class)
      ->name('projects.files.attributes');
 
-Route::get('/projects/{project}/files/{file}/experiments', ShowFileEntitiesWebController::class)
+Route::get('/projects/{project}/files/{file}/experiments', ShowFileExperimentsWebController::class)
      ->name('projects.files.experiments');
+
+Route::get('/projects/{project}/files/{file}/versions', ShowFileVersionsWebController::class)
+     ->name('projects.files.versions');
 
 Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController::class)
      ->name('projects.files.display');

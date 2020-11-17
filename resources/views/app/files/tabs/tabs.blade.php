@@ -26,4 +26,13 @@
             </a>
         </li>
     @endisset
+
+    @isset($versionsRoute)
+        <li class="nav-item">
+            <a class="nav-link no-underline {{setActiveNavByName($versionsRouteName)}}"
+               href="{{$versionsRoute}}">
+                Versions ({{$previousVersions->count()}})
+            </a>
+        </li>
+    @endisset
 </ul>

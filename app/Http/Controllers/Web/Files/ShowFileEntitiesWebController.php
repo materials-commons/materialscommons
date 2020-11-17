@@ -19,10 +19,11 @@ class ShowFileEntitiesWebController extends Controller
         $file = File::withCount('entities', 'activities', 'experiments')
                     ->with('entities')
                     ->findOrFail($fileId);
+        $previousVersions = $file->previousVersions()->get();
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);
         }
-        return view('app.files.show', compact('project', 'file', 'experiment'));
+        return view('app.files.show', compact('project', 'file', 'experiment', 'previousVersions'));
     }
 }

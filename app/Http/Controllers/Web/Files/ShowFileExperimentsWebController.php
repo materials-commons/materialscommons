@@ -16,13 +16,14 @@ class ShowFileExperimentsWebController extends Controller
         $experiment = null;
 
         $fileId = $request->route('file');
-        $file = $file = File::withCount('entities', 'activities', 'experiments')
-                            ->with('experiments')
-                            ->findOrFail($fileId);
+        $file = File::withCount('entities', 'activities', 'experiments')
+                    ->with('experiments')
+                    ->findOrFail($fileId);
+        $previousVersions = $file->previousVersions()->get();
 
         if ($experimentId !== null) {
             $experiment = Experiment::find($experimentId);
         }
-        return view('app.files.show', compact('project', 'file', 'experiment'));
+        return view('app.files.show', compact('project', 'file', 'experiment', 'previousVersions'));
     }
 }
