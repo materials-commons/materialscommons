@@ -28,9 +28,14 @@
                 @endif
             </td>
             <td>
-                <a href="#">Make current version</a>
+                <a class="action-link" href="#">
+                    <i class="fas fa-history mr-2"></i>Set as current version
+                </a>
                 <br>
-                <a href="#">Download</a>
+                <a class="action-link"
+                   href="{{route('projects.files.download', [$project, $filever])}}">
+                    <i class="fas fa-download mr-2"></i>Download File
+                </a>
             </td>
         </tr>
     @endforeach
