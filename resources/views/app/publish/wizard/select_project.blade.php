@@ -46,7 +46,7 @@
         });
 
         function gotoCreateDataset() {
-            window.location.href = route('projects.datasets.create', {project: projectId}).url();
+            window.location.href = route('projects.datasets.create', {project: projectId});
         }
     </script>
 @endpush

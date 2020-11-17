@@ -47,7 +47,7 @@
             let r = route('projects.files.upload', {
                 project: project,
                 file: e.target.value,
-            }).url();
+            });
 
             if (uppy !== null) {
                 uppy.close();

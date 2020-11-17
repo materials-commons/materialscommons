@@ -92,7 +92,7 @@
 
             } else if (datasetId != "") {
             } else {
-                window.location.href = route('projects.show', {project: projectId}).url();
+                window.location.href = route('projects.show', {project: projectId});
             }
         }
     </script>

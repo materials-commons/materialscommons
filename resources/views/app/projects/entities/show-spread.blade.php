@@ -56,7 +56,7 @@
                     project: "{{$project->id}}",
                     entity1: "{{$entity->id}}",
                     entity2: selected
-                }).url();
+                });
             });
         });
     </script>

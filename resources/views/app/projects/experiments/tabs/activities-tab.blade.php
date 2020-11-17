@@ -36,7 +36,7 @@
                                 project: "{{$project->id}}",
                                 experiment: "{{$experiment->id}}",
                                 activity: row["1"]
-                            }).url();
+                            });
                             return `<a href="${r}">${data}</a>`;
                         }
                     },

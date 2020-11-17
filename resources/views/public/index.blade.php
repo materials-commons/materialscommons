@@ -50,7 +50,7 @@
                         {
                             name: 'name',
                             render: function (data, type, row) {
-                                let r = route('public.datasets.show', row["1"]).url();
+                                let r = route('public.datasets.show', row["1"]);
                                 if (type === 'display') {
                                     let ndata = `<a href="` + r + `">` + data + '</a>';
                                     return ndata;

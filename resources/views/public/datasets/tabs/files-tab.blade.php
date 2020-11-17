@@ -25,7 +25,7 @@
                             if (type === 'display') {
                                 let rowType = row["2"];
                                 let objectId = row["1"];
-                                let r = route('public.datasets.files.show', [{{$dataset->id}}, objectId]).url();
+                                let r = route('public.datasets.files.show', [{{$dataset->id}}, objectId]);
                                 let icon = `<i class="fa-fw fas mr-2 fa-file"></i>`;
                                 let ndata = `<a href="${r}">${icon} ${data}</a>`;
                                 return ndata;

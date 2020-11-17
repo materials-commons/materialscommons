@@ -26,11 +26,11 @@
         let r = route('projects.files.upload', {
             project: "{{$project->id}}",
             file: "{{$directory->id}}"
-        }).url();
+        });
         let folderUrl = route('projects.folders.show', {
             project: "{{$project->id}}",
             folder: "{{$directory->id}}",
-        }).url();
+        });
         const uppy = Uppy({
             restrictions: {
                 maxFileSize: 70 * 1024 * 1024

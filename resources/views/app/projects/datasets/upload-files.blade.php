@@ -33,7 +33,7 @@
             project: "{{$project->id}}",
             dataset: "{{$dataset->id}}",
             file: "{{$directory->id}}"
-        }).url();
+        });
         const uppy = Uppy({
             restrictions: {
                 maxFileSize: 70 * 1024 * 1024,

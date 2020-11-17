@@ -32,7 +32,7 @@
         let r = route('projects.files.upload', {
             project: "{{$project->id}}",
             file: "{{$directory->id}}"
-        }).url();
+        });
         const uppy = Uppy({
             restrictions: {
                 maxFileSize: 70 * 1024 * 1024

@@ -11,7 +11,9 @@ class ShowFileWebController extends Controller
 {
     public function __invoke(Project $project, $fileId)
     {
-        $file = File::withCount('entities', 'activities', 'experiments')->findOrFail($fileId);
+        $file = File::withCount('entities', 'activities', 'experiments')
+                    ->with('previousVersions')
+                    ->findOrFail($fileId);
         $viewModel = new ShowFileViewModel($file, $project);
         return view('app.files.show', $viewModel);
     }

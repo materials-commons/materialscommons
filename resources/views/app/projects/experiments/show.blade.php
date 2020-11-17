@@ -65,7 +65,7 @@
                     window.location.href = route('projects.experiments.show', {
                         project: "{{$project->id}}",
                         experiment: selected
-                    }).url();
+                    });
                 });
             });
         </script>
