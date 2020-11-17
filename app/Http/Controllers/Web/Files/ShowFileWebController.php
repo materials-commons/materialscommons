@@ -14,7 +14,8 @@ class ShowFileWebController extends Controller
         $file = File::withCount('entities', 'activities', 'experiments')
                     ->with('previousVersions')
                     ->findOrFail($fileId);
-        $viewModel = new ShowFileViewModel($file, $project);
+        $viewModel = (new ShowFileViewModel($file, $project))
+            ->withPreviousVersions($file->previousVersions()->get());
         return view('app.files.show', $viewModel);
     }
 }

@@ -84,6 +84,7 @@ class File extends Model implements Searchable
     {
         return $this->hasMany(File::class, 'directory_id', 'directory_id')
                     ->where('name', $this->name)
+                    ->where('current', false)
                     ->where('id', '<>', $this->id);
     }
 
@@ -125,7 +126,7 @@ class File extends Model implements Searchable
     public function scopeWithCommon($query)
     {
         return $query->with('directory')
-            ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
+                     ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
     // Utility methods
