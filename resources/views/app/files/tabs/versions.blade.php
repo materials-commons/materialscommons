@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Create On</th>
+        <th>Uploaded On</th>
         <th>Size</th>
         <th>Real Size</th>
         <th></th>
