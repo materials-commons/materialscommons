@@ -43,6 +43,12 @@
         @endslot
 
         @slot('body')
+            @if(!$file->current)
+                <h4>You are looking at a previous version of the file.
+                    The current version is {{$file->currentVersion()->id}}
+                </h4>
+                <br>
+            @endif
             @include('app.files.tabs.tabs', [
                 'showRouteName' => 'projects.files.show',
                 'showRoute' => route('projects.files.show', [$project, $file]),

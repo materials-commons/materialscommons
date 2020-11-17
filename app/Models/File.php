@@ -83,8 +83,16 @@ class File extends Model implements Searchable
     public function previousVersions()
     {
         return $this->hasMany(File::class, 'directory_id', 'directory_id')
-            ->where('name', $this->name)
-            ->where('id', '<>', $this->id);
+                    ->where('name', $this->name)
+                    ->where('id', '<>', $this->id);
+    }
+
+    public function currentVersion()
+    {
+        return File::where('directory_id', $this->directory_id)
+                   ->where('name', $this->name)
+                   ->where('current', true)
+                   ->first();
     }
 
     public function datasets()
