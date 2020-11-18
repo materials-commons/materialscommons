@@ -15,12 +15,11 @@
 @endif
 
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot name="header">
             Dashboard
-        @endslot
-
-        @slot('body')
+        </x-slot>
+        <x-slot name="body">
             @include('app.dashboard.tabs.tabs')
             <br>
             @if (Request::routeIs('dashboard.projects.show'))
@@ -30,6 +29,6 @@
             @elseif (Request::routeIs('dashboard.data-dictionary.show'))
                 @include('app.dashboard.tabs.data-dictionary')
             @endif
-        @endslot
-    @endcomponent
+        </x-slot>
+    </x-card>
 @endsection
