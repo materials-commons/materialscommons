@@ -10,7 +10,7 @@
 
     <x-card>
         <x-slot name="header">
-            Comparing 2 versions of file {{$file1->name}}
+            Comparing versions of file {{$file1->name}}
         </x-slot>
         <x-slot name="body">
             <div class="row">
