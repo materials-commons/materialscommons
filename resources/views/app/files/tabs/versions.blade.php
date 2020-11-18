@@ -14,6 +14,9 @@
         <tr>
             <td>
                 <a href="{{route('projects.files.show', [$project, $filever])}}">{{$filever->name}}</a>
+                @if($filever->current)
+                    (Active)
+                @endif
             </td>
             <td>{{$filever->created_at->diffForHumans()}}</td>
             <td>{{$filever->toHumanBytes()}}</td>
@@ -28,10 +31,12 @@
                 @endif
             </td>
             <td>
-                <a class="action-link" href="#">
-                    <i class="fas fa-history mr-2"></i>Set as current version
-                </a>
-                <br>
+                @if(!$filever->current)
+                    <a class="action-link" href="{{route('projects.files.set-active', [$project, $filever])}}">
+                        <i class="fas fa-history mr-2"></i>Set as active version
+                    </a>
+                    <br>
+                @endif
                 <a class="action-link"
                    href="{{route('projects.files.download', [$project, $filever])}}">
                     <i class="fas fa-download mr-2"></i>Download File

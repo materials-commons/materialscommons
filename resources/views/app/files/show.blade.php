@@ -46,8 +46,8 @@
             @if(!$file->current)
                 <h4>You are looking at a previous version of the file. You can see the current version
                     <a href="{{route('projects.files.show', [$project, $file->currentVersion()])}}">here.</a>
-                    <a class="ml-4 btn btn-warning" href="{{route('projects.files.delete', [$project, $file])}}">
-                        <i class="fas fa-fw fa-history mr-2"></i>Set as current version
+                    <a class="ml-4 btn btn-warning" href="{{route('projects.files.set-active', [$project, $file])}}">
+                        <i class="fas fa-fw fa-history mr-2"></i>Set as active version
                     </a>
                 </h4>
 

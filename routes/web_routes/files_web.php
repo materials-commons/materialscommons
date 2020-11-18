@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
@@ -36,6 +37,9 @@ Route::get('/projects/{project}/files/{file}/experiments', ShowFileExperimentsWe
 
 Route::get('/projects/{project}/files/{file}/versions', ShowFileVersionsWebController::class)
      ->name('projects.files.versions');
+
+Route::get('/projects/{project}/files/{file}/set-active', SetAsActiveFileVersionWebController::class)
+     ->name('projects.files.set-active');
 
 Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController::class)
      ->name('projects.files.display');
