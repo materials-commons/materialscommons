@@ -7,12 +7,12 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot name="header">
             Create Project
-        @endslot
+        </x-slot>
 
-        @slot('body')
+        <x-slot name="body">
             @include('app.projects._overview')
             @include('partials._create_project', [
                 'createProjectRoute' => route('projects.store', ['show-overview' => request()->query('show-overview', false)]),
@@ -20,8 +20,8 @@
                 'createAndNext' => 'Create And Add Experiments',
                 'createAndNextRoute' => route('projects.store', ['experiments-next' => true, 'show-overview' => request()->query('show-overview', false)])
             ])
-        @endslot
-    @endcomponent
+        </x-slot>
+    </x-card>
 
     @include('common.errors')
 @endsection
