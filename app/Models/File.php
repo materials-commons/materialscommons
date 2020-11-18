@@ -84,7 +84,8 @@ class File extends Model implements Searchable
     {
         return $this->hasMany(File::class, 'directory_id', 'directory_id')
                     ->where('name', $this->name)
-                    ->where('id', '<>', $this->id);
+                    ->where('id', '<>', $this->id)
+                    ->orderBy('created_at');
     }
 
     public function currentVersion()

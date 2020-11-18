@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Uploaded On</th>
+        <th>Uploaded</th>
         <th>Size</th>
         <th>Real Size</th>
         <th></th>
@@ -40,6 +40,10 @@
                 <a class="action-link"
                    href="{{route('projects.files.download', [$project, $filever])}}">
                     <i class="fas fa-download mr-2"></i>Download File
+                </a>
+                <br>
+                <a class="action-link" href="{{route('projects.files.compare', [$project, $file, $filever])}}">
+                    <i class="fas fa-columns mr-2"></i>Compare
                 </a>
             </td>
         </tr>

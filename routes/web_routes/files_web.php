@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Files\CompareFilesWebController;
 use App\Http\Controllers\Web\Files\CreateExperimentFromSpreadsheetWebController;
 use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
@@ -40,6 +41,9 @@ Route::get('/projects/{project}/files/{file}/versions', ShowFileVersionsWebContr
 
 Route::get('/projects/{project}/files/{file}/set-active', SetAsActiveFileVersionWebController::class)
      ->name('projects.files.set-active');
+
+Route::get('/projects/{project}/files/{file1}/{file2}/compare', CompareFilesWebController::class)
+     ->name('projects.files.compare');
 
 Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController::class)
      ->name('projects.files.display');
