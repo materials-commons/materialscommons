@@ -14,6 +14,7 @@
             Show Spreadsheet load for {{$etlRun->files[0]->name}} run on: {{$etlRun->created_at}}
             <a class="action-link float-right" style="cursor: pointer"
                hx-get="{{route('projects.experiments.etl_run.show-log', [$project, $experiment, $etlRun])}}"
+               onclick="clearSearchInputOnReload()"
                hx-target="#etl-log"
                hx-swap="innerHTML scroll:bottom">
                 <i class="fas fa-plus mr-2"></i>Refresh Log
@@ -27,7 +28,7 @@
                 </span>
             </h3>
 
-            <input class="form-control col-6 mb-4" type="text"
+            <input class="form-control col-6 mb-4" type="text" id="search-input"
                    name="search" placeholder="Search log..."
                    hx-get="{{route('projects.experiments.etl_run.search', [$project, $experiment, $etlRun])}}"
                    hx-target="#etl-log"
@@ -40,3 +41,11 @@
         </x-slot>
     </x-card>
 @endsection
+
+@push('scripts')
+    <script>
+        function clearSearchInputOnReload() {
+            document.getElementById('search-input').value = '';
+        }
+    </script>
+@endpush
