@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Experiments\DestroyExperimentWebController;
 use App\Http\Controllers\Web\Experiments\EditExperimentWebController;
 use App\Http\Controllers\Web\Experiments\IndexExperimentsWebController;
 use App\Http\Controllers\Web\Experiments\ReloadExperimentWebController;
+use App\Http\Controllers\Web\Experiments\SearchExperimentEtlRunWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentActivitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Experiments\ShowExperimentEntitiesWebController;
@@ -87,4 +88,7 @@ Route::prefix('/projects/{project}')->group(function () {
 
     Route::get('/experiments/{experiment}/etl_run/{etlRun}', ShowExperimentEtlRunWebController::class)
          ->name('projects.experiments.etl_run.show');
+
+    Route::get('/experiments/{experiment}/etl_run/{etlRun}/search', SearchExperimentEtlRunWebController::class)
+         ->name('projects.experiments.etl_run.search');
 });
