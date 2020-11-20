@@ -26,6 +26,7 @@
                     <i class="fas fa-spinner fa-spin"></i>
                 </span>
             </h3>
+
             <input class="form-control col-6 mb-4" type="text"
                    name="search" placeholder="Search log..."
                    hx-get="{{route('projects.experiments.etl_run.search', [$project, $experiment, $etlRun])}}"
