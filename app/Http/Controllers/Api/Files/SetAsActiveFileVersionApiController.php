@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Web\Files;
+namespace App\Http\Controllers\Api\Files;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Files\FileResource;
 use App\Models\File;
 use App\Models\Project;
 
-class SetAsActiveFileVersionWebController extends Controller
+class SetAsActiveFileVersionApiController extends Controller
 {
     public function __invoke(Project $project, File $file)
     {
         if ($file->current) {
             // Already active version nothing to do
-            return redirect(route('projects.files.show', [$project, $file]));
+            return new FileResource($file);
         }
 
         $file->setAsActiveFile();
+        $file->fresh();
 
-        return redirect(route('projects.files.show', [$project, $file]));
+        return new FileResource($file);
     }
 }

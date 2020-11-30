@@ -7,6 +7,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -290,5 +291,20 @@ class File extends Model implements Searchable
         }
 
         return $this->path;
+    }
+
+    public function setAsActiveFile()
+    {
+        $file = $this;
+
+        DB::transaction(function () use ($file) {
+            // First mark all files matching name in the directory as not active
+            File::where('directory_id', $file->directory_id)
+                ->where('name', $file->name)
+                ->update(['current' => false]);
+
+            // Then mark the file passed in as active
+            $file->update(['current' => true]);
+        });
     }
 }
