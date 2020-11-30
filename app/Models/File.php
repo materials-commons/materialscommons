@@ -244,6 +244,7 @@ class File extends Model implements Searchable
         return $this->fileType($this) === "image";
     }
 
+
     public function shouldBeConverted()
     {
         if (!$this->isConvertible()) {

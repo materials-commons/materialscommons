@@ -107,6 +107,11 @@
                                     <img src="{{route('projects.files.display', [$project, $file])}}"
                                          style="width: 12rem">
                                 </a>
+                            @elseif($file->isDir())
+                                <a class="action-link"
+                                   href="{{route('projects.folders.delete', [$project, $file])}}">
+                                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                                </a>
                             @endif
                         </td>
 
