@@ -110,7 +110,7 @@
                             @elseif($file->isDir())
                                 <a class="action-link"
                                    href="{{route('projects.folders.delete', [$project, $file])}}">
-                                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                                    <i class="fas fa-fw fa-trash mr-2"></i>
                                 </a>
                             @endif
                         </td>
