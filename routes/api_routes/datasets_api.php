@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Datasets\AssignDoiApiController;
 use App\Http\Controllers\Api\Datasets\CreateDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DownloadDatasetZipfileApiController;
@@ -30,6 +31,8 @@ Route::put('/datasets/{dataset}/activities/selection', UpdateDatasetActivitySele
 
 Route::put('/datasets/{dataset}/workflows', UpdateDatasetWorkflowSelectionApiController::class)
      ->name('api.projects.datasets.workflows');
+
+Route::put('/projects/{project}/datasets/{dataset}/assign_doi', AssignDoiApiController::class);
 
 Route::get('/projects/{project}/datasets/{dataset}', ShowDatasetApiController::class)
      ->name('api.projects.datasets.show');
