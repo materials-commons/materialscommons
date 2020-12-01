@@ -6,7 +6,10 @@ use App\Http\Resources\JsonResource;
 
 class ActivityResource extends JsonResource
 {
-    protected $fields = ['id', 'uuid', 'name', 'description', 'created_at', 'updated_at', 'files_count', 'entities_count', 'activities_count'];
+    protected $fields = [
+        'id', 'uuid', 'name', 'description', 'created_at', 'updated_at', 'files_count', 'entities_count',
+        'activities_count',
+    ];
 
     /**
      * Transform the resource into an array.

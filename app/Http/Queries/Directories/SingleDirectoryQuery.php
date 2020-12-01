@@ -18,7 +18,9 @@ class SingleDirectoryQuery extends DirectoriesQueryBuilder
     public function __construct(?Request $request = null)
     {
         $directoryId = $this->getParameterId('directory');
-        $query = File::where('id', $directoryId)->where('mime_type', 'directory');
+        $query = File::with(['owner'])
+                     ->where('id', $directoryId)
+                     ->where('mime_type', 'directory');
         parent::__construct($query, $request);
     }
 }

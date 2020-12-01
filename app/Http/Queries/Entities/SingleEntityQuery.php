@@ -13,7 +13,8 @@ class SingleEntityQuery extends EntitiesQueryBuilder
     public function __construct(?Request $request = null)
     {
         $entityId = $this->getParameterId('entity');
-        $query = Entity::where('id', $entityId);
+        $query = Entity::with(['owner'])
+                       ->where('id', $entityId);
         parent::__construct($query, $request);
     }
 }

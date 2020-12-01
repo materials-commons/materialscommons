@@ -9,7 +9,8 @@ class IndexDirectoryQuery extends DirectoriesQueryBuilder
 {
     public function __construct(?Request $request = null, $projectId, $directoryId)
     {
-        $builder = File::where('project_id', $projectId)
+        $builder = File::with(['owner'])
+                       ->where('project_id', $projectId)
                        ->where('directory_id', $directoryId)
                        ->where('current', true);
         parent::__construct($builder, $request);

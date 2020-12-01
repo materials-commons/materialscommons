@@ -19,6 +19,7 @@ class SingleFileQuery extends FilesQueryBuilder
     {
         $fileId = $this->getParameterId('file');
         $query = File::withCommon()
+                     ->with(['owner'])
                      ->where('id', $fileId)
                      ->where('mime_type', '!=', 'directory');
         parent::__construct($query, $request);

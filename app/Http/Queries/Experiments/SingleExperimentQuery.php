@@ -13,7 +13,8 @@ class SingleExperimentQuery extends ExperimentsQueryBuilder
     public function __construct(?Request $request = null)
     {
         $experimentId = $this->getParameterId('experiment');
-        $query = Experiment::where('id', $experimentId);
+        $query = Experiment::with(['owner'])
+                           ->where('id', $experimentId);
         parent::__construct($query, $request);
     }
 }

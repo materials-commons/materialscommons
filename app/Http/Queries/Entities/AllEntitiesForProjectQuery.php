@@ -9,7 +9,8 @@ class AllEntitiesForProjectQuery extends EntitiesQueryBuilder
 {
     public function __construct($projectId, ?Request $request = null)
     {
-        $builder = Entity::where('project_id', $projectId);
+        $builder = Entity::with(['owner'])
+                         ->where('project_id', $projectId);
         parent::__construct($builder, $request);
     }
 }

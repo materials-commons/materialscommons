@@ -9,7 +9,8 @@ class AllActivitiesForProjectQuery extends ActivitiesQueryBuilder
 {
     public function __construct($projectId, ?Request $request = null)
     {
-        $builder = Activity::where('project_id', $projectId);
+        $builder = Activity::with(['owner'])
+                           ->where('project_id', $projectId);
         parent::__construct($builder, $request);
     }
 }

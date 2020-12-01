@@ -9,7 +9,8 @@ class AllExperimentsForProjectQuery extends ExperimentsQueryBuilder
 {
     public function __construct($projectId, ?Request $request = null)
     {
-        $query = Experiment::where('project_id', $projectId);
+        $query = Experiment::with(['owner'])
+                           ->where('project_id', $projectId);
         parent::__construct($query, $request);
     }
 }

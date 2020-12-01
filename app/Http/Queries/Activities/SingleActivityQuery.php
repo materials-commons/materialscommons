@@ -18,7 +18,8 @@ class SingleActivityQuery extends ActivitiesQueryBuilder
     public function __construct(?Request $request = null)
     {
         $activityId = $this->getParameterId('activity');
-        $query = Activity::where('id', $activityId);
+        $query = Activity::with(['owner'])
+                         ->where('id', $activityId);
         parent::__construct($query, $request);
     }
 }
