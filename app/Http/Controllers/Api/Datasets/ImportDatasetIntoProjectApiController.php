@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Datasets;
+namespace App\Http\Controllers\Api\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Datasets\ImportDatasetIntoProjectRequest;
@@ -9,18 +9,15 @@ use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\User;
 
-class ImportDatasetIntoProjectWebController extends Controller
+class ImportDatasetIntoProjectApiController extends Controller
 {
     public function __invoke(ImportDatasetIntoProjectRequest $request, Project $p, Dataset $dataset)
     {
         $p->load('team');
         $validated = $request->validated();
-        if (!$this->allowedToImportDataset($dataset, $p)) {
-            flash("You don't have access to import this dataset into the project")->error();
-            return redirect(route('projects.show', [$p]));
-        }
+        abort_unless($this->allowedToImportDataset($dataset, $p), 403,
+            "You don't have access to import this dataset into the project");
         ImportDatasetIntoProjectJob::dispatch($dataset, $p, $validated['directory'])->onQueue('globus');
-        return redirect(route('projects.show', [$p]));
     }
 
     private function allowedToImportDataset(Dataset $dataset, Project $project)
@@ -30,7 +27,7 @@ class ImportDatasetIntoProjectWebController extends Controller
             return true;
         }
 
-        // Check that the dataset owner is a member or admin in the project if the dataset being imported
+        // Check that the dataset owner is a member of the project if the dataset being imported
         // is not public.
 
         if ($this->isMemberOfProject($project, $dataset)) {

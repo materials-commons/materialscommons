@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DownloadDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\FileByPathInDatasetSelectionApiController;
 use App\Http\Controllers\Api\Datasets\FileInDatasetSelectionApiController;
+use App\Http\Controllers\Api\Datasets\ImportDatasetIntoProjectApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetActivitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetEntitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexDatasetFilesApiController;
@@ -56,6 +57,8 @@ Route::get('/projects/{project}/datasets/{dataset}/files/{file}/check_selection'
 
 Route::post('/projects/{project}/datasets/{dataset}/check_select_by_path',
     FileByPathInDatasetSelectionApiController::class);
+
+Route::post('/projects/{p}/datasets/{dataset}/import', ImportDatasetIntoProjectApiController::class);
 
 
 
