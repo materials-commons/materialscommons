@@ -22,7 +22,7 @@ trait UserProjects
                         ->pluck('team_id')
                         ->toArray();
         $allTeams = collect(array_merge($memberTeams, $adminTeams))->unique()->toArray();
-        return Project::with('owner', 'rootDir')
+        return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
                       ->withCount('entities')
                       ->whereIn('team_id', $allTeams)
                       ->get();

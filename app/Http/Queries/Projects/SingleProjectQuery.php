@@ -13,7 +13,7 @@ class SingleProjectQuery extends ProjectsQueryBuilder
     public function __construct(?Request $request = null)
     {
         $projectId = $this->getParameterId('project');
-        $query = Project::with(['rootDir', 'owner'])
+        $query = Project::with(['rootDir', 'owner', 'team.members', 'team.admins'])
                         ->withCount('entities')
                         ->where('id', $projectId);
         parent::__construct($query, $request);
