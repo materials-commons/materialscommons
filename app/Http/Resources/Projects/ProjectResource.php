@@ -22,6 +22,7 @@ class ProjectResource extends JsonResource
         $data['rootDir'] = new FileResource($this->whenLoaded('rootDir'));
         $data['admins'] = UserResource::collection($this['team']['admins']);
         $data['members'] = UserResource::collection($this['team']['members']);
+        $data['owner'] = new UserResource($this->whenLoaded('owner'));
         return $data;
     }
 }
