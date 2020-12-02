@@ -18,4 +18,6 @@
     @include('app.projects.datasets.tabs.communities')
 @elseif(Request::routeIs('projects.datasets.show.data-dictionary'))
     @include('app.projects.datasets.tabs.data-dictionary')
+@elseif(Request::routeIs('projects.datasets.show.file_includes_excludes'))
+    @include('app.projects.datasets.tabs.file-includes-excludes')
 @endif

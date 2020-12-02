@@ -28,6 +28,7 @@ use App\Http\Controllers\Web\Datasets\ShowDatasetCommunitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetDataDictionaryWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetEntitiesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetExperimentsWebController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetFileIncludesExcludesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetOverviewWebController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetWebController;
@@ -139,6 +140,10 @@ Route::get('/projects/{project}/datasets/{dataset}/communities', ShowDatasetComm
 
 Route::get('/projects/{project}/datasets/{dataset}/experiments', ShowDatasetExperimentsWebController::class)
      ->name('projects.datasets.show.experiments');
+
+Route::get('/projects/{project}/datasets/{dataset}/file_includes_excludes',
+    ShowDatasetFileIncludesExcludesWebController::class)
+     ->name('projects.datasets.show.file_includes_excludes');
 
 Route::get('/projects/{project}/datasets/{dataset}/data-dictionary', ShowDatasetDataDictionaryWebController::class)
      ->name('projects.datasets.show.data-dictionary');

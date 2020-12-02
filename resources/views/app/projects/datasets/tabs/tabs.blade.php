@@ -25,6 +25,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.file_includes_excludes')}}"
+           href="{{route('projects.datasets.show.file_includes_excludes', [$project, $dataset])}}">
+            Includes/Excludes
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.datasets.show.entities')}}"
            href="{{route('projects.datasets.show.entities', [$project, $dataset])}}">
             Samples
