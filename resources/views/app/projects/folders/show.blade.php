@@ -73,6 +73,15 @@
         @endslot
 
         @slot('body')
+            @if ($directory->path !== '/')
+                <a href="{{route('projects.folders.show', [$project, $directory->directory_id])}}"
+                   class="mb-3">
+                    <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                </a>
+                <br>
+                <br>
+            @endif
+
             <table id="files" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
