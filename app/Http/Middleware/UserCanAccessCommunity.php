@@ -11,8 +11,7 @@ class UserCanAccessCommunity
     use GetRequestParameterId;
 
     /**
-     * Make sure user has access to the project. $next is called if no project route, or project_id parameter
-     * is found.
+     * Make sure user has access to the community.
      *
      * @param  Request  $request
      * @param  Closure  $next
