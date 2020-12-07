@@ -47,6 +47,9 @@ class CreateProjectAction
         });
 
         $project->refresh();
-        return ['project' => Project::with('rootDir')->find($project->id), 'created' => true];
+        return [
+            'project' => Project::with(['rootDir', 'team.members', 'team.admins'])->find($project->id),
+            'created' => true,
+        ];
     }
 }
