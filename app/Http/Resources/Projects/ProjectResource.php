@@ -20,8 +20,13 @@ class ProjectResource extends JsonResource
         $data = $this->loadFromFields();
         $data['entities'] = EntityResource::collection($this->whenLoaded('entities'));
         $data['rootDir'] = new FileResource($this->whenLoaded('rootDir'));
-        $data['admins'] = UserResource::collection($this['team']['admins']);
-        $data['members'] = UserResource::collection($this['team']['members']);
+        if (isset($this['team']['admins'])) {
+            $data['admins'] = UserResource::collection($this['team']['admins']);
+        }
+
+        if (isset($this['team']['members'])) {
+            $data['members'] = UserResource::collection($this['team']['members']);
+        }
         return $data;
     }
 }

@@ -33,6 +33,7 @@ class CreateProjectApiController extends Controller
         $data = $createProjectAction->execute($validated, auth()->id());
         $project = $data['project'];
         $statusCode = $data['created'] ? 201 : 200;
+        $project->load(['team.admins', 'team.members']);
         return (new ProjectResource($project))->response()->setStatusCode($statusCode);
     }
 }
