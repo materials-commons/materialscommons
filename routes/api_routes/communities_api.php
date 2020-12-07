@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Communities\DeleteFileFromCommunityApiController;
 use App\Http\Controllers\Api\Communities\DeleteLinkFromCommunityApiController;
 use App\Http\Controllers\Api\Communities\IndexMyCommunitiesApiController;
 use App\Http\Controllers\Api\Communities\IndexPublicCommunitiesApiController;
+use App\Http\Controllers\Api\Communities\IndexTagsForCommunityApiController;
 use App\Http\Controllers\Api\Communities\RemoveDatasetFromCommunityApiController;
 use App\Http\Controllers\Api\Communities\ShowCommunityApiController;
 use App\Http\Controllers\Api\Communities\UpdateCommunityDatasetSelectionApiController;
@@ -31,3 +32,5 @@ Route::delete('/communities/{community}/files/{file}', DeleteFileFromCommunityAp
 
 Route::post("/communities/{community}/links", CreateLinkInCommunityApiController::class);
 Route::delete("/communities/{community}/links/{link}", DeleteLinkFromCommunityApiController::class);
+
+Route::get('/communities/{community}/tags', IndexTagsForCommunityApiController::class);
