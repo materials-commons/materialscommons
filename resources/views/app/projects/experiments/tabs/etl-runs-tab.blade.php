@@ -10,16 +10,18 @@
     </thead>
     <tbody>
     @foreach($experiment->etlRuns as $etlRun)
-        <tr>
-            <td>
-                <a href="{{route('projects.experiments.etl_run.show', [$project, $experiment, $etlRun])}}">
-                    {{$etlRun->files[0]->name}}
-                </a>
-            </td>
-            <td>
-                {{$etlRun->created_at->diffForHumans()}}
-            </td>
-        </tr>
+        @if(isset($etlRun->files[0]))
+            <tr>
+                <td>
+                    <a href="{{route('projects.experiments.etl_run.show', [$project, $experiment, $etlRun])}}">
+                        {{$etlRun->files[0]->name}}
+                    </a>
+                </td>
+                <td>
+                    {{$etlRun->created_at->diffForHumans()}}
+                </td>
+            </tr>
+        @endif
     @endforeach
     </tbody>
 </table>
