@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Communities\CreateCommunityApiController;
 use App\Http\Controllers\Api\Communities\CreateLinkInCommunityApiController;
 use App\Http\Controllers\Api\Communities\DeleteFileFromCommunityApiController;
 use App\Http\Controllers\Api\Communities\DeleteLinkFromCommunityApiController;
+use App\Http\Controllers\Api\Communities\IndexAuthorsForCommunityApiController;
 use App\Http\Controllers\Api\Communities\IndexMyCommunitiesApiController;
 use App\Http\Controllers\Api\Communities\IndexPublicCommunitiesApiController;
 use App\Http\Controllers\Api\Communities\IndexTagsForCommunityApiController;
@@ -34,3 +35,4 @@ Route::post("/communities/{community}/links", CreateLinkInCommunityApiController
 Route::delete("/communities/{community}/links/{link}", DeleteLinkFromCommunityApiController::class);
 
 Route::get('/communities/{community}/tags', IndexTagsForCommunityApiController::class);
+Route::get('/communities/{community}/authors', IndexAuthorsForCommunityApiController::class);

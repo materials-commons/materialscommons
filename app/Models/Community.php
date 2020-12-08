@@ -73,4 +73,13 @@ class Community extends Model implements Searchable
         }
         return new SearchResult($this, $this->name, $url);
     }
+
+    public function userCanAccess($ownerId)
+    {
+        if ($this->public) {
+            return true;
+        }
+
+        return $this->owner_id === $ownerId;
+    }
 }

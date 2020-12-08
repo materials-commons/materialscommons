@@ -14,7 +14,7 @@ class IndexTagsForCommunityApiController extends Controller
 {
     public function __invoke(Request $request, Community $community)
     {
-        abort_unless($this->canAccessCommunity($community), 403, "No such community");
+        abort_unless($community->userCanAccess(auth()->id()), 403, "No such community");
         $community->load(['publishedDatasets']);
 
         $publishedDatasetIds = $community->publishedDatasets->pluck('id')->toArray();
@@ -31,14 +31,5 @@ class IndexTagsForCommunityApiController extends Controller
                    ->distinct()
                    ->get();
         return TagResource::collection($tags);
-    }
-
-    private function canAccessCommunity(Community $community)
-    {
-        if ($community->public) {
-            return true;
-        }
-
-        return $community->owner_id === auth()->id();
     }
 }
