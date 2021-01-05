@@ -20,7 +20,8 @@ class DirectoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = $this->loadFromFields();
-        return $data;
+        return parent::toArray($request);
+//        $data = $this->loadFromFields();
+//        return $data;
     }
 }
