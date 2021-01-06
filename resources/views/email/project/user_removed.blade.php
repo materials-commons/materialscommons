@@ -6,7 +6,7 @@
     </p>
     <p>
         {{$removingUser->name}} has removed you from the project '{{$project->name}}'. If you believe this was
-        a mistake please contact {{$addingUser->name}} at {{$addingUser->email}}.
+        a mistake please contact {{$removingUser->name}} at {{$removingUser->email}}.
     </p>
     <p>
         This project will no longer show up in your dashboard, or be accessible by you.
