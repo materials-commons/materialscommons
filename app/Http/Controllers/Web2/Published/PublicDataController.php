@@ -29,8 +29,7 @@ class PublicDataController extends Controller
     {
         return Laratables::recordsOf(Dataset::class, function ($query) {
             return $query->withCount('views', 'downloads')
-                         ->whereNotNull('published_at')
-                         ->orderBy('published_at', 'desc');
+                         ->whereNotNull('published_at');
         });
     }
 }

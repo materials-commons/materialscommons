@@ -46,6 +46,7 @@
                     response: true,
                     stateSave: true,
                     ajax: "{{route('get_all_published_datasets')}}",
+                    order: [[4, "desc"]],
                     columns: [
                         {
                             name: 'name',
