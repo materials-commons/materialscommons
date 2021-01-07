@@ -17,7 +17,7 @@ class ShowDatasetFilesWebController extends Controller
     public function __invoke(Request $request, Project $project, $datasetId)
     {
         $dataset = Dataset::with('tags')->find($datasetId);
-        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);
+        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection, $dataset);
         $filesAndDir = $getDatasetFilesAction($project->id, '/');
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)

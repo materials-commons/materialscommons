@@ -130,6 +130,23 @@ class File extends Model implements Searchable
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
+    public function fullPath()
+    {
+        if ($this->isDir()) {
+            return $this->path;
+        }
+
+        if (!isset($this->directory)) {
+            return "/".$this->name;
+        }
+
+        if ($this->directory->path == "/") {
+            return "/".$this->name;
+        }
+
+        return $this->directory->path."/".$this->name;
+    }
+
     // Utility methods
 
     public function toHumanBytes()

@@ -143,7 +143,7 @@ class Dataset extends Model implements Searchable
 
     public function entitiesFromTemplate()
     {
-        return Entity::whereIn('id', function ($query) {
+        return Entity::with('files.directory')->whereIn('id', function ($query) {
             $query->select('entity_id')
                   ->from('experiment2entity')
                   ->whereIn('experiment_id', function ($query) {

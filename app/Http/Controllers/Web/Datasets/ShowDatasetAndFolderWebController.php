@@ -16,7 +16,7 @@ class ShowDatasetAndFolderWebController extends Controller
     public function __invoke(Project $project, $datasetId, $folderId)
     {
         $dataset = Dataset::with('tags')->findOrFail($datasetId);
-        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);
+        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection, $dataset);
         $filesAndDir = $getDatasetFilesAction($project->id, $folderId);
         $showDatasetOverviewViewModel = (new ShowDatasetOverviewViewModel())
             ->withProject($project)
