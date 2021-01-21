@@ -25,17 +25,6 @@
             grid.style.width = '100%';
             showSheet(sheet);
 
-            // function base64ToArrayBuffer(base64) {
-            //     let raw = window.atob(base64);
-            //     let rawLength = raw.length;
-            //     let array = new Uint8Array(new ArrayBuffer(rawLength));
-            //
-            //     for (let i = 0; i < rawLength; i++) {
-            //         array[i] = raw.charCodeAt(i);
-            //     }
-            //     return (array.buffer);
-            // }
-
             function createSheetTabs(sheets) {
                 let sheetTabs = document.getElementById("{{$file->uuid}}sheet-tabs");
 
@@ -57,6 +46,8 @@
                 $('a.nav-link.active.sheet').removeClass("active");
                 $(`#${index}_sheet`).addClass("active");
             }
+
+            window.changeToSheet = changeToSheet;
 
             function showSheet(sheet) {
                 grid.data = xlsx.utils.sheet_to_json(sheet, {raw: false, header: 1});
