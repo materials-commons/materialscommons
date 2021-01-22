@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataShowUploadFilesWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataStoreCreateDirectoryWebController;
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
+use App\Http\Controllers\Web\Datasets\DownloadDatasetZipfileWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
@@ -140,6 +141,9 @@ Route::get('/projects/{project}/datasets/{dataset}/communities', ShowDatasetComm
 
 Route::get('/projects/{project}/datasets/{dataset}/experiments', ShowDatasetExperimentsWebController::class)
      ->name('projects.datasets.show.experiments');
+
+Route::get('/projects/{project}/datasets/{dataset}/zipfile', DownloadDatasetZipfileWebController::class)
+     ->name('projects.datasets.download_zipfile');
 
 Route::get('/projects/{project}/datasets/{dataset}/file_includes_excludes',
     ShowDatasetFileIncludesExcludesWebController::class)
