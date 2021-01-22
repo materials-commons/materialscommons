@@ -62,7 +62,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
 
         $zip = new ZipArchive();
         $zipfile = $dataset->zipfilePath();
-        $zip->open($zipfile, ZipArchive::OVERWRITE) or die("Could not open archive");
+        $zip->open($zipfile, ZipArchive::CREATE) or die("Could not open archive");
 
         $maxFileCountBeforeReopen = 200;
         $fileCount = 0;
