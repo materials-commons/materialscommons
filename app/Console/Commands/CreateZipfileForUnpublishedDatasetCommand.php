@@ -7,6 +7,7 @@ use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class CreateZipfileForUnpublishedDatasetCommand extends Command
 {
