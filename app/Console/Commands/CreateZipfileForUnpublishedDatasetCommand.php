@@ -49,7 +49,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
     {
         umask(0);
         $dataset = Dataset::findOrFail($this->argument('dataset'));
-        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
+        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection, $dataset);
 
         $datasetDir = $dataset->zipfileDir();
         if (!file_exists($datasetDir)) {
