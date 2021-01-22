@@ -5,12 +5,15 @@ namespace App\Console\Commands;
 use App\Actions\Datasets\DatasetFileSelection;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
+use App\Traits\GetProjectFiles;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class CreateZipfileForUnpublishedDatasetCommand extends Command
 {
+    use GetProjectFiles;
+
     /**
      * The name and signature of the console command.
      *
