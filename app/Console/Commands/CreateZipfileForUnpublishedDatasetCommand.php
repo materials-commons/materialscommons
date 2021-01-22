@@ -74,6 +74,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
             $filePath = "{$file->directory->path}/{$file->name}";
             echo "Checking file {$filePath}\n";
             if (!$datasetFileSelection->isIncludedFile($filePath)) {
+                echo "   Not included...\n";
                 continue;
             }
 
@@ -85,6 +86,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
 
             $uuidPath = $this->getFilePathForFile($file);
             $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
+            echo "   Adding to zipfile ${fullPath}...\n";
             $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
             $zip->addFile($fullPath, $pathInZipfile);
         }
