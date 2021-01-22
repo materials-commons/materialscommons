@@ -6,12 +6,14 @@ use App\Actions\Datasets\DatasetFileSelection;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Traits\GetProjectFiles;
+use App\Traits\PathForFile;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class CreateZipfileForUnpublishedDatasetCommand extends Command
 {
+    use PathForFile;
     use GetProjectFiles;
 
     /**
