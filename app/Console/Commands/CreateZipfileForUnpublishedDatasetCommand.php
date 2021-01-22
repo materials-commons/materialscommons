@@ -51,6 +51,10 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
         $dataset = Dataset::findOrFail($this->argument('dataset'));
         $datasetFileSelection = new DatasetFileSelection($dataset->file_selection, $dataset);
 
+        if (Storage::disk('mcfs')->exists($dataset->zipfilePathPartial())) {
+            Storage::disk('mcfs')->delete($dataset->zipfilePathPartial());
+        }
+
         $datasetDir = $dataset->zipfileDir();
         if (!file_exists($datasetDir)) {
             mkdir($datasetDir, 0777, true);
@@ -68,6 +72,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
             }
 
             $filePath = "{$file->directory->path}/{$file->name}";
+            echo "Checking file {$filePath}\n";
             if (!$datasetFileSelection->isIncludedFile($filePath)) {
                 continue;
             }
