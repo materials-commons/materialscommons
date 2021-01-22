@@ -62,9 +62,10 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
 
         $zip = new ZipArchive();
         $zipfile = $dataset->zipfilePath();
-        $zip->open($zipfile, ZipArchive::CREATE) or die("Could not open archive");
+        $zip->open($zipfile, ZipArchive::OVERWRITE) or die("Could not open archive");
 
         $maxFileCountBeforeReopen = 200;
+        $fileCount = 0;
 
         foreach ($this->getCurrentFilesCursorForProject($dataset->project_id) as $file) {
             if (!$file->isFile()) {
@@ -72,21 +73,26 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
             }
 
             $filePath = "{$file->directory->path}/{$file->name}";
-            echo "Checking file {$filePath}\n";
+//            echo "Checking file {$filePath}\n";
             if (!$datasetFileSelection->isIncludedFile($filePath)) {
-                echo "   Not included...\n";
+//                echo "   Not included...\n";
                 continue;
             }
 
-            if ($zip->numFiles == $maxFileCountBeforeReopen) {
-                echo "close and reopen\n";
-                $zip->close();
-                $zip->open($zipfile) or die("Error: Could not reopen Zip");
-            }
+//            if ($zip->numFiles == $maxFileCountBeforeReopen) {
+//                echo "close and reopen\n";
+//                $zip->close();
+//                echo "past close\n";
+//                $zip->open($zipfile) or die("Error: Could not reopen Zip");
+//            }
 
             $uuidPath = $this->getFilePathForFile($file);
             $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
-            echo "   Adding to zipfile ${fullPath}...\n";
+//            echo "   Adding to zipfile ${fullPath}...\n";
+            $fileCount++;
+            if ($fileCount % 100) {
+                echo "Added {$fileCount} files to zipfile...\n";
+            }
             $pathInZipfile = PathHelpers::normalizePath("{$dataset->name}/{$file->directory->path}/{$file->name}");
             $zip->addFile($fullPath, $pathInZipfile);
         }
