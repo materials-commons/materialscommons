@@ -3,8 +3,8 @@
         <li class="list-inline-item">Download:</li>
         @if($dataset->zipfile_size > 0)
             <li class="list-inline-item">
-                @if(isset($project))
-                    <a href="{{route('projects.datasets.download_zipfile', [$project, $dataset])}}">
+                @if(is_null($dataset->published_at))
+                    <a href="{{route('projects.datasets.download_zipfile', [$dataset->project_id, $dataset])}}">
                         Zipfile
                     </a>
                 @else
@@ -14,6 +14,12 @@
                 @endif
                 <span class="ml-1">({{formatBytes($dataset->zipfile_size)}})</span>
             </li>
+        @else
+            @if(!is_null($dataset->published_at))
+                <li class="list-inline-item">
+                    <span class="ml-1">Building zipfile...</span>
+                </li>
+            @endif
         @endif
 
         @if($dataset->globus_path_exists)
