@@ -5,6 +5,8 @@ namespace App\Actions\Datasets;
 use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
 
 class PublishDatasetAction2
 {
@@ -47,7 +49,10 @@ class PublishDatasetAction2
 
     private function buildZipfile(Dataset $dataset)
     {
-        $createDatasetZipfileAction = new CreateDatasetZipfileAction();
-        $createDatasetZipfileAction($dataset);
+        Storage::disk('mcfs')->makeDirectory("zip_logs");
+        $logPath = Storage::disk('mcfs')->path("zip_logs/{$dataset->uuid}.log");
+        $command = "nohup mcdszip -d {$dataset->id} -z {$dataset->zipfilePath()} > {$logPath} 2>&1&";
+        $process = Process::fromShellCommandline($command);
+        $process->start();
     }
 }

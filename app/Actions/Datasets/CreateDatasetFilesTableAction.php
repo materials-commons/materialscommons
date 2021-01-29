@@ -13,7 +13,7 @@ class CreateDatasetFilesTableAction
 
     public function execute(Dataset $dataset)
     {
-        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection);
+        $datasetFileSelection = new DatasetFileSelection($dataset->file_selection, $dataset);
 
         $this->clearDatasetFiles($dataset);
 
