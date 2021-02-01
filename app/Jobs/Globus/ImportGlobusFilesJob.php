@@ -34,5 +34,6 @@ class ImportGlobusFilesJob implements ShouldQueue
         ini_set("memory_limit", "4096M");
         $importFilesAction = new ImportGlobusFilesIntoProjectAction();
         $importFilesAction->execute($this->globusRequest);
+        $this->globusRequest->delete();
     }
 }

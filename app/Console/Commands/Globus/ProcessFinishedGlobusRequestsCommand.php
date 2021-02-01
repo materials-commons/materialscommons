@@ -66,6 +66,7 @@ class ImportFinishedGlobusRequestsCommand extends Command
             } else {
                 $importFilesAction = new ImportGlobusFilesIntoProjectAction();
                 $importFilesAction->execute($finishedRequest);
+                $finishedRequest->delete();
             }
         }
     }
