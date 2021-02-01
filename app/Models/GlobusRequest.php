@@ -28,6 +28,8 @@ class GlobusRequest extends Model
 
     protected $guarded = ['id'];
 
+    protected $dates = ['last_active_at'];
+
     protected $casts = [
         'owner_id'   => 'integer',
         'project_id' => 'integer',

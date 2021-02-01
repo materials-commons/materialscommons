@@ -23,8 +23,10 @@ class CreateGlobusRequestsTable extends Migration
             $table->string('globus_identity_id')->nullable();
             $table->string('globus_path')->nullable();
             $table->string('globus_url')->nullable();
+
             $table->string('state')->nullable()->index();
-            $table->unsignedBigInteger('pid')->nullable();
+
+            $table->datetime('last_active_at')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
