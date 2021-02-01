@@ -31,6 +31,11 @@ class Kernel extends ConsoleKernel
                      ->everyMinute()
                      ->runInBackground()
                      ->withoutOverlapping();
+
+            $schedule->command("mc-globus:process-finished-globus-requests --background")
+                     ->everyMinute()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
         if (config('backup.backup.run_backups') != 0) {
