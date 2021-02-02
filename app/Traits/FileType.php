@@ -51,8 +51,9 @@ trait FileType
     ];
 
     protected $textTypes = [
-        "text/plain" => true,
-        "text/csv"   => true,
+        "text/plain"       => true,
+        "text/csv"         => true,
+        "application/json" => true,
     ];
 
     public function fileType($file): string
