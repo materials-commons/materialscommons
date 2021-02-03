@@ -16,7 +16,7 @@ class CreateGlobusRequestFilesTable extends Migration
         Schema::create('globus_request_files', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('path', 700)->nullable()->index();
+            $table->string('name', 150);
 
             $table->unsignedBigInteger("globus_request_id");
             $table->foreign("globus_request_id")
@@ -24,7 +24,7 @@ class CreateGlobusRequestFilesTable extends Migration
                   ->on("globus_requests")
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('directory_id');
+            $table->unsignedBigInteger('directory_id')->index();
             $table->foreign('directory_id')
                   ->references('id')
                   ->on('files')
@@ -36,7 +36,7 @@ class CreateGlobusRequestFilesTable extends Migration
                   ->on('files')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('project_id')->index();
             $table->foreign('project_id')
                   ->references('id')
                   ->on('projects')
@@ -49,6 +49,8 @@ class CreateGlobusRequestFilesTable extends Migration
                   ->onDelete('cascade');
 
             $table->timestamps();
+
+            $table->index(['directory_id', 'name']);
         });
     }
 
