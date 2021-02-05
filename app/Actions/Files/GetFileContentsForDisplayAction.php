@@ -69,7 +69,7 @@ class GetFileContentsForDisplayAction
     private function fileContentsPathPartial(File $file)
     {
         $uuid = $file->uuid;
-        if ($file->uses_uuid !== null) {
+        if (!blank($file->uses_uuid)) {
             $uuid = $file->uses_uuid;
         }
 

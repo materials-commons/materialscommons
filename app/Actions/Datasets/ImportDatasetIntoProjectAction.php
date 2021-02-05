@@ -144,7 +144,7 @@ class ImportDatasetIntoProjectAction
         if (!$file->current) {
             return;
         }
-        $usesUuid = is_null($file->uses_uuid) ? $file->uuid : $file->uses_uuid;
+        $usesUuid = blank($file->uses_uuid) ? $file->uuid : $file->uses_uuid;
         $f = $file->replicate()->fill([
             'uuid'         => Uuid::uuid4()->toString(),
             'directory_id' => $dir->id,

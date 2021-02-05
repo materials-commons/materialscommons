@@ -218,7 +218,7 @@ class File extends Model implements Searchable
     public function getFileUuidToUse()
     {
         $uuid = $this->uuid;
-        if ($this->uses_uuid !== null) {
+        if (!blank($this->uses_uuid)) {
             $uuid = $this->uses_uuid;
         }
 
