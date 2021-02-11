@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsFilesWebCont
 use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsProcessStepsWebController;
 use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsUnitsWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
+use App\Http\Controllers\Web\Projects\Globus\CloseOpenGlobusTransfersWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\CreateProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\DeleteGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\DestroyGlobusDownloadWebController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloa
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
+use App\Http\Controllers\Web\Projects\Globus\StartGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DestroyGlobusUploadWebController;
@@ -163,6 +165,13 @@ Route::get('/projects/{project}/globus/downloads/index', IndexProjectGlobusDownl
 
 Route::get('/projects/{project}/globus/downloads/{globusDownload}', ShowProjectGlobusDownloadWebController::class)
      ->name('projects.globus.downloads.show');
+
+// Globus NG
+Route::get('/projects/{project}/globus/start', StartGlobusTransferWebController::class)
+     ->name('projects.globus.start');
+
+Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
+     ->name('projects.globus.close');
 
 
 // Project Search

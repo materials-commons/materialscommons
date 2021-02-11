@@ -68,7 +68,7 @@ class OpenGlobusRequestAction
     {
         Storage::disk('mcfs')->makeDirectory('bridge_logs');
         $logPath = Storage::disk('mcfs')->path("bridge_logs/{$globusRequest->uuid}.log");
-        $command = "nohup mcbridgefs -g {$globusRequest->id} {$mountPath} > {$logPath} 2>&1&";
+        $command = "nohup /usr/local/bin/mcbridgefs -g {$globusRequest->id} {$mountPath} > {$logPath} 2>&1&";
         $process = Process::fromShellCommandline($command);
         $process->start();
     }

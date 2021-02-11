@@ -8,13 +8,6 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item">--}}
-            {{--                <a class="nav-link fs-11" href="{{route('projects.index')}}">--}}
-            {{--                    <i class="fa-fw fas fa-layer-group mr-2"></i>--}}
-            {{--                    Projects--}}
-            {{--                </a>--}}
-            {{--            </li>--}}
-
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.show')}}"
                    href="{{route('projects.show', ['project' => $project->id])}}">
@@ -137,6 +130,22 @@
                    href="{{route('projects.globus.downloads.index', [$project])}}">
                     <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
                     Globus Downloads
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.show')}}"
+                   href="{{route('projects.globus.start', [$project])}}">
+                    <i class="fa-fw fas fa-globe mr-2"></i>
+                    Globus (Beta)
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.close')}}"
+                   href="{{route('projects.globus.close', [$project])}}">
+                    <i class="fa-fw fas fa-check mr-2"></i>
+                    Finished With Globus (Beta)
                 </a>
             </li>
 
