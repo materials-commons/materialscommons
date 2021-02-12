@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Globus;
 
+use App\Actions\Globus\GlobusApi;
 use App\Models\GlobusRequest;
 use Illuminate\Console\Command;
 
@@ -38,7 +39,18 @@ class RemoveClosedGlobusRequestsCommand extends Command
      */
     public function handle()
     {
-        GlobusRequest::where('state', 'closed')->delete();
+        $globusApi = GlobusApi::createGlobusApi();
+        GlobusRequest::where('state', 'closed')
+                     ->get()
+                     ->each(function (GlobusRequest $globusRequest) use ($globusApi) {
+                         try {
+                             $globusApi->deleteEndpointAclRule($globusRequest->globus_endpoint_id,
+                                 $globusRequest->globus_acl_id);
+                         } catch (\Exception $e) {
+                             Log::error("Unable to delete acl");
+                         }
+                         $globusRequest->delete();
+                     });
         return 0;
     }
 }
