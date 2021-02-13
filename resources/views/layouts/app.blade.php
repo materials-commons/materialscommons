@@ -147,7 +147,7 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="mt-2 bg-red-3">
                 <p class="text-white pt-2 pb-2 pl-2">
-                    We are currently experiencing some issues with our storage. You may experience
+                    We are currently experiencing some issues. You may experience
                     slow response times and problems viewing or uploading files.
                 </p>
             </div>
