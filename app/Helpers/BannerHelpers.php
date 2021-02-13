@@ -54,7 +54,7 @@ if (!function_exists("bannerFileToCollection")) {
         $lines = collect();
 
         if (bannerFileExists($bannerFile)) {
-            $handle = fopen(Storage::disk('mcfs')->path($partialPath), "r");
+            $handle = fopen(Storage::disk('local_backup')->path($partialPath), "r");
             while (!feof($handle)) {
                 $line = trim(fgets($handle));
                 if ($line != "") {
