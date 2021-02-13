@@ -145,23 +145,29 @@
         @yield('nav')
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            @forelse(errorBannerMessages() as $errorBanner)
-                <div class="mt-2 bg-red-3">
-                    <p class="text-white pt-2 pb-2 pl-2">
-                    {{$errorBanner}}
-                    <p>
-                </div>
-            @empty
-            @endforelse
+            <div class="mt-2 bg-red-3">
+                <p class="text-white pt-2 pb-2 pl-2">
+                    We are currently experiencing some issues with our storage. You may experience
+                    slow response times and problems viewing or uploading files.
+                </p>
+            </div>
+            {{--            @forelse(errorBannerMessages() as $errorBanner)--}}
+            {{--                <div class="mt-2 bg-red-3">--}}
+            {{--                    <p class="text-white pt-2 pb-2 pl-2">--}}
+            {{--                    {{$errorBanner}}--}}
+            {{--                    <p>--}}
+            {{--                </div>--}}
+            {{--            @empty--}}
+            {{--            @endforelse--}}
 
-            @forelse(warnBannerMessages() as $warningBanner)
-                <div class="mt-2 bg-yellow-7">
-                    <p class="pt-2 pb-2 pl-2">
-                    {{$warningBanner}}
-                    <p>
-                </div>
-            @empty
-            @endforelse
+            {{--            @forelse(warnBannerMessages() as $warningBanner)--}}
+            {{--                <div class="mt-2 bg-yellow-7">--}}
+            {{--                    <p class="pt-2 pb-2 pl-2">--}}
+            {{--                    {{$warningBanner}}--}}
+            {{--                    <p>--}}
+            {{--                </div>--}}
+            {{--            @empty--}}
+            {{--            @endforelse--}}
             <div class="mt-3">
                 @include('flash::message')
                 @yield('breadcrumbs')
