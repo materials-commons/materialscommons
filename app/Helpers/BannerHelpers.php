@@ -35,11 +35,11 @@ if (!function_exists("bannerFileExists")) {
     {
         $partialPath = "banners/{$bannerFile}";
 
-        if (!Storage::disk('mcfs')->exists($partialPath)) {
+        if (!Storage::disk('local_backup')->exists($partialPath)) {
             return false;
         }
 
-        if (Storage::disk('mcfs')->size($partialPath) == 0) {
+        if (Storage::disk('local_backup')->size($partialPath) == 0) {
             return false;
         }
 
@@ -54,7 +54,7 @@ if (!function_exists("bannerFileToCollection")) {
         $lines = collect();
 
         if (bannerFileExists($bannerFile)) {
-            $handle = fopen(Storage::disk('mcfs')->path($partialPath), "r");
+            $handle = fopen(Storage::disk('local_backup')->path($partialPath), "r");
             while (!feof($handle)) {
                 $line = trim(fgets($handle));
                 if ($line != "") {
