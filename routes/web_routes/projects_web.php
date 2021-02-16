@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloa
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
+use App\Http\Controllers\Web\Projects\Globus\MonitorGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\StartGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\DeleteGlobusUploadWebController;
@@ -173,6 +174,8 @@ Route::get('/projects/{project}/globus/start', StartGlobusTransferWebController:
 Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
      ->name('projects.globus.close');
 
+Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
+     ->name('projects.globus.monitor');
 
 // Project Search
 

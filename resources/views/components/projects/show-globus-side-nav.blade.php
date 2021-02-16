@@ -46,9 +46,10 @@
             </li>
 
             <li class="nav-item ml-3">
-                <a class="nav-link fs-11 ml-5" href="#">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.monitor')}}"
+                   href="{{route('projects.globus.monitor', [$project])}}">
                     <i class="fa-fw fas fa-eye mr-2"></i>
-                    Status
+                    Monitor
                 </a>
             </li>
         @endif

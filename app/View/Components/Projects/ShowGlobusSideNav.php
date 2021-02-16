@@ -33,8 +33,8 @@ class ShowGlobusSideNav extends Component
             case 173: /* John Allison */
             case 130: /* Glenn Tarcea */
             case 101: /* David Montiel */
-            case 65:
-                return true; /* Brian Puchala */
+            case 65:  /* Brian Puchala */
+                return true;
             default:
                 return false;
         }
