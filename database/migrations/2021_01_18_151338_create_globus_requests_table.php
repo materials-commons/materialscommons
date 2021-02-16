@@ -24,7 +24,7 @@ class CreateGlobusRequestsTable extends Migration
             $table->string('globus_path')->nullable();
             $table->string('globus_url')->nullable();
 
-            $table->string('state')->nullable()->index();
+            $table->string('state', 10)->nullable()->index();
 
             $table->datetime('last_active_at')->nullable();
 
