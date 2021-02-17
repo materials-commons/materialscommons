@@ -30,6 +30,6 @@ class StartGlobusTransferWebController extends Controller
         // There isn't an open request so create a new one
         $openGlobusRequestAction = new OpenGlobusRequestAction(GlobusApi::createGlobusApi());
         $globusRequest = $openGlobusRequestAction->execute($project->id, $user);
-        return view('app.projects.globus.show', compact('globusRequest', 'project'));
+        return redirect(route('projects.globus.show-started', [$project, $globusRequest]));
     }
 }

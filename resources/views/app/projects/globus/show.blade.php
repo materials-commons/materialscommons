@@ -12,11 +12,15 @@
             Globus Transfer
         </x-slot>
         <x-slot name="body">
-            <p>
-                Your globus request has been set up. Click
-                <a href="{{$globusRequest->globus_url}}" target="_blank">here</a>
-                to go to the Globus web interface.
-            </p>
+            @if(!is_null($globusRequest))
+                <p>
+                    Your globus request has been set up. Click
+                    <a href="{{$globusRequest->globus_url}}" target="_blank">here</a>
+                    to go to the Globus web interface.
+                </p>
+            @else
+                <p>There is no active globus transfer</p>
+            @endif
         </x-slot>
     </x-card>
 @endsection
