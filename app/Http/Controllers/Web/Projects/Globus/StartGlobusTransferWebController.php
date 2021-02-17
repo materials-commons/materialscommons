@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Projects\Globus;
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\OpenGlobusRequestAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Globus\GlobusRequest;
+use App\Models\GlobusRequest;
 use App\Models\Project;
 
 class StartGlobusTransferWebController extends Controller

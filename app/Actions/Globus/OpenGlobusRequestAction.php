@@ -26,12 +26,12 @@ class OpenGlobusRequestAction
             'state'      => 'new',
         ]);
 
-        $path = Storage::disk('mcfs')->path("__globus_uploads/{$globusRequest->uuid}");
+        $mountPath = Storage::disk('mcfs')->path("__globus_uploads/{$globusRequest->uuid}");
         $globusPath = "/__globus_uploads/{$globusRequest->uuid}/";
 
-        if (!is_dir($path)) {
+        if (!is_dir($mountPath)) {
             $old = umask(0);
-            mkdir($path, 0777, true);
+            mkdir($mountPath, 0777, true);
             umask($old);
         }
 
@@ -43,10 +43,10 @@ class OpenGlobusRequestAction
             'globus_identity_id' => $globusUserId,
             'globus_url'         => GlobusUrl::globusUploadUrl($this->endpointId, $globusPath),
             'globus_path'        => $globusPath,
-            'path'               => $path,
+            'path'               => $mountPath,
         ]);
 
-        $this->startMCBridgeFS($globusRequest, $path);
+        $this->startMCBridgeFS($globusRequest, $mountPath);
 
         return $globusRequest->fresh();
     }
@@ -68,7 +68,7 @@ class OpenGlobusRequestAction
     {
         Storage::disk('mcfs')->makeDirectory('bridge_logs');
         $logPath = Storage::disk('mcfs')->path("bridge_logs/{$globusRequest->uuid}.log");
-        $command = "nohup /usr/local/bin/mcbridgefs -g {$globusRequest->id} {$mountPath} > {$logPath} 2>&1&";
+        $command = "nohup /usr/local/bin/mcbridgefs.sh {$globusRequest->id} {$mountPath} > {$logPath} 2>&1&";
         $process = Process::fromShellCommandline($command);
         $process->start();
     }

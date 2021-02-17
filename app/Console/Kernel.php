@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
                      ->runInBackground()
                      ->withoutOverlapping();
 
+            // This command runs periodically to clean up any globus requests that didn't properly close.
             $schedule->command('mc-globus:remove-closed-globus-requests')
                      ->everyFiveMinutes()
                      ->runInBackground()

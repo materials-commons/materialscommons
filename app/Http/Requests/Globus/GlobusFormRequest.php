@@ -4,7 +4,7 @@ namespace App\Http\Requests\Globus;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GlobusRequest extends FormRequest
+class GlobusFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
