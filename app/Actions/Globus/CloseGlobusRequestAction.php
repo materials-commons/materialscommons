@@ -4,7 +4,6 @@ namespace App\Actions\Globus;
 
 use App\Models\GlobusRequest;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class CloseGlobusRequestAction
 {
@@ -21,7 +20,6 @@ class CloseGlobusRequestAction
 
         try {
             $this->globusApi->deleteEndpointAclRule($globusRequest->globus_endpoint_id, $globusRequest->globus_acl_id);
-            @Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$globusRequest->uuid}");
             $globusRequest->delete();
         } catch (\Exception $e) {
             Log::error("Unable to delete acl");

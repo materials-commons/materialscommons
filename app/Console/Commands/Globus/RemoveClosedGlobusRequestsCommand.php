@@ -6,7 +6,6 @@ use App\Actions\Globus\GlobusApi;
 use App\Models\GlobusRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class RemoveClosedGlobusRequestsCommand extends Command
 {
@@ -51,7 +50,6 @@ class RemoveClosedGlobusRequestsCommand extends Command
                          } catch (\Exception $e) {
                              Log::error("Unable to delete acl");
                          }
-                         @Storage::disk('mcfs')->deleteDirectory("__globus_uploads/{$globusRequest->uuid}");
                          $globusRequest->delete();
                      });
         return 0;
