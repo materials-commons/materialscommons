@@ -21,7 +21,6 @@ class ShowOtherActiveGlobusUploads extends Component
                                     ->where('project_id', $this->globusRequest->project_id)
                                     ->where('owner_id', '<>', auth()->id())
                                     ->get();
-        ray($otherActive);
         return view('components.projects.globus.monitor.show-other-active-globus-uploads', [
             'otherActive' => $otherActive,
         ]);
