@@ -15,8 +15,16 @@
                 processing: true,
                 response: true,
                 stateSave: true,
-                ajax: "",
-                columns: []
+                ajax: "{{route('projects.globus.dt-file-upload-status', [$globusRequest->project_id, $globusRequest])}}",
+                columns: [
+                    {
+                        name: 'name',
+                        render: function (data, type, row) {
+                            return data;
+                        }
+                    },
+                    {name: 'state'},
+                ]
             });
         });
     </script>
