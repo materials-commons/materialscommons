@@ -17,7 +17,7 @@ class CreateGlobusRequestFilesTable extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name', 150);
-            $table->string('state', 10)->nullable();
+            $table->string('state', 20)->nullable();
 
             $table->unsignedBigInteger("globus_request_id");
             $table->foreign("globus_request_id")
