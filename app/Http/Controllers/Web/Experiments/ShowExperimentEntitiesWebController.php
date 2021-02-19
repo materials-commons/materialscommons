@@ -22,9 +22,10 @@ class ShowExperimentEntitiesWebController extends Controller
                         ->where('experiment_id', $experiment->id)
                         ->join('activities', 'experiment2activity.activity_id', '=', 'activities.id')
                         ->where('activities.name', '<>', 'Create Samples')
-                        ->select('activities.name')
+                        ->select('activities.name', 'activities.eindex')
                         ->distinct()
-                        ->orderBy('name')
+                        ->orderByRaw('case when eindex is null then name else eindex end')
+//            ->orderBy('name')
                         ->get();
 
         $entities = $experiment->entities()->with('activities')->get();
