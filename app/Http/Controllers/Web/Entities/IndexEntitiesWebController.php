@@ -24,9 +24,6 @@ class IndexEntitiesWebController extends Controller
                           ->where('project_id', $project->id)
                           ->get();
 
-        ray($activities);
-        ray($entities);
-
         return view('app.projects.entities.index', [
             'project'        => $project,
             'activities'     => $activities,
