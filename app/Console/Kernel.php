@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
         }
 
         if (config('app.beta') != 1) {
-            if (config('env') != 'dev') {
+            if (config('app.env') != 'dev') {
                 $schedule->command('mc:generate-site-map')->daily()->at('3:00');
             }
         }
