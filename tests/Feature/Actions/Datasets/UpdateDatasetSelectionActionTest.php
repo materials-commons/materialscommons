@@ -47,4 +47,24 @@ class UpdateDatasetSelectionActionTest extends TestCase
         $dataset = $updateDatasetSelectionAction(['remove_include_dir' => '/d1/d2'], $dataset);
         $this->assertEquals([], $dataset->file_selection["include_dirs"]);
     }
+
+    /** @test */
+    public function it_should_remove_file_or_add_to_exlude_list()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+
+        $project = Project::factory()->create(['owner_id' => $user->id]);
+        $dataset = Dataset::factory()->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $updateDatasetSelectionAction = new UpdateDatasetFileSelectionAction();
+        $dataset = $updateDatasetSelectionAction(['include_dir' => '/a'], $dataset);
+        $this->assertEquals(["/a"], $dataset->file_selection["include_dirs"]);
+
+        $dataset = $updateDatasetSelectionAction(['remove_include_file' => '/a/b.txt'], $dataset);
+        $this->assertEquals(["/a/b.txt"], $dataset->file_selection['exclude_files']);
+    }
 }
