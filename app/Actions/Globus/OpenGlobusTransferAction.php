@@ -2,14 +2,15 @@
 
 namespace App\Actions\Globus;
 
-use App\Models\GlobusRequest;
+use App\Models\GlobusTransfer;
+use App\Models\TransferRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
-class OpenGlobusRequestAction
+class OpenGlobusTransferAction
 {
-    private $globusApi;
+    private GlobusApi $globusApi;
     private $endpointId;
 
     public function __construct(GlobusApi $globusApi)
@@ -20,14 +21,21 @@ class OpenGlobusRequestAction
 
     public function execute($projectId, User $user)
     {
-        $globusRequest = GlobusRequest::create([
+        $transferRequest = TransferRequest::create([
             'project_id' => $projectId,
             'owner_id'   => $user->id,
-            'state'      => 'new',
+            'state'      => 'open',
         ]);
 
-        $mountPath = Storage::disk('mcfs')->path("__globus_uploads/{$globusRequest->uuid}");
-        $globusPath = "/__globus_uploads/{$globusRequest->uuid}/";
+        $globusTransfer = GlobusTransfer::create([
+            'project_id'          => $projectId,
+            'owner_id'            => $user->id,
+            'state'               => 'open',
+            'transfer_request_id' => $transferRequest->id,
+        ]);
+
+        $mountPath = Storage::disk('mcfs')->path("__transfers/{$transferRequest->uuid}");
+        $transferPath = "/__transfers/{$transferRequest->uuid}/";
 
         if (!is_dir($mountPath)) {
             $old = umask(0);
@@ -36,19 +44,19 @@ class OpenGlobusRequestAction
         }
 
         $globusUserId = $this->getGlobusIdentity($user->globus_user);
-        $aclId = $this->setAclOnPath($globusPath, $globusUserId);
-        $globusRequest->update([
+        $aclId = $this->setAclOnPath($transferPath, $globusUserId);
+        $globusTransfer->update([
             'globus_acl_id'      => $aclId,
             'globus_endpoint_id' => $this->endpointId,
             'globus_identity_id' => $globusUserId,
-            'globus_url'         => GlobusUrl::globusUploadUrl($this->endpointId, $globusPath),
-            'globus_path'        => $globusPath,
+            'globus_url'         => GlobusUrl::globusUploadUrl($this->endpointId, $transferPath),
+            'globus_path'        => $transferPath,
             'path'               => $mountPath,
         ]);
 
-        $this->startMCBridgeFS($globusRequest, $mountPath);
+        $this->startMCBridgeFS($transferRequest, $mountPath);
 
-        return $globusRequest->fresh();
+        return $transferRequest->fresh();
     }
 
     private function getGlobusIdentity($globusEmail)
@@ -64,11 +72,11 @@ class OpenGlobusRequestAction
         return $resp["access_id"];
     }
 
-    private function startMCBridgeFS(GlobusRequest $globusRequest, $mountPath)
+    private function startMCBridgeFS(TransferRequest $transferRequest, $mountPath)
     {
         Storage::disk('mcfs')->makeDirectory('bridge_logs');
-        $logPath = Storage::disk('mcfs')->path("bridge_logs/{$globusRequest->uuid}.log");
-        $command = "nohup /usr/local/bin/mcbridgefs.sh {$globusRequest->id} {$mountPath} > {$logPath} 2>&1&";
+        $logPath = Storage::disk('mcfs')->path("bridge_logs/{$transferRequest->uuid}.log");
+        $command = "nohup /usr/local/bin/mcbridgefs.sh {$transferRequest->id} {$mountPath} > {$logPath} 2>&1&";
         $process = Process::fromShellCommandline($command);
         $process->start();
     }

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class GlobusRequestFile extends Model
+class TransferRequestFile extends Model
 {
     use HasUUID;
     use HasFactory;
@@ -42,9 +42,9 @@ class GlobusRequestFile extends Model
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function globusEntry()
+    public function transferRequest()
     {
-        return $this->belongsTo(GlobusRequest::class, "globus_request_id");
+        return $this->belongsTo(TransferRequest::class, "transfer_request_id");
     }
 
     public function file()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGlobusRequestsTable extends Migration
+class CreateGlobusTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateGlobusRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('globus_requests', function (Blueprint $table) {
+        Schema::create('globus_transfers', function (Blueprint $table) {
             $table->id();
+
             $table->uuid('uuid')->unique();
+
+            $table->string('state', 20)->nullable()->index();
 
             // Globus columns
             $table->string('globus_acl_id')->nullable();
@@ -23,10 +26,10 @@ class CreateGlobusRequestsTable extends Migration
             $table->string('globus_identity_id')->nullable();
             $table->string('globus_path')->nullable();
             $table->string('globus_url')->nullable();
+            $table->string('last_transfer_id_completed')->nullable();
 
-            $table->string('state', 20)->nullable()->index();
-
-            $table->datetime('last_active_at')->nullable();
+            // Globus string for date
+            $table->string('latest_transfer_completed_date')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
@@ -40,6 +43,12 @@ class CreateGlobusRequestsTable extends Migration
                   ->on('users')
                   ->onDelete('cascade');
 
+            $table->unsignedBigInteger('transfer_request_id');
+            $table->foreign('transfer_request_id')
+                  ->references('id')
+                  ->on('transfer_requests')
+                  ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -51,6 +60,6 @@ class CreateGlobusRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('globus_requests');
+        Schema::dropIfExists('globus_transfers');
     }
 }

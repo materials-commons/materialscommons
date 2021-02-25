@@ -2,12 +2,12 @@
 
 namespace App\View\Components\Projects\Globus\Monitor;
 
-use App\Models\GlobusRequest;
+use App\Models\TransferRequest;
 use Illuminate\View\Component;
 
 class GlobusTransfer extends Component
 {
-    public ?GlobusRequest $globusRequest;
+    public ?TransferRequest $globusRequest;
 
     public function __construct($globusRequest)
     {

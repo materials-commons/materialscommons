@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\GlobusRequestFile;
+use App\Models\TransferRequestFile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GlobusRequestFileFactory extends Factory
@@ -12,7 +12,7 @@ class GlobusRequestFileFactory extends Factory
      *
      * @var string
      */
-    protected $model = GlobusRequestFile::class;
+    protected $model = TransferRequestFile::class;
 
     /**
      * Define the model's default state.
