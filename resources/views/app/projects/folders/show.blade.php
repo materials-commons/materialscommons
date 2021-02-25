@@ -73,6 +73,23 @@
         @endslot
 
         @slot('body')
+            <span class="float-left action-link mr-4">
+                <i class="fa-fw fas fa-filter mr-2"></i>
+                Filters:
+            </span>
+            <a class="float-left action-link mr-4" href="#">
+                <i class="fa-fw fas fa-calendar mr-2"></i>
+                By Date
+            </a>
+
+            <a class="float-left action-link ml-4" href="#">
+                <i class="fa-fw fas fa-user-friends mr-2"></i>
+                By Users
+            </a>
+
+            <br>
+            <br>
+
             @if ($directory->path !== '/')
                 <a href="{{route('projects.folders.show', [$project, $directory->directory_id])}}"
                    class="mb-3">
