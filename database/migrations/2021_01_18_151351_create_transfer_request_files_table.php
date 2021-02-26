@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFileTransferFilesTable extends Migration
+class CreateTransferRequestFilesTable extends Migration
 {
     /**
      * Run the migrations.
