@@ -16,8 +16,6 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloa
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
-use App\Http\Controllers\Web\Projects\Globus\DTGetGlobusRequestUploadedFilesWebController;
-use App\Http\Controllers\Web\Projects\Globus\MonitorGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\ShowStartedGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\StartGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
@@ -173,18 +171,18 @@ Route::get('/projects/{project}/globus/downloads/{globusDownload}', ShowProjectG
 Route::get('/projects/{project}/globus/start', StartGlobusTransferWebController::class)
      ->name('projects.globus.start');
 
-Route::get('/projects/{project}/globus/{globusRequest}/show-started', ShowStartedGlobusTransferWebController::class)
+Route::get('/projects/{project}/globus/{globusTransfer}/show-started', ShowStartedGlobusTransferWebController::class)
      ->name('projects.globus.show-started');
 
 Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
      ->name('projects.globus.close');
 
-Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
-     ->name('projects.globus.monitor');
+//Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
+//     ->name('projects.globus.monitor');
 
-Route::get('/projects/{project}/globus/{globusRequest}/file-upload-status',
-    DTGetGlobusRequestUploadedFilesWebController::class)
-     ->name('projects.globus.dt-file-upload-status');
+//Route::get('/projects/{project}/globus/{globusRequest}/file-upload-status',
+//    DTGetGlobusRequestUploadedFilesWebController::class)
+//     ->name('projects.globus.dt-file-upload-status');
 
 // Project Search
 
