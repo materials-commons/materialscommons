@@ -62,6 +62,6 @@ class CreateTransferRequestFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('globus_request_files');
+        Schema::dropIfExists('transfer_request_files');
     }
 }
