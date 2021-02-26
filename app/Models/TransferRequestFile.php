@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property string uuid
+ * @property string name
+ * @property string state
+ * @property integer transfer_request_id
+ * @property integer directory_id
  * @property integer file_id
  * @property integer project_id
  * @property integer owner_id
- * @property integer globus_entry_id
- * @property path string
  *
  * @mixin Builder
  */
@@ -26,10 +28,11 @@ class TransferRequestFile extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'owner_id'        => 'integer',
-        'project_id'      => 'integer',
-        'globus_entry_id' => 'integer',
-        'file_id'         => 'integer',
+        'owner_id'            => 'integer',
+        'project_id'          => 'integer',
+        'transfer_request_id' => 'integer',
+        'file_id'             => 'integer',
+        'directory_id'        => 'integer',
     ];
 
     public function owner()

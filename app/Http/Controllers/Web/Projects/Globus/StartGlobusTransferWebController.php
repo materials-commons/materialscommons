@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Web\Projects\Globus;
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\OpenGlobusTransferAction;
 use App\Http\Controllers\Controller;
+use App\Models\GlobusTransfer;
 use App\Models\Project;
-use App\Models\TransferRequest;
 
 class StartGlobusTransferWebController extends Controller
 {
@@ -18,18 +18,18 @@ class StartGlobusTransferWebController extends Controller
             return redirect(route('projects.globus.uploads.edit_account', [$project]));
         }
 
-        $globusRequest = TransferRequest::where('project_id', $project->id)
+        $globusTransfer = GlobusTransfer::where('project_id', $project->id)
                                         ->where('owner_id', $user->id)
-                                        ->where('state', 'new')
+                                        ->where('state', 'open')
                                         ->first();
-        if (!is_null($globusRequest)) {
+        if (!is_null($globusTransfer)) {
             // User already has an open request so use it
-            return view('app.projects.globus.show', compact('globusRequest', 'project'));
+            return view('app.projects.globus.show', compact('globusTransfer', 'project'));
         }
 
         // There isn't an open request so create a new one
         $openGlobusRequestAction = new OpenGlobusTransferAction(GlobusApi::createGlobusApi());
-        $globusRequest = $openGlobusRequestAction->execute($project->id, $user);
-        return redirect(route('projects.globus.show-started', [$project, $globusRequest]));
+        $globusTransfer = $openGlobusRequestAction->execute($project->id, $user);
+        return redirect(route('projects.globus.show-started', [$project, $globusTransfer]));
     }
 }

@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property integer $owner_id
  * @property integer $project_id
+ * @property string $state
+ * @property mixed $last_active_at
  *
  * @mixin Builder
  */

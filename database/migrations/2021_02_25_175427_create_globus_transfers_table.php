@@ -26,10 +26,10 @@ class CreateGlobusTransfersTable extends Migration
             $table->string('globus_identity_id')->nullable();
             $table->string('globus_path')->nullable();
             $table->string('globus_url')->nullable();
-            $table->string('last_transfer_id_completed')->nullable();
+            $table->string('last_globus_transfer_id_completed')->nullable();
 
             // Globus string for date
-            $table->string('latest_transfer_completed_date')->nullable();
+            $table->string('latest_globus_transfer_completed_date')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')

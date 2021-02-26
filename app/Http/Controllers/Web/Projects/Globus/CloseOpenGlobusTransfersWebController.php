@@ -16,9 +16,9 @@ class CloseOpenGlobusTransfersWebController extends Controller
 
         $closeGlobusRequestAction = new CloseGlobusTransferAction(GlobusApi::createGlobusApi());
 
-        TransferRequest::where('project_id', $project->id)
-                       ->where('owner_id', $user->id)
-                       ->where('state', 'new')
+        GlobusTransfer::where('project_id', $project->id)
+                      ->where('owner_id', $user->id)
+                      ->where('state', 'open')
                        ->get()
                        ->each(function (GlobusTransfer $globusTransfer) use ($closeGlobusRequestAction) {
                            $closeGlobusRequestAction->execute($globusTransfer);

@@ -8,11 +8,11 @@ use Freshbitsweb\Laratables\Laratables;
 
 class DTGetGlobusRequestUploadedFilesWebController extends Controller
 {
-    public function __invoke($projectId, $globusRequestId)
+    public function __invoke($projectId, $transferRequestId)
     {
-        ray($projectId, $globusRequestId);
-        $values = Laratables::recordsOf(TransferRequestFile::class, function ($query) use ($globusRequestId) {
-            return $query->with(['directory'])->where('globus_request_id', $globusRequestId);
+        ray($projectId, $transferRequestId);
+        $values = Laratables::recordsOf(TransferRequestFile::class, function ($query) use ($transferRequestId) {
+            return $query->with(['directory'])->where('transfer_request_id', $transferRequestId);
         });
 
         ray($values);
