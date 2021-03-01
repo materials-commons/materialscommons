@@ -6,7 +6,7 @@ cd ..
 cp -r materialscommons /var/www/html/materialscommons
 chcon -R -h -t httpd_sys_script_rw_t /var/www/html/materialscommons
 cd /var/www/html/materialscommons
-/usr/local/bin/composer install --optimize-autoloader --no-dev
+/usr/local/bin/composer install --optimize-autoloader --no-dev --no-interaction
 php artisan config:cache
 php artisan migrate
 cd ..
