@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Transfer;
 
 use App\Actions\Globus\GlobusApi;
-use App\Models\GlobusTransfer;
 use App\Models\TransferRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -39,19 +38,16 @@ class RemoveClosedTransferRequestsCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $globusApi = GlobusApi::createGlobusApi();
-        TransferRequest::where('state', 'closed')
+        TransferRequest::with(['globusTransfer'])->where('state', 'closed')
                        ->get()
                        ->each(function (TransferRequest $transferRequest) use ($globusApi) {
-                           $globusTransfer = GlobusTransfer::where('transfer_id', $transferRequest->id)
-                                                           ->where('state', 'closed')
-                                                           ->get();
-                           if (!is_null($globusTransfer)) {
+                           if (!isset($transferRequest->globusTransfer)) {
                                try {
-                                   $globusApi->deleteEndpointAclRule($globusTransfer->globus_endpoint_id,
-                                       $globusTransfer->globus_acl_id);
+                                   $globusApi->deleteEndpointAclRule($transferRequest->globusTransfer->globus_endpoint_id,
+                                       $transferRequest->globusTransfer->globus_acl_id);
                                } catch (\Exception $e) {
                                    Log::error("Unable to delete acl");
                                }
