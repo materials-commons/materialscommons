@@ -7,7 +7,7 @@
             </span>
         </li>
 
-        @if(is_null($globusRequest))
+        @if(is_null($globusTransfer))
             <li class="nav-item ml-3">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.start')}}"
                    href="{{route('projects.globus.start', [$project])}}">
@@ -31,7 +31,7 @@
             {{--            </li>--}}
         @else
             <li class="nav-item ml-3">
-                <a class="nav-link fs-11 ml-5" href="#">
+                <a class="nav-link fs-11 ml-5" href="{{$globusTransfer->globus_url}}" target="_blank">
                     <i class="fa-fw fas fa-arrow-alt-circle-right mr-2"></i>
                     Use
                 </a>

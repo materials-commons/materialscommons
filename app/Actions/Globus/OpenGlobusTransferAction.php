@@ -55,6 +55,7 @@ class OpenGlobusTransferAction
         ]);
 
         $this->startMCBridgeFS($transferRequest, $mountPath);
+        $transferRequest->load('globusTransfer');
 
         return $transferRequest->fresh();
     }

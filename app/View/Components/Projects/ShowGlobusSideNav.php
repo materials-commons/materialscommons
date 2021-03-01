@@ -2,8 +2,8 @@
 
 namespace App\View\Components\Projects;
 
+use App\Models\GlobusTransfer;
 use App\Models\Project;
-use App\Models\TransferRequest;
 use Illuminate\View\Component;
 
 class ShowGlobusSideNav extends Component
@@ -18,10 +18,10 @@ class ShowGlobusSideNav extends Component
     public function render()
     {
         return view('components.projects.show-globus-side-nav', [
-            'globusRequest' => TransferRequest::where('project_id', $this->project->id)
+            'globusTransfer' => GlobusTransfer::where('project_id', $this->project->id)
                                               ->where('owner_id', auth()->id())
                                               ->first(),
-            'show'          => $this->userInBeta(),
+            'show'           => $this->userInBeta(),
         ]);
     }
 

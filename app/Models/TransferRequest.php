@@ -46,4 +46,9 @@ class TransferRequest extends Model
     {
         return $this->hasMany(TransferRequestFile::class, "transfer_request_id");
     }
+
+    public function globusTransfer()
+    {
+        return $this->hasOne(GlobusTransfer::class, 'transfer_request_id');
+    }
 }

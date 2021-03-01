@@ -19,7 +19,7 @@
                     to go to the Globus web interface.
                 </p>
             @else
-                <p>There is no active globus transfer</p>
+                <p>There is no active globus transfer.</p>
             @endif
         </x-slot>
     </x-card>

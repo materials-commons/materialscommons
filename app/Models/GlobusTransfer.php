@@ -49,6 +49,6 @@ class GlobusTransfer extends Model
 
     public function transferRequest()
     {
-        return $this->hasOne(TransferRequest::class, "transfer_request_id");
+        return $this->belongsTo(TransferRequest::class, "transfer_request_id");
     }
 }
