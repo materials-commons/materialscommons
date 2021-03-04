@@ -21,6 +21,19 @@ class OpenGlobusTransferAction
 
     public function execute($projectId, User $user)
     {
+        $globusTransfer = GlobusTransfer::where('project_id', $projectId)
+                                        ->where('owner_id', $user->id)
+                                        ->where('state', 'open')
+                                        ->first();
+        if (!is_null($globusTransfer)) {
+            return $globusTransfer;
+        }
+
+        return $this->createGlobusTransfer($projectId, $user);
+    }
+
+    private function createGlobusTransfer($projectId, User $user)
+    {
         $transferRequest = TransferRequest::create([
             'project_id' => $projectId,
             'owner_id'   => $user->id,
@@ -55,9 +68,10 @@ class OpenGlobusTransferAction
         ]);
 
         $this->startMCBridgeFS($transferRequest, $mountPath);
-        $transferRequest->load('globusTransfer');
 
-        return $transferRequest->fresh();
+        $globusTransfer->refresh();
+
+        return $globusTransfer;
     }
 
     private function getGlobusIdentity($globusEmail)

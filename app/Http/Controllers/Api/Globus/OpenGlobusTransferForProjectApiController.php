@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Web\Projects\Globus;
+namespace App\Http\Controllers\Api\Globus;
 
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\OpenGlobusTransferAction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Globus\GlobusTransferResource;
 use App\Models\Project;
 
-class StartGlobusTransferWebController extends Controller
+class OpenGlobusTransferForProjectApiController extends Controller
 {
 
     public function __invoke(Project $project)
     {
         $user = auth()->user();
-        if (!isset($user->globus_user)) {
-            return redirect(route('projects.globus.uploads.edit_account', [$project]));
-        }
+        abort_unless(isset($user->globus_user), 403, "User hasn't configured a globus user");
 
         // There isn't an open request so create a new one
         $openGlobusRequestAction = new OpenGlobusTransferAction(GlobusApi::createGlobusApi());
         $globusTransfer = $openGlobusRequestAction->execute($project->id, $user);
-        return redirect(route('projects.globus.show-started', [$project, $globusTransfer]));
+        return new GlobusTransferResource($globusTransfer);
     }
 }

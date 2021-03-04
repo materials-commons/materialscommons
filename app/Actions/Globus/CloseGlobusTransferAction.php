@@ -22,7 +22,6 @@ class CloseGlobusTransferAction
             $this->globusApi->deleteEndpointAclRule($globusTransfer->globus_endpoint_id,
                 $globusTransfer->globus_acl_id);
             $globusTransfer->transferRequest()->delete();
-//            $globusTransfer->delete();
         } catch (\Exception $e) {
             Log::error("Unable to delete acl");
         }
