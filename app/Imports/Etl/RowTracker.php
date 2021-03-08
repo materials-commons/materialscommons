@@ -3,9 +3,9 @@
 namespace App\Imports\Etl;
 
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
-
-//use Maatwebsite\Excel\Row;
 
 class RowTracker
 {
@@ -42,7 +42,7 @@ class RowTracker
         $cellIterator->setIterateOnlyExistingCells(false);
 
         foreach ($cellIterator as $cell) {
-            $value = $cell->getFormattedValue();
+            $value = $this->getCellValue($cell);
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
@@ -98,7 +98,32 @@ class RowTracker
         $this->activityAttributesHash = hash_final($ctx);
     }
 
-    private function isBlankCell($value)
+    private function getCellValue(Cell $cell): string
+    {
+        $value = $cell->getFormattedValue();
+
+        $dataType = $cell->getDataType();
+        if ($dataType == DataType::TYPE_FORMULA) {
+            $raw = $cell->getValue();
+            if ($raw == "=TRUE()") {
+                $value = "TRUE";
+            } elseif ($raw == "=FALSE()") {
+                $value = "FALSE";
+            }
+        } elseif ($dataType == DataType::TYPE_BOOL) {
+            if ($value == "1") {
+                $value = "TRUE";
+            } elseif ($value == "0") {
+                $value = "FALSE";
+            } elseif ($value == "") {
+                $value = "FALSE";
+            }
+        }
+
+        return $value;
+    }
+
+    private function isBlankCell($value): bool
     {
         if (is_null($value)) {
             return true;

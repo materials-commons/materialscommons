@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGlobusRequestsTable extends Migration
+class CreateTransferRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,9 @@ class CreateGlobusRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('globus_requests', function (Blueprint $table) {
+        Schema::create('transfer_requests', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-
-            // Globus columns
-            $table->string('globus_acl_id')->nullable();
-            $table->string('globus_endpoint_id')->nullable();
-            $table->string('globus_identity_id')->nullable();
-            $table->string('globus_path')->nullable();
-            $table->string('globus_url')->nullable();
 
             $table->string('state', 20)->nullable()->index();
 
@@ -51,6 +44,6 @@ class CreateGlobusRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('globus_requests');
+        Schema::dropIfExists('transfer_requests');
     }
 }

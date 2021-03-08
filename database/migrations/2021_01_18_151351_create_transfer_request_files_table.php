@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGlobusRequestFilesTable extends Migration
+class CreateTransferRequestFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateGlobusRequestFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('globus_request_files', function (Blueprint $table) {
+        Schema::create('transfer_request_files', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name', 150);
             $table->string('state', 20)->nullable();
 
-            $table->unsignedBigInteger("globus_request_id");
-            $table->foreign("globus_request_id")
+            $table->unsignedBigInteger("transfer_request_id");
+            $table->foreign("transfer_request_id")
                   ->references("id")
-                  ->on("globus_requests")
+                  ->on("transfer_requests")
                   ->onDelete('cascade');
 
             $table->unsignedBigInteger('directory_id')->index();
@@ -62,6 +62,6 @@ class CreateGlobusRequestFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('globus_request_files');
+        Schema::dropIfExists('transfer_request_files');
     }
 }

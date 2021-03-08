@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\GlobusRequestFile;
+use App\Models\TransferRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GlobusRequestFileFactory extends Factory
+class TransferRequestFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = GlobusRequestFile::class;
+    protected $model = TransferRequest::class;
 
     /**
      * Define the model's default state.

@@ -13,15 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property integer $owner_id
  * @property integer $project_id
- * @property string $globus_acl_id
- * @property string $globus_endpoint_id
- * @property string $globus_identity_id
- * @property string $globus_path
- * @property string $globus_url
+ * @property string $state
+ * @property mixed $last_active_at
  *
  * @mixin Builder
  */
-class GlobusRequest extends Model
+class TransferRequest extends Model
 {
     use HasUUID;
     use HasFactory;
@@ -45,8 +42,13 @@ class GlobusRequest extends Model
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function globusRequestFiles()
+    public function transferRequestFiles()
     {
-        return $this->hasMany(GlobusRequestFile::class, "globus_request_id");
+        return $this->hasMany(TransferRequestFile::class, "transfer_request_id");
+    }
+
+    public function globusTransfer()
+    {
+        return $this->hasOne(GlobusTransfer::class, 'transfer_request_id');
     }
 }

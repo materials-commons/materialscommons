@@ -531,4 +531,27 @@ class EntityActivityImportTest extends TestCase
         $attrValue = AttributeValue::where('attribute_id', $attr->id)->first();
         $this->assertEquals(5, $attrValue->val["value"]);
     }
+
+    public function test_loading_spreadsheet_with_boolean_values()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::withExperiment()->create();
+        $experiment = $project->experiments->first();
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path("etl/single_with_bools.xlsx"));
+        $this->assertEquals(2, Attribute::all()->count());
+        $this->assertEquals(2, AttributeValue::all()->count());
+        Attribute::all()->each(function (Attribute $attribute) {
+            $attribute->load(['values']);
+            switch ($attribute->name) {
+                case "valid":
+                    $this->assertEquals("TRUE", $attribute->values[0]->val["value"]);
+                    break;
+                case "finished":
+                    $this->assertEquals("FALSE", $attribute->values[0]->val["value"]);
+                    break;
+            }
+        });
+    }
 }

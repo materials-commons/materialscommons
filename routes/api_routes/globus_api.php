@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Globus\CloseGlobusTransferForProjectApiController;
 use App\Http\Controllers\Api\Globus\Downloads\CreateGlobusDownloadApiController;
 use App\Http\Controllers\Api\Globus\Downloads\DeleteGlobusDownloadApiController;
 use App\Http\Controllers\Api\Globus\Downloads\GetGlobusDownloadApiController;
 use App\Http\Controllers\Api\Globus\Downloads\IndexProjectGlobusDownloadsApiController;
+use App\Http\Controllers\Api\Globus\OpenGlobusTransferForProjectApiController;
 use App\Http\Controllers\Api\Globus\Uploads\CreateGlobusUploadApiController;
 use App\Http\Controllers\Api\Globus\Uploads\DeleteGlobusUploadApiController;
 use App\Http\Controllers\Api\Globus\Uploads\IndexProjectGlobusUploadsApiController;
@@ -21,3 +23,7 @@ Route::get('/projects/{project}/globus/downloads', IndexProjectGlobusDownloadsAp
 Route::post('/globus/downloads', CreateGlobusDownloadApiController::class);
 Route::delete('/projects/{project}/globus/{globus}/downloads', DeleteGlobusDownloadApiController::class);
 Route::get('/projects/{project}/globus/downloads/{download}', GetGlobusDownloadApiController::class);
+
+// Globus NG
+Route::get('/projects/{project}/globus/open', OpenGlobusTransferForProjectApiController::class);
+Route::get('/projects/{project}/globus/close', CloseGlobusTransferForProjectApiController::class);
