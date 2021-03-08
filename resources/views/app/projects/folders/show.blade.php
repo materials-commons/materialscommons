@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot name="header">
             @if (Request::routeIs('projects.folders.index'))
                 {{$directory->name}}
             @else
@@ -70,25 +70,27 @@
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
             @endif
-        @endslot
+        </x-slot>
 
-        @slot('body')
-            <span class="float-left action-link mr-4">
-                <i class="fa-fw fas fa-filter mr-2"></i>
-                Filters:
-            </span>
-            <a class="float-left action-link mr-4" href="#">
-                <i class="fa-fw fas fa-calendar mr-2"></i>
-                By Date
-            </a>
+        <x-slot name="body">
+            @if ($directory->path == '/')
+                <span class="float-left action-link mr-4">
+                    <i class="fa-fw fas fa-filter mr-2"></i>
+                    Filters:
+                </span>
+                <a class="float-left action-link mr-4" href="#">
+                    <i class="fa-fw fas fa-calendar mr-2"></i>
+                    By Date
+                </a>
 
-            <a class="float-left action-link ml-4" href="#">
-                <i class="fa-fw fas fa-user-friends mr-2"></i>
-                By Users
-            </a>
+                <a class="float-left action-link ml-4" href="{{route('projects.folders.filter.by-user', [$project])}}">
+                    <i class="fa-fw fas fa-user-friends mr-2"></i>
+                    By User
+                </a>
 
-            <br>
-            <br>
+                <br>
+                <br>
+            @endif
 
             @if ($directory->path !== '/')
                 <a href="{{route('projects.folders.show', [$project, $directory->directory_id])}}"
@@ -145,8 +147,8 @@
                 @endforeach
                 </tbody>
             </table>
-        @endslot
-    @endcomponent
+        </x-slot>
+    </x-card>
 
     @push('scripts')
         <script>
