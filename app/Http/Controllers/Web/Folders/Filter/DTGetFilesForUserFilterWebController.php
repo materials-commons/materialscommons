@@ -12,8 +12,6 @@ class DTGetFilesForUserFilterWebController extends Controller
 {
     public function __invoke(Project $project, User $user)
     {
-        ray("Request = ", request("user", "not found"));
-        ray($user);
         return Laratables::recordsOf(File::class, function ($query) use ($project, $user) {
             return $query->where('project_id', $project->id)
                          ->where('owner_id', $user->id)
