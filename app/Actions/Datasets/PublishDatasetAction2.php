@@ -53,6 +53,13 @@ class PublishDatasetAction2
         $logPath = Storage::disk('mcfs')->path("zip_logs/{$dataset->uuid}.log");
         $command = "nohup /usr/local/bin/mcdszip -d {$dataset->id} -z {$dataset->zipfilePath()} > {$logPath} 2>&1&";
         $process = Process::fromShellCommandline($command);
-        $process->start();
+        $process->start(null, [
+            'MCFS_DIR'    => config('filesystems.disks.mcfs.root'),
+            'DB_USERNAME' => config('database.connections.mysql.username'),
+            'DB_PASSWORD' => config('database.connections.mysql.password'),
+            'DB_HOST'     => config('database.connections.mysql.host'),
+            'DB_PORT'     => config('database.connections.mysql.port'),
+            'DB_DATABASE' => config('database.connections.mysql.database'),
+        ]);
     }
 }

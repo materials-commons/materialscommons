@@ -5,8 +5,8 @@ namespace App\Actions\Globus;
 use App\Models\GlobusTransfer;
 use App\Models\TransferRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Process\Process;
 
 class OpenGlobusTransferAction
 {
@@ -91,8 +91,10 @@ class OpenGlobusTransferAction
     {
         Storage::disk('mcfs')->makeDirectory('bridge_logs');
         $logPath = Storage::disk('mcfs')->path("bridge_logs/{$transferRequest->uuid}.log");
-        $command = "nohup /usr/local/bin/mcbridgefs.sh {$transferRequest->id} {$mountPath} > {$logPath} 2>&1&";
-        $process = Process::fromShellCommandline($command);
-        $process->start();
+        Http::post("http://localhost:1323/api/start-bridge", [
+            "transfer_request_id" => $transferRequest->id,
+            "mount_path"          => $mountPath,
+            "log_path"            => $logPath,
+        ]);
     }
 }
