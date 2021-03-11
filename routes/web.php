@@ -58,7 +58,7 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 
 Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::get('/email/verification-notification', [VerificationController::class, 'resend'])->name('verification.send');
+Route::get('/email/verification-notification', [VerificationController::class, 'resend'])->name('verification.resend');
 
 //Route::get('')
 
