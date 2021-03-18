@@ -57,6 +57,7 @@ class Dataset extends Model implements Searchable
     ];
 
     protected $casts = [
+        'author_order'       => 'array',
         'file_selection'     => 'array',
         'owner_id'           => 'integer',
         'project_id'         => 'integer',
@@ -139,6 +140,16 @@ class Dataset extends Model implements Searchable
     public function papers()
     {
         return $this->morphedByMany(Paper::class, 'item', 'item2dataset');
+    }
+
+    public function authors()
+    {
+        return $this->morphedByMany(User::class, 'item', 'item2dataset');
+    }
+
+    public function externalAuthors()
+    {
+        return $this->morphedByMany(ExternalUser::class, 'item', 'item2dataset');
     }
 
     public function entitiesFromTemplate()
