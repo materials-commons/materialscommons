@@ -58,6 +58,11 @@ trait FileType
 
     public function fileType($file): string
     {
+        ray($file);
+        if ($file->id == 3240344) {
+            ray("returning jupyter");
+            return "jupyter";
+        }
         return $this->fileTypeFromMime($file->mime_type);
     }
 

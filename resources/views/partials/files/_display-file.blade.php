@@ -56,6 +56,14 @@
         </div>
         @break
 
+        @case("jupyter")
+{{--        {!!$fileContents($file)!!}--}}
+        <a href="{{$displayRoute}}" class="mt-2">
+            Display Full Screen
+        </a>
+        <iframe src="{{$displayRoute}}" width="100%" height="600px"></iframe>
+        @break
+
         @default
         <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch

@@ -60,6 +60,11 @@ trait FileView
             $fileName = $fileName.".pdf";
         }
 
+        if ($file->id == 3240344) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".html";
+        }
+
 //        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {
 //            $dirPath = $dirPath."/.conversion";
 //            $fileName = $fileName.".pdf";

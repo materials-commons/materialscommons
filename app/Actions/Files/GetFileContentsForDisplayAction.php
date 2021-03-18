@@ -63,6 +63,10 @@ class GetFileContentsForDisplayAction
             return "application/pdf";
         }
 
+        if ($file->id == 3240344) {
+            return "jupyter";
+        }
+
         return $file->mime_type;
     }
 
@@ -87,6 +91,11 @@ class GetFileContentsForDisplayAction
         if (array_key_exists($file->mime_type, $this->officeTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".pdf";
+        }
+
+        if ($file->id == 3240344) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".html";
         }
 
         return "{$dirPath}/{$fileName}";
