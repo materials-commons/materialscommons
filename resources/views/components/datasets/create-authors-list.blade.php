@@ -44,7 +44,13 @@
                                 "
                                 x-on:dragend="dragging = false"
                                 draggable="true">
-                                {{$author->name}}
+                                <div style="margin-left: 2.15rem;">
+                                    <input type="checkbox" class="form-check-input"
+                                           onclick="checkboxClicked(this, '{{$author->uuid}}', '{{$author->name}}')"
+                                           value="{{$author->id}}" name="mc_authors[]" checked>
+                                    {{$author->name}}
+                                </div>
+{{--                                {{$author->name}}--}}
                                 <input hidden name="author_order[]" value="{{$author->email}}" type="text">
                                 {{--                                <sup>1</sup>--}}
                             </li>

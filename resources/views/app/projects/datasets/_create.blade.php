@@ -22,12 +22,14 @@
                placeholder="Name...">
     </div>
 
-    <div class="form-group">
-        <label for="authors">Authors and Affiliations</label>
-        <input class="form-control" id="authors" name="authors" type="text"
-               value="{{old('authors', $authorsAndAffiliations)}}"
-               placeholder="Authors...">
-    </div>
+    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>
+
+{{--    <div class="form-group">--}}
+{{--        <label for="authors">Authors and Affiliations</label>--}}
+{{--        <input class="form-control" id="authors" name="authors" type="text"--}}
+{{--               value="{{old('authors', $authorsAndAffiliations)}}"--}}
+{{--               placeholder="Authors...">--}}
+{{--    </div>--}}
 
     <div class="form-group">
         <label for="summary">Summary</label>
