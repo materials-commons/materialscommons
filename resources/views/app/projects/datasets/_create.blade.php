@@ -22,14 +22,37 @@
                placeholder="Name...">
     </div>
 
-    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>
+    {{--    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>--}}
 
-{{--    <div class="form-group">--}}
-{{--        <label for="authors">Authors and Affiliations</label>--}}
-{{--        <input class="form-control" id="authors" name="authors" type="text"--}}
-{{--               value="{{old('authors', $authorsAndAffiliations)}}"--}}
-{{--               placeholder="Authors...">--}}
-{{--    </div>--}}
+    <x-datasets.create-authors-table :project="$project"/>
+
+    {{--    <table id="authors" class="table table-hover" style="width: 100%">--}}
+    {{--        <thead>--}}
+    {{--        <tr>--}}
+    {{--            <th>Name</th>--}}
+    {{--            <th>Affiliations</th>--}}
+    {{--            <th>Email</th>--}}
+    {{--            <th></th>--}}
+    {{--        </tr>--}}
+    {{--        </thead>--}}
+    {{--        <tbody>--}}
+    {{--        @foreach($project->team->members->merge($project->team->admins) as $author)--}}
+    {{--            <tr>--}}
+    {{--                <td>{{$author->name}}</td>--}}
+    {{--                <td>{{$author->affiliations}}</td>--}}
+    {{--                <td>{{$author->email}}</td>--}}
+    {{--                <td></td>--}}
+    {{--            </tr>--}}
+    {{--        @endforeach--}}
+    {{--        </tbody>--}}
+    {{--    </table>--}}
+
+    {{--    <div class="form-group">--}}
+    {{--        <label for="authors">Authors and Affiliations</label>--}}
+    {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
+    {{--               value="{{old('authors', $authorsAndAffiliations)}}"--}}
+    {{--               placeholder="Authors...">--}}
+    {{--    </div>--}}
 
     <div class="form-group">
         <label for="summary">Summary</label>
@@ -146,6 +169,10 @@
 
             let tagsInput = document.querySelector('#tags');
             new Tagify(tagsInput);
+
+            // $("#authors").DataTable({
+            //     stateSave: true,
+            // });
         });
 
         function validate() {
