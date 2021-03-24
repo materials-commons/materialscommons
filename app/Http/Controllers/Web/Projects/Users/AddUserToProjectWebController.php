@@ -14,9 +14,11 @@ class AddUserToProjectWebController extends Controller
     public function __invoke(AddUserToProjectAction $addUserToProjectAction, Project $project, User $user)
     {
         $this->authorize('updateUsers', $project);
+        $project->load('team.members');
         $addUserToProjectAction($project, $user);
         Mail::to($user)
             ->queue(new UserAddedToProjectMail($project, $user, auth()->user()));
+        flash("{$user->name} added as project member.")->success();
         return redirect(route('projects.users.edit', [$project]));
     }
 }

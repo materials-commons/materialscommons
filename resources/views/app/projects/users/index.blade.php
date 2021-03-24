@@ -9,11 +9,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Users
+            Project Members
             @if($project->owner->id === auth()->id())
                 <a class="action-link float-right"
                    href="{{route('projects.users.edit', [$project])}}">
-                    <i class="fas fa-edit mr-2"></i>Add Users
+                    <i class="fas fa-plus mr-2"></i>Add Users
                 </a>
             @endif
         @endslot

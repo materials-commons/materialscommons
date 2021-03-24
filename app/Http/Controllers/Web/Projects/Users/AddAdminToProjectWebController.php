@@ -13,10 +13,11 @@ class AddAdminToProjectWebController extends Controller
     public function __invoke(Project $project, User $user)
     {
         $this->authorize('updateUsers', $project);
-        $team = $project->team;
-        $team->admins()->syncWithoutDetaching($user);
+        $project->load('team.admins');
+        $project->team->admins()->syncWithoutDetaching($user);
         Mail::to($user)
             ->queue(new UserAddedToProjectMail($project, $user, auth()->user()));
+        flash("{$user->name} added as project admin.")->success();
         return redirect(route('projects.users.edit', [$project]));
     }
 }
