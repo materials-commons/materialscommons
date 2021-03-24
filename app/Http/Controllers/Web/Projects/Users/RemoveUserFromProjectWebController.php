@@ -17,6 +17,6 @@ class RemoveUserFromProjectWebController extends Controller
         $removeUserFromProjectAction($project, $user);
         Mail::to($user)
             ->queue(new UserRemovedFromProjectMail($project, $user, auth()->user()));
-        return redirect(route('projects.users.edit', [$project]));
+        return redirect(route('projects.users.index', [$project]));
     }
 }

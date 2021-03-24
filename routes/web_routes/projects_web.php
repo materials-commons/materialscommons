@@ -38,6 +38,8 @@ use App\Http\Controllers\Web\Projects\StoreProjectWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddAdminToProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddUserToProjectWebController;
+use App\Http\Controllers\Web\Projects\Users\ChangeUserToAdminWebController;
+use App\Http\Controllers\Web\Projects\Users\ChangeUserToMemberWebController;
 use App\Http\Controllers\Web\Projects\Users\IndexProjectUsersWebController;
 use App\Http\Controllers\Web\Projects\Users\ModifyProjectUsersWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveAdminFromProjectWebController;
@@ -104,6 +106,12 @@ Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::cl
 
 Route::get('/projects/{project}/users/{user}/show', ShowProjectUserWebController::class)
      ->name('projects.users.show');
+
+Route::get('/projects/{project}/users/{user}/change-to-admin', ChangeUserToAdminWebController::class)
+     ->name('projects.users.change-to-admin');
+
+Route::get('/projects/{project}/users/{user}/change-to-member', ChangeUserToMemberWebController::class)
+     ->name('projects.users.change-to-member');
 
 
 // Globus Uploads

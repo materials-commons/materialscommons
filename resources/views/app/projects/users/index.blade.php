@@ -13,7 +13,7 @@
             @if($project->owner->id === auth()->id())
                 <a class="action-link float-right"
                    href="{{route('projects.users.edit', [$project])}}">
-                    <i class="fas fa-edit mr-2"></i>Modify Users
+                    <i class="fas fa-edit mr-2"></i>Add Users
                 </a>
             @endif
         @endslot
@@ -26,10 +26,12 @@
                     <th>Name</th>
                     <th>Affiliations</th>
                     <th>Description</th>
+                    <th>Type</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($project->team->members as $member)
+                @foreach($project->team->members->merge($project->team->admins) as $member)
                     <tr>
                         <td>
                             <a href="{{route('projects.users.show', [$project, $member])}}">
@@ -38,33 +40,32 @@
                         </td>
                         <td>{{$member->affiliations}}</td>
                         <td>{{$member->description}}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-
-            <br>
-            <hr>
-            <br>
-            <h4>Project Admins</h4>
-            <table id="admins" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Affiliations</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($project->team->admins as $admin)
-                    <tr>
                         <td>
-                            <a href="{{route('projects.users.show', [$project, $admin])}}">
-                                {{$admin->name}}
-                            </a>
+                            @if ($project->owner_id === $member->id)
+                                Owner
+                            @else
+                                {{$project->team->members->contains('id', $member->id) ? 'Member' : 'Admin'}}
+                            @endif
                         </td>
-                        <td>{{$admin->affiliations}}</td>
-                        <td>{{$admin->description}}</td>
+                        <td>
+                            @if($project->owner_id != $member->id)
+                                @if($project->team->members->contains('id', $member->id))
+                                    <a href="{{route('projects.users.remove', [$project, $member])}}">
+                                        <i class="fa fas fa-trash"></i></a>
+                                    <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
+                                       class="ml-4">
+                                        <i class="fa fas fa-fw fa-edit"></i>Make Admin
+                                    </a>
+                                @else
+                                    <a href="{{route('projects.admins.remove', [$project, $member])}}">
+                                        <i class="fa fas fa-trash"></i></a>
+                                    <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
+                                       class="ml-4">
+                                        <i class="fa fas fa-fw fa-edit"></i>Make Member
+                                    </a>
+                                @endif
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -77,10 +78,6 @@
         <script>
             $(document).ready(function () {
                 $('#users').DataTable({
-                    stateSave: true,
-                });
-
-                $('#admins').DataTable({
                     stateSave: true,
                 });
             });
