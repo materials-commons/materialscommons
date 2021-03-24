@@ -32,7 +32,7 @@
 
     <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
 
-    <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>
+{{--    <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>--}}
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
