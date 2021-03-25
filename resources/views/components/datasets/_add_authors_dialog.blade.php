@@ -85,7 +85,9 @@
                     addAuthorToTable() {
                         let len = authorTable.data().length;
                         authorTable.row.add([
-                            len, this.author.name, this.author.affiliations, this.author.email,
+                            len,
+                            `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
+                            this.author.name, this.author.affiliations, this.author.email,
                             `<div class="float-right">
                                 <a class="action-link" href="#"><i class="fas fa-fw fa-edit"></i></a>
                                 <a class="action-link" href="#"><i class="fas fa-fw fa-trash"></i></a>
