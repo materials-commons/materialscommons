@@ -25,6 +25,7 @@
     {{--    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>--}}
 
     <x-datasets.create-authors-table :project="$project"/>
+    <br>
 
     {{--    <table id="authors" class="table table-hover" style="width: 100%">--}}
     {{--        <thead>--}}
@@ -169,10 +170,6 @@
 
             let tagsInput = document.querySelector('#tags');
             new Tagify(tagsInput);
-
-            // $("#authors").DataTable({
-            //     stateSave: true,
-            // });
         });
 
         function validate() {

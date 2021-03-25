@@ -36,12 +36,6 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>
 
-    {{--    <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">--}}
-    {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/rr-1.2.7/datatables.min.css"/>--}}
-
-
-    {{--    <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>--}}
-    {{--    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>--}}
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
 @stack('styles')

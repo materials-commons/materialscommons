@@ -31,16 +31,7 @@ require('@uppy/core/dist/style.css');
 require('@uppy/dashboard/dist/style.css');
 window.Tagify = require('@yaireo/tagify');
 
-// require( 'datatables.net-bs4' )(window, $);
-// require( 'datatables.net-buttons-bs4' )(window, $);
-// require( 'datatables.net-colreorder-bs4' )(window, $);
-// require( 'datatables.net-fixedcolumns-bs4' )(window, $);
-// require( 'datatables.net-fixedheader-bs4' )(window, $);
-// require( 'datatables.net-rowgroup-bs4' )(window, $);
-// require( 'datatables.net-rowreorder-bs4' )(window, $);
-// require( 'datatables.net-searchbuilder-bs4' )(window, $);
-// require( 'datatables.net-searchpanes-bs4' )(window, $);
-// require( 'datatables.net-select-bs4' )(window, $);
+// 
 
 // const Turbolinks = require("turbolinks");
 // Turbolinks.start();
