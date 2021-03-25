@@ -22,31 +22,8 @@
                placeholder="Name...">
     </div>
 
-    {{--    <x-datasets.create-authors-list :project="$project"></x-datasets.create-authors-list>--}}
-
     <x-datasets.create-authors-table :project="$project"/>
     <br>
-
-    {{--    <table id="authors" class="table table-hover" style="width: 100%">--}}
-    {{--        <thead>--}}
-    {{--        <tr>--}}
-    {{--            <th>Name</th>--}}
-    {{--            <th>Affiliations</th>--}}
-    {{--            <th>Email</th>--}}
-    {{--            <th></th>--}}
-    {{--        </tr>--}}
-    {{--        </thead>--}}
-    {{--        <tbody>--}}
-    {{--        @foreach($project->team->members->merge($project->team->admins) as $author)--}}
-    {{--            <tr>--}}
-    {{--                <td>{{$author->name}}</td>--}}
-    {{--                <td>{{$author->affiliations}}</td>--}}
-    {{--                <td>{{$author->email}}</td>--}}
-    {{--                <td></td>--}}
-    {{--            </tr>--}}
-    {{--        @endforeach--}}
-    {{--        </tbody>--}}
-    {{--    </table>--}}
 
     {{--    <div class="form-group">--}}
     {{--        <label for="authors">Authors and Affiliations</label>--}}
