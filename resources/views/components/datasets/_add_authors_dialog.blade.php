@@ -43,7 +43,6 @@
     @push('scripts')
         <script>
             function initAddAuthors() {
-                console.log('initAddAuthors');
                 return {
                     author: {
                         name: '',
