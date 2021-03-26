@@ -35,6 +35,7 @@ use Spatie\Tags\HasTags;
  * @property string $globus_endpoint_id
  * @property string $globus_path
  * @property string $authors
+ * @property array ds_authors
  * @property mixed $published_at
  * @property string $doi
  * @property integer zipfile_size
@@ -56,6 +57,7 @@ class Dataset extends Model implements Searchable
     ];
 
     protected $casts = [
+        'ds_authors'         => 'array',
         'file_selection'     => 'array',
         'owner_id'           => 'integer',
         'project_id'         => 'integer',

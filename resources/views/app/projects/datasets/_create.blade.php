@@ -180,19 +180,19 @@
                 let author = values[i];
                 let nameInput = document.createElement("input");
                 nameInput.type = "hidden";
-                nameInput.name = `authors_list[${i}][name]`;
+                nameInput.name = `ds_authors[${i}][name]`;
                 nameInput.value = author.name;
                 authorsListElement.appendChild(nameInput);
 
                 let emailInput = document.createElement("input");
                 emailInput.type = "hidden";
-                emailInput.name = `authors_list[${i}][email]`;
+                emailInput.name = `ds_authors[${i}][email]`;
                 emailInput.value = author.email;
                 authorsListElement.appendChild(emailInput);
 
                 let affiliationsInput = document.createElement("input");
                 affiliationsInput.type = "hidden";
-                affiliationsInput.name = `authors_list[${i}][affiliations]`;
+                affiliationsInput.name = `ds_authors[${i}][affiliations]`;
                 affiliationsInput.value = author.affiliations;
                 authorsListElement.appendChild(affiliationsInput);
             }
