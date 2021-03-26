@@ -23,6 +23,7 @@
     </div>
 
     <x-datasets.create-authors-table :project="$project"/>
+    <div id="authors_list"></div>
     <br>
 
     {{--    <div class="form-group">--}}
@@ -168,8 +169,42 @@
         }
 
         function setActionAndSubmit(action) {
+            console.log('setActionAndSubmit');
             $('#action').val(action);
+            let authorsListElement = document.getElementById('authors_list');
+
+            // authorTable is defined in the include create-authors-table.blade.php
+            let values = [];
+            authorTable.rows().data().each(row => values.push(createAuthorElement(row[2], row[3], row[4])));
+            for (let i = 0; i < values.length; i++) {
+                let author = values[i];
+                let nameInput = document.createElement("input");
+                nameInput.type = "hidden";
+                nameInput.name = `authors_list[${i}][name]`;
+                nameInput.value = author.name;
+                authorsListElement.appendChild(nameInput);
+
+                let emailInput = document.createElement("input");
+                emailInput.type = "hidden";
+                emailInput.name = `authors_list[${i}][email]`;
+                emailInput.value = author.email;
+                authorsListElement.appendChild(emailInput);
+
+                let affiliationsInput = document.createElement("input");
+                affiliationsInput.type = "hidden";
+                affiliationsInput.name = `authors_list[${i}][affiliations]`;
+                affiliationsInput.value = author.affiliations;
+                authorsListElement.appendChild(affiliationsInput);
+            }
             document.getElementById('dataset_create').submit();
+        }
+
+        function createAuthorElement(name, affiliations, email) {
+            return {
+                name: name,
+                affiliations: affiliations,
+                email: email,
+            };
         }
 
         function changeActionAndSubmit() {

@@ -45,6 +45,10 @@ class DatasetRequest extends FormRequest
             'existing_papers.*.reference' => 'required|string',
             'existing_papers.*.doi'       => 'nullable|string',
             'existing_papers.*.url'       => 'nullable|url',
+            'authors_list'                => 'nullable|array',
+            'authors_list.*.name'         => 'required|string',
+            'authors_list.*.affiliations' => 'nullable|string',
+            'authors_list.*.email'        => 'required|email',
         ];
     }
 
