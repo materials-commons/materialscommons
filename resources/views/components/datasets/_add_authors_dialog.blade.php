@@ -82,9 +82,8 @@
                     },
 
                     addAuthorToTable() {
-                        let len = authorTable.data().length;
                         authorTable.row.add([
-                            len,
+                            nextId,
                             `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
                             `<div class="float-right">
@@ -92,6 +91,7 @@
                                 <a class="action-link" href="#"><i class="fas fa-fw fa-trash"></i></a>
                             </div>`
                         ]).draw();
+                        nextId++;
                     },
 
                     clearAuthor() {

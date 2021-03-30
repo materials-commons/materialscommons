@@ -142,6 +142,7 @@
 
 @push('scripts')
     <script>
+        let nextId = 0;
         $(document).ready(() => {
             validate();
             $('#name').change(validate).keypress(() => validate());

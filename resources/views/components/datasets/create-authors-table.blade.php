@@ -113,6 +113,7 @@
                     }
                 }
             });
+            nextId = authorTable.data().length;
         });
 
         function initEditAuthor() {
