@@ -36,12 +36,16 @@
                name="summary">
     </div>
 
-    <div class="form-group">
-        <label for="authors">Authors and Affiliations</label>
-        <input class="form-control" id="authors" name="authors" type="text"
-               value="{{old('authors', $dataset->authors)}}"
-               placeholder="Authors...">
-    </div>
+    {{--    <div class="form-group">--}}
+    {{--        <label for="authors">Authors and Affiliations</label>--}}
+    {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
+    {{--               value="{{old('authors', $dataset->authors)}}"--}}
+    {{--               placeholder="Authors...">--}}
+    {{--    </div>--}}
+
+    <x-datasets.create-authors-table :project="$project" :dataset="$dataset"/>
+    <div id="authors_list"></div>
+    <br>
 
     <div class="form-group">
         <label for="description">Description</label>

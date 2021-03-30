@@ -53,23 +53,43 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($project->team->members->merge($project->team->admins) as $author)
-                <tr id="row-{{$loop->index}}">
-                    <td>{{$loop->index}}</td>
-                    <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
-                    <td>{{$author->name}}</td>
-                    <td>{{$author->affiliations}}</td>
-                    <td>{{$author->email}}</td>
-                    <td>
-                        <div class="float-right">
-                            <a class="action-link" href="#"
-                               x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
-                                <i class="fas fa-fw fa-edit"></i></a>
-                            <a class="action-link" href="#" target="_blank"><i class="fas fa-fw fa-trash"></i></a>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
+            @if(!is_null($dataset))
+                @foreach($dataset->ds_authors as $author)
+                    <tr id="row-{{$loop->index}}">
+                        <td>{{$loop->index}}</td>
+                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td>{{$author['name']}}</td>
+                        <td>{{$author['affiliations']}}</td>
+                        <td>{{$author['email']}}</td>
+                        <td>
+                            <div class="float-right">
+                                <a class="action-link" href="#"
+                                   x-on:click="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
+                                    <i class="fas fa-fw fa-edit"></i></a>
+                                <a class="action-link" href="#" target="_blank"><i class="fas fa-fw fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                @foreach($project->team->members->merge($project->team->admins) as $author)
+                    <tr id="row-{{$loop->index}}">
+                        <td>{{$loop->index}}</td>
+                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td>{{$author->name}}</td>
+                        <td>{{$author->affiliations}}</td>
+                        <td>{{$author->email}}</td>
+                        <td>
+                            <div class="float-right">
+                                <a class="action-link" href="#"
+                                   x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
+                                    <i class="fas fa-fw fa-edit"></i></a>
+                                <a class="action-link" href="#" target="_blank"><i class="fas fa-fw fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
     </div>
@@ -84,8 +104,13 @@
                 columnDefs: [
                     {targets: 0, visible: false}
                 ],
-                fnRowCallback: function (nRow) {
+                fnRowCallback: function (nRow, data) {
                     nRow.children[0].className = "cursor-move";
+                    console.log(nRow);
+                    console.log(data);
+                    if (nRow.id == "" || nRow.id == null) {
+                        nRow.id = `row-${data[0]}`;
+                    }
                 }
             });
         });
