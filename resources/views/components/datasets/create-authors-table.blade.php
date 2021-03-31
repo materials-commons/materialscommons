@@ -106,8 +106,6 @@
                 ],
                 fnRowCallback: function (nRow, data) {
                     nRow.children[0].className = "cursor-move";
-                    console.log(nRow);
-                    console.log(data);
                     if (nRow.id == "" || nRow.id == null) {
                         nRow.id = `row-${data[0]}`;
                     }
@@ -126,8 +124,8 @@
                 },
 
                 openEditDialog(row, name, affiliations, email) {
-                    console.log(`${row}, ${name}, ${affiliations}, ${email}`);
-                    this.author.row = row;
+                    console.log(` openEditDialog: ${row}, ${name}, ${affiliations}, ${email}`);
+                    this.author.id = row;
                     this.author.name = name;
                     this.author.affiliations = affiliations;
                     this.author.email = email;
@@ -137,11 +135,9 @@
                 updateAuthor() {
                     console.log(authorTable);
                     let row = authorTable.row($(`#row-${this.author.id}`)).data();
+                    console.log(`Updating: #row-${this.author.id}, ${this.author.name}, ${this.author.affiliations}, ${this.author.email}`);
                     authorTable.row($(`#row-${this.author.id}`)).data([row[0], row[1], this.author.name, this.author.affiliations, this.author.email, row[5]]);
                     $('#edit-author-dialog').modal('hide');
-                    // let row = authorTable.row($("#row-1")).data();
-                    // to update:
-                    //   authorTable.row($("row-1")).data(["x", row[1], ...]);
                 }
             };
         }
