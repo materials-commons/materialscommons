@@ -82,6 +82,8 @@
                     },
 
                     addAuthorToTable() {
+                        // In case you are looking for nextId:
+                        // ***** nextId is defined in view/app/projects/datasets/_create.blade.php ******
                         authorTable.row.add([
                             nextId,
                             `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
@@ -90,7 +92,7 @@
                                 <a class="action-link" href="#"
                                     x-on:click="openEditDialog(${nextId}, '${this.author.name}', '${this.author.affiliations}', '${this.author.email}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link" href="#"><i class="fas fa-fw fa-trash"></i></a>
+                                <a class="action-link" href="#" x-on:click="deleteAuthor(${nextId})"><i class="fas fa-fw fa-trash"></i></a>
                             </div>`
                         ]).draw();
                         nextId++;
