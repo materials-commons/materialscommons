@@ -3,5 +3,12 @@
     "/css/app.css": "/css/app.css",
     "/js/datatables.min.js": "/js/datatables.min.js",
     "/css/datatables.min.css": "/css/datatables.min.css",
-    "/css/main.css": "/css/main.css"
+    "/css/main.css": "/css/main.css",
+    "/images/icon-stack.svg": "/images/icon-stack.svg",
+    "/images/icon-terminal.svg": "/images/icon-terminal.svg",
+    "/images/icon-window.svg": "/images/icon-window.svg",
+    "/images/logo-large.svg": "/images/logo-large.svg",
+    "/images/logo.png": "/images/logo.png",
+    "/images/logo.svg": "/images/logo.svg",
+    "/css/fa/LICENSE.txt": "/css/fa/LICENSE.txt"
 }
