@@ -91,8 +91,12 @@
     </nav>
 
     <main class="py-4">
+        @include('flash::message')
         @yield('content')
     </main>
 </div>
+<script>
+    $('div.alert').not('.alert-important').delay(4000).fadeOut(350);
+</script>
 </body>
 </html>

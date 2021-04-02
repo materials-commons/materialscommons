@@ -5,6 +5,9 @@ use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\DeleteFolderWebController;
 use App\Http\Controllers\Web\Folders\DestroyFolderWebController;
+use App\Http\Controllers\Web\Folders\Filter\DTGetFilesForUserFilterWebController;
+use App\Http\Controllers\Web\Folders\Filter\ShowFilesFilteredForUserWebController;
+use App\Http\Controllers\Web\Folders\Filter\ShowFilterFilesByUserWebController;
 use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\RenameFolderWebController;
@@ -53,6 +56,14 @@ Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController
      ->name('projects.folders.rename');
 Route::put('/projects/{project}/folders/{dir}/rename', UpdateRenameFolderWebController::class)
      ->name('projects.folders.rename.update');
+
+# Filters
+Route::get('/projects/{project}/filter/folders/by-user', ShowFilterFilesByUserWebController::class)
+     ->name('projects.folders.filter.by-user');
+Route::get('/projects/{project}/filter/folders/show-for-user/{user}', ShowFilesFilteredForUserWebController::class)
+     ->name('projects.folders.filter.show-for-user');
+Route::get('/projects/{project}/filter/folders/dt-show-for-user/{user}', DTGetFilesForUserFilterWebController::class)
+     ->name('projects.folders.filter.dt_get_files_for_user_filter');
 
 
 

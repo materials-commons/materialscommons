@@ -142,6 +142,9 @@
 
             <x-projects.show-globus-side-nav :project="$project"/>
 
+            <x-projects.show-filters-side-nav/>
+
+
             <li class="nav-item mt-2">
                 <span class="ml-5">Settings</span>
             </li>
