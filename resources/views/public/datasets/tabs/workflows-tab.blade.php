@@ -1,6 +1,6 @@
 @include('public.datasets.tabs._short-overview')
 <div class="ml-2">
-    <table id="workflows" class="table table-hover">
+    <table id="workflows" class="bootstrap-table bootstrap-table-hover">
         <thead>
         <tr>
             <th>Workflow</th>

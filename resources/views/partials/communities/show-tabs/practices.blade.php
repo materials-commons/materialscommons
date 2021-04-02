@@ -1,6 +1,6 @@
 <h3>Files</h3>
 <br>
-<table id="files" class="table table-hover">
+<table id="files" class="bootstrap-table bootstrap-table-hover">
     <thead>
     <tr>
         <th>File</th>
@@ -29,7 +29,7 @@
 
 <h3>Links</h3>
 <br>
-<table id="links" class="table table-hover">
+<table id="links" class="bootstrap-table bootstrap-table-hover">
     <thead>
     <tr>
         <th>Link</th>

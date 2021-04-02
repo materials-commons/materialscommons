@@ -1,4 +1,4 @@
-<table id="globus-downloads" class="table table-hover">
+<table id="globus-downloads" class="bootstrap-table bootstrap-table-hover">
     <thead>
     <tr>
         <th>Name</th>

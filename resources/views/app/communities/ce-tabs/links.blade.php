@@ -7,7 +7,7 @@
     @endslot
 
     @slot('body')
-        <table id="links" class="table table-hover" style="width:100%">
+        <table id="links" class="bootstrap-table bootstrap-table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Name</th>

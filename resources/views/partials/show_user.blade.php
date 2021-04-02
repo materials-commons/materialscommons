@@ -19,7 +19,7 @@
 {{--<div>--}}
 {{--    <h4>Published Datasets</h4>--}}
 {{--    <br>--}}
-{{--    <table id="datasets" class="table table-hover" style="width:100%">--}}
+{{--    <table id="datasets" class="bootstrap-table bootstrap-table-hover" style="width:100%">--}}
 {{--        <thead>--}}
 {{--        <tr>--}}
 {{--            <th>Dataset</th>--}}

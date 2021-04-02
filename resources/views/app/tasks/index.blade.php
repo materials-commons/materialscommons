@@ -33,7 +33,7 @@
             </ul>
 
             @if(count($tasks))
-                <table class="table mt-4 table-hover">
+                <table class="bootstrap-table mt-4 bootstrap-table-hover">
                     <thead>
                     <tr>
                         <th>Name</th>

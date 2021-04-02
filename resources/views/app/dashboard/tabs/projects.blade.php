@@ -3,7 +3,7 @@
 </a>
 <br>
 <br>
-<table id="projects" class="table table-hover" style="width:100%">
+<table id="projects" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Project</th>

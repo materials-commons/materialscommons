@@ -3,7 +3,7 @@
 <a href="#" class="action-link float-right">
     <i class="fas fa-fw fa-plus"></i> Add Admin
 </a>
-<table id="team-admins" class="table table-hover" style="width:100%">
+<table id="team-admins" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>User</th>

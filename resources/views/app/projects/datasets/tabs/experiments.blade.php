@@ -1,6 +1,6 @@
 @include('app.projects.datasets.tabs._short-overview')
 
-<table id="dt-table" class="table table-hover" style="width:100%">
+<table id="dt-table" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Name</th>

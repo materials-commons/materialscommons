@@ -19,7 +19,7 @@
         @endslot
 
         @slot('body')
-            <table id="experiments" class="table table-hover" style="width:100%">
+            <table id="experiments" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Experiment</th>

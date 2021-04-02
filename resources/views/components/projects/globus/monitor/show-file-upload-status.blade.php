@@ -1,5 +1,5 @@
 <div>
-    <table id="globus-files" class="table table-hover" style="width:100%">
+    <table id="globus-files" class="bootstrap-table bootstrap-table-hover" style="width:100%">
         <thead>
         <th>File</th>
         <th>Status</th>

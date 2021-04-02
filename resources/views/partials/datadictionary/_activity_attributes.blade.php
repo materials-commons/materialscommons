@@ -1,4 +1,4 @@
-<table id="activities-dd" class="table table-hover" style="width:100%">
+<table id="activities-dd" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Attribute</th>

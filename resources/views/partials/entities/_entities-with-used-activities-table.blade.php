@@ -1,4 +1,4 @@
-<table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
+<table id="entities-with-used-activities" class="bootstrap-table bootstrap-table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
     @if(isset($showExperiment))

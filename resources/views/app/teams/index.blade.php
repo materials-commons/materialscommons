@@ -20,7 +20,7 @@
             <h4>Teams I Administor</h4>
             <br>
 
-            <table id="admin-teams" class="table table-hover" style="width: 100%">
+            <table id="admin-teams" class="bootstrap-table bootstrap-table-hover" style="width: 100%">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -65,7 +65,7 @@
             <h4>Teams I'm A Member Of</h4>
             <br>
 
-            <table id="member-teams" class="table table-hover" style="width: 100%">
+            <table id="member-teams" class="bootstrap-table bootstrap-table-hover" style="width: 100%">
                 <thead>
                 <tr>
                     <th>Name</th>

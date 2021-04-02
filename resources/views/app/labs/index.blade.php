@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <table class="table table-hover">
+    <table class="bootstrap-table bootstrap-table-hover">
         <thead class="bg-primary text-white">
         <th scope="col">Name</th>
         <th scope="col">Description</th>

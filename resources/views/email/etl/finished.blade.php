@@ -16,7 +16,7 @@
     </h3>
     <br>
     <h5>Overview</h5>
-    <table class="table" style="width:100%">
+    <table class="bootstrap-table" style="width:100%">
         <thead>
         <tr>
             <th># Processes</th>
