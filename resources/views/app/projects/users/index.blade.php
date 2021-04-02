@@ -20,7 +20,7 @@
 
         @slot('body')
             <h4>Project Members</h4>
-            <table id="users" class="table table-hover" style="width:100%">
+            <table id="users" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -47,7 +47,7 @@
             <hr>
             <br>
             <h4>Project Admins</h4>
-            <table id="admins" class="table table-hover" style="width:100%">
+            <table id="admins" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Name</th>

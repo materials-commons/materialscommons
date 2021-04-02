@@ -1,4 +1,4 @@
-<table id="file-versions" class="table table-hover" style="width:100%">
+<table id="file-versions" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Name</th>

@@ -21,7 +21,7 @@
         @slot('body')
             <h4>Projects</h4>
             <br>
-            <table id="projects" class="table table-hover" style="width:100%">
+            <table id="projects" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Project</th>
@@ -76,7 +76,7 @@
         @slot('body')
             <h4>Published Datasets</h4>
             <br>
-            <table id="datasets" class="table table-hover" style="width:100%">
+            <table id="datasets" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>Dataset</th>

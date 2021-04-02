@@ -1,5 +1,5 @@
 @include('public.datasets.tabs._short-overview')
-<table id="activities" class="table table-hover" width="100%">
+<table id="activities" class="bootstrap-table bootstrap-table-hover" width="100%">
     <thead>
     <th>Process</th>
     <th>Description</th>

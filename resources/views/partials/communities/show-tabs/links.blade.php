@@ -1,5 +1,5 @@
 @include('partials.communities.show-tabs._show-overview')
-<table id="links" class="table table-hover">
+<table id="links" class="bootstrap-table bootstrap-table-hover">
     <thead>
     <tr>
         <th>Link</th>

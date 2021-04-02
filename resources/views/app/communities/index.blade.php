@@ -16,7 +16,7 @@
         @endslot
 
         @slot('body')
-            <table id="communities" class="table table-hover">
+            <table id="communities" class="bootstrap-table bootstrap-table-hover">
                 <thead>
                 <tr>
                     <th>Community</th>

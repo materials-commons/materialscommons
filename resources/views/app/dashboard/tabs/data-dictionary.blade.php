@@ -6,7 +6,7 @@
     @slot('body')
         <h5>Processes Data Dictionary</h5>
         <br>
-        <table id="activities-dd" class="table table-hover" style="width:100%">
+        <table id="activities-dd" class="bootstrap-table bootstrap-table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Attribute</th>
@@ -31,7 +31,7 @@
 
         <h5>Samples Data Dictionary</h5>
         <br>
-        <table id="entities-dd" class="table table-hover" style="width:100%">
+        <table id="entities-dd" class="bootstrap-table bootstrap-table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Attribute</th>

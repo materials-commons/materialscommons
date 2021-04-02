@@ -5,7 +5,7 @@
 <x-show-standard-details :item="$experiment"/>
 <hr>
 <br>
-<table id="activities" class="table table-hover" width="100%">
+<table id="activities" class="bootstrap-table bootstrap-table-hover" width="100%">
     <thead>
     <th>Name</th>
     <th>ID</th>

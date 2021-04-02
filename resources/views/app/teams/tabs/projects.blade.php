@@ -3,7 +3,7 @@
 <a href="#" class="action-link float-right">
     <i class="fas fa-fw fa-plus"></i> Add Project
 </a>
-<table id="team-projects" class="table table-hover" style="width:100%">
+<table id="team-projects" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Project</th>

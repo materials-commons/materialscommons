@@ -20,7 +20,7 @@
                         <i class="fas fa-fw fa-plus"></i> Add Project
                     </a>
                     <br>
-                    <table id="team-projects" class="table table-hover" style="width:100%">
+                    <table id="team-projects" class="bootstrap-table bootstrap-table-hover" style="width:100%">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -46,7 +46,7 @@
                 <div class="col-6">
                     <h4>Select Users To Add</h4>
                     <br>
-                    <table id="all-users" class="table table-hover">
+                    <table id="all-users" class="bootstrap-table bootstrap-table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -76,7 +76,7 @@
                 <div class="col-6">
                     <h4>Team Users</h4>
                     <br>
-                    <table id="team-users" class="table table-hover">
+                    <table id="team-users" class="bootstrap-table bootstrap-table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>

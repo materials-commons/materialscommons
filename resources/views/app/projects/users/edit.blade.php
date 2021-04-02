@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-6">
                     <h4>Select Users To Add</h4>
-                    <table id="all-users" class="table table-hover">
+                    <table id="all-users" class="bootstrap-table bootstrap-table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-6">
                     <h4>Project Members</h4>
-                    <table id="project-users" class="table table-hover">
+                    <table id="project-users" class="bootstrap-table bootstrap-table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -90,7 +90,7 @@
                     <hr>
                     <br>
                     <h4>Project Admins</h4>
-                    <table id="project-admins" class="table table-hover">
+                    <table id="project-admins" class="bootstrap-table bootstrap-table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>

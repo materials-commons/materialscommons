@@ -13,7 +13,7 @@
         @endslot
 
         @slot('body')
-            <table class="table table-hover" id="dt-table">
+            <table class="bootstrap-table bootstrap-table-hover" id="dt-table">
                 <thead>
                 <tr>
                     <th>Name</th>

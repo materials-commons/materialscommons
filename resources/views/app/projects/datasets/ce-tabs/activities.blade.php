@@ -1,5 +1,5 @@
 @include('app.projects.datasets.ce-tabs._short-overview')
-<table id="activities" class="table table-hover" style="width:100%">
+<table id="activities" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Name</th>

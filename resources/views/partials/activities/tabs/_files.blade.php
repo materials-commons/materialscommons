@@ -1,4 +1,4 @@
-<table id="files" class="table table-hover" style="width:100%">
+<table id="files" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>File</th>

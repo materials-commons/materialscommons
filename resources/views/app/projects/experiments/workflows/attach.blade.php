@@ -15,7 +15,7 @@
         @endslot
 
         @slot('body')
-            <table id="workflows" class="table table-hover">
+            <table id="workflows" class="bootstrap-table bootstrap-table-hover">
                 <thead>
                 <tr>
                     <th>Name</th>

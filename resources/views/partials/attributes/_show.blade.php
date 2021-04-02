@@ -7,7 +7,7 @@
 
         <h5>Attribute Statistics</h5>
         <br>
-        <table class="table table-hover" style="width:100%">
+        <table class="bootstrap-table bootstrap-table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Attribute</th>
@@ -43,7 +43,7 @@
         <h5>Attribute Values</h5>
         <br>
 
-        <table id="attribute-values" class="table table-hover" style="width:100%">
+        <table id="attribute-values" class="bootstrap-table bootstrap-table-hover" style="width:100%">
             <thead>
             <tr>
                 <th>Value</th>

@@ -9,7 +9,7 @@
     <a href="#" class="ml-4 mb-2" onclick="uncheckAllEntities()">Unselect All Samples</a>
 </div>
 <br>
-<table id="entities" class="table table-hover" style="width:100%">
+<table id="entities" class="bootstrap-table bootstrap-table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Name</th>
