@@ -23,3 +23,9 @@ mix.js('resources/js/app.js', 'public/js')
     // are used, but is not apparently finding them.
     // .purgeCss()
     .disableNotifications();
+
+
+mix.postCss('resources/css/tailwind.css', 'public/css/app.css', [
+    require('postcss-import'),
+    require('tailwindcss'),
+]);
