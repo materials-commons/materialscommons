@@ -1,43 +1,44 @@
 {
-  "private": true,
-  "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
-    "watch-poll": "npm run watch -- --watch-poll",
-    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "devDependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
-    "bootstrap-select": "^1.13.18",
-    "cross-env": "^5.2.1",
-    "datatables": "^1.10.18",
-    "jest": "^24.9.0",
-    "jquery": "^3.5.1",
-    "laravel-mix": "^4.1.4",
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1",
-    "popper.js": "^1.16.1",
-    "resolve-url-loader": "^2.3.2",
-    "sass": "^1.32.7",
-    "sass-loader": "^7.3.1",
-    "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
-  },
-  "dependencies": {
-    "@uppy/core": "^1.16.1",
-    "@uppy/dashboard": "^1.16.1",
-    "@uppy/xhr-upload": "^1.7.0",
-    "@yaireo/tagify": "^3.22.3",
-    "alpinejs": "^2.8.0",
-    "bootstrap-steps": "^1.0.3",
-    "canvas-datagrid": "^0.22.17",
-    "flowchart.js": "^1.15.0",
-    "htmx.org": "^1.2.0",
-    "laravel-mix-purgecss": "^4.2.0",
-    "xlsx": "^0.15.6"
-  }
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "axios": "^0.21.1",
+        "bootstrap": "^4.6.0",
+        "bootstrap-select": "^1.13.18",
+        "cross-env": "^5.2.1",
+        "datatables": "^1.10.18",
+        "jest": "^24.9.0",
+        "jquery": "^3.5.1",
+        "laravel-mix": "^4.1.4",
+        "lodash": "^4.17.20",
+        "moment": "^2.29.1",
+        "popper.js": "^1.16.1",
+        "resolve-url-loader": "^2.3.2",
+        "sass": "^1.32.7",
+        "sass-loader": "^7.3.1",
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12",
+        "tailwindcss": "^2.0"
+    },
+    "dependencies": {
+        "@uppy/core": "^1.16.1",
+        "@uppy/dashboard": "^1.16.1",
+        "@uppy/xhr-upload": "^1.7.0",
+        "@yaireo/tagify": "^3.22.3",
+        "alpinejs": "^2.8.0",
+        "bootstrap-steps": "^1.0.3",
+        "canvas-datagrid": "^0.22.17",
+        "flowchart.js": "^1.15.0",
+        "htmx.org": "^1.2.0",
+        "laravel-mix-purgecss": "^4.2.0",
+        "xlsx": "^0.15.6"
+    }
 }
