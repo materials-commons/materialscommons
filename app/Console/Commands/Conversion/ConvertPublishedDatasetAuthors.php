@@ -376,10 +376,20 @@ class ConvertPublishedDatasetAuthors extends Command
                 "order"    => [34, 118, 65, 113, "Anton Van der Ven"],
             ],
             [
+                "id"       => 71,
+                "external" => [
+                    $this->addUser("Peng-Wei Chu", "University of Michigan", "pengwchu@umich.edu"),
+                    $this->addUser("Etienne Le Mire", "University of Michigan", ""),
+                    $this->addUser("Emmanuelle Marquis", "University of Michigan", "emarq@umich.edu"),
+                ],
+            ],
+            [
                 "id"       => 75,
                 "users"    => [253, 113],
                 "external" => [
-                    $this->addUser("Etienne Le Mire", "University of Michigan"),
+                    $this->addUser("Peng-Wei Chu", "University of Michigan", "pengwchu@umich.edu"),
+                    $this->addUser("Etienne Le Mire", "University of Michigan", ""),
+                    $this->addUser("Emmanuelle Marquis", "University of Michigan", "emarq@umich.edu"),
                 ],
                 "order"    => [253, "Etienne Le Mire", 113],
             ],
@@ -387,14 +397,27 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 77,
                 "users"    => [298],
                 "external" => [
+                    $this->addUser("Naga Sri Harsha Gunda", "University of California Santa Barbara",
+                        "sriharsha.naga@gmail.com"),
                 ],
                 "order"    => [298],
+            ],
+            [
+                "id"       => 78,
+                "external" => [
+                    $this->addUser("Jiashi Miao", "Ohio State University", "miaojias@umich.edu"),
+                    $this->addUser("Mei Li", "Ford Motor Company", ""),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                ],
             ],
             [
                 // Showed no authors
                 "id"       => 79,
                 "users"    => [29, 329, 173],
                 "external" => [
+                    $this->addUser("Anna Trump", "University of Michigan", "amcollet@umich.edu"),
+                    $this->addUser("Wenaho Sun", "", ""),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
                 ],
                 "order"    => [29, 329, 173],
             ],
@@ -402,6 +425,9 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 83,
                 "users"    => [184, 253, 113],
                 "external" => [
+                    $this->addUser("Kathleen Chou", "University of Michigan", "kachou@umich.edu"),
+                    $this->addUser("Peng-Wei Chu", "University of Michigan", "pengwchu@umich.edu"),
+                    $this->addUser("Emmanuelle Marquis", "University of Michigan", "emarq@umich.edu"),
                 ],
                 "order"    => [184, 253, 113],
             ],
@@ -409,6 +435,7 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 84,
                 "users"    => [286],
                 "external" => [
+                    $this->addUser("Sha Liu", "", "sha.liu@imdea.org"),
                 ],
                 "order"    => [286],
             ],
@@ -416,7 +443,18 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 87,
                 "users"    => [304, 118, 34, 47, 274, 198, 65, 113, 196, 173],
                 "external" => [
+                    $this->addUser("Stephen DeWitt", "University of Michigan", "stvdwtt@umich.edu"),
+                    $this->addUser("Ellen Solomon", "University of Michigan", "esitz@umich.edu"),
+                    $this->addUser("Anirudh Natarajan", "University of California, Santa Barbara",
+                        "anirudh@engineering.ucsb.edu"),
+                    $this->addUser("Vicente Araullo-Peters", "University of Michigan", "avicente@umich.edu"),
+                    $this->addUser("Shiva Rudraraju", "University of Michigan", "rudraa@umich.edu"),
+                    $this->addUser("Larry Aagesen", "University of Michigan", "laagesen@umich.edu"),
+                    $this->addUser("Brian Puchala", "University of Michigan", "bpuchala@umich.edu"),
+                    $this->addUser("Emmanuelle Marquis", "University of Michigan", "emarq@umich.edu"),
                     $this->addUser("Anton van der Ven", "University of California, Santa Barbara"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
                 ],
                 "order"    => [304, 118, 34, 47, 274, 198, 65, 113, "Anton van der Ven", 196, 173],
             ],
@@ -424,13 +462,24 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 91,
                 "users"    => [304],
                 "external" => [
+                    $this->addUser("Stephen DeWitt", "University of Michigan", "stvdwtt@umich.edu"),
                 ],
                 "order"    => [304],
+            ],
+            [
+                "id"       => 93,
+                "external" => [
+                    $this->addUser("Anirudh Natarajan", "University of California, Santa Barbara",
+                        "anirudh@engineering.ucsb.edu"),
+                    $this->addUser("Anton van der Ven", "University of California, Santa Barbara"),
+                ],
             ],
             [
                 "id"       => 94,
                 "users"    => [298],
                 "external" => [
+                    $this->addUser("Naga Sri Harsha Gunda", "University of California Santa Barbara",
+                        "sriharsha.naga@gmail.com"),
                 ],
                 "order"    => [298],
             ],
@@ -438,28 +487,69 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 95,
                 "users"    => [327, 196],
                 "external" => [
+                    $this->addUser("W. Beck Andrews", "University of Michigan", "wband@umich.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
                 ],
                 "order"    => [327, 196],
+            ],
+            [
+                "id"       => 98,
+                "external" => [
+                    $this->addUser("Brian Puchala", "University of Michigan", "bpuchala@umich.edu"),
+                ],
             ],
             [
                 "id"       => 99,
                 "users"    => [304, 274, 101, 327, 196],
                 "external" => [
+                    $this->addUser("Stephen DeWitt", "University of Michigan", "stvdwtt@umich.edu"),
+                    $this->addUser("Shiva Rudraraju", "University of Michigan", "rudraa@umich.edu"),
+                    $this->addUser("David Montiel", "University of Michigan", "dmontiel@umich.edu"),
+                    $this->addUser("W. Beck Andrews", "University of Michigan", "wband@umich.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
                 ],
                 "order"    => [304, 274, 101, 327, 196],
+            ],
+            [
+                "id"       => 102,
+                "external" => [
+                    $this->addUser("W. Beck Andrews", "University of Michigan", "wband@umich.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
+                    $this->addUser("Kate Elder", "Northwestern University", "kateelder2022@u.northwestern.edu"),
+                    $this->addUser("Peter Voorhees", "Northwestern University", ""),
+                ],
             ],
             [
                 "id"       => 106,
                 "users"    => [327, 196, 187],
                 "external" => [
-                    $this->addUser("Peter Voorhees", "Northwestern University"),
+                    $this->addUser("W. Beck Andrews", "University of Michigan", "wband@umich.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
+                    $this->addUser("Kate Elder", "Northwestern University", "kateelder2022@u.northwestern.edu"),
+                    $this->addUser("Peter Voorhees", "Northwestern University", ""),
                 ],
                 "order"    => [327, 196, "Peter Voorhees", 187],
+            ],
+            [
+                "id"       => 108,
+                "external" => [
+                    $this->addUser("Anirudh Natarajan", "University of California, Santa Barbara",
+                        "anirudh@engineering.ucsb.edu"),
+                    $this->addUser("Brian Puchala", "University of Michigan", "bpuchala@umich.edu"),
+                    $this->addUser("Anton van der Ven", "University of California, Santa Barbara"),
+                ],
             ],
             [
                 "id"       => 109,
                 "users"    => [159, 173, 174],
                 "external" => [
+                    $this->addUser("Jacob F. Adams",
+                        "Department of Materials Science and Engineering, University of Michigan", "jfadams@umich.edu"),
+                    $this->addUser("John E. Allison",
+                        "Department of Materials Science and Engineering, University of Michigan", "johnea@umich.edu"),
+                    $this->addUser("J. Wayne Jones",
+                        "Department of Materials Science and Engineering, University of Michigan",
+                        "jonesjwa@umich.edu"),
                 ],
                 "order"    => [159, 173, 174],
             ],
@@ -467,27 +557,55 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 115,
                 "users"    => [355, 365],
                 "external" => [
+                    $this->addUser("Zhe Chen", "University of California, Santa Barbara", "zhec@umich.edu"),
+                    $this->addUser("Samantha Daly", "University of California, Santa Barbara", "samdaly@ucsb.edu"),
                 ],
                 "order"    => [355, 365],
             ],
             [
-                "id"       => 118,
-                "users"    => [343],
+                "id"       => 116,
                 "external" => [
+                    $this->addUser("Zhe Chen", "University of California, Santa Barbara", "zhec@umich.edu"),
                 ],
-                "order"    => [343],
+            ],
+            [
+                "id"       => 117,
+                "external" => [
+                    $this->addUser("Glenn Tarcea", "University of Michigan", "gtarcea@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 118,
+                "external" => [
+                    $this->addUser("Mohammadreza Yaghoobi", "University of Michigan, Ann Arbor, MI",
+                        "yaghoobi@umich.edu"),
+                    $this->addUser("John E. Allison", "University of Michigan, Ann Arbor, MI", "johnea@umich.edu"),
+                    $this->addUser("Veera Sundararaghavan", "University of Michigan, Ann Arbor, MI",
+                        "veeras@umich.edu"),
+                ],
             ],
             [
                 "id"       => 119,
                 "users"    => [295, 196],
                 "external" => [
+                    $this->addUser("Susan P. Gentry",
+                        "University of Michigan; University of California, Davis (present)", "spgentry@ucdavis.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
                 ],
                 "order"    => [295, 196],
+            ],
+            [
+                "id"       => 120,
+                "external" => [
+                    $this->addUser("Glenn Tarcea", "University of Michigan", "gtarcea@umich.edu"),
+                ],
             ],
             [
                 "id"       => 121,
                 "users"    => [113],
                 "external" => [
+                    $this->addUser("Emmanuelle Marquis", "University of Michigan", "emarq@umich.edu"),
+
                 ],
                 "order"    => [113],
             ],
@@ -495,6 +613,11 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 123,
                 "users"    => [239, 11, 322, 173, 30],
                 "external" => [
+                    $this->addUser("Mohsen Taheri Andani", "University of Michigan", "mtaheri@umich.edu"),
+                    $this->addUser("Aaditya Lakshmanan", "University of Michigan", "aadityal@umich.edu"),
+                    $this->addUser("Veera Sundararaghavan", "University of Michigan", "veera@umich.edu"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                    $this->addUser("Amit Misra", "University of Michigan", "amitmis@umich.edu"),
                 ],
                 "order"    => [239, 11, 322, 173, 30],
             ],
@@ -502,6 +625,8 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 124,
                 "users"    => [82],
                 "external" => [
+                    $this->addUser("Charles R. Fisher",
+                        "Naval Surface Warfare Center, Carderock Division [NSWCCD]", "charles.r.fisher@gmail.com"),
                     $this->addUser("Daniel H. Bechetti",
                         "Naval Surface Warfare Center, Carderock Division [NSWCCD]"),
                     $this->addUser("Jennifer K. Semple",
@@ -514,9 +639,12 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 125,
                 "users"    => [290, 316, 173],
                 "external" => [
+                    $this->addUser("Qianying Shi", "University of Michigan", "shiqiany@umich.edu"),
                     $this->addUser("Yang Huo", "Ford Motor Company"),
+                    $this->addUser("Tracy Berman", "University of Michigan", "triadasa@umich.edu"),
                     $this->addUser("Bita Ghaffari", "Ford Motor Company"),
                     $this->addUser("Mei Li", "Ford Motor Company"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
                 ],
                 "order"    => [290, "Yang Huo", 316, "Bita Ghaffari", "Mei Li", 173],
             ],
@@ -524,6 +652,13 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 126,
                 "users"    => [299, 343, 19, 355, 365, 173, 322],
                 "external" => [
+                    $this->addUser("Sriram Ganesan", "University of Michigan - Ann Arbor", "sriramg@umich.edu"),
+                    $this->addUser("Mohammadreza Yaghoobi", "University of Michigan - Ann Arbor", "yagnoobi@umich.edu"),
+                    $this->addUser("Alan Githens", "University of Michigan - Ann Arbor", "agithens@umich.edu"),
+                    $this->addUser("Zhe Chen", "University of California - Santa Barbara", "zhec@umich.edu"),
+                    $this->addUser("Samantha Daly", "University of California - Santa Barbara", "samdaly@ucsb.edu"),
+                    $this->addUser("John Allison", "University of Michigan - Ann Arbor", "johnea@umich.edu"),
+                    $this->addUser("Veera Sundararaghavan", "University of Michigan - Ann Arbor", "veeras@umich.edu"),
                 ],
                 "order"    => [299, 343, 19, 355, 365, 173, 322],
             ],
@@ -531,16 +666,47 @@ class ConvertPublishedDatasetAuthors extends Command
                 "id"       => 127,
                 "users"    => [345],
                 "external" => [
+                    $this->addUser("Zhenjie Yao", "University of Michigan", "ycollin@umich.edu"),
                 ],
                 "order"    => [345],
+            ],
+            [
+                "id"       => 128,
+                "users"    => [345],
+                "external" => [
+                    $this->addUser("Zhenjie Yao", "University of Michigan", "ycollin@umich.edu"),
+                ],
+                "order"    => [345],
+            ],
+            [
+                "id"       => 129,
+                "external" => [
+                    $this->addUser("Brian Puchala", "University of Michigan", "bpuchala@umich.edu"),
+                ],
             ],
             [
                 "id"       => 130,
                 "users"    => [355, 755],
                 "external" => [
+                    $this->addUser("Zhe Chen", "University of California - Santa Barbara", "zhec@umich.edu"),
+                    $this->addUser("Ryan Sperry", "", ""),
                 ],
                 "order"    => [355, 755],
             ],
+            [
+                "id"       => 131,
+                "external" => [
+                    $this->addUser("Ryan Sperry", "", ""),
+                ],
+            ],
+            [
+                "id"       => 134,
+                "external" => [
+                    $this->addUser("Zhe Chen", "University of California - Santa Barbara", "zhec@umich.edu"),
+                ],
+            ],
+
+
         ];
     }
 

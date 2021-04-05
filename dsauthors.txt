@@ -131,25 +131,25 @@ id	authors
     Emmanuelle Marquis (University of Michigan);
     Anton Van der Ven (University of Michigan)
 
-71	Peng-Wei Chu (University of Michigan);
+71d	Peng-Wei Chu (University of Michigan);
     Etienne Le Mire (University of Michigan);
     Emmanuelle Marquis (University of Michigan)
 
-75	Peng-Wei Chu (University of Michigan);
+75d	Peng-Wei Chu (University of Michigan);
     Etienne Le Mire (University of Michigan);
     Emmanuelle Marquis (University of Michigan)
 
-77	Naga Sri Harsha Gunda (University of California Santa Barbara)
+77d	Naga Sri Harsha Gunda (University of California Santa Barbara)
 
-78	Jiashi MIao (Ohio State University);
+78d	Jiashi MIao (Ohio State University);
     Mei Li (Ford Motor Company);
     John Allison (University of Michigan)
 
-83	Kathleen Chou (University of Michigan);
+83d	Kathleen Chou (University of Michigan);
     Peng-Wei Chu (University of Michigan);
     Emmanuelle Marquis (University of Michigan)
 
-87	Stephen DeWitt (University of Michigan);
+87d	Stephen DeWitt (University of Michigan);
     Ellen Solomon (University of Michigan);
     Anirudh Natarajan (University of California, Santa Barbara);
     Vicente Araullo-Peters (University of Michigan);
@@ -161,79 +161,79 @@ id	authors
     Katsuyo Thornton (University of Michigan);
     John Allison (University of Michigan)
 
-91	Stephen DeWitt (University of Michigan)
+91d	Stephen DeWitt (University of Michigan)
 
-93	Anirudh Raju Natarajan (University of California, Santa Barbara);
+93d	Anirudh Raju Natarajan (University of California, Santa Barbara);
     Anton Van der Ven (University of California, Santa Barbara)
 
-94	Naga Sri Harsha Gunda (University of California Santa Barbara)
+94d	Naga Sri Harsha Gunda (University of California Santa Barbara)
 
-95	W. Beck Andrews (University of Michigan);
+95d	W. Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan)
 
-98	Brian Puchala (University of Michigan)
+98d	Brian Puchala (University of Michigan)
 
-99	Stephen DeWitt (University of Michigan);
+99d	Stephen DeWitt (University of Michigan);
     Shiva Rudraraju (University of Michigan);
     David Montiel (University of Michigan);
     W. Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan)
 
-102	W. Beck Andrews (University of Michigan);
+102d	W. Beck Andrews (University of Michigan);
     Katsuyo Thorton (University of Michigan);
     Kate Elder (Northwestern University);
     Peter Voorhees (Northwestern University)
 
-106	W. Beck Andrews (University of Michigan);
+106d	W. Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan);
     Peter Voorhees (Northwestern University);
     Kate Elder (Northwestern University)
 
-108	Anirudh Raju Natarajan (University of California, Santa Barbara);
+108d	Anirudh Raju Natarajan (University of California, Santa Barbara);
     Brian Puchala (University of Michigan, Ann Arbor);
     Anton Van der Ven (University of California, Santa Barbara)
 
-109	Jacob F. Adams (Department of Materials Science and Engineering, University of Michigan);
+109d	Jacob F. Adams (Department of Materials Science and Engineering, University of Michigan);
     John E. Allison (Department of Materials Science and Engineering, University of Michigan);
     J. Wayne Jones (Department of Materials Science and Engineering, University of Michigan)
 
 115	Zhe Chen (UCSB);
     Samantha Daly (UCSB)
 
-116	Zhe Chen (UCSB)
+116d	Zhe Chen (UCSB)
 
-117	Glenn Tarcea
+117d	Glenn Tarcea
 
-118	Mohammadreza Yaghoobi
+118d	Mohammadreza Yaghoobi
     John E. Allison,
     Veera Sundararaghavan;   University of Michigan, Ann Arbor, MI
 
-119	Susan P. Gentry (University of Michigan; University of California, Davis (present));
+119d	Susan P. Gentry (University of Michigan; University of California, Davis (present));
     Katsuyo Thornton (University of Michigan)
 
-120	Glenn Tarcea
+120d	Glenn Tarcea
 
-121	Emmanuelle Marquis (University of Michigan)
+121d	Emmanuelle Marquis (University of Michigan)
 
-123	Mohsen Taheri Andani (University of Michigan);
+123d	Mohsen Taheri Andani (University of Michigan);
     Aaditya Lakshmanan (University of Michigan);
     Veera Sundararaghavan (University of Michigan);
     John Allison (University of Michigan);
     Amit Misra (University of Michigan)
 
-124	Charles R. Fisher (Naval Surface Warfare Center, Carderock Division [NSWCCD]);
+124d	Charles R. Fisher (Naval Surface Warfare Center, Carderock Division [NSWCCD]);
     Daniel H. Bechetti (Naval Surface Warfare Center, Carderock Division [NSWCCD]);
     Jennifer K. Semple (Naval Surface Warfare Center, Carderock Division [NSWCCD]);
     Wei Zhang (Ohio State University [OSU])
 
-125	Qianying Shi (University of Michigan);
+125d	Qianying Shi (University of Michigan);
     Yang Huo (Ford Motor Company);
     Tracy Berman (University of Michigan);
     Bita Ghaffari (Ford Motor Company);
     Mei Li (Ford Motor Company);
     John Allison (University of Michigan)
 
-126	Sriram Ganesan (University of Michigan - Ann Arbor);
+126d	Sriram Ganesan (University of Michigan - Ann Arbor);
     Mohammadreza Yaghoobi (University of Michigan - Ann Arbor);
     Alan Githens (University of Michigan - Ann Arbor);
     Zhe Chen (University of California - Santa Barbara);
@@ -241,19 +241,19 @@ id	authors
     John Allison (University of Michigan - Ann Arbor);
     Veera Sundararaghavan (University of Michigan - Ann Arbor)
 
-127	Zhenjie Yao (University of Michigan)
+127d	Zhenjie Yao (University of Michigan)
 
-128	Zhenjie Yao (University of Michigan)
+128d	Zhenjie Yao (University of Michigan)
 
-129	Brian Puchala (University of Michigan);
+129d	Brian Puchala (University of Michigan);
     CASM TestProjects ()
 
-130	Zhe Chen (UCSB);
+130d	Zhe Chen (UCSB);
     Ryan Sperry
 
-131	Ryan Sperry
+131d	Ryan Sperry
 
-134	Zhe Chen (UCSB)
+134d	Zhe Chen (UCSB)
 
 150	Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan)
