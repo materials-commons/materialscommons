@@ -78,18 +78,18 @@ id	authors
 45d	W. Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan)
 
-47	Kathleen Chou (University of Michigan);
+47d	Kathleen Chou (University of Michigan);
     Peng-Wei Chu (University of Michigan);
     Carlos Levi (University of California, Santa Barbara);
     Emmanuelle Marquis (University of Michigan)
 
-48	Tracy Berman
+48d	Tracy Berman
 
-50	Jiashi Miao (Ohio State University);
+50d	Jiashi Miao (Ohio State University);
     Mei Li (Ford Motor Company);
     John Allison (University of Michigan)
 
-52	Yong-Jie Hu (Department of Materials Science and Engineering, University of Michigan);
+52d	Yong-Jie Hu (Department of Materials Science and Engineering, University of Michigan);
     Zhao Ge (Department of Statistics, Pennsylvania State University);
     Baiyu Zhang (Department of Materials Science and Engineering, Texas A&M University);
     Chaoming Yang (Department of Materials Science and Engineering, University of Michigan);
@@ -98,14 +98,14 @@ id	authors
     Xiaofeng Qian (Department of Materials Science and Engineering, Texas A&M University);
     Liang Qi (Department of Materials Science and Engineering, University of Michigan)
 
-58	Alan Githens (University of Michigan - Ann Arbor);
+58d	Alan Githens (University of Michigan - Ann Arbor);
     Sriram Ganesan (University of Michigan - Ann Arbor);
     Zhe Chen (University of California - Santa Barbara);
     John Allison (University of Michigan - Ann Arbor);
     Veera Sundararaghavan (University of Michigan - Ann Arbor);
     Samantha Daly (University of California - Santa Barbara)
 
-59	Mohammadreza Yaghoobi (Materials Science and Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
+59d	Mohammadreza Yaghoobi (Materials Science and Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
     Sriram Ganesan (Aerospace Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
     Srihari Sundar (Aerospace Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
     Aaditya Lakshmanan (Aerospace Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
@@ -113,19 +113,19 @@ id	authors
     John E. Allison (Materials Science and Engineering, University of Michigan, Ann Arbor, MI 48109, USA);
     Veera Sundararaghavan (Aerospace Engineering, University of Michigan, Ann Arbor, MI 48109, USA)
 
-63	Vir Nirankari (University of Michigan);
+63d	Vir Nirankari (University of Michigan);
     Mei Li (Ford Motor Company);
     John Allison (University of Michigan)
 
-64	Mohsen Taheri Andani (University of Michigan);
+64d	Mohsen Taheri Andani (University of Michigan);
     Aaditya Lakshmanan (University of Michigan);
     Veera Sundararaghavan (University of Michigan);
     John Allison (University of Michigan);
     Amit Misra
 
-67	Brian Puchala (University of Michigan)
+67d	Brian Puchala (University of Michigan)
 
-70	Anirudh Natarajan (University of Michigan);
+70d	Anirudh Natarajan (University of Michigan);
     Ellen Solomon (University of Michigan);
     Brian Puchala (University of Michigan);
     Emmanuelle Marquis (University of Michigan);
