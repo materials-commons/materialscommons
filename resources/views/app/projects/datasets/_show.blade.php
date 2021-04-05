@@ -1,7 +1,7 @@
 <form>
     <x-datasets.show-overview :dataset="$dataset"/>
 
-    <x-datasets.show-authors :authors="$dataset->authors"/>
+    <x-datasets.show-authors :authors="$dataset->ds_authors"/>
 
     @if(!blank($dataset->description))
         <x-show-description :description="$dataset->description"/>
