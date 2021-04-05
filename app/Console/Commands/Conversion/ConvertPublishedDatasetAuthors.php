@@ -706,7 +706,132 @@ class ConvertPublishedDatasetAuthors extends Command
                 ],
             ],
 
+            [
+                "id"       => 150,
+                "external" => [
+                    $this->addUser("W. Beck Andrews", "University of Michigan", "wband@umich.edu"),
+                    $this->addUser("Katsuyo Thornton", "University of Michigan", "kthorn@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 151,
+                "external" => [
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 155,
+                "external" => [
+                    $this->addUser("Tracy Berman", "University of Michigan", "tradiasa@umich.edu"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 156,
+                "external" => [
+                    $this->addUser("Mohammadreza yaghoobi", "University of Michigan", "yaghoobi@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 158,
+                "external" => [
+                    $this->addUser("Tracy Berman", "University of Michigan", "tradiasa@umich.edu"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 161,
+                "external" => [
+                    $this->addUser("Mohammadreza Yaghoobi", "University of Michigan", "yaghoobi@umich.edu"),
+                    $this->addUser("Krzysztof S. Stopka", "", "stopka.kris@gmail.com"),
+                    $this->addUser("Aaditya Lakshmanan", "University of Michigan", "aadityal@umich.edu"),
+                    $this->addUser("Veera Sundararaghavan", "University of Michigan", "veeras@umich.edu"),
+                    $this->addUser("John E. Allison", "University of Michigan", "johnea@umich.edu"),
+                    $this->addUser("David L. McDowell", "", ""),
+                ],
+            ],
+            [
+                "id"       => 162,
+                "external" => [
+                    $this->addUser("Mohammadreza Yaghoobi", "University of Michigan", "yaghoobi@umich.edu"),
+                    $this->addUser("Zhe Chen", "UCSB", "zhec@umich.edu"),
+                    $this->addUser("Veera Sundararaghavan", "University of Michigan", "veeras@umich.edu"),
+                    $this->addUser("John E. Allison", "University of Michigan", "johnea@umich.edu"),
+                    $this->addUser("Samantha Daly", "UCSB", "samdaly@ucsb.edu"),
+                ],
+            ],
+            [
+                "id"       => 163,
+                "external" => [
+                    $this->addUser("Tracy Berman", "University of Michigan", "tradiasa@umich.edu"),
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                ],
+            ],
+            [
+                "id"       => 164,
+                "external" => [
+                    $this->addUser("Yiyang Li", "Sandia National Labs", "yiyangli@umich.edu"),
+                    $this->addUser("T Patrick Xiao", "Sandia National Labs", ""),
+                    $this->addUser("Christopher H Bennett", "Sandia National Labs", ""),
+                    $this->addUser("Erik Isele", "Sandia National Labs", ""),
+                    $this->addUser("Hanbo Tao", "Sandia National Labs", ""),
+                    $this->addUser("Matthew J Marinella", "Sandia National Labs", ""),
+                    $this->addUser("Elliot J Fuller", "Sandia National Labs", ""),
+                    $this->addUser("A Alec Talin", "Sandia National Labs", ""),
+                    $this->addUser("Armantas Melianas", "Stanford University", ""),
+                    $this->addUser("Alberto Salleo", "Stanford University", ""),
+                ],
+            ],
+            [
+                "id"       => 165,
+                "external" => [
+                    $this->addUser("Haixing Fang", "Technical University of Denmark", "hfang@mek.dtu.dk"),
+                    $this->addUser("Dorte Juul Jensen", "Technical University of Denmark", "doje@dtu.dk"),
+                    $this->addUser("Yubin Zhang", "Technical University of Denmark", "yubz@mek.dtu.dk"),
+                ],
+            ],
+            [
+                "id"       => 166,
+                "external" => [
+                    $this->addUser("Haixing Fang", "Technical University of Denmark", "hfang@mek.dtu.dk"),
+                    $this->addUser("Emil Hovad", "Technical University of Denmark", ""),
+                    $this->addUser("Yubin Zhang", "Technical University of Denmark", "yubz@mek.dtu.dk"),
+                    $this->addUser("Dorte Juul Jensen", "Technical University of Denmark", "doje@dtu.dk"),
+                ],
+            ],
+            [
+                "id"       => 167,
+                "external" => [
+                    $this->addUser("Haixing Fang", "Technical University of Denmark", "hfang@mek.dtu.dk"),
+                    $this->addUser("Emil Hovad", "Technical University of Denmark", ""),
+                    $this->addUser("Yubin Zhang", "Technical University of Denmark", "yubz@mek.dtu.dk"),
+                    $this->addUser("Dorte Juul Jensen", "Technical University of Denmark", "doje@dtu.dk"),
+                ],
+            ],
+            [
+                "id"       => 168,
+                "external" => [
 
+                ],
+            ],
+            [
+                "id"       => 170,
+                "external" => [
+
+                ],
+            ],
+            [
+                "id"       => 171,
+                "external" => [
+
+                ],
+            ],
+            [
+                "id"       => 172,
+                "external" => [
+
+                ],
+            ],
         ];
     }
 

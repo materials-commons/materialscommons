@@ -255,36 +255,36 @@ id	authors
 
 134d	Zhe Chen (UCSB)
 
-150	Beck Andrews (University of Michigan);
+150d	Beck Andrews (University of Michigan);
     Katsuyo Thornton (University of Michigan)
 
-151	John Allison (University of Michigan)
+151d	John Allison (University of Michigan)
 
-155	Tracy Berman (University of Michigan);
+155d	Tracy Berman (University of Michigan);
     John Allison (University of Michigan)
 
 156	Mohammadreza yaghoobi ()
 
-158	Tracy Berman (University of Michigan),
+158d	Tracy Berman (University of Michigan),
     John Allison (University of Michigan)
 
-161	Mohammadreza Yaghoobi;
+161d	Mohammadreza Yaghoobi;
     Krzysztof S. Stopka;
     Aaditya Lakshmanan;
     Veera Sundararaghavan;
     John E. Allison;
     David L. McDowell
 
-162	Mohammadreza Yaghoobi,
+162d	Mohammadreza Yaghoobi,
     Zhe Chen,
     Veera Sundararaghavan ,
     John Allison,
     Samantha Daly
 
-163	Tracy Berman (University of Michigan);
+163d	Tracy Berman (University of Michigan);
     John Allison (University of Michigan)
 
-164	Sandia National Labs:
+164d	Sandia National Labs:
         Yiyang Li,
         T Patrick Xiao,
         Christopher H Bennett,
@@ -297,16 +297,18 @@ id	authors
         Armantas Melianas,
         Alberto Salleo
 
-165	Technical University of Denmark:
+165d	Technical University of Denmark:
     Haixing Fang,
     Dorte Juul Jensen
     Yubin Zhang;
 
-166	Technical University of Denmark:
-    Haixing Fang, Emil Hovad,
+166d	Technical University of Denmark:
+    Haixing Fang,
+    Emil Hovad,
     Yubin Zhang
     Dorte Juul Jensen;
-167	Technical University of Denmark:
+
+167d	Technical University of Denmark:
     Haixing Fang,
     Emil Hovad,
     Yubin Zhang,
