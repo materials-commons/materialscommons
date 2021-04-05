@@ -314,10 +314,10 @@ id	authors
     Yubin Zhang,
     Dorte Juul Jensen
 
-168	John Allison (University of Michigan);
+168d	John Allison (University of Michigan);
     Tracy Berman (University of Michigan)
 
-170	Guanglong Huang,
+170d	Guanglong Huang,
     Mojue Zhang,
     David Montiel,
     Praveen Soundararajan,
@@ -327,6 +327,6 @@ id	authors
     Peter Khalifah
     Katsuyo Thornton
 
-171	Yong-Jie Hu (Drexel University)
+171d	Yong-Jie Hu (Drexel University)
 
-172	Yong-Jie Hu (Drexel University)
+172d	Yong-Jie Hu (Drexel University)

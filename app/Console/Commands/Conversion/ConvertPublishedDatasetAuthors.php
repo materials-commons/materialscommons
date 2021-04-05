@@ -811,24 +811,34 @@ class ConvertPublishedDatasetAuthors extends Command
             [
                 "id"       => 168,
                 "external" => [
-
+                    $this->addUser("John Allison", "University of Michigan", "johnea@umich.edu"),
+                    $this->addUser("Tracy Berman", "University of Michigan", "tradiasa@umich.edu"),
                 ],
             ],
             [
                 "id"       => 170,
                 "external" => [
-
+                    $this->addUser("Guanglong Huang", "", "umjihgl@umich.edu"),
+                    $this->addUser("Mojue Zhang", "", ""),
+                    $this->addUser("David Montiel", "", "dmontiel@umich.edu",),
+                    $this->addUser("Praveen Soundararajan", "", ""),
+                    $this->addUser("Yusu Wang", "", ""),
+                    $this->addUser("Jonathan Denney", "", ""),
+                    $this->addUser("Adam Corrao", "", ""),
+                    $this->addUser("Peter Khalifah", "", ""),
+                    $this->addUser("Katsuyo Thornton", "", "kthorn@umich.edu"),
                 ],
             ],
             [
                 "id"       => 171,
                 "external" => [
-
+                    $this->addUser("Yong-Jie Hu", "Drexel University", "huyo@umich.edu"),
                 ],
             ],
             [
                 "id"       => 172,
                 "external" => [
+                    $this->addUser("Yong-Jie Hu", "Drexel University", "huyo@umich.edu"),
 
                 ],
             ],
