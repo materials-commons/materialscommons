@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Web\Published\Authors;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dataset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class IndexPublishedAuthorsWebController extends Controller
@@ -12,14 +12,14 @@ class IndexPublishedAuthorsWebController extends Controller
     public function __invoke(Request $request)
     {
         // Not the most efficient way, but good enough for now.
-        $datasets = DB::table('datasets')
-                      ->whereNotNull('published_at')
-                      ->select('authors')
-                      ->get();
+        $datasets = Dataset::whereNotNull('published_at')->get();
         $authors = [];
         foreach ($datasets as $ds) {
-            foreach (explode(';', $ds->authors) as $author) {
-                $author = Str::of($author)->before('(')->trim()->__toString();
+            if (is_null($ds->ds_authors)) {
+                continue;
+            }
+            foreach ($ds->ds_authors as $author) {
+                $author = Str::of($author['name'])->trim()->__toString();
                 if (isset($authors[$author])) {
                     $count = $authors[$author];
                     $count++;

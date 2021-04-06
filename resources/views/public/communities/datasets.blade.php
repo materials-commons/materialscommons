@@ -28,7 +28,7 @@
                             <a href="{{route('public.datasets.show', $dataset)}}">{{$dataset->name}}</a>
                         </td>
                         <td>{{$dataset->description}}</td>
-                        <td>{{$dataset->authors}}</td>
+                        <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
                     </tr>
                 @endforeach
                 </tbody>

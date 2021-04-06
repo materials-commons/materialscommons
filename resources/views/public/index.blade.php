@@ -72,18 +72,13 @@
                         },
                         {name: 'summary'},
                         {
-                            name: 'authors',
+                            name: 'ds_authors',
                             render: function (data) {
                                 if (!data) {
                                     return "";
                                 }
-                                return data.split(';').map(function (author) {
-                                    let openParen = author.indexOf('(');
-                                    if (openParen === -1) {
-                                        return author;
-                                    }
-
-                                    return author.substr(0, openParen).trim();
+                                return data.map(function (author) {
+                                    return author['name'];
                                 }).join(', ');
                             }
                         },

@@ -34,7 +34,7 @@
                         <td>{{$dataset->downloads_count}}</td>
                         <td>{{$dataset->published_at->toDateString()}}</td>
                         <td>{{$dataset->summary}}</td>
-                        <td>{{$formatAuthors($dataset->authors)}}</td>
+                        <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
                     </tr>
                 @endforeach
                 </tbody>

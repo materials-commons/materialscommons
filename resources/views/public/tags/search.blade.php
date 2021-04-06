@@ -32,7 +32,7 @@
                             <a href="{{route('public.datasets.show', [$dataset])}}">{{$dataset->name}}</a>
                         </td>
                         <td>{{$dataset->description}}</td>
-                        <td>{{$dataset->authors}}</td>
+                        <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
                         <td>
                             @foreach($dataset->tags as $tag)
                                 <span class="badge badge-info ml-1">{{$tag->name}}</span>
