@@ -35,6 +35,10 @@ class CreateDatasetAction
         $this->loadTagsFromData($data);
         unset($data['tags']);
 
+        if (sizeof($data['ds_authors']) != 0) {
+            $data['authors'] = collect($data['ds_authors'])->implode('name', '; ');
+        }
+
         $dataset = new Dataset($data);
         $dataset->owner_id = $userId;
         $dataset->project_id = $projectId;
