@@ -53,8 +53,11 @@ class ConvertPublishedDatasetAuthors extends Command
                 return;
             }
             $this->info("Updating datasets {$dataset->name}/{$dataset->id}");
-            $dataset->update(['ds_authors' => $ds['external']]);
-//            $this->info("{$ds['id']}\n");
+            $authors = collect($ds['external'])->implode('name', '; ');
+            $dataset->update([
+                'ds_authors' => $ds['external'],
+                'authors'    => $authors,
+            ]);
         });
     }
 
