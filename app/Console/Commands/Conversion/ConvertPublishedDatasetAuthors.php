@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Conversion;
 
 use App\Models\Dataset;
-use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class ConvertPublishedDatasetAuthors extends Command
 {
@@ -34,22 +34,31 @@ class ConvertPublishedDatasetAuthors extends Command
 
     public function handle()
     {
-        Dataset::with('project.team.members', 'project.team.admins')
-               ->whereNotNull('published_at')
-               ->get()
-               ->each(function (Dataset $dataset) {
-                   echo "\n\n";
-                   $this->info("Dataset: {$dataset->name} with id {$dataset->id}");
-                   $this->info("Authors: {$dataset->authors}");
-                   $dataset->project->team->members
-                       ->merge($dataset->project->team->admins)
-                       ->each(function (User $user) {
-                           $this->info("{$user->name} with id {$user->id}");
-                       });
-               });
+//        Dataset::with('project.team.members', 'project.team.admins')
+//               ->whereNotNull('published_at')
+//               ->get()
+//               ->each(function (Dataset $dataset) {
+//                   echo "\n\n";
+//                   $this->info("Dataset: {$dataset->name} with id {$dataset->id}");
+//                   $this->info("Authors: {$dataset->authors}");
+//                   $dataset->project->team->members
+//                       ->merge($dataset->project->team->admins)
+//                       ->each(function (User $user) {
+//                           $this->info("{$user->name} with id {$user->id}");
+//                       });
+//               });
+        $this->getDatasetAuthors()->each(function ($ds) {
+            $dataset = Dataset::find($ds['id']);
+            if (is_null($dataset)) {
+                return;
+            }
+            $this->info("Updating datasets {$dataset->name}/{$dataset->id}");
+            $dataset->update(['ds_authors' => $ds['external']]);
+//            $this->info("{$ds['id']}\n");
+        });
     }
 
-    private function fixAuthors()
+    private function getDatasetAuthors(): Collection
     {
         $datasetsToFix = [
             [
@@ -843,6 +852,8 @@ class ConvertPublishedDatasetAuthors extends Command
                 ],
             ],
         ];
+
+        return collect($datasetsToFix);
     }
 
     private function addUser($name, $affiliations, $email = "")
