@@ -87,7 +87,6 @@
         }
 
         function myfunc(event, node) {
-            console.log("You just clicked this node:", node);
             if (experimentId != "") {
 
             } else if (datasetId != "") {

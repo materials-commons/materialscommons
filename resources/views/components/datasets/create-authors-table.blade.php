@@ -53,7 +53,7 @@
             </tr>
             </thead>
             <tbody>
-            @if(!is_null($dataset))
+            @if(!is_null($dataset) && sizeof($dataset->ds_authors) != 0)
                 @foreach($dataset->ds_authors as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
@@ -124,7 +124,6 @@
                 },
 
                 openEditDialog(row, name, affiliations, email) {
-                    console.log(` openEditDialog: ${row}, ${name}, ${affiliations}, ${email}`);
                     this.author.id = row;
                     this.author.name = name;
                     this.author.affiliations = affiliations;
@@ -133,9 +132,7 @@
                 },
 
                 updateAuthor() {
-                    console.log(authorTable);
                     let row = authorTable.row($(`#row-${this.author.id}`)).data();
-                    console.log(`Updating: #row-${this.author.id}, ${this.author.name}, ${this.author.affiliations}, ${this.author.email}`);
                     authorTable.row($(`#row-${this.author.id}`)).data([row[0], row[1], this.author.name, this.author.affiliations, this.author.email, row[5]]);
                     $('#edit-author-dialog').modal('hide');
                 },

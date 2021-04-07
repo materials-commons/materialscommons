@@ -55,7 +55,7 @@
                         choose a license for your dataset.
                     </li>
                 </template>
-                <template x-if="dataset.ds_authors.length == 0">
+                <template x-if="dataset.authors.length == 0">
                     <li class="mt-2">
                         <x-warning-icon/>
                         Your dataset has no authors. An authors list helps others evaluate your dataset.
@@ -83,7 +83,7 @@
                         description: "{{$dataset->description}}",
                         summary: "{{$dataset->summary}}",
                         license: "{{$dataset->license}}",
-                        authors: {{$dataset->ds_authors}},
+                        authors: @json($dataset->ds_authors),
                         funding: "{{$dataset->funding}}",
                     },
                     showIssuesLinkText() {

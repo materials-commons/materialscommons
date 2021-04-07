@@ -22,7 +22,7 @@
                placeholder="Name...">
     </div>
 
-    <x-datasets.create-authors-table :project="$project"/>
+    <x-datasets.create-authors-table :project="$project" :dataset="null"/>
     <div id="authors_list"></div>
     <br>
 
@@ -170,7 +170,6 @@
         }
 
         function setActionAndSubmit(action) {
-            console.log('setActionAndSubmit');
             $('#action').val(action);
             let authorsListElement = document.getElementById('authors_list');
 
