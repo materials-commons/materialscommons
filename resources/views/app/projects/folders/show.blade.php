@@ -69,21 +69,21 @@
                    href="{{route('projects.folders.rename', [$project, $directory])}}">
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
-            @endif
+                @endif
         </x-slot>
 
         <x-slot name="body">
             @if ($directory->path == '/')
                 <span class="float-left action-link mr-4">
                     <i class="fa-fw fas fa-filter mr-2"></i>
-                    Filters:
+                    Filter:
                 </span>
-                <a class="float-left action-link mr-4" href="#">
-                    <i class="fa-fw fas fa-calendar mr-2"></i>
-                    By Date
-                </a>
+                {{--                <a class="float-left action-link mr-4" href="#">--}}
+                {{--                    <i class="fa-fw fas fa-calendar mr-2"></i>--}}
+                {{--                    By Date--}}
+                {{--                </a>--}}
 
-                <a class="float-left action-link ml-4" href="{{route('projects.folders.filter.by-user', [$project])}}">
+                <a class="float-left action-link" href="{{route('projects.folders.filter.by-user', [$project])}}">
                     <i class="fa-fw fas fa-user-friends mr-2"></i>
                     By User
                 </a>
