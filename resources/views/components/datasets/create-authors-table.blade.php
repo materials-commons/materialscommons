@@ -53,7 +53,7 @@
             </tr>
             </thead>
             <tbody>
-            @if(!is_null($dataset) && sizeof($dataset->ds_authors) != 0)
+            @if(!is_null($dataset) && is_array($dataset->ds_authors) && sizeof($dataset->ds_authors) != 0)
                 @foreach($dataset->ds_authors as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
