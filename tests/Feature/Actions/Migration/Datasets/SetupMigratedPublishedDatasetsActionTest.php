@@ -8,7 +8,6 @@ use Facades\Tests\Factories\DatasetFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Tests\Utils\GlobusMockUtils;
 use Tests\Utils\StorageUtils;
 
 class SetupMigratedPublishedDatasetsActionTest extends TestCase
@@ -18,16 +17,14 @@ class SetupMigratedPublishedDatasetsActionTest extends TestCase
     /** @test */
     public function it_creates_zip_and_globus_for_migrated_published_dataset()
     {
-        $globusApiMock = GlobusMockUtils::createGlobusApiMock();
         $dataset = DatasetFactory::create();
         $this->setupPublishedDataset($dataset);
 
-        $setupMigrated = new SetupMigratedPublishedDatasetsAction($globusApiMock);
+        $setupMigrated = new SetupMigratedPublishedDatasetsAction();
         $setupMigrated(true, true);
         $expectedGlobusPath = "/".$dataset->publishedGlobusPathPartial()."/";
         $this->assertDatabaseHas('datasets', [
             'globus_endpoint_id' => config('globus.endpoint'),
-            'globus_acl_id'      => 'acl_id_1234',
             'globus_path'        => $expectedGlobusPath,
         ]);
 

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Actions\Datasets\RefreshPublishedDatasetAction;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Console\Command;
 
@@ -41,7 +40,7 @@ class RefreshPublishedDatasetCommand extends Command
     public function handle()
     {
         $dataset = Dataset::findOrFail($this->argument('dataset'));
-        $refreshPublishedDatasetAction = new RefreshPublishedDatasetAction(GlobusApi::createGlobusApi());
+        $refreshPublishedDatasetAction = new RefreshPublishedDatasetAction();
         $refreshPublishedDatasetAction->execute($dataset);
     }
 }

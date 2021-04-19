@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jobs;
 
+use App\Actions\Datasets\PublishDatasetAction2;
 use App\Jobs\Datasets\PublishDatasetJob;
 use App\Models\Activity;
 use App\Models\Dataset;
@@ -44,8 +45,8 @@ class PublishDatasetJobTest extends TestCase
 
         $dataset->entities()->attach($entity);
 
-        $job = new PublishDatasetJob($dataset->id);
-        $job->handle();
+        $job = new PublishDatasetAction2();
+        $job->execute($dataset);
 
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());

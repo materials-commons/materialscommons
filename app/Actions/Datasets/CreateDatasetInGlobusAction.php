@@ -2,10 +2,7 @@
 
 namespace App\Actions\Datasets;
 
-use App\Actions\Globus\EndpointAclRule;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
-use App\Models\Project;
 use App\Traits\GetProjectFiles;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
@@ -16,16 +13,14 @@ class CreateDatasetInGlobusAction
     use PathForFile;
     use GetProjectFiles;
 
-    private $globusApi;
-    private $endpointId;
+//    private $endpointId;
 
-    public function __construct(GlobusApi $globusApi)
-    {
-        $this->globusApi = $globusApi;
-        $this->endpointId = config('globus.endpoint');
-    }
+//    public function __construct()
+//    {
+//        $this->endpointId = config('globus.endpoint');
+//    }
 
-    public function __invoke(Dataset $dataset, $isPrivate)
+    public function __invoke(Dataset $dataset, $isPrivate = false)
     {
         umask(0);
         $datasetDir = $this->getDatasetDir($dataset, $isPrivate);
@@ -55,7 +50,6 @@ class CreateDatasetInGlobusAction
             }
         }
 
-//        $this->setAcl($dataset, $isPrivate);
         $dataset->update(['globus_path_exists' => true]);
     }
 
@@ -68,44 +62,44 @@ class CreateDatasetInGlobusAction
         return Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}");
     }
 
-    private function setAcl(Dataset $dataset, $isPrivate)
-    {
-        if ($isPrivate) {
-            $this->setPrivateDatasetAcl($dataset);
-        } else {
-            $this->setPublishedDatasetAcl($dataset);
-        }
-    }
-
-    private function setPrivateDatasetAcl(Dataset $dataset)
-    {
-        $project = Project::with('users')->findOrFail($dataset->project_id);
-        $globusPath = "/__globus_private_datasets/{$dataset->uuid}/";
-        foreach ($project->users as $user) {
-            if (isset($user->globus_user)) {
-                $globusUserId = $this->getGlobusIdentity($user->globus_user);
-                $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", $this->endpointId);
-                $this->globusApi->addEndpointAclRule($endpointAclRule);
-            }
-        }
-    }
-
-    private function getGlobusIdentity($globusEmail)
-    {
-        $resp = $this->globusApi->getIdentities([$globusEmail]);
-        return $resp["identities"][0]["id"];
-    }
-
-    private function setPublishedDatasetAcl(Dataset $dataset)
-    {
-        $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
-        $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $this->endpointId,
-            EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
-        $aclId = $this->globusApi->addEndpointAclRule($endpointAclRule);
-        $dataset->update([
-            'globus_acl_id'      => $aclId,
-            'globus_endpoint_id' => $this->endpointId,
-            'globus_path'        => $globusPath,
-        ]);
-    }
+//    private function setAcl(Dataset $dataset, $isPrivate)
+//    {
+//        if ($isPrivate) {
+//            $this->setPrivateDatasetAcl($dataset);
+//        } else {
+//            $this->setPublishedDatasetAcl($dataset);
+//        }
+//    }
+//
+//    private function setPrivateDatasetAcl(Dataset $dataset)
+//    {
+//        $project = Project::with('users')->findOrFail($dataset->project_id);
+//        $globusPath = "/__globus_private_datasets/{$dataset->uuid}/";
+//        foreach ($project->users as $user) {
+//            if (isset($user->globus_user)) {
+//                $globusUserId = $this->getGlobusIdentity($user->globus_user);
+//                $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "r", $this->endpointId);
+//                $this->globusApi->addEndpointAclRule($endpointAclRule);
+//            }
+//        }
+//    }
+//
+//    private function getGlobusIdentity($globusEmail)
+//    {
+//        $resp = $this->globusApi->getIdentities([$globusEmail]);
+//        return $resp["identities"][0]["id"];
+//    }
+//
+//    private function setPublishedDatasetAcl(Dataset $dataset)
+//    {
+//        $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
+//        $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $this->endpointId,
+//            EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
+//        $aclId = $this->globusApi->addEndpointAclRule($endpointAclRule);
+//        $dataset->update([
+//            'globus_acl_id'      => $aclId,
+//            'globus_endpoint_id' => $this->endpointId,
+//            'globus_path'        => $globusPath,
+//        ]);
+//    }
 }

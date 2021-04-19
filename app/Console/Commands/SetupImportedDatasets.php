@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Globus\GlobusApi;
 use App\Actions\Migration\Datasets\SetupMigratedPublishedDatasetsAction;
 use Illuminate\Console\Command;
 
@@ -42,7 +41,7 @@ class SetupImportedDatasets extends Command
     {
         $runZipLinker = $this->option('zip');
         $runGlobus = $this->option('globus');
-        $setupMigratedPublishedDatasetsAction = new SetupMigratedPublishedDatasetsAction(GlobusApi::createGlobusApiWithEcho());
+        $setupMigratedPublishedDatasetsAction = new SetupMigratedPublishedDatasetsAction();
         $setupMigratedPublishedDatasetsAction($runZipLinker, $runGlobus);
     }
 }

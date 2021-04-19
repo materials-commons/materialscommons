@@ -3,7 +3,6 @@
 namespace App\Jobs\Datasets;
 
 use App\Actions\Datasets\RefreshPublishedDatasetAction;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,7 +28,7 @@ class RefreshPublishedDatasetJob implements ShouldQueue
      */
     public function handle()
     {
-        $refreshPublishedDatasetAction = new RefreshPublishedDatasetAction(GlobusApi::createGlobusApi());
+        $refreshPublishedDatasetAction = new RefreshPublishedDatasetAction();
         $refreshPublishedDatasetAction->execute($this->dataset);
     }
 }

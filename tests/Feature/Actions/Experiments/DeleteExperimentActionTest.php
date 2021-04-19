@@ -3,6 +3,7 @@
 namespace Tests\Feature\Actions\Experiments;
 
 use App\Actions\Datasets\PublishDatasetAction;
+use App\Actions\Datasets\PublishDatasetAction2;
 use App\Actions\Datasets\UpdateDatasetEntitySelectionAction;
 use App\Actions\Experiments\DeleteExperimentAction;
 use App\Models\Dataset;
@@ -77,8 +78,8 @@ class DeleteExperimentActionTest extends TestCase
 
         // Call the publish dataset action, then run delete and check that the dataset still has samples
 
-        $publishAction = new PublishDatasetAction();
-        $publishAction($dataset);
+        $publishAction = new PublishDatasetAction2();
+        $publishAction->execute($dataset);
 
         $deleteExperiment = new DeleteExperimentAction();
         $deleteExperiment($experiment);

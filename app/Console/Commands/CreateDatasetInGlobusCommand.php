@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Actions\Datasets\CreateDatasetFilesTableAction;
 use App\Actions\Datasets\CreateDatasetInGlobusAction;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Console\Command;
 
@@ -49,7 +48,7 @@ class CreateDatasetInGlobusCommand extends Command
             (new CreateDatasetFilesTableAction())->execute($dataset);
         }
 
-        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction(GlobusApi::createGlobusApi());
-        $createDatasetInGlobusAction($dataset, $this->option('private'));
+        $createDatasetInGlobusAction = new CreateDatasetInGlobusAction();
+        $createDatasetInGlobusAction($dataset);
     }
 }
