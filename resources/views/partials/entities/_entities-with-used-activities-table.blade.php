@@ -25,15 +25,17 @@
                     @endif
                 </td>
             @endif
-            @foreach($usedActivities[$entity->id] as $used)
-                @if($used)
-                    <td>X</td>
-                    {{--                    <td>{{$entity->name}}</td>--}}
-                    {{--                    <td>{{$entity->name}} ({{$used}})</td>--}}
-                @else
-                    <td></td>
-                @endif
-            @endforeach
+            @if(isset($usedActivities[$entity->id]))
+                @foreach($usedActivities[$entity->id] as $used)
+                    @if($used)
+                        <td>X</td>
+                        {{--                    <td>{{$entity->name}}</td>--}}
+                        {{--                    <td>{{$entity->name}} ({{$used}})</td>--}}
+                    @else
+                        <td></td>
+                    @endif
+                @endforeach
+            @endif
         </tr>
     @endforeach
     </tbody>
