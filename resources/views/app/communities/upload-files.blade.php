@@ -24,7 +24,7 @@
 
         const uppy = Uppy({
             restrictions: {
-                maxFileSize: 70 * 1024 * 1024,
+                maxFileSize: 250 * 1024 * 1024,
             }
         }).use(UppyDashboard, {
             trigger: '#file-upload',

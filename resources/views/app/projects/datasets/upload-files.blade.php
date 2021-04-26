@@ -8,7 +8,7 @@
 @section('content')
     <div class="row mb-10">
         <p class="col-10">
-            Maximum file size is 70M. If you need to upload larger files please use
+            Maximum file size is 250M. If you need to upload larger files please use
             <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>.
         </p>
         <div class="col-8">
@@ -36,7 +36,7 @@
         });
         const uppy = Uppy({
             restrictions: {
-                maxFileSize: 70 * 1024 * 1024,
+                maxFileSize: 250 * 1024 * 1024,
             }
         }).use(UppyDashboard, {
             trigger: '#file-upload',
