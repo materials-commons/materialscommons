@@ -37,6 +37,7 @@
                 </a>
                 <span class="ml-3 fs-10 grey-5">Size: {{formatBytes($project->size)}}</span>
             </x-show-standard-details>
+
             <form>
                 <div class="form-group">
                     <label for="counts">Counts</label>

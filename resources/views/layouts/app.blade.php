@@ -67,6 +67,12 @@
         <ul class="navbar-nav">
             {{--            Kept here for formatting purposes--}}
             <li class="nav-item">
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                   href="#code-dialog">
+                    Code
+                </a>
+            </li>
+            <li class="nav-item">
                 {{--                <a class="nav-link outline-none td-none navbar-brand help-color"--}}
                 {{--                   href="{{helpUrl()}}" target="_blank">--}}
                 {{--                    Help--}}
@@ -173,7 +179,7 @@
     </div>
 </div>
 
-
+@include('app.dialogs._code-dialog')
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')
 
