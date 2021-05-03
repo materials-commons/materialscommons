@@ -10,7 +10,7 @@
     @component('components.card')
         @slot('header')
             Project Members
-            @if($project->owner->id === auth()->id())
+            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()))
                 <a class="action-link float-right"
                    href="{{route('projects.users.edit', [$project])}}">
                     <i class="fas fa-plus mr-2"></i>Add Users
@@ -24,6 +24,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Email</th>
                     <th>Affiliations</th>
                     <th>Description</th>
                     <th>Type</th>
@@ -38,6 +39,7 @@
                                 {{$member->name}}
                             </a>
                         </td>
+                        <td>{{$member->email}}</td>
                         <td>{{$member->affiliations}}</td>
                         <td>{{$member->description}}</td>
                         <td>

@@ -5,6 +5,9 @@
                 <span class="fs-10 grey-5">Last Updated: {{$item->updated_at->diffForHumans()}}</span>
                 <span class="ml-3 fs-10 grey-5">Owner: {{$item->owner->name}}</span>
                 {{ $slot ?? '' }}
+                @if (isset($item->id))
+                    <span class="ml-3 fs-10 grey-5">ID: {{$item->id}}</span>
+                @endif
             </div>
         </div>
     </div>

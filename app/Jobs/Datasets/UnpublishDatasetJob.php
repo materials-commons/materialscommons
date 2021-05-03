@@ -3,7 +3,6 @@
 namespace App\Jobs\Datasets;
 
 use App\Actions\Datasets\UnpublishDatasetAction;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,9 +28,8 @@ class UnpublishDatasetJob implements ShouldQueue
      */
     public function handle()
     {
-        $globusApi = GlobusApi::createGlobusApi();
         $dataset = Dataset::findOrFail($this->datasetId);
-        $unpublishDatasetAction = new UnpublishDatasetAction($globusApi);
+        $unpublishDatasetAction = new UnpublishDatasetAction();
         $unpublishDatasetAction($dataset);
     }
 }

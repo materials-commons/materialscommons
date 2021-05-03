@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\Datasets;
 
+use App\Actions\Datasets\PublishDatasetAction2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Datasets\DatasetResource;
-use App\Jobs\Datasets\PublishDatasetJob;
 use App\Models\Dataset;
 use Carbon\Carbon;
 
@@ -14,8 +14,8 @@ class PublishDatasetApiController extends Controller
     {
         $dataset->update(['published_at' => Carbon::now()]);
 
-        $publishDatasetJob = new PublishDatasetJob($dataset->id);
-        dispatch($publishDatasetJob)->onQueue('globus');
+        $publishDatasetAction = new PublishDatasetAction2();
+        $publishDatasetAction->execute($dataset);
 
         return new DatasetResource($dataset->refresh());
     }

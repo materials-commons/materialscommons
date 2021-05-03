@@ -3,20 +3,16 @@
 namespace App\Actions\Migration\Datasets;
 
 use App\Actions\Datasets\CreateDatasetInGlobusAction;
-use App\Actions\Globus\EndpointAclRule;
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 use Illuminate\Support\Facades\Storage;
 
 class SetupMigratedPublishedDatasetsAction
 {
-    private $globusApi;
-    private $createDatsetInGlobusAction;
+    private CreateDatasetInGlobusAction $createDatsetInGlobusAction;
 
-    public function __construct(GlobusApi $globusApi)
+    public function __construct()
     {
-        $this->globusApi = $globusApi;
-        $this->createDatsetInGlobusAction = new CreateDatasetInGlobusAction($globusApi);
+        $this->createDatsetInGlobusAction = new CreateDatasetInGlobusAction();
     }
 
     public function __invoke($runZipLinker, $runGlobus)
@@ -72,24 +68,11 @@ class SetupMigratedPublishedDatasetsAction
     private function setupGlobusAccessForDataset($dataset)
     {
         $endpointId = config('globus.endpoint');
-        try {
-            $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
-            //            echo "Globus Path = {$globusPath}\n";
-            $endpointAclRule = new EndpointAclRule("", $globusPath, "r", $endpointId,
-                EndpointAclRule::ACLPrincipalTypeAllAuthenticatedUsers);
-            $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
-            if (isset($resp["access_id"])) {
-                $aclId = $resp["access_id"];
-                $dataset->update([
-                    'globus_acl_id'      => $aclId,
-                    'globus_endpoint_id' => $endpointId,
-                    'globus_path'        => $globusPath,
-                ]);
-            }
-        } catch (\Exception $e) {
-            echo "Unable to setup globus for dataset {$dataset->name}/{$dataset->uuid}\n";
-            $exceptionMessage = $e->getMessage();
-            echo "  Reason: {$exceptionMessage}\n";
-        }
+        $globusPath = "/".$dataset->publishedGlobusPathPartial()."/";
+        //            echo "Globus Path = {$globusPath}\n";
+        $dataset->update([
+            'globus_endpoint_id' => $endpointId,
+            'globus_path'        => $globusPath,
+        ]);
     }
 }

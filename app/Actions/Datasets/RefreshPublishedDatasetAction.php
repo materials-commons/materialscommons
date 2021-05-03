@@ -2,22 +2,13 @@
 
 namespace App\Actions\Datasets;
 
-use App\Actions\Globus\GlobusApi;
 use App\Models\Dataset;
 
 class RefreshPublishedDatasetAction
 {
-    /** @var \App\Actions\Globus\GlobusApi */
-    private $globusApi;
-
-    public function __construct(GlobusApi $globusApi)
-    {
-        $this->globusApi = $globusApi;
-    }
-
     public function execute(Dataset $dataset)
     {
-        $unpublishDatasetAction = new UnpublishDatasetAction(GlobusApi::createGlobusApi());
+        $unpublishDatasetAction = new UnpublishDatasetAction();
         $unpublishDatasetAction($dataset);
         $this->publishDataset($dataset);
     }
@@ -25,7 +16,7 @@ class RefreshPublishedDatasetAction
 
     private function publishDataset(Dataset $dataset)
     {
-        $publishAction = new PublishDatasetAction2(GlobusApi::createGlobusApi());
+        $publishAction = new PublishDatasetAction2();
         $publishAction->execute($dataset);
     }
 }
