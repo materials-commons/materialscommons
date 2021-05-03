@@ -68,8 +68,14 @@
             {{--            Kept here for formatting purposes--}}
             <li class="nav-item">
                 <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                   href="#jupyter-dialog">
+                    Jupyter
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
                    href="#code-dialog">
-                    Code
+                    CLI/API
                 </a>
             </li>
             <li class="nav-item">
@@ -179,6 +185,7 @@
     </div>
 </div>
 
+@include('app.dialogs._jupyter-dialog')
 @include('app.dialogs._code-dialog')
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')

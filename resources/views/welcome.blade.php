@@ -122,6 +122,15 @@
                  class="mx-auto mb-6 lg:mb-0 ">
         </div>
 
+        <p>
+            Materials Commons has as an extensive CLI and API. Learn more about:
+        </p>
+        <ul class="ml-10">
+            <li><a href="#">Using Jupyter Notebooks with Materials Commons</a></li>
+            <li><a href="#">Getting Started with the Materials Commons CLI</a></li>
+            <li><a href="#">Materials Commons API Documentation</a></li>
+        </ul>
+
         <hr class="block my-8 border lg:hidden">
 
         <div class="md:flex -mx-2 -mx-4">
