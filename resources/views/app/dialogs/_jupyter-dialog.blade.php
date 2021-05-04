@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-nav">
-                <h5 class="modal-title help-color">Help for {{helpTitle()}}</h5>
+                <h5 class="modal-title help-color">Jupyter Notebooks</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
