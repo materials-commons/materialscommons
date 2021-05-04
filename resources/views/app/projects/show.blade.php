@@ -66,6 +66,8 @@
                 </div>
             </form>
             @include('partials.overview._overview')
+            <br/>
+            <x-projects.list-notebooks :project="$project"/>
         @endslot
     @endcomponent
 @endsection
