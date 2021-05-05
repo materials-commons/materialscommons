@@ -11,4 +11,10 @@ files = c.get_dataset_files({{$project->id}}, {{$dataset->id}})
 
 # Delete dataset
 c.delete_dataset({{$project->id}}, {{$dataset->id}})
+
+# Publish dataset so that it shows up in the public list of published datasets
+dataset = c.publish_dataset({{$project->id}}, {{$dataset->id}})
+
+# Unpublish a previously published dataset
+dataset = c.unpublish_dataset({{$project->id}}, {{$dataset->id}})
 </pre>
