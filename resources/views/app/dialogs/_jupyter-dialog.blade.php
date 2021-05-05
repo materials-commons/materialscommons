@@ -22,7 +22,7 @@
                     To get started you can download our Jupyter Notebook template <a href="#">here</a>.
                 </p>
                 <p>
-                    To learn more read our online <a href="#">documentation</a>.
+                    To learn more, read our online <a href="#">documentation</a>.
                 </p>
 
             </div>
