@@ -7,11 +7,24 @@
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="height: 500px">
+            <div class="modal-body" style="height: 275px">
                 <p>
-                    You can now use Jupyter Notebooks with Materials Commons. To get started you can download our
-                    Notebook template <a href="#">here</a>. We also have online <a href="#">documentation</a>.
+                    You can now use Jupyter Notebooks with Materials Commons. Materials Commons provides the following
+                    benefits to Jupyter Notebooks:
                 </p>
+                <ul>
+                    <li>Easily save your data on Materials Commons</li>
+                    <li>Share your notebook with other team members</li>
+                    <li>Quickly download your data from Materials Commons</li>
+                    <li>Synchronize changes to Materials Commons</li>
+                </ul>
+                <p>
+                    To get started you can download our Jupyter Notebook template <a href="#">here</a>.
+                </p>
+                <p>
+                    To learn more read our online <a href="#">documentation</a>.
+                </p>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
