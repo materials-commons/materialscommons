@@ -7,7 +7,12 @@
         </a>.
     </p>
     @if (Request::routeIs('projects.files*'))
-        show api/cli for files
+        <p>The documentation for interacting with project files from the command line can be found
+            <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/ls_mkdir_rm_mv.html"
+               target="_blank">
+                here
+            </a>.
+        </p>
     @elseif (Request::routeIs('projects.show'))
         <p>The documentation for interacting with projects from the command line can be found
             <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/proj_init_clone.html"
@@ -23,7 +28,12 @@
             </a>.
         </p>
     @elseif(Request::routeIs('projects.folders*'))
-        show api/cli for folders
+        <p>The documentation for interacting with project files from the command line can be found
+            <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/ls_mkdir_rm_mv.html"
+               target="_blank">
+                here
+            </a>.
+        </p>
     @elseif (Request::routeIs('projects.experiments*'))
         show api/cli for experiments
     @elseif (Request::routeIs('projects.datasets.index'))
@@ -40,13 +50,13 @@
 mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
     </pre>
     @if (Request::routeIs('projects.files*'))
-        show api/cli for files
+        @include('partials.help.api-cli._file-up-down-cli-help')
     @elseif (Request::routeIs('projects.show'))
         @include('partials.help.api-cli._project-cli-help')
     @elseif (Request::routeIs('projects.folders.upload'))
         @include('partials.help.api-cli._file-up-down-cli-help')
     @elseif(Request::routeIs('projects.folders*'))
-        show api/cli for folders
+        @include('partials.help.api-cli._dir-show-cli-help')
     @elseif (Request::routeIs('projects.experiments*'))
         show api/cli for experiments
     @elseif (Request::routeIs('projects.datasets.index'))
@@ -73,13 +83,13 @@ import materials_commons.api as mcapi
 c = mcapi.Client("{{auth()->user()->api_token}}", base_url="https://materialscommons.org/api")
     </pre>
     @if (Request::routeIs('projects.files*'))
-        show api/cli for files
+        @include('partials.help.api-cli._file-show-api-help')
     @elseif (Request::routeIs('projects.show'))
         @include('partials.help.api-cli._project-api-help')
     @elseif (Request::routeIs('projects.folders.upload'))
         @include('partials.help.api-cli._file-up-down-api-help')
     @elseif(Request::routeIs('projects.folders*'))
-        show api/cli for folders
+        @include('partials.help.api-cli._dir-show-api-help')
     @elseif (Request::routeIs('projects.experiments*'))
         show api/cli for experiments
     @elseif (Request::routeIs('projects.datasets.index'))
