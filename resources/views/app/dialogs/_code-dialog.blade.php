@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-nav">
-                <h5 class="modal-title help-color">Code for Project</h5>
+                <h5 class="modal-title help-color">CLI/API Examples</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
