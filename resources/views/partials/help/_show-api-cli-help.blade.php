@@ -37,14 +37,6 @@
                 here
             </a>.
         </p>
-    @elseif (Request::routeIs('projects.datasets.index'))
-        @include('partials.help.api-cli._dataset-cli-help')
-    @elseif (Request::routeIs('projects.datasets*'))
-        @include('partials.help.api-cli._dataset-cli-help')
-    @elseif(Request::routeIs('projects.show'))
-        show api/cli for specific project
-    @elseif (Request::routeIs('dashboard.projects*'))
-        show api/cli for project index
     @endif
     <pre>
 # Setup CLI if you haven't already done so.
@@ -52,8 +44,6 @@ mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
     </pre>
     @if (Request::routeIs('projects.files*'))
         @include('partials.help.api-cli._file-up-down-cli-help')
-    @elseif (Request::routeIs('projects.show'))
-        @include('partials.help.api-cli._project-cli-help')
     @elseif (Request::routeIs('projects.folders.upload'))
         @include('partials.help.api-cli._file-up-down-cli-help')
     @elseif(Request::routeIs('projects.folders*'))
@@ -61,13 +51,13 @@ mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
     @elseif (Request::routeIs('projects.experiments*'))
         @include('partials.help.api-cli._exp-show-cli-help')
     @elseif (Request::routeIs('projects.datasets.index'))
-        @include('partials.help.api-cli._dataset-list-api-help')
+        @include('partials.help.api-cli._dataset-cli-help')
     @elseif (Request::routeIs('projects.datasets*'))
-        @include('partials.help.api-cli._dataset-show-api-help')
+        @include('partials.help.api-cli._dataset-cli-help')
     @elseif(Request::routeIs('projects.show'))
-        show api/cli for specific project
+        @include('partials.help.api-cli._project-cli-help')
     @elseif (Request::routeIs('dashboard.projects*'))
-        show api/cli for project index
+        @include('partials.help.api-cli._project-cli-help')
     @endif
     <hr>
     <h4>API Code</h4>
@@ -78,29 +68,26 @@ mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
         </a>.
     </p>
     <br/>
+    {{--# Alternatively you can create a client by passing in your email and password:--}}
+    {{--c = mcapi.login("{{auth()->user()->email}}", "Your Password Here")--}}
+
+    {{--# One method you can use so that your scripts don't contain your API Token or username/password is to store your--}}
+    {{--# your API Token in an environment variable. For example, on a Linux or Mac system, if you are using bash as your--}}
+    {{--# shell you can add the following line to your ~/.bashrc:--}}
+    {{--# export MCAPI_TOKEN="{{auth()->user()->api_token}}"--}}
+    {{--#--}}
+    {{--# Then you can access it as follows:--}}
+
+    {{--import os--}}
+    {{--c = mcapi.Client(os.getenv("MCAPI_TOKEN"))--}}
     <pre>
 import materials_commons.api as mcapi
 
 # Create Client: The token shown is your API token. You can cut and paste this code in to initialize the client.
 c = mcapi.Client("{{auth()->user()->api_token}}")
-
-# Alternatively you can create a client by passing in your email and password:
-c = mcapi.login("{{auth()->user()->email}}", "Your Password Here")
-
-# One method you can use so that your scripts don't contain your API Token or username/password is to store your
-# your API Token in an environment variable. For example, on a Linux or Mac system, if you are using bash as your
-# shell you can add the following line to your ~/.bashrc:
-# export MCAPI_TOKEN="{{auth()->user()->api_token}}"
-#
-# Then you can access it as follows:
-
-import os
-c = mcapi.Client(os.getenv("MCAPI_TOKEN"))
     </pre>
     @if (Request::routeIs('projects.files*'))
         @include('partials.help.api-cli._file-show-api-help')
-    @elseif (Request::routeIs('projects.show'))
-        @include('partials.help.api-cli._project-api-help')
     @elseif (Request::routeIs('projects.folders.upload'))
         @include('partials.help.api-cli._file-up-down-api-help')
     @elseif(Request::routeIs('projects.folders*'))
@@ -110,12 +97,12 @@ c = mcapi.Client(os.getenv("MCAPI_TOKEN"))
     @elseif (Request::routeIs('projects.experiments*'))
         @include('partials.help.api-cli._exp-show-api-help')
     @elseif (Request::routeIs('projects.datasets.index'))
-        show api/cli for datasets index
+        @include('partials.help.api-cli._dataset-list-api-help')
     @elseif (Request::routeIs('projects.datasets*'))
-        show api/cli for specific dataset
+        @include('partials.help.api-cli._dataset-show-api-help')
     @elseif(Request::routeIs('projects.show'))
-        show api/cli for specific project
+        @include('partials.help.api-cli._project-show-api-help')
     @elseif (Request::routeIs('dashboard.projects*'))
-        show api/cli for project index
+        @include('partials.help.api-cli._project-list-api-help')
     @endif
 </div>
