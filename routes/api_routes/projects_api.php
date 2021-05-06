@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Projects\AddAdminToProjectApiController;
 use App\Http\Controllers\Api\Projects\AddUserToProjectApiController;
 use App\Http\Controllers\Api\Projects\CreateProjectApiController;
 use App\Http\Controllers\Api\Projects\DeleteProjectApiController;
 use App\Http\Controllers\Api\Projects\IndexProjectsApiController;
+use App\Http\Controllers\Api\Projects\RemoveAdminFromProjectApiController;
 use App\Http\Controllers\Api\Projects\RemoveUserFromProjectApiController;
 use App\Http\Controllers\Api\Projects\ShowProjectApiController;
 use App\Http\Controllers\Api\Projects\UpdateProjectApiController;
@@ -64,5 +66,8 @@ Route::middleware(UserCanAccessProject::class)->group(function() {
     Route::get('/projects/{project}', ShowProjectApiController::class);
 
     Route::put('/projects/{project}/add-user/{user}', AddUserToProjectApiController::class);
-    Route::delete('/projects/{project}/remove-user/{user}', RemoveUserFromProjectApiController::class);
+    Route::put('/projects/{project}/remove-user/{user}', RemoveUserFromProjectApiController::class);
+
+    Route::put('/projects/{project}/add-admin/{user}', AddAdminToProjectApiController::class);
+    Route::put('/projects/{project}/remove-admin/{user}', RemoveAdminFromProjectApiController::class);
 });
