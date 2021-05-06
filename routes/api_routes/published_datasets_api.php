@@ -2,6 +2,8 @@
 
 // Published datasets
 
+use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetFileApiController;
+use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetActivitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetEntitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetFilesApiController;
@@ -14,3 +16,5 @@ Route::get('/published/datasets/{dataset}', ShowPublishedDatasetApiController::c
 Route::get('/published/datasets/{dataset}/files', IndexPublishedDatasetFilesApiController::class);
 Route::get('/published/datasets/{dataset}/entities', IndexPublishedDatasetEntitiesApiController::class);
 Route::get('/published/datasets/{dataset}/activities', IndexPublishedDatasetActivitiesApiController::class);
+Route::get('/published/datasets/{dataset}/files/{file}/download', DownloadPublishedDatasetFileApiController::class);
+Route::get('/published/datasets/{dataset}/download_zipfile', DownloadPublishedDatasetZipfileApiController::class);

@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Published\Datasets\ViewsAndDownloads;
 use App\Models\Dataset;
 use Illuminate\Http\Request;
 
-class DownloadDatasetZipfileApiController extends Controller
+class DownloadPublishedDatasetZipfileApiController extends Controller
 {
     use ViewsAndDownloads;
 
