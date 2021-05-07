@@ -4,7 +4,13 @@
 <pre>
 # Once you have set up a local project on your system
 mc ls .
-mc ls {{$directory->name}}
+@if ($directory->name != '/')
+    @if($directory->path == '/')
+mc ls /{{$directory->name}}
+    @else
+mc ls {{$directory->path}}/{{$directory->name}}
+    @endif
+@endif
 
 # Make a new directory
 mc mkdir myDir
