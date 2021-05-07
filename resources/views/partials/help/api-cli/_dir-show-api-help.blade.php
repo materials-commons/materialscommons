@@ -3,7 +3,7 @@
 dir_listing = c.list_directory({{$project->id}}, {{$directory->id}})
 
 # List directory by path
-dir_list = c.list_directory({{$project->id}}, {{$directory->path}})
+dir_list = c.list_directory({{$project->id}}, "{{$directory->path}}")
 
 @if ($directory->path != "/")
 # Create a new directory

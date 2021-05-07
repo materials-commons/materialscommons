@@ -4,12 +4,10 @@
 <pre>
 # Once you have set up a local project on your system
 mc ls .
-@if ($directory->name != '/')
-    @if($directory->path == '/')
-mc ls /{{$directory->name}}
-    @else
-mc ls {{$directory->path}}/{{$directory->name}}
-    @endif
+@if ($directory->name != '/' && $directory->path == '/')
+mc ls {{$directory->name}}
+@elseif ($directory->name != '/' && $directory->path != '/')
+mc ls {{Illuminate\Support\Str::replaceFirst('/', '', $directory->path)}}
 @endif
 
 # Make a new directory
