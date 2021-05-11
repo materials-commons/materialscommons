@@ -4,7 +4,7 @@
             <span class="ml-5 italic font-bold">
                 Beta
                 <a href="#" data-toggle="tooltip" title="This is a beta for a new way to interact with Globus.
-            If you run into any issues or have feedback please send an email to gtarcea@umich.edu.
+            If you run into any issues or have feedback please send an email to materials-commons-help@umich.edu.
             ">
                     <i class="fa-fw fas fa-question-circle"></i>
                 </a>
