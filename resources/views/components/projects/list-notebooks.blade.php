@@ -5,7 +5,7 @@
         <table id="notebooks" class="table table-hover" style="width:100%">
             <thead>
             <tr>
-                <th>Notebook</th>
+                <th>File</th>
                 <th>Last Modified</th>
                 <th>By</th>
                 <th></th>
