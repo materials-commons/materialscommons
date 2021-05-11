@@ -36,7 +36,7 @@ class ShowGlobusSideNav extends Component
             case 65:  /* Brian Puchala */
                 return true;
             default:
-                return false;
+                return true;
         }
     }
 }

@@ -1,5 +1,16 @@
 <div>
     @if ($show)
+        <li class="nav-item mt-2">
+            <span class="ml-5 italic font-bold">
+                Beta
+                <a href="#" data-toggle="tooltip" title="This is a beta for a new way to interact with Globus.
+            If you run into any issues or have feedback please send an email to gtarcea@umich.edu.
+            ">
+                    <i class="fa-fw fas fa-question-circle"></i>
+                </a>
+            </span>
+        </li>
+
         <li class="nav-item mt-2 ml-3">
             <span class="ml-5">
                 <i class="fa-fw fas fa-globe mr-2"></i>
@@ -55,3 +66,11 @@
         @endif
     @endif
 </div>
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+@endpush
