@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Datasets\AssignDoiApiController;
+use App\Http\Controllers\Api\Datasets\ChangeDatasetFileSelectionApiController;
 use App\Http\Controllers\Api\Datasets\CreateDatasetApiController;
 use App\Http\Controllers\Api\Datasets\DeleteDatasetApiController;
 use App\Http\Controllers\Api\Datasets\FileByPathInDatasetSelectionApiController;
@@ -49,6 +50,8 @@ Route::post('/projects/{project}/datasets', CreateDatasetApiController::class);
 Route::delete('/projects/{project}/datasets/{dataset}', DeleteDatasetApiController::class);
 Route::put('/datasets/{dataset}/publish', PublishDatasetApiController::class);
 Route::put('/datasets/{dataset}/unpublish', UnpublishDatasetApiController::class);
+Route::put('/projects/{project}/datasets/{dataset}/change_file_selection',
+    ChangeDatasetFileSelectionApiController::class);
 
 Route::get('/projects/{project}/datasets/{dataset}/files/{file}/check_selection',
     FileInDatasetSelectionApiController::class);
