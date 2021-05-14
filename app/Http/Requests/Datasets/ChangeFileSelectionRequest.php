@@ -24,10 +24,10 @@ class ChangeFileSelectionRequest extends FormRequest
     public function rules()
     {
         return [
-            "include_files" => "array|required",
-            "exclude_files" => "array|required",
-            "include_dirs"  => "array|required",
-            "exclude_dirs"  => "array|required",
+            "include_files" => "array|present",
+            "exclude_files" => "array|present",
+            "include_dirs"  => "array|present",
+            "exclude_dirs"  => "array|present",
         ];
     }
 }
