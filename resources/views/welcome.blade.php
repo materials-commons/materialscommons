@@ -126,9 +126,22 @@
             Materials Commons has as an extensive CLI and API. Learn more about:
         </p>
         <ul class="ml-10">
-            <li><a href="#">Using Jupyter Notebooks with Materials Commons</a></li>
-            <li><a href="#">Getting Started with the Materials Commons CLI</a></li>
-            <li><a href="#">Materials Commons API Documentation</a></li>
+            <li>
+                <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/jupyter.html"
+                   target="_blank">
+                    Using Jupyter Notebooks with Materials Commons
+                </a>
+            </li>
+            <li>
+                <a href="https://materials-commons.github.io/materials-commons-cli/html/index.html" target="_blank">
+                    Getting Started with the Materials Commons CLI
+                </a>
+            </li>
+            <li>
+                <a href="https://materials-commons.github.io/materials-commons-api/html/index.html" target="_blank">
+                    Materials Commons Python API Documentation
+                </a>
+            </li>
         </ul>
 
         <hr class="block my-8 border lg:hidden">
