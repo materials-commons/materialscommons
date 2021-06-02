@@ -38,21 +38,21 @@
                 </div>
 
 
-                @if(auth()->user()->hasCommunities())
-                    <div class="dropdown float-right mr-4">
-                        <a class="action-link dropdown-toggle" id="communitiesDropdown"
-                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-plus mr-2"></i>Add To Community
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">
-                            @foreach(auth()->user()->communities as $community)
-                                @if(!$dataset->isInCommunity($community->id))
-                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+                {{--                @if(auth()->user()->hasCommunities())--}}
+                {{--                    <div class="dropdown float-right mr-4">--}}
+                {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
+                {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
+                {{--                        </a>--}}
+                {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
+                {{--                            @foreach(auth()->user()->communities as $community)--}}
+                {{--                                @if(!$dataset->isInCommunity($community->id))--}}
+                {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
+                {{--                                @endif--}}
+                {{--                            @endforeach--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                @endif--}}
             @endauth
         @endslot
 
