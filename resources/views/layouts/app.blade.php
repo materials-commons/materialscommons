@@ -72,12 +72,14 @@
                     Jupyter
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
-                   href="#code-dialog">
-                    CLI/API
-                </a>
-            </li>
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                       href="#code-dialog">
+                        CLI/API
+                    </a>
+                </li>
+            @endauth
             <li class="nav-item">
                 {{--                <a class="nav-link outline-none td-none navbar-brand help-color"--}}
                 {{--                   href="{{helpUrl()}}" target="_blank">--}}
@@ -186,7 +188,9 @@
 </div>
 
 @include('app.dialogs._jupyter-dialog')
-@include('app.dialogs._code-dialog')
+@auth
+    @include('app.dialogs._code-dialog')
+@endauth
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')
 
