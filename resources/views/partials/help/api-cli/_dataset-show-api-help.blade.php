@@ -1,3 +1,4 @@
+@if(isset($dataset))
 <pre>
 # Get dataset details
 dataset = c.get_dataset({{$project->id}}, {{$dataset->id}})
@@ -18,3 +19,4 @@ dataset = c.publish_dataset({{$project->id}}, {{$dataset->id}})
 # Unpublish a previously published dataset
 dataset = c.unpublish_dataset({{$project->id}}, {{$dataset->id}})
 </pre>
+@endif
