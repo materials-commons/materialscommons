@@ -72,6 +72,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // Globus
     require base_path('routes/api_routes/globus_api.php');
+
+    // MQL Queries
+    require base_path('routes/api_routes/query_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
