@@ -14,6 +14,6 @@ class ExecuteMQLApiController extends Controller
         return Http::Post("http://localhost:1324/api/execute-query", [
             "project_id" => $project->id,
             "statement"  => $request->all(),
-        ]);
+        ])->json();
     }
 }
