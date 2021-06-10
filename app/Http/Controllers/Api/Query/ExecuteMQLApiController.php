@@ -12,8 +12,10 @@ class ExecuteMQLApiController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         return Http::Post("http://localhost:1324/api/execute-query", [
-            "project_id" => $project->id,
-            "statement"  => $request->all(),
+            "project_id"       => $project->id,
+            "statement"        => $request->get("statement"),
+            "select_processes" => $request->get("select_processes", true),
+            "select_samples"   => $request->get("select_samples", true),
         ])->json();
     }
 }
