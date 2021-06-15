@@ -22,7 +22,6 @@
         @endslot
 
         @slot('body')
-            <br>
             @include('partials.entities._entities-with-used-activities-table', ['showExperiment' => true])
         @endslot
     @endcomponent

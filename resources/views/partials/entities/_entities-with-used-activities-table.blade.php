@@ -1,3 +1,34 @@
+<h4>Filters</h4>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="btn btn-success" data-toggle="modal" href="#mql-processes-dialog">
+                Processes
+            </a>
+            <a class="btn btn-success" data-toggle="modal" href="#mql-process-attributes-dialog">
+                Process Attributes
+            </a>
+            <a class="btn btn-success" data-toggle="modal" href="#mql-sample-attributes-dialog">
+                Sample Attributes
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <form class="ml-4">
+                <div class="form-group">
+                    <label for="mql">Current Filters</label>
+                    <textarea class="form-control" id="mql" placeholder="Filters...">{{$filters}}</textarea>
+                </div>
+                <div class="float-right">
+                    <button class="btn btn-danger">Clear Filters</button>
+                    <button class="btn btn-success">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
 <table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
@@ -51,3 +82,7 @@
         });
     </script>
 @endpush
+
+@include('app.dialogs.mql._processes-dialog')
+@include('app.dialogs.mql._process-attributes-dialog')
+@include('app.dialogs.mql._sample-attributes-dialog')

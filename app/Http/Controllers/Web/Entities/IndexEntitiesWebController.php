@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web\Entities;
 
 use App\Actions\Entities\CreateUsedActivitiesForEntitiesAction;
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Entity;
+use App\Models\EntityState;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
@@ -23,12 +25,45 @@ class IndexEntitiesWebController extends Controller
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)
                           ->get();
+        $processAttributes = DB::table('attributes')
+                               ->select('name')
+                               ->whereIn('attributable_id',
+                                   DB::table('entities')
+                                     ->select('id')
+                                     ->where('project_id', $project->id)
+                               )
+                               ->where('attributable_type', Activity::class)
+                               ->distinct()
+                               ->orderBy('name')
+                               ->get();
+        $sampleAttributes = DB::table('attributes')
+                              ->select('name')
+                              ->whereIn(
+                                  'attributable_id',
+                                  DB::table('entities')
+                                    ->select('entity_states.id')
+                                    ->where('project_id', $project->id)
+                                    ->join('entity_states', 'entities.id', '=', 'entity_states.entity_id')
+
+                              )
+                              ->where('attributable_type', EntityState::class)
+                              ->distinct()
+                              ->orderBy('name')
+                              ->get();
+        $filters = "(has-process:'SEM Imaging' or has-process:'Deep Draw Cupping' or has-process:'Optical Imaging')
+and
+(sample-attr:'Mn Content = 0.5' and sample-attr:'Ca Content > 0.3')
+and
+(process-attr:'Current > 3')";
 
         return view('app.projects.entities.index', [
-            'project'        => $project,
-            'activities'     => $activities,
-            'entities'       => $entities,
-            'usedActivities' => $createUsedActivities->execute($activities, $entities),
+            'project'           => $project,
+            'activities'        => $activities,
+            'entities'          => $entities,
+            'processAttributes' => $processAttributes,
+            'sampleAttributes'  => $sampleAttributes,
+            'filters'           => $filters,
+            'usedActivities'    => $createUsedActivities->execute($activities, $entities),
         ]);
     }
 }
