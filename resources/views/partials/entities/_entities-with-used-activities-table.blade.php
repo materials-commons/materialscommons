@@ -14,16 +14,7 @@
             </a>
         </div>
         <div class="col-sm-6">
-            <form class="ml-4">
-                <div class="form-group">
-                    <label for="mql">Current Filters</label>
-                    <textarea class="form-control" id="mql" placeholder="Filters...">{{$filters}}</textarea>
-                </div>
-                <div class="float-right">
-                    <button class="btn btn-danger">Clear Filters</button>
-                    <button class="btn btn-success">Apply Filters</button>
-                </div>
-            </form>
+            @include('partials.entities.mql._mql-textbox')
         </div>
     </div>
 </div>
@@ -83,6 +74,9 @@
     </script>
 @endpush
 
-@include('app.dialogs.mql._processes-dialog')
-@include('app.dialogs.mql._process-attributes-dialog')
-@include('app.dialogs.mql._sample-attributes-dialog')
+<form id="mql-selection">
+    @csrf
+    @include('app.dialogs.mql._processes-dialog')
+    @include('app.dialogs.mql._process-attributes-dialog')
+    @include('app.dialogs.mql._sample-attributes-dialog')
+</form>

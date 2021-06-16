@@ -13,12 +13,13 @@
                     @foreach($processAttributes as $attr)
                         <li class="col-12">
                             <div class="row">
-                                <input type="checkbox" class="mr-2" name="[]process_attrs" value="{{$attr->name}}">
+                                <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
+                                       value="{{$attr->name}}">
                                 {{$attr->name}}
                             </div>
                             <div class="row ml-3">
-                                <select class="selectpicker col-5">
-                                    <option>choose operation</option>
+                                <select class="selectpicker col-5" name="process_attrs[{{$loop->index}}][operator]">
+                                    <option>choose operator</option>
                                     <option>=</option>
                                     <option>></option>
                                     <option>>=</option>
@@ -26,14 +27,19 @@
                                     <option><=</option>
                                     <option><></option>
                                 </select>
-                                <input type="text" placeholder="Value...">
+                                <input type="text" placeholder="Value..." name="process_attrs[{{$loop->index}}][value]">
                             </div>
                         </li>
                     @endforeach
                 </ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+                <a class="btn btn-primary" data-dismiss="modal"
+                   hx-post="{{route('projects.entities.mql.show', $project)}}"
+                   hx-include="#mql-selection"
+                   hx-target="#mql-query">
+                    Done
+                </a>
             </div>
         </div>
     </div>

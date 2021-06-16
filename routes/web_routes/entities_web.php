@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Entities\CompareEntitiesWebController;
 use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
+use App\Http\Controllers\Web\Entities\Mql\ShowMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntitySpreadWebController;
@@ -49,4 +50,6 @@ Route::get('/projects/{project}/export-entities', function ($projectId) {
     return Excel::download(new EntitiesExport($projectId), 'entities.xlsx');
 })->name('projects.entities-export');
 
-
+# MQL
+Route::post('/projects/{project}/mql-show', ShowMqlQueryWebController::class)
+     ->name('projects.entities.mql.show');

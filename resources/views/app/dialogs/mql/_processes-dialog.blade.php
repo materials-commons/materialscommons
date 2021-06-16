@@ -12,14 +12,19 @@
                 <ul class="list-unstyled ml-4">
                     @foreach($activities as $activity)
                         <li>
-                            <input type="checkbox" name="[]activities" value="{{$activity->name}}">
+                            <input type="checkbox" name="activities[]" value="{{$activity->name}}">
                             {{$activity->name}}
                         </li>
                     @endforeach
                 </ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+                <a class="btn btn-primary" data-dismiss="modal"
+                   hx-post="{{route('projects.entities.mql.show', $project)}}"
+                   hx-include="#mql-selection"
+                   hx-target="#mql-query">
+                    Done
+                </a>
             </div>
         </div>
     </div>
