@@ -24,9 +24,6 @@ class CreateEntityStateRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_id'         => 'required|integer',
-            'entity_id'          => 'required|integer',
-            'activity_id'        => 'required|integer',
             'current'            => 'boolean',
             'attributes'         => 'array',
             'attributes.*.value' => 'required',

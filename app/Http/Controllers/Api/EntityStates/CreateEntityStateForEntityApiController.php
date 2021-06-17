@@ -8,11 +8,12 @@ use App\Http\Requests\EntityStates\CreateEntityStateRequest;
 use App\Http\Resources\Entities\EntityResource;
 use App\Models\Activity;
 use App\Models\Entity;
+use App\Models\Project;
 
 class CreateEntityStateForEntityApiController extends Controller
 {
     public function __invoke(CreateEntityStateRequest $request, CreateEntityStateAction $createEntityStateAction,
-        Entity $entity, Activity $activity)
+        Project $project, Entity $entity, Activity $activity)
     {
         $validated = $request->validated();
         $createEntityStateAction->execute($validated, $entity, $activity, auth()->id());
