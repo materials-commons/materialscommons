@@ -22,9 +22,11 @@ class IndexEntitiesWebController extends Controller
                         ->orderBy('name')
 //                        ->orderByRaw('case when eindex is null then name else eindex end')
                         ->get();
+
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)
                           ->get();
+
         $processAttributes = DB::table('attributes')
                                ->select('name')
                                ->whereIn('attributable_id',
@@ -36,6 +38,7 @@ class IndexEntitiesWebController extends Controller
                                ->distinct()
                                ->orderBy('name')
                                ->get();
+
         $sampleAttributes = DB::table('attributes')
                               ->select('name')
                               ->whereIn(
@@ -50,11 +53,8 @@ class IndexEntitiesWebController extends Controller
                               ->distinct()
                               ->orderBy('name')
                               ->get();
-        $filters = "(has-process:'SEM Imaging' or has-process:'Deep Draw Cupping' or has-process:'Optical Imaging')
-and
-(sample-attr:'Mn Content = 0.5' and sample-attr:'Ca Content > 0.3')
-and
-(process-attr:'Current > 3')";
+
+        $filters = "";
 
         return view('app.projects.entities.index', [
             'project'           => $project,

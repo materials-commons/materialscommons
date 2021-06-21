@@ -10,22 +10,34 @@ class ShowMqlQueryWebController extends Controller
 {
     public function __invoke(MqlSelectionRequest $request, Project $project)
     {
-        ray("ShowMqlQueryWebController");
         $validated = $request->validated();
-        ray("  request = ", $validated);
         $filters = "";
         if (isset($validated["activities"])) {
             $filters = $this->buildProcessFilters($validated["activities"]);
         }
-        ray("sample_attrs[0] = ", $validated["sample_attrs"][0]);
-        $filters .= $this->buildProcessAttributesFilters($validated["process_attrs"], $filters == "");
-        $filters .= $this->buildSampleAtttributesFilters($validated["sample_attrs"]);
+        $processFilters = $this->buildAttributeFilters($validated["process_attrs"], 'process-attr');
+        if ($processFilters != "") {
+            if ($filters != "") {
+                $filters = "{$filters}\nAND\n{$processFilters}";
+            } else {
+                $filters = $processFilters;
+            }
+        }
+        $sampleFilters = $this->buildAttributeFilters($validated["sample_attrs"], 'sample-attr');
+        if ($sampleFilters != "") {
+            if ($filters != "") {
+                $filters = "{$filters}\nAND\n{$sampleFilters}";
+            } else {
+                $filters = $sampleFilters;
+            }
+        }
         return view('partials.entities.mql._mql-textbox', [
+            'project' => $project,
             'filters' => $filters,
         ]);
     }
 
-    private function buildProcessFilters($activities)
+    private function buildProcessFilters($activities): string
     {
         if (sizeof($activities) == 0) {
             return "";
@@ -43,31 +55,23 @@ class ShowMqlQueryWebController extends Controller
         return $processFilters;
     }
 
-    private function buildProcessAttributesFilters($processAttrs, $hasProcessFilters)
+    private function buildAttributeFilters($attrs, $attrType): string
     {
-        $processAttrFilters = "";
-        for ($i = 0; $i < sizeof($processAttrs); $i++) {
-            $p = $processAttrs[$i];
+        $attrFilters = "";
+        for ($i = 0; $i < sizeof($attrs); $i++) {
+            $p = $attrs[$i];
             if (isset($p["name"])) {
-                if ($processAttrFilters != "") {
-                    $processAttrFilters .= " AND ";
+                if ($attrFilters != "") {
+                    $attrFilters .= " AND ";
                 }
-                $processAttrFilters .= " process-attr:'{$p['name']}' {$p['operator']} {$p['value']}";
+                $attrFilters .= "{$attrType}:'{$p['name']}' {$p['operator']} {$p['value']}";
             }
         }
 
-        if ($processAttrFilters != "") {
-            $processAttrFilters = "(".$processAttrFilters." )";
-            if ($hasProcessFilters) {
-                $processAttrFilters = "\n AND\n".$processAttrFilters;
-            }
+        if ($attrFilters != "") {
+            $attrFilters = "(".$attrFilters.")";
         }
 
-        return $processAttrFilters;
-    }
-
-    private function buildSampleAtttributesFilters($sampleAttrs)
-    {
-        return " Sample Attrs here ";
+        return $attrFilters;
     }
 }

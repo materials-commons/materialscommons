@@ -4,7 +4,9 @@
         <textarea class="form-control" id="mql" placeholder="Filters...">{{$filters}}</textarea>
     </div>
     <div class="float-right">
-        <button class="btn btn-danger">Clear Filters</button>
-        <button class="btn btn-success">Apply Filters</button>
+        <button class="btn btn-danger">Clear</button>
+        <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
+            Run
+        </a>
     </div>
 </form>

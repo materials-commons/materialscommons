@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Entities\CompareEntitiesWebController;
 use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
+use App\Http\Controllers\Web\Entities\Mql\RunMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\Mql\ShowMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
@@ -53,3 +54,6 @@ Route::get('/projects/{project}/export-entities', function ($projectId) {
 # MQL
 Route::post('/projects/{project}/mql-show', ShowMqlQueryWebController::class)
      ->name('projects.entities.mql.show');
+
+Route::post('/projects/{project}/mql-run', RunMqlQueryWebController::class)
+     ->name('projects.entities.mql.run');

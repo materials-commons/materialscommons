@@ -67,14 +67,19 @@
     <script>
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({
-                stateSave: true,
+                scrollX: true,
+            });
+        });
+        htmx.on('htmx:after-settle', () => {
+            mcutil.autosizeTextareas();
+            $('#entities-with-used-activities').DataTable({
                 scrollX: true,
             });
         });
     </script>
 @endpush
 
-<form id="mql-selection">
+<form id="mql-selection" action="{{route('projects.entities.mql.run', [$project])}}" method="POST">
     @csrf
     @include('app.dialogs.mql._processes-dialog')
     @include('app.dialogs.mql._process-attributes-dialog')
