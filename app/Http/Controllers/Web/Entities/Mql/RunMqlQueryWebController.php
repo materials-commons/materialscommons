@@ -23,6 +23,7 @@ class RunMqlQueryWebController extends Controller
         Project $project)
     {
         $validated = $request->validated();
+        ray("validated =", $validated);
 
         $activities = DB::table('activities')
                         ->select('name')
@@ -83,6 +84,7 @@ class RunMqlQueryWebController extends Controller
     private function runQuery($data, Project $project)
     {
         $statement = $this->buildStatement($data);
+        ray("statement =", $statement);
         return Http::Post("http://localhost:1324/api/execute-query", [
             "project_id"       => $project->id,
             "statement"        => $statement,
@@ -94,7 +96,7 @@ class RunMqlQueryWebController extends Controller
     private function buildStatement($data)
     {
         $processTypes = [];
-        if (isset($data['activites'])) {
+        if (isset($data['activities'])) {
             $processTypes = $data['activities'];
         }
 
@@ -178,6 +180,7 @@ class RunMqlQueryWebController extends Controller
 
     private function buildQuery($items, $buildMatchFn, $isUsableFn)
     {
+        ray("buildQuery", $items);
         if (sizeof($items) == 0) {
             return null;
         }
@@ -198,6 +201,7 @@ class RunMqlQueryWebController extends Controller
                 continue;
             }
 
+            ray("assign to left");
             $current['left'] = $buildMatchFn($items[$i]);
             // if we are on the second to last entry then right will also be a match statement.
             // To simplify tracking this we just set up the right side here and then exit the
@@ -211,6 +215,7 @@ class RunMqlQueryWebController extends Controller
             // entry in $processTypes and we can set this up as match statement for the right
             // side of the our AND statement.
             if (sizeof($items) - 2 == $i) {
+                ray("assign to right and break");
                 $current['right'] = $buildMatchFn($items[$i + 1]);
                 break;
             }
@@ -232,6 +237,7 @@ class RunMqlQueryWebController extends Controller
             //    ],
             //    'and' => true
             // ]
+            ray("  create right and");
             $current['right'] = [
                 'left'  => [],
                 'right' => [],
@@ -274,6 +280,7 @@ class RunMqlQueryWebController extends Controller
 
     private function filterEntitiesUsingQueryResults(Collection $entities, $queryResults): Collection
     {
+        ray($queryResults);
         $samples = collect($queryResults['samples']);
         return $entities->filter(function (Entity $entity) use ($samples) {
             return $samples->where('id', $entity->id)->count() != 0;
