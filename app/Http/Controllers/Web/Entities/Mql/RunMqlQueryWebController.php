@@ -18,12 +18,13 @@ class RunMqlQueryWebController extends Controller
 {
     private const PROCESS_ATTR_FIELD = 3;
     private const SAMPLE_ATTR_FIELD = 4;
+    private const PROCESS_FUNC_TYPE = 5;
+    private const SAMPLE_FUNC_TYPE = 6;
 
     public function __invoke(MqlSelectionRequest $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
         Project $project)
     {
         $validated = $request->validated();
-        ray("validated =", $validated);
 
         $activities = DB::table('activities')
                         ->select('name')
@@ -83,8 +84,11 @@ class RunMqlQueryWebController extends Controller
 
     private function runQuery($data, Project $project)
     {
+        Http::Post("http://localhost:1324/api/reload-project", [
+            "project_id" => $project->id,
+        ]);
+
         $statement = $this->buildStatement($data);
-        ray("statement =", $statement);
         $response = Http::Post("http://localhost:1324/api/execute-query", [
             "project_id"       => $project->id,
             "statement"        => $statement,
@@ -109,10 +113,9 @@ class RunMqlQueryWebController extends Controller
         }
 
         $processTypesQuery = $this->buildQuery($processTypes, function ($item) {
-            ray("build match func for processTypes", $item);
             return [
                 "field_name" => '',
-                "field_type" => 'sample-function',
+                "field_type" => self::SAMPLE_FUNC_TYPE,
                 "value"      => $item,
                 "operation"  => 'has-process',
             ];
@@ -122,10 +125,10 @@ class RunMqlQueryWebController extends Controller
 
         $processAttrs = $this->buildQuery($data['process_attrs'], function ($item) {
             return [
-                "field_name" => '',
+                "field_name" => $item["name"],
                 "field_type" => self::PROCESS_ATTR_FIELD,
-                "value"      => $item,
-                "operation"  => 'has-process',
+                "value"      => $item["value"],
+                "operation"  => $item["operator"],
             ];
         }, function ($item) {
             return isset($item["name"]);
@@ -142,23 +145,19 @@ class RunMqlQueryWebController extends Controller
             return isset($item["name"]);
         });
 
-        ray("processTypesQuery =", $processTypesQuery);
         $numberOfQueries = 0;
         if (!is_null($processTypesQuery)) {
             $numberOfQueries++;
         }
 
-        ray("processAttrs = ", $processAttrs);
         if (!is_null($processAttrs)) {
             $numberOfQueries++;
         }
 
-        ray("sampleAttrs = ", $sampleAttrs);
         if (!is_null($sampleAttrs)) {
             $numberOfQueries++;
         }
 
-        ray("numberOfQueries = ", $numberOfQueries);
         if ($numberOfQueries == 0) {
             // no queries
             return null;
@@ -195,13 +194,11 @@ class RunMqlQueryWebController extends Controller
 
     private function buildQuery($items, $buildMatchFn, $isUsableFn)
     {
-        ray("buildQuery", $items);
         if (sizeof($items) == 0) {
             return null;
         }
 
         if (sizeof($items) == 1) {
-            ray("sizeof items == 1");
             return $buildMatchFn($items[0]);
         }
 
@@ -218,7 +215,6 @@ class RunMqlQueryWebController extends Controller
                 continue;
             }
 
-            ray("assign to left");
             $current['left'] = $buildMatchFn($items[$i]);
             $termsCount++;
             // if we are on the second to last entry then right will also be a match statement.
@@ -233,7 +229,6 @@ class RunMqlQueryWebController extends Controller
             // entry in $processTypes and we can set this up as match statement for the right
             // side of the our AND statement.
             if (sizeof($items) - 2 == $i) {
-                ray("assign to right and break");
                 $current['right'] = $buildMatchFn($items[$i + 1]);
                 $termsCount++;
                 break;
@@ -256,7 +251,6 @@ class RunMqlQueryWebController extends Controller
             //    ],
             //    'and' => true
             // ]
-            ray("  create right and");
             $current['right'] = [
                 'left'  => [],
                 'right' => [],
@@ -302,7 +296,6 @@ class RunMqlQueryWebController extends Controller
 
     private function filterEntitiesUsingQueryResults(Collection $entities, $queryResults): Collection
     {
-        ray($queryResults);
         $samples = collect($queryResults['samples']);
         return $entities->filter(function (Entity $entity) use ($samples) {
             return $samples->where('id', $entity->id)->count() != 0;
