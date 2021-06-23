@@ -85,12 +85,20 @@ class RunMqlQueryWebController extends Controller
     {
         $statement = $this->buildStatement($data);
         ray("statement =", $statement);
-        return Http::Post("http://localhost:1324/api/execute-query", [
+        $response = Http::Post("http://localhost:1324/api/execute-query", [
             "project_id"       => $project->id,
             "statement"        => $statement,
             "select_processes" => false,
             "select_samples"   => true,
-        ])->json();
+        ]);
+        if (!$response->ok()) {
+            return [
+                'samples'   => [],
+                'processes' => [],
+            ];
+        }
+
+        return $response->json();
     }
 
     private function buildStatement($data)
@@ -101,6 +109,7 @@ class RunMqlQueryWebController extends Controller
         }
 
         $processTypesQuery = $this->buildQuery($processTypes, function ($item) {
+            ray("build match func for processTypes", $item);
             return [
                 "field_name" => '',
                 "field_type" => 'sample-function',
@@ -133,19 +142,23 @@ class RunMqlQueryWebController extends Controller
             return isset($item["name"]);
         });
 
+        ray("processTypesQuery =", $processTypesQuery);
         $numberOfQueries = 0;
         if (!is_null($processTypesQuery)) {
             $numberOfQueries++;
         }
 
+        ray("processAttrs = ", $processAttrs);
         if (!is_null($processAttrs)) {
             $numberOfQueries++;
         }
 
+        ray("sampleAttrs = ", $sampleAttrs);
         if (!is_null($sampleAttrs)) {
             $numberOfQueries++;
         }
 
+        ray("numberOfQueries = ", $numberOfQueries);
         if ($numberOfQueries == 0) {
             // no queries
             return null;
@@ -176,6 +189,8 @@ class RunMqlQueryWebController extends Controller
             'right' => $sampleAttrs,
             'and'   => true,
         ];
+
+        return $toplevelQuery;
     }
 
     private function buildQuery($items, $buildMatchFn, $isUsableFn)
@@ -186,6 +201,7 @@ class RunMqlQueryWebController extends Controller
         }
 
         if (sizeof($items) == 1) {
+            ray("sizeof items == 1");
             return $buildMatchFn($items[0]);
         }
 
@@ -196,6 +212,7 @@ class RunMqlQueryWebController extends Controller
         ];
 
         $current = $itemsQuery;
+        $termsCount = 0;
         for ($i = 0; $i < sizeof($items); $i++) {
             if (!$isUsableFn($items[$i])) {
                 continue;
@@ -203,6 +220,7 @@ class RunMqlQueryWebController extends Controller
 
             ray("assign to left");
             $current['left'] = $buildMatchFn($items[$i]);
+            $termsCount++;
             // if we are on the second to last entry then right will also be a match statement.
             // To simplify tracking this we just set up the right side here and then exit the
             // loop.
@@ -217,6 +235,7 @@ class RunMqlQueryWebController extends Controller
             if (sizeof($items) - 2 == $i) {
                 ray("assign to right and break");
                 $current['right'] = $buildMatchFn($items[$i + 1]);
+                $termsCount++;
                 break;
             }
 
@@ -248,6 +267,9 @@ class RunMqlQueryWebController extends Controller
             $current = $current['right'];
         }
 
+        if ($termsCount == 0) {
+            return null;
+        }
         return $itemsQuery;
     }
 
