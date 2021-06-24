@@ -71,6 +71,8 @@ class RunMqlQueryWebController extends Controller
         $queryResults = $this->runQuery($validated, $project);
         $entities = $this->filterEntitiesUsingQueryResults($entities, $queryResults);
 
+        $request->flash();
+
         return view('app.projects.entities.index', [
             'project'           => $project,
             'activities'        => $activities,
@@ -112,37 +114,31 @@ class RunMqlQueryWebController extends Controller
             $processTypes = $data['activities'];
         }
 
-        $processTypesQuery = $this->buildQuery($processTypes, function ($item) {
+        $processTypesQuery = $this->buildFromArrayOfSetItems($processTypes, function ($item) {
             return [
                 "field_name" => '',
                 "field_type" => self::SAMPLE_FUNC_TYPE,
                 "value"      => $item,
                 "operation"  => 'has-process',
             ];
-        }, function ($item) {
-            return true;
         });
 
-        $processAttrs = $this->buildQuery($data['process_attrs'], function ($item) {
+        $processAttrs = $this->buildAttrsQuery($data['process_attrs'], function ($item) {
             return [
                 "field_name" => $item["name"],
                 "field_type" => self::PROCESS_ATTR_FIELD,
                 "value"      => $item["value"],
                 "operation"  => $item["operator"],
             ];
-        }, function ($item) {
-            return isset($item["name"]);
         });
 
-        $sampleAttrs = $this->buildQuery($data['sample_attrs'], function ($item) {
+        $sampleAttrs = $this->buildAttrsQuery($data['sample_attrs'], function ($item) {
             return [
                 "field_name" => $item["name"],
                 "field_type" => self::SAMPLE_ATTR_FIELD,
                 "value"      => $item["value"],
                 "operation"  => $item["operator"],
             ];
-        }, function ($item) {
-            return isset($item["name"]);
         });
 
         $numberOfQueries = 0;
@@ -168,7 +164,6 @@ class RunMqlQueryWebController extends Controller
         }
 
         // Two or more not null
-        $items = [$processTypesQuery, $processAttrs, $sampleAttrs];
         $toplevelQuery = [
             'left'  => null,
             'right' => null,
@@ -192,7 +187,7 @@ class RunMqlQueryWebController extends Controller
         return $toplevelQuery;
     }
 
-    private function buildQuery($items, $buildMatchFn, $isUsableFn)
+    private function buildFromArrayOfSetItems($items, $buildMatchFn)
     {
         if (sizeof($items) == 0) {
             return null;
@@ -208,13 +203,9 @@ class RunMqlQueryWebController extends Controller
             'and'   => true,
         ];
 
-        $current = $itemsQuery;
+        $current = &$itemsQuery;
         $termsCount = 0;
         for ($i = 0; $i < sizeof($items); $i++) {
-            if (!$isUsableFn($items[$i])) {
-                continue;
-            }
-
             $current['left'] = $buildMatchFn($items[$i]);
             $termsCount++;
             // if we are on the second to last entry then right will also be a match statement.
@@ -258,13 +249,43 @@ class RunMqlQueryWebController extends Controller
             ];
 
             // Point $current at the newly created AND statement
-            $current = $current['right'];
+            $current = &$current['right'];
         }
 
         if ($termsCount == 0) {
             return null;
         }
+
         return $itemsQuery;
+    }
+
+    private function buildAttrsQuery($attrs, $buildMatchFn)
+    {
+        $setAttrs = [];
+        foreach ($attrs as $attr) {
+            if (isset($attr['name'])) {
+                array_push($setAttrs, $attr);
+            }
+        }
+
+        if (sizeof($setAttrs) == 0) {
+            return null;
+        }
+
+        if (sizeof($setAttrs) == 1) {
+            return $buildMatchFn($setAttrs[0]);
+        }
+
+        if (sizeof($setAttrs) == 2) {
+            return [
+                'left'  => $buildMatchFn($setAttrs[0]),
+                'right' => $buildMatchFn($setAttrs[1]),
+                'and'   => true,
+            ];
+        }
+
+        // More than two items
+        return $this->buildFromArrayOfSetItems($setAttrs, $buildMatchFn);
     }
 
     private function firstNotNull($first, $second, $third)
