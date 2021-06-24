@@ -23,12 +23,24 @@
                                             name="process_attrs[{{$loop->index}}][operator]"
                                             value="{{old('process_attrs')[$loop->index]['operator']}}">
                                         <option>choose operator</option>
-                                        <option>=</option>
-                                        <option>></option>
-                                        <option>>=</option>
-                                        <option><</option>
-                                        <option><=</option>
-                                        <option><></option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '=' ? 'selected' : ''}}>
+                                            =
+                                        </option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '>' ? 'selected' : ''}}>
+                                            >
+                                        </option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '>=' ? 'selected' : ''}}>
+                                            >=
+                                        </option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '<' ? 'selected' : ''}}>
+                                            <
+                                        </option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '<=' ? 'selected' : ''}}>
+                                            <=
+                                        </option>
+                                        <option {{old('process_attrs')[$loop->index]['operator'] == '<>' ? 'selected' : ''}}>
+                                            <>
+                                        </option>
                                     </select>
                                     <input type="text" placeholder="Value..."
                                            name="process_attrs[{{$loop->index}}][value]"
