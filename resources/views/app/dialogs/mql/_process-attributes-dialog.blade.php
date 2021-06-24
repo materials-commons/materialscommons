@@ -16,8 +16,7 @@
                                 <div class="row">
                                     <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
                                            value="{{$attr->name}}" checked>
-                                    {{$attr->name}}
-                                    <a href="#">Ranges/Values</a>
+                                    <a href="#">{{$attr->name}}</a>
                                 </div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5"
@@ -39,8 +38,7 @@
                                 <div class="row">
                                     <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
                                            value="{{$attr->name}}">
-                                    {{$attr->name}}
-                                    <a href="#" class="ml-3">View Ranges/Values</a>
+                                    <a href="#">{{$attr->name}}</a>
                                 </div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5" name="process_attrs[{{$loop->index}}][operator]">
