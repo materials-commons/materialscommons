@@ -75,7 +75,8 @@
       "app/Helpers/ViewHelpers.php",
       "app/Helpers/HelpHelpers.php",
       "app/Helpers/BannerHelpers.php",
-      "app/Helpers/UtilHelpers.php"
+      "app/Helpers/UtilHelpers.php",
+      "app/Helpers/BetaHelpers.php"
     ]
   },
   "autoload-dev": {
