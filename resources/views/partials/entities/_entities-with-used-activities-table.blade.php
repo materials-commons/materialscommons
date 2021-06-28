@@ -1,25 +1,27 @@
-<h4>Filters</h4>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <a class="btn btn-success" data-toggle="modal" href="#mql-processes-dialog">
-                Processes
-            </a>
-            <a class="btn btn-success" data-toggle="modal" href="#mql-process-attributes-dialog">
-                Process Attributes
-            </a>
-            <a class="btn btn-success" data-toggle="modal" href="#mql-sample-attributes-dialog">
-                Sample Attributes
-            </a>
-        </div>
-        <div class="col-sm-6">
-            @include('partials.entities.mql._mql-textbox')
+@if(isInBeta())
+    <h4>Filters</h4>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <a class="btn btn-success" data-toggle="modal" href="#mql-processes-dialog">
+                    Processes
+                </a>
+                <a class="btn btn-success" data-toggle="modal" href="#mql-process-attributes-dialog">
+                    Process Attributes
+                </a>
+                <a class="btn btn-success" data-toggle="modal" href="#mql-sample-attributes-dialog">
+                    Sample Attributes
+                </a>
+            </div>
+            <div class="col-sm-6">
+                @include('partials.entities.mql._mql-textbox')
+            </div>
         </div>
     </div>
-</div>
-<br>
-<br>
+    <br>
+    <br>
+@endif
 <table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
     <thead>
     <th>Name</th>
