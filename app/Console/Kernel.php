@@ -37,6 +37,11 @@ class Kernel extends ConsoleKernel
                      ->everyFiveMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
+
+            $schedule->command('mc:delete-unverified-accounts')
+                     ->daily()
+                     ->at('02:00')
+                     ->runInBackground();
         }
 
         if (config('backup.backup.run_backups') != 0) {
