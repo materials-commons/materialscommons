@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 
 if (!function_exists("setActiveNav")) {
     function setActiveNav($path)
@@ -47,5 +48,12 @@ if (!function_exists("getPreviousRoute")) {
     function getPreviousRoute()
     {
         return url()->previous();
+    }
+}
+
+if (!function_exists("slugify")) {
+    function slugify($what): string
+    {
+        return Str::slug($what);
     }
 }

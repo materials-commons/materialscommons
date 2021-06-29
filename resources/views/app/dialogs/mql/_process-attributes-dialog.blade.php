@@ -16,8 +16,11 @@
                                 <div class="row">
                                     <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
                                            value="{{$attr->name}}" checked>
-                                    <a href="#">{{$attr->name}}</a>
+                                    <a href="#"
+                                       hx-target="#{{slugify($attr->name)}}"
+                                       hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attr->name])}}">{{$attr->name}}</a>
                                 </div>
+                                <div id="{{slugify($attr->name)}}" class="row"></div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5"
                                             name="process_attrs[{{$loop->index}}][operator]"
@@ -50,8 +53,13 @@
                                 <div class="row">
                                     <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
                                            value="{{$attr->name}}">
-                                    <a href="#">{{$attr->name}}</a>
+                                    <a href="#"
+                                       hx-target="#{{slugify($attr->name)}}"
+                                       hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attr->name])}}">
+                                        {{$attr->name}}
+                                    </a>
                                 </div>
+                                <div id="{{slugify($attr->name)}}" class="row"></div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5" name="process_attrs[{{$loop->index}}][operator]">
                                         <option>choose operator</option>

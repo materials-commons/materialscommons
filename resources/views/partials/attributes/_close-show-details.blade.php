@@ -1,0 +1,1 @@
+<div id="{{slugify($name)}}" class="row"></div>
