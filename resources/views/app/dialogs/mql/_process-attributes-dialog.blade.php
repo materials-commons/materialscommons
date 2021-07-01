@@ -8,10 +8,52 @@
                 </button>
             </div>
             <div class="modal-body" style="height: 500px">
+                @if(false)
+                    <a href="#" class="mb-2">Close Summary Table</a>
+                    <table class="table table-hover mt-2">
+                        <thead>
+                        <th>Attribute</th>
+                        <th>Numeric?</th>
+                        <th>Min</th>
+                        <th>Max</th>
+                        <th># Unique Values</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Beam Intensity or current</td>
+                            <td>Yes</td>
+                            <td>20</td>
+                            <td>20</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Black Pre-Heat Temperature</td>
+                            <td>Yes</td>
+                            <td>100</td>
+                            <td>300</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>No</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>More</td>
+                            <td>Not</td>
+                            <td>Shown</td>
+                            <td>For</td>
+                            <td>Example....</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                @endif
                 <ul class="list-unstyled ml-4">
                     <h4>Process Attributes</h4>
                     @foreach($processAttributes as $attr)
-                        <li class="col-12">
+                        <li class="col-12 mt-2">
                             @if(old('process_attrs') && isset(old('process_attrs')[$loop->index]['name']))
                                 <div class="row">
                                     <input type="checkbox" class="mr-2" name="process_attrs[{{$loop->index}}][name]"
@@ -20,7 +62,6 @@
                                        hx-target="#{{slugify($attr->name)}}"
                                        hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attr->name])}}">{{$attr->name}}</a>
                                 </div>
-                                <div id="{{slugify($attr->name)}}" class="row"></div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5"
                                             name="process_attrs[{{$loop->index}}][operator]"
@@ -55,11 +96,11 @@
                                            value="{{$attr->name}}">
                                     <a href="#"
                                        hx-target="#{{slugify($attr->name)}}"
+                                       hx-swap="innerHTML"
                                        hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attr->name])}}">
                                         {{$attr->name}}
                                     </a>
                                 </div>
-                                <div id="{{slugify($attr->name)}}" class="row"></div>
                                 <div class="row ml-3">
                                     <select class="selectpicker col-5" name="process_attrs[{{$loop->index}}][operator]">
                                         <option>choose operator</option>
@@ -74,6 +115,7 @@
                                            name="process_attrs[{{$loop->index}}][value]">
                                 </div>
                             @endif
+                            <div id="{{slugify($attr->name)}}" class="row ml-4 mt-2"></div>
                         </li>
                     @endforeach
                 </ul>
