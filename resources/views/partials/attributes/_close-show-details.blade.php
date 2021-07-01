@@ -1,1 +1,1 @@
-<div id="{{slugify($name)}}" class="row"></div>
+<div id="{{slugify(request()->route('name'))}}" class="container ml-4"></div>

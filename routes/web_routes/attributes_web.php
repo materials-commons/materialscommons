@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Web\Attributes\CloseAttributeDetailsByNameWebController;
 use App\Http\Controllers\Web\Attributes\ShowActivityAttributeDetailsByNameWebController;
 use App\Http\Controllers\Web\Attributes\ShowExperimentActivityAttributeWebController;
 use App\Http\Controllers\Web\Attributes\ShowExperimentEntityAttributeWebController;
@@ -25,7 +24,11 @@ Route::prefix('/projects/{project}/experiments/{experiment}')->group(function ()
 Route::get('/projects/{project}/activities/attributes/{name}/show-details-by-name',
     ShowActivityAttributeDetailsByNameWebController::class)
      ->name('projects.activities.attributes.show-details-by-name');
-Route::get('/projects/{project}/attributes-by-name/{name}/close-details-by-name',
-    CloseAttributeDetailsByNameWebController::class)
+//Route::get('/projects/{project}/attributes-by-name/{name}/close-details-by-name',
+//    CloseAttributeDetailsByNameWebController::class)
+//     ->name('projects.attributes.close-details-by-name');
+
+Route::view('/projects/{project}/attributes-by-name/{name}/close-details-by-name',
+    'partials.attributes._close-show-details')
      ->name('projects.attributes.close-details-by-name');
 
