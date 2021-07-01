@@ -30,7 +30,7 @@ class IndexEntitiesWebController extends Controller
         $processAttributes = DB::table('attributes')
                                ->select('name')
                                ->whereIn('attributable_id',
-                                   DB::table('entities')
+                                   DB::table('activities')
                                      ->select('id')
                                      ->where('project_id', $project->id)
                                )
