@@ -74,9 +74,6 @@
         });
         htmx.on('htmx:after-settle', () => {
             mcutil.autosizeTextareas();
-            $('#entities-with-used-activities').DataTable({
-                scrollX: true,
-            });
         });
     </script>
 @endpush
