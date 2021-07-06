@@ -26,9 +26,11 @@ class CreateEntityAction
             $entity->experiments()->attach($data['experiment_id']);
         }
 
-        $activity = Activity::findOrFail($data['activity_id']);
-        $activity->entities()->attach($entity);
-        $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
+        if (array_key_exists('activity_id', $data)) {
+            $activity = Activity::findOrFail($data['activity_id']);
+            $activity->entities()->attach($entity);
+            $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
+        }
 
         $entity->refresh();
 
