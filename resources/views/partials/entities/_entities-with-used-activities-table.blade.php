@@ -1,25 +1,15 @@
 @if(isInBeta())
-    <h4>Build Query</h4>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <a class="btn btn-success" data-toggle="modal" href="#mql-processes-dialog">
-                    Processes
-                </a>
-                <a class="btn btn-success" data-toggle="modal" href="#mql-process-attributes-dialog">
-                    Process Attributes
-                </a>
-                <a class="btn btn-success" data-toggle="modal" href="#mql-sample-attributes-dialog">
-                    Sample Attributes
-                </a>
-            </div>
-            <div class="col-sm-6">
-                @include('partials.entities.mql._mql-textbox')
-            </div>
+    <div id="mql-query-builder" x-data="initMQLBuilder()">
+        <div id="open-query-builder" x-show="!showBuilder">
+            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
+            <p>
+                Search for matching samples by process type and attributes.
+            </p>
+        </div>
+        <div id="query-builder" style="display: none" x-show="showBuilder">
+            @include('partials.mql._query-builder')
         </div>
     </div>
-    <br>
     <br>
 @endif
 <table id="entities-with-used-activities" class="table table-hover" style="width: 100%">
@@ -77,6 +67,23 @@
                 mcutil.autosizeTextareas();
             }
         });
+
+        function initMQLBuilder() {
+            return {
+                showBuilder: false,
+                showSavedQueries: false,
+                toggleShowBuilder() {
+                    this.showBuilder = !this.showBuilder;
+                    if (this.showBuilder) {
+                        mcutil.autosizeTextareas();
+                    }
+                },
+                toggleShowSavedQueries() {
+                    console.log('toggleShowSavedQueries');
+                    this.showSavedQueries = !this.showSavedQueries;
+                }
+            };
+        }
     </script>
 @endpush
 @if(isInBeta())

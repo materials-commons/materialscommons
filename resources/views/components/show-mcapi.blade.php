@@ -11,12 +11,10 @@
     @push('scripts')
         <script>
             function initShowApi() {
-                console.log('initShowApi');
                 return {
                     showCode: false,
                     toggleShow() {
                         this.showCode = !this.showCode;
-                        console.log('this.showCode = ', this.showCode);
                     }
                 };
             }

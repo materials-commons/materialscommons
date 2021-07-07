@@ -14,7 +14,11 @@ function setupDatatableOnDocumentReady(id) {
 
 function autosizeTextareas() {
     $('textarea').each(function () {
-        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+        let scrollHeight = 75;
+        if (this.scrollHeight && this.scrollHeight > 75) {
+            scrollHeight = this.scrollHeight;
+        }
+        this.setAttribute('style', 'height:' + (scrollHeight) + 'px;overflow-y:hidden;');
     }).on('input', function () {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
