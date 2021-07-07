@@ -60,6 +60,7 @@
                                            value="{{$attr->name}}" checked>
                                     <a href="#"
                                        hx-target="#{{slugify($attr->name)}}"
+                                       hx-swap="innerHTML"
                                        hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attr->name])}}">{{$attr->name}}</a>
                                 </div>
                                 <div class="row ml-3">

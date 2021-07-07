@@ -1,5 +1,5 @@
 @if(isInBeta())
-    <h4>Filters</h4>
+    <h4>Build Query</h4>
     <br>
     <div class="container">
         <div class="row">
@@ -72,8 +72,10 @@
                 scrollX: true,
             });
         });
-        htmx.on('htmx:after-settle', () => {
-            mcutil.autosizeTextareas();
+        htmx.on('htmx:after-settle', (evt) => {
+            if (evt.target.id == "mql-query") {
+                mcutil.autosizeTextareas();
+            }
         });
     </script>
 @endpush

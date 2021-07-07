@@ -4,19 +4,13 @@ namespace App\Traits\Attributes;
 
 use App\Models\Activity;
 use App\Models\AttributeValue;
-use App\Models\Entity;
+use App\Models\EntityState;
 use Illuminate\Support\Facades\DB;
 
 trait AttributeDetails
 {
-    public function getAttributeDetails($projectId, $name, $table = "entities"): \stdClass
+    public function getProcessAttributeDetails($projectId, $name): \stdClass
     {
-        $attributableType = Entity::class;
-
-        if ($table == "activities") {
-            $attributableType = Activity::class;
-        }
-
         $values = AttributeValue::select('val')
                                 ->distinct()
                                 ->whereIn(
@@ -24,10 +18,10 @@ trait AttributeDetails
                                     DB::table('attributes')
                                       ->select('id')
                                       ->where('name', $name)
-                                      ->where("attributable_type", $attributableType)
+                                      ->where("attributable_type", Activity::class)
                                       ->whereIn(
                                           "attributable_id",
-                                          DB::table($table)
+                                          DB::table('activities')
                                             ->select('id')
                                             ->where('project_id', $projectId)
                                       )
@@ -38,6 +32,40 @@ trait AttributeDetails
                                 })
                                 ->sort();
 
+        return $this->createDetails($values);
+    }
+
+    public function getSampleAttributeDetails($projectId, $name): \stdClass
+    {
+        $values = AttributeValue::select('val')
+                                ->distinct()
+                                ->whereIn(
+                                    'attribute_id',
+                                    DB::table('attributes')
+                                      ->select('id')
+                                      ->where('name', $name)
+                                      ->where("attributable_type", EntityState::class)
+                                      ->whereIn(
+                                          "attributable_id",
+                                          DB::table('entity_states')
+                                            ->select('id')
+                                            ->whereIn('entity_id',
+                                                DB::table('entities')
+                                                  ->select('id')
+                                                  ->where('project_id', $projectId))
+                                      )
+                                )
+                                ->get()
+                                ->map(function ($av) {
+                                    return $av->val['value'];
+                                })
+                                ->sort();
+
+        return $this->createDetails($values);
+    }
+
+    private function createDetails($values)
+    {
         $details = new \stdClass();
         $details->isNumeric = $this->isNumeric($values);
 

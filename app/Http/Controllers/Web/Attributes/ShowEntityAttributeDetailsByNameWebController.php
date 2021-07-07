@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Web\Attributes;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Traits\Attributes\AttributeDetails;
 use Illuminate\Http\Request;
 
 class ShowEntityAttributeDetailsByNameWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    use AttributeDetails;
+
+    public function __invoke(Request $request, Project $project, $name)
     {
-        //
+        return view('partials.attributes._show-details', [
+            'project' => $project,
+            'name'    => $name,
+            'details' => $this->getSampleAttributeDetails($project->id, $name),
+        ]);
     }
 }

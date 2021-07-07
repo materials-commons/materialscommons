@@ -16,7 +16,7 @@ class ShowActivityAttributeDetailsByNameWebController extends Controller
         return view('partials.attributes._show-details', [
             'project' => $project,
             'name'    => $name,
-            'details' => $this->getAttributeDetails($project->id, $name, "activities"),
+            'details' => $this->getProcessAttributeDetails($project->id, $name),
         ]);
     }
 }
