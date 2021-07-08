@@ -10,8 +10,16 @@
 </div>
 <hr>
 <br>
-<a class="btn btn-success" href="#">Apply</a>
-<div class="row mt-4">
+<a class="btn btn-success" href="#"
+   hx-post="{{route('projects.entities.mql.show', $project)}}"
+   hx-include="#mql-selection"
+   hx-target="#mql-query">
+    Apply
+</a>
+<p>Showing processes and attributes that are available from the current selection.</p>
+<form class="row mt-4" id="mql-selection" action="{{route('projects.entities.mql.run', [$project])}}" method="POST">
+
+    @csrf
     <div class="col-sm">
         <h4>Processes</h4>
         @include('partials.mql._processes-list')
@@ -24,6 +32,11 @@
         <h4>Sample Attributes</h4>
         @include('partials.mql._sample-attributes-list')
     </div>
-</div>
-<a class="btn btn-success" href="#">Apply</a>
+</form>
+<a class="btn btn-success" href="#"
+   hx-post="{{route('projects.entities.mql.show', $project)}}"
+   hx-include="#mql-selection"
+   hx-target="#mql-query">
+    Apply
+</a>
 <hr>

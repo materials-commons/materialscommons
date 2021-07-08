@@ -9,6 +9,7 @@ use App\Models\Activity;
 use App\Models\Entity;
 use App\Models\EntityState;
 use App\Models\Project;
+use App\Traits\Mql\MqlQueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Http;
 
 class RunMqlQueryWebController extends Controller
 {
+    use MqlQueryBuilder;
+
     private const PROCESS_ATTR_FIELD = 3;
     private const SAMPLE_ATTR_FIELD = 4;
     private const PROCESS_FUNC_TYPE = 5;
@@ -32,7 +35,6 @@ class RunMqlQueryWebController extends Controller
                         ->where('name', '<>', 'Create Samples')
                         ->distinct()
                         ->orderBy('name')
-//                        ->orderByRaw('case when eindex is null then name else eindex end')
                         ->get();
 
         $entities = Entity::with(['activities', 'experiments'])
@@ -42,7 +44,7 @@ class RunMqlQueryWebController extends Controller
         $processAttributes = DB::table('attributes')
                                ->select('name')
                                ->whereIn('attributable_id',
-                                   DB::table('entities')
+                                   DB::table('activities')
                                      ->select('id')
                                      ->where('project_id', $project->id)
                                )
@@ -66,8 +68,6 @@ class RunMqlQueryWebController extends Controller
                               ->orderBy('name')
                               ->get();
 
-        $filters = "";
-
         $queryResults = $this->runQuery($validated, $project);
         $entities = $this->filterEntitiesUsingQueryResults($entities, $queryResults);
 
@@ -79,7 +79,7 @@ class RunMqlQueryWebController extends Controller
             'entities'          => $entities,
             'processAttributes' => $processAttributes,
             'sampleAttributes'  => $sampleAttributes,
-            'filters'           => $filters,
+            'filters'           => $this->buildMqlQueryText($validated),
             'usedActivities'    => $createUsedActivities->execute($activities, $entities),
         ]);
     }

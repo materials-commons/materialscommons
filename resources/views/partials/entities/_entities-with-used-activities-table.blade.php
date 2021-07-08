@@ -86,11 +86,11 @@
         }
     </script>
 @endpush
-@if(isInBeta())
-    <form id="mql-selection" action="{{route('projects.entities.mql.run', [$project])}}" method="POST">
-        @csrf
-        @include('app.dialogs.mql._processes-dialog')
-        @include('app.dialogs.mql._process-attributes-dialog')
-        @include('app.dialogs.mql._sample-attributes-dialog')
-    </form>
-@endif
+{{--@if(isInBeta())--}}
+{{--    <form id="mql-selection" action="{{route('projects.entities.mql.run', [$project])}}" method="POST">--}}
+{{--        @csrf--}}
+{{--        @include('app.dialogs.mql._processes-dialog')--}}
+{{--        @include('app.dialogs.mql._process-attributes-dialog')--}}
+{{--        @include('app.dialogs.mql._sample-attributes-dialog')--}}
+{{--    </form>--}}
+{{--@endif--}}
