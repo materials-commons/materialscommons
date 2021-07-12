@@ -3,7 +3,7 @@
         <div id="open-query-builder" x-show="!showBuilder">
             <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
             <p>
-                Search for matching samples by process type and attributes.
+                Query for matching samples by process type and attributes.
             </p>
         </div>
         <div id="query-builder" style="display: none" x-show="showBuilder">
