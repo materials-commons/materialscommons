@@ -1,5 +1,5 @@
-<h4>Query Builder</h4>
-<a href="#" class="float-right" @click="toggleShowBuilder()">Close</a>
+<h4>Query Builder <a href="#" class="ml-2 fs-7" @click="toggleShowBuilder()">close</a></h4>
+
 <br>
 <div class="container">
     <div class="row">
