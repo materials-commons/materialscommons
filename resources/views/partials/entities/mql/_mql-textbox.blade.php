@@ -10,10 +10,17 @@
                 <a class="float-left" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
                 <div class="float-right">
                     <a class="btn btn-danger" href="{{route('projects.entities.index', [$project])}}">Reset</a>
-                    <a class="btn btn-warning" href="#">Save</a>
-                    <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
-                        Run
-                    </a>
+                    @if($filters == "")
+                        <a class="btn btn-warning disabled" href="#" disabled="true">Save</a>
+                        <a class="btn btn-success disabled" href="#" disabled="true">
+                            Run
+                        </a>
+                    @else
+                        <a class="btn btn-warning" href="#">Save</a>
+                        <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
+                            Run
+                        </a>
+                    @endif
                 </div>
             </form>
         </div>
