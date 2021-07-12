@@ -26,11 +26,13 @@
     </div>
     <div class="col-sm">
         <h4>Process Attributes</h4>
-        @include('partials.mql._process-attributes-list')
+        <x-mql.attribute-query-list :attrs="$processAttributes" :project="$project" :form-var-name="'process_attrs'"
+                                    :details-route-name="'projects.activities.attributes.show-details-by-name'"/>
     </div>
     <div class="col-sm">
         <h4>Sample Attributes</h4>
-        @include('partials.mql._sample-attributes-list')
+        <x-mql.attribute-query-list :attrs="$sampleAttributes" :project="$project" :form-var-name="'sample_attrs'"
+                                    :details-route-name="'projects.entities.attributes.show-details-by-name'"/>
     </div>
 </form>
 <a class="btn btn-success" href="#"
