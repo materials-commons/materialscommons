@@ -3,15 +3,15 @@
         <li class="col-12 mt-2">
             @if(old($formVarName) && isset(old($formVarName)[$loop->index]['name']))
                 <div class="row">
-                    <input type="checkbox" class="mr-2" name="{{$formVarName}}[{{$loop->index}}][name]"
+                    <input type="checkbox" class="mr-1" name="{{$formVarName}}[{{$loop->index}}][name]"
                            value="{{$attr->name}}" checked>
                     <a href="#"
                        hx-target="#{{slugify($attr->name)}}"
                        hx-swap="innerHTML"
                        hx-get="{{route($detailsRouteName, [$project, $attr->name])}}">{{$attr->name}}</a>
                 </div>
-                <div class="row ml-3">
-                    <select class="selectpicker col-5"
+                <div class="row ml-1">
+                    <select class="selectpicker col-6"
                             name="{{$formVarName}}[{{$loop->index}}][operator]"
                             value="{{old($formVarName)[$loop->index]['operator']}}">
                         <option>Select</option>
@@ -34,13 +34,13 @@
                             <>
                         </option>
                     </select>
-                    <input type="text" placeholder="Value..."
+                    <input type="text" placeholder="Value..." class="col-4"
                            name="{{$formVarName}}[{{$loop->index}}][value]"
                            value="{{old($formVarName)[$loop->index]['value']}}">
                 </div>
             @else
                 <div class="row">
-                    <input type="checkbox" class="mr-2" name="{{$formVarName}}[{{$loop->index}}][name]"
+                    <input type="checkbox" class="mr-1" name="{{$formVarName}}[{{$loop->index}}][name]"
                            value="{{$attr->name}}">
                     <a href="#"
                        hx-target="#{{slugify($attr->name)}}"
@@ -49,8 +49,8 @@
                         {{$attr->name}}
                     </a>
                 </div>
-                <div class="row ml-3">
-                    <select class="selectpicker col-5" name="{{$formVarName}}[{{$loop->index}}][operator]">
+                <div class="row ml-1">
+                    <select class="selectpicker col-6" name="{{$formVarName}}[{{$loop->index}}][operator]">
                         <option>Select</option>
                         <option>=</option>
                         <option>></option>
@@ -59,7 +59,7 @@
                         <option><=</option>
                         <option><></option>
                     </select>
-                    <input type="text" placeholder="Value..."
+                    <input type="text" placeholder="Value..." class="col-4"
                            name="{{$formVarName}}[{{$loop->index}}][value]">
                 </div>
             @endif
