@@ -1,16 +1,16 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="ml-4" id="mql-query">
+            <form class="ml-4">
                 <div class="form-group">
                     <label for="mql">Current Query</label>
                     <textarea class="form-control" id="mql" placeholder="Query..."
-                              style="height: 75px">{{$filters}}</textarea>
+                              style="height: 75px">{{$query}}</textarea>
                 </div>
                 <a class="float-left" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
                 <div class="float-right">
                     <a class="btn btn-danger" href="{{route('projects.entities.index', [$project])}}">Reset</a>
-                    @if($filters == "")
+                    @if($query == "")
                         <a class="btn btn-warning disabled" href="#" disabled="true">Save</a>
                         <a class="btn btn-success disabled" href="#" disabled="true">
                             Run

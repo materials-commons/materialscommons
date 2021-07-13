@@ -54,7 +54,7 @@ class IndexEntitiesWebController extends Controller
                               ->orderBy('name')
                               ->get();
 
-        $filters = "";
+        $query = "";
 
         return view('app.projects.entities.index', [
             'project'           => $project,
@@ -62,7 +62,7 @@ class IndexEntitiesWebController extends Controller
             'entities'          => $entities,
             'processAttributes' => $processAttributes,
             'sampleAttributes'  => $sampleAttributes,
-            'filters'           => $filters,
+            'query'             => $query,
             'usedActivities'    => $createUsedActivities->execute($activities, $entities),
         ]);
     }

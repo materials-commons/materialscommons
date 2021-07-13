@@ -79,7 +79,7 @@ class RunMqlQueryWebController extends Controller
             'entities'          => $entities,
             'processAttributes' => $processAttributes,
             'sampleAttributes'  => $sampleAttributes,
-            'filters'           => $this->buildMqlQueryText($validated),
+            'query'             => $this->buildMqlQueryText($validated),
             'usedActivities'    => $createUsedActivities->execute($activities, $entities),
         ]);
     }

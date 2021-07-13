@@ -17,7 +17,7 @@ class ShowMqlQueryWebController extends Controller
 
         return view('partials.entities.mql._mql-textbox', [
             'project' => $project,
-            'filters' => $this->buildMqlQueryText($validated),
+            'query'   => $this->buildMqlQueryText($validated),
         ]);
     }
 }
