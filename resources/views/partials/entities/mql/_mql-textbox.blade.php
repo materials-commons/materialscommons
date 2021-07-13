@@ -16,7 +16,7 @@
                             Run
                         </a>
                     @else
-                        <a class="btn btn-warning" href="#">Save</a>
+                        <a class="btn btn-warning" data-toggle="modal" href="#mql-save-query-dialog">Save</a>
                         <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
                             Run
                         </a>
@@ -31,4 +31,5 @@
         Showing saved queries
     </div>
     <br>
+    @include('app.dialogs.save-query-dialog')
 </div>

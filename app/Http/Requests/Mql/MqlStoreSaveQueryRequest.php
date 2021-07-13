@@ -4,7 +4,7 @@ namespace App\Http\Requests\Mql;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MqlSaveQueryRequest extends FormRequest
+class MqlStoreSaveQueryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

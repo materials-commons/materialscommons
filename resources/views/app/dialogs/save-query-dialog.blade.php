@@ -12,7 +12,7 @@
                 <form id="mql-save">
                     <div class="form-group">
                         <label>Query</label>
-                        <textarea class="form-control" name="query_text">{{$filter}}</textarea>
+                        <textarea class="form-control" name="query_text">{{$query}}</textarea>
                     </div>
                     <div class="form-group">
                         <label>Name</label>
@@ -32,14 +32,6 @@
                         </a>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
-                <a class="btn btn-primary" data-dismiss="modal"
-                   hx-post="{{route('projects.mql.store', $project)}}"
-                   hx-include="#mql-selection">
-                    Done
-                </a>
             </div>
         </div>
     </div>
