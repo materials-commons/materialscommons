@@ -43,7 +43,11 @@
                     <td>{{$query->name}}</td>
                     <td>{{$query->descripton}}</td>
                     <td>{{$query->queryText()}}</td>
-                    <td></td>
+                    <td>
+                        <a class="btn btn-success" href="{{route('projects.mql.run', [$project, $query])}}">
+                            Run
+                        </a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

@@ -5,24 +5,20 @@ namespace App\Http\Controllers\Web\Entities\Mql;
 use App\Actions\Entities\CreateUsedActivitiesForEntitiesAction;
 use App\Actions\Mql\RunMqlQueryAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Mql\MqlSelectionRequest;
 use App\Models\Entity;
 use App\Models\Project;
 use App\Models\SavedQuery;
 use App\Traits\Entities\EntityAndAttributeQueries;
 use App\Traits\Mql\MqlQueryBuilder;
 
-
-class RunMqlQueryWebController extends Controller
+class RunSavedMqlQueryWebController extends Controller
 {
     use MqlQueryBuilder;
     use EntityAndAttributeQueries;
 
-    public function __invoke(MqlSelectionRequest $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-        RunMqlQueryAction $runMqlQueryAction, Project $project)
+    public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+        RunMqlQueryAction $runMqlQueryAction, Project $project, SavedQuery $query)
     {
-        $validated = $request->validated();
-
         $activities = $this->getProjectActivities($project->id);
 
         $entities = Entity::with(['activities', 'experiments'])
@@ -33,10 +29,10 @@ class RunMqlQueryWebController extends Controller
 
         $sampleAttributes = $this->getSampleAttributes($project->id);
 
-        $queryResults = $runMqlQueryAction->runQuery($validated, $project);
+        $queryResults = $runMqlQueryAction->runQuery($query->query, $project);
         $entities = $runMqlQueryAction->filterEntitiesUsingQueryResults($entities, $queryResults);
 
-        $request->flash();
+        session()->flashInput($query->query);
 
         return view('app.projects.entities.index', [
             'project'           => $project,
@@ -44,7 +40,7 @@ class RunMqlQueryWebController extends Controller
             'entities'          => $entities,
             'processAttributes' => $processAttributes,
             'sampleAttributes'  => $sampleAttributes,
-            'query'             => $this->buildMqlQueryText($validated),
+            'query'             => $this->buildMqlQueryText($query->query),
             'queries'           => SavedQuery::where('owner_id', auth()->id())
                                              ->where('project_id', $project->id)
                                              ->get(),
