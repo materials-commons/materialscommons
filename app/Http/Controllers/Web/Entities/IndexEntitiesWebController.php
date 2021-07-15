@@ -8,6 +8,7 @@ use App\Models\Activity;
 use App\Models\Entity;
 use App\Models\EntityState;
 use App\Models\Project;
+use App\Models\SavedQuery;
 use Illuminate\Support\Facades\DB;
 
 class IndexEntitiesWebController extends Controller
@@ -63,6 +64,9 @@ class IndexEntitiesWebController extends Controller
             'processAttributes' => $processAttributes,
             'sampleAttributes'  => $sampleAttributes,
             'query'             => $query,
+            'queries'           => SavedQuery::where('owner_id', auth()->id())
+                                             ->where('project_id', $project->id)
+                                             ->get(),
             'usedActivities'    => $createUsedActivities->execute($activities, $entities),
         ]);
     }

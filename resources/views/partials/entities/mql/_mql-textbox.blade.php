@@ -28,7 +28,26 @@
     <div id="saved-queries" style="display: none" x-show="showSavedQueries" class="row">
         <br>
         <a href="#" @click="toggleShowSavedQueries()" class="mt-6">Close</a>
-        Showing saved queries
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Query</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($queries as $query)
+                <tr>
+                    <td>{{$query->name}}</td>
+                    <td>{{$query->descripton}}</td>
+                    <td>{{$query->queryText()}}</td>
+                    <td></td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
     <br>
     @include('app.dialogs.save-query-dialog')

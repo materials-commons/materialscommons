@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use App\Traits\Mql\MqlQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ class SavedQuery extends Model
 {
     use HasUUID;
     use HasFactory;
+    use MqlQueryBuilder;
 
     protected $guarded = ['id'];
 
@@ -42,5 +44,10 @@ class SavedQuery extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function queryText()
+    {
+        return $this->buildMqlQueryText($this->query);
     }
 }
