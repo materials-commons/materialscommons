@@ -1,4 +1,4 @@
-@if(isInBeta())
+@if(isInBeta() && Request::routeIs('projects.entities.*'))
     <div id="mql-query-builder" x-data="initMQLBuilder()">
         <div id="open-query-builder" x-show="!showBuilder">
             <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
