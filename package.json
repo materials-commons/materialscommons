@@ -48,6 +48,6 @@
     "flowchart.js": "^1.15.0",
     "htmx.org": "^1.2.0",
     "laravel-mix-purgecss": "^4.2.0",
-    "xlsx": "^0.15.6"
+    "xlsx": "^0.17.0"
   }
 }
