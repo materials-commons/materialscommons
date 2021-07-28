@@ -45,8 +45,17 @@ class DeleteUnverifiedAccountsCommand extends Command
                       ->cursor();
         foreach ($cursor as $user) {
             $this->info("Deleting unverified user: {$user->name}/{$user->email}");
-            $user->delete();
+            $this->deleteUser($user);
         }
         return 0;
+    }
+
+    private function deleteUser(User $user)
+    {
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            $this->info("   Failed to delete use: {$user->name}/{$user->email}");
+        }
     }
 }
