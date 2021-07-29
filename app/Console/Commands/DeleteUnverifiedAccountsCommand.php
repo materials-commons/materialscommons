@@ -55,7 +55,7 @@ class DeleteUnverifiedAccountsCommand extends Command
         try {
             $user->delete();
         } catch (\Exception $e) {
-            $this->info("   Failed to delete use: {$user->name}/{$user->email}");
+            $this->info("   Failed to delete user: {$user->name}/{$user->email}");
         }
     }
 }
