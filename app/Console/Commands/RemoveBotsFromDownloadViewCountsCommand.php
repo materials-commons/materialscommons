@@ -24,6 +24,8 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
      */
     protected $description = 'Cleans up the downloand and view counts';
 
+    private $badAddresses;
+
     /**
      * Create a new command instance.
      *
@@ -32,6 +34,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->badAddresses = array();
     }
 
     /**
@@ -92,7 +95,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
         foreach ($countsById as $id => $count) {
             $dataset = Dataset::find($id);
             if (!is_null($dataset)) {
-                array_push($table, [$dataset->name, $count]);
+                array_push($table, [Str::limit($dataset->name, 50, "..."), $count]);
             }
         }
 
@@ -101,6 +104,10 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
 
     function tryGetHost($ip)
     {
+        if (array_key_exists($ip, $this->badAddresses)) {
+            return $ip;
+        }
+        
         $string = '';
         exec("dig +short -x $ip 2>&1", $output, $retval);
         if ($retval != 0) {
@@ -114,6 +121,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
         }
 
         if (empty($string)) {
+            $this->badAddresses[$ip] = true;
             $string = $ip;
         } else {
             //remove the trailing dot
