@@ -107,7 +107,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
         if (array_key_exists($ip, $this->badAddresses)) {
             return $ip;
         }
-        
+
         $string = '';
         exec("dig +short -x $ip 2>&1", $output, $retval);
         if ($retval != 0) {
