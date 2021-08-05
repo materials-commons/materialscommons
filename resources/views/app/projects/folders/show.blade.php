@@ -69,7 +69,7 @@
                    href="{{route('projects.folders.rename', [$project, $directory])}}">
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
-                @endif
+            @endif
         </x-slot>
 
         <x-slot name="body">
@@ -126,7 +126,11 @@
                             @endif
                         </td>
                         <td>{{$file->mime_type}}</td>
-                        <td>{{$file->toHumanBytes()}}</td>
+                        @if($file->isDir())
+                            <td></td>
+                        @else
+                            <td>{{$file->toHumanBytes()}}</td>
+                        @endif
                         <td>{{$file->size}}</td>
                         <td>
                             @if($file->isImage())
