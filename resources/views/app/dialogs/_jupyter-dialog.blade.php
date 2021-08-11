@@ -19,10 +19,24 @@
                     <li>Synchronize changes to Materials Commons</li>
                 </ul>
                 <p>
-                    To get started you can download our Jupyter Notebook template <a href="#">here</a>.
+                    To get started you can download our Jupyter Notebook template:
                 </p>
+                <ul>
+                    <li>
+                        <a href="https://materials-commons.github.io/materials-commons-cli/html/examples/MaterialsCommons-Project-Example.ipynb">
+                            Python API Version
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://materials-commons.github.io/materials-commons-cli/html/examples/MaterialsCommons-Project-Shell-Example.ipynb">
+                            Materials Commons CLI Version
+                        </a>
+                    </li>
+                </ul>
                 <p>
-                    To learn more, read our online <a href="#">documentation</a>.
+                    To learn more, read our online
+                    <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/jupyter.html"
+                       target="_blank">documentation</a>.
                 </p>
 
             </div>
