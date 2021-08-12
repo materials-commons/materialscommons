@@ -23,7 +23,7 @@
             <tbody>
             @foreach($attributeValues as $name => $attrs)
                 <tr>
-                    <td>{{$name}}</td>
+                    <td>{{$attributeName}}</td>
                     <td>{{$units($attrs)}}</td>
                     <td>{{$min($attrs)}}</td>
                     <td>{{$max($attrs)}}</td>

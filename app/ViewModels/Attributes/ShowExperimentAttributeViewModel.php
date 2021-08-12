@@ -35,12 +35,14 @@ class ShowExperimentAttributeViewModel extends ViewModel
 
     public function withAttributeValues($attributeValues)
     {
+        ray($attributeValues);
         $this->attributeValues = $attributeValues;
         return $this;
     }
 
     public function withAttributeName($name)
     {
+        ray("withAttributeName", $name);
         $this->attributeName = $name;
         return $this;
     }

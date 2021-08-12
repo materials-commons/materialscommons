@@ -19,6 +19,7 @@ class ShowExperimentActivityAttributeWebController extends Controller
         abort_if(is_null($attributeName), 400, "Attribute name is required");
         $viewModel = (new ShowExperimentAttributeViewModel())
             ->withProject($project)
+            ->withAttributeName($attributeName)
             ->withExperiment($experiment)
             ->withAttributeValues($this->getActivityAttributeForExperiment($experiment->id, $attributeName));
         return view('app.projects.experiments.attributes.show', $viewModel);

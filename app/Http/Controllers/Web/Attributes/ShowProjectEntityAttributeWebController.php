@@ -18,6 +18,7 @@ class ShowProjectEntityAttributeWebController extends Controller
         abort_if(is_null($attributeName), 400, "Attribute name is required");
         $viewModel = (new ShowExperimentAttributeViewModel())
             ->withProject($project)
+            ->withAttributeName($attributeName)
             ->withAttributeValues($this->getEntityAttributeForProject($project->id, $attributeName));
         return view('app.projects.attributes.show', $viewModel);
     }
