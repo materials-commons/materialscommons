@@ -1,6 +1,6 @@
 <?php
 
-use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 
 Breadcrumbs::for('projects.index', function ($trail) {
     $trail->push('Projects', route('projects.index'));
