@@ -9,14 +9,14 @@
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
            href="{{route('projects.data-dictionary.entities', [$project])}}">
-            Sample Attributes
+            Sample Attributes ({{$entityAttributesCount}})
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.activities')}}"
            href="{{route('projects.data-dictionary.activities', [$project])}}">
-            Process Attributes
+            Process Attributes ({{$activityAttributesCount}})
         </a>
     </li>
 

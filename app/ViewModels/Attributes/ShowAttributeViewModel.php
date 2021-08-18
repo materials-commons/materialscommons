@@ -7,7 +7,7 @@ use App\Models\Project;
 use App\ViewModels\DataDictionary\AttributeStatistics;
 use Spatie\ViewModels\ViewModel;
 
-class ShowExperimentAttributeViewModel extends ViewModel
+class ShowAttributeViewModel extends ViewModel
 {
     use AttributeStatistics;
 

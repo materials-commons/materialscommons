@@ -16,6 +16,7 @@ class ShowProjectActivitiesDataDictionaryWebController extends Controller
     {
         $viewModel = (new ShowProjectDataDictionaryViewModel())
             ->withProject($project)
+            ->withEntityAttributes($this->getUniqueEntityAttributesForProject($project->id))
             ->withActivityAttributes($this->getUniqueActivityAttributesForProject($project->id));
         return view('app.projects.show', $viewModel);
     }

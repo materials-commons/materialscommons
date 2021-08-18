@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Web\Projects;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Traits\DataDictionaryQueries;
 use App\ViewModels\Projects\ShowProjectViewModel;
 use Illuminate\Support\Facades\DB;
 
 class ShowProjectWebController extends Controller
 {
+    use DataDictionaryQueries;
+
     public function __invoke($projectId)
     {
         $project = Project::with(['owner', 'team.members', 'team.admins'])
@@ -16,6 +19,8 @@ class ShowProjectWebController extends Controller
                           ->where('id', $projectId)
                           ->first();
         $showProjectViewModel = (new ShowProjectViewModel($project))
+            ->withActivityAttributesCount($this->getUniqueActivityAttributesForProject($projectId)->count())
+            ->withEntityAttributesCount($this->getUniqueEntityAttributesForProject($projectId)->count())
             ->withActivitiesGroup($this->getActivitiesGroup($project->id))
             ->withObjectCounts($this->getObjectTypes($project->id));
         return view('app.projects.show', $showProjectViewModel);

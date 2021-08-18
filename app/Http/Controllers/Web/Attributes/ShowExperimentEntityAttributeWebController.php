@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Traits\DataDictionaryQueries;
-use App\ViewModels\Attributes\ShowExperimentAttributeViewModel;
+use App\ViewModels\Attributes\ShowAttributeViewModel;
 use Illuminate\Http\Request;
 
 class ShowExperimentEntityAttributeWebController extends Controller
@@ -17,7 +17,7 @@ class ShowExperimentEntityAttributeWebController extends Controller
     {
         $attributeName = $request->input('attribute', null);
         abort_if(is_null($attributeName), 400, "Attribute name is required");
-        $viewModel = (new ShowExperimentAttributeViewModel())
+        $viewModel = (new ShowAttributeViewModel())
             ->withAttributeName($attributeName)
             ->withProject($project)
             ->withExperiment($experiment)

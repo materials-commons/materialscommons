@@ -13,6 +13,9 @@ class ShowProjectViewModel extends ViewModel
     /** @var \App\Models\Project */
     private $project;
 
+    private int $entityAttributesCount;
+    private int $activityAttributesCount;
+
     public function __construct(Project $project)
     {
         $this->project = $project;
@@ -21,5 +24,27 @@ class ShowProjectViewModel extends ViewModel
     public function project()
     {
         return $this->project;
+    }
+
+    public function withEntityAttributesCount(int $count)
+    {
+        $this->entityAttributesCount = $count;
+        return $this;
+    }
+
+    public function withActivityAttributesCount(int $count)
+    {
+        $this->activityAttributesCount = $count;
+        return $this;
+    }
+
+    public function entityAttributesCount(): int
+    {
+        return $this->entityAttributesCount;
+    }
+
+    public function activityAttributesCount(): int
+    {
+        return $this->activityAttributesCount;
     }
 }
