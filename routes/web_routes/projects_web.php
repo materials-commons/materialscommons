@@ -2,10 +2,6 @@
 
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
-use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsAttributesWebController;
-use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsFilesWebController;
-use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsProcessStepsWebController;
-use App\Http\Controllers\Web\Projects\Documents\ShowProjectDocumentsUnitsWebController;
 use App\Http\Controllers\Web\Projects\EditProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\CloseOpenGlobusTransfersWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\CreateProjectGlobusDownloadWebController;
@@ -31,7 +27,9 @@ use App\Http\Controllers\Web\Projects\Globus\Uploads\UpdateGlobusAccountForUploa
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectDocumentsWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -63,18 +61,6 @@ Route::post('/projects/search', SearchAcrossProjectsWebController::class)
 
 Route::get('/projects/{project}', ShowProjectWebController::class)
      ->name('projects.show');
-Route::get('/projects/{project}/documents', ShowProjectDocumentsWebController::class)
-     ->name('projects.documents.show');
-
-// Document sub routes
-Route::get('/projects/{project}/documents/files', ShowProjectDocumentsFilesWebController::class)
-     ->name('projects.documents.show.files');
-Route::get('/projects/{project}/documents/process-steps', ShowProjectDocumentsProcessStepsWebController::class)
-     ->name('projects.documents.show.process-steps');
-Route::get('/projects/{project}/documents/attributes', ShowProjectDocumentsAttributesWebController::class)
-     ->name('projects.documents.show.attributes');
-Route::get('/projects/{project}/documents/units', ShowProjectDocumentsUnitsWebController::class)
-     ->name('projects.documents.show.units');
 
 //
 
@@ -184,6 +170,12 @@ Route::get('/projects/{project}/globus/{globusTransfer}/show-started', ShowStart
 
 Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
      ->name('projects.globus.close');
+
+Route::get('/projects/{project}/data-dictionary/activities', ShowProjectActivitiesDataDictionaryWebController::class)
+     ->name('projects.data-dictionary.activities');
+
+Route::get('/projects/{project}/data-dictionary/entities', ShowProjectEntitiesDataDictionaryWebController::class)
+     ->name('projects.data-dictionary.entities');
 
 //Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
 //     ->name('projects.globus.monitor');
