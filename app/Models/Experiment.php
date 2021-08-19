@@ -18,6 +18,7 @@ use Spatie\Searchable\SearchResult;
  * @property string description
  * @property string summary
  * @property mixed workflows
+ * @property mixed etlRuns
  *
  * @mixin Builder
  */

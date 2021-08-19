@@ -36,7 +36,7 @@
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.experiments.etl_runs')}}"
            href="{{route('projects.experiments.etl_runs', [$project, $experiment])}}">
-            ETL Runs
+            Spreadsheet Load Logs ({{$etlRunsCount}})
         </a>
     </li>
 </ul>

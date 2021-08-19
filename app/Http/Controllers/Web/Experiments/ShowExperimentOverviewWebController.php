@@ -13,13 +13,17 @@ class ShowExperimentOverviewWebController extends Controller
 {
     use ExcelFilesCount;
     use DataDictionaryQueries;
+    use EtlRunsCount;
 
     public function __invoke($projectId, $experimentId)
     {
-        $experiment = Experiment::withCount('entities', 'activities', 'workflows')->findOrFail($experimentId);
+        $experiment = Experiment::withCount('entities', 'activities', 'workflows')
+                                ->with('etlruns.files')
+                                ->findOrFail($experimentId);
         $showExperimentViewModel = (new ShowExperimentViewModel())
             ->withProject($project = Project::with('experiments')->findOrFail($projectId))
             ->withExperiment($experiment)
+            ->withEtlRunsCount($this->getEtlRunsCount($experiment->etlruns))
             ->withExcelFilesCount($this->getExcelFilesCount($project))
             ->withActivitiesGroup($this->getActivitiesGroup($experiment->id))
             ->withFileTypes($this->getFileTypesGroup($experiment->id))

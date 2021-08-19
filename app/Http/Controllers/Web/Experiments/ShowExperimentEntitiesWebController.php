@@ -13,10 +13,13 @@ class ShowExperimentEntitiesWebController extends Controller
 {
     use ExcelFilesCount;
     use DataDictionaryQueries;
+    use EtlRunsCount;
 
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, $projectId, $experimentId)
     {
-        $experiment = Experiment::withCount('entities', 'activities', 'workflows')->findOrFail($experimentId);
+        $experiment = Experiment::withCount('entities', 'activities', 'workflows')
+                                ->with('etlruns.files')
+                                ->findOrFail($experimentId);
         $project = Project::with('experiments')->findOrFail($projectId);
         $activities = DB::table('experiment2activity')
                         ->where('experiment_id', $experiment->id)
@@ -36,6 +39,7 @@ class ShowExperimentEntitiesWebController extends Controller
             'excelFilesCount'         => $this->getExcelFilesCount($project),
             'activities'              => $activities,
             'entities'                => $entities,
+            'etlRunsCount'            => $this->getEtlRunsCount($experiment->etlruns),
             'activityAttributesCount' => $this->getUniqueActivityAttributesForExperiment($experiment->id)->count(),
             'entityAttributesCount'   => $this->getUniqueEntityAttributesForExperiment($experiment->id)->count(),
             'usedActivities'          => $createUsedActivities->execute($activities, $entities),

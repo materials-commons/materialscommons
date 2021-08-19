@@ -17,6 +17,8 @@ class ShowExperimentDataDictionaryViewModel extends AbstractShowDataDictionaryVi
 
     private $excelFilesCount;
 
+    private $etlRunsCount;
+
     public function withProject(Project $project)
     {
         $this->project = $project;
@@ -70,5 +72,16 @@ class ShowExperimentDataDictionaryViewModel extends AbstractShowDataDictionaryVi
     public function activityAttributesCount()
     {
         return $this->activityAttributes->count();
+    }
+
+    public function withEtlRunsCount($count)
+    {
+        $this->etlRunsCount = $count;
+        return $this;
+    }
+
+    public function etlRunsCount()
+    {
+        return $this->etlRunsCount;
     }
 }
