@@ -4,8 +4,9 @@
 <table id="etl-runs" class="table table-hover" style="width:100%">
     <thead>
     <tr>
-        <th>File</th>
+        <th>Log</th>
         <th>Date</th>
+        <th>File</th>
     </tr>
     </thead>
     <tbody>
@@ -14,11 +15,16 @@
             <tr>
                 <td>
                     <a href="{{route('projects.experiments.etl_run.show', [$project, $experiment, $etlRun])}}">
-                        {{$etlRun->files[0]->name}}
+                        View Log
                     </a>
                 </td>
                 <td>
                     {{$etlRun->created_at->diffForHumans()}}
+                </td>
+                <td>
+                    <a href="{{route('projects.files.show', [$project, $etlRun->files[0]])}}">
+                        {{$etlRun->files[0]->name}}
+                    </a>
                 </td>
             </tr>
         @endif
