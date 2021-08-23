@@ -72,7 +72,7 @@ class Experiment extends Model implements Searchable
 
     public function etlruns()
     {
-        return $this->morphMany(EtlRun::class, 'etlable');
+        return $this->morphMany(EtlRun::class, 'etlable')->orderBy('created_at');
     }
 
     public static function laratablesCustomAction($experiment)

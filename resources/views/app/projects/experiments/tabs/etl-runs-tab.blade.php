@@ -6,6 +6,7 @@
     <tr>
         <th>Log</th>
         <th>Date</th>
+        <th>Created</th>
         <th>File</th>
     </tr>
     </thead>
@@ -18,9 +19,8 @@
                         View Log
                     </a>
                 </td>
-                <td>
-                    {{$etlRun->created_at->diffForHumans()}}
-                </td>
+                <td>{{$etlRun->created_at->diffForHumans()}}</td>
+                <td>{{$etlRun->created_at}}</td>
                 <td>
                     <a href="{{route('projects.files.show', [$project, $etlRun->files[0]])}}">
                         {{$etlRun->files[0]->name}}
@@ -37,6 +37,10 @@
         $(document).ready(() => {
             $('#etl-runs').DataTable({
                 stateSave: true,
+                columnDefs: [
+                    {orderData: [2], targets: [1]},
+                    {targets: [2], visible: false, searchable: false}
+                ]
             });
         });
     </script>
