@@ -42,10 +42,17 @@ class AttributeHeader
 
     public static function parse($header)
     {
-        $attrType = "entity";
+        // Set the default header type if the user didn't specify one
+        $attrType = "activity";
+
+        // See if the user specified a header type (that is there is a colon in the header), and use it.
         $headerTrimmed = trim($header);
         $headerLower = Str::lower($headerTrimmed);
         $colon = strpos($headerLower, ':');
+
+        // If there was a colon then set attrType to the specified header type. If there wasn't
+        // a colon, then the user didn't specify a header type and it will default to what $attrType
+        // was originally set to at the top.
         if ($colon !== false) {
             $attrType = AttributeHeader::getHeaderType(substr($headerLower, 0, $colon));
         }
