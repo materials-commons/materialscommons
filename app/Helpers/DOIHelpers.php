@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class DOIHelpers
 {
@@ -29,6 +30,58 @@ class DOIHelpers
         $matches = [];
         preg_match("/doi:\S*/", $respBody, $matches);
         return str_replace("doi:", "", $matches[0]);
+    }
+
+    public static function mintDOI2($title, $author, $datasetId)
+    {
+        // First create a draft DOI
+        $response = Http::withBasicAuth(config('doi.user'), config('doi.password'))
+                        ->contentType('application/vnd.api+json')
+                        ->post('https://api.datacite.org/dois', [
+                            'data' => [
+                                'type'       => 'dois',
+                                'attributes' => [
+                                    'prefix' => config('doi.namespace'),
+                                ],
+                            ],
+                        ]);
+        if (!$response->ok()) {
+            return null;
+        }
+
+        $DSURL = config('doi.dataset_url');
+        $draft = $response->json()['data'];
+        // Now that we have a draft DOI, publish it
+        $response = Http::withBasicAuth(config('doi.user'), config('doi.password'))
+                        ->contentType('application/vnd.api+json')
+                        ->post('https://api.datacite.org/dois', [
+                            'data' => [
+                                'id'         => $draft['id'],
+                                'type'       => 'dois',
+                                'attributes' => [
+                                    'event'           => 'publish',
+                                    'doi'             => $draft['id'],
+                                    'creators'        => [
+                                        ['name' => $author],
+                                    ],
+                                    'titles'          => [
+                                        ['title' => $title],
+                                    ],
+                                    'publisher'       => 'Materials Commons',
+                                    'publicationYear' => Carbon::now()->year,
+                                    'types'           => [
+                                        'resourceTypeGeneral' => 'Dataset',
+                                    ],
+                                    'url'             => "{$DSURL}/{$datasetId}",
+                                ],
+                            ],
+                        ]);
+
+        if ($response->ok()) {
+            return null;
+        }
+
+        return $draft['id'];
     }
 }
 
