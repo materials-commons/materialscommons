@@ -45,6 +45,16 @@
                 </a>
             </li>
 
+            @if(isInBeta())
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.data-explorer')}}"
+                       href="{{route('projects.data-explorer.samples', [$project])}}">
+                        <i class="fa-fw fas fa-eye mr-2"></i>
+                        Explorer
+                    </a>
+                </li>
+            @endif
+
             {{--            <li class="nav-item">--}}
             {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities')}}"--}}
             {{--                   href="{{route('projects.activities.index', ['project' => $project->id])}}">--}}
