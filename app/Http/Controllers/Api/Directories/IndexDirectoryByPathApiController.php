@@ -13,7 +13,11 @@ class IndexDirectoryByPathApiController extends Controller
     public function __invoke(Request $request, $projectId)
     {
         $path = request()->input("path");
-        $dir = File::where('project_id', $projectId)->where('path', $path)->where('mime_type', 'directory')->first();
+        $dir = File::where('project_id', $projectId)
+                   ->where('path', $path)
+                   ->where('mime_type', 'directory')
+                   ->where('current', true)
+                   ->first();
         abort_if(is_null($dir), 404, "No such directory path");
         $query = new IndexDirectoryQuery($request, $projectId, $dir->id);
         return DirectoryResource::collection($query->get());

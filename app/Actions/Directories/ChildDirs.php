@@ -17,7 +17,8 @@ trait ChildDirs
      *
      * @return array
      */
-    public function getDirectoriesToUpdate(File $directory, string $newPath, int $startingFrom, int $oldPathLen): iterable
+    public function getDirectoriesToUpdate(File $directory, string $newPath, int $startingFrom,
+        int $oldPathLen): iterable
     {
         $directoriesToUpdate = $this->recursivelyRetrieveAllSubdirs($directory->id);
 
@@ -46,12 +47,15 @@ trait ChildDirs
         // into the list of directories to update and then get the query set of directories children.
 
         $directoriesToUpdate = collect(); // Initial empty collection of subdirs to update
-        $count               = $directoriesToUpdate->count(); // Initial count
+        $count = $directoriesToUpdate->count(); // Initial count
 
-        $dirs = File::where('directory_id', $directoryId)->whereNotNull('path')->get(); // Get children of directory being moved
+        $dirs = File::where('directory_id', $directoryId)
+                    ->whereNotNull('path')
+                    ->where('current', true)
+                    ->get(); // Get children of directory being moved
 
         while (true) {
-            $directoriesToUpdate      = $directoriesToUpdate->merge($dirs);
+            $directoriesToUpdate = $directoriesToUpdate->merge($dirs);
             $directoriesToUpdateCount = $directoriesToUpdate->count();
             if ($count == $directoriesToUpdateCount) {
                 // Count didn't change so no new directories were found so exit loop.
@@ -66,7 +70,10 @@ trait ChildDirs
                 return $item->id;
             })->toArray();
 
-            $dirs = File::whereIn('directory_id', $dirIds)->whereNotNull('path')->get();
+            $dirs = File::whereIn('directory_id', $dirIds)
+                        ->where('current', true)
+                        ->whereNotNull('path')
+                        ->get();
         }
 
         return $directoriesToUpdate;

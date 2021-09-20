@@ -35,8 +35,10 @@ class CreateDataDatasetWebController extends Controller
             return $folderId;
         }
 
-        $folder = File::where('project_id', $projectId)->where('path', $path)
+        $folder = File::where('project_id', $projectId)
+                      ->where('path', $path)
                       ->where('mime_type', 'directory')
+                      ->where('current', true)
                       ->first();
         return $folder->id;
     }

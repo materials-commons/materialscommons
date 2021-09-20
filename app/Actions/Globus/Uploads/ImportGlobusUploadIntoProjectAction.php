@@ -130,9 +130,14 @@ class ImportGlobusUploadIntoProjectAction
         if (blank($dirPath)) {
             $dirPath = "/";
         }
-        $parentDir = File::where('project_id', $this->globusUpload->project_id)->where('path',
-            dirname($dirPath))->first();
-        $dir = File::where('project_id', $this->globusUpload->project_id)->where('path', $dirPath)->first();
+        $parentDir = File::where('project_id', $this->globusUpload->project_id)
+                         ->where('path', dirname($dirPath))
+                         ->where('current', true)
+                         ->first();
+        $dir = File::where('project_id', $this->globusUpload->project_id)
+                   ->where('path', $dirPath)
+                   ->where('current', true)
+                   ->first();
         if ($dir !== null) {
             return $dir;
         }

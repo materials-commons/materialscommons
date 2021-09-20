@@ -40,7 +40,10 @@ class GetFileByPathAction
     {
         $fileName = basename($path);
         $dirName = dirname($path);
-        $dir = File::where('project_id', $projectId)->where('path', $dirName)->first();
+        $dir = File::where('project_id', $projectId)
+                   ->where('path', $dirName)
+                   ->where('current', true)
+                   ->first();
         if (is_null($dir)) {
             return null;
         }

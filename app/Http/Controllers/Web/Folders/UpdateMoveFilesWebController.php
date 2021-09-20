@@ -18,12 +18,17 @@ class UpdateMoveFilesWebController extends Controller
         $ids = $validated['ids'];
         $moveToDirectory = $validated['directory'];
 
-        $filesToMove = File::whereIn('id', $ids)->whereNull('path')->get();
+        $filesToMove = File::whereIn('id', $ids)
+                           ->whereNull('path')
+                           ->get();
         $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction) {
             $moveFileAction($file, $moveToDirectory);
         });
 
-        $dirsToMove = File::whereIn('id', $ids)->whereNotNull('path')->get();
+        $dirsToMove = File::whereIn('id', $ids)
+                          ->whereNotNull('path')
+                          ->where('current', true)
+                          ->get();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction) {
             $moveDirectoryAction($dir->id, $moveToDirectory);
         });

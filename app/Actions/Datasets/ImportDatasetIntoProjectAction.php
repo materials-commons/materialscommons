@@ -87,6 +87,7 @@ class ImportDatasetIntoProjectAction
         return File::where('project_id', $projectId)
                    ->where('path', $pathToUse)
                    ->where('mime_type', 'directory')
+                   ->where('current', true)
                    ->first();
     }
 

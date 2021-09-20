@@ -33,6 +33,7 @@ class CreateGlobusProjectDownloadDirsAction
         $globusDownload->update(['status' => GlobusStatus::Loading]);
         $allDirs = File::where('project_id', $globusDownload->project_id)
                        ->where('mime_type', 'directory')
+                       ->where('current', true)
                        ->orderBy('path')
                        ->cursor();
 

@@ -26,6 +26,7 @@ class CreateDirectoryAction
     private function getExistingDirIfExists($path, $projectId)
     {
         return File::where('path', $path)
+                   ->where('current', true)
                    ->where('project_id', $projectId)
                    ->first();
     }

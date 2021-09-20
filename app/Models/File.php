@@ -109,7 +109,7 @@ class File extends Model implements Searchable
 
     public function directory()
     {
-        return $this->belongsTo(File::class, 'directory_id');
+        return $this->belongsTo(File::class, 'directory_id')->where('current', true);
     }
 
     public function communities()
@@ -323,5 +323,21 @@ class File extends Model implements Searchable
             // Then mark the file passed in as active
             $file->update(['current' => true]);
         });
+    }
+
+    public static function getDirectoryByPath($projectId, $path)
+    {
+        return File::where('project_id', $projectId)
+                   ->where('path', $path)
+                   ->where('current', true)
+                   ->first();
+    }
+
+    public static function getAllDirectoriesByPath($projectId, $path)
+    {
+        return File::where('project_id', $projectId)
+                   ->where('path', $path)
+                   ->where('current', true)
+                   ->get();
     }
 }

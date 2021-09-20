@@ -317,6 +317,7 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
+                   ->where('current', true)
                    ->where('project_id', $this->projectId)
                    ->first();
 
