@@ -35,6 +35,7 @@ class CreateProjectAction
                 'path'                   => '/',
                 'mime_type'              => 'directory',
                 'media_type_description' => 'directory',
+                'current'                => true,
                 'owner_id'               => $ownerId,
             ]);
             $team = Team::create([

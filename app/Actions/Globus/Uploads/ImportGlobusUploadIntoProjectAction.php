@@ -148,6 +148,7 @@ class ImportGlobusUploadIntoProjectAction
             'mime_type'    => 'directory',
             'owner_id'     => $this->globusUpload->owner->id,
             'project_id'   => $this->globusUpload->project->id,
+            'current'      => true,
             'directory_id' => optional($parentDir)->id,
         ]);
     }

@@ -26,6 +26,7 @@ trait GetProjectFolderFiles
     {
         return File::where('project_id', $projectId)
                    ->where('mime_type', 'directory')
+                   ->where('current', true)
                    ->get();
     }
 }

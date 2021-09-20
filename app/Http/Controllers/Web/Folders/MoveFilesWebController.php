@@ -17,6 +17,7 @@ class MoveFilesWebController extends Controller
         $files = $this->getProjectFolderFiles($project->id, $folderId);
         $dirsInProject = File::where('project_id', $project->id)
                              ->where('mime_type', 'directory')
+                             ->where('current', true)
                              ->where('id', '<>', $folderId)
                              ->get();
         return view('app.projects.folders.move', compact('project', 'directory', 'files', 'dirsInProject'));
