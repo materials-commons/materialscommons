@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActivityInProject;
+use App\Http\Middleware\AddProjectNavigationBarCounts;
 use App\Http\Middleware\DatasetInProject;
 use App\Http\Middleware\EntityInProject;
 use App\Http\Middleware\EntityStateInProject;
@@ -43,6 +44,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             UserCanAccessProject::class,
+            AddProjectNavigationBarCounts::class,
             FileInProject::class,
             ActivityInProject::class,
             EntityInProject::class,
