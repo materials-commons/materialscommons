@@ -40,6 +40,8 @@ class ImportDirectories extends AbstractImporter
         $modelData['mime_type'] = 'directory';
         $modelData['media_type_description'] = 'directory';
         $modelData['disk'] = 'mcfs';
+        $modelData['current'] = true;
+        $modelData['is_deleted'] = false;
 
         return File::create($modelData);
     }

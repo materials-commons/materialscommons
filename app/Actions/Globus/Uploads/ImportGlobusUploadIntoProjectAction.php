@@ -149,6 +149,7 @@ class ImportGlobusUploadIntoProjectAction
             'owner_id'     => $this->globusUpload->owner->id,
             'project_id'   => $this->globusUpload->project->id,
             'current'      => true,
+            'is_deleted'   => false,
             'directory_id' => optional($parentDir)->id,
         ]);
     }
@@ -167,6 +168,7 @@ class ImportGlobusUploadIntoProjectAction
             'name'         => $finfo->getFilename(),
             'owner_id'     => $this->globusUpload->owner->id,
             'current'      => true,
+            'is_deleted'   => false,
             'description'  => "",
             'project_id'   => $this->globusUpload->project->id,
             'directory_id' => $currentDir->id,

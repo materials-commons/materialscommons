@@ -62,6 +62,7 @@ class ImportFiles extends AbstractImporter
 
         $modelData['checksum'] = $data['checksum'];
         $modelData['directory_id'] = $dir->id;
+        $modelData['is_deleted'] = false;
 
         return File::create($modelData);
     }
