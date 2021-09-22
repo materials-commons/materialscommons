@@ -14,6 +14,7 @@
     "ext-zip": "*",
     "bensampo/laravel-enum": "^3.1",
     "bkwld/cloner": "^3.5",
+    "diglactic/laravel-breadcrumbs": "^7.0",
     "doctrine/dbal": "^2.10",
     "elegantweb/sanitizer": "^1.0",
     "fideloper/proxy": "^4.0",
