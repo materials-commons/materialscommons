@@ -33,23 +33,33 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
-                    Files ({{number_format($project->file_count+1000000)}})
+                    Files
                 </a>
             </li>
 
-            <li class="nav-item ml-3">
-                <a class="nav-link fs-11 ml-5"
-                   href="#">
-                    <i class="fa-fw fas fa-trash-restore mr-2"></i>
-                    Trash ({{number_format($nav_trash_count)}})
-                </a>
-            </li>
+            @if($nav_trash_count > 0)
+                <li class="nav-item ml-3">
+                    <a class="nav-link fs-11 ml-5"
+                       href="#">
+                        <i class="fa-fw fas fa-trash-restore mr-2"></i>
+                        Trash
+                    </a>
+                </li>
+            @else
+                <li class="nav-item ml-3">
+                    <a class="nav-link fs-11 ml-5 nav-disabled"
+                       href="#">
+                        <i class="fa-fw fas fa-trash mr-2"></i>
+                        Trash
+                    </a>
+                </li>
+            @endif
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
                    href="{{route('projects.entities.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>
-                    Samples ({{number_format($nav_entities_count+10000)}})
+                    Samples
                 </a>
             </li>
 
@@ -79,7 +89,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-flask mr-2"></i>
-                    Experiments ({{number_format($nav_experiments_count+100)}})
+                    Experiments
                 </a>
             </li>
 
@@ -87,8 +97,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
                    href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
-                    Datasets ({{number_format($nav_published_datasets_count)}}
-                    /{{number_format($nav_unpublished_datasets_count)}})
+                    Datasets
                 </a>
             </li>
 
@@ -96,7 +105,7 @@
                 <a class="nav-link fs-11 ml-5"
                    href="{{route('projects.workflows.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-project-diagram mr-2"></i>
-                    Workflows ({{number_format($nav_workflows_count)}})
+                    Workflows
                 </a>
             </li>
 
@@ -169,7 +178,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
                    href="{{route('projects.users.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-users-cog mr-2"></i>
-                    Members ({{number_format($nav_admins_count+$nav_members_count)}})
+                    Members
                 </a>
             </li>
 
