@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Reload Experiment
+            Reload Experiment: {{$experiment->name}}
         @endslot
 
         @slot('body')

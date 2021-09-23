@@ -13,13 +13,15 @@ class DestroyFolderWebController extends Controller
     {
         $dir = File::with('directory')->findOrFail($dirId);
         $parent = $dir->directory;
-        $count = File::where('directory_id', $dir->id)->count();
-        if ($count !== 0) {
-            flash("Cannot delete directories that are not empty")->error();
-            return redirect(route('projects.folders.show', [$project, $parent]));
-        }
-
-        $deleteDirectoryAction($dir);
+        $dir->update(['current' => false]);
+        flash("Directory '{$dir->path}' moved to trash")->success();
+//        $count = File::where('directory_id', $dir->id)->count();
+//        if ($count !== 0) {
+//            flash("Cannot delete directories that are not empty")->error();
+//            return redirect(route('projects.folders.show', [$project, $parent]));
+//        }
+//
+//        $deleteDirectoryAction($dir);
         return redirect(route('projects.folders.show', [$project, $parent]));
     }
 }

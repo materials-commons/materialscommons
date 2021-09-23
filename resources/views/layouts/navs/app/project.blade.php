@@ -39,8 +39,8 @@
 
             @if($nav_trash_count > 0)
                 <li class="nav-item ml-3">
-                    <a class="nav-link fs-11 ml-5"
-                       href="#">
+                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.trashcan')}}"
+                       href="{{route('projects.trashcan.index', [$project])}}">
                         <i class="fa-fw fas fa-trash-restore mr-2"></i>
                         Trash
                     </a>

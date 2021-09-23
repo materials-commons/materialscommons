@@ -52,24 +52,24 @@
                 <i class="fas fa-fw fa-plus mr-2"></i>Add Files
             </a>
 
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.create', [$project, $directory])}}">
-                <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
-            </a>
-
-            @if(sizeof($dirPaths) !== 1 && $files->count() === 0)
                 <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.delete', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                   href="{{route('projects.folders.create', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
                 </a>
-            @endif
 
-            @if(sizeof($dirPaths) !== 1)
-                <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.rename', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
-                </a>
-            @endif
+                @if(sizeof($dirPaths) !== 1 && $files->count() === 0)
+                    <a class="float-right action-link mr-4"
+                       href="{{route('projects.folders.destroy', [$project, $directory])}}">
+                        <i class="fas fa-fw fa-trash mr-2"></i>Delete
+                    </a>
+                @endif
+
+                @if(sizeof($dirPaths) !== 1)
+                    <a class="float-right action-link mr-4"
+                       href="{{route('projects.folders.rename', [$project, $directory])}}">
+                        <i class="fas fa-fw fa-edit mr-2"></i>Rename
+                    </a>
+                @endif
         </x-slot>
 
         <x-slot name="body">
@@ -141,7 +141,7 @@
                                 </a>
                             @elseif($file->isDir())
                                 <a class="action-link"
-                                   href="{{route('projects.folders.delete', [$project, $file])}}">
+                                   href="{{route('projects.folders.destroy', [$project, $file])}}">
                                     <i class="fas fa-fw fa-trash mr-2"></i>
                                 </a>
                             @endif

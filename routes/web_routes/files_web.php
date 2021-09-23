@@ -13,6 +13,12 @@ use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileExperimentsWebController;
 use App\Http\Controllers\Web\Files\ShowFileVersionsWebController;
 use App\Http\Controllers\Web\Files\ShowFileWebController;
+use App\Http\Controllers\Web\Files\Trashcan\DeleteDirectoryFromTrashcanWebController;
+use App\Http\Controllers\Web\Files\Trashcan\DeleteFileFromTrashcanWebController;
+use App\Http\Controllers\Web\Files\Trashcan\EmptyTrashcanWebController;
+use App\Http\Controllers\Web\Files\Trashcan\IndexFilesTrashcanWebController;
+use App\Http\Controllers\Web\Files\Trashcan\RestoreDirectoryFromTrashcanWebController;
+use App\Http\Controllers\Web\Files\Trashcan\RestoreFileFromTrashcanWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
 use App\Models\File;
 use App\Models\Project;
@@ -67,3 +73,20 @@ Route::delete('/projects/{project}/files/{file}/destroy', DestroyFileWebControll
 Route::post('/projects/{project}/files/{file}/create-experiment',
     CreateExperimentFromSpreadsheetWebController::class)
      ->name('projects.files.create-experiment');
+
+// Trashcan
+Route::get('/projects/{project}/trashcan', IndexFilesTrashcanWebController::class)
+     ->name('projects.trashcan.index');
+
+Route::get('/projects/{project}/trashcan/empty', EmptyTrashcanWebController::class)
+     ->name('projects.trashcan.empty');
+
+Route::get('/projects/{project}/trashcan/dir/{dir}/restore', RestoreDirectoryFromTrashcanWebController::class)
+     ->name('projects.trashcan.dir.restore');
+Route::get('/projects/{project}/trashcan/dir/{dir}/delete', DeleteDirectoryFromTrashcanWebController::class)
+     ->name('projects.trashcan.dir.delete');
+
+Route::get('/projects/{project}/trashcan/file/{file}/restore', RestoreFileFromTrashcanWebController::class)
+     ->name('projects.trashcan.file.restore');
+Route::get('/projects/{project}/trashcan/file/{file}/delete', DeleteFileFromTrashcanWebController::class)
+     ->name('projects.trashcan.file.delete');

@@ -340,4 +340,12 @@ class File extends Model implements Searchable
                    ->where('current', true)
                    ->get();
     }
+
+    public static function getTrashForProject($projectId)
+    {
+        return File::where('project_id', $projectId)
+                   ->where('mime_type', 'directory')
+                   ->where('current', false)
+                   ->get();
+    }
 }
