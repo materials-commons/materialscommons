@@ -37,6 +37,7 @@ use Spatie\Tags\HasTags;
  * @property string $authors
  * @property array ds_authors
  * @property mixed $published_at
+ * @property mixed $cleanup_started_at
  * @property string $doi
  * @property integer zipfile_size
  * @property boolean globus_path_exists
@@ -54,6 +55,7 @@ class Dataset extends Model implements Searchable
     protected $dates = [
         'published_at',
         'privately_published_at',
+        'cleanup_started_at',
     ];
 
     protected $casts = [
