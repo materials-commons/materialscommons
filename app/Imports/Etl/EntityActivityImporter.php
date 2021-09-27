@@ -328,6 +328,7 @@ class EntityActivityImporter
 
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
+            ->where('current', true)
             ->chunk(100, function ($files) use ($entity, $activity, $expression) {
                 $files->each(function (File $file) use ($entity, $activity, $expression) {
                     if (!fnmatch($expression, $file->name)) {
@@ -349,6 +350,7 @@ class EntityActivityImporter
     {
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
+            ->where('current', true)
             ->chunk(100, function ($files) use ($entity, $activity, $dir) {
                 $files->each(function (File $file) use ($entity, $activity, $dir) {
                     if (!$this->addFileToActivityAndEntity($file, $activity, $entity)) {
@@ -371,7 +373,7 @@ class EntityActivityImporter
         $this->experiment->files()->syncWithoutDetaching($file);
     }
 
-    private function addFileToActivityAndEntity(?File $file, ?Activity $activity, ?Entity $entity)
+    private function addFileToActivityAndEntity(?File $file, ?Activity $activity, ?Entity $entity): bool
     {
         if (is_null($file)) {
             return false;
@@ -419,9 +421,6 @@ class EntityActivityImporter
 
     private function addToExistingEntity(RowTracker $row)
     {
-//        $activity = $this->activityTracker->getActivity($row->activityAttributesHash);
-//        if ($activity === null) {
-        // There is no matching activity so we need to do the following
         // 1. Create a new entity state and add it to the entity
         // 2. Add all entity attributes to that entity state
         // 3. Create the new activity and associate it with that entity/entity state.
@@ -435,32 +434,6 @@ class EntityActivityImporter
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
-//        } else {
-//            // Matching activity found, so add attribute values as additional values on existing
-//            // measurements for this entity. To do this first get the entity state that is associated
-//            // with the entity for this activity. Then add the attributes.
-//            $entity = $this->entityTracker->getEntity($row->entityName);
-//            $entityStates = $activity->entityStates()->get();
-//            $entityState = $entityStates->firstWhere('entity_id', $entity->id);
-//            if (is_null($entityState)) {
-//                return;
-//            }
-//            $this->addValuesToEntityStateAttributes($row->entityAttributes, $entityState);
-//            $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $entityState, $activity);
-//        }
-    }
-
-    private function addValuesToEntityStateAttributes(Collection $attributes, EntityState $entityState)
-    {
-        $attributes->each(function (ColumnAttribute $attr) use ($entityState) {
-            $a = Attribute::where('name', $attr->name)->where('attributable_type', EntityState::class)
-                          ->where('attributable_id', $entityState->id)->first();
-            AttributeValue::create([
-                'attribute_id' => $a->id,
-                'unit'         => $attr->unit,
-                'val'          => ['value' => $attr->value],
-            ]);
-        });
     }
 
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)

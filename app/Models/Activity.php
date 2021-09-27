@@ -51,6 +51,7 @@ class Activity extends Model implements Searchable
     public function files()
     {
         return $this->belongsToMany(File::class, 'activity2file')
+                    ->where('current', true)
                     ->withPivot('direction')
                     ->withTimestamps();
     }
