@@ -48,7 +48,9 @@ class GetFileByPathAction
             return null;
         }
 
-        return File::where('directory_id', $dir->id)->where('name', $fileName)
-                   ->where('current', true)->first();
+        return File::where('directory_id', $dir->id)
+                   ->where('name', $fileName)
+                   ->where('current', true)
+                   ->first();
     }
 }
