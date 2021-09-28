@@ -19,7 +19,10 @@ class IndexEntitiesWebController extends Controller
 
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)
-                          ->get();
+                          ->get()
+                          ->filter(function (Entity $entity) {
+                              return $entity->experiments->count() > 0;
+                          });
 
         $processAttributes = $this->getProcessAttributes($project->id);
 
