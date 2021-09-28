@@ -14,7 +14,7 @@ class AddDeletedAtColumnToFilesTable extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->datetime('deleted_at')->default(false);
+            $table->datetime('deleted_at')->nullable();
         });
     }
 
