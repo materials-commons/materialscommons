@@ -14,7 +14,7 @@ class AddCleanupColumnsToDatasetsTable extends Migration
     public function up()
     {
         Schema::table('datasets', function (Blueprint $table) {
-            $table->date('cleanup_started_at')->nullable();
+            $table->datetime('cleanup_started_at')->nullable();
         });
     }
 

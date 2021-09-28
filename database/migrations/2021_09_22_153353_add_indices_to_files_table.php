@@ -14,7 +14,7 @@ class AddIndicesToFilesTable extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->index(['is_deleted', 'mime_type', 'project_id']);
+            $table->index(['deleted_at', 'mime_type', 'project_id']);
             $table->index(['current', 'mime_type', 'project_id']);
         });
     }
