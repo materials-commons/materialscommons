@@ -27,7 +27,7 @@ class GenerateUsageStatisticsCommand extends Command
      */
     protected $description = 'Generates various usage statistics about Materials Commons';
 
-    private $oneMonthAgo;
+    private string $oneMonthAgo;
 
 
     /**
@@ -56,7 +56,8 @@ class GenerateUsageStatisticsCommand extends Command
         $mail = new MaterialsCommonsMonthlyStatisticsMail($userStats, $projectStats, $dsStats, $fileStats,
             $spreadsheetStats);
         $this->info("Emailing Usage Statistics...");
-        Mail::to("gtarcea@umich.edu")->send($mail);
+        $addresses = explode(",", config('statistics.mail_to'));
+        Mail::to($addresses)->send($mail);
         return 0;
     }
 
@@ -78,6 +79,17 @@ class GenerateUsageStatisticsCommand extends Command
         $projectStats->numberOfProjectsCreatedOverLastMonth = Project::where('created_at', '>', $this->oneMonthAgo)
                                                                      ->count();
         $projectStats->totalNumberOfProjects = Project::all()->count();
+
+        $projectsWithPublishedDatasets = Project::has('publishedDatasets')
+                                                ->with(['publishedDatasets', 'owner'])
+                                                ->get();
+
+        $projectStats->topProjects = Project::with(['publishedDatasets', 'owner'])
+                                            ->orderByDesc('size')
+                                            ->where('size', '>', 200000000000)
+                                            ->get()
+                                            ->merge($projectsWithPublishedDatasets);
+
         return $projectStats;
     }
 

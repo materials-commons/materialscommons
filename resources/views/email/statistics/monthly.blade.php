@@ -15,6 +15,7 @@
             month: {{number_format($projectStats->numberOfProjectsCreatedOverLastMonth)}}</li>
         <li>Total projects: {{number_format($projectStats->totalNumberOfProjects)}}</li>
     </ul>
+
     <h4>File statistics</h4>
     <ul>
         <li>Number of files uploaded for the month: {{number_format($fileStats->numberOfFilesAddedOverLastMonth)}}</li>
@@ -34,5 +35,35 @@
             </ul>
         </li>
         <li>Total number of published datasets: {{number_format($dsStats->totalNumberOfPublishedDatasets)}}</li>
+    </ul>
+
+    <h4>Published And Top Projects</h4>
+    <ul>
+        @foreach($projectStats->topProjects as $project)
+            <li>
+                Project: {{$project->name}}
+                <ul>
+                    <li>ID: {{$project->id}}</li>
+                    <li>Owner: {{$project->owner->name}}</li>
+                    <li>Size: {{formatBytes($project->size)}}</li>
+                    <li>
+                        Datasets:
+                        <ul>
+                            @forelse($project->publishedDatasets as $ds)
+                                <li>
+                                    <a href="{{route('public.datasets.show', [$ds])}}">{{$ds->name}}</a>
+                                    <ul>
+                                        <li>ID: {{$ds->id}}</li>
+                                        <li>Zipfile Size: {{formatBytes($ds->zipfile_size)}}</li>
+                                    </ul>
+                                </li>
+                            @empty
+                                <li>No published datasets in project</li>
+                            @endforelse
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        @endforeach
     </ul>
 @endsection
