@@ -41,7 +41,6 @@ class MaterialsCommonsMonthlyStatisticsMail extends Mailable
         $lastMonth = Carbon::now()->subMonth();
         $month = $lastMonth->monthName;
         $year = $lastMonth->year;
-        $date = Carbon::now()->subMonth()->toDateString();
         return $this->subject("Materials Commons Statistics for {$month} {$year}")
                     ->view('email.statistics.monthly', [
                         'month'            => $month,

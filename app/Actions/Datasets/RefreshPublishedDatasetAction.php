@@ -9,14 +9,14 @@ class RefreshPublishedDatasetAction
     public function execute(Dataset $dataset)
     {
         $unpublishDatasetAction = new UnpublishDatasetAction();
-        $unpublishDatasetAction($dataset);
-        $this->publishDataset($dataset);
+        $unpublishDatasetAction($dataset, auth()->user());
+        $this->publishDataset($dataset, auth()->user());
     }
 
 
     private function publishDataset(Dataset $dataset)
     {
         $publishAction = new PublishDatasetAction2();
-        $publishAction->execute($dataset);
+        $publishAction->execute($dataset, auth()->user());
     }
 }

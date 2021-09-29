@@ -13,18 +13,17 @@ class PublishDatasetWebController extends Controller
     {
         if (blank($dataset->description)) {
             flash("Cannot publish Dataset {$dataset->name}: It's missing a description")->error();
-            return redirect(route('projects.datasets.index', [$project]));
+            return redirect(route('projects.datasets.show', [$project, $dataset]));
         }
 
         if (!$dataset->hasSelectedFiles()) {
             flash("Cannot publish Dataset {$dataset->name}: It has not files")->error();
-            return redirect(route('projects.datasets.index', [$project]));
+            return redirect(route('projects.datasets.show', [$project, $dataset]));
         }
 
         $publishDatasetAction = new PublishDatasetAction2();
-        $publishDatasetAction->execute($dataset);
+        $publishDatasetAction->execute($dataset, auth()->user());
 
-        flash("Dataset {$dataset->name} successfully published")->success();
-        return redirect(route('projects.datasets.index', [$project]));
+        return redirect(route('projects.datasets.published-message', [$project, $dataset]));
     }
 }

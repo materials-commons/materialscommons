@@ -12,7 +12,7 @@ class UnpublishDatasetWebController extends Controller
     public function __invoke(Project $project, Dataset $dataset)
     {
         $unpublishDatasetAction = new UnpublishDatasetAction();
-        $unpublishDatasetAction($dataset);
+        $unpublishDatasetAction($dataset, auth()->user());
         flash("Dataset {$dataset->name} successfully unpublished")->success();
         return redirect(route('projects.datasets.index', [$project]));
     }

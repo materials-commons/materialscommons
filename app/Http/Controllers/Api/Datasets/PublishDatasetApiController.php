@@ -15,7 +15,7 @@ class PublishDatasetApiController extends Controller
         $dataset->update(['published_at' => Carbon::now()]);
 
         $publishDatasetAction = new PublishDatasetAction2();
-        $publishDatasetAction->execute($dataset);
+        $publishDatasetAction->execute($dataset, auth()->user());
 
         return new DatasetResource($dataset->refresh());
     }
