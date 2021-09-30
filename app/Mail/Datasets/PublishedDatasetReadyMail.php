@@ -28,9 +28,10 @@ class PublishedDatasetReadyMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.datasets.published-dataset-ready', [
-            'dataset' => $this->dataset,
-            'user'    => $this->user,
-        ]);
+        return $this->subject("Completed publishing dataset {$this->dataset->name}")
+                    ->view('email.datasets.published-dataset-ready', [
+                        'dataset' => $this->dataset,
+                        'user'    => $this->user,
+                    ]);
     }
 }

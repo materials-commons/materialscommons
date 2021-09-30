@@ -12,6 +12,18 @@ class PublishDatasetApiController extends Controller
 {
     public function __invoke(Dataset $dataset)
     {
+        if (!is_null($dataset->cleanup_started_at)) {
+            return response()->json(['error' => 'Dataset is being unpublished'], 403);
+        }
+
+        if (blank($dataset->description)) {
+            return response()->json(['error' => 'Dataset must have a description'], 403);
+        }
+
+        if (!$dataset->hasSelectedFiles()) {
+            return response()->json(['error' => 'Dataset has no files'], 403);
+        }
+
         $dataset->update(['published_at' => Carbon::now()]);
 
         $publishDatasetAction = new PublishDatasetAction2();

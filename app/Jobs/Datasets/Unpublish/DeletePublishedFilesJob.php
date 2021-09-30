@@ -35,6 +35,7 @@ class DeletePublishedFilesJob implements ShouldQueue
      */
     public function handle()
     {
+        ray('deleting files for published dataset');
         $this->dataset->files()->get()->each(function (File $file) {
             $file->delete();
         });

@@ -10,6 +10,7 @@ use App\Models\Dataset;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Mail;
 
 class UnpublishDatasetAction
 {
@@ -26,11 +27,12 @@ class UnpublishDatasetAction
             new DeleteDatasetGlobusAndZipfilesJob($dataset),
             new DeleteDatasetRelationshipsJob($dataset),
             function () use ($dataset, $user) {
-                $dataset->update(['cleanup_started_at', null]);
-                $mail = new UnpublishDatasetCompleteMail();
+                ray('sending unpublish complete email');
+                $dataset->update(['cleanup_started_at' => null]);
+                $mail = new UnpublishDatasetCompleteMail($dataset, $user);
                 Mail::to($user)->send($mail);
             },
-        ])->dispatch()->onQueue('globus');
+        ])->onQueue('globus')->dispatch();
 
         return $dataset->fresh();
     }

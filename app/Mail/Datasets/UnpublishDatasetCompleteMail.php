@@ -28,9 +28,10 @@ class UnpublishDatasetCompleteMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.datasets.unpublish-dataset-complete', [
-            'dataset' => $this->dataset,
-            'user'    => $this->user,
-        ]);
+        return $this->subject("Completed unpublishing dataset {$this->dataset->name}")
+                    ->view('email.datasets.unpublish-dataset-complete', [
+                        'dataset' => $this->dataset,
+                        'user'    => $this->user,
+                    ]);
     }
 }

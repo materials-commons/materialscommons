@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCleanupColumnsToDatasetsTable extends Migration
+class AddCleanupAndStartedColumnsToDatasetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class AddCleanupColumnsToDatasetsTable extends Migration
     {
         Schema::table('datasets', function (Blueprint $table) {
             $table->datetime('cleanup_started_at')->nullable();
+            $table->datetime('publish_started_at')->nullable();
         });
     }
 
