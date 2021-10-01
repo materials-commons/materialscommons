@@ -27,7 +27,7 @@
                     this is done you can make changes to your project without affecting your published data.
                 </li>
             </ul>
-            <a class="btn btn-success" href="{{route('projects.datasets.index', [$project])}}">Done</a>
+            <a class="btn btn-success" href="{{route('projects.datasets.show', [$project, $dataset])}}">Done</a>
         </x-slot>
     </x-card>
 @stop

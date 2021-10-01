@@ -12,7 +12,6 @@ class StoreMQLQueryWebController extends Controller
     public function __invoke(MqlStoreSaveQueryRequest $request, Project $project)
     {
         $validated = $request->validated();
-        ray($validated);
         SavedQuery::create([
             'project_id'  => $project->id,
             'name'        => $validated['name'],

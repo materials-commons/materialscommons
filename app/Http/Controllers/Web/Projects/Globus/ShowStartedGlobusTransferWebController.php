@@ -12,7 +12,6 @@ class ShowStartedGlobusTransferWebController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         $globusTransferId = $request->route("globusTransfer");
-        ray("transfer = {$globusTransferId}");
         $globusTransfer = GlobusTransfer::with(['transferRequest'])->find($globusTransferId);
         return view('app.projects.globus.show', compact('globusTransfer', 'project'));
     }

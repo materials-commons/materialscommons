@@ -2,12 +2,10 @@
 
 namespace App\Actions\Datasets;
 
-use App\Mail\Datasets\PublishedDatasetReadyMail;
 use App\Models\Dataset;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
@@ -43,10 +41,10 @@ class PublishDatasetAction2
                     'DB_DATABASE' => config('database.connections.mysql.database'),
                 ]);
             },
-            function () use ($dataset, $user) {
-                $mail = new PublishedDatasetReadyMail($dataset, $user);
-                Mail::to($user)->send($mail);
-            },
+//            function () use ($dataset, $user) {
+//                $mail = new PublishedDatasetReadyMail($dataset, $user);
+//                Mail::to($user)->send($mail);
+//            },
         ])->onQueue('globus')->dispatch();
     }
 }
