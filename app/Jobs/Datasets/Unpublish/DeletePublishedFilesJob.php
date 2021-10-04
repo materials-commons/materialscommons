@@ -37,17 +37,7 @@ class DeletePublishedFilesJob implements ShouldQueue
     public function handle()
     {
         DB::transaction(function () {
-            $directories = [];
-            $this->dataset->load(['files.directory']);
-            $this->dataset->files->each(function (File $file) use (&$directories) {
-                if (!array_key_exists($file->directory->path, $directories)) {
-                    $directories[$file->directory->path] = $file->directory;
-                }
-                $file->delete();
-            });
-            foreach ($directories as $path => $dir) {
-                $dir->delete();
-            }
+            File::where('dataset_id', $this->dataset->id)->delete();
         });
     }
 }

@@ -18,9 +18,9 @@
                 Once they are completed you will receive an email.
             </p>
             <ul>
-                <li>If the total size of your dataset is less than 200GB a zipfile will be created containing all the
-                    files.
-                </li>
+                {{--                <li>If the total size of your dataset is less than 200GB a zipfile will be created containing all the--}}
+                {{--                    files.--}}
+                {{--                </li>--}}
                 <li>Globus is being setup allowing users to download your files.</li>
                 <li>Copies of all your data, including files, samples and processes (if you have any) are being made.
                     Once

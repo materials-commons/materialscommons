@@ -37,6 +37,7 @@ use Spatie\Tags\HasTags;
  * @property string $authors
  * @property array ds_authors
  * @property mixed $published_at
+ * @property mixed $publish_started_at
  * @property mixed $cleanup_started_at
  * @property string $doi
  * @property integer zipfile_size
@@ -56,6 +57,7 @@ class Dataset extends Model implements Searchable
         'published_at',
         'privately_published_at',
         'cleanup_started_at',
+        'publish_started_at',
     ];
 
     protected $casts = [

@@ -21,6 +21,11 @@ class PublishDatasetWebController extends Controller
             return redirect(route('projects.datasets.show', [$project, $dataset]));
         }
 
+        if (!is_null($dataset->cleanup_started_at)) {
+            flash("Cannot publish dataset {$dataset->name} it is still being unpublished")->error();
+            return redirect(route('projects.datasets.show', [$project, $dataset]));
+        }
+
         $publishDatasetAction = new PublishDatasetAction2();
         $publishDatasetAction->execute($dataset, auth()->user());
 

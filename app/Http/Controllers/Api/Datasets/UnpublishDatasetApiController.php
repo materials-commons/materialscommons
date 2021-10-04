@@ -11,7 +11,13 @@ class UnpublishDatasetApiController extends Controller
 {
     public function __invoke(Dataset $dataset)
     {
-        $dataset->update(['published_at' => null]);
+        if (!is_null($dataset->publish_started_at)) {
+            return response()->json(['error' => "Dataset is still being published"], 403);
+        }
+
+        if (is_null($dataset->published_at)) {
+            return response()->json(['error' => 'Dataset was not published'], 403);
+        }
 
         $unpublishDatasetAction = new UnpublishDatasetAction();
         $unpublishDatasetAction($dataset, auth()->user());

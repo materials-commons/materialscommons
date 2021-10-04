@@ -30,10 +30,12 @@
                     <i class="fas fa-sync mr-2"></i> Refresh
                 </a>
 
-                <a class="float-right action-link mr-4"
-                   href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
-                    <i class="fas fa-minus-circle mr-2"></i>Unpublish
-                </a>
+                @if(is_null($dataset->publish_started_at))
+                    <a class="float-right action-link mr-4"
+                       href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
+                        <i class="fas fa-minus-circle mr-2"></i>Unpublish
+                    </a>
+                @endif
             @elseif($dataset->hasSelectedFiles())
                 @if(!isset($dataset->cleanup_started_at))
                     <a class="float-right action-link mr-4"
@@ -66,6 +68,12 @@
                 <div class="msg msg-danger">
                     Dataset cannot be published - It is still in the process of being unpublished
                     (Unpublish started {{$dataset->cleanup_started_at->diffForHumans()}}).
+                </div>
+            @endif
+            @if(isset($datset->publish_started_at))
+                <div class="msg msg-danger">
+                    Dataset is being published. It cannot be unpublished while this happening.
+                    (Publish started {{$dataset->publish_started_at->diffForHumans()}}).
                 </div>
             @endif
             @include('app.projects.datasets._dataset-status', [

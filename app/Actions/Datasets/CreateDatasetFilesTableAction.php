@@ -36,7 +36,7 @@ class CreateDatasetFilesTableAction
             if (!$datasetFileSelection->isIncludedFile($filePath)) {
                 continue;
             }
-            $f = $this->duplicateFile($file);
+            $f = $this->duplicateFile($file, $dataset->id);
             $dataset->files()->attach($f->id);
         }
     }
@@ -46,25 +46,26 @@ class CreateDatasetFilesTableAction
         $dataset->files()->detach();
     }
 
-    private function duplicateFile(File $file)
+    private function duplicateFile(File $file, $datasetId)
     {
         if (array_key_exists($file->directory->path, $this->replicatedDirectories)) {
             $directory = $this->replicatedDirectories[$file->directory->path];
         } else {
-            $directory = $this->replicateDirectoryTree($file->directory);
+            $directory = $this->replicateDirectoryTree($file->directory, $datasetId);
         }
 
         $f = $file->replicate(['project_id'])->fill([
             'uuid'         => Uuid::uuid4()->toString(),
             'uses_uuid'    => blank($file->uses_uuid) ? $file->uuid : $file->uses_uuid,
             'directory_id' => $directory->id,
+            'dataset_id'   => $datasetId,
         ]);
         $f->save();
         return $f->refresh();
     }
 
     // Replicates the tree for this directory, and returns the child node that we were asked to create.
-    private function replicateDirectoryTree(File $dir): File
+    private function replicateDirectoryTree(File $dir, $datasetId): File
     {
         // Need replicate all the way up the tree
         $path = "/";
@@ -76,7 +77,7 @@ class CreateDatasetFilesTableAction
                 $lastDir = $this->replicatedDirectories[$path];
             } else {
                 $existingDir = File::getDirectoryByPath($dir->project_id, $path);
-                $lastDir = $this->createReplicatedDir($existingDir, $parentId);
+                $lastDir = $this->createReplicatedDir($existingDir, $parentId, $datasetId);
                 $parentId = $lastDir->id;
                 $this->replicatedDirectories[$path] = $lastDir;
             }
@@ -85,11 +86,12 @@ class CreateDatasetFilesTableAction
         return $lastDir;
     }
 
-    private function createReplicatedDir(File $dir, $parentId): File
+    private function createReplicatedDir(File $dir, $parentId, $datasetId): File
     {
         $d = $dir->replicate(['project_id'])->fill([
             'uuid'         => Uuid::uuid4()->toString(),
             'directory_id' => $parentId,
+            'dataset_id'   => $datasetId,
         ]);
 
         $d->save();

@@ -13,7 +13,11 @@ class PublishDatasetAction2
 {
     public function execute(Dataset $dataset, User $user)
     {
-        $dataset->update(['published_at' => Carbon::now()]);
+        $now = Carbon::now();
+        $dataset->update([
+            'published_at'       => $now,
+            'publish_started_at' => $now,
+        ]);
         Bus::chain([
             function () use ($dataset) {
                 $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
@@ -41,10 +45,11 @@ class PublishDatasetAction2
                     'DB_DATABASE' => config('database.connections.mysql.database'),
                 ]);
             },
-//            function () use ($dataset, $user) {
+            function () use ($dataset, $user) {
+                $dataset->update(['publish_started_at' => null]);
 //                $mail = new PublishedDatasetReadyMail($dataset, $user);
 //                Mail::to($user)->send($mail);
-//            },
+            },
         ])->onQueue('globus')->dispatch();
     }
 }
