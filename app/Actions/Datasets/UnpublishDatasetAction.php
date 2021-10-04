@@ -5,10 +5,12 @@ namespace App\Actions\Datasets;
 use App\Jobs\Datasets\Unpublish\DeleteDatasetGlobusAndZipfilesJob;
 use App\Jobs\Datasets\Unpublish\DeleteDatasetRelationshipsJob;
 use App\Jobs\Datasets\Unpublish\DeletePublishedFilesJob;
+use App\Mail\Datasets\UnpublishDatasetCompleteMail;
 use App\Models\Dataset;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Mail;
 
 class UnpublishDatasetAction
 {
@@ -26,8 +28,8 @@ class UnpublishDatasetAction
             new DeleteDatasetRelationshipsJob($dataset),
             function () use ($dataset, $user) {
                 $dataset->update(['cleanup_started_at' => null]);
-//                $mail = new UnpublishDatasetCompleteMail($dataset, $user);
-//                Mail::to($user)->send($mail);
+                $mail = new UnpublishDatasetCompleteMail($dataset, $user);
+                Mail::to($user)->send($mail);
             },
         ])->onQueue('globus')->dispatch();
 
