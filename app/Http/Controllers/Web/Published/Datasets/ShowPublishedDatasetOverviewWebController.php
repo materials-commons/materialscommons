@@ -35,7 +35,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                  ->select('name', DB::raw('count(*) as count'))
                  ->whereIn('id',
                      DB::table('dataset2entity')
-                       ->where('dataset_id', $datasetId)
+                       ->where('dataset2entity.dataset_id', $datasetId)
                        ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                        ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
                        ->select('activities.id')
@@ -56,7 +56,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     private function getFileTypesGroup($datasetId)
     {
         return DB::table('dataset2file')
-                 ->where('dataset_id', $datasetId)
+                 ->where('dataset2file.dataset_id', $datasetId)
                  ->join('files', 'files.id', '=', 'dataset2file.file_id')
                  ->where('files.mime_type', '<>', 'directory')
                  ->select('files.mime_type', DB::raw('count(*) as count'))
@@ -68,7 +68,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     private function getDatasetTotalFilesSize($datasetId)
     {
         return DB::table('dataset2file')
-                 ->where('dataset_id', $datasetId)
+                 ->where('dataset2file.dataset_id', $datasetId)
                  ->join('files', 'files.id', '=', 'dataset2file.file_id')
                  ->where('files.mime_type', '<>', 'directory')
                  ->distinct()
