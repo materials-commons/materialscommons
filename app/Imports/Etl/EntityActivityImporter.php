@@ -294,12 +294,12 @@ class EntityActivityImporter
 
                 if ($this->isWildCard($path)) {
                     $this->addWildCardFiles($path, $entity, $activity);
-                    return;
+                    continue;
                 }
 
                 if (($dir = $this->isDirectory($path)) !== null) {
                     $this->addDirectoryFiles($dir, $entity, $activity);
-                    return;
+                    continue;
                 }
 
                 $this->addSingleFile($path, $entity, $activity);

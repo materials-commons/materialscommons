@@ -466,6 +466,34 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
+    public function test_multiple_file_wildcard_in_one_cell()
+    {
+        // Setup
+        $project = ProjectFactory::create();
+        $root = $project->rootDir;
+        $d1 = ProjectFactory::createDirectory($project, $root, "d1");
+        ProjectFactory::createFakeFile($project, $d1, "f1.txt");
+        ProjectFactory::createFakeFile($project, $d1, "f2.txt");
+        ProjectFactory::createFakeFile($project, $d1, "image.jpg");
+        $experiment = Experiment::factory()->create([
+            'owner_id'   => $project->owner_id,
+            'project_id' => $project->id,
+        ]);
+
+        // Run importer
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/single_with_multiple_wildcard_files_in_cell.xlsx'));
+
+        // Asserts
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(3, $activity->files()->count());
+
+        $entity = Entity::where('name', 'G181030g')->first();
+        $this->assertEquals(3, $entity->files()->count());
+    }
+
+    /** @test */
     public function test_loading_ff_spreadsheet()
     {
         $this->withoutExceptionHandling();
