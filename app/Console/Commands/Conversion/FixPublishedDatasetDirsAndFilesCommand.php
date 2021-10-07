@@ -43,6 +43,7 @@ class FixPublishedDatasetDirsAndFilesCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $dsId = $this->option("dataset");
         if (!is_null($dsId)) {
             $this->updateDataset(Dataset::findOrFail($dsId));
