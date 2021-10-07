@@ -20,11 +20,11 @@ class ListNotebooks extends Component
         $notebooks = File::with(['directory', 'owner'])
                          ->where('project_id', $this->project->id)
                          ->where('current', true)
-            ->where(function ($query) {
-                $query->where('name', 'like', '%.ipynb')
-                    ->orWhere('name', 'like', '%.xlsx');
-            })
-            ->get();
+                         ->where(function ($query) {
+                             $query->where('name', 'like', '%.ipynb')
+                                   ->orWhere('name', 'like', '%.xlsx');
+                         })
+                         ->get();
         return view('components.projects.list-notebooks', ['notebooks' => $notebooks]);
     }
 }
