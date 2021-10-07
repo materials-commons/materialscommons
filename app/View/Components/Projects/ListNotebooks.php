@@ -18,7 +18,8 @@ class ListNotebooks extends Component
     public function render()
     {
         $notebooks = File::with(['directory', 'owner'])
-            ->where('project_id', $this->project->id)
+                         ->where('project_id', $this->project->id)
+                         ->where('current', true)
             ->where(function ($query) {
                 $query->where('name', 'like', '%.ipynb')
                     ->orWhere('name', 'like', '%.xlsx');
