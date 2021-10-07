@@ -200,6 +200,7 @@
     $(document).ready(() => {
         mcutil.autosizeTextareas();
     });
+    window.mc_grids = [];
 </script>
 @stack('scripts')
 </body>

@@ -6,6 +6,7 @@
 
         $(document).ready(() => {
             let workbook, grid;
+            let uuid = "{{$file->uuid}}";
 
             let fileContents = "{!!$fileContentsBase64($file)!!}";
             workbook = xlsx.read(fileContents, {type: "base64"});
@@ -23,7 +24,11 @@
             });
             grid.style.height = '100%';
             grid.style.width = '100%';
-            showSheet(sheet);
+            window.mc_grids[uuid] = {
+                workbook: workbook,
+                grid: grid,
+            };
+            showSheet(grid, sheet);
 
             function createSheetTabs(sheets) {
                 let sheetTabs = document.getElementById("{{$file->uuid}}sheet-tabs");
@@ -34,22 +39,24 @@
                     sheetTabs.insertAdjacentHTML('beforeend', `
                     <li class="nav-item">
                         <a class="nav-link ${active} sheet outline-none text-decoration-none" href="#"
-                            onclick="changeToSheet(${i})" id="${i}_sheet">${sheet}</a>
+                            onclick="changeToSheet('${uuid}', ${i})" id="${i}_sheet">${sheet}</a>
                     </li>`);
                 }
             }
 
-            function changeToSheet(index) {
+            function changeToSheet(uuid, index) {
+                let workbook = window.mc_grids[uuid].workbook;
+                let grid = window.mc_grids[uuid].grid;
                 let sheetName = workbook.SheetNames[index];
                 let sheet = workbook.Sheets[sheetName];
-                showSheet(sheet);
+                showSheet(grid, sheet);
                 $('a.nav-link.active.sheet').removeClass("active");
                 $(`#${index}_sheet`).addClass("active");
             }
 
             window.changeToSheet = changeToSheet;
 
-            function showSheet(sheet) {
+            function showSheet(grid, sheet) {
                 grid.data = xlsx.utils.sheet_to_json(sheet, {raw: false, header: 1});
             }
         });
