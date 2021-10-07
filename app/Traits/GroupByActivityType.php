@@ -46,6 +46,7 @@ trait GroupByActivityType
                  ->join('activity2file', 'activity2file.activity_id', '=', 'activities.id')
                  ->join('files', 'activity2file.file_id', '=', 'files.id')
                  ->distinct()
+                 ->orderBy('fname')
                  ->get()
                  ->groupBy('name');
     }
@@ -66,6 +67,7 @@ trait GroupByActivityType
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('attributes.eindex')
                  ->distinct()
+                 ->orderBy('attr_name')
                  ->get()
                  ->map(function ($attr) {
                      $attr->val = json_decode($attr->val, true);
