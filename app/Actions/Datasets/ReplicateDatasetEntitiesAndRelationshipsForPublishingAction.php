@@ -29,22 +29,23 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 //            echo "replicating entity {$entity->id}\n";
             $entity->load('entityStates.attributes.values', 'activities.attributes.values', 'files');
             $e = $entity->replicate()->fill([
-                'uuid'      => $this->uuid(),
-                'copied_at' => Carbon::now(),
-                'copied_id' => $entity->id,
+                'uuid'       => $this->uuid(),
+                'copied_at'  => Carbon::now(),
+                'copied_id'  => $entity->id,
+                'dataset_id' => $dataset->id,
             ]);
             $e->save();
             $dataset->entities()->attach($e);
 //            echo "  replicating its files\n";
-            $this->attachReplicatedFilesToEntity($entity, $e, $dataset);
+            $this->attachReplicatedFilesToEntity($entity, $e);
 //            echo "   replicating its states\n";
-            $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e);
+            $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e, $dataset);
 //            echo "   replicating its activities and their files\n";
             $this->replicateActivitiesAndRelationshipsForEntity($entity, $e, $dataset);
         });
     }
 
-    private function attachReplicatedFilesToEntity(Entity $entity, Entity $e, Dataset $dataset)
+    private function attachReplicatedFilesToEntity(Entity $entity, Entity $e)
     {
         $columns = [
             'entity_id',
@@ -70,12 +71,13 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
           });
     }
 
-    private function replicateEntityStatesAndRelationshipsForEntity(Entity $entity, Entity $e)
+    private function replicateEntityStatesAndRelationshipsForEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
-        $entity->entityStates->each(function (EntityState $entityState) use ($e) {
+        $entity->entityStates->each(function (EntityState $entityState) use ($e, $dataset) {
             $es = $entityState->replicate()->fill([
-                'uuid'      => $this->uuid(),
-                'entity_id' => $e->id,
+                'uuid'       => $this->uuid(),
+                'entity_id'  => $e->id,
+                'dataset_id' => $dataset->id,
             ]);
             $es->save();
             $entityState->attributes->each(function (Attribute $attribute) use ($es) {
@@ -100,9 +102,10 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         $entity->activities->each(function (Activity $activity) use ($e, $dataset) {
 //            echo "      replication activity {$activity->id}\n";
             $newActivity = $activity->replicate()->fill([
-                'uuid'      => $this->uuid(),
-                'copied_at' => Carbon::now(),
-                'copied_id' => $activity->id,
+                'uuid'       => $this->uuid(),
+                'copied_at'  => Carbon::now(),
+                'copied_id'  => $activity->id,
+                'dataset_id' => $dataset->id,
             ]);
             $newActivity->save();
             $e->activities()->attach($newActivity);

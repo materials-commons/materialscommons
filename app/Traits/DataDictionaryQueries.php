@@ -207,7 +207,7 @@ trait DataDictionaryQueries
                      'attributable_id',
                      DB::table('dataset2entity')
                        ->select('entity_states.id')
-                       ->where('dataset_id', $datasetId)
+                       ->where('dataset2entity.dataset_id', $datasetId)
                        ->join('entity_states', 'dataset2entity.entity_id', '=', 'entity_states.entity_id')
 
                  )
