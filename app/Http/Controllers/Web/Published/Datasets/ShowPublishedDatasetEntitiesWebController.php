@@ -16,7 +16,7 @@ class ShowPublishedDatasetEntitiesWebController extends Controller
                           ->withCounts()
                           ->findOrFail($datasetId);
         $activities = DB::table('dataset2entity')
-                        ->where('dataset_id', $datasetId)
+                        ->where('dataset2entity.dataset_id', $datasetId)
                         ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                         ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
                         ->where('name', '<>', 'Create Samples')

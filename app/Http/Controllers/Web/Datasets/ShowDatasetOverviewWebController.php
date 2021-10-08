@@ -33,7 +33,7 @@ class ShowDatasetOverviewWebController extends Controller
             ->select('name', DB::raw('count(*) as count'))
             ->whereIn('id',
                      DB::table('dataset2entity')
-                       ->where('dataset_id', $datasetId)
+                       ->where('dataset2entity.dataset_id', $datasetId)
                        ->join('activity2entity', 'dataset2entity.entity_id', '=', 'activity2entity.entity_id')
                        ->join('activities', 'activity2entity.activity_id', '=', 'activities.id')
                        ->select('activities.id')
