@@ -23,6 +23,6 @@ class UnpublishDatasetWebController extends Controller
             flash("Dataset {$dataset->name} successfully unpublished")->success();
         }
 
-        return redirect(route('projects.datasets.index', [$project]));
+        return redirect(route('projects.datasets.show', [$project, $dataset]));
     }
 }
