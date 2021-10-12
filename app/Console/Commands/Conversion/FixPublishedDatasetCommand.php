@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands\Conversion;
 
+use App\Models\Activity;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Traits\Datasets\DatasetFileReplication;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class FixPublishedDatasetDirsAndFilesCommand extends Command
+class FixPublishedDatasetCommand extends Command
 {
     use DatasetFileReplication;
 
@@ -17,7 +18,7 @@ class FixPublishedDatasetDirsAndFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-convert:fix-published-dataset-dirs-and-files {--dataset= : Dataset to update}';
+    protected $signature = 'mc-convert:fix-published-datasets {--dataset= : Dataset to update}';
 
     /**
      * The console command description.
@@ -50,6 +51,7 @@ class FixPublishedDatasetDirsAndFilesCommand extends Command
         } else {
             $this->info("Converting all published datasets...\n");
             foreach (Dataset::whereNotNull('published_at')->cursor() as $dataset) {
+                $this->info("Converting dataset({$dataset->id}): {$dataset->name}");
                 $this->updateDataset($dataset);
             }
         }
@@ -58,7 +60,12 @@ class FixPublishedDatasetDirsAndFilesCommand extends Command
 
     private function updateDataset(Dataset $dataset)
     {
-        $this->info("Converting dataset({$dataset->id}): {$dataset->name}");
+//        $this->updateDatasetFilesAndDirs($dataset);
+        $this->updateDatasetActivities($dataset);
+    }
+
+    private function updateDatasetFilesAndDirs(Dataset $dataset)
+    {
         $this->resetReplicatedDirsTracking();
         $this->info("   Updating file dataset_id...");
         $dataset->load('files.directory');
@@ -96,5 +103,24 @@ class FixPublishedDatasetDirsAndFilesCommand extends Command
               ->whereNotNull('directory_id')
               ->distinct()
         )->get();
+    }
+
+    private function updateDatasetActivities(Dataset $dataset)
+    {
+        $dataset->load(['activities.entityStates', 'entities']);
+
+        $this->info("   Updating activities...");
+        $dataset->activities()->update(['activities.dataset_id' => $dataset->id]);
+        $this->info("   Done.");
+
+        $this->info("   Updating entities...");
+        $dataset->entities()->update(['entities.dataset_id' => $dataset->id]);
+        $this->info("   Done.");
+
+        $this->info("   Updating entityStatess for all activities...");
+        $dataset->activities->each(function (Activity $activity) use ($dataset) {
+            $activity->entityStates()->update(['entityStates.dataset_id' => $dataset->id]);
+        });
+        $this->info("   Done.");
     }
 }
