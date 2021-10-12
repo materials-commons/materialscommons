@@ -69,8 +69,7 @@
                     Dataset cannot be published - It is still in the process of being unpublished
                     (Unpublish started {{$dataset->cleanup_started_at->diffForHumans()}}).
                 </div>
-            @endif
-            @if(isset($datset->publish_started_at))
+            @elseif(isset($dataset->publish_started_at))
                 <div class="msg msg-danger">
                     Dataset is being published. It cannot be unpublished while this happening.
                     (Publish started {{$dataset->publish_started_at->diffForHumans()}}).
