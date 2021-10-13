@@ -17,7 +17,8 @@ class AddDatasetIdColumnToEntityStatesTable extends Migration
             $table->unsignedBigInteger('dataset_id')->nullable();
             $table->foreign('dataset_id')
                   ->references('id')
-                  ->on('datasets');
+                  ->on('datasets')
+                  ->onDelete('cascade');
             $table->index('dataset_id');
         });
     }
