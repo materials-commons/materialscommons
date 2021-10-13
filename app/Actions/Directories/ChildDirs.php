@@ -3,6 +3,7 @@
 namespace App\Actions\Directories;
 
 use App\Models\File;
+use Illuminate\Support\Collection;
 
 trait ChildDirs
 {
@@ -38,7 +39,7 @@ trait ChildDirs
      *
      * @return \Illuminate\Support\Collection
      */
-    private function recursivelyRetrieveAllSubdirs($directoryId)
+    public function recursivelyRetrieveAllSubdirs($directoryId): Collection
     {
         // Here we need to recursively update the path of all directories underneath the moved directory.
         // We start with a count of the current collection of $directoriesToUpdate and merge into it
@@ -46,8 +47,8 @@ trait ChildDirs
         // were no more child directories and can break out of the loop. Otherwise, add those directories
         // into the list of directories to update and then get the query set of directories children.
 
-        $directoriesToUpdate = collect(); // Initial empty collection of subdirs to update
-        $count = $directoriesToUpdate->count(); // Initial count
+        $directoriesToReturn = collect(); // Initial empty collection of subdirs to update
+        $count = $directoriesToReturn->count(); // Initial count
 
         $dirs = File::where('directory_id', $directoryId)
                     ->whereNotNull('path')
@@ -55,8 +56,8 @@ trait ChildDirs
                     ->get(); // Get children of directory being moved
 
         while (true) {
-            $directoriesToUpdate = $directoriesToUpdate->merge($dirs);
-            $directoriesToUpdateCount = $directoriesToUpdate->count();
+            $directoriesToReturn = $directoriesToReturn->merge($dirs);
+            $directoriesToUpdateCount = $directoriesToReturn->count();
             if ($count == $directoriesToUpdateCount) {
                 // Count didn't change so no new directories were found so exit loop.
                 break;
@@ -76,6 +77,6 @@ trait ChildDirs
                         ->get();
         }
 
-        return $directoriesToUpdate;
+        return $directoriesToReturn;
     }
 }
