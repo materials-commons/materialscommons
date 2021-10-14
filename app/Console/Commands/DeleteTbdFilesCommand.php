@@ -49,24 +49,26 @@ class DeleteTbdFilesCommand extends Command
         }
 
         foreach (TbdFile::limit($limit)->cursor() as $tbdFile) {
-            // If the file doesn't exist on disk then there is nothing to do so just
-            // remove the entry from the tbd_files table.
-            if (!$this->fileExists($tbdFile->uuid)) {
-                $tbdFile->delete();
+            $uuid = $tbdFile->uuid;
+
+            // Always delete the entry in the table, then determine whether or not to delete
+            // the file on disk.
+            $tbdFile->delete();
+
+            // If the file doesn't exist on disk then there is nothing to do.
+            if (!$this->fileExists($uuid)) {
                 continue;
             }
 
-            // Check if anything references this uuid. If it does then we can't delete the
-            // on disk file, so we just remove the entry from the tbd_files table.
-            $count = File::where('uses_uuid', $tbdFile->uuid)->count();
+            // Check if anything references this uuid: If it does then we can't delete the
+            // on disk file.
+            $count = File::where('uses_uuid', $uuid)->count();
             if ($count != 0) {
-                $tbdFile->delete();
                 continue;
             }
 
             // If we are here then nothing points at this file, so we can just delete it.
-            Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($tbdFile->uuid));
-            $tbdFile->delete();
+            Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($uuid));
         }
 
         return 0;

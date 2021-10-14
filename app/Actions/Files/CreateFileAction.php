@@ -29,17 +29,22 @@ class CreateFileAction
         ]);
 
         $existing = File::where('directory_id', $directoryId)->where('name', $fileEntry->name)->get();
-        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->whereNull('uses_id')->first();
+        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->first();
 
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
             $this->saveFile($file, $fileEntry->uuid);
         } else {
-            // Matching file found, so point at it.
-            $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
-            $fileEntry->uses_id = $matchingFileChecksum->id;
+            // Matching file found, so point at it. At this point the match is either the original file that
+            // everything points at or its a file container the pointer (the pointer is uses_uuid and uses_id are set).
+            // So determine which case and set fileEntry uses_uuid and uses_id the appropriate value (which for a pointer
+            // is the uses_uuid/uses_id, and if its the file everything points at its uuid/id).
+            $usesUuid = blank($matchingFileChecksum->uses_uuid) ? $matchingFileChecksum->uuid : $matchingFileChecksum->uses_uuid;
+            $usesId = blank($matchingFileChecksum->uses_id) ? $matchingFileChecksum->id : $matchingFileChecksum->uses_id;
+            $fileEntry->uses_uuid = $usesUuid;
+            $fileEntry->uses_id = $usesId;
             if (!$matchingFileChecksum->realFileExists()) {
-                $this->saveFile($file, $matchingFileChecksum->uuid);
+                $this->saveFile($file, $usesUuid);
             }
         }
 
