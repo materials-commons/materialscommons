@@ -38,10 +38,23 @@ class Kernel extends ConsoleKernel
                      ->runInBackground()
                      ->withoutOverlapping();
 
+            // Delete old unverified accounts.
             $schedule->command('mc:delete-unverified-accounts')
                      ->daily()
                      ->at('02:00')
                      ->runInBackground();
+
+            // Cleanup old deleted directories in the trashcan
+            $schedule->command("mc:delete-old-trashcan-directories")
+                     ->everyFifteenMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
+
+            // Cleanup old deleted files in the trashcan
+            $schedule->command("mc:delete-old-trashcan-files")
+                     ->everyFifteenMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
         if (config('backup.backup.run_backups') != 0) {
