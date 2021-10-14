@@ -41,8 +41,8 @@ trait ChildDirs
      */
     public function recursivelyRetrieveAllSubdirs($directoryId): Collection
     {
-        // Here we need to recursively update the path of all directories underneath the moved directory.
-        // We start with a count of the current collection of $directoriesToUpdate and merge into it
+        // Here we need to recursively retrieve all directories underneath a root directory.
+        // We start with a count of the current collection of $directoriesToReturn and merge into it
         // the current set of directory. If $count is unchanged after the merge then we know that there
         // were no more child directories and can break out of the loop. Otherwise, add those directories
         // into the list of directories to update and then get the query set of directories children.
@@ -57,15 +57,15 @@ trait ChildDirs
 
         while (true) {
             $directoriesToReturn = $directoriesToReturn->merge($dirs);
-            $directoriesToUpdateCount = $directoriesToReturn->count();
-            if ($count == $directoriesToUpdateCount) {
+            $directoriesToReturnCount = $directoriesToReturn->count();
+            if ($count == $directoriesToReturnCount) {
                 // Count didn't change so no new directories were found so exit loop.
                 break;
             }
 
-            // If we are here then there were new directories added to $directoriesToUpdate.
+            // If we are here then there were new directories added to $directoriesToReturn.
             // Get their ids and query for their child dirs.
-            $count = $directoriesToUpdateCount;
+            $count = $directoriesToReturnCount;
 
             $dirIds = $dirs->transform(function ($item) {
                 return $item->id;

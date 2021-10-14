@@ -26,6 +26,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer size
  * @property boolean current
  * @property string checksum
+ * @property string $disk
  *
  * @mixin Builder
  *
