@@ -43,7 +43,8 @@ class DeleteOldTrashcanDirectoriesCommand extends Command
      */
     public function handle()
     {
-        $rootDir = File::where('deleted_at', '>', Carbon::now()->subDays(8))
+        $days = Carbon::now()->subDays(config('trash.expires_in_days'));
+        $rootDir = File::where('deleted_at', '>', $days)
                        ->where('mime_type', 'directory')
                        ->first();
         $dirs = $this->recursivelyRetrieveAllSubdirs($rootDir->id);
