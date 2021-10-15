@@ -12,6 +12,7 @@ trait GetProjectFolderFiles
             $rootId = File::where('project_id', $projectId)->where('name', '/')->first()->id;
             return File::where('project_id', $projectId)
                        ->where('directory_id', $rootId)
+                       ->whereNull('deleted_at')
                        ->where('current', true)
                        ->get();
         }
@@ -19,6 +20,7 @@ trait GetProjectFolderFiles
         return File::where('project_id', $projectId)
                    ->where('directory_id', $folder)
                    ->where('current', true)
+                   ->whereNull('deleted_at')
                    ->get();
     }
 
@@ -27,6 +29,7 @@ trait GetProjectFolderFiles
         return File::where('project_id', $projectId)
                    ->where('mime_type', 'directory')
                    ->where('current', true)
+                   ->whereNull('deleted_at')
                    ->get();
     }
 }

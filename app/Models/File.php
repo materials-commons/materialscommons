@@ -359,7 +359,14 @@ class File extends Model implements Searchable
     public static function getTrashForProject($projectId)
     {
         return File::where('project_id', $projectId)
-                   ->where('deleted_at', '<', Carbon::now()->subDays(config('trash.expires_in_days')))
+                   ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->get();
+    }
+
+    public static function getTrashCountForProject($projectId): int
+    {
+        return File::where('project_id', $projectId)
+                   ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
+                   ->count();
     }
 }

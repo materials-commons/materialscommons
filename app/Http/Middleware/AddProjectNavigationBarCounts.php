@@ -19,7 +19,7 @@ class AddProjectNavigationBarCounts
             return $next($request);
         }
 
-        View::share('nav_trash_count', $this->getTrashCounts($projectId));
+        View::share('nav_trash_count', File::getTrashCountForProject($projectId));
 
 //        $project = Project::with(['team.members', 'team.admins'])
 //                          ->withCount('experiments', 'entities', 'publishedDatasets', 'unpublishedDatasets',
@@ -34,13 +34,5 @@ class AddProjectNavigationBarCounts
 //        View::share('nav_admins_count', $project->team->admins->count());
 
         return $next($request);
-    }
-
-    private function getTrashCounts($projectId): int
-    {
-        return File::where('project_id', $projectId)
-                   ->where('mime_type', 'directory')
-                   ->where('current', false)
-                   ->count();
     }
 }

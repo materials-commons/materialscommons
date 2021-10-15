@@ -6,6 +6,7 @@ use App\Actions\Directories\DeleteDirectoryAction;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
+use Illuminate\Support\Carbon;
 
 class DestroyFolderWebController extends Controller
 {
@@ -13,7 +14,7 @@ class DestroyFolderWebController extends Controller
     {
         $dir = File::with('directory')->findOrFail($dirId);
         $parent = $dir->directory;
-        $dir->update(['current' => false]);
+        $dir->update(['deleted_at' => Carbon::now()]);
         flash("Directory '{$dir->path}' moved to trash")->success();
 //        $count = File::where('directory_id', $dir->id)->count();
 //        if ($count !== 0) {
