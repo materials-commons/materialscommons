@@ -34,11 +34,19 @@
                 <tbody>
                 @foreach($trash as $item)
                     <tr>
-                        <td>
-                            <a href="{{route('projects.folders.show', [$project, $item])}}">
-                                <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
-                            </a>
-                        </td>
+                        @if(is_null($item->path))
+                            <td>
+                                <a href="{{route('projects.files.show', [$project, $item])}}">
+                                    <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
+                                </a>
+                            </td>
+                        @else
+                            <td>
+                                <a href="{{route('projects.folders.show', [$project, $item])}}">
+                                    <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
+                                </a>
+                            </td>
+                        @endif
                         <td>
                             <div class="float-right">
                                 <ul class="list-unstyled">
@@ -52,11 +60,19 @@
                                     @endif
 
                                     <li>
-                                        <a href="{{route('projects.trashcan.dir.restore', [$project, $item])}}"
-                                           class="action-link">
-                                            <i class="fas fa-fw fa-trash-restore"></i>
-                                            restore
-                                        </a>
+                                        @if(is_null($item->path))
+                                            <a href="{{route('projects.trashcan.file.restore', [$project, $item])}}"
+                                               class="action-link">
+                                                <i class="fas fa-fw fa-trash-restore"></i>
+                                                restore
+                                            </a>
+                                        @else
+                                            <a href="{{route('projects.trashcan.dir.restore', [$project, $item])}}"
+                                               class="action-link">
+                                                <i class="fas fa-fw fa-trash-restore"></i>
+                                                restore
+                                            </a>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
