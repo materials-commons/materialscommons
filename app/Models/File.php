@@ -7,6 +7,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
@@ -298,7 +299,7 @@ class File extends Model implements Searchable
         }
     }
 
-    public function getDirPathForFormatting()
+    public function getDirPathForFormatting(): string
     {
         if (is_null($this->path)) {
             return "";
@@ -309,6 +310,19 @@ class File extends Model implements Searchable
         }
 
         return $this->path;
+    }
+
+    public function getFilePath(): string
+    {
+        if (!isset($this->directory)) {
+            return $this->name;
+        }
+
+        if ($this->directory->path == "/") {
+            return $this->directory->path.$this->name;
+        }
+
+        return $this->directory->path."/".$this->name;
     }
 
     public function setAsActiveFile()
@@ -345,8 +359,7 @@ class File extends Model implements Searchable
     public static function getTrashForProject($projectId)
     {
         return File::where('project_id', $projectId)
-                   ->where('mime_type', 'directory')
-                   ->where('current', false)
+                   ->where('deleted_at', '<', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->get();
     }
 }

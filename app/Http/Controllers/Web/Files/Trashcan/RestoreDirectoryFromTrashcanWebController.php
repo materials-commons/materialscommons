@@ -16,7 +16,7 @@ class RestoreDirectoryFromTrashcanWebController extends Controller
             return redirect(route('projects.trashcan.index', [$project]));
         }
 
-        $dir->update(['current' => true]);
+        $dir->update(['deleted_at' => null]);
         flash("Directory {$dir->path} restored.")->success();
         return redirect(route('projects.trashcan.index', [$project]));
     }
