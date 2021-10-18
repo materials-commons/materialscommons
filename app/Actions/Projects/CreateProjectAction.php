@@ -24,6 +24,7 @@ class CreateProjectAction
         $data['file_count'] = 0;
         $data['directory_count'] = 0;
         $data['size'] = 0;
+        $data['disk'] = 'mcfs';
         $project = new Project($data);
         $project->owner_id = $ownerId;
 

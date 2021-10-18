@@ -26,6 +26,7 @@ class CreateFileAction
             'description'  => $description,
             'project_id'   => $projectId,
             'directory_id' => $directoryId,
+            'disk'         => 'mcfs',
         ]);
 
         $existing = File::where('directory_id', $directoryId)->where('name', $fileEntry->name)->get();
