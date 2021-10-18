@@ -46,7 +46,7 @@ class PublishDatasetJobTest extends TestCase
         $dataset->entities()->attach($entity);
 
         $job = new PublishDatasetAction2();
-        $job->execute($dataset);
+        $job->execute($dataset, $user);
 
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());

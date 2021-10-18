@@ -57,6 +57,7 @@ class DeleteExperimentActionTest extends TestCase
     {
         // Create project and experiment
         $project = ProjectFactory::withExperiment()->create();
+        $project->load('owner');
         $experiment = $project->experiments->first();
 
         // Create dataset attached to project
@@ -79,7 +80,7 @@ class DeleteExperimentActionTest extends TestCase
         // Call the publish dataset action, then run delete and check that the dataset still has samples
 
         $publishAction = new PublishDatasetAction2();
-        $publishAction->execute($dataset);
+        $publishAction->execute($dataset, $project->owner);
 
         $deleteExperiment = new DeleteExperimentAction();
         $deleteExperiment($experiment);

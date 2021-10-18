@@ -12,25 +12,25 @@ class AttributeHeaderTest extends TestCase
     {
         $header = "temp";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("", $attrHeader->unit);
 
         $header = " temp";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("", $attrHeader->unit);
 
         $header = "temp ";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("", $attrHeader->unit);
 
         $header = " temp ";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("", $attrHeader->unit);
     }
@@ -90,19 +90,19 @@ class AttributeHeaderTest extends TestCase
     {
         $header = "temp(m)";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("m", $attrHeader->unit);
 
         $header = "temp (m)";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("m", $attrHeader->unit);
 
         $header = "temp ( m)";
         $attrHeader = AttributeHeader::parse($header);
-        $this->assertEquals("entity", $attrHeader->attrType);
+        $this->assertEquals("activity", $attrHeader->attrType);
         $this->assertEquals("temp", $attrHeader->name);
         $this->assertEquals("m", $attrHeader->unit);
     }
