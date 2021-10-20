@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDatasetIdToFilesTable extends Migration
+class AddDatasetIdIndexToFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,7 @@ class AddDatasetIdToFilesTable extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->unsignedBigInteger('dataset_id')->nullable();
-            $table->foreign('dataset_id')
-                  ->references('id')
-                  ->on('datasets')
-                  ->onDelete('cascade');
+            $table->index('dataset_id');
         });
     }
 
