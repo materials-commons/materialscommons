@@ -9,7 +9,7 @@ use App\Traits\Datasets\DatasetFileReplication;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class FixPublishedDatasetCommand extends Command
+class FixPublishedDatasetsCommand extends Command
 {
     use DatasetFileReplication;
 
@@ -60,8 +60,8 @@ class FixPublishedDatasetCommand extends Command
 
     private function updateDataset(Dataset $dataset)
     {
-//        $this->updateDatasetFilesAndDirs($dataset);
-        $this->updateDatasetActivities($dataset);
+        $this->updateDatasetFilesAndDirs($dataset);
+//        $this->updateDatasetActivities($dataset);
     }
 
     private function updateDatasetFilesAndDirs(Dataset $dataset)
