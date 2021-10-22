@@ -6,6 +6,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -21,6 +22,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer file_count
  * @property integer directory_count
  * @property array file_types
+ * @property mixed deleted_at
  *
  * @mixin Builder
  */
@@ -32,6 +34,10 @@ class Project extends Model implements Searchable
     protected $guarded = ['id'];
 
     protected $attributes = [];
+
+    protected $dates = [
+        'deleted_at',
+    ];
 
     protected $casts = [
         'default_project' => 'boolean',
@@ -148,5 +154,21 @@ class Project extends Model implements Searchable
     {
         $url = route('projects.show', [$this->id]);
         return new SearchResult($this, $this->name, $url);
+    }
+
+    public static function getDeletedTrashCountForUser($userId): int
+    {
+        return Project::where('owner_id', $userId)
+                      ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
+                      ->count();
+    }
+
+    public static function getDeletedForUser($userId)
+    {
+        return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
+                      ->withCount('entities')
+                      ->where('owner_id', $userId)
+                      ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
+                      ->get();
     }
 }

@@ -8,6 +8,24 @@
                 </a>
             </li>
 
+            @if($nav_trash_count > 0)
+                <li class="nav-item">
+                    <a class="nav-link fs-11"
+                       href="#">
+                        <i class="fa-fw fas fa-trash-restore mr-2"></i>
+                        Trash
+                    </a>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link fs-11 nav-disabled"
+                       href="#">
+                        <i class="fa-fw fas fa-trash mr-2"></i>
+                        Trash
+                    </a>
+                </li>
+            @endif
+
             {{--            <li class="nav-item">--}}
             {{--                <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">--}}
             {{--                    <i class="fa-fw fas fa-layer-group mr-2 "></i>--}}

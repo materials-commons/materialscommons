@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActivityInProject;
+use App\Http\Middleware\AddAppNavigationBarCounts;
 use App\Http\Middleware\AddProjectNavigationBarCounts;
 use App\Http\Middleware\DatasetInProject;
 use App\Http\Middleware\EntityInProject;
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             UserCanAccessProject::class,
             AddProjectNavigationBarCounts::class,
+            AddAppNavigationBarCounts::class,
             FileInProject::class,
             ActivityInProject::class,
             EntityInProject::class,
