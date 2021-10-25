@@ -8,7 +8,7 @@ use App\Models\TbdFile;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
-class DeleteOldTrashcanDirectoriesCommand extends Command
+class DeleteExpiredTrashcanDirectoriesCommand extends Command
 {
     use ChildDirs;
 
@@ -17,7 +17,7 @@ class DeleteOldTrashcanDirectoriesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:delete-old-trashcan-directories';
+    protected $signature = 'mc:delete-expired-trashcan-directories';
 
     /**
      * The console command description.

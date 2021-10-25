@@ -10,7 +10,7 @@ class IndexTrashWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return view('', [
+        return view('app.trash.index', [
             'projects' => Project::getDeletedForUser(auth()->id()),
         ]);
     }

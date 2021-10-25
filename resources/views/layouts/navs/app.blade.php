@@ -10,8 +10,8 @@
 
             @if($nav_trash_count > 0)
                 <li class="nav-item">
-                    <a class="nav-link fs-11"
-                       href="#">
+                    <a class="nav-link fs-11 {{setActiveNav('trash')}}"
+                       href="{{route('trash')}}">
                         <i class="fa-fw fas fa-trash-restore mr-2"></i>
                         Trash
                     </a>

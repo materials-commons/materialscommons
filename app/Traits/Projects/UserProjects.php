@@ -25,6 +25,7 @@ trait UserProjects
         return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
                       ->withCount('entities')
                       ->whereIn('team_id', $allTeams)
+                      ->whereNull('deleted_at')
                       ->get();
     }
 }

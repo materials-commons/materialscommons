@@ -31,10 +31,10 @@ class DeleteProjectWebController extends Controller
             return false;
         }
 
-        if ($project->file_count > 0) {
-            flash("You cannot delete a project that has files")->error();
-            return false;
-        }
+//        if ($project->file_count > 0) {
+//            flash("You cannot delete a project that has files")->error();
+//            return false;
+//        }
 
         return true;
     }
