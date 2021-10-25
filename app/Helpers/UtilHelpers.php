@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Carbon;
 
 if (!function_exists("pipe")) {
     function pipe()
@@ -20,5 +21,19 @@ if (!function_exists("formatBytes")) {
         $bytes /= pow(1024, $pow);
 
         return round($bytes, $precision).' '.$units[$pow];
+    }
+}
+
+if (!function_exists("trashExpiration")) {
+    function trashExpiration()
+    {
+        return Carbon::now()->subDays(config('trash.expires_in_days'));
+    }
+}
+
+if (!function_exists("trashExpirationInFuture")) {
+    function trashExpirationInFuture($days = 1)
+    {
+        return Carbon::now()->subDays(config('trash.expires_in_days') + $days);
     }
 }
