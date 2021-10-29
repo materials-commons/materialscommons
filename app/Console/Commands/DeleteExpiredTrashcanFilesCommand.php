@@ -41,7 +41,7 @@ class DeleteExpiredTrashcanFilesCommand extends Command
     public function handle()
     {
         $days = Carbon::now()->subDays(config('trash.expires_in_days'));
-        $files = File::where('deleted_at', '>', $days)
+        $files = File::where('deleted_at', '<', $days)
                      ->where('mime_type', '<>', 'directory')
                      ->limit(1000)
                      ->cursor();

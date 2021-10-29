@@ -44,18 +44,19 @@ class Kernel extends ConsoleKernel
                      ->at('02:00')
                      ->runInBackground();
 
-            // Cleanup old deleted directories in the trashcan
+            // Cleanup expired directories in the trashcan
             $schedule->command("mc:delete-expired-trashcan-directories")
                      ->everyFifteenMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
 
-            // Cleanup old deleted files in the trashcan
+            // Cleanup expired files in the trashcan
             $schedule->command("mc:delete-expired-trashcan-files")
                      ->everyFifteenMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
 
+            // Cleanup expired projects in the trashcan
             $schedule->command("mc:delete-expired-trashcan-projects")
                      ->everyFifteenMinutes()
                      ->runInBackground()
