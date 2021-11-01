@@ -61,6 +61,12 @@ class Kernel extends ConsoleKernel
                      ->everyFifteenMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
+
+            // Queue file conversions
+            $schedule->command("mc:run-conversion-on-files")
+                     ->everyFifteenMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
         if (config('backup.backup.run_backups') != 0) {
