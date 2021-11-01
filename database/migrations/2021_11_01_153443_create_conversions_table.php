@@ -29,7 +29,7 @@ class CreateConversionsTable extends Migration
                   ->on('projects')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
                   ->references('id')
                   ->on('users');
