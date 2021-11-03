@@ -28,7 +28,6 @@ use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
-use App\Http\Controllers\Web\Projects\ShowProjectDocumentsWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
