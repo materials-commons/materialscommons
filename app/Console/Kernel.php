@@ -70,7 +70,7 @@ class Kernel extends ConsoleKernel
 
             // Delete the actual files, where appropriate
             $schedule->command("mc:delete-tbd-files")
-                     ->everyThirtyMinutes()
+                     ->everyFiveMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
         }
