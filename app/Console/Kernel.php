@@ -67,6 +67,12 @@ class Kernel extends ConsoleKernel
                      ->everyFifteenMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
+
+            // Delete the actual files, where appropriate
+            $schedule->command("mc:delete-tbd-files")
+                     ->everyThirtyMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
         if (config('backup.backup.run_backups') != 0) {

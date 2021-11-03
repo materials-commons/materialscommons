@@ -63,12 +63,10 @@ class DeleteTbdFilesCommand extends Command
             // Check if anything references this uuid: If it does then we can't delete the
             // on disk file.
             $count = File::where('uses_uuid', $uuid)->count();
-            if ($count != 0) {
-                continue;
+            if ($count == 0) {
+                // If we are here then nothing points at this file, so we can delete it.
+                Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($uuid));
             }
-
-            // If we are here then nothing points at this file, so we can just delete it.
-            Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($uuid));
         }
 
         return 0;
