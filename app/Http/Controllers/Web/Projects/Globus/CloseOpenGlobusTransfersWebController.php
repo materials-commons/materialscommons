@@ -19,10 +19,10 @@ class CloseOpenGlobusTransfersWebController extends Controller
         GlobusTransfer::where('project_id', $project->id)
                       ->where('owner_id', $user->id)
                       ->where('state', 'open')
-                       ->get()
-                       ->each(function (GlobusTransfer $globusTransfer) use ($closeGlobusRequestAction) {
-                           $closeGlobusRequestAction->execute($globusTransfer);
-                       });
+                      ->get()
+                      ->each(function (GlobusTransfer $globusTransfer) use ($closeGlobusRequestAction) {
+                          $closeGlobusRequestAction->execute($globusTransfer);
+                      });
         flash("Marked globus transfers as finished.")->success();
         return redirect()->back();
     }
