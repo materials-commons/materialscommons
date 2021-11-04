@@ -60,7 +60,7 @@ class DOIHelpers
                             ],
                         ]);
 
-        if ($response->ok()) {
+        if (!$response->successful()) {
             return null;
         }
 
