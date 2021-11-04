@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class DOIHelpers
 {
-    public static function mintDOI($title, $author, $datasetId)
+    public static function mintDOIEzAPI($title, $author, $datasetId)
     {
         $client = new Client();
         $year = Carbon::now()->year;
@@ -32,35 +32,18 @@ class DOIHelpers
         return str_replace("doi:", "", $matches[0]);
     }
 
-    public static function mintDOI2($title, $author, $datasetId)
+    public static function mintDOI($title, $author, $datasetId)
     {
-        // First create a draft DOI
-        $response = Http::withBasicAuth(config('doi.user'), config('doi.password'))
-                        ->contentType('application/vnd.api+json')
-                        ->post('https://api.datacite.org/dois', [
-                            'data' => [
-                                'type'       => 'dois',
-                                'attributes' => [
-                                    'prefix' => config('doi.namespace'),
-                                ],
-                            ],
-                        ]);
-        if (!$response->ok()) {
-            return null;
-        }
-
+        $doiServiceUrl = config('doi.service_url');
         $DSURL = config('doi.dataset_url');
-        $draft = $response->json()['data'];
-        // Now that we have a draft DOI, publish it
         $response = Http::withBasicAuth(config('doi.user'), config('doi.password'))
                         ->contentType('application/vnd.api+json')
-                        ->post('https://api.datacite.org/dois', [
+                        ->post($doiServiceUrl, [
                             'data' => [
-                                'id'         => $draft['id'],
                                 'type'       => 'dois',
                                 'attributes' => [
                                     'event'           => 'publish',
-                                    'doi'             => $draft['id'],
+                                    'prefix'          => config('doi.namespace'),
                                     'creators'        => [
                                         ['name' => $author],
                                     ],
@@ -81,7 +64,7 @@ class DOIHelpers
             return null;
         }
 
-        return $draft['id'];
+        return $response->json()['data']['id'];
     }
 }
 
