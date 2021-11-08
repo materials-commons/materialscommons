@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property string $uuid
  * @property string $disk
+ * @property integer project_id
  * @mixin Builder
  */
 class TbdFile extends Model
