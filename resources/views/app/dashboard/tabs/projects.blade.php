@@ -7,6 +7,7 @@
     <thead>
     <tr>
         <th>Project</th>
+        <th>Goto</th>
         <th>Size</th>
         <th>Hidden Size</th>
         <th>Files</th>
@@ -22,6 +23,28 @@
         <tr>
             <td>
                 <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
+            </td>
+            <td>
+                <div class="dropdown">
+                    <a class="dropdown-toggle no-underline" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Goto
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item td-none" href="{{route('projects.folders.index', [$proj])}}">
+                            Files
+                        </a>
+                        <a class="dropdown-item td-none" href="{{route('projects.experiments.index', [$proj])}}">
+                            Experiments
+                        </a>
+                        <a class="dropdown-item td-none" href="{{route('projects.entities.index', [$proj])}}">
+                            Samples
+                        </a>
+                        <a class="dropdown-item td-none" href="{{route('projects.datasets.index', [$proj])}}">
+                            Datasets
+                        </a>
+                    </div>
+                </div>
             </td>
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>
@@ -65,10 +88,10 @@
             $('#projects').DataTable({
                 stateSave: true,
                 columnDefs: [
-                    {orderData: [7], targets: [6]},
-                    {targets: [7], visible: false, searchable: false},
-                    {orderData: [2], targets: [1]},
-                    {targets: [2], visible: false},
+                    {orderData: [8], targets: [7]},
+                    {targets: [8], visible: false, searchable: false},
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false},
                 ]
             });
         });
