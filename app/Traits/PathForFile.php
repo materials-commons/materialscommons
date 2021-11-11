@@ -20,7 +20,7 @@ trait PathForFile
         return $this->getDirPathForFileFromUuid($uuid).'/'.$uuid;
     }
 
-    public function getFilePathPartialFromUid($uuid): string
+    public function getFilePathPartialFromUuid($uuid): string
     {
         return $this->getDirPathForFileFromUuid($uuid).'/'.$uuid;
     }

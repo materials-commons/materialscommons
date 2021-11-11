@@ -7,12 +7,15 @@ use App\Models\Conversion;
 use App\Models\File;
 use App\Models\TransferRequest;
 use App\Models\TransferRequestFile;
+use App\Traits\PathForFile;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class RemoveClosedTransferRequestsCommand extends Command
 {
+    use PathForFile;
+
     /**
      * The name and signature of the console command.
      *
@@ -72,7 +75,7 @@ class RemoveClosedTransferRequestsCommand extends Command
                                        'uses_uuid' => $usesUuid,
                                        'uses_id'   => $usesId,
                                    ]);
-                                   Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($trFile->file->uuid));
+                                   Storage::disk('mcfs')->delete($this->getFilePathPartialFromUuid($trFile->file->uuid));
                                }
                                if ($trFile->file->shouldBeConverted()) {
                                    Conversion::create([

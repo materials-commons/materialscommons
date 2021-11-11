@@ -70,7 +70,7 @@ class DeleteTbdFilesCommand extends Command
             }
 
             // If we are here then nothing points at this file, so we can delete it.
-            Storage::disk('mcfs')->delete($this->getFilePathPartialFromUid($uuid));
+            Storage::disk('mcfs')->delete($this->getFilePathPartialFromUuid($uuid));
         }
 
         return 0;
@@ -78,6 +78,6 @@ class DeleteTbdFilesCommand extends Command
 
     private function fileExists($uuid)
     {
-        return Storage::disk('mcfs')->exists($this->getFilePathPartialFromUid($uuid));
+        return Storage::disk('mcfs')->exists($this->getFilePathPartialFromUuid($uuid));
     }
 }
