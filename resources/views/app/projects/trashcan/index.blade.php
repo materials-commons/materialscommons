@@ -34,7 +34,7 @@
                 <tbody>
                 @foreach($trash as $item)
                     <tr>
-                        @if(is_null($item->path))
+                        @if(blank($item->path))
                             <td>
                                 <a href="{{route('projects.files.show', [$project, $item])}}">
                                     <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
@@ -60,7 +60,7 @@
                                     @endif
 
                                     <li>
-                                        @if(is_null($item->path))
+                                        @if(blank($item->path))
                                             <a href="{{route('projects.trashcan.file.restore', [$project, $item])}}"
                                                class="action-link">
                                                 <i class="fas fa-fw fa-trash-restore"></i>
