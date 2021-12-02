@@ -20,6 +20,7 @@ class ShowGlobusSideNav extends Component
         return view('components.projects.show-globus-side-nav', [
             'globusTransfer' => GlobusTransfer::where('project_id', $this->project->id)
                                               ->where('owner_id', auth()->id())
+                                              ->where('state', 'open')
                                               ->first(),
             'show'           => $this->userInBeta(),
         ]);
