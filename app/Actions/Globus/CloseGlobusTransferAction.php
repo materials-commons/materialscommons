@@ -17,11 +17,11 @@ class CloseGlobusTransferAction
     public function execute(GlobusTransfer $globusTransfer)
     {
         $globusTransfer->transferRequest()->update(['state' => 'closed']);
+        $globusTransfer->update(['state' => 'closed']);
 
         try {
             $this->globusApi->deleteEndpointAclRule($globusTransfer->globus_endpoint_id,
                 $globusTransfer->globus_acl_id);
-            $globusTransfer->transferRequest()->delete();
         } catch (\Exception $e) {
             Log::error("Unable to delete acl");
         }
