@@ -318,6 +318,7 @@ class EntityActivityImporter
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
                    ->where('current', true)
+                   ->whereNull('deleted_at')
                    ->where('project_id', $this->projectId)
                    ->first();
 
@@ -328,6 +329,7 @@ class EntityActivityImporter
 
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
+            ->whereNull('deleted_at')
             ->where('current', true)
             ->chunk(100, function ($files) use ($entity, $activity, $expression) {
                 $files->each(function (File $file) use ($entity, $activity, $expression) {
@@ -350,6 +352,7 @@ class EntityActivityImporter
     {
         File::where('directory_id', $dir->id)
             ->where('mime_type', '<>', 'directory')
+            ->whereNull('deleted_at')
             ->where('current', true)
             ->chunk(100, function ($files) use ($entity, $activity, $dir) {
                 $files->each(function (File $file) use ($entity, $activity, $dir) {
