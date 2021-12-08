@@ -116,11 +116,11 @@
                     <tr>
                         <td>
                             @if($file->isDir())
-                                <a href="{{route('projects.folders.show', [$project, $file])}}">
+                                <a class="no-underline" href="{{route('projects.folders.show', [$project, $file])}}">
                                     <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                 </a>
                             @else
-                                <a href="{{route('projects.files.show', [$project, $file])}}">
+                                <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
                                     <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
                                 </a>
                             @endif
