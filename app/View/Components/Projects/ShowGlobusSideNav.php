@@ -22,22 +22,22 @@ class ShowGlobusSideNav extends Component
                                               ->where('owner_id', auth()->id())
                                               ->where('state', 'open')
                                               ->first(),
-            'show'           => $this->userInBeta(),
+//            'show'           => $this->userInBeta(),
         ]);
     }
 
-    private function userInBeta(): bool
-    {
-        switch (auth()->id()) {
-            // case 343: /* Reza */
-            // case 316: /* Tracy Berman */
-            // case 173: /* John Allison */
-            // case 101: /* David Montiel */
-            case 130: /* Glenn Tarcea */
-            case 65:  /* Brian Puchala */
-                return true;
-            default:
-                return true;
-        }
-    }
+//    private function userInBeta(): bool
+//    {
+//        switch (auth()->id()) {
+//            // case 343: /* Reza */
+//            // case 316: /* Tracy Berman */
+//            // case 173: /* John Allison */
+//            // case 101: /* David Montiel */
+//            case 130: /* Glenn Tarcea */
+//            case 65:  /* Brian Puchala */
+//                return true;
+//            default:
+//                return true;
+//        }
+//    }
 }

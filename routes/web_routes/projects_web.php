@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloa
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
+use App\Http\Controllers\Web\Projects\Globus\RedirectToProjectGlobusSiteWebController;
 use App\Http\Controllers\Web\Projects\Globus\ShowStartedGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\StartGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\CreateProjectGlobusUploadWebController;
@@ -187,3 +188,7 @@ Route::get('/projects/{project}/data-dictionary/entities', ShowProjectEntitiesDa
 
 Route::post('/projects/{project}/search', SearchProjectWebController::class)
      ->name('projects.search');
+
+// Project Globus Bookmark
+Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWebController::class)
+     ->name('projects.globus.bookmark');
