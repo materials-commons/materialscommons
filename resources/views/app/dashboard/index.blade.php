@@ -28,6 +28,8 @@
                 @include('app.dashboard.tabs.published-datasets')
             @elseif (Request::routeIs('dashboard.data-dictionary.show'))
                 @include('app.dashboard.tabs.data-dictionary')
+            @elseif(Request::routeIs('dashboard.globus-bookmarks.index'))
+                @include('app.dashboard.tabs.globus-bookmarks')
             @endif
         </x-slot>
     </x-card>

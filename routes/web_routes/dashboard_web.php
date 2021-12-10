@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Dashboard\IndexGlobusBookmarksWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardDataDictionaryWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
@@ -15,3 +16,6 @@ Route::get('/dashboard/published-datasets', ShowDashboardPublishedDatasetsWebCon
 
 Route::get('/dashboard/data-dictionary', ShowDashboardDataDictionaryWebController::class)
      ->name('dashboard.data-dictionary.show');
+
+Route::get('/dashboard/globus-bookmarks', IndexGlobusBookmarksWebController::class)
+     ->name('dashboard.globus-bookmarks.index');

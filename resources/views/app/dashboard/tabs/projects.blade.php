@@ -43,6 +43,9 @@
                         <a class="dropdown-item td-none" href="{{route('projects.datasets.index', [$proj])}}">
                             Datasets
                         </a>
+                        <a class="dropdown-item td-none" href="{{route('projects.globus.bookmark', [$proj])}}">
+                            Upload Using Globus
+                        </a>
                     </div>
                 </div>
             </td>
