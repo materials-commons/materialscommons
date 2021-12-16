@@ -105,6 +105,10 @@ class GlobalSettingsLoader
             $cellIndex++;
         }
 
+        if (blank($worksheet)) {
+            return;
+        }
+
         // If we are here then we have successfully loaded a global setting.
         array_push($this->worksheets[$worksheet], $globalSetting);
     }
