@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\ExperimentStatus;
 use App\Imports\Etl\EntityActivityImporter;
+use App\Imports\Etl\EtlState;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
@@ -65,9 +66,12 @@ class CreateExperimentFromSpreadsheetCommand extends Command
         $experiment->refresh();
 
         $file = File::findOrFail($fileId);
+        $etlState = new EtlState($project->owner_id, $file->id);
+        $experiment->etlruns()->save($etlState->etlRun);
+
         $uuidPath = $this->getFilePathForFile($file);
         $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-        $importer = new EntityActivityImporter($projectId, $experiment->id, $project->owner_id);
+        $importer = new EntityActivityImporter($projectId, $experiment->id, $project->owner_id, $etlState);
         $importer->execute($filePath);
     }
 }
