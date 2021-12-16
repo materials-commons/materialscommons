@@ -43,6 +43,13 @@ class EntityActivityImporter
     private $currentSheetPosition;
     private $etlState;
 
+    private static $ignoreWorksheetKeys = [
+        "i"       => true,
+        "ignore"  => true,
+        "doc"     => true,
+        "example" => true,
+    ];
+
     public function __construct($projectId, $experimentId, $userId, EtlState $etlState)
     {
         $this->projectId = $projectId;
@@ -99,10 +106,32 @@ class EntityActivityImporter
                 // settings to apply with processing steps.
                 continue;
             }
+
+            if ($this->ignoreWorksheet($worksheet)) {
+                continue;
+            }
+
             $this->processWorksheet($worksheet);
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
         }
+    }
+
+    private function ignoreWorksheet(Worksheet $worksheet): bool
+    {
+        $worksheetTitleLower = Str::lower($worksheet->getTitle());
+        $colon = strpos($worksheetTitleLower, ':');
+
+        // If there was a colon then the user might have set the sheet to be ignored. Check if the word
+        // before the colon is one of the keywords we use to ignore the sheet.
+        if ($colon !== false) {
+            $prefix = substr($worksheetTitleLower, 0, $colon);
+            if (array_key_exists($prefix, self::$ignoreWorksheetKeys)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function processWorksheet(Worksheet $worksheet)
