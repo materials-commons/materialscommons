@@ -122,8 +122,8 @@ class EntityActivityImporter
         $worksheetTitleLower = Str::lower($worksheet->getTitle());
         $dash = strpos($worksheetTitleLower, '-');
 
-        // If there was a colon then the user might have set the sheet to be ignored. Check if the word
-        // before the colon is one of the keywords we use to ignore the sheet.
+        // If there was a dash then the user might have set the sheet to be ignored. Check if the word
+        // before the dash is one of the keywords we use that tells us to ignore the sheet.
         if ($dash !== false) {
             $prefix = substr($worksheetTitleLower, 0, $dash);
             if (array_key_exists($prefix, self::$ignoreWorksheetKeys)) {
