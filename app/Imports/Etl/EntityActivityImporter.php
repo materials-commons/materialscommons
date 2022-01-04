@@ -120,12 +120,12 @@ class EntityActivityImporter
     private function ignoreWorksheet(Worksheet $worksheet): bool
     {
         $worksheetTitleLower = Str::lower($worksheet->getTitle());
-        $colon = strpos($worksheetTitleLower, ':');
+        $dash = strpos($worksheetTitleLower, '-');
 
         // If there was a colon then the user might have set the sheet to be ignored. Check if the word
         // before the colon is one of the keywords we use to ignore the sheet.
-        if ($colon !== false) {
-            $prefix = substr($worksheetTitleLower, 0, $colon);
+        if ($dash !== false) {
+            $prefix = substr($worksheetTitleLower, 0, $dash);
             if (array_key_exists($prefix, self::$ignoreWorksheetKeys)) {
                 return true;
             }
