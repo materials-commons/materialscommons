@@ -8,4 +8,5 @@ return [
     'contact'           => env('MC_SERVER_CONTACT', 'materials-commons-help@umich.edu'),
     'description'       => env('MC_SERVER_DESCRIPTION', 'Materials Commons server'),
     'uuid'              => env('MC_SERVER_UUID', 'Not Set'),
+    'down_file'         => env('MC_DOWN_FILE', '/no/such/file'),
 ];
