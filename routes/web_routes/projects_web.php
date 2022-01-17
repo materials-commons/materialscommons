@@ -43,139 +43,140 @@ use App\Http\Controllers\Web\Projects\Users\ModifyProjectUsersWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveAdminFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
+use App\Http\Controllers\Web\Visus\ShowVisusDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/create', CreateProjectWebController::class)
-     ->name('projects.create');
+    ->name('projects.create');
 Route::post('/projects', StoreProjectWebController::class)
-     ->name('projects.store');
+    ->name('projects.store');
 
 Route::get('/projects', IndexProjectsWebController::class)
-     ->name('projects.index');
+    ->name('projects.index');
 
 Route::get('/projects/{project}/upload', ShowUploadFilesWebController::class)
-     ->name('projects.upload-files');
+    ->name('projects.upload-files');
 
 Route::post('/projects/search', SearchAcrossProjectsWebController::class)
-     ->name('projects.search_all');
+    ->name('projects.search_all');
 
 Route::get('/projects/{project}', ShowProjectWebController::class)
-     ->name('projects.show');
+    ->name('projects.show');
 
 //
 
 Route::patch('/projects/{project}', UpdateProjectWebController::class)
-     ->name('projects.update');
+    ->name('projects.update');
 Route::get('/projects/{project}/edit', EditProjectWebController::class)
-     ->name('projects.edit');
+    ->name('projects.edit');
 
 Route::delete('/projects/{project}', DeleteProjectWebController::class)
-     ->name('projects.destroy');
+    ->name('projects.destroy');
 
 Route::get('/projects/{project}/users/{user}/remove', RemoveUserFromProjectWebController::class)
-     ->name('projects.users.remove');
+    ->name('projects.users.remove');
 
 Route::get('/projects/{project}/users/{user}/add', AddUserToProjectWebController::class)
-     ->name('projects.users.add');
+    ->name('projects.users.add');
 
 Route::get('/projects/{project}/admins/{user}/remove', RemoveAdminFromProjectWebController::class)
-     ->name('projects.admins.remove');
+    ->name('projects.admins.remove');
 
 Route::get('/projects/{project}/admins/{user}/add', AddAdminToProjectWebController::class)
-     ->name('projects.admins.add');
+    ->name('projects.admins.add');
 
 Route::get('/projects/{project}/users', IndexProjectUsersWebController::class)
-     ->name('projects.users.index');
+    ->name('projects.users.index');
 
 Route::get('/projects/{project}/users/edit', ModifyProjectUsersWebController::class)
-     ->name('projects.users.edit');
+    ->name('projects.users.edit');
 
 Route::get('/projects/{project}/users/{user}/show', ShowProjectUserWebController::class)
-     ->name('projects.users.show');
+    ->name('projects.users.show');
 
 Route::get('/projects/{project}/users/{user}/change-to-admin', ChangeUserToAdminWebController::class)
-     ->name('projects.users.change-to-admin');
+    ->name('projects.users.change-to-admin');
 
 Route::get('/projects/{project}/users/{user}/change-to-member', ChangeUserToMemberWebController::class)
-     ->name('projects.users.change-to-member');
+    ->name('projects.users.change-to-member');
 
 
 // Globus Uploads
 
 Route::post('/projects/{project}/globus/uploads', StoreGlobusUploadToProjectWebController::class)
-     ->name('projects.globus.uploads.store');
+    ->name('projects.globus.uploads.store');
 
 Route::get('/projects/{project}/globus/uploads/create', CreateProjectGlobusUploadWebController::class)
-     ->name('projects.globus.uploads.create');
+    ->name('projects.globus.uploads.create');
 
 Route::get('/projects/{project}/globus/uploads/account/edit', EditGlobusAccountForUploadsWebController::class)
-     ->name('projects.globus.uploads.edit_account');
+    ->name('projects.globus.uploads.edit_account');
 
 Route::post('/projects/{project}/globus/uploads/account/update', UpdateGlobusAccountForUploadsWebController::class)
-     ->name('projects.globus.uploads.update_account');
+    ->name('projects.globus.uploads.update_account');
 
 Route::get('/projects/{project}/globus/uploads/{globusUpload}/delete', DeleteGlobusUploadWebController::class)
-     ->name('projects.globus.uploads.delete');
+    ->name('projects.globus.uploads.delete');
 
 Route::delete('/projects/{project}/globus/uploads/{globusUpload}', DestroyGlobusUploadWebController::class)
-     ->name('projects.globus.uploads.destroy');
+    ->name('projects.globus.uploads.destroy');
 
 Route::get('/projects/{project}/globus/uploads/{globusUpload}/done',
     ShowGlobusUploadToMarkAsCompleteWebController::class)
-     ->name('projects.globus.uploads.done');
+    ->name('projects.globus.uploads.done');
 
 Route::post('/projects/{project}/globus/uploads/{globusUpload}/mark_done',
     MarkGlobusUploadAsCompleteWebController::class)
-     ->name('projects.globus.uploads.mark_done');
+    ->name('projects.globus.uploads.mark_done');
 
 Route::get('/projects/{project}/globus/uploads/index', IndexProjectGlobusUploadsWebController::class)
-     ->name('projects.globus.uploads.index');
+    ->name('projects.globus.uploads.index');
 
 Route::get('/projects/{project}/globus/uploads/{globusUpload}', ShowProjectGlobusUploadWebController::class)
-     ->name('projects.globus.uploads.show');
+    ->name('projects.globus.uploads.show');
 
 
 // Globus Downloads
 
 Route::post('/projects/{project}/globus/downloads', StoreGlobusDownloadProjectWebController::class)
-     ->name('projects.globus.downloads.store');
+    ->name('projects.globus.downloads.store');
 
 Route::get('/projects/{project}/globus/downloads/create', CreateProjectGlobusDownloadWebController::class)
-     ->name('projects.globus.downloads.create');
+    ->name('projects.globus.downloads.create');
 
 Route::get('/projects/{project}/globus/downloads/account/edit', EditGlobusAccountWebController::class)
-     ->name('projects.globus.downloads.edit_account');
+    ->name('projects.globus.downloads.edit_account');
 
 Route::post('/projects/{project}/globus/downloads/account/update', UpdateGlobusAccountWebController::class)
-     ->name('projects.globus.downloads.update_account');
+    ->name('projects.globus.downloads.update_account');
 
 Route::get('/projects/{project}/globus/downloads/{globusDownload}/delete', DeleteGlobusDownloadWebController::class)
-     ->name('projects.globus.downloads.delete');
+    ->name('projects.globus.downloads.delete');
 
 Route::delete('/projects/{project}/globus/downloads/{globusDownload}', DestroyGlobusDownloadWebController::class)
-     ->name('projects.globus.downloads.destroy');
+    ->name('projects.globus.downloads.destroy');
 
 Route::get('/projects/{project}/globus/downloads/index', IndexProjectGlobusDownloadsWebController::class)
-     ->name('projects.globus.downloads.index');
+    ->name('projects.globus.downloads.index');
 
 Route::get('/projects/{project}/globus/downloads/{globusDownload}', ShowProjectGlobusDownloadWebController::class)
-     ->name('projects.globus.downloads.show');
+    ->name('projects.globus.downloads.show');
 
 // Globus NG
 Route::get('/projects/{project}/globus/start', StartGlobusTransferWebController::class)
-     ->name('projects.globus.start');
+    ->name('projects.globus.start');
 
 Route::get('/projects/{project}/globus/{globusTransfer}/show-started', ShowStartedGlobusTransferWebController::class)
-     ->name('projects.globus.show-started');
+    ->name('projects.globus.show-started');
 
 Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
-     ->name('projects.globus.close');
+    ->name('projects.globus.close');
 
 Route::get('/projects/{project}/data-dictionary/activities', ShowProjectActivitiesDataDictionaryWebController::class)
-     ->name('projects.data-dictionary.activities');
+    ->name('projects.data-dictionary.activities');
 
 Route::get('/projects/{project}/data-dictionary/entities', ShowProjectEntitiesDataDictionaryWebController::class)
-     ->name('projects.data-dictionary.entities');
+    ->name('projects.data-dictionary.entities');
 
 //Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
 //     ->name('projects.globus.monitor');
@@ -187,8 +188,12 @@ Route::get('/projects/{project}/data-dictionary/entities', ShowProjectEntitiesDa
 // Project Search
 
 Route::post('/projects/{project}/search', SearchProjectWebController::class)
-     ->name('projects.search');
+    ->name('projects.search');
 
 // Project Globus Bookmark
 Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWebController::class)
-     ->name('projects.globus.bookmark');
+    ->name('projects.globus.bookmark');
+
+// For now Visus datasets here
+Route::get('/projects/{project}/visus', ShowVisusDatasetWebController::class)
+    ->name('projects.visus');
