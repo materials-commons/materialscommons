@@ -22,11 +22,6 @@ class CreateExperimentAction
         $experiment->save();
         $experiment->refresh();
 
-        if (array_key_exists('file_id', $data) && $data['file_id'] !== null) {
-            $ps = new ProcessSpreadsheetJob($data['project_id'], $experiment->id, auth()->id(), $data['file_id']);
-            dispatch($ps)->onQueue('globus');
-        }
-
         return $experiment;
     }
 }
