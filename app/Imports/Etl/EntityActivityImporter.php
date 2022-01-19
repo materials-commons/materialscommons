@@ -27,27 +27,33 @@ class EntityActivityImporter
     private $experimentId;
 
     /** @var \App\Models\Experiment */
-    private $experiment;
+    private Experiment $experiment;
     private $userId;
 
-    private $sawHeader = false;
+    private bool $sawHeader = false;
     private $headerTracker;
     private $worksheet;
-    private $entityTracker;
-    private $activityTracker;
-    private $rowNumber;
-    private $rows;
-    private $currentSheetRows;
-    private $getFileByPathAction;
-    private $globalSettings;
-    private $currentSheetPosition;
-    private $etlState;
+    private EntityTracker $entityTracker;
+    private HashedActivityTracker $activityTracker;
+    private int $rowNumber;
+    private Collection $rows;
+    private Collection $currentSheetRows;
+    private GetFileByPathAction $getFileByPathAction;
+    private GlobalSettingsLoader $globalSettings;
+    private int $currentSheetPosition;
+    private EtlState $etlState;
 
-    private static $ignoreWorksheetKeys = [
+    private static array $ignoreWorksheetKeys = [
         "i"       => true,
         "ignore"  => true,
         "doc"     => true,
         "example" => true,
+    ];
+
+    private static array $experimentWorksheetKeys = [
+        "e"          => true,
+        "exp"        => true,
+        "experiment" => true,
     ];
 
     public function __construct($projectId, $experimentId, $userId, EtlState $etlState)
@@ -111,6 +117,20 @@ class EntityActivityImporter
                 continue;
             }
 
+            // if ($this->isExperimentWorksheet($worksheet)) {
+            //     if there was a previous experiment {
+            //         $this->createActivityRelationships();
+            //     }
+            //     create and set experiment
+            //          $this->experiment = createExperiment();
+            //          $this->experimentId = $this->experiment->id;
+            //     reset appropriate state
+            //           $this->currentSheetPosition = 1;
+            //           $this->rows = collect()
+            //           $this->entityTracker = new EntityTracker();
+            //           $this->activityTracker = new HashedActivityTracker();
+            // }
+
             $this->processWorksheet($worksheet);
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
@@ -119,6 +139,16 @@ class EntityActivityImporter
 
     private function ignoreWorksheet(Worksheet $worksheet): bool
     {
+        return $this->worksheetContainsKeyFrom($worksheet, self::$ignoreWorksheetKeys);
+    }
+
+    private function isExperimentWorksheet(Worksheet $worksheet): bool
+    {
+        return $this->worksheetContainsKeyFrom($worksheet, self::$experimentWorksheetKeys);
+    }
+
+    private function worksheetContainsKeyFrom(Worksheet $worksheet, $keys): bool
+    {
         $worksheetTitleLower = Str::lower($worksheet->getTitle());
         $dash = strpos($worksheetTitleLower, '-');
 
@@ -126,7 +156,7 @@ class EntityActivityImporter
         // before the dash is one of the keywords we use that tells us to ignore the sheet.
         if ($dash !== false) {
             $prefix = substr($worksheetTitleLower, 0, $dash);
-            if (array_key_exists($prefix, self::$ignoreWorksheetKeys)) {
+            if (array_key_exists($prefix, $keys)) {
                 return true;
             }
         }
@@ -253,9 +283,12 @@ class EntityActivityImporter
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
 
-    private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
-        RowTracker $rowTracker)
-    {
+    private function addAttributesToEntity(
+        Collection $entityAttributes,
+        Entity $entity,
+        EntityState $state,
+        RowTracker $rowTracker
+    ) {
         $seenAttributes = collect();
         $attributePosition = 1;
         $entityAttributes->each(function ($attr) use ($state, $entity, $seenAttributes, &$attributePosition) {
@@ -346,10 +379,10 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
-                   ->where('current', true)
-                   ->whereNull('deleted_at')
-                   ->where('project_id', $this->projectId)
-                   ->first();
+            ->where('current', true)
+            ->whereNull('deleted_at')
+            ->where('project_id', $this->projectId)
+            ->first();
 
         if (is_null($dir)) {
             $this->etlState->logError("   Unable to find directory {$dirPath}");
@@ -525,8 +558,8 @@ class EntityActivityImporter
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)
-                                      ->where('direction', 'out')
-                                      ->first();
+                        ->where('direction', 'out')
+                        ->first();
                     $activity->entityStates()->attach($entityState, ['direction' => 'in']);
                 });
             });
