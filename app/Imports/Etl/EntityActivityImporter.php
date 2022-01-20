@@ -5,6 +5,7 @@ namespace App\Imports\Etl;
 use App\Actions\Activities\CreateActivityAction;
 use App\Actions\Entities\CreateEntityAction;
 use App\Actions\Etl\GetFileByPathAction;
+use App\Enums\ExperimentStatus;
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
@@ -23,16 +24,15 @@ class EntityActivityImporter
 {
     const GLOBAL_WORKSHEET_NAME = 'mc constants';
 
-    private $projectId;
-    private $experimentId;
+    private int $projectId;
+    private int $experimentId;
 
-    /** @var \App\Models\Experiment */
-    private Experiment $experiment;
-    private $userId;
+    private ?Experiment $experiment;
+    private int $userId;
 
     private bool $sawHeader = false;
-    private $headerTracker;
-    private $worksheet;
+    private ?HeaderTracker $headerTracker;
+    private ?Worksheet $worksheet;
     private EntityTracker $entityTracker;
     private HashedActivityTracker $activityTracker;
     private int $rowNumber;
@@ -117,19 +117,9 @@ class EntityActivityImporter
                 continue;
             }
 
-            // if ($this->isExperimentWorksheet($worksheet)) {
-            //     if there was a previous experiment {
-            //         $this->createActivityRelationships();
-            //     }
-            //     create and set experiment
-            //          $this->experiment = createExperiment();
-            //          $this->experimentId = $this->experiment->id;
-            //     reset appropriate state
-            //           $this->currentSheetPosition = 1;
-            //           $this->rows = collect()
-            //           $this->entityTracker = new EntityTracker();
-            //           $this->activityTracker = new HashedActivityTracker();
-            // }
+            if ($this->isExperimentWorksheet($worksheet)) {
+                $this->switchToNewExperiment($worksheet);
+            }
 
             $this->processWorksheet($worksheet);
             $this->etlState->etlRun->n_sheets_processed++;
@@ -161,7 +151,89 @@ class EntityActivityImporter
             }
         }
 
+        // Second way of handling this if the first failed - with parenthesis. For example if a user
+        // were to give a worksheet the name "(Example) How to use", then it would be recognized
+        // as an example worksheet and ignored.
+        $leftParen = strpos($worksheetTitleLower, '(');
+        $rightParen = strpos($worksheetTitleLower, ')');
+        if ($leftParen !== false && $rightParen !== false) {
+            $prefix = substr($worksheetTitleLower, $leftParen + 1, $rightParen - 1);
+            return array_key_exists($prefix, $keys);
+        }
+
         return false;
+    }
+
+    private function worksheetContainsKeyUsingDashFrom(Worksheet $worksheet, $keys): bool
+    {
+        $worksheetTitleLower = Str::lower($worksheet->getTitle());
+        $dash = strpos($worksheetTitleLower, '-');
+
+        // If there was a dash then the user might have set the sheet to be ignored. Check if the word
+        // before the dash is one of the keywords we use that tells us to ignore the sheet.
+        if ($dash !== false) {
+            $prefix = substr($worksheetTitleLower, 0, $dash);
+            return array_key_exists($prefix, $keys);
+        }
+
+        return false;
+    }
+
+    private function worksheetContainsKeyUsingParensFrom(Worksheet $worksheet, $keys): bool
+    {
+        $worksheetTitleLower = Str::lower($worksheet->getTitle());
+        // Second way of handling this if the first failed - with parenthesis. For example if a user
+        // were to give a worksheet the name "(Example) How to use", then it would be recognized
+        // as an example worksheet and ignored.
+        $leftParen = strpos($worksheetTitleLower, '(');
+        $rightParen = strpos($worksheetTitleLower, ')');
+        if ($leftParen !== false && $rightParen !== false) {
+            $prefix = substr($worksheetTitleLower, $leftParen + 1, $rightParen - 1);
+            return array_key_exists($prefix, $keys);
+        }
+
+        return false;
+    }
+
+    private function switchToNewExperiment(Worksheet $worksheet)
+    {
+        if (!is_null($this->experiment)) {
+            // There was a previous experiment so connect all the relationships
+            // before we start cleaning up state.
+            $this->createActivityRelationships();
+        }
+        $this->experiment = $this->createExperiment($worksheet);
+        $this->experimentId = $this->experiment->id;
+
+        // Reset loader state
+        $this->currentSheetPosition = 1;
+        $this->rows = collect();
+        $this->entityTracker = new EntityTracker();
+        $this->activityTracker = new HashedActivityTracker();
+    }
+
+    private function createExperiment(Worksheet $worksheet): ?Experiment
+    {
+        $name = $this->getAnnotatedWorksheetName($worksheet);
+        return Experiment::create([
+            'name'       => $name,
+            'project_id' => $this->projectId,
+            'owner_id'   => $this->userId,
+            'status'     => ExperimentStatus::InProgress,
+        ]);
+    }
+
+    private function getAnnotatedWorksheetName(Worksheet $worksheet): string
+    {
+        $title = $worksheet->getTitle();
+        if ($this->worksheetContainsKeyUsingDashFrom($worksheet, self::$experimentWorksheetKeys)) {
+            $dash = strpos($title, '-');
+            return Str::of(substr($title, $dash + 1))->trim()->__toString();
+        }
+
+        // Must have parens so
+        $parenRight = strpos($title, ')');
+        return Str::of(substr($title, $parenRight + 1))->trim()->__toString();
     }
 
     private function processWorksheet(Worksheet $worksheet)
