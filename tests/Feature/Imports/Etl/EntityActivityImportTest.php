@@ -560,6 +560,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(5, $attrValue->val["value"]);
     }
 
+    /** @test */
     public function test_loading_spreadsheet_with_boolean_values()
     {
         $this->withoutExceptionHandling();
@@ -581,5 +582,46 @@ class EntityActivityImportTest extends TestCase
                     break;
             }
         });
+    }
+
+    /** @test */
+    public function test_creating_single_experiment_from_spreadsheet()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/create-one-experiment.xlsx'));
+        $this->assertEquals(1, Experiment::all()->count());
+        $experiment = Experiment::first();
+        $this->assertEquals("sem", $experiment->name);
+        $this->assertEquals(4, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertEquals(2, Attribute::where('attributable_type', Activity::class)->count());
+    }
+
+    /** @test */
+    public function test_creating_multiple_experiments_from_spreadsheet()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/create-two-experiments.xlsx'));
+        $this->assertEquals(2, Experiment::all()->count());
+
+        $experimentSem = Experiment::findOrFail(1);
+        $this->assertEquals("sem", $experimentSem->name);
+
+        $experimentSem2 = Experiment::findOrFail(2);
+        $this->assertEquals("sem2", $experimentSem2->name);
+
+        $this->assertEquals(8, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertEquals(4, Attribute::where('attributable_type', Activity::class)->count());
+    }
+
+    /** @test */
+    public function test_creating_single_experiment_with_workflow_step()
+    {
+
     }
 }

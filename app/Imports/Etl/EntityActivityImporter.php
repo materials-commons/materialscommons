@@ -25,7 +25,7 @@ class EntityActivityImporter
     const GLOBAL_WORKSHEET_NAME = 'mc constants';
 
     private int $projectId;
-    private int $experimentId;
+    private ?int $experimentId;
 
     private ?Experiment $experiment;
     private int $userId;
@@ -65,6 +65,7 @@ class EntityActivityImporter
         $this->rows = collect();
         $this->currentSheetRows = collect();
         $this->currentSheetPosition = 1;
+        $this->experiment = null;
 
         $this->entityTracker = new EntityTracker();
         $this->activityTracker = new HashedActivityTracker();
@@ -75,7 +76,9 @@ class EntityActivityImporter
 
     public function execute($spreadsheetPath)
     {
-        $this->experiment = Experiment::findOrFail($this->experimentId);
+        if (!is_null($this->experimentId)) {
+            $this->experiment = Experiment::findOrFail($this->experimentId);
+        }
         $spreadsheet = $this->loadSpreadsheet($spreadsheetPath);
         $this->loadGlobalSettingsIfExists($spreadsheet);
         $this->processWorksheets($spreadsheet);
