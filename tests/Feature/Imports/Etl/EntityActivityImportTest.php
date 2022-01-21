@@ -585,7 +585,7 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
-    public function test_creating_single_experiment_from_spreadsheet()
+    public function test_create_single_experiment_from_spreadsheet()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
@@ -600,7 +600,7 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
-    public function test_creating_multiple_experiments_from_spreadsheet()
+    public function test_create_multiple_experiments_from_spreadsheet()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
@@ -620,8 +620,42 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
-    public function test_creating_single_experiment_with_workflow_step()
+    public function test_create_single_experiment_with_workflow_step()
     {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/create-one-experiment-with-workflow.xlsx'));
+        $this->assertEquals(1, Experiment::all()->count());
+        $experiment = Experiment::first();
+        $this->assertEquals("sem", $experiment->name);
+        $this->assertEquals(2, Activity::all()->count());
+        $this->assertEquals(9, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertEquals(5, Attribute::where('attributable_type', Activity::class)->count());
+    }
 
+    /** @test */
+    public function test_create_multiple_experiments_with_workflow_steps()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/create-experiments-with-workflows.xlsx'));
+        $this->assertEquals(2, Experiment::all()->count());
+        $e1 = Experiment::with(['entities.attributes', 'activities.attributes'])->where('name', 'e1')->first();
+        $this->assertEquals(1, $e1->entities->count());
+        $this->assertEquals(2, $e1->entities[0]->entityStates->count());
+        $this->assertEquals(2, $e1->activities->count());
+        $this->assertEquals(2, $e1->activities[0]->attributes->count());
+        $this->assertEquals(3, $e1->activities[1]->attributes->count());
+
+        $e2 = Experiment::with(['entities.attributes', 'activities.attributes'])->where('name', 'e2')->first();
+        $this->assertEquals(1, $e2->entities->count());
+        $this->assertEquals(2, $e2->entities[0]->entityStates->count());
+        $this->assertEquals(2, $e2->activities->count());
+        $this->assertEquals(1, $e2->activities[0]->attributes->count());
+        $this->assertEquals(1, $e2->activities[1]->attributes->count());
     }
 }
