@@ -12,7 +12,7 @@ class DownloadDatasetGlobusRedirectWebController extends Controller
 
     public function __invoke(Dataset $dataset)
     {
-        $this->incrementDownloads($dataset->id);
+        $this->incrementDatasetDownloads($dataset->id);
         return redirect(GlobusUrl::globusDownloadUrl(config('globus.endpoint'),
             "/__published_datasets/{$dataset->uuid}/"));
     }

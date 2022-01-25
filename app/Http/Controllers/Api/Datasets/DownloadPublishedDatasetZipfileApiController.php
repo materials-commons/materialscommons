@@ -15,7 +15,7 @@ class DownloadPublishedDatasetZipfileApiController extends Controller
     {
         abort_if(is_null($dataset->published_at), 400, "No such dataset");
 
-        $this->incrementDownloads($dataset->id);
+        $this->incrementDatasetDownloads($dataset->id);
         return response()->download($dataset->zipfilePath());
     }
 }

@@ -14,7 +14,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
 
     public function __invoke($datasetId)
     {
-        $this->incrementViews($datasetId);
+        $this->incrementDatasetViews($datasetId);
         $dataset = Dataset::with(['workflows', 'tags'])
                           ->withCount(['views', 'downloads'])
                           ->withCounts()

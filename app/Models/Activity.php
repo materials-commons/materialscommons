@@ -88,7 +88,7 @@ class Activity extends Model implements Searchable
         return $this->morphToMany(EtlRun::class, 'item', 'item2activity');
     }
 
-    public function getTypeAttribute()
+    public function getTypeAttribute(): string
     {
         return "process";
     }
