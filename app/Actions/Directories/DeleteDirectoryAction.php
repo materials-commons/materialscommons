@@ -3,6 +3,7 @@
 namespace App\Actions\Directories;
 
 use App\Models\File;
+use Illuminate\Support\Carbon;
 
 class DeleteDirectoryAction
 {
@@ -14,10 +15,7 @@ class DeleteDirectoryAction
      */
     public function __invoke(File $directory)
     {
-        // For now only delete directories that are empty
-        abort_unless($directory->name != '/', 400, 'Cannot delete project root directory');
-        $count = File::where('directory_id', $directory->id)->count();
-        abort_unless($count == 0, 400, 'Directory not empty');
-        $directory->delete();
+        abort_if($directory->name == '/', 400, 'Cannot delete project root directory');
+        $directory->update(['deleted_at' => Carbon::now()]);
     }
 }
