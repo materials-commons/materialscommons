@@ -13,14 +13,29 @@ class CreateFileAction
     public function __invoke($projectId, $directoryId, $description, $file, $name = null)
     {
         umask(0);
+        $nameToUse = $name ?? $file->getClientOriginalName();
+        $checksum = md5_file($file->getRealPath());
+
+        // Check if the exact file already exists
+        $existingFile = $this->matchingFileInDir($directoryId, $checksum, $nameToUse);
+        if (!is_null($existingFile)) {
+            $existing = File::where('directory_id', $directoryId)->where('name', $existingFile->name)->get();
+            if ($existing->count() != 1) {
+                File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
+            }
+            $existingFile->update(['current' => true]);
+            return $existingFile;
+        }
+
         $mimeType = mime_content_type($file->getRealPath());
+
         $fileEntry = new File([
             'uuid'         => Uuid::uuid4()->toString(),
-            'checksum'     => md5_file($file->getRealPath()),
-//            'mime_type'    => $file->getClientMimeType(),
+            'checksum'     => $checksum,
+            //            'mime_type'    => $file->getClientMimeType(),
             'mime_type'    => $mimeType,
             'size'         => $file->getSize(),
-            'name'         => $name ?? $file->getClientOriginalName(),
+            'name'         => $nameToUse,
             'owner_id'     => auth()->id(),
             'current'      => true,
             'description'  => $description,
@@ -61,6 +76,15 @@ class CreateFileAction
         }
 
         return $fileEntry;
+    }
+
+    private function matchingFileInDir($directoryId, $checksum, $name)
+    {
+        return File::where('checksum', $checksum)
+                   ->where('directory_id', $directoryId)
+                   ->whereNull('deleted_at')
+                   ->where('name', $name)
+                   ->first();
     }
 
 }
