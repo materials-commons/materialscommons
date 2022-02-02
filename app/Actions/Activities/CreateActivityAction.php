@@ -23,10 +23,13 @@ class CreateActivityAction
         if (array_key_exists('attributes', $data)) {
             foreach ($data['attributes'] as $attribute) {
                 $attr = Attribute::create([
-                    'name'              => $attribute['name'],
-                    'attributable_type' => Activity::class,
-                    'attributable_id'   => $activity->id,
-                    'eindex'            => array_key_exists('eindex', $attribute) ? $attribute['eindex'] : null,
+                    'name'                => $attribute['name'],
+                    'attributable_type'   => Activity::class,
+                    'attributable_id'     => $activity->id,
+                    'eindex'              => array_key_exists('eindex', $attribute) ? $attribute['eindex'] : null,
+                    'marked_important_at' =>
+                        array_key_exists('marked_important_at',
+                            $attribute) ? $attribute['marked_important_at'] : null,
                 ]);
                 $unit = '';
                 if (array_key_exists('unit', $attribute)) {

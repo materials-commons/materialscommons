@@ -13,6 +13,7 @@ use App\Models\Entity;
 use App\Models\EntityState;
 use App\Models\Experiment;
 use App\Models\File;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -42,6 +43,7 @@ class EntityActivityImporter
     private GlobalSettingsLoader $globalSettings;
     private int $currentSheetPosition;
     private EtlState $etlState;
+    private Carbon $now;
 
     private static array $ignoreWorksheetKeys = [
         "i"       => true,
@@ -72,6 +74,7 @@ class EntityActivityImporter
         $this->getFileByPathAction = new GetFileByPathAction();
         $this->globalSettings = new GlobalSettingsLoader();
         $this->etlState = $etlState;
+        $this->now = Carbon::now();
     }
 
     public function execute($spreadsheetPath)
@@ -375,11 +378,13 @@ class EntityActivityImporter
                     'val'          => ['value' => $attr->value],
                 ]);
             } else {
+                $importantDate = $attr->important ? $this->now : null;
                 $a = Attribute::create([
-                    'name'              => $attr->name,
-                    'attributable_id'   => $state->id,
-                    'eindex'            => $attributePosition,
-                    'attributable_type' => EntityState::class,
+                    'name'                => $attr->name,
+                    'attributable_id'     => $state->id,
+                    'eindex'              => $attributePosition,
+                    'attributable_type'   => EntityState::class,
+                    'marked_important_at' => $importantDate,
                 ]);
                 AttributeValue::create([
                     'attribute_id' => $a->id,
@@ -481,10 +486,10 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
-            ->where('current', true)
-            ->whereNull('deleted_at')
-            ->where('project_id', $this->projectId)
-            ->first();
+                   ->where('current', true)
+                   ->whereNull('deleted_at')
+                   ->where('project_id', $this->projectId)
+                   ->first();
 
         if (is_null($dir)) {
             $this->etlState->logError("   Unable to find directory {$dirPath}");
@@ -609,10 +614,11 @@ class EntityActivityImporter
         $attributePosition = 1;
         $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) use (&$attributePosition) {
             return [
-                'name'   => $attr->name,
-                'value'  => $attr->value,
-                'unit'   => $attr->unit,
-                'eindex' => $attributePosition++,
+                'name'                => $attr->name,
+                'value'               => $attr->value,
+                'unit'                => $attr->unit,
+                'eindex'              => $attributePosition++,
+                'marked_important_at' => $attr->important ? $this->now : null,
             ];
         })->toArray();
 
@@ -660,8 +666,8 @@ class EntityActivityImporter
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)
-                        ->where('direction', 'out')
-                        ->first();
+                                      ->where('direction', 'out')
+                                      ->first();
                     $activity->entityStates()->attach($entityState, ['direction' => 'in']);
                 });
             });

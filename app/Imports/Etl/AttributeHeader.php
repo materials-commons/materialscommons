@@ -9,15 +9,26 @@ class AttributeHeader
     public $name;
     public $unit;
     public $attrType;
+    public $important;
 
     private static $entityKeywords = [
         "s"      => true,
         "sample" => true,
     ];
 
+    private static $importantEntityKeywords = [
+        "is"      => true,
+        "isample" => true,
+    ];
+
     private static $activityKeywords = [
         "p"       => true,
         "process" => true,
+    ];
+
+    private static $importantActivityKeywords = [
+        "ip"       => true,
+        "iprocess" => true,
     ];
 
     private static $fileKeywords = [
@@ -37,7 +48,15 @@ class AttributeHeader
     {
         $this->name = $name;
         $this->unit = $unit;
+        $this->important = false;
         $this->attrType = $attrType;
+        if ($attrType == "important-entity") {
+            $this->attrType = "entity";
+            $this->important = true;
+        } elseif ($attrType == "important-activity") {
+            $this->attrType = "activity";
+            $this->important = true;
+        }
     }
 
     public static function parse($header)
@@ -64,8 +83,12 @@ class AttributeHeader
     {
         if (array_key_exists($str, AttributeHeader::$entityKeywords)) {
             return "entity";
+        } elseif (array_key_exists($str, AttributeHeader::$importantEntityKeywords)) {
+            return "important-entity";
         } elseif (array_key_exists($str, AttributeHeader::$activityKeywords)) {
             return "activity";
+        } elseif (array_key_exists($str, AttributeHeader::$importantActivityKeywords)) {
+            return "important-activity";
         } elseif (array_key_exists($str, AttributeHeader::$fileKeywords)) {
             return "file";
         } elseif (array_key_exists($str, AttributeHeader::$ignoreKeywords)) {
