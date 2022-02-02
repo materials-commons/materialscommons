@@ -417,31 +417,58 @@ class EntityActivityImporter
             // Multiple files can be specified in a cell when they are separated by a semi-colon (;), eg
             // file1.txt;file2.txt
             foreach (explode(";", $attr->value) as $value) {
-                $value = trim($value);
-
-                if ($value == "") {
-                    continue;
-                }
-
-                $path = "{$header->name}/{$value}";
-                if (strpos($value, "/") !== false) {
-                    // Cell contains the path, no need to use the header
-                    $path = $value;
-                }
-
-                if ($this->isWildCard($path)) {
-                    $this->addWildCardFiles($path, $entity, $activity);
-                    continue;
-                }
-
-                if (($dir = $this->isDirectory($path)) !== null) {
-                    $this->addDirectoryFiles($dir, $entity, $activity);
-                    continue;
-                }
-
-                $this->addSingleFile($path, $entity, $activity);
+                $path = $this->entryToPath($header->name, $value);
+                $this->processAndAddFiles($path, $entity, $activity);
             }
         });
+
+        $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($activity->name);
+        foreach ($globalAttributes as $globalAttribute) {
+            if ($globalAttribute->attributeHeader->attrType !== "file") {
+                continue;
+            }
+
+            foreach (explode(";", $globalAttribute->value) as $value) {
+                $path = $this->entryToPath($globalAttribute->attributeHeader->name, $value);
+                $this->processAndAddFiles($path, $entity, $activity);
+            }
+        }
+    }
+
+    private function entryToPath($headerName, $value)
+    {
+        $value = trim($value);
+
+        if ($value == "") {
+            return null;
+        }
+
+        $path = "{$headerName}/{$value}";
+        if (strpos($value, "/") !== false) {
+            // Cell contains the path, no need to use the header
+            $path = $value;
+        }
+
+        return $path;
+    }
+
+    private function processAndAddFiles($path, $entity, $activity)
+    {
+        if (is_null($path)) {
+            return;
+        }
+
+        if ($this->isWildCard($path)) {
+            $this->addWildCardFiles($path, $entity, $activity);
+            return;
+        }
+
+        if (($dir = $this->isDirectory($path)) !== null) {
+            $this->addDirectoryFiles($dir, $entity, $activity);
+            return;
+        }
+
+        $this->addSingleFile($path, $entity, $activity);
     }
 
     private function isWildCard($path)

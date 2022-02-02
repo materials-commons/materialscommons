@@ -561,6 +561,43 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
+    public function test_loading_spreadsheet_with_global_file_settings()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
+            'owner_id' => $user->id,
+        ]);
+        $rootDir = File::factory()->create([
+            'project_id' => $project->id,
+            'name'       => '/',
+            'path'       => '/',
+            'mime_type'  => 'directory',
+            'owner_id'   => $user->id,
+        ]);
+        $f1 = File::factory()->create([
+            'project_id'   => $project->id,
+            'name'         => 'f1.txt',
+            'mime_type'    => 'text',
+            'directory_id' => $rootDir->id,
+            'owner_id'     => $user->id,
+        ]);
+        $experiment = Experiment::factory()->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id, new EtlState($user->id));
+        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_global_settings_including_files.xlsx"));
+
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(1, $activity->files()->count());
+
+        $entity = Entity::where('name', 'DOUBLES1')->first();
+        $this->assertEquals(1, $entity->files()->count());
+    }
+
+    /** @test */
     public function test_loading_spreadsheet_with_boolean_values()
     {
         $this->withoutExceptionHandling();
