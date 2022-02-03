@@ -66,7 +66,8 @@ class RowTracker
                     continue;
                 }
 
-                $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index);
+                $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
+                    $header->important);
                 switch ($header->attrType) {
                     case "entity":
                         $this->entityAttributes->push($colAttr);

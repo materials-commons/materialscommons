@@ -18,6 +18,7 @@ class AttributeHeader
 
     private static $importantEntityKeywords = [
         "is"      => true,
+        "si"      => true,
         "isample" => true,
     ];
 
@@ -28,6 +29,7 @@ class AttributeHeader
 
     private static $importantActivityKeywords = [
         "ip"       => true,
+        "pi"       => true,
         "iprocess" => true,
     ];
 
