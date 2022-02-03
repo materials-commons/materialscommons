@@ -44,6 +44,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reload-captcha');
 
 Route::get('login-for-upload', [LoginController::class, 'showLoginForm'])->name('login-for-upload');
 Route::post('login-for-upload', [LoginController::class, 'login'])->name('login-for-upload');

@@ -186,6 +186,11 @@ return [
          * Batch Update
          */
         Mavinoo\Batch\BatchServiceProvider::class,
+
+        /*
+         * Captcha
+         */
+        Mews\Captcha\CaptchaServiceProvider::class,
     ],
 
     /*
@@ -201,7 +206,7 @@ return [
 
     'aliases' => [
 
-        'App'       => Illuminate\Support\Facades\App::class,
+        'App'          => Illuminate\Support\Facades\App::class,
         'Artisan'      => Illuminate\Support\Facades\Artisan::class,
         'Auth'         => Illuminate\Support\Facades\Auth::class,
         'Blade'        => Illuminate\Support\Facades\Blade::class,
@@ -236,6 +241,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Sanitizer'    => Waavi\Sanitizer\Laravel\Facade::class,
         'Batch'        => Mavinoo\Batch\BatchFacade::class,
+        'Captcha'      => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

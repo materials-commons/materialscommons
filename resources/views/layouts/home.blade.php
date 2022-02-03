@@ -98,5 +98,6 @@
 <script>
     $('div.alert').not('.alert-important').delay(4000).fadeOut(350);
 </script>
+@stack('scripts')
 </body>
 </html>

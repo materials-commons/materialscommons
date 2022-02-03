@@ -74,6 +74,19 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <div class="captcha col-md-4 ml-5">
+                                    <span>{!! captcha_img() !!}</span>
+                                    <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                        &#x21bb;
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha..."
+                                       name="captcha">
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
@@ -88,3 +101,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        console.log('here i am');
+        $('#reload').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'reload-captcha',
+                success: function (data) {
+                    $('.captcha span').html(data.captcha);
+                }
+            });
+        });
+    </script>
+@endpush
