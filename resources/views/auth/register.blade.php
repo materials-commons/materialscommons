@@ -76,7 +76,7 @@
 
                             <div class="form-group row">
                                 <div class="captcha col-md-4 ml-5">
-                                    <span>{!! captcha_img() !!}</span>
+                                    <span>{!! captcha_img('flat') !!}</span>
                                     <button type="button" class="btn btn-danger" class="reload" id="reload">
                                         &#x21bb;
                                     </button>

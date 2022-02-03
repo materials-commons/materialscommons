@@ -89,7 +89,7 @@ class RegisterController extends Controller
 
     public function reloadCaptcha(Request $request)
     {
-        return response()->json(['captcha' => captcha_img()]);
+        return response()->json(['captcha' => captcha_img('flat')]);
     }
 
     public function redirectTo()
