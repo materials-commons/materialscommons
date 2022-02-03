@@ -97,6 +97,7 @@ class RegisterController extends Controller
         if (true) {
             return route('verification.notice');
         }
+
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'register-for-upload') {
             return route('public.publish.wizard.choose_create_or_select_project');
