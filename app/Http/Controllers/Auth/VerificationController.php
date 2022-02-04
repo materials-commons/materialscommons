@@ -46,7 +46,8 @@ class VerificationController extends Controller
 
     public function show(Request $request)
     {
-        return view('auth.verify');
+        $user = User::find($request->route('id'));
+        return view('auth.verify', ['user' => $user]);
     }
 
     public function verify(Request $request)
@@ -60,7 +61,23 @@ class VerificationController extends Controller
         if ($user->markEmailAsVerified())
             event(new Verified($user));
 
-        return redirect($this->redirectPath())->with('verified', true);
+        return redirect($this->redirectPath())->with('verified', true)->with('user', $user);
+    }
+
+    public function resend(Request $request)
+    {
+        $user = User::where('email', $request->route('email'))->first();
+        if ($user->hasVerifiedEmail()) {
+            return $request->wantsJson()
+                ? new JsonResponse([], 204)
+                : redirect(route('verification.notice', [$user]));
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 202)
+            : back()->with('resent', true);
     }
 
 }
