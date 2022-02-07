@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property string name
  * @property string description
+ * @property mixed marked_important_at
  *
  * @mixin Builder
  */
