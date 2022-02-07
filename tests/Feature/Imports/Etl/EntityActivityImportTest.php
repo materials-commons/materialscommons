@@ -695,4 +695,46 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(1, $e2->activities[0]->attributes->count());
         $this->assertEquals(1, $e2->activities[1]->attributes->count());
     }
+
+    /** @test */
+    public function test_import_attributes_marked_important()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = Experiment::factory()->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id, new EtlState($user->id));
+        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_important.xlsx"));
+
+        // Check entities and entity attributes
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
+        $this->assertEquals(2, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
+
+        $sampleAttrMarkedImportant = Attribute::where('name', 'wire composition')->first();
+        $this->assertNotNull($sampleAttrMarkedImportant->marked_important_at);
+
+        $sampleAttrNotImportant = Attribute::where('name', 'wire diameter')->first();
+        $this->assertNull($sampleAttrNotImportant->marked_important_at);
+
+        // Check activity and activity attributes
+        $this->assertDatabaseHas('activities', ['name' => 'sem']);
+        $this->assertEquals(1, Activity::count());
+
+        $this->assertEquals(2, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'temperature', 'attributable_type' => Activity::class]);
+
+        $processAttrMarkedImportant = Attribute::where('name', 'temperature')->first();
+        $this->assertNotNull($processAttrMarkedImportant->marked_important_at);
+
+        $processAttrNotImportant = Attribute::where('name', 'stress relief time')->first();
+        $this->assertNull($processAttrNotImportant->marked_important_at);
+    }
 }
