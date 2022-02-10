@@ -10,18 +10,20 @@
     </thead>
     <tbody>
     @foreach($community->datasets as $dataset)
-        <tr>
-            <td>
-                @isset($datasetRouteName)
-                    <a href="{{route($datasetRouteName, [$dataset])}}">{{$dataset->name}}</a>
-                @else
-                    {{$dataset->name}}
-                @endisset
-            </td>
-            <td>{{$dataset->description}}</td>
-            <td>{{$dataset->owner->name}}</td>
-            <td>{{$dataset->updated_at->diffForHumans()}}</td>
-        </tr>
+        @if(!is_null($dataset->published_at))
+            <tr>
+                <td>
+                    @isset($datasetRouteName)
+                        <a href="{{route($datasetRouteName, [$dataset])}}">{{$dataset->name}}</a>
+                    @else
+                        {{$dataset->name}}
+                    @endisset
+                </td>
+                <td>{{$dataset->description}}</td>
+                <td>{{$dataset->owner->name}}</td>
+                <td>{{$dataset->updated_at->diffForHumans()}}</td>
+            </tr>
+        @endif
     @endforeach
     </tbody>
 </table>
