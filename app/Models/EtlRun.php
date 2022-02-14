@@ -6,6 +6,8 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @mixin Builder
@@ -89,5 +91,20 @@ class EtlRun extends Model
     public function entities()
     {
         return $this->morphToMany(Entity::class, 'item', 'item2entity');
+    }
+
+    public function logPath(): string
+    {
+        return Storage::disk('mcfs')->path("etl_logs/{$this->uuid}.log");
+    }
+
+    public function deleteLog()
+    {
+        return Storage::disk('mcfs')->delete("etl_logs/{$this->uuid}.log");
+    }
+
+    public static function getOldEtlLogs()
+    {
+        return EtlRun::where('created_at', '<=', Carbon::now()->subDays(30))->limit(100)->get();
     }
 }
