@@ -76,17 +76,15 @@ class Kernel extends ConsoleKernel
         }
 
         if (config('backup.backup.run_backups') != 0) {
-            if (config('app.beta') != 1) {
+            if (config('app.env') == 'production') {
                 $schedule->command('backup:clean')->daily()->at('01:00');
                 $schedule->command('backup:run')->daily()->at('01:30');
             }
         }
 
-        if (config('app.beta') != 1) {
-            if (config('app.env') != 'dev') {
-                $schedule->command('mc:generate-site-map')->daily()->at('3:00');
-                $schedule->command('mc:generate-usage-statistics')->monthlyOn(1, '02:00');
-            }
+        if (config('app.env') == 'production') {
+            $schedule->command('mc:generate-site-map')->daily()->at('3:00');
+            $schedule->command('mc:generate-usage-statistics')->monthlyOn(1, '02:00');
         }
     }
 
