@@ -45,7 +45,9 @@ class CreateFileAction
         ]);
 
         $existing = File::where('directory_id', $directoryId)->where('name', $fileEntry->name)->get();
-        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)->first();
+        $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
+                                    ->whereNull('deleted_at')
+                                    ->first();
 
         if (!$matchingFileChecksum) {
             // Just save physical file and insert into database
