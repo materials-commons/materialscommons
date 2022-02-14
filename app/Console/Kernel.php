@@ -73,6 +73,11 @@ class Kernel extends ConsoleKernel
                      ->everyFiveMinutes()
                      ->runInBackground()
                      ->withoutOverlapping();
+
+            $schedule->command("mc-logs:purge-old-log-files")
+                     ->everyFifteenMinutes()
+                     ->runInBackground()
+                     ->withoutOverlapping();
         }
 
         if (config('backup.backup.run_backups') != 0) {
