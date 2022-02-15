@@ -26,7 +26,7 @@
     @foreach($entities as $entity)
         <tr>
             <td>
-                <a href="{{route('projects.entities.show', [$project, $entity])}}">
+                <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
                     {{$entity->name}}
                 </a>
             </td>
@@ -60,6 +60,7 @@
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({
                 scrollX: true,
+                stateSave: true,
             });
         });
         htmx.on('htmx:after-settle', (evt) => {
