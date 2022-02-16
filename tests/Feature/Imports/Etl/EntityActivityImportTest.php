@@ -737,4 +737,57 @@ class EntityActivityImportTest extends TestCase
         $processAttrNotImportant = Attribute::where('name', 'stress relief time')->first();
         $this->assertNull($processAttrNotImportant->marked_important_at);
     }
+
+    /** @test */
+    public function test_process_and_sample_tags()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $project = Project::factory()->create([
+            'owner_id' => $user->id,
+        ]);
+        $experiment = Experiment::factory()->create([
+            'owner_id'   => $user->id,
+            'project_id' => $project->id,
+        ]);
+
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $user->id, new EtlState($user->id));
+        $importer->execute(Storage::disk('test_data')->path("etl/d1_with_tags.xlsx"));
+
+        // Check entities and entity attributes
+        $this->assertDatabaseHas('entities', ['project_id' => $project->id, 'name' => 'DOUBLES1']);
+        $this->assertEquals(1, Attribute::where('attributable_type', EntityState::class)->count());
+        $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
+
+        // Check Activities and activity attributes
+        $this->assertDatabaseHas('activities', ['project_id' => $project->id, 'name' => 'sem']);
+        $this->assertEquals(2, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes', ['name' => 'Temperature']);
+        $this->assertDatabaseHas('attributes', ['name' => 'stress relief time']);
+
+        $entity = Entity::with(['tags'])->where('name', 'DOUBLES1')->first();
+        $this->assertEquals(3, $entity->tags->count());
+        $this->hasTags($entity->tags, ["alloy", "al", "zn"]);
+
+        $activity = Activity::with(['tags'])->where('name', 'sem')->first();
+        $this->assertEquals(2, $activity->tags->count());
+        $this->hasTags($entity->tags, ["heat treatment", "long"]);
+    }
+
+    private function hasTags($tags, $tagsItShouldHave)
+    {
+        foreach ($tagsItShouldHave as $tagItShouldHave) {
+            if (!$this->hasTag($tags, $tagItShouldHave)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function hasTag($tags, $tagName)
+    {
+        return $tags->contains(function ($tag) use ($tagName) {
+            return $tag->name == $tagName;
+        });
+    }
 }

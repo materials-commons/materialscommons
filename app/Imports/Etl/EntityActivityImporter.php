@@ -355,11 +355,23 @@ class EntityActivityImporter
         /** @var EntityState $state */
         $state = $entity->entityStates()->first();
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
-        $entity->attachTags($row->entityTags);
+        $this->addTagsToEntity($entity, $row->entityTags);
         // Add a new activity
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
+    }
+
+    private function addTagsToEntity(Entity $entity, Collection $entityTags)
+    {
+        $tags = [];
+        $entityTags->each(function(ColumnAttribute $ca) use (&$tags) {
+            foreach($ca->tags as $tag) {
+                $tags[] = $tag;
+            }
+        });
+
+        $entity->attachTags($tags);
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
@@ -601,9 +613,8 @@ class EntityActivityImporter
             'current'   => true,
         ]);
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
-        $entity->attachTags($row->entityTags);
+        $this->addTagsToEntity($entity, $row->entityTags);
         $activity = $this->addNewActivity($entity, $state, $row);
-        $activity->attachTags($row->activityTags);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
@@ -646,10 +657,22 @@ class EntityActivityImporter
         $this->etlState->logProgress("   Adding process: {$activity->name} for sample {$entity->name}");
         $activity->entities()->attach($entity);
         $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
-        $activity->attachTags($rowTracker->activityTags);
+        $this->addTagsToActivity($activity, $rowTracker->activityTags);
         $this->etlState->etlRun->n_activities++;
 
         return $activity;
+    }
+
+    private function addTagsToActivity(Activity $activity, Collection $activityTags)
+    {
+        $tags = [];
+        $activityTags->each(function(ColumnAttribute $ca) use (&$tags) {
+            foreach($ca->tags as $tag) {
+                $tags[] = $tag;
+            }
+        });
+
+        $activity->attachTags($tags);
     }
 
     private function createActivityRelationships()
