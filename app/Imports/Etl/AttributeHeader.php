@@ -22,6 +22,10 @@ class AttributeHeader
         "isample" => true,
     ];
 
+    private static $entityTagKeywords = [
+        "st" => true,
+    ];
+
     private static $activityKeywords = [
         "p"       => true,
         "process" => true,
@@ -31,6 +35,10 @@ class AttributeHeader
         "ip"       => true,
         "pi"       => true,
         "iprocess" => true,
+    ];
+
+    private static $activityTagKeywords = [
+        "pt" => true,
     ];
 
     private static $fileKeywords = [
@@ -87,10 +95,14 @@ class AttributeHeader
             return "entity";
         } elseif (array_key_exists($str, AttributeHeader::$importantEntityKeywords)) {
             return "important-entity";
+        } elseif (array_key_exists($str, AttributeHeader::$entityTagKeywords)) {
+            return "tags-entity";
         } elseif (array_key_exists($str, AttributeHeader::$activityKeywords)) {
             return "activity";
         } elseif (array_key_exists($str, AttributeHeader::$importantActivityKeywords)) {
             return "important-activity";
+        } elseif (array_key_exists($str, AttributeHeader::$activityTagKeywords)) {
+            return "tags-activity";
         } elseif (array_key_exists($str, AttributeHeader::$fileKeywords)) {
             return "file";
         } elseif (array_key_exists($str, AttributeHeader::$ignoreKeywords)) {

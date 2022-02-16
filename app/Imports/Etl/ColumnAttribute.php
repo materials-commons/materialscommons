@@ -19,5 +19,18 @@ class ColumnAttribute
         $this->type = $type;
         $this->columnNumber = $columnNumber;
         $this->important = $important;
+        $this->tags = [];
+    }
+
+    public function addTags($tags): ColumnAttribute
+    {
+        collect(explode(';', $tags))
+            ->map(function ($tag) {
+                return trim($tag);
+            })
+            ->each(function ($tag) {
+                $this->tags[] = $tag;
+            });
+        return $this;
     }
 }

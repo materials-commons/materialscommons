@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Spatie\Tags\HasTags;
 
 /**
  * @property integer $id
@@ -27,6 +28,7 @@ class Entity extends Model implements Searchable
 {
     use HasUUID;
     use HasFactory;
+    use HasTags;
 
     protected $guarded = ['id'];
 

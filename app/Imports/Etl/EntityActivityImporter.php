@@ -237,7 +237,7 @@ class EntityActivityImporter
             return Str::of(substr($title, $dash + 1))->trim()->__toString();
         }
 
-        // Must have parens so
+        // Must have parens
         $parenRight = strpos($title, ')');
         return Str::of(substr($title, $parenRight + 1))->trim()->__toString();
     }
@@ -355,18 +355,16 @@ class EntityActivityImporter
         /** @var EntityState $state */
         $state = $entity->entityStates()->first();
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
+        $entity->attachTags($row->entityTags);
         // Add a new activity
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
 
-    private function addAttributesToEntity(
-        Collection $entityAttributes,
-        Entity $entity,
-        EntityState $state,
-        RowTracker $rowTracker
-    ) {
+    private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
+                                           RowTracker $rowTracker)
+    {
         $seenAttributes = collect();
         $attributePosition = 1;
         $entityAttributes->each(function ($attr) use ($state, $entity, $seenAttributes, &$attributePosition) {
@@ -603,7 +601,9 @@ class EntityActivityImporter
             'current'   => true,
         ]);
         $this->addAttributesToEntity($row->entityAttributes, $entity, $state, $row);
+        $entity->attachTags($row->entityTags);
         $activity = $this->addNewActivity($entity, $state, $row);
+        $activity->attachTags($row->activityTags);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
     }
@@ -646,6 +646,7 @@ class EntityActivityImporter
         $this->etlState->logProgress("   Adding process: {$activity->name} for sample {$entity->name}");
         $activity->entities()->attach($entity);
         $activity->entityStates()->attach([$entityState->id => ['direction' => 'out']]);
+        $activity->attachTags($rowTracker->activityTags);
         $this->etlState->etlRun->n_activities++;
 
         return $activity;
