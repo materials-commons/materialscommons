@@ -18,6 +18,7 @@ class AddEntityFilesToDatasetTest extends TestCase
     /** @test */
     public function add_entity_files_to_dataset_command_works()
     {
+        $this->markTestSkipped('AddEntityFilesToDatasetTest skipped');
         $project = ProjectFactory::withExperiment()->create();
         $experiment = $project->experiments->first();
         $dataset = DatasetFactory::ownedBy($project->owner)
