@@ -13,6 +13,7 @@
         'showRouteName' => 'communities.show',
         'filesRouteName' => 'communities.files.show-files',
         'linksRouteName' => 'communities.links.show-links',
+        'datasetRouteName' => 'public.datasets.show',
         'datasetsRouteName' => 'communities.datasets.show-datasets',
     ])
 @stop
