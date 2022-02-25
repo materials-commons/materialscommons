@@ -13,11 +13,7 @@
         @if(!is_null($dataset->published_at))
             <tr>
                 <td>
-                    @isset($datasetRouteName)
-                        <a href="{{route($datasetRouteName, [$dataset])}}">{{$dataset->name}}</a>
-                    @else
-                        {{$dataset->name}}
-                    @endisset
+                    <a href="{{route($datasetRouteName, [$dataset])}}">{{$dataset->name}}</a>
                 </td>
                 <td>{{$dataset->description}}</td>
                 <td>{{$dataset->owner->name}}</td>

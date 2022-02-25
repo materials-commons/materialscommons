@@ -13,6 +13,7 @@ trait GetProjectFolderFiles
             return File::where('project_id', $projectId)
                        ->where('directory_id', $rootId)
                        ->whereNull('deleted_at')
+                       ->whereNull('dataset_id')
                        ->where('current', true)
                        ->get();
         }
@@ -21,6 +22,7 @@ trait GetProjectFolderFiles
                    ->where('directory_id', $folder)
                    ->where('current', true)
                    ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->get();
     }
 
@@ -30,6 +32,7 @@ trait GetProjectFolderFiles
                    ->where('mime_type', 'directory')
                    ->where('current', true)
                    ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->get();
     }
 }
