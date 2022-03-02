@@ -60,6 +60,11 @@ return [
             'root'   => env('MCFS_DIR', storage_path('app/mcfs')),
         ],
 
+        'mcfs_replica' => [
+            'driver' => 'local',
+            'root'   => env('MCFS_REPLICA_DIR'),
+        ],
+
         'mcfs_backup' => [
             'driver' => 'local',
             'root'   => env('MCFS_BACKUP_DIR', '/mcfs/backups'),

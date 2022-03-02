@@ -205,6 +205,37 @@ class File extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->realPathPartial());
     }
 
+    public function mcfsReplicaPath()
+    {
+        return Storage::disk('mcfs_replica')->path($this->realPathPartial());
+    }
+
+    public function partialReplicaPath()
+    {
+        $realPartial = $this->realPathPartial();
+        return "replica/{$realPartial}";
+    }
+
+    public function mcfsReplicate()
+    {
+        $mcfsPathPartial = $this->realPathPartial();
+        if (!Storage::disk('mcfs')->exists($mcfsPathPartial)) {
+            // The file we are copying should exist, if it doesn't just skip. This case
+            // should not happen, but we should check for it.
+            return;
+        }
+
+        if (!Storage::disk('mcfs')->exists($this->partialReplicaPath())) {
+            @Storage::disk('mcfs')->copy($mcfsPathPartial, $this->partialReplicaPath());
+            $replicaPath = Storage::disk('mcfs')->path($this->partialReplicaPath());
+            @chmod($replicaPath, 0777);
+        }
+
+        // If we are here then either the copy was successful, or the copy had already been done. In either case
+        // we set replicated_at to denote that the file has been replicated.
+        $this->update(['replicated_at' => Carbon::now()]);
+    }
+
     public function realPathPartial()
     {
         $uuid = $this->getFileUuidToUse();
