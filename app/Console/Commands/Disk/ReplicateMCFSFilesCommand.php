@@ -46,8 +46,19 @@ class ReplicateMCFSFilesCommand extends Command
         }
 
         $limit = $this->option("limit");
-        File::whereNull('uses_uuid')
-            ->whereNull("replicated_at")
+
+        // Only select files that haven't been replicated *AND* are not currently being used in transfer_request_files.
+        // The reason to exclude files in transfer_request_files is that any entry in that table has a file in an
+        // unknown state. Files in the transfer_request_files are files that are used by the mcbridgefs. As such those
+        // files could be having bytes written to them. So we exclude them as they aren't candidates for replication
+        // at this time.
+        File::select('files.*')
+            ->whereNull('files.uses_uuid')
+            ->whereNull("files.replicated_at")
+            ->leftJoin('transfer_request_files', function ($q) {
+                $q->on('files.id', '=', 'transfer_request_files.file_id');
+            })
+            ->whereNull('transfer_request_files.file_id')
             ->limit($limit)
             ->cursor()
             ->each(function (File $file) {
