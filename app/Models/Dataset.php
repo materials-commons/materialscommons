@@ -141,6 +141,11 @@ class Dataset extends Model implements Searchable
         return $this->morphMany(View::class, 'viewable');
     }
 
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifyable');
+    }
+
     public function downloads()
     {
         return $this->morphMany(Download::class, 'downloadable');

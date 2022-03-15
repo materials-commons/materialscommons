@@ -19,8 +19,9 @@ class CreateNotificationsTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->morphs('notifyable');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
+
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->foreign('owner_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
