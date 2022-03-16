@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWeb
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntitySpreadWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
+use App\Http\Controllers\Web\Published\Datasets\MarkDatasetForNotificationsWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowImportPublishedDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetFilesWebCont
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetOverviewWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetWorkflowsWebController;
+use App\Http\Controllers\Web\Published\Datasets\UnmarkDatasetForNotificationsWebController;
 use App\Http\Controllers\Web\Published\Files\DisplayPublishedFileWebController;
 use App\Http\Controllers\Web\Published\Files\ShowPublishedFileWebController;
 use Illuminate\Support\Facades\Route;
@@ -110,3 +112,9 @@ Route::get('/datasets/{dataset}/comments/{comment}/delete', DeleteDatasetComment
      ->name('datasets.comments.delete');
 Route::delete('/datasets/{dataset}/comments/{comment}', DestroyDatasetCommentWebController::class)
      ->name('datasets.comments.destroy');
+
+// Notifications
+Route::get('/datasets/{dataset}/mark-for-notification', MarkDatasetForNotificationsWebController::class)
+     ->name('datasets.notifications.mark-for-notification');
+Route::get('/dataset/{dataset}/unmark-for-notification', UnmarkDatasetForNotificationsWebController::class)
+     ->name('datasets.notifications.unmark-for-notification');
