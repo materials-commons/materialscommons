@@ -35,16 +35,29 @@
                             @endif
                         @endforeach
                     </div>
-                    <a class="action-link ml-3"
-                       href="#"
-                       id="notification"
-                       data-toggle="tooltip"
-                       title="Get notified when dataset is updated"
-                       hx-get="{{route('public.datasets.notifications.mark-for-notification', [$dataset])}}"
-                       hx-target="#notification"
-                       hx-swap="outerHTML">
-                        <i class="fas fa-fw fa-bell-slash"></i>
-                    </a>
+                    @if($hasNotificationsForDataset)
+                        <a class="action-link ml-3"
+                           href="#"
+                           id="notification"
+                           data-toggle="tooltip"
+                           title="Stop notifications on dataset"
+                           hx-get="{{route('public.datasets.notifications.unmark-for-notification', [$dataset])}}"
+                           hx-target="#notification"
+                           hx-swap="outerHTML">
+                            <i class='fa-fw fas fa-bell yellow-4'></i>
+                        </a>
+                    @else
+                        <a class="action-link ml-3"
+                           href="#"
+                           id="notification"
+                           data-toggle="tooltip"
+                           title="Get notified when dataset is updated"
+                           hx-get="{{route('public.datasets.notifications.mark-for-notification', [$dataset])}}"
+                           hx-target="#notification"
+                           hx-swap="outerHTML">
+                            <i class="fas fa-fw fa-bell-slash"></i>
+                        </a>
+                    @endif
                 </div>
 
 

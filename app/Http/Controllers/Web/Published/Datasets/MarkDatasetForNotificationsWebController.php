@@ -19,11 +19,11 @@ class MarkDatasetForNotificationsWebController extends Controller
                        href="#"
                        id="notification"
                        data-toggle="tooltip"
-                       title="Stopping notifications on dataset"
+                       title="Stop notifications on dataset"
                        hx-get="{$route}"
                        hx-target="#notification"
                        hx-swap="outerHTML">
-                        <i class='fa-fw fas fa-bell ml-4 yellow-4'></i>
+                        <i class='fa-fw fas fa-bell yellow-4'></i>
                     </a>
 
 EOF;
