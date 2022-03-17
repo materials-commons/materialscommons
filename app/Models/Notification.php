@@ -33,7 +33,7 @@ class Notification extends Model
         return $this->morphTo();
     }
 
-    public function user()
+    public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
