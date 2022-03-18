@@ -195,3 +195,7 @@ Breadcrumbs::for('public.datasets.files.show', function ($trail, $dataset, $file
     $trail->parent('public.datasets.files.index', $dataset);
     $trail->push($file->name, route('public.datasets.files.show', [$dataset, $file]));
 });
+
+Breadcrumbs::for('public.datasets.folders.show', function($trail, $dataset) {
+    $trail->parent('public.datasets.show', $dataset);
+});

@@ -14,6 +14,11 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link no-underline {{setActiveNavByName('public.datasets.folders')}}"
+           href="{{route('public.datasets.folders.show', [$dataset, '-1'])}}"> Files2</a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('public.datasets.entities')}}"
            href="{{route('public.datasets.entities.index', ['dataset' => $dataset])}}">
             Samples ({{$dataset->entities_count}})

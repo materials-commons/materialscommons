@@ -12,14 +12,29 @@ class ShowFolderViewModel extends ViewModel
     private $project;
     private $dirPaths;
     private $files;
+    private $dataset;
 
-    public function __construct(Project $project, File $directory, $files)
+    public function __construct(File $directory, $files)
     {
-        $this->project = $project;
         $this->directory = $directory;
         $this->dirPaths = [];
         $this->files = $files;
+        $this->project = null;
+        $this->dataset = null;
+
         $this->createDirectoryPaths();
+    }
+
+    public function withProject($project)
+    {
+        $this->project = $project;
+        return $this;
+    }
+
+    public function withDataset($dataset)
+    {
+        $this->dataset = $dataset;
+        return $this;
     }
 
     public function project()
@@ -35,6 +50,11 @@ class ShowFolderViewModel extends ViewModel
     public function files()
     {
         return $this->files;
+    }
+
+    public function dataset()
+    {
+        return $this->dataset;
     }
 
     public function dirPaths()

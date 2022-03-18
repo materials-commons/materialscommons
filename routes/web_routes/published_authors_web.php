@@ -5,7 +5,7 @@ use App\Http\Controllers\Web\Published\Authors\SearchPublishedAuthorsWebControll
 use Illuminate\Support\Facades\Route;
 
 Route::get('/authors', IndexPublishedAuthorsWebController::class)
-     ->name('authors.index');
+     ->name('public.authors.index');
 
 Route::get('/authors/search', SearchPublishedAuthorsWebController::class)
-     ->name('authors.search');
+     ->name('public.authors.search');

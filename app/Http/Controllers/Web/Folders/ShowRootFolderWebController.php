@@ -16,7 +16,7 @@ class ShowRootFolderWebController extends Controller
     {
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         $files = $this->getProjectFolderFiles($project->id, '/');
-        $viewModel = new ShowFolderViewModel($project, $directory, $files);
+        $viewModel = (new ShowFolderViewModel($directory, $files))->withProject($project);
         return view('app.projects.folders.show', $viewModel);
     }
 }

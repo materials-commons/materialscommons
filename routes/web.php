@@ -92,11 +92,10 @@ Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
 
 Route::prefix('public')->group(function () {
-    Route::name('public.')->group(function () {
-        Route::post('/search', SearchPublishedDataWebController::class)->name('search');
-        Route::get('/new', [PublicDataNewController::class, 'index'])->name('new.index');
-        Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('projects.index');
-        Route::get('/datasets', [PublicDataController::class, 'index'])->name('datasets.index');
+        Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
+        Route::get('/new', [PublicDataNewController::class, 'index'])->name('public.new.index');
+        Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('public.projects.index');
+        Route::get('/datasets', [PublicDataController::class, 'index'])->name('public.datasets.index');
         //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
 //        Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
 //        Route::view('/community', 'public.community.index')->name('community.index');
@@ -107,7 +106,6 @@ Route::prefix('public')->group(function () {
         require base_path('routes/web_routes/published_authors_web.php');
         require base_path('routes/web_routes/published_tags_web.php');
 //        require base_path('routes/web_routes/public_projects_web.php');
-    });
 });
 
 //Route::get('/share/{file}', function() {

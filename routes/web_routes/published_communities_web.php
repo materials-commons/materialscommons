@@ -7,17 +7,18 @@ use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityLinksWe
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/communities', IndexPublishedCommunitiesWebController::class)->name('communities.index');
+Route::get('/communities', IndexPublishedCommunitiesWebController::class)
+     ->name('public.communities.index');
 
 Route::get('/communities/{community}/datasets', IndexPublishedCommunityDatasetsWebController::class)
-     ->name('communities.datasets.index');
+     ->name('public.communities.datasets.index');
 
 Route::get('/communities/{community}', ShowPublishedCommunityWebController::class)
-     ->name('communities.show');
+     ->name('public.communities.show');
 
 Route::get('/communities/{community}/files', ShowPublishedCommunityFilesWebController::class)
-     ->name('communities.files.show');
+     ->name('public.communities.files.show');
 
 Route::get('/communities/{community}/links', ShowPublishedCommunityLinksWebController::class)
-     ->name('communities.links.show');
+     ->name('public.communities.links.show');
 

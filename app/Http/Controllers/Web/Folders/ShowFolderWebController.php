@@ -14,9 +14,11 @@ class ShowFolderWebController extends Controller
 
     public function __invoke(Project $project, $folderId)
     {
-        $dir = File::where('project_id', $project->id)->where('id', $folderId)->first();
+        $dir = File::where('project_id', $project->id)
+                   ->where('id', $folderId)
+                   ->first();
         $files = $this->getProjectFolderFiles($project->id, $folderId);
-        $viewModel = new ShowFolderViewModel($project, $dir, $files);
+        $viewModel = (new ShowFolderViewModel($dir, $files))->withProject($project);
         return view('app.projects.folders.show', $viewModel);
     }
 }

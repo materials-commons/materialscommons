@@ -8,17 +8,17 @@ use App\Http\Controllers\Web\PublishWizard\StoreProjectStepWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/publish/wizard/select_project', SelectProjectStepWebController::class)
-     ->name('publish.wizard.select_project');
+     ->name('public.publish.wizard.select_project');
 
 Route::post('/publish/wizard/store_project', StoreProjectStepWebController::class)
-     ->name('publish.wizard.store_project');
+     ->name('public.publish.wizard.store_project');
 
 Route::get('/publish/wizard/{project}/create_workflow', CreateWorkflowStepWebController::class)
-     ->name('publish.wizard.create_workflow');
+     ->name('public.publish.wizard.create_workflow');
 
 Route::get('/publish/wizard/choose_create_or_select_project', ChooseCreateOrSelectProjectStepWebController::class)
-     ->name('publish.wizard.choose_create_or_select_project');
+     ->name('public.publish.wizard.choose_create_or_select_project');
 
 Route::get('/publish/wizard/create_project', CreateProjectStepWebController::class)
-     ->name('publish.wizard.create_project');
+     ->name('public.publish.wizard.create_project');
 
