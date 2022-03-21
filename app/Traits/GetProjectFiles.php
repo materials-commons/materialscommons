@@ -12,6 +12,7 @@ trait GetProjectFiles
         return File::with('directory')
                    ->where('project_id', $projectId)
                    ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->where('current', true)
                    ->cursor();
     }
@@ -20,6 +21,8 @@ trait GetProjectFiles
     {
         return File::with('directory')
                    ->where('project_id', $projectId)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->cursor();
     }
 }

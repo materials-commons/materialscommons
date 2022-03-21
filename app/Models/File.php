@@ -375,6 +375,8 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->where('current', true)
                    ->first();
     }
