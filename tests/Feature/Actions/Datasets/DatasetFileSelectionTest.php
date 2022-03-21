@@ -71,4 +71,23 @@ class DatasetFileSelectionTest extends TestCase
 
         $this->assertFalse($fs->isIncludedFile("/d1/f1.txt"));
     }
+
+    /** @test */
+    public function it_will_include_files_in_selection()
+    {
+        $project = ProjectFactory::withExperiment()->create();
+        $experiment = $project->experiments->first();
+        $d1 = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
+        $f1 = ProjectFactory::createFakeFile($project, $d1, "f1.txt");
+        $dataset = DatasetFactory::inProject($project)->create();
+
+        $fs = new DatasetFileSelection([
+            'include_files' => ['/d1/f1.txt'],
+            'include_dirs'  => [],
+            'exclude_files' => [],
+            'exclude_dirs'  => [],
+        ], $dataset);
+
+        $this->assertTrue($fs->isIncludedFile("/d1/f1.txt"));
+    }
 }
