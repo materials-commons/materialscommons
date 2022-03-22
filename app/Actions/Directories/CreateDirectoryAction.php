@@ -12,7 +12,6 @@ class CreateDirectoryAction
         $data['owner_id'] = $ownerId;
         $data['mime_type'] = 'directory';
         $data['current'] = true;
-        $data['is_deleted'] = false;
         $data['media_type_description'] = 'directory';
         $parent = File::findOrFail($data['directory_id']);
         $data['path'] = PathHelpers::normalizePath("{$parent->path}/{$data['name']}");
