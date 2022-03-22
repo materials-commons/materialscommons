@@ -23,6 +23,7 @@ trait GetProjectFiles
                    ->where('project_id', $projectId)
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
+                   ->where('current', true)
                    ->cursor();
     }
 }
