@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands\Conversion;
 
+use App\Actions\Datasets\CreateDatasetFilesTableAction;
 use App\Models\Dataset;
 use App\Models\File;
 use Illuminate\Console\Command;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\DB;
 use function dirname;
 
 class FixPublishedDatasetDirectoriesCommand extends Command
@@ -41,9 +42,9 @@ class FixPublishedDatasetDirectoriesCommand extends Command
      */
     public function handle()
     {
-        // Hard code in for now the two datasets that need newer directories deleted
-        $this->deleteUnusedDirectoriesForPublishedDataset(178, '2021-10-29');
-        $this->deleteUnusedDirectoriesForPublishedDataset(155, '2021-10-29');
+        // Hard code in for now the two datasets that have double publishing of directories
+        $this->fixDatasetWithDoubleDirectories(155);
+        $this->fixDatasetWithDoubleDirectories(178);
 
         Dataset::whereNotNull('published_at')
                ->cursor()
@@ -60,29 +61,8 @@ class FixPublishedDatasetDirectoriesCommand extends Command
                                             ->first();
                            if (is_null($parentDir)) {
                                echo "Failed to find parent for {$dir->path} in dataset {$dataset->id}, creating it..\n";
-                               $myParentPath = dirname($parentDirPath);
-                               $myParentDir = File::where('dataset_id', $dataset->id)
-                                                  ->where('path', $myParentPath)
-                                                  ->first();
-                               if (is_null($myParentDir)) {
-                                   echo "  Cannot create....\n";
-                                   return;
-                               }
-
-                               $parentDir = new File([
-                                   'uuid'                   => Uuid::uuid4()->toString(),
-                                   'path'                   => $parentDirPath,
-                                   'directory_id'           => $myParentDir->id,
-                                   'name'                   => basename($parentDir),
-                                   'mime_type'              => 'directory',
-                                   'current'                => true,
-                                   'dataset_id'             => $dataset->id,
-                                   'project_id'             => $dataset->project_id,
-                                   'owner_id'               => $dataset->owner_id,
-                                   'disk'                   => 'mcfs',
-                                   'media_type_description' => 'directory',
-                               ]);
-                               $parentDir->save();
+                               echo "  Path searched for '{$parentDirPath}'\n";
+                               return;
                            }
                            $dir->update(['directory_id' => $parentDir->id]);
                        });
@@ -90,11 +70,16 @@ class FixPublishedDatasetDirectoriesCommand extends Command
         return 0;
     }
 
-    private function deleteUnusedDirectoriesForPublishedDataset($datasetId, $date)
+    private function fixDatasetWithDoubleDirectories($datasetId)
     {
-        File::where('dataset_id', $datasetId)
-            ->whereDate('created_at', $date)
-            ->where('mime_type', 'directory')
-            ->delete();
+        $dataset = Dataset::findOrFail($datasetId);
+        echo "Fixing dataset {$dataset->name}:{$dataset->id} with double directories\n";
+
+        DB::transaction(function () use ($datasetId) {
+            File::where('dataset_id', $datasetId)->delete();
+        });
+
+        $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
+        $createDatasetFilesTableAction->execute($dataset);
     }
 }
