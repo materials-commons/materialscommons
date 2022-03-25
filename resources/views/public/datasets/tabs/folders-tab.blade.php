@@ -1,6 +1,6 @@
 @include('public.datasets.tabs._short-overview')
 
-@section('content')
+{{--@section('content')--}}
     <x-card>
         <x-slot name="header">
             @if ($directory->name == '/')
@@ -90,4 +90,4 @@
         </script>
     @endpush
 
-@stop
+{{--@stop--}}

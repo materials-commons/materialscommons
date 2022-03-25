@@ -13,8 +13,13 @@ class ShowPublishedDatasetFolderWebController extends Controller
 {
     use GetPublishedDatasetFolderFiles;
 
-    public function __invoke(Request $request, Dataset $dataset, $folderId)
+    public function __invoke(Request $request, $datasetId, $folderId)
     {
+        $dataset = Dataset::with(['workflows', 'tags'])
+                          ->withCount(['views', 'downloads'])
+                          ->withCounts()
+                          ->findOrFail($datasetId);
+
         if ($folderId == -1) {
             $dir = File::where('dataset_id', $dataset->id)
                        ->where('path', '/')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Published\Datasets\Folders;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class GotoPublishedDatasetFolderByPathWebController extends Controller

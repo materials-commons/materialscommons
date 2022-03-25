@@ -192,10 +192,11 @@ Breadcrumbs::for('public.datasets.comments.index', function ($trail, $dataset) {
 });
 
 Breadcrumbs::for('public.datasets.files.show', function ($trail, $dataset, $file) {
-    $trail->parent('public.datasets.files.index', $dataset);
-    $trail->push($file->name, route('public.datasets.files.show', [$dataset, $file]));
+    $trail->parent('public.datasets.folders.show', $dataset, $file->directory_id);
+    $trail->push($file->name, route('public.datasets.folders.show', [$dataset, $file->directory_id]));
 });
 
 Breadcrumbs::for('public.datasets.folders.show', function($trail, $dataset) {
     $trail->parent('public.datasets.show', $dataset);
+    $trail->push('Files', route('public.datasets.folders.show', [$dataset, -1]));
 });
