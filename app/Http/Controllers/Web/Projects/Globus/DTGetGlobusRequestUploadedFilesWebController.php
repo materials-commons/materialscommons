@@ -10,11 +10,8 @@ class DTGetGlobusRequestUploadedFilesWebController extends Controller
 {
     public function __invoke($projectId, $transferRequestId)
     {
-        $values = Laratables::recordsOf(TransferRequestFile::class, function ($query) use ($transferRequestId) {
+        return Laratables::recordsOf(TransferRequestFile::class, function ($query) use ($transferRequestId) {
             return $query->with(['directory'])->where('transfer_request_id', $transferRequestId);
         });
-
-        ray($values);
-        return $values;
     }
 }
