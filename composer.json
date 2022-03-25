@@ -12,7 +12,7 @@
     "ext-fileinfo": "*",
     "ext-json": "*",
     "ext-zip": "*",
-    "bensampo/laravel-enum": "^3.1",
+    "bensampo/laravel-enum": "4.2.0",
     "bkwld/cloner": "^3.5",
     "diglactic/laravel-breadcrumbs": "^7.0",
     "doctrine/dbal": "^2.10",
