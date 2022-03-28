@@ -42,9 +42,22 @@ class FixPublishedDatasetDirectoriesCommand extends Command
      */
     public function handle()
     {
-        // Hard code in for now the two datasets that have double publishing of directories
-        $this->fixDatasetWithDoubleDirectories(155);
-        $this->fixDatasetWithDoubleDirectories(178);
+        //
+        // Find all root dirs that are in a published dataset and get a count of the root dirs. If there are more
+        // than 1 root dir then that published dataset has multiple directories, so we need to fix that.
+        DB::table('files')
+          ->select('dataset_id', DB::raw('count(path) as count'))
+          ->whereNotNull('dataset_id')
+          ->where('path', '/')
+          ->groupBy('dataset_id')
+          ->get()
+          ->each(function ($obj) {
+              if ($obj->count > 1) {
+                  $this->fixDatasetWithDoubleDirectories($obj->dataset_id);
+              }
+          });
+//        $this->fixDatasetWithDoubleDirectories(155);
+//        $this->fixDatasetWithDoubleDirectories(178);
 
         Dataset::whereNotNull('published_at')
                ->cursor()
