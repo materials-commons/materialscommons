@@ -27,12 +27,11 @@
                     </div>
                     <div class="float-right">
                         <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
-                        <a class="btn btn-primary" data-dismiss="modal"
-                           onclick="document.getElementById('download-details')">
-                            Submit And Download
+                        <a class="btn btn-primary" data-dismiss="modal" onclick="loginAndDownload()">
+                            Login and Download
                         </a>
                         <a class="btn btn-success" data-dismss="modal"
-                           onclick="document.getElementById('download-details')">
+                           onclick="document.getElementById('download-details').submit()">
                             Create Account And Download
                         </a>
                     </div>
@@ -41,3 +40,13 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        function loginAndDownload() {
+            let loginAndDownloadRoute = "";
+            $('#download-details').attr('action', loginAndDownloadRoute);
+            document.getElementById('download-details').submit();
+        }
+    </script>
+@endpush
