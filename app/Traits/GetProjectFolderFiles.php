@@ -9,7 +9,9 @@ trait GetProjectFolderFiles
     public function getProjectFolderFiles($projectId, $folder)
     {
         if ($folder == '/') {
-            $rootId = File::where('project_id', $projectId)->where('name', '/')->first()->id;
+            $rootId = File::where('project_id', $projectId)
+                          ->where('name', '/')
+                          ->first()->id;
             return File::where('project_id', $projectId)
                        ->where('directory_id', $rootId)
                        ->whereNull('deleted_at')

@@ -93,6 +93,8 @@
                 {{--                @include('public.datasets.tabs.activities-tab')--}}
             @elseif (Request::routeIs('public.datasets.files*'))
                 @include('public.datasets.tabs.files-tab')
+            @elseif(Request::routeIs('public.datasets.folders*'))
+                @include('public.datasets.tabs.folders-tab')
             @elseif(Request::routeIs('public.datasets.communities.*'))
                 @include('public.datasets.tabs.communities')
             @elseif (Request::routeIs('public.datasets.comments*'))

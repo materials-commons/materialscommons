@@ -40,6 +40,7 @@ trait DatasetFileReplication
             $path = PathHelpers::joinPaths($path, $pathEntry);
             if (array_key_exists($path, $this->replicatedDirectories)) {
                 $lastDir = $this->replicatedDirectories[$path];
+                $parentId = $lastDir->id;
             } else {
                 $existingDir = File::getDirectoryByPath($dir->project_id, $path);
                 $lastDir = $this->createReplicatedDir($existingDir, $parentId, $datasetId);

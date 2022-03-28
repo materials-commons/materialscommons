@@ -7,10 +7,8 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('public.datasets.files')}}"
-           href="{{route('public.datasets.files.index', ['dataset' => $dataset])}}">
-            Files ({{$dataset->files_count}})
-        </a>
+        <a class="nav-link no-underline {{setActiveNavByName('public.datasets.folders')}}"
+           href="{{route('public.datasets.folders.show', [$dataset, '-1'])}}"> Files ({{$dataset->files_count}})</a>
     </li>
 
     <li class="nav-item">
