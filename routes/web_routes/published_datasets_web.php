@@ -116,13 +116,13 @@ Route::get('/datasets/{dataset}/comments/{comment}/delete', DeleteDatasetComment
      ->name('public.datasets.comments.delete');
 
 Route::delete('/datasets/{dataset}/comments/{comment}', DestroyDatasetCommentWebController::class)
-     ->name('datasets.comments.destroy');
+     ->name('public.datasets.comments.destroy');
 
 // Notifications
 Route::get('/datasets/{dataset}/mark-for-notification', MarkDatasetForNotificationsWebController::class)
-     ->name('datasets.notifications.mark-for-notification');
+     ->name('public.datasets.notifications.mark-for-notification');
 Route::get('/dataset/{dataset}/unmark-for-notification', UnmarkDatasetForNotificationsWebController::class)
-     ->name('datasets.notifications.unmark-for-notification');
+     ->name('public.datasets.notifications.unmark-for-notification');
 
 // Folders
 Route::get('/datasets/{dataset}/folders/by_path', GotoPublishedDatasetFolderByPathWebController::class)
