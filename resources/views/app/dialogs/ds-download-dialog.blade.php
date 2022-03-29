@@ -11,8 +11,8 @@
                 <h4>Create Account</h4>
                 <p>
                     You can optionally create an account on Materials Commons. Creating an account gives you many
-                    benefits, such as being able to mark a dataset as followed. Marking a dataset as followed will
-                    let you know if the dataset is changed.
+                    benefits, such as being able to follow a dataset. Following a dataset will
+                    let you know if the dataset has changed.
                 </p>
                 <a href="#">Skip and download</a>
                 <form method="post" action="" id="download-details" class="mt-4">
