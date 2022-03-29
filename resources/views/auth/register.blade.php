@@ -104,11 +104,10 @@
 
 @push('scripts')
     <script>
-        console.log('here i am');
         $('#reload').click(function () {
             $.ajax({
                 type: 'GET',
-                url: 'reload-captcha',
+                url: "{{route('reload-captcha')}}",
                 success: function (data) {
                     $('.captcha span').html(data.captcha);
                 }
