@@ -15,6 +15,10 @@ use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetGlobusRedirectWeb
 use App\Http\Controllers\Web\Published\Datasets\DownloadDatasetZipfileWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntitySpreadWebController;
 use App\Http\Controllers\Web\Published\Datasets\Entities\ShowPublishedDatasetEntityWebController;
+use App\Http\Controllers\Web\Published\Datasets\Login\CreateAccountForPublishedDatasetGlobusDownloadWebController;
+use App\Http\Controllers\Web\Published\Datasets\Login\CreateAccountForPublishedDatasetZipfileDownloadWebController;
+use App\Http\Controllers\Web\Published\Datasets\Login\LoginForPublishedDatasetGlobusDownloadWebController;
+use App\Http\Controllers\Web\Published\Datasets\Login\LoginForPublishedDatasetZipfileDownloadWebController;
 use App\Http\Controllers\Web\Published\Datasets\MarkDatasetForNotificationsWebController;
 use App\Http\Controllers\Web\Published\Datasets\Folders\GotoPublishedDatasetFolderByPathWebController;
 use App\Http\Controllers\Web\Published\Datasets\Folders\ShowPublishedDatasetFolderWebController;
@@ -44,11 +48,25 @@ Route::get('/datasets/{dataset}/workflows', ShowPublishedDatasetWorkflowsWebCont
 Route::get('/datasets/{dataset}/zipfile', DownloadDatasetZipfileWebController::class)
      ->name('public.datasets.download_zipfile');
 
+Route::get('/datasets/{dataset}/login/download/zipfile', LoginForPublishedDatasetZipfileDownloadWebController::class)
+     ->name('public.datasets.login.download.zipfile');
+
+Route::get('/datasets/{dataset}/create-account/download/zipfile',
+    CreateAccountForPublishedDatasetZipfileDownloadWebController::class)
+     ->name('public.datasets.create-account.download.zipfile');
+
 Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
      ->name('public.datasets.download_file');
 
 Route::get('/datasets/{dataset}/globus', DownloadDatasetGlobusRedirectWebController::class)
      ->name('public.datasets.download_globus');
+
+Route::get('/datasets/{dataset}/login/download/globus', LoginForPublishedDatasetGlobusDownloadWebController::class)
+     ->name('public.datasets.login.download.globus');
+
+Route::get('/datasets/{dataset}/create-account/download/globus',
+    CreateAccountForPublishedDatasetGlobusDownloadWebController::class)
+     ->name('public.datasets.create-account.download.globus');
 
 Route::get('/datasets/{dataset}/entities', ShowPublishedDatasetEntitiesWebController::class)
      ->name('public.datasets.entities.index');

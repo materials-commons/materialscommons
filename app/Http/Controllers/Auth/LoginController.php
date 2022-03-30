@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Traits\GetRequestParameterId;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
 {
+    use GetRequestParameterId;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -38,6 +40,16 @@ class LoginController extends Controller
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'login-for-upload') {
             return route('public.publish.wizard.choose_create_or_select_project');
+        }
+
+        if ($routeName == 'login-for-ds-download-zip') {
+            $datasetId = $this->getParameterId('dataset');
+            return route('public.datasets.download_zipfile', [$datasetId]);
+        }
+
+        if ($routeName == 'login-for-ds-download-globus') {
+            $datasetId = $this->getParameterId('dataset');
+            return route('public.datasets.download_globus', [$datasetId]);
         }
 
         return route('dashboard');
