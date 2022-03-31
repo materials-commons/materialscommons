@@ -20,8 +20,7 @@
                     <div class="card-header">{{ __('Login') }}</div>
 
                     <div class="card-body">
-                        <form method="POST"
-                              action="@if (Request::routeIs('login-for-upload')) {{route('login-for-upload')}} @else {{ route('login') }} @endif">
+                        <form method="POST" action="{{$routeToUse}}">
                             @csrf
 
                             <div class="form-group row">

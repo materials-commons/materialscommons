@@ -15,7 +15,10 @@
                     let you know if the dataset has changed.
                 </p>
                 <a href="#">Skip and download</a>
-                <form method="post" action="" id="download-details" class="mt-4">
+                <a href="{{route('login-for-dataset-zipfile-download', [$dataset])}}" class="btn btn-success">
+                    Login to download
+                </a>
+                <form method="post" action="{{route('login')}}" id="download-details" class="mt-4">
                     <div class="form-group">
                         <label>Name</label>
                         <input class="form-control" name="name" value="" type="text"
@@ -89,8 +92,8 @@
         });
 
         function loginAndDownload() {
-            let loginAndDownloadRoute = "";
-            $('#download-details').attr('action', loginAndDownloadRoute);
+            // let loginAndDownloadRoute = "";
+            // $('#download-details').attr('action', loginAndDownloadRoute);
             document.getElementById('download-details').submit();
         }
     </script>

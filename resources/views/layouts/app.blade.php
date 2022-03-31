@@ -193,7 +193,6 @@
 @endauth
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')
-@include('app.dialogs.ds-download-dialog')
 
 {{--@livewireAssets--}}
 <script>

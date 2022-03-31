@@ -2,7 +2,9 @@
 
 namespace App\Traits\Notifications;
 
+use App\Models\Dataset;
 use App\Models\Notification;
+use App\Models\User;
 
 trait NotificationChecker
 {
@@ -13,6 +15,11 @@ trait NotificationChecker
                              ->where('owner_id', $userId)
                              ->count();
         return $count > 0;
+    }
+
+    private function datasetAlreadySetForNotificationForUser(User $user, Dataset $dataset): bool
+    {
+        return $this->userAlreadySetForNotification($user->id, Dataset::class, $dataset->id);
     }
 
     private function emailAlreadySetForNotification($email, $modelClass, $modelId): bool

@@ -7,6 +7,7 @@ use App\Models\Dataset;
 use App\Models\File;
 use App\Traits\Datasets\GetPublishedDatasetFolderFiles;
 use App\ViewModels\Folders\ShowFolderViewModel;
+use App\ViewModels\Published\Datasets\ShowPublishedDatasetFolderViewModel;
 use Illuminate\Http\Request;
 
 class ShowPublishedDatasetFolderWebController extends Controller
@@ -30,7 +31,7 @@ class ShowPublishedDatasetFolderWebController extends Controller
                        ->first();
         }
         $files = $this->getPublishedDatasetFolderFiles($dataset, $folderId);
-        $viewModel = (new ShowFolderViewModel($dir, $files))->withDataset($dataset);
+        $viewModel = (new ShowPublishedDatasetFolderViewModel($dir, $files))->withDataset($dataset);
         return view('public.datasets.show', $viewModel);
     }
 }

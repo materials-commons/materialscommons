@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 use App\Actions\Entities\CreateUsedActivitiesForEntitiesAction;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Traits\Notifications\NotificationChecker;
 use Illuminate\Support\Facades\DB;
+use function auth;
 
 class ShowPublishedDatasetEntitiesWebController extends Controller
 {
+    use NotificationChecker;
+
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, $datasetId)
     {
         $dataset = Dataset::with(['entities.activities', 'tags'])
@@ -25,10 +29,11 @@ class ShowPublishedDatasetEntitiesWebController extends Controller
                         ->orderBy('name')
                         ->get();
         return view('public.datasets.show', [
-            'dataset'        => $dataset,
-            'entities'       => $dataset->entities,
-            'activities'     => $activities,
-            'usedActivities' => $createUsedActivities->execute($activities, $dataset->entities),
+            'dataset'                    => $dataset,
+            'entities'                   => $dataset->entities,
+            'activities'                 => $activities,
+            'hasNotificationsForDataset' => $this->datasetAlreadySetForNotificationForUser(auth()->user(), $dataset),
+            'usedActivities'             => $createUsedActivities->execute($activities, $dataset->entities),
         ]);
     }
 }

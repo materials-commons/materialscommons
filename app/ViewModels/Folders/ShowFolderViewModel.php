@@ -4,6 +4,7 @@ namespace App\ViewModels\Folders;
 
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\Notifications\NotificationChecker;
 use Spatie\ViewModels\ViewModel;
 
 class ShowFolderViewModel extends ViewModel
@@ -12,7 +13,7 @@ class ShowFolderViewModel extends ViewModel
     private $project;
     private $dirPaths;
     private $files;
-    private $dataset;
+    protected $dataset;
 
     public function __construct(File $directory, $files)
     {

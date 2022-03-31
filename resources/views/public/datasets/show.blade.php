@@ -111,4 +111,5 @@
             </script>
         @endpush
     @endisset
+    @include('app.dialogs.ds-download-dialog')
 @stop

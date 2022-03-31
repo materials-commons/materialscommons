@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Traits\Notifications\NotificationChecker;
+use function auth;
+use function view;
 
 class ShowPublishedDatasetCommunitiesWebController extends Controller
 {
+    use NotificationChecker;
+
     public function __invoke($datasetId)
     {
         $dataset = Dataset::with(['publishedCommunities', 'tags'])
@@ -14,6 +19,9 @@ class ShowPublishedDatasetCommunitiesWebController extends Controller
                           ->withCounts()
                           ->findOrFail($datasetId);
 
-        return view('public.datasets.show', compact('dataset'));
+        return view('public.datasets.show', [
+            'dataset'                    => $dataset,
+            'hasNotificationsForDataset' => $this->datasetAlreadySetForNotificationForUser(auth()->user(), $dataset),
+        ]);
     }
 }

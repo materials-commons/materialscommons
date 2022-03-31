@@ -49,6 +49,14 @@ Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name
 Route::get('login-for-upload', [LoginController::class, 'showLoginForm'])->name('login-for-upload');
 Route::post('login-for-upload', [LoginController::class, 'login'])->name('login-for-upload');
 
+Route::get('login-for-dataset-zipfile-download/datasets/{dataset}',
+    [LoginController::class, 'showLoginForm'])->name('login-for-dataset-zipfile-download');
+Route::post('login-for-dataset-zipfile-download/datasets/{dataset}',
+    [LoginController::class, 'login'])->name('login-for-dataset-zipfile-download');
+
+Route::post('login-for-dataset-globus-download/datasets/{dataset}',
+    [LoginController::class, 'login'])->name('login-for-dataset-globus-download');
+
 Route::get('register-for-upload', [RegisterController::class, 'showRegistrationForm'])->name('register-for-upload');
 Route::post('register-for-upload', [RegisterController::class, 'register'])->name('register-for-upload');
 
@@ -59,7 +67,8 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 
 Route::get('/email/verify/{id}', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::get('/email/verification-notification/{email}', [VerificationController::class, 'resend'])->name('verification.resend');
+Route::get('/email/verification-notification/{email}',
+    [VerificationController::class, 'resend'])->name('verification.resend');
 
 //Route::get('')
 
@@ -92,19 +101,19 @@ Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
 
 Route::prefix('public')->group(function () {
-        Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
-        Route::get('/new', [PublicDataNewController::class, 'index'])->name('public.new.index');
-        Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('public.projects.index');
-        Route::get('/datasets', [PublicDataController::class, 'index'])->name('public.datasets.index');
-        //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
+    Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
+    Route::get('/new', [PublicDataNewController::class, 'index'])->name('public.new.index');
+    Route::get('/projects', [PublicDataProjectsController::class, 'index'])->name('public.projects.index');
+    Route::get('/datasets', [PublicDataController::class, 'index'])->name('public.datasets.index');
+    //        Route::get('/datasets/{dataset}', [PublicDataDatasetsController::class, 'show'])->name('datasets.show');
 //        Route::get('/tags', [PublicDataTagsController::class, 'index'])->name('tags.index');
 //        Route::view('/community', 'public.community.index')->name('community.index');
 
-        require base_path('routes/web_routes/published_datasets_web.php');
-        require base_path('routes/web_routes/published_communities_web.php');
-        require base_path('routes/web_routes/publish_dataset_wizard_web.php');
-        require base_path('routes/web_routes/published_authors_web.php');
-        require base_path('routes/web_routes/published_tags_web.php');
+    require base_path('routes/web_routes/published_datasets_web.php');
+    require base_path('routes/web_routes/published_communities_web.php');
+    require base_path('routes/web_routes/publish_dataset_wizard_web.php');
+    require base_path('routes/web_routes/published_authors_web.php');
+    require base_path('routes/web_routes/published_tags_web.php');
 //        require base_path('routes/web_routes/public_projects_web.php');
 });
 
