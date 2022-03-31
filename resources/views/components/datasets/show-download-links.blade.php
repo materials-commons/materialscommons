@@ -13,7 +13,7 @@
                             Zipfile
                         </a>
                     @else
-                        <a data-toggle="modal" href="#ds-download-dialog">Zipfile</a>
+                        <a data-toggle="modal" href="#ds-download-zip">Zipfile</a>
                     @endauth
                 @endif
                 <span class="ml-1">({{formatBytes($dataset->zipfile_size)}})</span>
@@ -34,7 +34,7 @@
                         Using Globus
                     </a>
                 @else
-                    <a class="ml-2" data-toggle="modal" href="#ds-download-dialog">Using Globus</a>
+                    <a class="ml-2" data-toggle="modal" href="#ds-download-globus">Using Globus</a>
                 @endauth
             </li>
         @endif

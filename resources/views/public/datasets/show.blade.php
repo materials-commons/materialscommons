@@ -111,5 +111,24 @@
             </script>
         @endpush
     @endisset
-    @include('app.dialogs.ds-download-dialog')
+
+    @php
+        $zipLoginRoute = route('login-for-dataset-zipfile-download', [$dataset]);
+        $zipCreateAccountRoute = '';
+
+        $globusLoginRoute = route('login-for-dataset-globus-download', [$dataset]);
+        $globusCreateAccountRoute = '';
+    @endphp
+
+    @include('app.dialogs.ds-download-dialog', [
+            'dialogId' => 'ds-download-zip',
+            'loginRoute' => $zipLoginRoute,
+            'createAccountRoute' => $zipCreateAccountRoute,
+    ])
+
+    @include('app.dialogs.ds-download-dialog', [
+            'dialogId' => 'ds-download-globus',
+            'loginRoute' => $globusLoginRoute,
+            'createAccountRoute' => $globusCreateAccountRoute,
+    ])
 @stop
