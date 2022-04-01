@@ -65,10 +65,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'captcha'  => ['required', 'captcha'],
+            'name'                 => ['required', 'string', 'max:255'],
+            'email'                => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'             => ['required', 'string', 'min:6', 'confirmed'],
+            'g-recaptcha-response' => ['required', 'recaptchav3:register,0.5'],
         ]);
     }
 
@@ -86,11 +86,6 @@ class RegisterController extends Controller
             'password'  => Hash::make($data['password']),
             'api_token' => Str::random(60),
         ]);
-    }
-
-    public function reloadCaptcha(Request $request)
-    {
-        return response()->json(['captcha' => captcha_img('flat')]);
     }
 
     public function redirectTo()
