@@ -110,6 +110,12 @@ class Dataset extends Model implements Searchable
         return $this->belongsToMany(File::class, 'dataset2file', 'dataset_id', 'file_id');
     }
 
+    public function rootDir()
+    {
+        return $this->hasOne(File::class, 'dataset_id')
+                    ->where('path', '/');
+    }
+
 //    public function files()
 //    {
 //        $this->belongsTo(File::class, 'dataset_id');
