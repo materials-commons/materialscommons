@@ -12,7 +12,8 @@ class ShowPublishedDatasetApiController extends Controller
     {
         $dataset = Dataset::with(['owner', 'tags', 'rootDir'])
                           ->withCounts()
-                          ->where('id', $datasetId);
+                          ->where('id', $datasetId)
+                          ->first();
         // if published_at is null then this dataset is not in a published state.
         abort_if(is_null($dataset->published_at), 404);
         return new DatasetResource($dataset);

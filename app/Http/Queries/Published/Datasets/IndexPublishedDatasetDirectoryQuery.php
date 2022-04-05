@@ -3,6 +3,7 @@
 namespace App\Http\Queries\Published\Datasets;
 
 use App\Models\File;
+use Illuminate\Http\Request;
 
 class IndexPublishedDatasetDirectoryQuery extends PublishedDatasetsDirectoryQueryBuilder
 {

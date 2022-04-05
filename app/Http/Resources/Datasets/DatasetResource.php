@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Datasets;
 
+use App\Http\Resources\Files\FileResource;
 use App\Http\Resources\JsonResource;
 
 class DatasetResource extends JsonResource
@@ -50,6 +51,7 @@ class DatasetResource extends JsonResource
         }
 
         $ds['zipfile_name'] = $this->zipfileName();
+        $ds['rootDir'] = new FileResource($this->whenLoaded('rootDir'));
 
         return $ds;
     }
