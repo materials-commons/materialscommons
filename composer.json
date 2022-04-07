@@ -38,7 +38,9 @@
     "spatie/laravel-tags": "^3.0",
     "spatie/laravel-view-models": "^1.1",
     "tightenco/ziggy": "^1.0",
-    "ylsideas/feature-flags": "^1.2"
+    "ylsideas/feature-flags": "^1.2",
+    "ext-simplexml": "*",
+    "ext-dom": "*"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.0",

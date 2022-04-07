@@ -5,8 +5,12 @@ namespace App\Services;
 use App\Helpers\PathHelpers;
 use App\Models\Dataset;
 use App\Models\Project;
+use DOMDocument;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use function config;
+use function simplexml_load_file;
 
 class OpenVisusApiService
 {
@@ -33,23 +37,25 @@ class OpenVisusApiService
 
     public static function addDatasetToOpenVisus(Dataset $dataset)
     {
-        // $doc = simplexml_load_file('/home/gtarcea/visus/datasets/datasets.config');
-        // $datasets = $doc->datasets;
-        // $newData = $datasets->addChild('dataset');
-        // $newData->addAttribute('name', 'test');
-        // $newData->addAttribute('url', '/datasets/test/visus.idx');
+        OpenVisusApiService::addToOpenVisusConfigFile($dataset->uuid);
+    }
 
-        // $newData2 = $datasets->addChild('dataset');
-        // $newData2->addAttribute('name', 'test2');
-        // $newData2->addAttribute('url', '/datasets/test2/visus.idx');
+    private static function addToOpenVisusConfigFile($uuid)
+    {
+        Cache::lock("visus")->get(function() use ($uuid) {
+            $configPath = config('visus.idx_path')."/datasets.config";
+            $doc = simplexml_load_file($configPath);
+            $datasets = $doc->datasets;
+            $newData = $datasets->addChild('dataset');
+            $newData->addAttribute('name', $uuid);
+            $newData->addAttribute('url', "/datasets/{$uuid}/visus.idx");
 
-        // $dom = new DOMDocument;
-        // $dom->preserveWhiteSpace = FALSE;
-        // $dom->loadXML($doc->saveXML());
-        // $dom->formatOutput = true;
-        // // $doc->preserveWhiteSpace = false;
-        // // $doc->formatOutput = true;
-        // $dom->save('/home/gtarcea/datasets-new.config');
+            $dom = new DOMDocument;
+            $dom->preserveWhiteSpace = false;
+            $dom->loadXML($doc->saveXML());
+            $dom->formatOutput = true;
+            $dom->save($configPath);
+        });
     }
 
     private static function idxPathForDataset(Dataset $dataset): string
@@ -59,11 +65,11 @@ class OpenVisusApiService
 
     public static function addProjectToOpenVisus(Project $project)
     {
-
+        OpenVisusApiService::addToOpenVisusConfigFile($project->uuid);
     }
 
     private static function idxPathForProject(Project $project): string
     {
-        return PathHelpers::joinPaths(config('visus.idx_path'), "/projects/{$project->uuid}");
+        return PathHelpers::joinPaths(config('visus.idx_path'), "/datasets/{$project->uuid}");
     }
 }
