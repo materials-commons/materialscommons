@@ -37,17 +37,19 @@ class OpenVisusApiService
 
     public static function addDatasetToOpenVisus(Dataset $dataset)
     {
-        OpenVisusApiService::addToOpenVisusConfigFile($dataset->uuid);
+        OpenVisusApiService::addToOpenVisusConfigFile("dataset", $dataset->uuid, $dataset->name, $dataset->owner_id);
     }
 
-    private static function addToOpenVisusConfigFile($uuid)
+    private static function addToOpenVisusConfigFile($type, $uuid, $name, $ownerId)
     {
-        Cache::lock("visus")->get(function() use ($uuid) {
+        Cache::lock("visus")->get(function () use ($type, $uuid, $name, $ownerId) {
             $configPath = config('visus.idx_path')."/datasets.config";
             $doc = simplexml_load_file($configPath);
             $datasets = $doc->datasets;
             $newData = $datasets->addChild('dataset');
-            $newData->addAttribute('name', $uuid);
+            $newData->addAttribute('name', "{$ownerId}:{$name}");
+            $newData->addAttribute('uuid', $uuid);
+            $newData->addAttribute('type', $type);
             $newData->addAttribute('url', "/datasets/{$uuid}/visus.idx");
 
             $dom = new DOMDocument;
@@ -65,7 +67,7 @@ class OpenVisusApiService
 
     public static function addProjectToOpenVisus(Project $project)
     {
-        OpenVisusApiService::addToOpenVisusConfigFile($project->uuid);
+        OpenVisusApiService::addToOpenVisusConfigFile("project", $project->uuid, $project->name, $project->owner_id);
     }
 
     private static function idxPathForProject(Project $project): string
