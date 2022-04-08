@@ -14,6 +14,11 @@ use function simplexml_load_file;
 
 class OpenVisusApiService
 {
+    //$doc = simplexml_load_file('/home/gtarcea/visus/datasets/datasets.config');
+    //$datasets = $doc->datasets;
+    //$ds = $datasets->dataset[0];
+    //echo $ds->attributes()["mc-uuid"];
+
     public static function displayDataset($visusDataset)
     {
         $url = config('visus.url').$visusDataset;
@@ -48,11 +53,11 @@ class OpenVisusApiService
             $datasets = $doc->datasets;
             $newData = $datasets->addChild('dataset');
             $newData->addAttribute('name', "{$ownerId}:{$name}");
-            $newData->addAttribute('uuid', $uuid);
-            $newData->addAttribute('type', $type);
+            $newData->addAttribute('mc-uuid', $uuid);
+            $newData->addAttribute('mc-type', $type);
             $newData->addAttribute('url', "/datasets/{$uuid}/visus.idx");
 
-            $dom = new DOMDocument;
+            $dom = new DOMDocument();
             $dom->preserveWhiteSpace = false;
             $dom->loadXML($doc->saveXML());
             $dom->formatOutput = true;
