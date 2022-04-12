@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -93,5 +94,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function datasets()
     {
         return $this->morphToMany(Dataset::class, 'item', 'item2dataset');
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        if (!config('app.email_verification')) {
+            return;
+        }
+
+        $this->notify(new VerifyEmail);
     }
 }

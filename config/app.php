@@ -4,6 +4,8 @@ return [
 
     'beta' => env('APP_BETA', 0),
 
+    'email_verification' => env('APP_EMAIL_VERIFICATION', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
