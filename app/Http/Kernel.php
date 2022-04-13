@@ -10,6 +10,7 @@ use App\Http\Middleware\EntityInProject;
 use App\Http\Middleware\EntityStateInProject;
 use App\Http\Middleware\ExperimentInProject;
 use App\Http\Middleware\FileInProject;
+use App\Http\Middleware\PublicRouteDatasetIsPublished;
 use App\Http\Middleware\UserCanAccessProject;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -53,6 +54,7 @@ class Kernel extends HttpKernel
             EntityStateInProject::class,
             DatasetInProject::class,
             ExperimentInProject::class,
+            PublicRouteDatasetIsPublished::class,
         ],
 
         'api' => [
