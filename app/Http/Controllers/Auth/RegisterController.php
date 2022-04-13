@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use function redirect;
+use function route;
 
 class RegisterController extends Controller
 {
@@ -51,9 +53,15 @@ class RegisterController extends Controller
             return $response;
         }
 
-        return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect(route('verification.notice', [$user]));
+        if ($request->wantsJson()) {
+            return new JsonResponse([], 201);
+        }
+
+        if (config('app.email_verification')) {
+            return redirect(route('verification.notice', [$user]));
+        }
+
+        return redirect(route('login'));
     }
 
     /**
