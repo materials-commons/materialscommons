@@ -91,7 +91,11 @@ class RegisterController extends Controller
     public function redirectTo()
     {
         if (true) {
-            return route('verification.notice');
+            if (config('app.email_verification')) {
+                return route('verification.notice');
+            }
+
+            return route('login');
         }
 
         $routeName = Route::getCurrentRoute()->getName();

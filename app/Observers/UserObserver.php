@@ -14,6 +14,8 @@ class UserObserver
      */
     public function created(User $user)
     {
+        ray("UserObserver created called: ", config('app.email_verification'));
+
         if (config('app.email_verification') == false) {
             // If email verification is turned off then just automatically set the email_verified_at column
             // so that users are automatically verified.
