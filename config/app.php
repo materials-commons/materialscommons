@@ -6,6 +6,8 @@ return [
 
     'email_verification' => env('APP_EMAIL_VERIFICATION', true),
 
+    'recaptcha_enabled' => env('APP_RECAPTCHA_ENABLED', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

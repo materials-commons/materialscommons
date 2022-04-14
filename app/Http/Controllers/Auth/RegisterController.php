@@ -72,11 +72,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        if (config('app.recaptcha_enabled')) {
+            return Validator::make($data, [
+                'name'                 => ['required', 'string', 'max:255'],
+                'email'                => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password'             => ['required', 'string', 'min:6', 'confirmed'],
+                'g-recaptcha-response' => ['required', 'recaptchav3:register,0.5'],
+            ]);
+        }
+
         return Validator::make($data, [
-            'name'                 => ['required', 'string', 'max:255'],
-            'email'                => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'             => ['required', 'string', 'min:6', 'confirmed'],
-            'g-recaptcha-response' => ['required', 'recaptchav3:register,0.5'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
