@@ -73,7 +73,10 @@
                                            name="password_confirmation" required>
                                 </div>
                             </div>
-                            {!! RecaptchaV3::field('register') !!}
+
+                            @if(config('app.recaptcha_enabled'))
+                                {!! RecaptchaV3::field('register') !!}
+                            @endif
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

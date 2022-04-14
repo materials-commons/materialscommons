@@ -12,9 +12,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {!! RecaptchaV3::initJs() !!}
 
-    <!-- Fonts -->
+@if(config('app.recaptcha_enabled'))
+    {!! RecaptchaV3::initJs() !!}
+@endif
+
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
