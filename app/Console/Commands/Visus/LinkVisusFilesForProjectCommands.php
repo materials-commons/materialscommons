@@ -18,7 +18,7 @@ class LinkVisusFilesForProjectCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-visus:link-visus-files-for-project {projectId: projecto to setup}';
+    protected $signature = 'mc-visus:link-visus-files-for-project {projectId: project to setup}';
 
     /**
      * The console command description.
