@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Http\Sanitizers\DirectoryPathSanitizer;
 use App\Models\File;
 use App\Models\Project;
+use App\Models\User;
 use App\Observers\FileObserver;
+use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use YlsIdeas\FeatureFlags\Facades\Features;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         File::observe(FileObserver::class);
+        User::observe(UserObserver::class);
     }
 
     /**

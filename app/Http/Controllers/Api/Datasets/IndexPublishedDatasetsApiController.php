@@ -10,6 +10,9 @@ class IndexPublishedDatasetsApiController extends Controller
 {
     public function __invoke()
     {
-        return DatasetResource::collection(Dataset::withCounts()->whereNotNull('published_at')->get());
+        return DatasetResource::collection(Dataset::with(['rootDir', 'owner', 'tags'])
+                                                  ->withCounts()
+                                                  ->whereNotNull('published_at')
+                                                  ->get());
     }
 }

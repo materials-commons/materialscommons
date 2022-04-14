@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use function redirect;
+use function route;
 
 class RegisterController extends Controller
 {
@@ -51,9 +53,15 @@ class RegisterController extends Controller
             return $response;
         }
 
-        return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect(route('verification.notice', [$user]));
+        if ($request->wantsJson()) {
+            return new JsonResponse([], 201);
+        }
+
+        if (config('app.email_verification')) {
+            return redirect(route('verification.notice', [$user]));
+        }
+
+        return redirect(route('login'));
     }
 
     /**
@@ -64,11 +72,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        if (config('app.recaptcha_enabled')) {
+            return Validator::make($data, [
+                'name'                 => ['required', 'string', 'max:255'],
+                'email'                => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password'             => ['required', 'string', 'min:6', 'confirmed'],
+                'g-recaptcha-response' => ['required', 'recaptchav3:register,0.5'],
+            ]);
+        }
+
         return Validator::make($data, [
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'captcha'  => ['required', 'captcha'],
         ]);
     }
 
@@ -88,15 +104,14 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function reloadCaptcha(Request $request)
-    {
-        return response()->json(['captcha' => captcha_img('flat')]);
-    }
-
     public function redirectTo()
     {
         if (true) {
-            return route('verification.notice');
+            if (config('app.email_verification')) {
+                return route('verification.notice');
+            }
+
+            return route('login');
         }
 
         $routeName = Route::getCurrentRoute()->getName();

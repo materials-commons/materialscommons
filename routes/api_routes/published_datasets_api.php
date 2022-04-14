@@ -2,6 +2,9 @@
 
 // Published datasets
 
+use App\Http\Controllers\Api\Datasets\Directories\IndexPublishedDatasetDirectoryApiController;
+use App\Http\Controllers\Api\Datasets\Directories\IndexPublishedDatasetDirectoryByPathApiController;
+use App\Http\Controllers\Api\Datasets\Directories\ShowPublishedDatasetDirectoryApiController;
 use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetFileApiController;
 use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetZipfileApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetActivitiesApiController;
@@ -18,3 +21,11 @@ Route::get('/published/datasets/{dataset}/entities', IndexPublishedDatasetEntiti
 Route::get('/published/datasets/{dataset}/activities', IndexPublishedDatasetActivitiesApiController::class);
 Route::get('/published/datasets/{dataset}/files/{file}/download', DownloadPublishedDatasetFileApiController::class);
 Route::get('/published/datasets/{dataset}/download_zipfile', DownloadPublishedDatasetZipfileApiController::class);
+
+// Published dataset directories
+
+Route::get('/published/datasets/{dataset}/directories/{directory}', ShowPublishedDatasetDirectoryApiController::class);
+Route::get('/published/datasets/{dataset}/directories/{directory}/list',
+    IndexPublishedDatasetDirectoryApiController::class);
+Route::get('/published/datasets/{dataset}/directories_by_path',
+    IndexPublishedDatasetDirectoryByPathApiController::class);

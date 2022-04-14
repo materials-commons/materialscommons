@@ -74,18 +74,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="captcha col-md-4 ml-5">
-                                    <span>{!! captcha_img('flat') !!}</span>
-                                    <button type="button" class="btn btn-danger" class="reload" id="reload">
-                                        &#x21bb;
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group mb-4">
-                                <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha..."
-                                       name="captcha">
-                            </div>
+                            @if(config('app.recaptcha_enabled'))
+                                {!! RecaptchaV3::field('register') !!}
+                            @endif
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -101,17 +92,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        $('#reload').click(function () {
-            $.ajax({
-                type: 'GET',
-                url: "{{route('reload-captcha')}}",
-                success: function (data) {
-                    $('.captcha span').html(data.captcha);
-                }
-            });
-        });
-    </script>
-@endpush

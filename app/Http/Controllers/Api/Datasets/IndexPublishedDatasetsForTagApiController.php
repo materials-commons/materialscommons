@@ -12,7 +12,10 @@ class IndexPublishedDatasetsForTagApiController extends Controller
     public function __invoke(Request $request)
     {
         $tag = $request->input('tag');
-        $datasets = Dataset::withAnyTags([$tag])->with('tags')->whereNotNull('published_at')->get();
+        $datasets = Dataset::withAnyTags([$tag])
+                           ->with(['tags', 'owner', 'rootDir'])
+                           ->whereNotNull('published_at')
+                           ->get();
         return DatasetResource::collection($datasets);
     }
 }
