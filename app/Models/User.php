@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'email', 'password', 'globus_user', 'description',
-        'api_token', 'affiliations', 'uuid', 'is_admin',
+        'api_token', 'affiliations', 'uuid', 'is_admin', 'slug'
     ];
 
     /**

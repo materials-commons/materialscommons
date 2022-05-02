@@ -4,13 +4,14 @@ namespace App\Console\Commands\Conversion;
 
 use App\Models\Project;
 use App\Models\User;
-use App\Traits\Projects\AddProjectSlug;
+use App\Traits\HasUniqueSlug;
 use Illuminate\Console\Command;
 use function slugify;
+use function substr;
 
 class AddSlugToExistingProjectsAndUsersCommand extends Command
 {
-    use AddProjectSlug;
+    use HasUniqueSlug;
 
     /**
      * The name and signature of the console command.
@@ -45,13 +46,12 @@ class AddSlugToExistingProjectsAndUsersCommand extends Command
     {
         User::whereNull('slug')->get()->each(function (User $user) {
             echo "Updating slug for user {$user->email}...\n";
-            $slug = slugify($user->email);
-            $user->update(['slug' => $slug]);
+            $this->addUniqueSlugToUser($user);
         });
 
         Project::whereNull('slug')->get()->each(function (Project $project) {
             echo "Updating slug for project {$project->name}...\n";
-            $this->addSlugToProject($project);
+            $this->addUniqueSlugToProject($project);
         });
         return 0;
     }

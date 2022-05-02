@@ -5,12 +5,12 @@ namespace App\Actions\Projects;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Team;
-use App\Traits\Projects\AddProjectSlug;
+use App\Traits\HasUniqueSlug;
 use Illuminate\Support\Facades\DB;
 
 class CreateProjectAction
 {
-    use AddProjectSlug;
+    use HasUniqueSlug;
 
     public function execute($data, $ownerId)
     {
@@ -52,7 +52,7 @@ class CreateProjectAction
             $team->admins()->attach($project->owner);
         });
 
-        $this->addSlugToProject($project);
+        $this->addUniqueSlugToProject($project);
 
         $project->refresh();
         return [
