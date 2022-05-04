@@ -31,14 +31,19 @@ trait HasUniqueSlug
 
     private function addUniqueSlugToUser(User $user)
     {
-        $startOfUuid = substr($user->uuid, 0, 4);
-        $slugifiedName = slugify($user->name);
-        $this->addUniqueSlugToItem($user, $slugifiedName, $startOfUuid);
+        // Replace @ and . (period) with - (dash)
+        $fixedEmail = Str::replace("@", "-", Str::replace(".", "-", $user->email));
+        $slugifiedName = slugify($fixedEmail);
+        $this->addUniqueSlugToItem($user, $slugifiedName, "");
     }
 
     private function addUniqueSlugToItem($item, $slugifiedName, $uuidPiece)
     {
-        $slug = $slugifiedName."-".$uuidPiece;
+        if ($uuidPiece == "") {
+            $slug = $slugifiedName;
+        } else {
+            $slug = $slugifiedName."-".$uuidPiece;
+        }
 
         $count = 1;
         $slugToUse = $slug;
