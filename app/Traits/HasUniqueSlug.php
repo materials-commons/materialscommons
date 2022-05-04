@@ -15,39 +15,39 @@ trait HasUniqueSlug
     // unique slug for the project.
     private function addUniqueSlugToProject(Project $project)
     {
-        $startOfUuid = substr($project->uuid, 0, 4);
         $slugifiedName = Str::limit(slugify($project->name), 15, "");
 
+        // Somebody has a project name with one of more special characters, so make the name
+        // "p" rather than ""
         if ($slugifiedName == "") {
             $slugifiedName = "p";
         }
 
+        // If project name ends with a '-' remove it.
         if (Str::endsWith($slugifiedName, "-")) {
             $slugifiedName = substr($slugifiedName, 0, -1);
         }
 
-        $this->addUniqueSlugToItem($project, $slugifiedName, $startOfUuid);
+        $this->addUniqueSlugToItem($project, $slugifiedName, $project->id);
     }
 
     private function addUniqueSlugToUser(User $user)
     {
-        // Replace @ and . (period) with - (dash)
-        $fixedEmail = Str::replace("@", "-", Str::replace(".", "-", $user->email));
-        $slugifiedName = slugify($fixedEmail);
-        $this->addUniqueSlugToItem($user, $slugifiedName, "");
+        // Extract the username from the email.
+        $username = Str::before($user->email, "@");
+
+        $slugifiedName = Str::lower($username);
+        $this->addUniqueSlugToItem($user, $slugifiedName, $user->id);
     }
 
-    private function addUniqueSlugToItem($item, $slugifiedName, $uuidPiece)
+    private function addUniqueSlugToItem($item, $slugifiedName, $id)
     {
-        if ($uuidPiece == "") {
-            $slug = $slugifiedName;
-        } else {
-            $slug = $slugifiedName."-".$uuidPiece;
-        }
 
+        $slug = $slugifiedName;
+        $idAdded = false;
         $count = 1;
         $slugToUse = $slug;
-        while(true) {
+        while (true) {
             DB::beginTransaction();
             try {
                 $item->update(['slug' => $slugToUse]);
@@ -55,8 +55,21 @@ trait HasUniqueSlug
                 break;
             } catch (\Throwable $e) {
                 DB::rollback();
-                $slugToUse = $slug . "-{$count}";
-                $count++;
+                if (!$idAdded) {
+                    // if not unique and the id hasn't been appended then append it.
+                    $slugToUse = "{$slug}-{$id}";
+
+                    // Make slug equal to the slug plus the id so that if we start having
+                    // to append the count it will be off the slug with the id, and not
+                    // just the slug.
+                    $slug = $slugToUse;
+                    $idAdded = true;
+                } else {
+                    // if we are here then the slug contains the id, and it's still not
+                    // unique so begin appending the count until its unique.
+                    $slugToUse = $slug."-{$count}";
+                    $count++;
+                }
             }
         }
     }
