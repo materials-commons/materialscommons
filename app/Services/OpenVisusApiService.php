@@ -38,7 +38,7 @@ class OpenVisusApiService
             return $url.$visusDataset;
         }
 
-        return $url."/{$visusDataset}";
+        return $url."{$visusDataset}";
     }
 
     public static function addDatasetToOpenVisus(Dataset $dataset)
@@ -82,8 +82,7 @@ class OpenVisusApiService
         $doc = simplexml_load_file($configPath);
         $datasets = $doc->datasets;
         $newData = $datasets->addChild('dataset');
-        $newData->addAttribute('name', "{$project->uuid}_{$idxFile->name}");
-        $newData->addAttribute('mc-file-uuid', $idxFile->uuid);
+        $newData->addAttribute('name', "{$idxFile->uuid}_{$idxFile->name}");
         $newData->addAttribute('mc-type', 'project');
         $newData->addAttribute("mc-container-uuid", $project->uuid);
         $newData->addAttribute('url', "/datasets/{$project->uuid}/{$dir->uuid}/{$idxFile->name}");

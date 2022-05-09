@@ -13,6 +13,7 @@ trait FileView
 
     public function fileExists(File $file)
     {
+        return true;
         $filePath = Storage::disk('mcfs')->path($this->fileContentsPathPartial($file));
         return file_exists($filePath);
     }

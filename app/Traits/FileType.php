@@ -58,7 +58,14 @@ trait FileType
 
     public function fileType($file): string
     {
-        return $this->fileTypeFromMime($file->mime_type);
+        $type = $this->fileTypeFromMime($file->mime_type);
+        if ($type == "text") {
+            if (Str::endsWith($file->name, ".idx")) {
+                return "open-visus";
+            }
+        }
+
+        return $type;
     }
 
     public function fileTypeFromMime($mime)

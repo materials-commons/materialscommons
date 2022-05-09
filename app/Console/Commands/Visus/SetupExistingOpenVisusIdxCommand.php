@@ -71,7 +71,7 @@ class SetupExistingOpenVisusIdxCommand extends Command
                     echo "Processing {$file->name}\n";
                     $path = OpenVisusApiService::addIdxForProjectToOpenVisus($project, $dir, $file);
                     echo "  path = {$path}\n";
-                    mkdir($path, 0777, true);
+                    @mkdir($path, 0777, true);
                     $nameWithoutExtension = pathinfo($file->name, PATHINFO_FILENAME);
                     $d = File::where('name', $nameWithoutExtension)
                              ->whereNull('deleted_at')

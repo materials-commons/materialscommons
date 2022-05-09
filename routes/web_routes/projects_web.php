@@ -195,5 +195,5 @@ Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWeb
     ->name('projects.globus.bookmark');
 
 // For now Visus datasets here
-Route::get('/projects/{project}/visus', ShowVisusDatasetWebController::class)
-    ->name('projects.visus');
+Route::get('/projects/{project}/files/{file}/visus', ShowVisusDatasetWebController::class)
+    ->name('projects.files.show-visus');

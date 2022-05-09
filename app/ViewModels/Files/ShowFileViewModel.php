@@ -2,27 +2,23 @@
 
 namespace App\ViewModels\Files;
 
+use App\Models\Dataset;
 use App\Models\File;
+use App\Models\Project;
 use Spatie\ViewModels\ViewModel;
 
 class ShowFileViewModel extends ViewModel
 {
     use FileView;
 
-    /**
-     * @var \App\Models\File
-     */
-    private $file;
+    private ?File $file;
 
-    /**
-     * @var \App\Models\Project
-     */
-    private $project;
+    private ?Project $project;
 
     /**
      * @var \App\Models\Dataset | null
      */
-    private $dataset;
+    private ?Dataset $dataset;
 
     private $previousVersions;
 
