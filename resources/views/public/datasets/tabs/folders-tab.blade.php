@@ -64,7 +64,7 @@
                                 {{-- Change next two routes to public.datasets.files.display once that is implemented --}}
                                 <a href="{{route('public.datasets.files.show', [$dataset, $file])}}">
 
-                                    <img src="{{route('public.datasets.files.show', [$dataset, $file])}}"
+                                    <img src="{{route('public.datasets.files.display', [$dataset, $file])}}"
                                          style="width: 12rem">
                                 </a>
                             @endif

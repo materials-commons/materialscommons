@@ -10,7 +10,7 @@ use App\Http\Resources\Users\UserResource;
 class ProjectResource extends JsonResource
 {
     protected $fields = [
-        'id', 'uuid', 'name', 'description', 'owner_id', 'is_active',
+        'id', 'uuid', 'name', 'description', 'owner_id', 'is_active', 'slug',
         'created_at', 'updated_at', 'files_count', 'activities_count', 'entities_count',
         'workflows_count',
     ];

@@ -37,7 +37,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
             $e->save();
             $dataset->entities()->attach($e);
 //            echo "  replicating its files\n";
-            $this->attachReplicatedFilesToEntity($entity, $e);
+            $this->attachReplicatedFilesToEntity($entity, $e, $dataset);
 //            echo "   replicating its states\n";
             $this->replicateEntityStatesAndRelationshipsForEntity($entity, $e, $dataset);
 //            echo "   replicating its activities and their files\n";
@@ -45,7 +45,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         });
     }
 
-    private function attachReplicatedFilesToEntity(Entity $entity, Entity $e)
+    private function attachReplicatedFilesToEntity(Entity $entity, Entity $e, Dataset $dataset)
     {
         $columns = [
             'entity_id',
@@ -57,7 +57,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         $checksums = $entity->files->pluck('checksum')->toArray();
         DB::table('files')
           ->select('id', 'checksum')
-          ->whereNull('project_id')
+          ->where('dataset_id', $dataset->id)
           ->whereNull('deleted_at')
           ->whereIn('checksum', $checksums)
           ->distinct('checksum')
@@ -148,7 +148,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
         $checksums = $activity->files->pluck('checksum')->toArray();
         DB::table('files')
           ->select('id', 'checksum')
-          ->whereNull('project_id')
+          ->where('dataset_id', $dataset->id)
           ->whereIn('checksum', $checksums)
           ->whereNull('deleted_at')
           ->distinct('checksum')

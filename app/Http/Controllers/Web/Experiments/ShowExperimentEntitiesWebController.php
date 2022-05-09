@@ -21,14 +21,34 @@ class ShowExperimentEntitiesWebController extends Controller
                                 ->with('etlruns.files')
                                 ->findOrFail($experimentId);
         $project = Project::with('experiments')->findOrFail($projectId);
+
+        $orderByColumn = "name";
+        $nullCount = DB::table('experiment2activity')
+                       ->where('experiment_id', $experiment->id)
+                       ->join(
+                           'activities',
+                           'experiment2activity.activity_id',
+                           '=',
+                           'activities.id'
+                       )
+                       ->where('activities.name', '<>', 'Create Samples')
+                       ->select('activities.name', 'activities.eindex')
+                       ->whereNull('eindex')
+                       ->distinct()
+                       ->get()
+                       ->count();
+
+        if ($nullCount == 0) {
+            $orderByColumn = "eindex";
+        }
+
         $activities = DB::table('experiment2activity')
                         ->where('experiment_id', $experiment->id)
                         ->join('activities', 'experiment2activity.activity_id', '=', 'activities.id')
                         ->where('activities.name', '<>', 'Create Samples')
                         ->select('activities.name', 'activities.eindex')
                         ->distinct()
-                        ->orderByRaw('case when eindex is null then name else eindex end')
-//            ->orderBy('name')
+                        ->orderBy($orderByColumn)
                         ->get();
 
         $entities = $experiment->entities()->with('activities')->get();

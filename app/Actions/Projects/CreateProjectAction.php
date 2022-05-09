@@ -5,10 +5,13 @@ namespace App\Actions\Projects;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Team;
+use App\Traits\HasUniqueSlug;
 use Illuminate\Support\Facades\DB;
 
 class CreateProjectAction
 {
+    use HasUniqueSlug;
+
     public function execute($data, $ownerId)
     {
         $project = Project::with('rootDir')
@@ -48,6 +51,8 @@ class CreateProjectAction
             $project->update(['team_id' => $team->id]);
             $team->admins()->attach($project->owner);
         });
+
+        $this->addUniqueSlugToProject($project);
 
         $project->refresh();
         return [

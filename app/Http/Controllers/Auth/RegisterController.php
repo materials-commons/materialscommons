@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\HasUniqueSlug;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use function redirect;
 use function route;
+use function slugify;
 
 class RegisterController extends Controller
 {
@@ -30,6 +32,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use HasUniqueSlug;
 
     /**
      * Create a new controller instance.
@@ -46,6 +49,8 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+
+        $this->addUniqueSlugToUser($user);
 
 //        $this->guard()->login($user);
 
