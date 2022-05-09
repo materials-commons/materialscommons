@@ -83,6 +83,7 @@ class OpenVisusApiService
         $datasets = $doc->datasets;
         $newData = $datasets->addChild('dataset');
         $newData->addAttribute('name', "{$idxFile->uuid}_{$idxFile->name}");
+        $newData->addAttribute("mc-id", $idxFile->id);
         $newData->addAttribute('mc-type', 'project');
         $newData->addAttribute("mc-container-uuid", $project->uuid);
         $newData->addAttribute('url', "/datasets/{$project->uuid}/{$dir->uuid}/{$idxFile->name}");
