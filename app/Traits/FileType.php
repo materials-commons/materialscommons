@@ -65,6 +65,10 @@ trait FileType
             }
         }
 
+        if (Str::startsWith($file->mime_type, "text/")) {
+            return "text";
+        }
+
         return $type;
     }
 
