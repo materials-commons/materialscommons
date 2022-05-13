@@ -20,7 +20,7 @@ class CopyProjectFilesIntoNewProjectCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Copy all files/directories from fromProject to toProject';
 
     /**
      * Create a new command instance.
