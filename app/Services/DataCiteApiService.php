@@ -27,4 +27,18 @@ class DataCiteApiService
 
         return $response->json()["data"]["attributes"]["citationCount"];
     }
+
+    public static function getFormatedCitation(Dataset $dataset, string $format): string {
+        if (is_null($dataset->doi)) {
+            return "";
+        }
+
+        $doi = Str::replace("doi:", "", $dataset->doi);
+        $response = Http::accept($format)->get("https://doi.org/".$doi);
+        if (!$response->ok()) {
+            return "";
+        }
+
+        return $response->body();
+    }
 }
