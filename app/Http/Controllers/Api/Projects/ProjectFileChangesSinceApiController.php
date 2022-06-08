@@ -23,6 +23,7 @@ class ProjectFileChangesSinceApiController extends Controller
                                             ->where('current', true)
                                             ->whereNull('dataset_id')
                                             ->where('mime_type', '<>', 'directory')
+                                            ->orderBy('created_at')
                                             ->get());
     }
 }
