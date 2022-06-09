@@ -13,6 +13,7 @@ class IndexDirectoryQuery extends DirectoriesQueryBuilder
                        ->where('project_id', $projectId)
                        ->where('directory_id', $directoryId)
                        ->whereNull('deleted_at')
+                       ->whereNull('dataset_id')
                        ->where('current', true);
         parent::__construct($builder, $request);
     }
