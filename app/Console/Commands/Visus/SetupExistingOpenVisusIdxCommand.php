@@ -94,13 +94,13 @@ class SetupExistingOpenVisusIdxCommand extends Command
                                 echo "Linking:\n";
                                 echo "    {$uuidPath}\n";
                                 echo "    {$path}\n";
-//                                try {
-//                                    if (!link($uuidPath, $path)) {
-//                                        echo "Unable to link {$uuidPath} to {$path}\n";
-//                                    }
-//                                } catch (\Exception $e) {
-//                                    echo "Unable to link {$uuidPath} to {$path}\n";
-//                                }
+                                try {
+                                    if (!link($uuidPath, $path)) {
+                                        echo "Unable to link {$uuidPath} to {$path}\n";
+                                    }
+                                } catch (\Exception $e) {
+                                    echo "Unable to link {$uuidPath} to {$path}\n";
+                                }
                             }
                         });
                 }
