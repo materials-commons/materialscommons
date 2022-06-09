@@ -90,6 +90,7 @@ class SetupExistingOpenVisusIdxCommand extends Command
                         ->each(function (File $file) use ($dirPath, $d) {
                             if (Str::endsWith($file->name, ".bin")) {
                                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
+                                @mkdir($dirPath."/".$d->name, 0777, true);
                                 $path = $dirPath."/".$d->name."/".$file->name;
                                 echo "Linking:\n";
                                 echo "    {$uuidPath}\n";
