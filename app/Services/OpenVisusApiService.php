@@ -94,7 +94,7 @@ class OpenVisusApiService
         $dom->formatOutput = true;
         $dom->save($configPath);
         $nameWithoutExtension = pathinfo($idxFile->name, PATHINFO_FILENAME);
-        return config("visus.idx_path")."/datasets/{$project->uuid}/{$dir->uuid}/{$nameWithoutExtension}";
+        return config("visus.idx_path")."/{$project->uuid}/{$dir->uuid}/{$nameWithoutExtension}";
     }
 
     private static function idxPathForProject(Project $project): string

@@ -84,6 +84,22 @@ class SetupExistingOpenVisusIdxCommand extends Command
                     }
 
                     $dirPath = dirname($path);
+                    $path = $dirPath."/".$file->name;
+
+                    // link idx file
+                    $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
+                    echo "Linking idx file {$file->name}:\n";
+                    echo "   {$uuidPath}\n";
+                    echo "   {$path}\n";
+                    try {
+                        if (!link($uuidPath, $path)) {
+                            echo "Unable to link {$uuidPath} to {$path}\n";
+                        }
+                    } catch (\Exception $e) {
+                        echo "Unable to link {$uuidPath} to {$path}\n";
+                    }
+
+                    // Link bin files for idx
                     File::where('directory_id', $d->id)
                         ->whereNull('deleted_at')
                         ->get()
@@ -92,9 +108,9 @@ class SetupExistingOpenVisusIdxCommand extends Command
                                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                                 @mkdir($dirPath."/".$d->name, 0777, true);
                                 $path = $dirPath."/".$d->name."/".$file->name;
-                                echo "Linking:\n";
-                                echo "    {$uuidPath}\n";
-                                echo "    {$path}\n";
+                                echo "   Linking:\n";
+                                echo "      {$uuidPath}\n";
+                                echo "      {$path}\n";
                                 try {
                                     if (!link($uuidPath, $path)) {
                                         echo "Unable to link {$uuidPath} to {$path}\n";
