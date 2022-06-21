@@ -18,7 +18,7 @@ class ShowEntitySpreadWebController extends Controller
         $activityIds = $entity->activities->pluck('id')->toArray();
         $activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                               ->whereIn('id', $activityIds)
-                              ->orderBy('name')
+                              ->orderBy('eindex')
                               ->get();
         return view('app.projects.entities.show-spread', [
             'project'    => $project,
