@@ -72,5 +72,5 @@ Route::middleware(UserCanAccessProject::class)->group(function () {
     Route::put('/projects/{project}/add-admin/{user}', AddAdminToProjectApiController::class);
     Route::put('/projects/{project}/remove-admin/{user}', RemoveAdminFromProjectApiController::class);
 
-    Route::post('/projects/{project}/file-changes-since', ProjectFileChangesSinceApiController::class);
+    Route::get('/projects/{project}/file-changes-since', ProjectFileChangesSinceApiController::class);
 });
