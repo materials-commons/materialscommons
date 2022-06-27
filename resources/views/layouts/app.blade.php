@@ -94,7 +94,7 @@
                 <a class="nav-link outline-none td-none navbar-brand cursor-pointer font-italic"
                    href="https://docs.google.com/forms/d/e/1FAIpQLSd8H8hUBqqa8BuABje7LaRkOt8jdTHA5fKOt3kTaT-culVEUA/viewform?usp=sf_link"
                    target="_blank">
-                    <span class="red-5x yellow-7 italic">Take our survey!</span>
+                    <span class="yellow-7 italic">Take our survey!</span>
                 </a>
             </li>
         </ul>
