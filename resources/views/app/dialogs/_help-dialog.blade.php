@@ -7,13 +7,13 @@
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="height: 500px">
+            <div class="modal-body" style="height: 600px">
                 <div>
                     <p class="font-weight-bold">Questions, suggestions or need help? You can
                         <a href="mailto:materials-commons-help@umich.edu">email</a> us!
                     </p>
                 </div>
-                <iframe src="{{helpUrl()}}" width="100%" height="100%"></iframe>
+                <iframe src="{{helpUrl()}}" width="100%" height="95%"></iframe>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#welcome-dialog">Welcome
