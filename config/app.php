@@ -8,6 +8,8 @@ return [
 
     'recaptcha_enabled' => env('APP_RECAPTCHA_ENABLED', true),
 
+    'survey_url' => env("MC_SURVEY_URL"),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
