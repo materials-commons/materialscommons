@@ -29,11 +29,7 @@ trait CopyFiles
 
     private function getDirectory($rootDirName, $path, int $projectId)
     {
-        if ($path == "/") {
-            $pathToUse = "/";
-        } else {
-            $pathToUse = PathHelpers::normalizePath("/{$rootDirName}/{$path}");
-        }
+        $pathToUse = PathHelpers::normalizePath("/{$rootDirName}/{$path}");
         return File::where('project_id', $projectId)
                    ->where('path', $pathToUse)
                    ->where('mime_type', 'directory')
