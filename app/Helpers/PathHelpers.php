@@ -22,7 +22,12 @@ class PathHelpers
             return "/";
         }
 
-        return Str::of(preg_replace($patterns, $replacements, $path))->rtrim('/')->__toString();
+        $p = Str::of(preg_replace($patterns, $replacements, $path))->rtrim('/')->__toString();
+        if ($p == "") {
+            return "/";
+        }
+
+        return $p;
     }
 
     static function joinPaths()
