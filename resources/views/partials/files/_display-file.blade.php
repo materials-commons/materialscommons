@@ -24,6 +24,15 @@
         </div>
         @break
 
+        @case("open-visus")
+        @php
+                $visusDatasetUrl = \App\Services\OpenVisusApiService::visusDatasetUrl("{$file->uuid}_{$file->name}");
+        @endphp
+        <div style="height:750px">
+            <iframe src="{{$visusDatasetUrl}}" width="100%" height="100%"></iframe>
+        </div>
+        @break
+
         @case("pdf")
         <div class="embed-responsive embed-responsive-4by3">
             <embed class="col-xs-8 embed-responsive-item"

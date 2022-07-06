@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Str;
+use function isInBeta;
 
 trait FileType
 {
@@ -58,7 +59,21 @@ trait FileType
 
     public function fileType($file): string
     {
-        return $this->fileTypeFromMime($file->mime_type);
+        $type = $this->fileTypeFromMime($file->mime_type);
+
+        if (isInBeta()) {
+            if ($type == "text") {
+                if (Str::endsWith($file->name, ".idx")) {
+                    return "open-visus";
+                }
+            }
+        }
+
+        if (Str::startsWith($file->mime_type, "text/")) {
+            return "text";
+        }
+
+        return $type;
     }
 
     public function fileTypeFromMime($mime)

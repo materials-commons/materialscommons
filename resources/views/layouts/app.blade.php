@@ -21,13 +21,13 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-@stack('googleds')
+    @stack('googleds')
 
 
-{{--    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">--}}
-{{--    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">--}}
+    {{--    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">--}}
+    {{--    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">--}}
 
-<!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css"
@@ -38,11 +38,11 @@
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
-@stack('styles')
+    @stack('styles')
 
-{{--    @stack('')--}}
+    {{--    @stack('')--}}
 
-<!-- Custom styles for this template -->
+    <!-- Custom styles for this template -->
 </head>
 
 <body>
@@ -90,6 +90,15 @@
                     Help
                 </a>
             </li>
+            @if(!is_null(config('app.survey_url')))
+                <li class="nav-item">
+                    <a class="nav-link outline-none td-none navbar-brand cursor-pointer font-italic"
+                       href="{{config('app.survey_url')}}"
+                       target="_blank">
+                        <span class="yellow-7 italic">Take our survey!</span>
+                    </a>
+                </li>
+            @endif
         </ul>
         @auth
             @isset($project)

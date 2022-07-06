@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Projects\AddUserToProjectApiController;
 use App\Http\Controllers\Api\Projects\CreateProjectApiController;
 use App\Http\Controllers\Api\Projects\DeleteProjectApiController;
 use App\Http\Controllers\Api\Projects\IndexProjectsApiController;
+use App\Http\Controllers\Api\Projects\ProjectFileChangesSinceApiController;
 use App\Http\Controllers\Api\Projects\RemoveAdminFromProjectApiController;
 use App\Http\Controllers\Api\Projects\RemoveUserFromProjectApiController;
 use App\Http\Controllers\Api\Projects\ShowProjectApiController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
  * @apiParam (Body Parameters) {String} [description] description of project
  */
 
-Route::middleware(UserCanAccessProject::class)->group(function() {
+Route::middleware(UserCanAccessProject::class)->group(function () {
     /**
      * @api {post} /projects Create a new project
      * @apiGroup Projects
@@ -70,4 +71,6 @@ Route::middleware(UserCanAccessProject::class)->group(function() {
 
     Route::put('/projects/{project}/add-admin/{user}', AddAdminToProjectApiController::class);
     Route::put('/projects/{project}/remove-admin/{user}', RemoveAdminFromProjectApiController::class);
+
+    Route::get('/projects/{project}/file-changes-since', ProjectFileChangesSinceApiController::class);
 });

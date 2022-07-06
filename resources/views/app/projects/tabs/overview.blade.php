@@ -6,6 +6,7 @@
         {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
     </a>
     <span class="ml-3 fs-10 grey-5">Size: {{formatBytes($project->size)}}</span>
+    <span class="ml-3 fs-10 grey-5">Slug: {{$project->slug}}</span>
 </x-show-standard-details>
 
 <form>
