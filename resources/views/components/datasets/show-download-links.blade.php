@@ -8,13 +8,16 @@
                         Zipfile
                     </a>
                 @else
-                    @auth
-                        <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">
-                            Zipfile
-                        </a>
-                    @else
-                        <a data-toggle="modal" href="#ds-download-zip">Zipfile</a>
-                    @endauth
+                    <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">
+                        Zipfile
+                    </a>
+{{--                    @auth--}}
+{{--                        <a href="{{route('public.datasets.download_zipfile', [$dataset])}}">--}}
+{{--                            Zipfile--}}
+{{--                        </a>--}}
+{{--                    @else--}}
+{{--                        <a data-toggle="modal" href="#ds-download-zip">Zipfile</a>--}}
+{{--                    @endauth--}}
                 @endif
                 <span class="ml-1">({{formatBytes($dataset->zipfile_size)}})</span>
             </li>
@@ -28,14 +31,18 @@
 
         @if($dataset->globus_path_exists)
             <li class="list-inline-item">
-                @auth
-                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-2"
-                       target="_blank">
-                        Using Globus
-                    </a>
-                @else
-                    <a class="ml-2" data-toggle="modal" href="#ds-download-globus">Using Globus</a>
-                @endauth
+                <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-2"
+                   target="_blank">
+                    Using Globus
+                </a>
+{{--                @auth--}}
+{{--                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-2"--}}
+{{--                       target="_blank">--}}
+{{--                        Using Globus--}}
+{{--                    </a>--}}
+{{--                @else--}}
+{{--                    <a class="ml-2" data-toggle="modal" href="#ds-download-globus">Using Globus</a>--}}
+{{--                @endauth--}}
             </li>
         @endif
     </ul>
