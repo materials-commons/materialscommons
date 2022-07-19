@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\ParaviewAppWebController;
 use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
@@ -90,3 +91,6 @@ Route::get('/projects/{project}/trashcan/file/{file}/restore', RestoreFileFromTr
      ->name('projects.trashcan.file.restore');
 Route::get('/projects/{project}/trashcan/file/{file}/delete', DeleteFileFromTrashcanWebController::class)
      ->name('projects.trashcan.file.delete');
+
+Route::get('/projects/{project}/files/{file}/paraview', ParaviewAppWebController::class)
+    ->name('projects.files.paraview');

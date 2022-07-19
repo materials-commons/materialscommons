@@ -66,6 +66,10 @@ trait FileType
                 if (Str::endsWith($file->name, ".idx")) {
                     return "open-visus";
                 }
+
+                if (Str::endsWith($file->name, ".vtk")) {
+                    return "paraview";
+                }
             }
         }
 

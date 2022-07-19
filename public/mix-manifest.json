@@ -3,5 +3,6 @@
     "/css/app.css": "/css/app.css",
     "/js/datatables.min.js": "/js/datatables.min.js",
     "/css/datatables.min.css": "/css/datatables.min.css",
+    "/js/Visualizer.js": "/js/Visualizer.js",
     "/css/main.css": "/css/main.css"
 }

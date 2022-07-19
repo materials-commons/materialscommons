@@ -33,6 +33,13 @@
         </div>
         @break
 
+        @case("paraview")
+            <div style="height:750px">
+{{--                <iframe src="http://localhost:8085" width="100%" height="100%"></iframe>--}}
+                <iframe src="{{route('projects.files.paraview', [$project, $file])}}" width="100%" height="100%"></iframe>
+            </div>
+        @break
+
         @case("pdf")
         <div class="embed-responsive embed-responsive-4by3">
             <embed class="col-xs-8 embed-responsive-item"
