@@ -30,6 +30,7 @@ class CreateDirectoryAction
                    ->where('current', true)
                    ->where('project_id', $projectId)
                    ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->first();
     }
 }

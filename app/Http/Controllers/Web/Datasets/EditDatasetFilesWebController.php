@@ -49,6 +49,7 @@ class EditDatasetFilesWebController extends Controller
         $folder = File::where('project_id', $projectId)
                       ->where('path', $path)
                       ->where('mime_type', 'directory')
+                      ->whereNull('deleted_at')
                       ->where('current', true)
                       ->first();
         return $folder->id;

@@ -131,11 +131,15 @@ class ImportGlobusUploadIntoProjectAction
             $dirPath = "/";
         }
         $parentDir = File::where('project_id', $this->globusUpload->project_id)
+                         ->whereNull('dataset_id')
+                         ->whereNull('deleted_at')
                          ->where('path', dirname($dirPath))
                          ->where('current', true)
                          ->first();
         $dir = File::where('project_id', $this->globusUpload->project_id)
                    ->where('path', $dirPath)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->where('current', true)
                    ->first();
         if ($dir !== null) {
@@ -149,7 +153,6 @@ class ImportGlobusUploadIntoProjectAction
             'owner_id'     => $this->globusUpload->owner->id,
             'project_id'   => $this->globusUpload->project->id,
             'current'      => true,
-            'is_deleted'   => false,
             'directory_id' => optional($parentDir)->id,
         ]);
     }

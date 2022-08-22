@@ -42,7 +42,10 @@ class ConvertProjectFilesCommand extends Command
         ini_set("memory_limit", "4096M");
         $projectId = $this->argument("projectId");
         $convertFileAction = new ConvertFileAction();
-        File::where('project_id', $projectId)->where('mime_type', '<>', 'directory')
+        File::where('project_id', $projectId)
+            ->whereNull('deleted_at')
+            ->whereNull('dataset_id')
+            ->where('mime_type', '<>', 'directory')
             ->chunk(100, function ($files) use ($convertFileAction) {
                 foreach ($files as $file) {
                     if ($file->shouldBeConverted()) {

@@ -15,6 +15,7 @@ class GotoFolderByPathInParam extends Controller
                    ->where('path', $path)
                    ->where('mime_type', 'directory')
                    ->where('current', true)
+                   ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->first();
         return redirect(route('projects.folders.show', [$project, $dir]));

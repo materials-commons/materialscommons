@@ -100,6 +100,8 @@ class SetFileAttributesForProjectCommand extends Command
     private function getFilesCursorForProject($project)
     {
         return File::where('project_id', $project->id)
+                   ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->where('mime_type', '<>', 'directory')
                    ->where('current', true)->cursor();
     }
