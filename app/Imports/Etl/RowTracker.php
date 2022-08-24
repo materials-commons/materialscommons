@@ -53,30 +53,22 @@ class RowTracker
             if ($index === 0) {
                 $this->entityName = $value;
             } elseif ($index === 1) {
-                $this->relatedActivityName = $value;
-//                $header = $headerTracker->getHeaderByIndex($index-1);
-//                if (!is_null($header)) {
-//                    echo "header is not null and name is {$header->name}\n";
-//                }
-//                if (is_null($header) || Str::lower($header->name) == "parent") {
-//                    echo "  Saving as parent\n";
-//                    $this->relatedActivityName = $value;
-//                    $index++;
-//                    continue;
-//                }
-//
-//                echo "    Saving as attribute in parent section {$header->name}\n";
-//                $this->handleAttributeValue($header, $value, $index);
+                $header = $headerTracker->getHeaderByIndex($index-1);
+                if (is_null($header) || Str::lower($header->name) == "parent") {
+                    $this->relatedActivityName = $value;
+                    $index++;
+                    continue;
+                }
+
+                $this->handleAttributeValue($header, $value, $index);
             } else {
-                $header = $headerTracker->getHeaderByIndex($index - 2);
+                $header = $headerTracker->getHeaderByIndex($index - 1);
 
                 if (is_null($header)) {
                     // Break out of loop when looking up a header that doesn't exist. That means the
                     // cell contains a value, but there is no associated header.
                     break;
                 }
-
-                echo "Handling attribute {$header->name}\n";
 
                 if (!$this->handleAttributeValue($header, $value, $index)) {
                     $index++;
@@ -106,8 +98,6 @@ class RowTracker
     {
         if ($header->attrType === "ignore" || $header->attrType === "unknown" || Str::lower($header->name) == "parent") {
             return false;
-//            $index++;
-//            continue;
         }
 
         $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,

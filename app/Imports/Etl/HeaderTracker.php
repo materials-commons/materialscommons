@@ -21,6 +21,10 @@ class HeaderTracker
 
     public function getHeaderByIndex($index)
     {
+        if ($index < 0) {
+            return null;
+        }
+
         if ($index >= $this->headersByIndexLength) {
             return null;
         }
