@@ -314,7 +314,7 @@ class EntityActivityImporter
         $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
         foreach ($cellIterator as $cell) {
-            if ($index > 1) {
+            if ($index > 0) {
                 $value = $cell->getValue();
                 if ($value !== null) {
                     $ah = AttributeHeader::parse($value);
@@ -389,6 +389,7 @@ class EntityActivityImporter
                 ]);
             } else {
                 $importantDate = $attr->important ? $this->now : null;
+                echo "Importer Adding attribute {$attr->name}\n";
                 $a = Attribute::create([
                     'name'                => $attr->name,
                     'attributable_id'     => $state->id,

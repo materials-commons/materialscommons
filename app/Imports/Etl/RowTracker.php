@@ -54,40 +54,33 @@ class RowTracker
                 $this->entityName = $value;
             } elseif ($index === 1) {
                 $this->relatedActivityName = $value;
+//                $header = $headerTracker->getHeaderByIndex($index-1);
+//                if (!is_null($header)) {
+//                    echo "header is not null and name is {$header->name}\n";
+//                }
+//                if (is_null($header) || Str::lower($header->name) == "parent") {
+//                    echo "  Saving as parent\n";
+//                    $this->relatedActivityName = $value;
+//                    $index++;
+//                    continue;
+//                }
+//
+//                echo "    Saving as attribute in parent section {$header->name}\n";
+//                $this->handleAttributeValue($header, $value, $index);
             } else {
                 $header = $headerTracker->getHeaderByIndex($index - 2);
 
                 if (is_null($header)) {
-                    // Break out of look when looking up a header that doesn't exist. That means the
+                    // Break out of loop when looking up a header that doesn't exist. That means the
                     // cell contains a value, but there is no associated header.
                     break;
                 }
 
-                if ($header->attrType === "ignore" || $header->attrType === "unknown") {
+                echo "Handling attribute {$header->name}\n";
+
+                if (!$this->handleAttributeValue($header, $value, $index)) {
                     $index++;
                     continue;
-                }
-
-                $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
-                    $header->important);
-                switch ($header->attrType) {
-                    case "entity":
-                        $this->entityAttributes->push($colAttr);
-                        break;
-                    case "tags-entity":
-                        $colAttr->addTags($value);
-                        $this->entityTags->push($colAttr);
-                        break;
-                    case "activity":
-                        $this->activityAttributes->push($colAttr);
-                        break;
-                    case "tags-activity":
-                        $colAttr->addTags($value);
-                        $this->activityTags->push($colAttr);
-                        break;
-                    case "file":
-                        $this->fileAttributes->push($colAttr);
-                        break;
                 }
             }
 
@@ -107,6 +100,38 @@ class RowTracker
         hash_update($ctx, $this->entityName);
 
         $this->activityAttributesHash = hash_final($ctx);
+    }
+
+    private function handleAttributeValue($header, $value, $index)
+    {
+        if ($header->attrType === "ignore" || $header->attrType === "unknown" || Str::lower($header->name) == "parent") {
+            return false;
+//            $index++;
+//            continue;
+        }
+
+        $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
+            $header->important);
+        switch ($header->attrType) {
+            case "entity":
+                $this->entityAttributes->push($colAttr);
+                break;
+            case "tags-entity":
+                $colAttr->addTags($value);
+                $this->entityTags->push($colAttr);
+                break;
+            case "activity":
+                $this->activityAttributes->push($colAttr);
+                break;
+            case "tags-activity":
+                $colAttr->addTags($value);
+                $this->activityTags->push($colAttr);
+                break;
+            case "file":
+                $this->fileAttributes->push($colAttr);
+                break;
+        }
+        return true;
     }
 
     private function getCellValue(Cell $cell): string
