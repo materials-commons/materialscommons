@@ -25,14 +25,17 @@ class PublishDatasetAction2
         ]);
         Bus::chain([
             function () use ($dataset) {
+                ini_set("memory_limit", "4096M");
                 $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
                 $createDatasetFilesTableAction->execute($dataset);
             },
             function () use ($dataset) {
+                ini_set("memory_limit", "4096M");
                 $replicator = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
                 $replicator->execute($dataset);
             },
             function () use ($dataset) {
+                ini_set("memory_limit", "4096M");
                 $createDatasetInGlobusAction = new CreateDatasetInGlobusAction();
                 $createDatasetInGlobusAction($dataset);
             },
