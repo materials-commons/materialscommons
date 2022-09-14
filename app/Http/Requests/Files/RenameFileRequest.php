@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Files;
 
+use App\Rules\Files\IsValidFileName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RenameFileRequest extends FormRequest
@@ -24,7 +25,7 @@ class RenameFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required|string|max:80',
+            'name' => ['required', 'string', 'max:80', new IsValidFileName()],
             'project_id' => 'required|integer',
         ];
     }

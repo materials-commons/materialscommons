@@ -13,7 +13,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            File: {{$file->name}}
+            File: {{$file->fullPath()}}
 
             @isset($project)
                 {{--                <a class="float-right action-link" href="#">--}}
@@ -39,7 +39,7 @@
                     <i class="fas fa-fw fa-trash mr-2"></i>Delete
                 </a>
 
-                <a class="action-link float-right mr-4" href="#">
+                <a class="action-link float-right mr-4" href="{{route('projects.files.rename', [$project, $file])}}">
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
             @endisset

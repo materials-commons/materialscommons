@@ -12,8 +12,8 @@ class UpdateRenameFileWebController extends Controller
 {
     public function __invoke(Request $request, RenameFileAction $renameFileAction, Project $project, File $file)
     {
-        $name = "";
+        $name = $request->input('name');
         $file = $renameFileAction($file, $name);
-        redirect(route('projects.files.show', [$project, $file]));
+        return redirect(route('projects.files.show', [$project, $file]));
     }
 }

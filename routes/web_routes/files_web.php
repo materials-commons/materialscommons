@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\RenameFileWebController;
 use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Web\Files\Trashcan\EmptyTrashcanWebController;
 use App\Http\Controllers\Web\Files\Trashcan\IndexFilesTrashcanWebController;
 use App\Http\Controllers\Web\Files\Trashcan\RestoreDirectoryFromTrashcanWebController;
 use App\Http\Controllers\Web\Files\Trashcan\RestoreFileFromTrashcanWebController;
+use App\Http\Controllers\Web\Files\UpdateRenameFileWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
 use App\Models\File;
 use App\Models\Project;
@@ -65,6 +67,11 @@ Route::get('/projects/{project}/files/{file}/delete', DeleteFileWebController::c
      ->name('projects.files.delete');
 Route::delete('/projects/{project}/files/{file}/destroy', DestroyFileWebController::class)
      ->name('projects.files.destroy');
+
+Route::get('/projects/{project}/files/{file}/rename', RenameFileWebController::class)
+     ->name('projects.files.rename');
+Route::put('/projects/{project}/files/{file}/rename', UpdateRenameFileWebController::class)
+     ->name('projects.files.rename.update');
 
 //Route::get('/projects/{project}/file_path/{path}', function (Project $project, $path) {
 //    dd($path);
