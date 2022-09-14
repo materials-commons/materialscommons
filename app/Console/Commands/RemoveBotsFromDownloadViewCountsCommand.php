@@ -22,7 +22,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Cleans up the downloand and view counts';
+    protected $description = 'Cleans up the download and view counts';
 
     private $badAddresses;
 
