@@ -9,20 +9,8 @@
 @section('content')
     <x-card>
         <x-slot name="header">
-            @if (Request::routeIs('projects.folders.index'))
-                {{$directory->name}}
-            @else
-                @if(sizeof($dirPaths) == 1)
-                    {{$directory->name}}
-                @else
-                    @foreach($dirPaths as $dirpath)
-                        <a class="action-link"
-                           href="{{route('projects.folders.by_path', ['project' => $project, 'path' => $dirpath["path"]])}}">
-                            {{$dirpath['name']}}/
-                        </a>
-                    @endforeach
-                @endif
-            @endif
+            <x-show-dir-path :project="$project" :file="$directory"/>
+
             {{--            <a class="float-right action-link" href="#">--}}
             {{--                <i class="fas fa-trash mr-2"></i>Delete Files--}}
             {{--            </a>--}}
@@ -57,14 +45,14 @@
                     <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
                 </a>
 
-                @if(sizeof($dirPaths) !== 1 && $files->count() === 0)
+                @if($directory->name !== "/" && $files->count() === 0)
                     <a class="float-right action-link mr-4"
                        href="{{route('projects.folders.destroy', [$project, $directory])}}">
                         <i class="fas fa-fw fa-trash mr-2"></i>Delete
                     </a>
                 @endif
 
-                @if(sizeof($dirPaths) !== 1)
+                @if($directory->name !== "/")
                     <a class="float-right action-link mr-4"
                        href="{{route('projects.folders.rename', [$project, $directory])}}">
                         <i class="fas fa-fw fa-edit mr-2"></i>Rename

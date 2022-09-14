@@ -3,20 +3,7 @@
 {{--@section('content')--}}
     <x-card>
         <x-slot name="header">
-            @if ($directory->name == '/')
-                {{$directory->name}}
-            @else
-                @if(sizeof($dirPaths) == 1)
-                    {{$directory->name}}
-                @else
-                    @foreach($dirPaths as $dirpath)
-                        <a class="action-link"
-                           href="{{route('public.datasets.folders.by-path', ['dataset' => $dataset, 'path' => $dirpath["path"]])}}">
-                            {{$dirpath['name']}}/
-                        </a>
-                    @endforeach
-                @endif
-            @endif
+            <x-show-dataset-dir-path :dataset="$dataset" :file="$directory"/>
         </x-slot>
 
         <x-slot name="body">
