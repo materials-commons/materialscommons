@@ -14,7 +14,7 @@ class MoveFileAction
      */
     public function __invoke(File $file, $toDirectoryId)
     {
-        // When moving a file we also have to move all of it's previous versions
+        // When moving a file we also have to move all of its previous versions
         $previousVersions = $file->previousVersions()->get();
         DB::transaction(function () use ($file, $previousVersions, $toDirectoryId) {
             $file->update(['directory_id' => $toDirectoryId]);
