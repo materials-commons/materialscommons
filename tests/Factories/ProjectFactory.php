@@ -55,6 +55,7 @@ class ProjectFactory
         }
 
         $project->refresh();
+
         return $project;
     }
 
@@ -62,6 +63,12 @@ class ProjectFactory
     {
         $team = $project->team;
         $team->members()->syncWithoutDetaching($user);
+    }
+
+    public function addAdminToProject($user, $project)
+    {
+        $team = $project->team;
+        $team->admins()->syncWithoutDetaching($user);
     }
 
     public function createDirectory($project, $parent, $name)
