@@ -88,12 +88,14 @@ class ProjectFactory
     public function createFile($project, $dir, $name, $content)
     {
         $file = File::factory()->create([
-            'project_id'   => $project->id,
-            'name'         => $name,
-            'directory_id' => $dir->id,
-            'current'      => true,
-            'owner_id'     => $project->owner_id,
-            'mime_type'    => 'text/plain',
+            'project_id'             => $project->id,
+            'name'                   => $name,
+            'directory_id'           => $dir->id,
+            'current'                => true,
+            'owner_id'               => $project->owner_id,
+            'media_type_description' => 'text',
+            'disk'                   => 'mcfs',
+            'mime_type'              => 'text/plain',
         ]);
 
         $dirPath = Storage::disk('mcfs')->path($this->getDirPathForFile($file));
@@ -112,12 +114,14 @@ class ProjectFactory
     public function createFakeFile($project, $dir, $name)
     {
         return File::factory()->create([
-            'project_id'   => $project->id,
-            'name'         => $name,
-            'directory_id' => $dir->id,
-            'owner_id'     => $project->owner_id,
-            'mime_type'    => 'text/plain',
-            'current'      => true,
+            'project_id'             => $project->id,
+            'name'                   => $name,
+            'directory_id'           => $dir->id,
+            'owner_id'               => $project->owner_id,
+            'mime_type'              => 'text/plain',
+            'media_type_description' => 'text',
+            'disk'                   => 'mcfs',
+            'current'                => true,
         ]);
     }
 
