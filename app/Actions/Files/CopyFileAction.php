@@ -50,6 +50,7 @@ class CopyFileAction
                               'owner_id'     => $user->id,
                               'project_id'   => $toDir->project_id,
                               'directory_id' => $toDir->id,
+                              'uses_uuid'    => $fileToCopy->getFileUuidToUse(),
                           ])
                           ->save();
     }
