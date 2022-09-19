@@ -42,6 +42,7 @@ class CreateDatasetInGlobusCommand extends Command
      */
     public function handle()
     {
+        ini_set("memory_limit", "4096M");
         $dataset = Dataset::findOrFail($this->argument('datasetId'));
 
         if ($this->option('create-dataset-files-table')) {
