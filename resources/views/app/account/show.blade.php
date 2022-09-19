@@ -98,6 +98,34 @@
             </form>
 
             <br>
+            <hr>
+            <h3 class="mb-3">Change Email Address</h3>
+            <form method="post" id="change-email" action="{{route('accounts.update.email')}}">
+                @csrf
+                <div class="form-group">
+                    <label for="current-email">Current Email</label>
+                    <input class="form-control" id="current-email" name="email" type="email"
+                           value="{{$user->email}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="new-email">New Email</label>
+                    <input class="form-control" id="new-email" name="new_email" type="email"
+                           value="" placeholder="New Email...">
+                </div>
+                <div class="form-group">
+                    <label for="new-email2">Verify New Email</label>
+                    <input class="form-control" id="new-email2" name="new_email2" type="email"
+                           value="" placeholder="Re-enter new Email...">
+                </div>
+                <div class="float-right">
+                    <a class="action-link" href="#"
+                       onclick="document.getElementById('change-email').submit()">
+                        Change Email
+                    </a>
+                </div>
+            </form>
+
+            <br>
             <br>
 
             @include('common.errors')

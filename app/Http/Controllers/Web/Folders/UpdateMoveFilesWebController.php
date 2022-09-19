@@ -27,6 +27,8 @@ class UpdateMoveFilesWebController extends Controller
 
         $dirsToMove = File::whereIn('id', $ids)
                           ->whereNotNull('path')
+                          ->whereNull('dataset_id')
+                          ->whereNull('deleted_at')
                           ->where('current', true)
                           ->get();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction) {

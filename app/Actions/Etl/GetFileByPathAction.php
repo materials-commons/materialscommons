@@ -42,6 +42,8 @@ class GetFileByPathAction
         $dirName = dirname($path);
         $dir = File::where('project_id', $projectId)
                    ->where('path', $dirName)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->where('current', true)
                    ->first();
         if (is_null($dir)) {
@@ -50,6 +52,8 @@ class GetFileByPathAction
 
         return File::where('directory_id', $dir->id)
                    ->where('name', $fileName)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->where('current', true)
                    ->first();
     }

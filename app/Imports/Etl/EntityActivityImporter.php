@@ -314,7 +314,7 @@ class EntityActivityImporter
         $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
         foreach ($cellIterator as $cell) {
-            if ($index > 1) {
+            if ($index > 0) {
                 $value = $cell->getValue();
                 if ($value !== null) {
                     $ah = AttributeHeader::parse($value);
@@ -365,8 +365,8 @@ class EntityActivityImporter
     private function addTagsToEntity(Entity $entity, Collection $entityTags)
     {
         $tags = [];
-        $entityTags->each(function(ColumnAttribute $ca) use (&$tags) {
-            foreach($ca->tags as $tag) {
+        $entityTags->each(function (ColumnAttribute $ca) use (&$tags) {
+            foreach ($ca->tags as $tag) {
                 $tags[] = $tag;
             }
         });
@@ -427,8 +427,7 @@ class EntityActivityImporter
     private function addFilesToActivityAndEntity(Collection $fileAttributes, ?Entity $entity, ?Activity $activity)
     {
         $fileAttributes->each(function (ColumnAttribute $attr) use ($entity, $activity) {
-            $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 2);
-
+            $header = $this->headerTracker->getHeaderByIndex($attr->columnNumber - 1);
             // Multiple files can be specified in a cell when they are separated by a semi-colon (;), eg
             // file1.txt;file2.txt
             foreach (explode(";", $attr->value) as $value) {
@@ -550,6 +549,7 @@ class EntityActivityImporter
             $this->etlState->logError("   Unable to find file {$path}");
             return;
         }
+
         $this->addFileToActivityAndEntity($file, $activity, $entity);
 
         $this->experiment->files()->syncWithoutDetaching($file);
@@ -666,8 +666,8 @@ class EntityActivityImporter
     private function addTagsToActivity(Activity $activity, Collection $activityTags)
     {
         $tags = [];
-        $activityTags->each(function(ColumnAttribute $ca) use (&$tags) {
-            foreach($ca->tags as $tag) {
+        $activityTags->each(function (ColumnAttribute $ca) use (&$tags) {
+            foreach ($ca->tags as $tag) {
                 $tags[] = $tag;
             }
         });

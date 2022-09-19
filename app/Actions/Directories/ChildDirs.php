@@ -52,6 +52,8 @@ trait ChildDirs
 
         $dirs = File::where('directory_id', $directoryId)
                     ->whereNotNull('path')
+                    ->whereNull('dataset_id')
+                    ->whereNull('deleted_at')
                     ->where('current', true)
                     ->get(); // Get children of directory being moved
 
@@ -73,6 +75,8 @@ trait ChildDirs
 
             $dirs = File::whereIn('directory_id', $dirIds)
                         ->where('current', true)
+                        ->whereNull('dataset_id')
+                        ->whereNull('deleted_at')
                         ->whereNotNull('path')
                         ->get();
         }

@@ -80,7 +80,7 @@ class AttributeHeader
         $colon = strpos($headerLower, ':');
 
         // If there was a colon then set attrType to the specified header type. If there wasn't
-        // a colon, then the user didn't specify a header type and it will default to what $attrType
+        // a colon, then the user didn't specify a header type, so it will default to what $attrType
         // was originally set to at the top.
         if ($colon !== false) {
             $attrType = AttributeHeader::getHeaderType(substr($headerLower, 0, $colon));

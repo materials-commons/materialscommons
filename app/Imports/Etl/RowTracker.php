@@ -53,41 +53,26 @@ class RowTracker
             if ($index === 0) {
                 $this->entityName = $value;
             } elseif ($index === 1) {
-                $this->relatedActivityName = $value;
-            } else {
-                $header = $headerTracker->getHeaderByIndex($index - 2);
-
-                if (is_null($header)) {
-                    // Break out of look when looking up a header that doesn't exist. That means the
-                    // cell contains a value, but there is no associated header.
-                    break;
-                }
-
-                if ($header->attrType === "ignore" || $header->attrType === "unknown") {
+                $header = $headerTracker->getHeaderByIndex($index-1);
+                if (is_null($header) || Str::lower($header->name) == "parent") {
+                    $this->relatedActivityName = $value;
                     $index++;
                     continue;
                 }
 
-                $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
-                    $header->important);
-                switch ($header->attrType) {
-                    case "entity":
-                        $this->entityAttributes->push($colAttr);
-                        break;
-                    case "tags-entity":
-                        $colAttr->addTags($value);
-                        $this->entityTags->push($colAttr);
-                        break;
-                    case "activity":
-                        $this->activityAttributes->push($colAttr);
-                        break;
-                    case "tags-activity":
-                        $colAttr->addTags($value);
-                        $this->activityTags->push($colAttr);
-                        break;
-                    case "file":
-                        $this->fileAttributes->push($colAttr);
-                        break;
+                $this->handleAttributeValue($header, $value, $index);
+            } else {
+                $header = $headerTracker->getHeaderByIndex($index - 1);
+
+                if (is_null($header)) {
+                    // Break out of loop when looking up a header that doesn't exist. That means the
+                    // cell contains a value, but there is no associated header.
+                    break;
+                }
+
+                if (!$this->handleAttributeValue($header, $value, $index)) {
+                    $index++;
+                    continue;
                 }
             }
 
@@ -107,6 +92,36 @@ class RowTracker
         hash_update($ctx, $this->entityName);
 
         $this->activityAttributesHash = hash_final($ctx);
+    }
+
+    private function handleAttributeValue($header, $value, $index)
+    {
+        if ($header->attrType === "ignore" || $header->attrType === "unknown" || Str::lower($header->name) == "parent") {
+            return false;
+        }
+
+        $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
+            $header->important);
+        switch ($header->attrType) {
+            case "entity":
+                $this->entityAttributes->push($colAttr);
+                break;
+            case "tags-entity":
+                $colAttr->addTags($value);
+                $this->entityTags->push($colAttr);
+                break;
+            case "activity":
+                $this->activityAttributes->push($colAttr);
+                break;
+            case "tags-activity":
+                $colAttr->addTags($value);
+                $this->activityTags->push($colAttr);
+                break;
+            case "file":
+                $this->fileAttributes->push($colAttr);
+                break;
+        }
+        return true;
     }
 
     private function getCellValue(Cell $cell): string

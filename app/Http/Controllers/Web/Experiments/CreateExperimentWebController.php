@@ -13,6 +13,8 @@ class CreateExperimentWebController extends Controller
             ->files()
             ->with('directory')
             ->where('mime_type', "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
             ->where('current', true)
             ->get();
         return view('app.projects.experiments.create', compact('project', 'excelFiles'));

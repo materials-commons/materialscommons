@@ -2,6 +2,7 @@
 
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Carbon;
+use Ramsey\Uuid\Uuid;
 
 if (!function_exists("pipe")) {
     function pipe()
@@ -35,5 +36,12 @@ if (!function_exists("trashExpirationInFuture")) {
     function trashExpirationInFuture($days = 1)
     {
         return Carbon::now()->subDays(config('trash.expires_in_days') + $days);
+    }
+}
+
+if (!function_exists("uuid")) {
+    function uuid(): string
+    {
+        return Uuid::uuid4()->toString();
     }
 }

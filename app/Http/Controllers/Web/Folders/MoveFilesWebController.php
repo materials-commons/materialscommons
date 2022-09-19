@@ -17,6 +17,8 @@ class MoveFilesWebController extends Controller
         $files = $this->getProjectFolderFiles($project->id, $folderId);
         $dirsInProject = File::where('project_id', $project->id)
                              ->where('mime_type', 'directory')
+                             ->whereNull('dataset_id')
+                             ->whereNull('deleted_at')
                              ->where('current', true)
                              ->where('id', '<>', $folderId)
                              ->get();

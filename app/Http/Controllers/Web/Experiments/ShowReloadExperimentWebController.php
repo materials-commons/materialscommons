@@ -29,6 +29,8 @@ class ShowReloadExperimentWebController extends Controller
         return $project->files()
                        ->with('directory')
                        ->where('mime_type', "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                       ->whereNull('dataset_id')
+                       ->whereNull('deleted_at')
                        ->where('current', true)
                        ->get();
     }

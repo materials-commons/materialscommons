@@ -15,6 +15,8 @@ class DTGetFilesForUserFilterWebController extends Controller
         return Laratables::recordsOf(File::class, function ($query) use ($project, $user) {
             return $query->where('project_id', $project->id)
                          ->where('owner_id', $user->id)
+                         ->whereNull('dataset_id')
+                         ->whereNull('deleted_at')
                          ->where('current', true)
                          ->where('mime_type', '<>', 'directory');
         });

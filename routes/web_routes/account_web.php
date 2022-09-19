@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Accounts\ShowAccountWebController;
+use App\Http\Controllers\Web\Accounts\UpdateAccountEmailWebController;
 use App\Http\Controllers\Web\Accounts\UpdateAccountGlobusUserWebController;
 use App\Http\Controllers\Web\Accounts\UpdateAccountPasswordWebController;
 use App\Http\Controllers\Web\Accounts\UpdateAccountUserDetailsWebController;
@@ -17,3 +18,6 @@ Route::post('/accounts/update/globus', UpdateAccountGlobusUserWebController::cla
 
 Route::post('/accounts/update/password', UpdateAccountPasswordWebController::class)
      ->name('accounts.update.password');
+
+Route::post('/accounts/update/email', UpdateAccountEmailWebController::class)
+     ->name('accounts.update.email');
