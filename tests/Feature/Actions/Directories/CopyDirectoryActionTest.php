@@ -37,6 +37,6 @@ class CopyDirectoryActionTest extends TestCase
     /** @test */
     public function it_should_copy_dir_to_a_different_project_user_is_in()
     {
-        $this->fail();
+        $this->fail("not implemented");
     }
 }
