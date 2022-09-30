@@ -113,7 +113,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
 
             // Attach up the entity states to the new activity
             $e->entityStates()->get()->each(function (EntityState $es) use ($newActivity) {
-                $newActivity->entityStates()->attach($es);
+                $newActivity->entityStates()->attach($es, ['direction' => 'out']);
             });
             $activity->attributes->each(function (Attribute $attribute) use ($newActivity) {
                 $a = $attribute->replicate()->fill([
