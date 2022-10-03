@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Folders\Filter\DTGetFilesForUserFilterWebController
 use App\Http\Controllers\Web\Folders\Filter\ShowFilesFilteredForUserWebController;
 use App\Http\Controllers\Web\Folders\Filter\ShowFilterFilesByUserWebController;
 use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
+use App\Http\Controllers\Web\Folders\IndexImagesWebController;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\RenameFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
@@ -59,6 +60,9 @@ Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController
      ->name('projects.folders.rename');
 Route::put('/projects/{project}/folders/{dir}/rename', UpdateRenameFolderWebController::class)
      ->name('projects.folders.rename.update');
+
+Route::get('/projects/{project}/folders/{folder}/index-images', IndexImagesWebController::class)
+     ->name('projects.folders.index-images');
 
 # Filters
 Route::get('/projects/{project}/filter/folders/by-user', ShowFilterFilesByUserWebController::class)

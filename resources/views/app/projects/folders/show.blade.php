@@ -58,6 +58,11 @@
                         <i class="fas fa-fw fa-edit mr-2"></i>Rename
                     </a>
                 @endif
+
+                <a class="float-right action-link mr-4"
+                   href="{{route('projects.folders.index-images', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-images mr-2"></i>View Images
+                </a>
         </x-slot>
 
         <x-slot name="body">
