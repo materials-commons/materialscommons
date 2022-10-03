@@ -21,6 +21,7 @@ class IndexImagesWebController extends Controller
                       })
                       ->cursor();
         return view('app.projects.folders.index-images', [
+            'folder'  => $folder,
             'project' => $project,
             'images'  => $images,
         ]);

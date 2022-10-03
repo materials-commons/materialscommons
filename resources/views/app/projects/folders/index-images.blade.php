@@ -9,6 +9,7 @@
 @section('content')
     <x-card>
         <x-slot name="header">
+            {{$folder->path}}
         </x-slot>
         <x-slot name="body">
             <div class="container">
