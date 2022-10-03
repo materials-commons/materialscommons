@@ -11,7 +11,6 @@
     {{--    @endisset--}}
     @if(sizeof($attributes) != 0)
         @include('partials.activities._activity-type-attributes', ['attributes' => $attributes])
-        <h6>Measurements</h6>
     @endif
     @if (sizeof($measurements) != 0)
         <h6>Measurements</h6>
