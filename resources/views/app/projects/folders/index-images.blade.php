@@ -15,9 +15,12 @@
             <div class="container">
                 @foreach($images as $image)
                     <div class="row">
-                        <div class="col-lg-11 mt-2">
+                        <div class="col-lg-12 mt-2">
                             <hr/>
                             <div class="text-center">
+                                <span>{{$image->name}}</span>
+                                <br>
+                                <br>
                                 <img src="{{route('projects.files.display', [$project, $image])}}" class="img-fluid">
                             </div>
                         </div>
