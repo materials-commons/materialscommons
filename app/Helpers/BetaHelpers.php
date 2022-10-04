@@ -17,6 +17,7 @@ if (!function_exists("isInBeta")) {
             case 65:  /* Brian Puchala */
             case 4484: /* Valerio Pascucci */
             case 127: /* Duncan Greeley */
+            case 2874: /* Steve Petruzza */
                 return true;
             default:
                 return false;
