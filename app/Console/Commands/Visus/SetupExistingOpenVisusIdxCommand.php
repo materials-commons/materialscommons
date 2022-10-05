@@ -116,6 +116,7 @@ class SetupExistingOpenVisusIdxCommand extends Command
             $nameWithoutExtension = pathinfo($file->name, PATHINFO_FILENAME);
             $d = File::where('name', $nameWithoutExtension)
                      ->whereNull('deleted_at')
+                     ->whereNull('dataset_id')
                      ->where('directory_id', $dir->id)
                      ->where('mime_type', 'directory')
                      ->first();
@@ -142,6 +143,7 @@ class SetupExistingOpenVisusIdxCommand extends Command
 
             // Link bin files for idx
             File::where('directory_id', $d->id)
+                ->whereNull('dataset_id')
                 ->whereNull('deleted_at')
                 ->get()
                 ->each(function (File $file) use ($dirPath, $d) {
