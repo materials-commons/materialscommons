@@ -4,7 +4,6 @@ namespace App\Actions\Datasets;
 
 use App\Jobs\Datasets\SendPublishedDatasetUpdatedEmailJob;
 use App\Mail\Datasets\PublishedDatasetReadyMail;
-use App\Mail\Datasets\PublishedDatasetUpdatedMail;
 use App\Models\Dataset;
 use App\Models\Notification;
 use App\Models\User;
@@ -16,11 +15,12 @@ use Symfony\Component\Process\Process;
 
 class PublishDatasetAction2
 {
-    public function execute(Dataset $dataset, User $user)
+    public function execute(Dataset $dataset, User $user, $publishAsPrivate = false)
     {
         $now = Carbon::now();
+        $publishedAtField = $publishAsPrivate ? 'privately_published_at' : 'published_at';
         $dataset->update([
-            'published_at'       => $now,
+            $publishedAtField    => $now,
             'publish_started_at' => $now,
         ]);
         Bus::chain([
@@ -63,7 +63,7 @@ class PublishDatasetAction2
                 $dataset->notifications->each(function (Notification $notification) use ($dataset) {
                     SendPublishedDatasetUpdatedEmailJob::dispatch($dataset, $notification->owner);
                 });
-            }
+            },
         ])->onQueue('globus')->dispatch();
     }
 }
