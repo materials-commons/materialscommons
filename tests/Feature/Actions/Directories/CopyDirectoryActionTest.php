@@ -27,8 +27,15 @@ class CopyDirectoryActionTest extends TestCase
 
         $copyDirAction = new CopyDirectoryAction();
         $this->assertTrue($copyDirAction->execute($d1, $destDir, $user));
+
+        $d1DestDir = File::query()
+                         ->where('directory_id', $destDir->id)
+                         ->where('path', '/destdir/d1')
+                         ->where('mime_type', 'directory')
+                         ->first();
+
         $count = File::query()
-                     ->where('directory_id', $destDir->id)
+                     ->where('directory_id', $d1DestDir->id)
                      ->where('mime_type', '<>', 'directory')
                      ->where('current', true)
                      ->whereNull('deleted_at')
@@ -37,7 +44,7 @@ class CopyDirectoryActionTest extends TestCase
         $this->assertEquals(1, $count);
 
         $copiedFile = File::query()
-                          ->where('directory_id', $destDir->id)
+                          ->where('directory_id', $d1DestDir->id)
                           ->where('mime_type', '<>', 'directory')
                           ->where('current', true)
                           ->whereNull('deleted_at')
@@ -185,6 +192,37 @@ class CopyDirectoryActionTest extends TestCase
         $this->assertEquals($d->id, $f->directory_id);
     }
 
+    /** @test */
+    public function it_should_fail_to_copy_when_directory_with_same_name_exists()
+    {
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+
+        $d1 = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
+        $d1File = ProjectFactory::createFakeFile($project, $d1, "file.txt");
+
+        $destDir = ProjectFactory::createDirectory($project, $project->rootDir, "destdir");
+
+        // Create d1 directory in destdir. This is so that the copy of /d1 to /destdir will fail
+        // because a d1 already exists in /destdir.
+        ProjectFactory::createDirectory($project, $destDir, "d1");
+
+        $copyDirAction = new CopyDirectoryAction();
+        $this->assertFalse($copyDirAction->execute($d1, $destDir, $user));
+    }
+
+    /** @test */
+    public function it_should_fail_to_copy_dir_to_a_different_project_user_is_not_in()
+    {
+        $this->fail("not implemented");
+    }
+
+    /** @test */
+    public function it_should_copy_dir_to_a_different_project_user_is_in()
+    {
+        $this->fail("not implemented");
+    }
+
     public function getFilesCountInDir($dir): int
     {
         return File::query()
@@ -216,23 +254,5 @@ class CopyDirectoryActionTest extends TestCase
                    ->whereNull('deleted_at')
                    ->whereNull('dataset_id')
                    ->first();
-    }
-
-    /** @test */
-    public function it_should_fail_to_copy_when_directory_with_same_name_exists()
-    {
-        $this->fail("not implemented");
-    }
-
-    /** @test */
-    public function it_should_fail_to_copy_dir_to_a_different_project_user_is_not_in()
-    {
-        $this->fail("not implemented");
-    }
-
-    /** @test */
-    public function it_should_copy_dir_to_a_different_project_user_is_in()
-    {
-        $this->fail("not implemented");
     }
 }
