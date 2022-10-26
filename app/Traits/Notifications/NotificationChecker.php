@@ -17,8 +17,12 @@ trait NotificationChecker
         return $count > 0;
     }
 
-    private function datasetAlreadySetForNotificationForUser(User $user, Dataset $dataset): bool
+    private function datasetAlreadySetForNotificationForUser(?User $user, Dataset $dataset): bool
     {
+        if (is_null($user)) {
+            return false;
+        }
+
         return $this->userAlreadySetForNotification($user->id, Dataset::class, $dataset->id);
     }
 
