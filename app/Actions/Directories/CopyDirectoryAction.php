@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Services\AuthService;
 use App\Traits\CopyFiles;
+use Illuminate\Support\Facades\DB;
 
 class CopyDirectoryAction
 {
@@ -36,6 +37,10 @@ class CopyDirectoryAction
 
     private function copyToDir(File $dirToCopy, File $toDir, User $user): bool
     {
+        if ($this->fileOrDirWithSameNameExistsInDir($dirToCopy, $toDir)) {
+            return false;
+        }
+
         $dirs = $this->recursivelyRetrieveAllSubdirs($dirToCopy->id);
 
         // Prepend the $dirToCopy to make sure all files get copied out of it.
@@ -62,6 +67,22 @@ class CopyDirectoryAction
         foreach ($cursor as $file) {
             $this->importFileIntoDir($toDir, $file);
         }
+        return true;
+    }
+
+    private function fileOrDirWithSameNameExistsInDir($dirBeingCopied, File $toDir): bool
+    {
+        $count = DB::table("files")
+                   ->where("directory_id", $toDir->id)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
+                   ->where("name", $dirBeingCopied->name)
+                   ->count();
+        if ($count == 0) {
+            // no matching file names
+            return false;
+        }
+
         return true;
     }
 }
