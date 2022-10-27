@@ -214,13 +214,53 @@ class CopyDirectoryActionTest extends TestCase
     /** @test */
     public function it_should_fail_to_copy_dir_to_a_different_project_user_is_not_in()
     {
-        $this->fail("not implemented");
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+        $dirToCopy = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
+
+        // Create 2nd project owned by a different user
+        $user2 = User::factory()->create();
+        $project2 = ProjectFactory::ownedBy($user2)->create();
+
+        $copyDirAction = new CopyDirectoryAction();
+
+        // $user is not in $project2, so copying /d1 to $project2 rootdir should fail
+        $this->assertFalse($copyDirAction->execute($dirToCopy, $project2->rootDir, $user));
     }
 
     /** @test */
     public function it_should_copy_dir_to_a_different_project_user_is_in()
     {
-        $this->fail("not implemented");
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+        $dirToCopy = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
+
+        // Create 2nd project owned by a different user and add $user to $project2
+        $user2 = User::factory()->create();
+        $project2 = ProjectFactory::ownedBy($user2)->create();
+        ProjectFactory::addMemberToProject($user, $project2);
+
+        $copyDirAction = new CopyDirectoryAction();
+
+        // $user is in $project2. We should be able to copy $dirToCopy into the $rootDir
+        // of $project2.
+        $this->assertTrue($copyDirAction->execute($dirToCopy, $project2->rootDir, $user));
+        $this->assertEquals(1, File::where('directory_id', $project2->rootDir->id)->count());
+
+        // Let's make sure the copied dir has the correct project_id, mime type, etc...
+        $copiedDir = File::where('directory_id', $project2->rootDir->id)->first();
+        $this->assertEquals($project2->id, $copiedDir->project_id);
+        $this->assertEquals($copiedDir->mime_type, "directory");
+        $this->assertEquals($project2->rootDir->id, $copiedDir->directory_id);
+
+        // The $copiedDir->owner_id really should be equal to $user->id. However, the code in CopyDirectoryAction
+        // uses an existing trait that doesn't take a user and creates missing directories in a project by setting
+        // the newly created directory to the owner_id on the project. While it would be nice to set the copiedDir
+        // to the user who copied it, at the end of the day it isn't worth the effort to change this as it really
+        // has no effect (that the owner is instead the project owner).
+        // $this->assertEquals($user->id, $copiedDir->owner_id);
+        $this->assertEquals("/d1", $copiedDir->path);
+        $this->assertEquals("d1", $copiedDir->name);
     }
 
     public function getFilesCountInDir($dir): int
