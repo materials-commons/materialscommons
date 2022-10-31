@@ -25,7 +25,7 @@
                     <th>Type</th>
                     <th>Size</th>
                     <th>Real Size</th>
-                    <th>Move Here</th>
+                    <th>Copy To</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                             @endif
                             <td>{{$file->size}}</td>
                             <td>
-                                <input type="checkbox" value="0">
+                                <a class="btn btn-success" href="#">Select</a>
                             </td>
                         </tr>
                     @endif
