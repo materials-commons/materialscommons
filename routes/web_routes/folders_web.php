@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Folders\ChooseProjectForCopyDestinationWebController;
 use App\Http\Controllers\Web\Folders\CopyFolderToDestinationWebController;
 use App\Http\Controllers\Web\Folders\CreateFolderWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
@@ -36,11 +37,16 @@ Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
 Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
-Route::get('/projects/{project}/folders/from-folder/{fromFolder}/copy-to/{toFolder}', CopyFolderToDestinationWebController::class)
+Route::get('/projects/{project}/folders/from-folder/{fromFolder}/copy-to/{toFolder}',
+    CopyFolderToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
-Route::get('/projects/{project}/folders/{folder}/show-for-copy', ShowFolderForCopyFolderToProjectWebController::class)
+Route::get('/projects/{project}/folders/{originalFolder}/{folder}/show-for-copy', ShowFolderForCopyFolderToProjectWebController::class)
      ->name('projects.folders.show-for-copy');
+
+Route::get('/projects/{project}/folders/{file}/{copyType}/choose-project',
+    ChooseProjectForCopyDestinationWebController::class)
+     ->name('projects.folders.choose-project');
 
 Route::get('/projects/{project}/folders/{directory}/upload', ShowUploadFilesWebController::class)
      ->name('projects.folders.upload');

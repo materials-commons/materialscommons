@@ -6,16 +6,11 @@
     <x-card>
         <x-slot name="header">
             <x-show-dir-path :project="$project" :file="$directory"/>
-
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.index-images', [$project, $directory])}}">
-                <i class="fas fa-fw fa-images mr-2"></i>View Images
-            </a>
         </x-slot>
 
         <x-slot name="body">
             @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show-for-copy', [$project, $directory->directory_id])}}"
+                <a href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $directory->directory_id])}}"
                    class="mb-3">
                     <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
                 </a>
@@ -35,42 +30,26 @@
                 </thead>
                 <tbody>
                 @foreach($files as $file)
-                    <tr>
-                        <td>
-                            @if($file->isDir())
+                    @if($file->isDir())
+                        <tr>
+                            <td>
                                 <a class="no-underline"
-                                   href="{{route('projects.folders.show-for-copy', [$project, $file])}}">
+                                   href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $file])}}">
                                     <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                 </a>
+                            </td>
+                            <td>{{$file->mime_type}}</td>
+                            @if($file->isDir())
+                                <td></td>
                             @else
-                                <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
-                                    <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
-                                </a>
+                                <td>{{$file->toHumanBytes()}}</td>
                             @endif
-                        </td>
-                        <td>{{$file->mime_type}}</td>
-                        @if($file->isDir())
-                            <td></td>
-                        @else
-                            <td>{{$file->toHumanBytes()}}</td>
-                        @endif
-                        <td>{{$file->size}}</td>
-                        <td>
-                            @if($file->isImage())
-                                <a href="{{route('projects.files.display', [$project, $file])}}">
-
-                                    <img src="{{route('projects.files.display', [$project, $file])}}"
-                                         style="width: 12rem">
-                                </a>
-                            @elseif($file->isDir())
+                            <td>{{$file->size}}</td>
+                            <td>
                                 <input type="checkbox" value="0">
-                                <a class="action-link"
-                                   href="{{route('projects.folders.destroy', [$project, $file])}}">
-                                    <i class="fas fa-fw fa-trash mr-2"></i>
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
                 </tbody>
             </table>

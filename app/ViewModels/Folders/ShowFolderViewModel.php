@@ -2,15 +2,17 @@
 
 namespace App\ViewModels\Folders;
 
+use App\Models\Dataset;
 use App\Models\File;
+use App\Models\Project;
 use Spatie\ViewModels\ViewModel;
 
 class ShowFolderViewModel extends ViewModel
 {
-    private $directory;
-    private $project;
-    private $files;
-    protected $dataset;
+    protected ?File $directory;
+    protected ?Project $project;
+    protected $files;
+    protected ?Dataset $dataset;
 
     public function __construct(File $directory, $files)
     {

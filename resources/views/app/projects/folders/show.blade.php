@@ -141,15 +141,17 @@
                                    href="{{route('projects.folders.destroy', [$project, $file])}}">
                                     <i class="fas fa-fw fa-trash mr-2"></i>
                                 </a>
-                                <a class="action-link" title="Copy directory" href="#">
+                                <a class="action-link" title="Copy directory"
+                                   href="{{route('projects.folders.choose-project', [$project, $file, 'copy-dir'])}}">
                                     <i class="fas fa-fw fa-copy mr-2"></i>
                                 </a>
                             @else
-                                <a class="action-link" title="Delete directory"
+                                <a class="action-link" title="Delete file"
                                    href="{{route('projects.files.destroy', [$project, $file])}}">
                                     <i class="fas fa-fw fa-trash mr-2"></i>
                                 </a>
-                                <a class="action-link" title="Copy directory" href="#">
+                                <a class="action-link" title="Copy file"
+                                   href="{{route('projects.folders.choose-project', [$project, $file, 'copy-file'])}}">
                                     <i class="fas fa-fw fa-copy mr-2"></i>
                                 </a>
                             @endif

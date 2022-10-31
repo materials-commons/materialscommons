@@ -26,6 +26,7 @@ trait UserProjects
                       ->withCount('entities')
                       ->whereIn('team_id', $allTeams)
                       ->whereNull('deleted_at')
+                      ->orderBy('name')
                       ->get();
     }
 }
