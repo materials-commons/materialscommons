@@ -43,7 +43,7 @@ class GetFileContentsForDisplayAction
     {
         $filePathPartial = $this->fileContentsPathPartial($file);
         if (!Storage::disk('mcfs')->exists($filePathPartial)) {
-            return "does not exist" ; //null;
+            return null;
         }
 
         try {
