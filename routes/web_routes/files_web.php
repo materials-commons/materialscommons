@@ -67,6 +67,8 @@ Route::get('/projects/{project}/files/{file}/delete', DeleteFileWebController::c
      ->name('projects.files.delete');
 Route::delete('/projects/{project}/files/{file}/destroy', DestroyFileWebController::class)
      ->name('projects.files.destroy');
+Route::get('/projects/{project}/files/{file}/destroy', DestroyFileWebController::class)
+     ->name('projects.files.destroy');
 
 Route::get('/projects/{project}/files/{file}/rename', RenameFileWebController::class)
      ->name('projects.files.rename');

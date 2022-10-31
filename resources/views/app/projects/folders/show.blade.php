@@ -40,29 +40,29 @@
                 <i class="fas fa-fw fa-plus mr-2"></i>Add Files
             </a>
 
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.folders.create', [$project, $directory])}}">
+                <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
+            </a>
+
+            @if($directory->name !== "/" && $files->count() === 0)
                 <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.create', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
+                   href="{{route('projects.folders.destroy', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
                 </a>
+            @endif
 
-                @if($directory->name !== "/" && $files->count() === 0)
-                    <a class="float-right action-link mr-4"
-                       href="{{route('projects.folders.destroy', [$project, $directory])}}">
-                        <i class="fas fa-fw fa-trash mr-2"></i>Delete
-                    </a>
-                @endif
-
-                @if($directory->name !== "/")
-                    <a class="float-right action-link mr-4"
-                       href="{{route('projects.folders.rename', [$project, $directory])}}">
-                        <i class="fas fa-fw fa-edit mr-2"></i>Rename
-                    </a>
-                @endif
-
+            @if($directory->name !== "/")
                 <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.index-images', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-images mr-2"></i>View Images
+                   href="{{route('projects.folders.rename', [$project, $directory])}}">
+                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
+            @endif
+
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.folders.index-images', [$project, $directory])}}">
+                <i class="fas fa-fw fa-images mr-2"></i>View Images
+            </a>
         </x-slot>
 
         <x-slot name="body">
@@ -101,6 +101,7 @@
                     <th>Type</th>
                     <th>Size</th>
                     <th>Real Size</th>
+                    <th>Thumbnail</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -118,7 +119,7 @@
                                 </a>
                             @endif
                         </td>
-                        <td>{{$file->mime_type}}</td>
+                        <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
                         @if($file->isDir())
                             <td></td>
                         @else
@@ -132,10 +133,24 @@
                                     <img src="{{route('projects.files.display', [$project, $file])}}"
                                          style="width: 12rem">
                                 </a>
-                            @elseif($file->isDir())
-                                <a class="action-link"
+                            @endif
+                        </td>
+                        <td>
+                            @if($file->isDir())
+                                <a class="action-link" title="Delete directory"
                                    href="{{route('projects.folders.destroy', [$project, $file])}}">
                                     <i class="fas fa-fw fa-trash mr-2"></i>
+                                </a>
+                                <a class="action-link" title="Copy directory" href="#">
+                                    <i class="fas fa-fw fa-copy mr-2"></i>
+                                </a>
+                            @else
+                                <a class="action-link" title="Delete directory"
+                                   href="{{route('projects.files.destroy', [$project, $file])}}">
+                                    <i class="fas fa-fw fa-trash mr-2"></i>
+                                </a>
+                                <a class="action-link" title="Copy directory" href="#">
+                                    <i class="fas fa-fw fa-copy mr-2"></i>
                                 </a>
                             @endif
                         </td>
