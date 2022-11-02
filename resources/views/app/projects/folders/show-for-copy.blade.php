@@ -3,7 +3,11 @@
 @section('pageTitle', 'Files')
 
 @section('content')
-    <h4>Select File/Directory Copy Destination</h4>
+    <h4>
+        Select Destination For Copy Of Directory '{{$fromDirectory->path}}' From Project
+        '{{$fromDirectory->project->name}}'.
+        You Are Currently Selecting Destination In Project '{{$project->name}}'.
+    </h4>
     <x-card>
         <x-slot name="header">
             <x-show-dir-path :project="$project" :file="$directory"/>
