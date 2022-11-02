@@ -13,14 +13,14 @@
             <x-show-dir-path :project="$project" :file="$directory"/>
 
             <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $project->rootDir])}}">
+               href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $project->rootDir, $copyType])}}">
                 <i class="fas fa-check mr-2"></i>Copy Here
             </a>
         </x-slot>
 
         <x-slot name="body">
             @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $directory->directory_id])}}"
+                <a href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $directory->directory_id, $copyType])}}"
                    class="mb-3">
                     <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
                 </a>
@@ -44,7 +44,7 @@
                         <tr>
                             <td>
                                 <a class="no-underline"
-                                   href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $file])}}">
+                                   href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $file, $copyType])}}">
                                     <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                 </a>
                             </td>
@@ -57,7 +57,7 @@
                             <td>{{$file->size}}</td>
                             <td>
                                 <a class="btn btn-success"
-                                   href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $file])}}">
+                                   href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $file, $copyType])}}">
                                     Select
                                 </a>
                             </td>

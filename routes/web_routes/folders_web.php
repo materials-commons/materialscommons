@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Folders\ChooseProjectForCopyDestinationWebController;
-use App\Http\Controllers\Web\Folders\CopyFolderToDestinationWebController;
+use App\Http\Controllers\Web\Folders\CopyToDestinationWebController;
 use App\Http\Controllers\Web\Folders\CreateFolderWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
@@ -14,7 +14,7 @@ use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\IndexImagesWebController;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\RenameFolderWebController;
-use App\Http\Controllers\Web\Folders\ShowFolderForCopyFolderToProjectWebController;
+use App\Http\Controllers\Web\Folders\ShowFolderForCopyToProjectWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowRootFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowUploadFilesWebController;
@@ -37,11 +37,11 @@ Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
 Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
-Route::get('/projects/{project}/folders/from-folder/{fromFolder}/copy-to/{toFolder}',
-    CopyFolderToDestinationWebController::class)
+Route::get('/projects/{project}/folders/from/{from}/{toFolder}/{copyType}/copy-to',
+    CopyToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
-Route::get('/projects/{project}/folders/{originalFolder}/{folder}/show-for-copy', ShowFolderForCopyFolderToProjectWebController::class)
+Route::get('/projects/{project}/folders/{originalFolder}/{folder}/{copyType}/show-for-copy', ShowFolderForCopyToProjectWebController::class)
      ->name('projects.folders.show-for-copy');
 
 Route::get('/projects/{project}/folders/{file}/{copyType}/choose-project',

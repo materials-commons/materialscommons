@@ -12,7 +12,8 @@
             Select Project For Destination
         </x-slot>
         <x-slot name="body">
-            <a class="btn btn-success" href="{{route('projects.folders.show-for-copy', [$project->id, $file->id, $project->rootDir->id])}}">
+            <a class="btn btn-success"
+               href="{{route('projects.folders.show-for-copy', [$project, $file, $project->rootDir, $copyType])}}">
                 Copy to Current Project ({{$project->name}})
             </a>
             <br>
@@ -33,7 +34,10 @@
                 @foreach($projects as $proj)
                     <tr>
                         <td>
-                            <a href="{{route('projects.folders.show-for-copy', [$proj->id, $file->id, $proj->rootDir->id])}}" class="">{{$proj->name}}</a>
+                            <a href="{{route('projects.folders.show-for-copy', [$proj, $file, $proj->rootDir, $copyType])}}"
+                               class="">
+                                {{$proj->name}}
+                            </a>
                         </td>
                         <td>{{$proj->summary}}</td>
                         <td>{{$proj->owner->name}}</td>
