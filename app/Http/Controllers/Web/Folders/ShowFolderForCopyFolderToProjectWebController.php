@@ -21,6 +21,6 @@ class ShowFolderForCopyFolderToProjectWebController extends Controller
         $originalFolder = File::findOrFail($originalFolderId);
         $files = $this->getProjectFolderFiles($project->id, $folderId);
         $viewModel = (new ShowCopyToFolderViewModel($originalFolder, $dir, $files))->withProject($project);
-        return view('app.projects.folders.show-copy-to', $viewModel);
+        return view('app.projects.folders.show-for-copy', $viewModel);
     }
 }

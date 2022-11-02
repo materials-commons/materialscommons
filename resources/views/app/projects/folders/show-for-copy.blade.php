@@ -9,7 +9,7 @@
             <x-show-dir-path :project="$project" :file="$directory"/>
 
             <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.', [$project, $directory])}}">
+               href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $project->rootDir])}}">
                 <i class="fas fa-check mr-2"></i>Copy Here
             </a>
         </x-slot>
@@ -52,7 +52,10 @@
                             @endif
                             <td>{{$file->size}}</td>
                             <td>
-                                <a class="btn btn-success" href="#">Select</a>
+                                <a class="btn btn-success"
+                                   href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $file])}}">
+                                    Select
+                                </a>
                             </td>
                         </tr>
                     @endif
