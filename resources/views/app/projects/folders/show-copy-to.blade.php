@@ -3,9 +3,15 @@
 @section('pageTitle', 'Files')
 
 @section('content')
+    <h4>Select File/Directory Copy Destination</h4>
     <x-card>
         <x-slot name="header">
             <x-show-dir-path :project="$project" :file="$directory"/>
+
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.folders.', [$project, $directory])}}">
+                <i class="fas fa-check mr-2"></i>Copy Here
+            </a>
         </x-slot>
 
         <x-slot name="body">

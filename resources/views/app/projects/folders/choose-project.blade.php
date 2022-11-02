@@ -12,7 +12,7 @@
             Select Project For Destination
         </x-slot>
         <x-slot name="body">
-            <a class="btn btn-success" href="#">
+            <a class="btn btn-success" href="{{route('projects.folders.show-for-copy', [$project->id, $file->id, $project->rootDir->id])}}">
                 Copy to Current Project ({{$project->name}})
             </a>
             <br>

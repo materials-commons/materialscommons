@@ -1,4 +1,4 @@
-<div>
+<span>
     @if(sizeof($dirPaths) == 1)
         /
     @else
@@ -9,4 +9,4 @@
             </a>
         @endforeach
     @endif
-</div>
+</span>
