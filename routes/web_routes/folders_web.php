@@ -41,7 +41,7 @@ Route::get('/projects/{project}/folders/from/{from}/{toFolder}/{copyType}/copy-t
     CopyToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
-Route::get('/projects/{project}/folders/{originalFolder}/{folder}/{copyType}/show-for-copy', ShowFolderForCopyToProjectWebController::class)
+Route::get('/projects/{project}/folders/{fromFolder}/{folder}/{copyType}/show-for-copy', ShowFolderForCopyToProjectWebController::class)
      ->name('projects.folders.show-for-copy');
 
 Route::get('/projects/{project}/folders/{file}/{copyType}/choose-project',
