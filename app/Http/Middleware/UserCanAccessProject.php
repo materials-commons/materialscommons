@@ -4,13 +4,16 @@ namespace App\Http\Middleware;
 
 use App\Models\Project;
 use App\Traits\GetRequestParameterId;
+use App\Traits\Projects\CanAccessProject;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use function auth;
 
 class UserCanAccessProject
 {
+    use CanAccessProject;
     use GetRequestParameterId;
 
     /**
@@ -42,47 +45,23 @@ class UserCanAccessProject
         return $next($request);
     }
 
-    private function isPublicPath()
+    private function isPublicPath(): bool
     {
         return Str::contains(request()->url(), "/public");
     }
 
-    private function isPublicProject($projectId)
+    private function isPublicProject($projectId): bool
     {
         $count = Project::where('id', $projectId)->where('is_public', true)->count();
         return $count == 1;
     }
 
-    private function canAccessPrivateProject($projectId)
+    private function canAccessPrivateProject($projectId): bool
     {
-        if ($this->userIsMember($projectId)) {
+        if ($this->userIsProjectMember($projectId, auth()->id())) {
             return true;
         }
 
-        return $this->userIsProjectAdmin($projectId);
-//        $count = auth()->user()->projects()->where('project_id', $projectId)->count();
-//        return $count == 1;
-    }
-
-    private function userIsMember($projectId)
-    {
-        $count = DB::table('team2member')
-                   ->whereIn('team_id', function ($q) use ($projectId) {
-                       $q->select('team_id')->from('projects')->where('id', $projectId);
-                   })
-                   ->where('user_id', auth()->id())
-                   ->count();
-        return $count != 0;
-    }
-
-    private function userIsProjectAdmin($projectId)
-    {
-        $count = DB::table('team2admin')
-                   ->whereIn('team_id', function ($q) use ($projectId) {
-                       $q->select('team_id')->from('projects')->where('id', $projectId);
-                   })
-                   ->where('user_id', auth()->id())
-                   ->count();
-        return $count != 0;
+        return $this->userIsProjectAdmin($projectId, auth()->id());
     }
 }
