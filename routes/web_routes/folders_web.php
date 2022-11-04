@@ -14,7 +14,7 @@ use App\Http\Controllers\Web\Folders\GotoFolderByPathInParam;
 use App\Http\Controllers\Web\Folders\IndexImagesWebController;
 use App\Http\Controllers\Web\Folders\MoveFilesWebController;
 use App\Http\Controllers\Web\Folders\RenameFolderWebController;
-use App\Http\Controllers\Web\Folders\ShowFolderForCopyToProjectWebController;
+use App\Http\Controllers\Web\Folders\ShowFoldersForCopyToProjectWebController;
 use App\Http\Controllers\Web\Folders\ShowFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowRootFolderWebController;
 use App\Http\Controllers\Web\Folders\ShowUploadFilesWebController;
@@ -41,7 +41,7 @@ Route::get('/projects/{project}/folders/from/{from}/{toFolder}/{copyType}/copy-t
     CopyToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
-Route::get('/projects/{project}/folders/{fromFolder}/{folder}/{copyType}/show-for-copy', ShowFolderForCopyToProjectWebController::class)
+Route::get('/projects/{leftProject}/{leftFolder}/{rightProject}/{rightFolder}/show-for-copy', ShowFoldersForCopyToProjectWebController::class)
      ->name('projects.folders.show-for-copy');
 
 Route::get('/projects/{project}/folders/{file}/{copyType}/choose-project',

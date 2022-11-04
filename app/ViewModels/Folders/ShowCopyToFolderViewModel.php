@@ -4,55 +4,87 @@ namespace App\ViewModels\Folders;
 
 use App\Models\File;
 use App\Models\Project;
+use Spatie\ViewModels\ViewModel;
 
-class ShowCopyToFolderViewModel extends ShowFolderViewModel
+class ShowCopyToFolderViewModel extends ViewModel
 {
-    protected ?File $fromDirectory;
-    protected ?string $copyType;
-    protected ?Project $fromProject;
-    protected $fromFiles;
+    protected ?File $leftDirectory;
+    protected ?Project $leftProject;
+    protected $leftFiles;
+    protected ?File $rightDirectory;
+    protected ?Project $rightProject;
+    protected $rightFiles;
 
-    public function __construct(File $fromDirectory, File $directory, $files)
+    public function withLeftDirectory(File $dir): ShowCopyToFolderViewModel
     {
-        parent::__construct($directory, $files);
-        $this->fromDirectory = $fromDirectory;
-    }
-
-    public function withCopyType(string $copyType): ShowCopyToFolderViewModel
-    {
-        $this->copyType = $copyType;
+        $this->leftDirectory = $dir;
         return $this;
     }
 
-    public function copyType(): ?string
+    public function leftDirectory(): File
     {
-        return $this->copyType;
+        return $this->leftDirectory;
     }
 
-    public function fromDirectory(): File
+    public function withLeftProject(Project $project): ShowCopyToFolderViewModel
     {
-        return $this->fromDirectory;
-    }
-
-    public function withFromProject(Project $project): ShowCopyToFolderViewModel
-    {
-        $this->fromProject = $project;
+        $this->leftProject = $project;
         return $this;
     }
 
-    public function fromProject(): ?Project
+    public function leftProject(): ?Project
     {
-        return $this->fromProject;
+        return $this->leftProject;
     }
 
-    public function withFromFiles($files): ShowCopyToFolderViewModel
+    // To show the nav we must have a $project. $leftProject is the current project, so
+    // we create an accessor that allows access to $leftProject as $project.
+    public function project(): ?Project
     {
-        $this->fromFiles = $files;
+        return $this->leftProject;
+    }
+
+    public function withLeftFiles($files): ShowCopyToFolderViewModel
+    {
+        $this->leftFiles = $files;
         return $this;
     }
 
-    public function fromFiles()
+    public function leftFiles()
     {
-        return $this->fromFiles;
+        return $this->leftFiles;
+    }
+
+    public function withRightDirectory(File $dir): ShowCopyToFolderViewModel
+    {
+        $this->rightDirectory = $dir;
+        return $this;
+    }
+
+    public function rightDirectory(): File
+    {
+        return $this->rightDirectory;
+    }
+
+    public function withRightProject(Project $project): ShowCopyToFolderViewModel
+    {
+        $this->rightProject = $project;
+        return $this;
+    }
+
+    public function rightProject(): ?Project
+    {
+        return $this->rightProject;
+    }
+
+    public function withRightFiles($files): ShowCopyToFolderViewModel
+    {
+        $this->rightFiles = $files;
+        return $this;
+    }
+
+    public function rightFiles()
+    {
+        return $this->rightFiles;
     }
 }

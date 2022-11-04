@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
 use App\Traits\GetProjectFolderFiles;
+use App\Traits\Projects\UserProjects;
 use App\ViewModels\Folders\ShowFolderViewModel;
+use function auth;
 
 class ShowFolderWebController extends Controller
 {
     use GetProjectFolderFiles;
+    use UserProjects;
 
     public function __invoke(Project $project, $folderId)
     {
@@ -18,7 +21,10 @@ class ShowFolderWebController extends Controller
                    ->where('id', $folderId)
                    ->first();
         $files = $this->getProjectFolderFiles($project->id, $folderId);
-        $viewModel = (new ShowFolderViewModel($dir, $files))->withProject($project);
+        $projects = $this->getUserProjects(auth()->id());
+        $viewModel = (new ShowFolderViewModel($dir, $files))
+            ->withProject($project)
+            ->withProjects($projects);
         return view('app.projects.folders.show', $viewModel);
     }
 }

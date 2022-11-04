@@ -2,35 +2,30 @@
 
 @section('pageTitle', 'Files')
 
+@section('nav')
+    @include('layouts.navs.app.project')
+@stop
+
 @section('content')
-    <h4>
-        Select Destination For Copy Of Directory '{{$fromDirectory->path}}' From Project
-        '{{$fromDirectory->project->name}}'.
-        You Are Currently Selecting Destination In Project '{{$project->name}}'.
-    </h4>
     <x-card>
         <x-slot name="header">
-            <x-show-dir-path :project="$project" :file="$directory"/>
-
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.copy-to', [$project, $fromDirectory, $project->rootDir, $copyType])}}">
-                <i class="fas fa-check mr-2"></i>Copy Here
-            </a>
+            Copy Files/Directories
         </x-slot>
 
         <x-slot name="body">
-            @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show-for-copy', [$fromProject, $fromDirectory, $directory->directory_id, $copyType])}}"
-                   class="mb-3">
-                    <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
-                </a>
-                <br>
-                <br>
-            @endif
-
             <div class="row">
                 <div class="col-5">
-                    <table id="left" class="table table-hover" stylex="width:100%">
+                    <h4>Project: {{$leftProject->name}}</h4>
+                    <h5>Path: {{$leftDirectory->path}}</h5>
+                    @if ($leftDirectory->path !== '/')
+                        <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory->directory_id, $rightProject, $rightDirectory])}}"
+                           class="mb-3">
+                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                        </a>
+                        <br>
+                        <br>
+                    @endif
+                    <table id="left" class="table table-hover">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -40,15 +35,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($fromFiles as $file)
+                        @foreach($leftFiles as $file)
                             <tr draggable="true">
                                 <td>
-                                    <a class="no-underline"
-                                       href="{{route('projects.folders.show-for-copy', [$fromProject, $fromDirectory, $file, $copyType])}}">
-                                        <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
-                                    </a>
+                                    @if($file->isDir())
+                                        <a class="no-underline"
+                                           href="{{route('projects.folders.show-for-copy', [$leftProject, $file, $rightProject, $rightDirectory])}}">
+                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                        </a>
+                                    @else
+                                        <a class="no-underline"
+                                           href="{{route('projects.files.show', [$leftProject, $file])}}">
+                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                        </a>
+                                    @endif
                                 </td>
-                                <td>{{$file->mime_type}}</td>
+                                <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
                                 @if($file->isDir())
                                     <td></td>
                                 @else
@@ -61,8 +63,21 @@
                     </table>
                 </div>
 
+                <div class="col-1"></div>
+
                 <div class="col-5">
-                    <table id="right" class="table table-hover" stylex="width:100%">
+                    <h4>Project: {{$rightProject->name}}</h4>
+                    <h5>Path: {{$rightDirectory->path}}</h5>
+                    @if ($rightDirectory->path !== '/')
+                        <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $rightDirectory->directory_id])}}"
+                           class="mb-3">
+                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                        </a>
+                        <br>
+                        <br>
+                    @endif
+
+                    <table id="right" class="table table-hover mt-3" stylex="width:100%">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -72,24 +87,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($files as $file)
-                            @if($file->isDir())
-                                <tr draggable="true">
-                                    <td>
+                        @foreach($rightFiles as $file)
+                            <tr draggable="true">
+                                <td>
+                                    @if($file->isDir())
                                         <a class="no-underline"
-                                           href="{{route('projects.folders.show-for-copy', [$project, $fromDirectory, $file, $copyType])}}">
+                                           href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $file])}}">
                                             <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                         </a>
-                                    </td>
-                                    <td>{{$file->mime_type}}</td>
-                                    @if($file->isDir())
-                                        <td></td>
                                     @else
-                                        <td>{{$file->toHumanBytes()}}</td>
+                                        <a class="no-underline"
+                                           href="{{route('projects.files.show', [$rightProject, $file])}}">
+                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                        </a>
                                     @endif
-                                    <td>{{$file->size}}</td>
-                                </tr>
-                            @endif
+                                </td>
+                                <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
+                                @if($file->isDir())
+                                    <td></td>
+                                @else
+                                    <td>{{$file->toHumanBytes()}}</td>
+                                @endif
+                                <td>{{$file->size}}</td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

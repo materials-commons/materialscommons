@@ -13,6 +13,7 @@ class ShowFolderViewModel extends ViewModel
     protected ?Project $project;
     protected $files;
     protected ?Dataset $dataset;
+    protected $projects;
 
     public function __construct(File $directory, $files)
     {
@@ -34,6 +35,12 @@ class ShowFolderViewModel extends ViewModel
         return $this;
     }
 
+    public function withProjects($projects): ShowFolderViewModel
+    {
+        $this->projects = $projects;
+        return $this;
+    }
+
     public function project()
     {
         return $this->project;
@@ -52,5 +59,10 @@ class ShowFolderViewModel extends ViewModel
     public function dataset()
     {
         return $this->dataset;
+    }
+
+    public function projects()
+    {
+        return $this->projects;
     }
 }
