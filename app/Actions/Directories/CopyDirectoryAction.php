@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\AuthService;
 use App\Traits\CopyFiles;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CopyDirectoryAction
 {
@@ -46,8 +47,17 @@ class CopyDirectoryAction
         // Prepend the $dirToCopy to make sure all files get copied out of it.
         $dirs->prepend($dirToCopy);
 
+        // For the correct path of $dirToCopy to copy to, we need to take away the path up to name. We use
+        // dirname to determine this. For example, lets say $dirToCopy has path /d1/d2/d3. That is we are copying
+        // the directory d3 to $toDir. To construct the path that should be created in $toDir, we need to remove
+        // /d1/d2 from $dirToCopy and all its children. If we use dirname($dirToCopy->path), then we would get
+        // for the example path dirname(/d1/d2/d3) returns "/d1/d2".
+        $pathToRemove = dirname($dirToCopy->path);
         foreach ($dirs as $dir) {
-            $newDir = $this->getDirectoryOrCreateIfDoesNotExist($toDir, $dir->path, $this->project);
+            // Construct the path for the directory by replacing $pathToRemove with "", to leave us with the
+            // basedir and subdir paths.
+            $pathToUse = Str::replaceFirst($pathToRemove, "", $dir->path);
+            $newDir = $this->getDirectoryOrCreateIfDoesNotExist($toDir, $pathToUse, $this->project);
             if (!$this->copyAllFilesInDir($dir, $newDir, $user)) {
                 return false;
             }

@@ -7,6 +7,14 @@
 @stop
 
 @section('content')
+    <div class="alert alert-warning alert-dismissible d-none" role="alert">
+        <strong>Directory Copy Started</strong> Your directory copy will take place in the background. You can
+        refresh the page to see if its started.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     <x-card>
         <x-slot name="header">
             Copy Files/Directories
@@ -38,13 +46,20 @@
                         @foreach($leftFiles as $file)
                             <tr draggable="true">
                                 <td>
+                                    {{-- For copy to we are in the left side dragging to the right, so $file is what is being copied --}}
+                                    {{-- and destination is rightDirectory. Copy to url is: --}}
+                                    {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
                                     @if($file->isDir())
                                         <a class="no-underline"
+                                           data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-dir'])}}"
+                                           data-copy-type="copy-dir"
                                            href="{{route('projects.folders.show-for-copy', [$leftProject, $file, $rightProject, $rightDirectory])}}">
                                             <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a class="no-underline"
+                                           data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-file'])}}"
+                                           data-copy-type="copy-file"
                                            href="{{route('projects.files.show', [$leftProject, $file])}}">
                                             <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
                                         </a>
@@ -90,13 +105,20 @@
                         @foreach($rightFiles as $file)
                             <tr draggable="true">
                                 <td>
+                                    {{-- For copy to we are in the right side dragging to the left, so $file is what is being copied --}}
+                                    {{-- and destination is leftDirectory. Copy to url is: --}}
+                                    {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
                                     @if($file->isDir())
                                         <a class="no-underline"
+                                           data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-dir'])}}"
+                                           data-copy-type="copy-dir"
                                            href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $file])}}">
                                             <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a class="no-underline"
+                                           data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-file'])}}"
+                                           data-copy-type="copy-file"
                                            href="{{route('projects.files.show', [$rightProject, $file])}}">
                                             <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
                                         </a>
@@ -163,7 +185,6 @@
                 });
 
                 function handleDragStart(e) {
-                    console.log('handleDragStart');
                     // this / e.target is the source node.
 
                     // Set the source row opacity
@@ -216,8 +237,6 @@
                 function handleDrop(e) {
                     // this / e.target is current target element.
 
-                    console.log('handleDrop = ', e);
-
                     if (e.stopPropagation) {
                         e.stopPropagation(); // stops the browser from redirecting.
                     }
@@ -240,24 +259,18 @@
                         $('#' + srcTable).DataTable().rows(selectedRows.indexes()).remove().draw();
 
                     } else {  // Otherwise move dragged row
-                        // console.log("  in else");
-
                         // Get source transfer data
                         var srcData = e.dataTransfer.getData('text/plain');
-                        console.log(e.dataTransfer);
-
-                        console.log("   srcData = ", srcData);
-                        let href = $(srcData).attr('href');
-                        console.log('href = ' + href);
-                        fetch(href);
-                        // Add row to destination Datatable
-                        // $('#' + dstTable).DataTable().row.add($(srcData)).draw();
-                        //
-                        // console.log("   past add");
-                        //
-                        // // Remove row from source Datatable
-                        // $('#' + srcTable).DataTable().row(dragSrcRow).remove().draw();
-
+                        let copyTo = $(srcData).attr('data-copy-to');
+                        let copyType = $(srcData).attr('data-copy-type');
+                        fetch(copyTo).then(()=> {
+                            if (copyType === "copy-file") {
+                                window.location.reload();
+                            } else {
+                                // $('.alert').removeClass('d-none').addClass(['show', 'fade']);
+                                window.location.reload();
+                            }
+                        });
                     }
 
                     return false;
