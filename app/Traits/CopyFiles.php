@@ -15,21 +15,21 @@ use function is_null;
 
 trait CopyFiles
 {
-    private function getDirectoryOrCreateIfDoesNotExist(File $rootDir, string $path, Project $project)
+    private function getDirectoryOrCreateIfDoesNotExist(File $baseDir, string $path, Project $project)
     {
-        $dir = $this->getDirectory($rootDir->name, $path, $project->id);
+        $dir = $this->getDirectory($baseDir->path, $path, $project->id);
         if (!is_null($dir)) {
             return $dir;
         }
 
-        $this->makeDirPathInProject($rootDir, $path, $project);
+        $this->makeDirPathInProject($baseDir, $path, $project);
 
-        return $this->getDirectory($rootDir->name, $path, $project->id);
+        return $this->getDirectory($baseDir->path, $path, $project->id);
     }
 
-    private function getDirectory($rootDirName, $path, int $projectId)
+    private function getDirectory($rootDirPath, $path, int $projectId)
     {
-        $pathToUse = PathHelpers::normalizePath("/{$rootDirName}/{$path}");
+        $pathToUse = PathHelpers::normalizePath("/{$rootDirPath}/{$path}");
         return File::where('project_id', $projectId)
                    ->where('path', $pathToUse)
                    ->where('mime_type', 'directory')
@@ -54,8 +54,8 @@ trait CopyFiles
                 continue;
             }
             $pathToCreate = "{$pathToCreate}/{$pathItem}";
-            if ($this->getDirectory($rootDir->name, $pathToCreate, $project->id) == null) {
-                $parent = $this->getDirectory($rootDir->name, dirname($pathToCreate), $project->id);
+            if ($this->getDirectory($rootDir->path, $pathToCreate, $project->id) == null) {
+                $parent = $this->getDirectory($rootDir->path, dirname($pathToCreate), $project->id);
                 $this->makeDirInProject($parent, $pathToCreate, $project);
             }
         }
