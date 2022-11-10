@@ -28,12 +28,15 @@ class SpreadsheetLoadFinishedMail extends Mailable
     /** @var \App\Models\EtlRun */
     public $etlRun;
 
-    public function __construct(File $file, Project $project, Experiment $experiment, EtlRun $etlRun)
+    public ?string $sheetUrl;
+
+    public function __construct(File $file, $sheetUrl, Project $project, Experiment $experiment, EtlRun $etlRun)
     {
         $this->file = $file;
         $this->project = $project;
         $this->experiment = $experiment;
         $this->etlRun = $etlRun;
+        $this->sheetUrl = $sheetUrl;
     }
 
     public function build()
@@ -45,6 +48,13 @@ class SpreadsheetLoadFinishedMail extends Mailable
             ->withExperiment($this->experiment)
             ->withEntityAttributes($this->getUniqueEntityAttributesForExperiment($this->experiment->id))
             ->withActivityAttributes($this->getUniqueActivityAttributesForExperiment($this->experiment->id));
-        return $this->subject("Finished Loading {$this->file->name}")->view('email.etl.finished', compact('viewModel'));
+
+        if (!is_null($this->file)) {
+            $subject = "Finished Loading {$this->file->name}";
+        } else {
+            $subject = "Finished Loading Google Sheet";
+        }
+
+        return $this->subject($subject)->view('email.etl.finished', compact('viewModel'));
     }
 }

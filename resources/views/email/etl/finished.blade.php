@@ -4,11 +4,17 @@
     <p>
         Hi {{$etlRun->owner->name}},
     </p>
-    <p>
-        Your job loading the data from the spreadsheet
-        <a href="{{route('projects.files.show', [$viewModel->project(), $file])}}">{{$file->name}}</a>
-        has completed.
-    </p>
+    @if(is_null($file))
+        <p>
+            Your job loading the data from the <a href="{{$sheetUrl}}">Google sheet</a> has completed.
+        </p>
+    @else
+        <p>
+            Your job loading the data from the spreadsheet
+            <a href="{{route('projects.files.show', [$viewModel->project(), $file])}}">{{$file->name}}</a>
+            has completed.
+        </p>
+    @endif
     <h3>
         <a href="{{route('projects.experiments.show', [$viewModel->project(), $viewModel->experiment()])}}">
             Experiment {{$viewModel->experiment()->name}}

@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use App\Traits\PathForFile;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -17,6 +18,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
+use function uniqid;
 
 class ProcessSpreadsheetJob implements ShouldQueue
 {
@@ -26,13 +29,15 @@ class ProcessSpreadsheetJob implements ShouldQueue
     private $experimentId;
     private $userId;
     private $fileId;
+    private $sheetUrl;
 
-    public function __construct($projectId, $experimentId, $userId, $fileId)
+    public function __construct($projectId, $experimentId, $userId, $fileId, $sheetUrl)
     {
         $this->projectId = $projectId;
         $this->experimentId = $experimentId;
         $this->userId = $userId;
         $this->fileId = $fileId;
+        $this->sheetUrl = $sheetUrl;
     }
 
     /**
@@ -43,16 +48,37 @@ class ProcessSpreadsheetJob implements ShouldQueue
     public function handle()
     {
         ini_set("memory_limit", "4096M");
-        $file = File::find($this->fileId);
-        $uuidPath = $this->getFilePathForFile($file);
-        $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-        $etlState = new EtlState($this->userId, $file->id);
+        if (!is_null($this->sheetUrl)) {
+            $filePath = $this->DownloadSheetAndReturnFilePath();
+            $file = null;
+            $etlState = new EtlState($this->userId, null);
+        } else {
+            $file = File::find($this->fileId);
+            $uuidPath = $this->getFilePathForFile($file);
+            $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
+            $etlState = new EtlState($this->userId, $file->id);
+        }
+
         $experiment = Experiment::findOrFail($this->experimentId);
         $experiment->etlruns()->save($etlState->etlRun);
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
         $importer->execute($filePath);
         Mail::to(User::findOrFail($this->userId))
-            ->send(new SpreadsheetLoadFinishedMail($file, Project::findOrFail($this->projectId), $experiment,
+            ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId), $experiment,
                 $etlState->etlRun));
+    }
+
+    private function DownloadSheetAndReturnFilePath(): string
+    {
+        $filename = uniqid() . '.xlsx';
+        @Storage::disk('mcfs')->createDir('__sheets');
+        $filePath = Storage::disk('mcfs')->path('__sheets/' . $filename);
+
+        // Since this is an url we need to download it.
+        $command = "curl -o \"{$filePath}\" -L {$this->sheetUrl}/export?format=xlsx";
+        $process = Process::fromShellCommandline($command);
+        $process->run();
+
+        return $filePath;
     }
 }

@@ -21,6 +21,13 @@
                       id="experiment-reload">
                     @csrf
                     @method('put')
+                    <div class="form-group">
+                        <label for="url-id">Reload Experiment From Google Sheet</label>
+                        <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
+                               id="url-id">
+                    </div>
+                    <span><b>OR</b></span>
+                    <br>
                     <label for="file_id">Reload Experiment From</label>
                     <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
                             title="Select Spreadsheet">
