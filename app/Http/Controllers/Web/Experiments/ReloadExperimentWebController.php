@@ -17,9 +17,14 @@ class ReloadExperimentWebController extends Controller
     public function __invoke(Request    $request, ReloadExperimentAction $reloadExperimentAction, Project $project,
                              Experiment $experiment)
     {
-        $request->validate(['file_id' => 'integer', 'sheet_url' => 'url']);
+        ray("ReloadExperimentWebController");
+        $request->validate(['file_id' => 'nullable|integer', 'sheet_url' => 'nullable|url']);
+        ray("past validation");
+
         $fileId = $request->get('file_id');
         $sheetUrl = $this->cleanupGoogleSheetUrl($request->get('sheet_url'));
+
+        ray("sheetUrl = {$sheetUrl}");
 
         if (is_null($fileId) && is_null($sheetUrl)) {
             // One of these must be set

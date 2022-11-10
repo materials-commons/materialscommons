@@ -10,7 +10,7 @@ use App\Models\Project;
 class StoreExperimentWebController extends Controller
 {
     public function __invoke(CreateExperimentRequest $request, CreateExperimentAction $createExperimentAction,
-        Project $project)
+                             Project                 $project)
     {
         $validated = $request->validated();
         $experiment = $createExperimentAction($validated);

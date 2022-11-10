@@ -39,13 +39,21 @@
                     <p style="margin-top: 8px">
                         Materials Commons can <b>optionally</b> import a spreadsheet to create your experiment. This
                         will set up the
-                        processes, samples and files.
+                        processes, samples and files. You can have it load a spreadsheet you've uploaded to this
+                        project, or you can specify a Google Sheet.
                     </p>
                     <p>
                         To see the format for the spreadsheet please read the
                         <a href="{{makeHelpUrl("reference/spreadsheets")}}" target="_blank">documentation</a>.
                     </p>
 
+                    <div class="form-group">
+                        <label for="url-id">Reload Experiment From Google Sheet</label>
+                        <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
+                               id="url-id">
+                    </div>
+                    <span><b>OR</b></span>
+                    <br>
                     <div class="row" style="margin-bottom: 10px">
                         <div class="col-10">
                             <a class="btn btn-info"

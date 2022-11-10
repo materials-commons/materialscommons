@@ -16,8 +16,7 @@ class SpreadsheetLoadFinishedMail extends Mailable
 {
     use Queueable, SerializesModels, DataDictionaryQueries;
 
-    /** @var \App\Models\File */
-    public $file;
+    public ?File $file;
 
     /** @var \App\Models\Experiment */
     private $experiment;
@@ -30,7 +29,7 @@ class SpreadsheetLoadFinishedMail extends Mailable
 
     public ?string $sheetUrl;
 
-    public function __construct(File $file, $sheetUrl, Project $project, Experiment $experiment, EtlRun $etlRun)
+    public function __construct(?File $file, $sheetUrl, Project $project, Experiment $experiment, EtlRun $etlRun)
     {
         $this->file = $file;
         $this->project = $project;
@@ -41,7 +40,6 @@ class SpreadsheetLoadFinishedMail extends Mailable
 
     public function build()
     {
-        $this->file->load('directory');
         $this->etlRun->load('owner');
         $viewModel = (new ShowExperimentDataDictionaryViewModel())
             ->withProject($this->project)
@@ -50,6 +48,7 @@ class SpreadsheetLoadFinishedMail extends Mailable
             ->withActivityAttributes($this->getUniqueActivityAttributesForExperiment($this->experiment->id));
 
         if (!is_null($this->file)) {
+            $this->file->load('directory');
             $subject = "Finished Loading {$this->file->name}";
         } else {
             $subject = "Finished Loading Google Sheet";
