@@ -22,6 +22,7 @@ class ShowProjectWebController extends Controller
             ->withActivityAttributesCount($this->getUniqueActivityAttributesForProject($projectId)->count())
             ->withEntityAttributesCount($this->getUniqueEntityAttributesForProject($projectId)->count())
             ->withActivitiesGroup($this->getActivitiesGroup($project->id))
+            ->withFileDescriptionTypes($project->file_types)
             ->withObjectCounts($this->getObjectTypes($project->id));
         return view('app.projects.show', $showProjectViewModel);
     }

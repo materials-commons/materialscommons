@@ -31,6 +31,12 @@ trait HasOverviews
         return $this;
     }
 
+    public function withFileDescriptionTypes($fileDescriptionTypes)
+    {
+        $this->fileDescriptionTypes = $fileDescriptionTypes;
+        return $this;
+    }
+
     public function withActivitiesGroup($activitiesGroup)
     {
         $this->activitiesGroup = $activitiesGroup;
@@ -89,13 +95,13 @@ trait HasOverviews
     private function buildFileDescriptionsFromfileTypes()
     {
         $fileDescriptionTypes = [];
-        foreach ($this->fileTypes as $fileType) {
-            $description = $this->mimeTypeToDescription($fileType->mime_type);
+        foreach ($this->fileTypes as $fileType => $count) {
+            $description = $this->mimeTypeToDescription($fileType);
             $descriptionCount = 0;
             if (array_key_exists($description, $fileDescriptionTypes)) {
                 $descriptionCount = $fileDescriptionTypes[$description];
             }
-            $fileDescriptionTypes[$description] = $descriptionCount + $fileType->count;
+            $fileDescriptionTypes[$description] = $descriptionCount + $count;
         }
 
         $this->fileDescriptionTypes = collect($fileDescriptionTypes)->sortKeys()->all();

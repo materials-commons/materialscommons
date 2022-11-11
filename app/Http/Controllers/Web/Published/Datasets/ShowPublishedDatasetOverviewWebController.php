@@ -62,7 +62,11 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                  ->select('files.mime_type', DB::raw('count(*) as count'))
                  ->groupBy('mime_type')
                  ->orderBy('mime_type')
-                 ->get();
+                 ->get()
+                 ->flatMap(function ($item) {
+                     return [$item->mime_type => $item->count];
+                 })
+                 ->all();;
     }
 
     private function getDatasetTotalFilesSize($datasetId)

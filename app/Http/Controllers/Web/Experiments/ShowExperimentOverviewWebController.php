@@ -71,7 +71,11 @@ class ShowExperimentOverviewWebController extends Controller
                  ->where('mime_type', '<>', 'directory')
                  ->groupBy('mime_type')
                  ->orderBy('mime_type')
-                 ->get();
+                 ->get()
+                 ->flatMap(function ($item) {
+                     return [$item->mime_type => $item->count];
+                 })
+                 ->all();
     }
 
     private function getObjectTypes($experimentId)
