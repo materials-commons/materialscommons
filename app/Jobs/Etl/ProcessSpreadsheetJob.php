@@ -49,10 +49,12 @@ class ProcessSpreadsheetJob implements ShouldQueue
     {
         ini_set("memory_limit", "4096M");
         if (!is_null($this->sheetUrl)) {
-            $filePath = $this->DownloadSheetAndReturnFilePath();
+            $fileName = $this->DownloadSheetAndReturnFileName();
+            $filePath = $this->getPathToSheet($fileName);
             $file = null;
             $etlState = new EtlState($this->userId, null);
         } else {
+            $fileName = "";
             $file = File::find($this->fileId);
             $uuidPath = $this->getFilePathForFile($file);
             $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
@@ -64,21 +66,31 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
         $importer->execute($filePath);
         Mail::to(User::findOrFail($this->userId))
-            ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId), $experiment,
+            ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId),
+                $experiment,
                 $etlState->etlRun));
+        if (!is_null($this->sheetUrl)) {
+            // need to delete the temporary file.
+            Storage::disk('mcfs')->delete('__sheets/'.$fileName);
+        }
     }
 
-    private function DownloadSheetAndReturnFilePath(): string
+    private function DownloadSheetAndReturnFileName(): string
     {
-        $filename = uniqid() . '.xlsx';
+        $filename = uniqid().'.xlsx';
         @Storage::disk('mcfs')->createDir('__sheets');
-        $filePath = Storage::disk('mcfs')->path('__sheets/' . $filename);
+        $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
 
         // Since this is an url we need to download it.
         $command = "curl -o \"{$filePath}\" -L {$this->sheetUrl}/export?format=xlsx";
         $process = Process::fromShellCommandline($command);
         $process->run();
 
-        return $filePath;
+        return $filename;
+    }
+
+    private function getPathToSheet($filename): string
+    {
+        return Storage::disk('mcfs')->path('__sheets/'.$filename);
     }
 }
