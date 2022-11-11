@@ -48,7 +48,7 @@
                     </p>
 
                     <div class="form-group">
-                        <label for="url-id">Reload Experiment From Google Sheet</label>
+                        <label for="url-id">Load Experiment From Google Sheet</label>
                         <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
                                id="url-id">
                     </div>
