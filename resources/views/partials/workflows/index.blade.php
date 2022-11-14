@@ -67,11 +67,11 @@
             if (item) {
                 let firstTick = item[0].indexOf('`'),
                     secondTick = item[0].lastIndexOf('`'),
-                    workflowCode = item[0].substr(firstTick + 1, secondTick - firstTick - 1);
+                    workflowCode = item[0].slice(firstTick + 1, secondTick - firstTick - 1);
 
                 let part1 = item[0].indexOf('#">'),
                     part2 = item[0].indexOf("</a>"),
-                    workflowName = item[0].substr(part1 + 3, part2 - part1 - 3);
+                    workflowName = item[0].slice(part1 + 3, part2 - part1 - 3);
 
                 showWorkflow(workflowCode, workflowName);
             }

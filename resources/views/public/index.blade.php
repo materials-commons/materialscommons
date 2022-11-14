@@ -67,7 +67,7 @@
                             name: 'published_at',
                             render: function (data, type, row) {
                                 let space = data.indexOf(' ');
-                                return data.substr(0, space);
+                                return data.slice(0, space);
                             }
                         },
                         {name: 'summary'},
