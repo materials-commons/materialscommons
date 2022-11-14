@@ -2,25 +2,18 @@
 
 namespace App\View\Components\Projects;
 
+use App\Models\Project;
 use Illuminate\View\Component;
 
 class ShowRecentUploads extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public Project $project;
+
+    public function __construct(Project $project)
     {
-        //
+        $this->project = $project;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
     public function render()
     {
         return view('components.projects.show-recent-uploads');

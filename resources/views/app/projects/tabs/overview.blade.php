@@ -37,5 +37,7 @@
     </div>
 </form>
 @include('partials.overview._overview')
+{{--<br/>--}}
+{{--<x-projects.list-notebooks :project="$project"/>--}}
 <br/>
-<x-projects.list-notebooks :project="$project"/>
+<x-projects.show-recent-uploads :project="$project"/>

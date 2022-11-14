@@ -90,6 +90,7 @@
             }
             $('#projects').DataTable({
                 stateSave: true,
+                pageLength: 100,
                 columnDefs: [
                     {orderData: [8], targets: [7]},
                     {targets: [8], visible: false, searchable: false},
