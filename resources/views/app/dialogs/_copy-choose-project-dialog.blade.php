@@ -16,9 +16,11 @@
                     </option>
                     @foreach($projects as $p)
                         @if($p->id != $project->id)
-                            <option data-tokens="{{$p->id}}" value="{{$p->id}}" data-root-id="{{$p->rootDir->id}}">
-                                {{$p->name}} ({{$p->owner->name}})
-                            </option>
+                            @if(isset($p->rootDir))
+                                <option data-tokens="{{$p->id}}" value="{{$p->id}}" data-root-id="{{$p->rootDir->id}}">
+                                    {{$p->name}} ({{$p->owner->name}})
+                                </option>
+                            @endif
                         @endif
                     @endforeach
                 </select>
