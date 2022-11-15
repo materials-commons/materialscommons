@@ -1,3 +1,6 @@
+@if($globusUploads->count() !== 0)
+    <div class="mb-4" id="countdown">Refresh in 10 seconds...</div>
+@endif
 <table id="globus-uploads" class="table table-hover">
     <thead>
     <tr>
@@ -73,5 +76,19 @@
                 @endif
             });
         });
+
+        @if($globusUploads->count() !== 0)
+        let countDown = 10;
+        setInterval(() => {
+            countDown -= 2;
+            if (countDown <= 0) {
+                clearInterval();
+                location.reload();
+            } else {
+                let e = document.getElementById("countdown");
+                e.innerText = `Refresh in ${countDown} seconds...`;
+            }
+        }, 2000)
+        @endif
     </script>
 @endpush

@@ -76,7 +76,6 @@
             let countDown = 10;
             setInterval(() => {
                 countDown -= 2;
-                console.log(`count = ${countDown}`);
                 if (countDown <= 0) {
                     clearInterval();
                     location.reload();
