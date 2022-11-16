@@ -48,6 +48,10 @@
                     </p>
 
                     <div class="form-group">
+                        <p>
+                            <b>If loading from a Google Sheet, you must set the share permissions to "Anyone with the link"
+                                under General Access in the share popup.</b>
+                        </p>
                         <label for="url-id">Load Experiment From Google Sheet</label>
                         <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
                                id="url-id">
