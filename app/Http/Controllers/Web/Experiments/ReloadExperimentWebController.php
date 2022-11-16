@@ -17,14 +17,10 @@ class ReloadExperimentWebController extends Controller
     public function __invoke(Request    $request, ReloadExperimentAction $reloadExperimentAction, Project $project,
                              Experiment $experiment)
     {
-        ray("ReloadExperimentWebController");
         $request->validate(['file_id' => 'nullable|integer', 'sheet_url' => 'nullable|url']);
-        ray("past validation");
 
         $fileId = $request->get('file_id');
         $sheetUrl = $this->cleanupGoogleSheetUrl($request->get('sheet_url'));
-
-        ray("sheetUrl = {$sheetUrl}");
 
         if (is_null($fileId) && is_null($sheetUrl)) {
             // One of these must be set
@@ -47,7 +43,7 @@ class ReloadExperimentWebController extends Controller
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 
-    private function cleanupGoogleSheetUrl($url): string
+    private function cleanupGoogleSheetUrl($url): ?string
     {
         if (Str::contains($url, "/edit?")) {
             // Remove /edit from the end of the url
