@@ -110,14 +110,16 @@
                 </thead>
                 <tbody>
                 @foreach($files as $file)
-                    <tr>
+                    <tr draggable="true">
                         <td>
                             @if($file->isDir())
-                                <a class="no-underline" href="{{route('projects.folders.show', [$project, $file])}}">
+                                <a class="no-underline" data-type="dir" data-id="{{$file->id}}"
+                                   href="{{route('projects.folders.show', [$project, $file])}}">
                                     <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                 </a>
                             @else
-                                <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
+                                <a class="no-underline" data-type="file" data-id="{{$file->id}}"
+                                   href="{{route('projects.files.show', [$project, $file])}}">
                                     <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
                                 </a>
                             @endif
@@ -155,6 +157,19 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <div class="row">
+                <div class="col-4" draggable="true" id="source">Drag me</div>
+            </div>
+            <div class="row">
+                <form id="drop-destination" hx-trigger="myevent" hx-post="/stuff">
+                    <div class="col-9" style="border-width:5px; border-style:dashed; width:500px; height: 200px">
+
+                    </div>
+                    <input hidden name="type" value="" id="dest-1-type">
+                    <input hidden name="id" value="" id="dest-1-id">
+                </form>
+            </div>
         </x-slot>
     </x-card>
 
@@ -170,6 +185,41 @@
                         {targets: [3], visible: false},
                     ]
                 });
+
+                let dest = document.getElementById('drop-destination');
+                dest.addEventListener('dragend', dragEnd);
+                dest.addEventListener('drop', drop);
+                dest.addEventListener('dragover', dragOver);
+
+                let src = document.getElementById('source');
+                src.addEventListener('drop', drop);
+
+                // src.addEventListener('dragover', dragOver);
+
+                function dragEnd(e) {
+                    e.preventDefault();
+                    console.log('dragEnd');
+                }
+
+                function drop(e) {
+                    console.log('drop');
+                    console.log(e);
+                    let srcData = e.dataTransfer.getData('text/html');
+                    console.log('srcData = ', srcData);
+                    let dataId = $(srcData).attr('data-id');
+                    let dataType = $(srcData).attr('data-type');
+                    console.log('  dataId = ', dataId);
+                    console.log('  dataType = ', dataType);
+                    const myEvent = new Event("myevent");
+                    document.getElementById('dest-1-id').setAttribute('value', dataId);
+                    document.getElementById('dest-1-type').setAttribute('value', dataType);
+                    document.getElementById("drop-destination").dispatchEvent(myEvent);
+                }
+
+                function dragOver(e) {
+                    console.log('dragOver');
+                    e.preventDefault();
+                }
             });
         </script>
     @endpush
