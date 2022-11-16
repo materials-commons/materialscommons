@@ -20,6 +20,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer owner_id
  * @property integer size
  * @property integer file_count
+ * @property string $type
  * @property integer directory_count
  * @property array file_types
  * @property mixed deleted_at

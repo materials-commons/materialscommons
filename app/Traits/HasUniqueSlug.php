@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\Entity;
+use App\Models\Experiment;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +40,19 @@ trait HasUniqueSlug
 
         $slugifiedName = Str::lower($username);
         $this->addUniqueSlugToItem($user, $slugifiedName, $user->id);
+    }
+
+    private function addUniqueSlugToEntity(Entity $entity, ?Experiment $experiment)
+    {
+        $slugifedName = slugify($entity->name);
+        if (!is_null($experiment)) {
+            $slugifedName = $slugifedName . '-' . $experiment->uuid;
+        }
+
+        // Because entities can be re-created the id will change. So for the 3rd parameter we will always
+        // set the id to add to 0. This will hopefully minimize any drift on names for re-recreated entities
+        // when a re-load takes place.
+        $this->addUniqueSlugToItem($entity, $slugifedName, 0);
     }
 
     private function addUniqueSlugToItem($item, $slugifiedName, $id)

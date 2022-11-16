@@ -24,10 +24,11 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'string|max:80',
-            'description' => 'nullable|string|max:8192',
-            'summary'     => 'nullable|string|max:100',
-            'is_active'   => 'boolean',
+            'name'             => 'string|max:80',
+            'description'      => 'nullable|string|max:8192',
+            'summary'          => 'nullable|string|max:100',
+            'is_active'        => 'boolean',
+            'is_computational' => 'boolean'
         ];
     }
 }

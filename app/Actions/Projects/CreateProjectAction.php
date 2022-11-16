@@ -28,6 +28,10 @@ class CreateProjectAction
         $data['directory_count'] = 0;
         $data['size'] = 0;
         $data['disk'] = 'mcfs';
+        $data['type'] = 'exp';
+        if (isset($data['is_computational']) && $data['is_computational']) {
+            $data['type'] = 'comp';
+        }
         $project = new Project($data);
         $project->owner_id = $ownerId;
 

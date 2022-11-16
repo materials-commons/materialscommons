@@ -24,10 +24,11 @@ class CreateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string|max:80',
-            'description' => 'nullable|string|max:8192',
-            'summary'     => 'nullable|string|max:100',
-            'is_active'   => 'boolean',
+            'name'             => 'required|string|max:80',
+            'description'      => 'nullable|string|max:8192',
+            'summary'          => 'nullable|string|max:100',
+            'is_active'        => 'boolean',
+            'is_computational' => 'boolean'
         ];
     }
 }
