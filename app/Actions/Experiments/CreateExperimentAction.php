@@ -47,7 +47,7 @@ class CreateExperimentAction
         return $experiment;
     }
 
-    private function cleanupGoogleSheetUrl($url): string
+    private function cleanupGoogleSheetUrl($url): ?string
     {
         if (Str::contains($url, "/edit?")) {
             // Remove /edit from the end of the url
