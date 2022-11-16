@@ -46,6 +46,33 @@
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
 
+    <div class="row">
+        <form c>
+            <div class="col-3" id="drop-destination-1" hx-trigger="myevent" hx-post="/stuff"
+                    style="border-width:5px; border-style:dashed; height: 200px">
+
+            </div>
+            <input hidden name="type" value="" id="dest-1-type">
+            <input hidden name="id" value="" id="dest-1-id">
+        </form>
+
+        <form class="col-3" id="drop-destination-2" hx-trigger="myevent" hx-post="/stuff">
+            <div style="border-width:5px; border-style:dashed; xheight: 200px">
+abc
+            </div>
+            <input hidden name="type" value="" id="dest-2-type">
+            <input hidden name="id" value="" id="dest-2-id">
+        </form>
+
+        <form class="col-3" id="drop-destination-3" hx-trigger="myevent" hx-post="/stuff">
+            <div class="col-3" style="border-width:5px; border-style:dashed; xheight: 200px">
+def
+            </div>
+            <input hidden name="type" value="" id="dest-3-type">
+            <input hidden name="id" value="" id="dest-3-id">
+        </form>
+    </div>
+
     <div class="form-group">
         <label for="funding">Funding</label>
         <textarea class="form-control" id="funding" name="funding"

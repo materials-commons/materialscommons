@@ -162,13 +162,13 @@
                 <div class="col-4" draggable="true" id="source">Drag me</div>
             </div>
             <div class="row">
-                <form id="drop-destination" hx-trigger="myevent" hx-post="/stuff">
-                    <div class="col-9" style="border-width:5px; border-style:dashed; width:500px; height: 200px">
-
+                <div class="col-9" id="drop-destination" hx-trigger="myevent" hx-post="/stuff" hx-include="#include-me"
+                     style="border-width:5px; border-style:dashed; width:500px; height: 200px">
+                    <div id="include-me">
+                        <input hidden name="type" value="" id="dest-1-type">
+                        <input hidden name="id" value="" id="dest-1-id">
                     </div>
-                    <input hidden name="type" value="" id="dest-1-type">
-                    <input hidden name="id" value="" id="dest-1-id">
-                </form>
+                </div>
             </div>
         </x-slot>
     </x-card>
