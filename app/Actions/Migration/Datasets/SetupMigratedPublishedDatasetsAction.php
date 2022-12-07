@@ -35,7 +35,7 @@ class SetupMigratedPublishedDatasetsAction
                     if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
                         $this->setupGlobusAccessForDataset($dataset);
                     } else {
-                        ($this->createDatsetInGlobusAction)($dataset->id, false);
+                        ($this->createDatsetInGlobusAction)($dataset, false);
                     }
                 }
             } catch (\Exception $e) {
@@ -55,11 +55,11 @@ class SetupMigratedPublishedDatasetsAction
         }
         $newZipfilePath = $dataset->zipfilePath();
         try {
-            if (!link($existingZipfilePath, $newZipfilePath)) {
-                echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
+            if (!symlink($existingZipfilePath, $newZipfilePath)) {
+                echo "Unable to symlink {$existingZipfilePath} to {$newZipfilePath}\n";
             }
         } catch (\Exception $e) {
-            echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
+            echo "Unable to symlink {$existingZipfilePath} to {$newZipfilePath}\n";
             $exceptionMessage = $e->getMessage();
             echo "  Reason: {$exceptionMessage}\n";
         }

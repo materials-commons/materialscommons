@@ -38,15 +38,15 @@ class CreateDatasetInGlobusAction
             $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
             try {
                 if (!file_exists($filePath)) {
-                    if (!link($uuidPath, $filePath)) {
-                        Log::error("Unable to link {$uuidPath} to {$filePath}");
-                        echo "Unable to link {$uuidPath} to {$filePath}\n";
+                    if (!symlink($uuidPath, $filePath)) {
+                        Log::error("Unable to symlink {$uuidPath} to {$filePath}");
+                        echo "Unable to symlink {$uuidPath} to {$filePath}\n";
                     }
                 }
             } catch (\Exception $e) {
-                Log::error("Unable to link {$uuidPath} to {$filePath}");
+                Log::error("Unable to symlink {$uuidPath} to {$filePath}");
                 $msg = $e->getMessage();
-                echo "Unable to link {$uuidPath} to {$filePath}: {$msg}\n";
+                echo "Unable to symlink {$uuidPath} to {$filePath}: {$msg}\n";
             }
         }
 

@@ -134,11 +134,11 @@ class SetupExistingOpenVisusIdxCommand extends Command
             echo "   {$uuidPath}\n";
             echo "   {$path}\n";
             try {
-                if (!link($uuidPath, $path)) {
-                    echo "Unable to link {$uuidPath} to {$path}\n";
+                if (!symlink($uuidPath, $path)) {
+                    echo "Unable to symlink {$uuidPath} to {$path}\n";
                 }
             } catch (\Exception $e) {
-                echo "Unable to link {$uuidPath} to {$path}\n";
+                echo "Unable to symlink {$uuidPath} to {$path}\n";
             }
 
             // Link bin files for idx
@@ -155,11 +155,11 @@ class SetupExistingOpenVisusIdxCommand extends Command
                         echo "      {$uuidPath}\n";
                         echo "      {$path}\n";
                         try {
-                            if (!link($uuidPath, $path)) {
-                                echo "Unable to link {$uuidPath} to {$path}\n";
+                            if (!symlink($uuidPath, $path)) {
+                                echo "Unable to symlink {$uuidPath} to {$path}\n";
                             }
                         } catch (\Exception $e) {
-                            echo "Unable to link {$uuidPath} to {$path}\n";
+                            echo "Unable to symlink {$uuidPath} to {$path}\n";
                         }
                     }
                 });

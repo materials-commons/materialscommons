@@ -58,13 +58,13 @@ class CreateGlobusProjectDownloadDirsAction
                 try {
                     $dirPathForFilePartial = "__globus_downloads/{$globusDownload->uuid}{$dir->path}";
                     $this->createDirIfNotExists($dirPathForFilePartial);
-                    if (!link($uuidPath, $filePath)) {
-                        echo "Unable to link {$uuidPath} to {$filePath}\n";
-                        Log::error("Unable to link {$uuidPath} to {$filePath}");
+                    if (!symlink($uuidPath, $filePath)) {
+                        echo "Unable to symlink {$uuidPath} to {$filePath}\n";
+                        Log::error("Unable to symlink {$uuidPath} to {$filePath}");
                     }
                 } catch (\Exception $e) {
-                    echo "Unable to link {$uuidPath} to {$filePath}\n";
-                    Log::error("Unable to link {$uuidPath} to {$filePath}");
+                    echo "Unable to symlink {$uuidPath} to {$filePath}\n";
+                    Log::error("Unable to symlink {$uuidPath} to {$filePath}");
                 }
             }
         }
