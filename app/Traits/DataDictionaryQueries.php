@@ -97,7 +97,7 @@ trait DataDictionaryQueries
         // TBD Not sure what the query is...
     }
 
-    public function getUniqueActivityAttributesForProject($projectId)
+    public function getUniqueActivityAttributesForProjectFragment($projectId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -110,9 +110,12 @@ trait DataDictionaryQueries
                  ->where('attributable_type', Activity::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
-                 ->distinct()
-                 ->get()
-                 ->groupBy('name');
+                 ->distinct();
+    }
+
+    public function getUniqueActivityAttributesForProject($projectId)
+    {
+        return $this->getUniqueActivityAttributesForProjectFragment($projectId)->get()->groupBy('name');
     }
 
     public function getActivityAttributeForProject($projectId, $attrName)
@@ -137,7 +140,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    public function getUniqueEntityAttributesForProject($projectId)
+    public function getUniqueEntityAttributesForProjectFragment($projectId)
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -151,9 +154,12 @@ trait DataDictionaryQueries
                  )
                  ->where('attributable_type', EntityState::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
-                 ->distinct()
-                 ->get()
-                 ->groupBy('name');
+                 ->distinct();
+    }
+
+    public function getUniqueEntityAttributesForProject($projectId)
+    {
+        return $this->getUniqueActivityAttributesForProjectFragment($projectId)->get()->groupBy('name');
     }
 
     public function getEntityAttributeForProject($projectId, $attrName)
