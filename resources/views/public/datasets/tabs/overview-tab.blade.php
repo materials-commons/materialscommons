@@ -18,5 +18,8 @@
     <x-datasets.show-papers-list :papers="$dataset->papers"/>
 
     @include('partials.overview._overview')
+
+    <x-datasets.show-overview-files :dataset="$dataset"/>
+
 </form>
 

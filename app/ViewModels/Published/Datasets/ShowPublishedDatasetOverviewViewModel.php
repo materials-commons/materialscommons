@@ -5,6 +5,7 @@ namespace App\ViewModels\Published\Datasets;
 use App\Models\Dataset;
 use App\Traits\Notifications\NotificationChecker;
 use App\ViewModels\Concerns\HasOverviews;
+use App\ViewModels\Files\FileView;
 use Spatie\ViewModels\ViewModel;
 
 class ShowPublishedDatasetOverviewViewModel extends ViewModel

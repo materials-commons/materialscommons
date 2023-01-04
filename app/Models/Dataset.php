@@ -42,6 +42,12 @@ use Spatie\Tags\HasTags;
  * @property string $doi
  * @property integer zipfile_size
  * @property boolean globus_path_exists
+ * @property integer file1_id
+ * @property integer file2_id
+ * @property integer file3_id
+ * @property integer file4_id
+ * @property integer file5_id
+ * @property string app_url
  *
  * @mixin Builder
  */
@@ -114,6 +120,31 @@ class Dataset extends Model implements Searchable
     {
         return $this->hasOne(File::class, 'dataset_id')
                     ->where('path', '/');
+    }
+
+    public function file1()
+    {
+        return $this->belongsTo(File::class, 'file1_id');
+    }
+
+    public function file2()
+    {
+        return $this->belongsTo(File::class, 'file2_id');
+    }
+
+    public function file3()
+    {
+        return $this->belongsTo(File::class, 'file3_id');
+    }
+
+    public function file4()
+    {
+        return $this->belongsTo(File::class, 'file4_id');
+    }
+
+    public function file5()
+    {
+        return $this->belongsTo(File::class, 'file5_id');
     }
 
 //    public function files()
