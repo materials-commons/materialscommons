@@ -80,6 +80,7 @@
         <script>
             $(document).ready(function () {
                 $('#users').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

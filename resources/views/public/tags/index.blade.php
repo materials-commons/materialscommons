@@ -41,6 +41,7 @@
         <script>
             $(document).ready(() => {
                 $('#tags').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

@@ -38,6 +38,7 @@
         <script>
             $(document).ready(() => {
                 $('#authors').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

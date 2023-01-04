@@ -28,6 +28,7 @@
     <script>
         $(document).ready(() => {
             $('#datasets').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

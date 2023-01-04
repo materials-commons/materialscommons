@@ -24,6 +24,7 @@
     <script>
         $(document).ready(() => {
             $('#links').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

@@ -88,6 +88,7 @@
         <script>
             $(document).ready(() => {
                 $('#trash').DataTable({
+                    pageLength: 100,
                     // stateSave: true,
                 });
             });

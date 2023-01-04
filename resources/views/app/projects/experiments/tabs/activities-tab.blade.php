@@ -20,6 +20,7 @@
             let projectId = "{{$project->id}}",
                 experimentId = "{{$experiment->id}}";
             $('#activities').DataTable({
+                pageLength: 100,
                 serverSide: true,
                 processing: true,
                 response: true,

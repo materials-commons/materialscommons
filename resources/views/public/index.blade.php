@@ -41,6 +41,7 @@
         <script>
             $(document).ready(() => {
                 $('#datasets').DataTable({
+                    pageLength: 100,
                     serverSide: true,
                     processing: true,
                     response: true,

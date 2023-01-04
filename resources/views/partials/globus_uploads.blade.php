@@ -59,6 +59,7 @@
     <script>
         $(document).ready(() => {
             $('#globus-uploads').DataTable({
+                pageLength: 100,
                 stateSave: true,
                 @if($showProject)
                 columnDefs: [

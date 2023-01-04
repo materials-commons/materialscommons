@@ -36,6 +36,7 @@
     <script>
         $(document).ready(() => {
             $('#etl-runs').DataTable({
+                pageLength: 100,
                 stateSave: true,
                 columnDefs: [
                     {orderData: [2], targets: [1]},

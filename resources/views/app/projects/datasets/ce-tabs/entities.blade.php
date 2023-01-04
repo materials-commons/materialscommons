@@ -46,6 +46,7 @@
 
         $(document).ready(() => {
             $('#entities').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

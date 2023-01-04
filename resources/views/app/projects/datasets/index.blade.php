@@ -77,6 +77,7 @@
         <script>
             $(document).ready(() => {
                 $('#datasets').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                     columnDefs: [
                         {orderData: [5], targets: [4]},

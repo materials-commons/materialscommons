@@ -32,6 +32,7 @@
     <script>
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({
+                pageLength: 100,
                 stateSave: true,
                 scrollX: true,
             });

@@ -52,6 +52,7 @@
             $(document).ready(() => {
                 let projectId = "{{$project->id}}";
                 $('#activities').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

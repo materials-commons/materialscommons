@@ -41,6 +41,7 @@
     <script>
         $(document).ready(() => {
             $('#notebooks').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

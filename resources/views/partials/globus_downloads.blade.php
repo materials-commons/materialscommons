@@ -54,6 +54,7 @@
     <script>
         $(document).ready(() => {
             $('#globus-downloads').DataTable({
+                pageLength: 100,
                 stateSave: true,
                 @if($showProject)
                 columnDefs: [

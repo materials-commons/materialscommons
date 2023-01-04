@@ -149,6 +149,7 @@
                 let rows, rows2;
 
                 $('#left').DataTable({
+                    pageLength: 100,
                     columnDefs: [
                         {orderData: [3], targets: [2]},
                         {targets: [3], visible: false},
@@ -167,6 +168,7 @@
                 });
 
                 $('#right').DataTable({
+                    pageLength: 100,
                     columnDefs: [
                         {orderData: [3], targets: [2]},
                         {targets: [3], visible: false},
