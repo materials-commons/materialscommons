@@ -16,7 +16,7 @@ class ShowEntityWebController extends Controller
     {
         $project = Project::with('entities')->findOrFail($projectId);
         $entityId = $request->route('entity');
-        $entity = Entity::with(['activities'])->findOrFail($entityId);
+        $entity = Entity::with(['activities.tags', 'tags'])->findOrFail($entityId);
         $activityIds = $entity->activities->pluck('id')->toArray();
 
         return view('app.projects.entities.show-grouped', [

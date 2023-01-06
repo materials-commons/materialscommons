@@ -18,6 +18,9 @@ class RowTracker
     public $activityAttributesHash;
     public $rowNumber;
 
+    public $entityTags;
+    public $activityTags;
+
     private static $blankCellKeywords = [
         'n/a'   => true,
         'blank' => true,
