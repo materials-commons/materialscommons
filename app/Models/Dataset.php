@@ -359,4 +359,18 @@ class Dataset extends Model implements Searchable
     {
         return $this->files()->where('file_id', $fileId)->count() != 0;
     }
+
+    /*
+     * Laratables
+     */
+
+    // ds_authors column is json. It appears that json columns are case-sensitive. This makes sense
+    // since keys for json are case-sensitive. However, when searching ds_authors column we want to
+    // the query to be case-insensitive. We do this by forcing the collation scheme to be
+    // case-insensitive.
+    public static function laratablesSearchDSAuthors($query, $searchValue)
+    {
+        return $query->orWhereRaw("ds_authors COLLATE utf8mb4_general_ci like '%".$searchValue."%'");
+    }
+
 }
