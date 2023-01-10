@@ -75,12 +75,17 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // MQL Queries
     require base_path('routes/api_routes/query_api.php');
+
+    // VASP Calls
+    require base_path('routes/api_routes/projects_vasp_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);
 
 // Published Datasets
 require base_path('routes/api_routes/published_datasets_api.php');
+
+require base_path('routes/api_routes/published_datasets_vasp_api.php');
 
 // Other published attributes
 require base_path('routes/api_routes/published_api.php');
