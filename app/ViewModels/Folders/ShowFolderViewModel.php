@@ -15,7 +15,7 @@ class ShowFolderViewModel extends ViewModel
     protected ?Dataset $dataset;
     protected $projects;
 
-    public function __construct(File $directory, $files)
+    public function __construct(?File $directory, $files)
     {
         $this->directory = $directory;
         $this->files = $files;
