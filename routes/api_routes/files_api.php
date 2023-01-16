@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\Files\CreateFileApiController;
 use App\Http\Controllers\Api\Files\DeleteFileApiController;
 use App\Http\Controllers\Api\Files\DownloadFileApiController;
 use App\Http\Controllers\Api\Files\GetFileByPathApiController;
+use App\Http\Controllers\Api\Files\IndexAllProjectsForFilesMatchingApiController;
+use App\Http\Controllers\Api\Files\IndexProjectForFilesMatchingApiController;
 use App\Http\Controllers\Api\Files\MoveFileApiController;
 use App\Http\Controllers\Api\Files\RenameFileApiController;
 use App\Http\Controllers\Api\Files\SetAsActiveFileVersionApiController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\Api\Files\UploadFileNamedApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/files', CreateFileApiController::class);
+Route::post("/projects/files/matching", IndexAllProjectsForFilesMatchingApiController::class);
 Route::put('/files/{file}', UpdateFileApiController::class);
 Route::put('/projects/{project}/files/{file}/make_active', SetAsActiveFileVersionApiController::class);
 Route::delete('/projects/{project}/files/{file}', DeleteFileApiController::class);
@@ -28,3 +31,4 @@ Route::post('/projects/{project}/files/{file}/upload', UploadFileApiController::
      ->name('api.projects.files.upload');
 Route::post('/projects/{project}/files/{file}/upload/{name}', UploadFileNamedApiController::class)
      ->name('api.projects.files.upload.named');
+Route::post("/projects/{project}/files/matching", IndexProjectForFilesMatchingApiController::class);

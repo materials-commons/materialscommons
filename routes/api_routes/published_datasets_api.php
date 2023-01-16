@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\Datasets\Directories\IndexPublishedDatasetDirectory
 use App\Http\Controllers\Api\Datasets\Directories\ShowPublishedDatasetDirectoryApiController;
 use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetFileApiController;
 use App\Http\Controllers\Api\Datasets\DownloadPublishedDatasetZipfileApiController;
+use App\Http\Controllers\Api\Datasets\IndexAllPublishedDatasetsForFilesMatchingApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetActivitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetEntitiesApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetFilesApiController;
+use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetForFilesMatchingApiController;
 use App\Http\Controllers\Api\Datasets\IndexPublishedDatasetsApiController;
 use App\Http\Controllers\Api\Datasets\ShowPublishedDatasetApiController;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +25,12 @@ Route::get('/published/datasets/{dataset}/files/{file}/download', DownloadPublis
 Route::get('/published/datasets/{dataset}/download_zipfile', DownloadPublishedDatasetZipfileApiController::class);
 
 // Published dataset directories
-
 Route::get('/published/datasets/{dataset}/directories/{directory}', ShowPublishedDatasetDirectoryApiController::class);
 Route::get('/published/datasets/{dataset}/directories/{directory}/list',
     IndexPublishedDatasetDirectoryApiController::class);
 Route::get('/published/datasets/{dataset}/directories_by_path',
     IndexPublishedDatasetDirectoryByPathApiController::class);
+
+// Find file matches
+Route::post("/published/datasets/files/matching", IndexAllPublishedDatasetsForFilesMatchingApiController::class);
+Route::post("/published/datasets/{dataset}/files/matching", IndexPublishedDatasetForFilesMatchingApiController::class);
