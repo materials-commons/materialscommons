@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\DeleteFolderWebController;
 use App\Http\Controllers\Web\Folders\DestroyFolderWebController;
+use App\Http\Controllers\Web\Folders\DTGetProjectDirectoryFilesWebController;
 use App\Http\Controllers\Web\Folders\Filter\DTGetFilesForUserFilterWebController;
 use App\Http\Controllers\Web\Folders\Filter\ShowFilesFilteredForUserWebController;
 use App\Http\Controllers\Web\Folders\Filter\ShowFilterFilesByUserWebController;
@@ -85,6 +86,8 @@ Route::get('/projects/{project}/filter/folders/show-for-user/{user}', ShowFilesF
      ->name('projects.folders.filter.show-for-user');
 Route::get('/projects/{project}/filter/folders/dt-show-for-user/{user}', DTGetFilesForUserFilterWebController::class)
      ->name('projects.folders.filter.dt_get_files_for_user_filter');
+Route::get('/projects/{project}/folders/{dir}/dt-get-directory-files', DTGetProjectDirectoryFilesWebController::class)
+    ->name('projects.folders.dt-get-directory-files');
 
 
 

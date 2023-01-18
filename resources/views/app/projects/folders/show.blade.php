@@ -101,6 +101,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>ID</th>
                     <th>Type</th>
                     <th>Size</th>
                     <th>Real Size</th>
@@ -163,12 +164,70 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
+                let projectId = "{{$project->id}}";
+                let directoryId = "{{$directory->id}}";
+
                 $('#files').DataTable({
                     pageLength: 100,
+                    serverSide: true,
+                    processing: true,
+                    response: true,
                     stateSave: true,
+                    ajax: "{{route('projects.folders.dt-get-directory-files', [$project, $directory])}}",
+                    columns: [
+                        {
+                            name: 'name',
+                            render: function(data, type, row) {
+                                if (type !== 'display') {
+                                    return data;
+                                }
+
+                                let fileId = row["1"];
+                                let fileType = row["2"];
+
+                                // Default to file for route and icon.
+                                let r = "",
+                                    icon = `<i class="fa-fw fas fa-file mr-2"></i> ${data}`;
+                                if (fileType === "directory") {
+                                    r = route('projects.folders.show', [projectId, fileId]);
+                                    icon = `<i class="fa-fw fas fa-folder mr-2"></i> ${data}`
+
+                                }
+                                return `<a class="no-underline" href="${r}"> ${icon} </a>`;
+                            }
+                        },
+
+                        {
+                            name: 'size',
+                            render: function(data, type, row) {
+                                if (type === "display") {
+                                    return formatters.humanFileSize(data);
+                                }
+                                return data;
+                            }
+                        }
+                    ],
                     columnDefs: [
                         {orderData: [3], targets: [2]},
                         {targets: [3], visible: false},
+                        {
+                            targets: [4],
+                            data: null,
+                            render: function(data, type, row) {
+                                if (type == "display") {
+                                    let r = route()
+                                    return `<a href=`;
+                                }
+                                return "";
+                            }
+                        },
+                        {
+                            targets:[5],
+                            data: null,
+                            render: function(data, type, row) {
+                                return "";
+                            }
+                        }
                     ]
                 });
             });
