@@ -29,6 +29,9 @@ class PublicDataController extends Controller
     {
         return Laratables::recordsOf(Dataset::class, function ($query) {
             return $query->withCount('views', 'downloads')
+                         ->whereDoesntHave('tags', function ($q) {
+                             $q->where('tags.id', config('visus.tag_id'));
+                         })
                          ->whereNotNull('published_at');
         });
     }
