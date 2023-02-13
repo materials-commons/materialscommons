@@ -115,6 +115,7 @@ Route::prefix('public')->group(function () {
     require base_path('routes/web_routes/published_authors_web.php');
     require base_path('routes/web_routes/published_tags_web.php');
     require base_path('routes/web_routes/published_openvisus_web.php');
+    require base_path('routes/web_routes/published_reference_web.php');
 //        require base_path('routes/web_routes/public_projects_web.php');
 });
 

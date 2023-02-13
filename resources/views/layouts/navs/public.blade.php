@@ -18,25 +18,22 @@
             @endauth
 
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNavByName('public.index')}}" href="{{route('public.index')}}">
-                    <i class="fa-fw fas fa-globe mr-2"></i>
-                    Public Data
-                </a>
-            </li>
-
-            <li class="nav-item">
                 @auth
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.publish')}}"
+                    <a class="nav-link fs-11 {{setActiveNavByName('public.publish')}}"
                        href="{{route('public.publish.wizard.choose_create_or_select_project')}}">
                         <i class="fa-fw fas fa-file-export mr-2"></i>
                         Publish
                     </a>
                 @else
-                    <a class="nav-link fs-11 ml-3" href="{{route('login-for-upload')}}">
+                    <a class="nav-link fs-11" href="{{route('login-for-upload')}}">
                         <i class="fa-fw fas fa-file-export mr-2"></i>
                         Publish
                     </a>
                 @endauth
+            </li>
+
+            <li class="nav-item">
+                <span class="ml-3">Published Data</span>
             </li>
 
 
@@ -53,48 +50,63 @@
             {{--                            <span data-feather="home"></span>--}}
             {{--                            <i class="fa-fw fas fa-project-diagram mr-2"></i>--}}
             {{--                            Projects--}}
-                {{--                        </a>--}}
-                {{--                    </li>--}}
+            {{--                        </a>--}}
+            {{--                    </li>--}}
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}"
+                   href="{{route('public.datasets.index')}}">
+                    <i class="fa-fw fas fa-book mr-2"></i>
+                    Datasets
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
+                   href="{{route('public.openvisus.index', ['tag' => 'OpenVisus'])}}">
+                    <i class="fa-fw fas fa-cube mr-2"></i> OpenVisus Datasets
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.communities')}}"
+                   href="{{route('public.communities.index')}}">
+                    <i class="fa-fw fas fa-users mr-2"></i>
+                    Communities
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}"
+                   href="{{route('public.authors.index')}}">
+                    <i class="fa-fw fas fa-user-friends mr-2"></i>
+                    Authors
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}"
+                   href="{{route('public.tags.index')}}">
+                    <i class="fa-fw fas fa-tags mr-2"></i>
+                    Tags
+                </a>
+            </li>
+
+            @if(true)
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.communities')}}"
-                       href="{{route('public.communities.index')}}">
-                        <i class="fa-fw fas fa-users mr-2"></i>
-                        Communities
-                    </a>
+                    <span class="ml-3">Reference Data</span>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.datasets')}}"
-                       href="{{route('public.datasets.index')}}">
-                        <i class="fa-fw fas fa-book mr-2"></i>
-                        Datasets
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
+                       href="http://localhost:9000" target="_blank">
+                        <i class="fa-fw fas fa-atlas mr-2"></i>
+                        UHCSDB
                     </a>
                 </li>
+            @endif
 
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
-                       href="{{route('public.openvisus.index', ['tag' => 'OpenVisus'])}}">
-                        <i class="fa-fw fas fa-cube mr-2"></i> OpenVisus
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}"
-                       href="{{route('public.authors.index')}}">
-                        <i class="fa-fw fas fa-user-friends mr-2"></i>
-                        Authors
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}"
-                       href="{{route('public.tags.index')}}">
-                        <i class="fa-fw fas fa-tags mr-2"></i>
-                        Tags
-                    </a>
-                </li>
-
-                @auth
+            @auth
                 <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
                         <i class="fa-fw fas fa-user mr-2"></i>
