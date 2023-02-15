@@ -11,7 +11,11 @@
 @section('content')
     <x-card>
         <x-slot name="header">
-            Show Spreadsheet load for {{$etlRun->files[0]->name}} run on: {{$etlRun->created_at}}
+            @if(isset($etlRun->files[0]))
+                Show Spreadsheet load for {{$etlRun->files[0]->name}} run on: {{$etlRun->created_at}}
+            @else
+                Show Spreadsheet load for Google Spreadsheet run on: {{$etlRun->created_at}}
+            @endif
             <a class="action-link float-right" style="cursor: pointer"
                hx-get="{{route('projects.experiments.etl_run.show-log', [$project, $experiment, $etlRun])}}"
                onclick="clearSearchInputOnReload()"
