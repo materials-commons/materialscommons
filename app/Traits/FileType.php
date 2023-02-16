@@ -63,7 +63,7 @@ trait FileType
     {
         $type = $this->fileTypeFromMime($file->mime_type);
 
-        if (isInBeta()) {
+        if (!is_null($file->dataset_id)) {
             if ($type == "text") {
                 if (Str::endsWith($file->name, ".idx")) {
                     return "open-visus";
