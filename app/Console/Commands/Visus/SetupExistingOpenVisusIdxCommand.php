@@ -141,11 +141,11 @@ class SetupExistingOpenVisusIdxCommand extends Command
             echo "   {$path}\n";
             echo "symlnk {$uuidPath}, {$path}\n";
             try {
-                if (!symlink($uuidPath, $path)) {
-                    echo "Unable to symlink {$uuidPath} to {$path}\n";
+                if (!link($uuidPath, $path)) {
+                    echo "Unable to link {$uuidPath} to {$path}\n";
                 }
             } catch (\Exception $e) {
-                echo "Unable to symlink {$uuidPath} to {$path}\n";
+                echo "Unable to link {$uuidPath} to {$path}\n";
             }
 
             $pathToRemove = dirname($d->path);
@@ -179,11 +179,11 @@ class SetupExistingOpenVisusIdxCommand extends Command
 //                        echo "      {$uuidPath}\n";
 //                        echo "      {$path}\n";
 //                        try {
-//                            if (!symlink($uuidPath, $path)) {
-//                                echo "Unable to symlink {$uuidPath} to {$path}\n";
+//                            if (!link($uuidPath, $path)) {
+//                                echo "Unable to link {$uuidPath} to {$path}\n";
 //                            }
 //                        } catch (\Exception $e) {
-//                            echo "Unable to symlink {$uuidPath} to {$path}\n";
+//                            echo "Unable to link {$uuidPath} to {$path}\n";
 //                        }
 //                    }
 //                });
@@ -210,11 +210,11 @@ class SetupExistingOpenVisusIdxCommand extends Command
                   echo "      {$uuidPath}\n";
                   echo "      {$path}\n";
                   try {
-                      if (!symlink($uuidPath, $path)) {
-                          echo "Unable to symlink {$uuidPath} to {$path}\n";
+                      if (!link($uuidPath, $path)) {
+                          echo "Unable to link {$uuidPath} to {$path}\n";
                       }
                   } catch (\Exception $e) {
-                      echo "Unable to symlink {$uuidPath} to {$path}\n";
+                      echo "Unable to link {$uuidPath} to {$path}\n";
                   }
               });
     }
