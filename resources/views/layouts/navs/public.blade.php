@@ -64,7 +64,7 @@
                 @if (false)
                     <li class="nav-item">
                         <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
-                           href="{{route('public.openvisus.index', ['tag' => 'OpenVisus'])}}">
+                           href="{{route('public.openvisus.index', ['tag' => 'OpenVisus-Commons-Import'])}}">
                             <i class="fa-fw fas fa-cube mr-2"></i> OpenVisus Datasets
                         </a>
                     </li>
