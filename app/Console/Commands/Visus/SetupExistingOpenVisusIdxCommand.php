@@ -60,6 +60,7 @@ class SetupExistingOpenVisusIdxCommand extends Command
      */
     public function handle()
     {
+        umask(0);
         $project = Project::findOrFail($this->option('project-id'));
 
         $datasetId = $this->option('dataset-id');
