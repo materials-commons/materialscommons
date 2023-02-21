@@ -71,6 +71,10 @@ trait FileType
             }
         }
 
+        if (Str::endsWith($file->name, ".ipynb")) {
+            return "jupyter-notebook";
+        }
+
         if (Str::startsWith($file->mime_type, "text/")) {
             return "text";
         }

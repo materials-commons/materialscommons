@@ -61,7 +61,7 @@
                     </a>
                 </li>
 
-                @if (false)
+                @if (true)
                     <li class="nav-item">
                         <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
                            href="{{route('public.openvisus.index', ['tag' => 'OpenVisus-Commons-Import'])}}">

@@ -1,14 +1,16 @@
 @if($fileExists($file))
+    {{$fileType($file)}}
+    {{$displayRoute}}
     @switch($fileType($file))
         @case("image")
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="text-center">
-                        <a href="{{$displayRoute}}">
-                            <img src="{{$displayRoute}}" class="img-fluid">
-                        </a>
-                    </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="text-center">
+                            <a href="{{$displayRoute}}">
+                                <img src="{{$displayRoute}}" class="img-fluid">
+                            </a>
+                        </div>
                 </div>
             </div>
         </div>
@@ -25,23 +27,28 @@
         @break
 
         @case("open-visus")
-        @php
+            @php
                 $visusDatasetUrl = \App\Services\OpenVisusApiService::visusDatasetUrl("{$file->uuid}_{$file->name}");
-        @endphp
-        <div style="height:750px">
-            <iframe src="{{$visusDatasetUrl}}" width="100%" height="100%"></iframe>
-        </div>
-        @break
+            @endphp
+            <div style="height:750px">
+                <iframe src="{{$visusDatasetUrl}}" width="100%" height="100%"></iframe>
+            </div>
+            @break
+
+        @case("jupyter-notebook")
+            <div style="height:750px">
+                <iframe src="{{$displayRoute}}" width="100%" height="100%"></iframe>
+            </div>
 
         @case("pdf")
-        <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item"
-                   src="{{$displayRoute}}">
-        </div>
-        @break
+            <div class="embed-responsive embed-responsive-4by3">
+                <embed class="col-xs-8 embed-responsive-item"
+                       src="{{$displayRoute}}">
+            </div>
+            @break
 
         @case("excel")
-        @if($file->size > 2000000)
+            @if($file->size > 2000000)
             <span class="ml-3">Excel file too large to display</span>
         @else
             @include('partials.files._display-excel-file')
