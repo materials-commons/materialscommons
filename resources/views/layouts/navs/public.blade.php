@@ -43,14 +43,14 @@
             {{--                    <i class="fa-fw fas fa-bullhorn mr-2"></i>--}}
             {{--                    What's New--}}
             {{--                </a>--}}
-            {{--            </li>--}}
+                {{--            </li>--}}
 
-            {{--                    <li class="nav-item">--}}
-            {{--                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">--}}
-            {{--                            <span data-feather="home"></span>--}}
-            {{--                            <i class="fa-fw fas fa-project-diagram mr-2"></i>--}}
-            {{--                            Projects--}}
-            {{--                        </a>--}}
+                {{--                    <li class="nav-item">--}}
+                {{--                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.projects')}}" href="{{route('public.projects.index')}}">--}}
+                {{--                            <span data-feather="home"></span>--}}
+                {{--                            <i class="fa-fw fas fa-project-diagram mr-2"></i>--}}
+                {{--                            Projects--}}
+                {{--                        </a>--}}
                 {{--                    </li>--}}
 
                 <li class="nav-item">
@@ -61,15 +61,6 @@
                     </a>
                 </li>
 
-                @if (true)
-                    <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
-                           href="{{route('public.openvisus.index', ['tag' => 'OpenVisus-Commons-Import'])}}">
-                            <i class="fa-fw fas fa-cube mr-2"></i> OpenVisus Datasets
-                        </a>
-                    </li>
-                @endif
-
                 <li class="nav-item">
                     <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.communities')}}"
                        href="{{route('public.communities.index')}}">
@@ -79,34 +70,41 @@
                 </li>
 
                 <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}"
-                   href="{{route('public.authors.index')}}">
-                    <i class="fa-fw fas fa-user-friends mr-2"></i>
-                    Authors
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}"
-                   href="{{route('public.tags.index')}}">
-                    <i class="fa-fw fas fa-tags mr-2"></i>
-                    Tags
-                </a>
-            </li>
-
-            @if(false)
-                <li class="nav-item">
-                    <span class="ml-3">Reference Data</span>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
-                       href="http://localhost:9000" target="_blank">
-                        <i class="fa-fw fas fa-atlas mr-2"></i>
-                        UHCSDB
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.authors')}}"
+                       href="{{route('public.authors.index')}}">
+                        <i class="fa-fw fas fa-user-friends mr-2"></i>
+                        Authors
                     </a>
                 </li>
-            @endif
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.tags')}}"
+                       href="{{route('public.tags.index')}}">
+                        <i class="fa-fw fas fa-tags mr-2"></i>
+                        Tags
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <span class="ml-3">Special Collections</span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.openvisus')}}"
+                       href="{{route('public.openvisus.index', ['tag' => 'OpenVisus'])}}">
+                        <i class="fa-fw fas fa-cube mr-2"></i> OpenVisus Datasets
+                    </a>
+                </li>
+
+                @if(false)
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
+                           href="http://localhost:9000" target="_blank">
+                            <i class="fa-fw fas fa-atlas mr-2"></i>
+                            UHCSDB
+                        </a>
+                    </li>
+                @endif
 
             @auth
                 <li class="nav-item">
