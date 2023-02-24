@@ -10,6 +10,8 @@ class WelcomeWebController extends Controller
 {
     public function __invoke(Request $request)
     {
+        return view('welcome');
+
 //        $datasetsCount = Dataset::whereNotNull('published_at')
 //                                ->whereDoesntHave('tags', function ($q) {
 //                                    $q->where('tags.id', config('visus.import_tag_id'));
@@ -23,6 +25,5 @@ class WelcomeWebController extends Controller
 //            'datasets'                   => $datasetsCount,
 //            'specialCollectionsDatasets' => $specialCollectionsDatasetsCount,
 //        ]);                                              ->count();;
-        return view('welcome');
     }
 }
