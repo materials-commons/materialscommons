@@ -1,6 +1,4 @@
 @if($fileExists($file))
-    {{$fileType($file)}}
-    {{$displayRoute}}
     @switch($fileType($file))
         @case("image")
             <div class="container">
@@ -11,20 +9,20 @@
                                 <img src="{{$displayRoute}}" class="img-fluid">
                             </a>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        @break
+            @break
 
         @case("text")
-        <div class="ml-3">
-            @if($file->size > 2000000)
-                <span class="ml-3">File too large to display</span>
-            @else
-                <pre>{!!$fileContents($file)!!}</pre>
-            @endif
-        </div>
-        @break
+            <div class="ml-3">
+                @if($file->size > 2000000)
+                    <span class="ml-3">File too large to display</span>
+                @else
+                    <pre>{!!$fileContents($file)!!}</pre>
+                @endif
+            </div>
+            @break
 
         @case("open-visus")
             @php
@@ -49,31 +47,31 @@
 
         @case("excel")
             @if($file->size > 2000000)
-            <span class="ml-3">Excel file too large to display</span>
-        @else
-            @include('partials.files._display-excel-file')
-        @endif
-        @break
+                <span class="ml-3">Excel file too large to display</span>
+            @else
+                @include('partials.files._display-excel-file')
+            @endif
+            @break
 
         @case("office")
-        <div class="embed-responsive embed-responsive-4by3">
-            <embed class="col-xs-8 embed-responsive-item"
-                   src="{{$displayRoute}}">
-        </div>
-        @break
+            <div class="embed-responsive embed-responsive-4by3">
+                <embed class="col-xs-8 embed-responsive-item"
+                       src="{{$displayRoute}}">
+            </div>
+            @break
 
         @case("video")
-        <div class="col-10">
-            <a href="{{$displayRoute}}" class="mt-2">
-                Display Full Screen
-            </a>
-            <video controls width="100%" src="{{$displayRoute}}" class="mt-2">
-            </video>
-        </div>
-        @break
+            <div class="col-10">
+                <a href="{{$displayRoute}}" class="mt-2">
+                    Display Full Screen
+                </a>
+                <video controls width="100%" src="{{$displayRoute}}" class="mt-2">
+                </video>
+            </div>
+            @break
 
         @default
-        <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
+            <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch
 @else
     <span class="ml-3">Unable to display file, it may not exist or have been converted yet</span>

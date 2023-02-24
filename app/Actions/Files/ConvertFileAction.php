@@ -4,6 +4,9 @@ namespace App\Actions\Files;
 
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
+use function chmod;
+use function shell_exec;
 
 class ConvertFileAction
 {
@@ -14,6 +17,8 @@ class ConvertFileAction
             $this->convertImage($file);
         } elseif ($file->isConvertibleOfficeDocument()) {
             $this->convertOfficeDocument($file);
+        } elseif ($file->isJupyterNotebook()) {
+            $this->convertJupyterNotebook($file);
         }
     }
 
@@ -69,6 +74,28 @@ class ConvertFileAction
         if (!Storage::disk('mcfs')->exists($file->pathDirPartial()."/.conversion")) {
             Storage::disk('mcfs')->makeDirectory($file->pathDirPartial()."/.conversion");
             chmod(Storage::disk('mcfs')->path($file->pathDirPartial()."/.conversion"), 0777);
+        }
+    }
+
+    private function convertJupyterNotebook(File $file)
+    {
+        if (Storage::disk('mcfs')->exists($file->convertedPathPartial())) {
+            return;
+        }
+
+        $this->createConversionDir($file);
+
+        $originalFilePath = Storage::disk('mcfs')->path($file->realPathPartial());
+        $convertedFilePath = Storage::disk('mcfs')->path($file->convertedPathPartial());
+
+        try {
+            $command = "jupyter nbconvert --to html --output {$convertedFilePath} {$originalFilePath}";
+            $process = Process::fromShellCommandline($command);
+            $process->run();
+            chmod($convertedFilePath, 0777);
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            echo "Jupyter notebook conversion failed: {$msg}\n";
         }
     }
 }

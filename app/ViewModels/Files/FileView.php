@@ -14,9 +14,14 @@ trait FileView
 
     public function fileExists(File $file)
     {
-        return true;
         $filePath = Storage::disk('mcfs')->path($this->fileContentsPathPartial($file));
         return file_exists($filePath);
+    }
+
+    public function fileConversionExists(File $file)
+    {
+        $convertedFilePath = Storage::disk('mcfs')->path($file->convertedPathPartial());
+        return file_exists($convertedFilePath);
     }
 
     public function fileContents(File $file)

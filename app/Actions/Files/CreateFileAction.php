@@ -34,6 +34,9 @@ class CreateFileAction
             }
 
             $existingFile->update(['current' => true]);
+            if ($existingFile->shouldBeConverted()) {
+                ConvertFileJob::dispatch($existingFile)->onQueue('globus');
+            }
             return $existingFile;
         }
 
