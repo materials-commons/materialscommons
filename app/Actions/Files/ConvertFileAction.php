@@ -79,6 +79,10 @@ class ConvertFileAction
 
     private function convertJupyterNotebook(File $file)
     {
+        if (true) {
+            return;
+        }
+
         if (Storage::disk('mcfs')->exists($file->convertedPathPartial())) {
             return;
         }
