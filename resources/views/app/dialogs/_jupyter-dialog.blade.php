@@ -7,7 +7,7 @@
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="height: 275px">
+            <div class="modal-body" style="height: 350px">
                 <p>
                     You can now use Jupyter Notebooks with Materials Commons. Materials Commons provides the following
                     benefits to Jupyter Notebooks:
@@ -19,7 +19,12 @@
                     <li>Synchronize changes to Materials Commons</li>
                 </ul>
                 <p>
-                    To get started you can download our Jupyter Notebook template:
+                    To learn more, read our online
+                    <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/jupyter.html"
+                       target="_blank">documentation</a>.
+                </p>
+                <p>
+                    To get started you can download one of our Jupyter Notebook templates:
                 </p>
                 <ul>
                     <li>
@@ -33,11 +38,6 @@
                         </a>
                     </li>
                 </ul>
-                <p>
-                    To learn more, read our online
-                    <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/jupyter.html"
-                       target="_blank">documentation</a>.
-                </p>
 
             </div>
             <div class="modal-footer">
