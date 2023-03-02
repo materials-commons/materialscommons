@@ -79,6 +79,11 @@ class Dataset extends Model implements Searchable
         'workflows_count'    => 'integer',
         'zipfile_size'       => 'integer',
         'globus_path_exists' => 'boolean',
+        'file1_id'           => 'integer',
+        'file2_id'           => 'integer',
+        'file3_id'           => 'integer',
+        'file4_id'           => 'integer',
+        'file5_id'           => 'integer',
     ];
 
     public function owner()

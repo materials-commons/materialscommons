@@ -4,7 +4,9 @@ namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
 use App\Models\Experiment;
+use App\Models\File;
 use App\Models\Paper;
+use App\Models\Project;
 use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -52,6 +54,26 @@ class CreateDatasetAction
         $dataset->zipfile_size = 0;
         $dataset->globus_path_exists = false;
 
+        if (isset($data['file1_id']) && $this->fileInProject($data['file1_id'], $projectId)) {
+            $dataset->file1_id = $data['file1_id'];
+        }
+
+        if (isset($data['file2_id']) && $this->fileInProject($data['file2_id'], $projectId)) {
+            $dataset->file2_id = $data['file2_id'];
+        }
+
+        if (isset($data['file3_id']) && $this->fileInProject($data['file3_id'], $projectId)) {
+            $dataset->file3_id = $data['file3_id'];
+        }
+
+        if (isset($data['file4_id']) && $this->fileInProject($data['file4_id'], $projectId)) {
+            $dataset->file4_id = $data['file4_id'];
+        }
+
+        if (isset($data['file5_id']) && $this->fileInProject($data['file5_id'], $projectId)) {
+            $dataset->file5_id = $data['file5_id'];
+        }
+
         DB::transaction(function () use ($dataset, $communities, $experiments, $papers) {
             $dataset->save();
             if ($communities !== null) {
@@ -84,5 +106,15 @@ class CreateDatasetAction
             $paper['owner_id'] = $userId;
             return new Paper($paper);
         })->values();
+    }
+
+    private function fileInProject($fileId, $projectId): bool
+    {
+        $count = File::where('project_id', $projectId)
+                     ->where('id', $fileId)
+                     ->whereNull('deleted_at')
+                     ->whereNull('dataset_id')
+                     ->count();
+        return $count != 0;
     }
 }

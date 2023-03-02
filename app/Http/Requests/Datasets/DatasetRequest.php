@@ -49,6 +49,11 @@ class DatasetRequest extends FormRequest
             'ds_authors.*.name'           => 'required|string',
             'ds_authors.*.affiliations'   => 'nullable|string',
             'ds_authors.*.email'          => 'required|email',
+            'file1_id'                    => 'nullable|integer',
+            'file2_id'                    => 'nullable|integer',
+            'file3_id'                    => 'nullable|integer',
+            'file4_id'                    => 'nullable|integer',
+            'file5_id'                    => 'nullable|integer',
         ];
     }
 

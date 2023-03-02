@@ -83,6 +83,9 @@
                 <p class="text-lg">Give your research a boost with Materials Commons. <br class="hidden sm:block"> Store
                     your results and workflow. Easily share with colleagues or publish online.</p>
 
+                {{--                <p class="text-lg">We have {{$datasets}} high quality published datasets and {{$specialCollectionsDatasets}}--}}
+                {{--                datasets in our special collections.</p>--}}
+
                 <div class="flex my-10">
 
 
@@ -109,13 +112,14 @@
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Browse Published Data
                     </a>
-
-                    {{--                    <a href="{{route('about')}}" title="About Materials Commons"--}}
-                    {{--                       class="bg-gray-400 hover:bg-gray-600 text-blue-900 font-normal hover:text-white rounded py-2 px-6">--}}
-                    {{--                        About Materials Commons--}}
-                    {{--                    </a>--}}
-
                 </div>
+
+                {{--                <div class="flex mt-1 ml-5">--}}
+                {{--                    <ul class="list-unstyled">--}}
+                {{--                        <li>Published Datasets: {{$datasets}}</li>--}}
+                {{--                        <li>Published Special Collections Datasets: {{$specialCollectionsDatasets}}</li>--}}
+                {{--                    </ul>--}}
+                {{--                </div>--}}
             </div>
 
             <img src="{{asset('images/logo-large.svg')}}" alt="Materials Commons large logo"

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -282,6 +283,10 @@ class File extends Model implements Searchable
             $fileName = $fileName.".pdf";
         }
 
+        if ($this->isJupyterNotebook()) {
+            $fileName = $fileName.".html";
+        }
+
         return $this->pathDirPartial()."/.conversion/{$fileName}";
     }
 
@@ -291,7 +296,11 @@ class File extends Model implements Searchable
             return true;
         }
 
-        return $this->isConvertibleOfficeDocument();
+        if ($this->isConvertibleOfficeDocument()) {
+            return true;
+        }
+
+        return $this->isJupyterNotebook();
     }
 
     public function isImage()
@@ -332,6 +341,15 @@ class File extends Model implements Searchable
             default:
                 return false;
         }
+    }
+
+    public function isJupyterNotebook()
+    {
+        if ($this->mime_type !== 'directory' && Str::endsWith($this->name, ".ipynb")) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getDirPathForFormatting(): string
