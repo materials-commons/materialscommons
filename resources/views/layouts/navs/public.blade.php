@@ -96,10 +96,10 @@
                     </a>
                 </li>
 
-                @if(false)
+                @if(true)
                     <li class="nav-item">
                         <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
-                           href="http://localhost:9000" target="_blank">
+                           href="/uhcsdb">
                             <i class="fa-fw fas fa-atlas mr-2"></i>
                             UHCSDB
                         </a>
