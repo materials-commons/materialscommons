@@ -55,11 +55,11 @@ class SetupMigratedPublishedDatasetsAction
         }
         $newZipfilePath = $dataset->zipfilePath();
         try {
-            if (!symlink($existingZipfilePath, $newZipfilePath)) {
-                echo "Unable to symlink {$existingZipfilePath} to {$newZipfilePath}\n";
+            if (!link($existingZipfilePath, $newZipfilePath)) {
+                echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
             }
         } catch (\Exception $e) {
-            echo "Unable to symlink {$existingZipfilePath} to {$newZipfilePath}\n";
+            echo "Unable to link {$existingZipfilePath} to {$newZipfilePath}\n";
             $exceptionMessage = $e->getMessage();
             echo "  Reason: {$exceptionMessage}\n";
         }
