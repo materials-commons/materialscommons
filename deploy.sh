@@ -24,6 +24,7 @@ echo "MC_SERVER_LAST_UPDATED_AT=${DEPLOY_DATE}" >>.env.tmp
 echo "MC_SERVER_VERSION=${FIRST_V}.${SECOND_V}.${NEXT_V}" >>.env.tmp
 mv .env.tmp .env
 
+npm run prod
 sudo ./deploy2.sh
 
 NGINXUSERACC="${NGINXUSER:-nginx}"
