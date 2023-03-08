@@ -32,6 +32,13 @@
 </head>
 
 <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
+@if(!is_null(config('app.banner')))
+    <div style="background-color: hsl(356, 75%, 53%)">
+        <p class="text-white pt-2 pb-2 pl-2 fs-14" style="margin-top: 0; margin-bottom: 0">
+            {{config('app.banner')}}
+        </p>
+    </div>
+@endif
 <header class="flex items-center shadow bg-white border-b h-18 py-4 bg-blue-700" role="banner">
     <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-8">
         <div class="flex items-center">

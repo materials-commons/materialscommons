@@ -46,7 +46,6 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
         <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
@@ -170,23 +169,14 @@
         @yield('nav')
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            {{--            @forelse(errorBannerMessages() as $errorBanner)--}}
-            {{--                <div class="mt-2 bg-red-3">--}}
-            {{--                    <p class="text-white pt-2 pb-2 pl-2">--}}
-            {{--                    {{$errorBanner}}--}}
-            {{--                    <p>--}}
-            {{--                </div>--}}
-            {{--            @empty--}}
-            {{--            @endforelse--}}
+            @if(!is_null(config('app.banner')))
+                <div class="mt-2 bg-red-5">
+                    <p class="text-white pt-2 pb-2 pl-2 fs-14">
+                        {{config('app.banner')}}
+                    </p>
+                </div>
+            @endif
 
-            {{--            @forelse(warnBannerMessages() as $warningBanner)--}}
-            {{--                <div class="mt-2 bg-yellow-7">--}}
-            {{--                    <p class="pt-2 pb-2 pl-2">--}}
-            {{--                    {{$warningBanner}}--}}
-            {{--                    <p>--}}
-            {{--                </div>--}}
-            {{--            @empty--}}
-            {{--            @endforelse--}}
             <div class="mt-3">
                 @include('flash::message')
                 @yield('breadcrumbs')
