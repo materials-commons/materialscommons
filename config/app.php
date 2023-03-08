@@ -10,6 +10,8 @@ return [
 
     'survey_url' => env("MC_SURVEY_URL"),
 
+    'banner' => env('MC_BANNER', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
