@@ -9,7 +9,9 @@ fi
 
 set -x
 
-SRC_DIR=$(pwd)
+DEPLOYTO="${1:-/var/www/html/materialscommons}"
+
+echo "Deploying to ${DEPLOYTO}"
 
 DEPLOY_DATE=$(date +'%Y-%m-%dT%H:%M:%S.%Z')
 CURRENT_VERSION=$(grep MC_SERVER_VERSION .env | sed 's/MC_SERVER_VERSION=//')
@@ -25,13 +27,13 @@ echo "MC_SERVER_VERSION=${FIRST_V}.${SECOND_V}.${NEXT_V}" >>.env.tmp
 mv .env.tmp .env
 
 npm run prod
-sudo ./deploy2.sh
+sudo ./deploy2.sh ${DEPLOYTO}
 
 NGINXUSERACC="${NGINXUSER:-nginx}"
-sudo chown -R $NGINXUSERACC:$NGINXUSERACC /var/www/html/materialscommons
+sudo chown -R $NGINXUSERACC:$NGINXUSERACC ${DEPLOYTO}
 
 SUPERVISORSERVICENAME="${SUPERVISORSERVICE:-supervisord}"
 sudo systemctl status ${SUPERVISORSERVICENAME}
 php artisan queue:restart
-sleep 2
+sleep 5
 sudo systemctl status ${SUPERVISORSERVICENAME}
