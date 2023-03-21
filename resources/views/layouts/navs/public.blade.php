@@ -37,12 +37,12 @@
             </li>
 
 
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}"--}}
-            {{--                   href="{{route('public.new.index')}}">--}}
-            {{--                    <i class="fa-fw fas fa-bullhorn mr-2"></i>--}}
-            {{--                    What's New--}}
-            {{--                </a>--}}
+                {{--            <li class="nav-item">--}}
+                {{--                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.new')}}"--}}
+                {{--                   href="{{route('public.new.index')}}">--}}
+                {{--                    <i class="fa-fw fas fa-bullhorn mr-2"></i>--}}
+                {{--                    What's New--}}
+                {{--                </a>--}}
                 {{--            </li>--}}
 
                 {{--                    <li class="nav-item">--}}
@@ -96,25 +96,26 @@
                     </a>
                 </li>
 
-                @if(true)
-                    <li class="nav-item">
-                        <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
-                           href="/uhcsdb">
-                            <i class="fa-fw fas fa-atlas mr-2"></i>
-                            UHCSDB
-                        </a>
-                    </li>
-                @endif
-
-            @auth
                 <li class="nav-item">
-                    <a class="nav-link fs-11 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
-                        <i class="fa-fw fas fa-user mr-2"></i>
-                        Account
+                    <a class="nav-link fs-11 ml-3 {{setActiveNavByName('public.uhcsdb')}}"
+                       href="/uhcsdb">
+                        <i class="fa-fw fas fa-atlas mr-2"></i>
+                        UHCSDB
+                        <i class="fa-fw fas fa-question-circle ml-2"
+                           data-toggle="tooltip"
+                           title="A dataset explorer of hierarchical structures in Ultrahigh carbon steel"></i>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link fs-11 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
+                            <i class="fa-fw fas fa-user mr-2"></i>
+                            Account
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
                         <i class="fa-fw fas fa-city mr-2"></i>
                         My Communities
