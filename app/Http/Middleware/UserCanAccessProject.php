@@ -7,7 +7,7 @@ use App\Traits\GetRequestParameterId;
 use App\Traits\Projects\CanAccessProject;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use function auth;
 

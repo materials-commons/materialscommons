@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Dataset')
+@section('pageTitle', "{$project->name} - Create Dataset")
 
 @section('nav')
     @include('layouts.navs.app.project')

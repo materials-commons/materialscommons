@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Globus Download')
+@section('pageTitle', "{$project->name} - Delete Globus Download")
 
 @section('nav')
     @include('layouts.navs.app.project')

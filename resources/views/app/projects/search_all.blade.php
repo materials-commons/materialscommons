@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Search Results')
+@section('pageTitle', "Search Results")
 
 @section('nav')
     @include('layouts.navs.app')
