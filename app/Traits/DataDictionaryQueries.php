@@ -159,7 +159,7 @@ trait DataDictionaryQueries
 
     public function getUniqueEntityAttributesForProject($projectId)
     {
-        return $this->getUniqueActivityAttributesForProjectFragment($projectId)->get()->groupBy('name');
+        return $this->getUniqueEntityAttributesForProjectFragment($projectId)->get()->groupBy('name');
     }
 
     public function getEntityAttributeForProject($projectId, $attrName)

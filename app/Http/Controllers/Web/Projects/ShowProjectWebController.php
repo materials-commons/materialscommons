@@ -19,8 +19,8 @@ class ShowProjectWebController extends Controller
                           ->where('id', $projectId)
                           ->first();
         $showProjectViewModel = (new ShowProjectViewModel($project))
-            ->withActivityAttributesCount($this->getUniqueActivityAttributesForProjectFragment($projectId)->count())
-            ->withEntityAttributesCount($this->getUniqueEntityAttributesForProjectFragment($projectId)->count())
+            ->withActivityAttributesCount($this->getUniqueActivityAttributesForProject($projectId)->count())
+            ->withEntityAttributesCount($this->getUniqueEntityAttributesForProject($projectId)->count())
             ->withActivitiesGroup($this->getActivitiesGroup($project->id))
             ->withFileDescriptionTypes($project->file_types)
             ->withObjectCounts($this->getObjectTypes($project->id));
