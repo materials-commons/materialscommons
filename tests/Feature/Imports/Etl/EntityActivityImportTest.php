@@ -821,6 +821,45 @@ class EntityActivityImportTest extends TestCase
         $this->hasTags($entity->tags, ["heat treatment", "long"]);
     }
 
+    /** @test */
+    public function test_load_single_calculation()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/single-calculation.xlsx'));
+        $this->assertEquals(1, Activity::count());
+        $this->assertEquals(0, Entity::count());
+        $this->assertEquals(3, Attribute::where('attributable_type', Activity::class)->count());
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'Temperature', 'attributable_type' => Activity::class]);
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'stress relief time', 'attributable_type' => Activity::class]);
+        $this->assertDatabaseHas('attributes',
+            ['name' => 'stress relief temperature', 'attributable_type' => Activity::class]);
+
+        // Check attribute values
+
+        // Temperature Attribute
+        $attr = Attribute::where('name', 'Temperature')->first();
+        $value = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals(1, $value->val["value"]);
+        $this->assertEquals("c", $value->unit);
+
+        // stress relief time Attribute
+        $attr = Attribute::where('name', 'stress relief time')->first();
+        $value = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals(7, $value->val["value"]);
+        $this->assertEquals("hr", $value->unit);
+
+        // stress relief temperature Attribute
+        $attr = Attribute::where('name', 'stress relief temperature')->first();
+        $value = AttributeValue::where('attribute_id', $attr->id)->first();
+        $this->assertEquals(50, $value->val["value"]);
+        $this->assertEquals("°C", $value->unit);
+    }
+
     private function hasTags($tags, $tagsItShouldHave)
     {
         foreach ($tagsItShouldHave as $tagItShouldHave) {

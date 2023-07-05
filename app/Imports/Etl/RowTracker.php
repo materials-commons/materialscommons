@@ -11,6 +11,7 @@ class RowTracker
 {
     public $entityName;
     public $activityName;
+    public $activityType;
     public $relatedActivityName;
     public $activityAttributes;
     public $entityAttributes;
@@ -31,6 +32,7 @@ class RowTracker
         $this->rowNumber = $rowNumber;
         $this->entityName = "";
         $this->activityName = $sheetName;
+        $this->activityType = $sheetName;
         $this->relatedActivityName = "";
         $this->activityAttributes = collect();
         $this->entityAttributes = collect();
@@ -122,6 +124,9 @@ class RowTracker
                 break;
             case "file":
                 $this->fileAttributes->push($colAttr);
+                break;
+            case "calculation":
+                $this->activityName = $value;
                 break;
         }
         return true;

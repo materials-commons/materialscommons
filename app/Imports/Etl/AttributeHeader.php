@@ -54,6 +54,12 @@ class AttributeHeader
         "notes"  => true,
     ];
 
+    private static $calculationKeywords = [
+        "c"    => true,
+        "calc" => true,
+        "cal"  => true,
+    ];
+
     public function __construct($name, $unit, $attrType)
     {
         $this->name = $name;
@@ -105,6 +111,8 @@ class AttributeHeader
             return "tags-activity";
         } elseif (array_key_exists($str, AttributeHeader::$fileKeywords)) {
             return "file";
+        } elseif (array_key_exists($str, AttributeHeader::$calculationKeywords)) {
+            return "calculation";
         } elseif (array_key_exists($str, AttributeHeader::$ignoreKeywords)) {
             return "ignore";
         } else {

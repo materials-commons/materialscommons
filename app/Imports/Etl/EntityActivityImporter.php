@@ -20,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use function array_push;
 
 class EntityActivityImporter
 {
@@ -127,7 +128,12 @@ class EntityActivityImporter
                 $this->switchToNewExperiment($worksheet);
             }
 
-            $this->processWorksheet($worksheet);
+            if ($this->isActivityWorksheet($worksheet)) {
+                $this->processActivityWorksheet($worksheet);
+            } else {
+                $this->processEntityWorksheet($worksheet);
+            }
+
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
         }
@@ -141,6 +147,26 @@ class EntityActivityImporter
     private function isExperimentWorksheet(Worksheet $worksheet): bool
     {
         return $this->worksheetContainsKeyFrom($worksheet, self::$experimentWorksheetKeys);
+    }
+
+    private function isActivityWorksheet(Worksheet $worksheet): bool
+    {
+        $value = $worksheet->getCell('A1')->getValue();
+
+        // If cell A1 has no value then return false. By default, the first column is samples.
+        if (is_null($value)) {
+            return false;
+        }
+
+        // If the user specified a calculation in the first cell then
+        // this is an activity/process/calculations worksheet.
+        $ah = AttributeHeader::parse($value);
+        if ($ah->attrType == "calculation") {
+            return true;
+        }
+
+        // Otherwise it's not a calculation worksheet.
+        return false;
     }
 
     private function worksheetContainsKeyFrom(Worksheet $worksheet, $keys): bool
@@ -242,7 +268,7 @@ class EntityActivityImporter
         return Str::of(substr($title, $parenRight + 1))->trim()->__toString();
     }
 
-    private function processWorksheet(Worksheet $worksheet)
+    private function processActivityWorksheet(Worksheet $worksheet)
     {
         $blankRowCount = 0;
         $this->beforeSheet($worksheet);
@@ -262,7 +288,30 @@ class EntityActivityImporter
                 break;
             }
         }
-        $this->afterSheet();
+        $this->afterActivitySheet();
+    }
+
+    private function processEntityWorksheet(Worksheet $worksheet)
+    {
+        $blankRowCount = 0;
+        $this->beforeSheet($worksheet);
+        $title = $worksheet->getTitle();
+        $this->etlState->logProgress("\nProcessing worksheet {$title}");
+        foreach ($worksheet->getRowIterator() as $row) {
+            if (!$this->onRow($row)) {
+                // saw blank row
+                $blankRowCount++;
+            } else {
+                // Not a blank row so reset blankRowCount
+                $blankRowCount = 0;
+            }
+            if ($blankRowCount >= 10) {
+                // when we've seen 10 or more consecutive blank rows, then
+                // we stop processing data
+                break;
+            }
+        }
+        $this->afterEntitySheet();
     }
 
     private function beforeSheet($worksheet)
@@ -274,7 +323,7 @@ class EntityActivityImporter
         $this->currentSheetRows = collect();
     }
 
-    private function afterSheet()
+    private function afterEntitySheet()
     {
         $this->currentSheetRows->each(function (RowTracker $row) {
             if (!$this->entityTracker->hasEntity($row->entityName)) {
@@ -282,6 +331,13 @@ class EntityActivityImporter
             } else {
                 $this->addToExistingEntity($row);
             }
+        });
+    }
+
+    private function afterActivitySheet()
+    {
+        $this->currentSheetRows->each(function (RowTracker $row) {
+            $this->addCalculation($row);
         });
     }
 
@@ -617,6 +673,46 @@ class EntityActivityImporter
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
+    }
+
+    private function addCalculation(RowTracker $rowTracker)
+    {
+        $createActivityAction = new CreateActivityAction();
+        $attributePosition = 1;
+        $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) use (&$attributePosition) {
+            return [
+                'name'                => $attr->name,
+                'value'               => $attr->value,
+                'unit'                => $attr->unit,
+                'eindex'              => $attributePosition++,
+                'marked_important_at' => $attr->important ? $this->now : null,
+            ];
+        })->toArray();
+
+        // Add global settings for worksheet (activity)
+        $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
+        foreach ($globalAttributes as $globalAttribute) {
+            if ($globalAttribute->attributeHeader->attrType === "activity") {
+                array_push($attributes, [
+                    'name'   => $globalAttribute->attributeHeader->name,
+                    'unit'   => $globalAttribute->attributeHeader->unit,
+                    'value'  => $globalAttribute->value,
+                    'eindex' => $attributePosition++,
+                ]);
+            }
+        }
+
+        $activity = $createActivityAction([
+            'name'          => $rowTracker->activityName,
+            'project_id'    => $this->projectId,
+            'experiment_id' => $this->experimentId,
+            'attributes'    => $attributes,
+            'eindex'        => $this->currentSheetPosition,
+        ], $this->userId);
+
+        $this->etlState->etlRun->n_activities++;
+
+        return $activity;
     }
 
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)
