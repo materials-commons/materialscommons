@@ -6,6 +6,13 @@
                 <i class="fas fa-edit mr-2"></i>Edit Community
             </a>
         @endisset
+        @guest
+        @else
+            <a class="action-link float-right mr-4" href="#">
+                <i class="fas fa-plus mr-2"></i>Add Dataset
+            </a>
+        @endguest
+
     @endslot
 
     @slot('body')
