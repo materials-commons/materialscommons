@@ -8,9 +8,22 @@
         @endisset
         @guest
         @else
-            <a class="action-link float-right mr-4" href="#">
-                <i class="fas fa-plus mr-2"></i>Add Dataset
-            </a>
+            @if($userDatasets->isNotEmpty())
+                <div class="dropdown">
+                    <a class="action-link float-right mr-4 dropdown-toggle" data-toggle="dropdown"
+                       data-offset="20" data-boundary="viewport"
+                       href="#">
+                        <i class="fas fa-plus mr-2"></i>Add Dataset
+                    </a>
+                    <div class="dropdown-menu" data-offset="20" data-boundary="viewport">
+                        @foreach($userDatasets as $userDataset)
+                            <a class="dropdown-item td-none" href="#">
+                                {{$userDataset->name}}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         @endguest
 
     @endslot

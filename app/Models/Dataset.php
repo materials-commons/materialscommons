@@ -173,6 +173,12 @@ class Dataset extends Model implements Searchable
                     ->where('public', true);
     }
 
+    public function communitiesWaitingForApprovalIn()
+    {
+        return $this->belongsToMany(Community::class, 'community2dataset_waiting_approval', 'dataset_id',
+            'community_id');
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');

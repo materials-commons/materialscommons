@@ -50,6 +50,11 @@ class Community extends Model implements Searchable
                     ->whereNotNull('published_at');
     }
 
+    public function datasetsWaitingForApproval()
+    {
+        return $this->belongsToMany(Dataset::class, 'community2dataset_waiting_approval', 'community_id', 'dataset_id');
+    }
+
     public function links()
     {
         return $this->morphToMany(Link::class, 'item', 'item2link');

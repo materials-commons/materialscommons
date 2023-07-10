@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Web\Published\Communities;
 
 use App\Http\Controllers\Controller;
 use App\Models\Community;
+use App\Models\Dataset;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ShowPublishedCommunityWebController extends Controller
@@ -13,12 +16,18 @@ class ShowPublishedCommunityWebController extends Controller
     {
         $community = Community::with(['datasets.owner', 'owner'])->findOrFail($communityId);
         abort_unless($community->public, 404, "No such community");
+        $userDatasets = collect();
+        if (Auth::check()) {
+            // User is logged in so get published datasets that aren't in the community
+            $userDatasets = $this->getPublishedDatasetsForUserNotInCommunity(auth()->user(), $community);
+        }
         $tags = $this->getCommunityTags($community);
         $contributors = $this->getContributors($community);
         return view('public.communities.show', [
             'community'    => $community,
             'tags'         => $tags,
             'contributors' => $contributors,
+            'userDatasets' => $userDatasets,
         ]);
     }
 
@@ -60,5 +69,26 @@ class ShowPublishedCommunityWebController extends Controller
             }
         }
         return collect($contributors)->sortKeys()->toArray();
+    }
+
+    private function getPublishedDatasetsForUserNotInCommunity(User $user, Community $community)
+    {
+        return Dataset::with('communities')
+                      ->whereNotNull('published_at')
+                      ->where('owner_id', $user->id)
+                      ->orderBy('name')
+                      ->limit(10)
+                      ->get()
+                      ->filter(function (Dataset $dataset) use ($community) {
+                          foreach ($dataset->communities as $c) {
+                              if ($c->id === $community->id) {
+                                  // dataset is already in the community, filter it out.
+                                  return false;
+                              }
+                          }
+
+                          // Dataset is not in the community so keep it.
+                          return true;
+                      });
     }
 }
