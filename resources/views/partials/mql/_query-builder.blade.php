@@ -9,13 +9,6 @@
     </div>
 </div>
 <hr>
-{{--<br>--}}
-{{--<a class="btn btn-success" href="#"--}}
-{{--   hx-post="{{route('projects.entities.mql.show', $project)}}"--}}
-{{--   hx-include="#mql-selection"--}}
-{{--   hx-target="#mql-query">--}}
-{{--    Apply--}}
-{{--</a>--}}
 <p>Showing processes and attributes that are available from the current selection.</p>
 <form class="row mt-4" id="mql-selection" action="{{route('projects.entities.mql.run', [$project])}}" method="POST"
       autocomplete="off">
@@ -36,10 +29,4 @@
                                     :details-route-name="'projects.entities.attributes.show-details-by-name'"/>
     </div>
 </form>
-{{--<a class="btn btn-success" href="#"--}}
-{{--   hx-post="{{route('projects.entities.mql.show', $project)}}"--}}
-{{--   hx-include="#mql-selection"--}}
-{{--   hx-target="#mql-query">--}}
-{{--    Apply--}}
-{{--</a>--}}
 <hr>
