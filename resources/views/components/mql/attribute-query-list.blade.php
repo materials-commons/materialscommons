@@ -36,12 +36,20 @@
                     </select>
                     <input type="text" placeholder="Value..." class="col-4"
                            name="{{$formVarName}}[{{$loop->index}}][value]"
-                           value="{{old($formVarName)[$loop->index]['value']}}">
+                           value="{{old($formVarName)[$loop->index]['value']}}"
+                           hx-post="{{route('projects.entities.mql.show', $project)}}"
+                           hx-include="#mql-selection"
+                           hx-target="#mql-query"
+                           hx-trigger="keyup changed delay:500ms">
                 </div>
             @else
                 <div class="row">
                     <input type="checkbox" class="mr-1" name="{{$formVarName}}[{{$loop->index}}][name]"
-                           value="{{$attr->name}}">
+                           value="{{$attr->name}}"
+                           hx-post="{{route('projects.entities.mql.show', $project)}}"
+                           hx-include="#mql-selection"
+                           hx-target="#mql-query"
+                           hx-trigger="click">
                     <a href="#"
                        hx-target="#{{slugify($attr->name)}}"
                        hx-swap="innerHTML"
@@ -50,7 +58,7 @@
                     </a>
                 </div>
                 <div class="row ml-1">
-                    <select class="selectpicker col-6" name="{{$formVarName}}[{{$loop->index}}][operator]">
+                    <select class="selectpicker col-6" name="{{$formVarName}}[{{$loop->index}}][operator]" value="">
                         <option>Select</option>
                         <option>=</option>
                         <option>></option>
@@ -60,7 +68,12 @@
                         <option><></option>
                     </select>
                     <input type="text" placeholder="Value..." class="col-4"
-                           name="{{$formVarName}}[{{$loop->index}}][value]">
+                           name="{{$formVarName}}[{{$loop->index}}][value]"
+                           value=""
+                           hx-post="{{route('projects.entities.mql.show', $project)}}"
+                           hx-include="#mql-selection"
+                           hx-target="#mql-query"
+                           hx-trigger="keyup changed delay:500ms">
                 </div>
             @endif
             <div id="{{slugify($attr->name)}}" class="row ml-4 mt-2"></div>

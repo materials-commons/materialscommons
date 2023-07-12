@@ -11,21 +11,25 @@ trait MqlQueryBuilder
             $query = $this->buildProcessQueryPieces($data["activities"]);
         }
 
-        $processAttributesQueryPart = $this->buildAttributeQueryPieces($data["process_attrs"], 'process-attr');
-        if ($processAttributesQueryPart != "") {
-            if ($query != "") {
-                $query = "{$query}\nAND\n{$processAttributesQueryPart}";
-            } else {
-                $query = $processAttributesQueryPart;
+        if (isset($data["process_attrs"])) {
+            $processAttributesQueryPart = $this->buildAttributeQueryPieces($data["process_attrs"], 'process-attr');
+            if ($processAttributesQueryPart != "") {
+                if ($query != "") {
+                    $query = "{$query}\nAND\n{$processAttributesQueryPart}";
+                } else {
+                    $query = $processAttributesQueryPart;
+                }
             }
         }
 
-        $sampleAttributesQueryPart = $this->buildAttributeQueryPieces($data["sample_attrs"], 'sample-attr');
-        if ($sampleAttributesQueryPart != "") {
-            if ($query != "") {
-                $query = "{$query}\nAND\n{$sampleAttributesQueryPart}";
-            } else {
-                $query = $sampleAttributesQueryPart;
+        if (isset($data["sample_attrs"])) {
+            $sampleAttributesQueryPart = $this->buildAttributeQueryPieces($data["sample_attrs"], 'sample-attr');
+            if ($sampleAttributesQueryPart != "") {
+                if ($query != "") {
+                    $query = "{$query}\nAND\n{$sampleAttributesQueryPart}";
+                } else {
+                    $query = $sampleAttributesQueryPart;
+                }
             }
         }
 
