@@ -58,7 +58,14 @@
                     </a>
                 </div>
                 <div class="row ml-1">
-                    <select class="selectpicker col-6" name="{{$formVarName}}[{{$loop->index}}][operator]" value="">
+                    <select id="select-{{$loop->index}}"
+                            class="selectpicker col-6"
+                            name="{{$formVarName}}[{{$loop->index}}][operator]" value=""
+                            onchange="fireEvent('#select-{{$loop->index}}')"
+                            hx-post="{{route('projects.entities.mql.show', $project)}}"
+                            hx-include="#mql-selection"
+                            hx-target="#mql-query"
+                            hx-trigger="changed.bs.select">
                         <option>Select</option>
                         <option>=</option>
                         <option>></option>
