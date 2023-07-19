@@ -70,11 +70,13 @@ trait MqlQueryBuilder
         // Remove all invalid queries
         $validAttrs = collect($attrs)->filter(function ($attr) {
             return $this->isValidQuery($attr);
-        })->all();
+        })->toArray();
 
-        // After the collection the array is a hash table with indices that are not sequential. Use
-        // array combine to create a correctly sequenced array.
-        $validAttrs = array_combine(range(0, count($validAttrs) - 1), array_values($validAttrs));
+        if (count($validAttrs) != 0) {
+            // After the collection the array is a hash table with indices that are not sequential. Use
+            // array combine to create a correctly sequenced array.
+            $validAttrs = array_combine(range(0, count($validAttrs) - 1), array_values($validAttrs));
+        }
 
         // For each valid query construct the query line. We want the query line to
         // be a reasonable length so add a new line when the query line gets too long.
