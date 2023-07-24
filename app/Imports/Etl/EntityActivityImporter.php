@@ -326,7 +326,7 @@ class EntityActivityImporter
     private function afterEntitySheet()
     {
         $this->currentSheetRows->each(function (RowTracker $row) {
-            if (!$this->entityTracker->hasEntity($row->entityName)) {
+            if (!$this->entityTracker->hasEntity($row->entityOrActivityName)) {
                 $this->addNewEntity($row);
             } else {
                 $this->addToExistingEntity($row);
@@ -388,7 +388,7 @@ class EntityActivityImporter
     {
         $rowTracker = new RowTracker($this->rowNumber, $this->worksheet->getTitle());
         $rowTracker->loadRow($row, $this->headerTracker);
-        if ($rowTracker->entityName == "") {
+        if ($rowTracker->entityOrActivityName == "") {
             return false;
         }
         $this->rows->push($rowTracker);
@@ -400,7 +400,7 @@ class EntityActivityImporter
     {
         $createEntityAction = new CreateEntityAction();
         $entity = $createEntityAction([
-            'name'          => $row->entityName,
+            'name'          => $row->entityOrActivityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
         ], $this->userId);
@@ -662,7 +662,7 @@ class EntityActivityImporter
         // 1. Create a new entity state and add it to the entity
         // 2. Add all entity attributes to that entity state
         // 3. Create the new activity and associate it with that entity/entity state.
-        $entity = $this->entityTracker->getEntity($row->entityName);
+        $entity = $this->entityTracker->getEntity($row->entityOrActivityName);
         $state = EntityState::create([
             'owner_id'  => $this->userId,
             'entity_id' => $entity->id,
@@ -703,7 +703,10 @@ class EntityActivityImporter
         }
 
         $activity = $createActivityAction([
-            'name'          => $rowTracker->activityName,
+            'name'          => $rowTracker->entityOrActivityName,
+            // Processing an activity, so this is the activity name
+            'atype'         => $rowTracker->activityType,
+            'category'      => 'calculation',
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
             'attributes'    => $attributes,
@@ -782,7 +785,7 @@ class EntityActivityImporter
                 // Hook up all the activities who have an entityId === $entityId and that have a name === $row->relatedActivityName
                 // by loop through each of these activities and doing the following: (entity state is the entity state from the
                 // $activity for the given $entity
-                $entity = $activity->entities()->where('name', $row->entityName)->first();
+                $entity = $activity->entities()->where('name', $row->entityOrActivityName)->first();
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)

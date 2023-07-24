@@ -63,15 +63,23 @@
                 </a>
             </li>
 
-            @if(isInBeta())
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.data-explorer')}}"
-                       href="{{route('projects.data-explorer.samples', [$project])}}">
-                        <i class="fa-fw fas fa-eye mr-2"></i>
-                        Explorer
-                    </a>
-                </li>
-            @endif
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities.calculations')}}"
+                   href="{{route('projects.activities.calculations.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
+                    Calculations
+                </a>
+            </li>
+
+            {{--            @if(isInBeta())--}}
+            {{--                <li class="nav-item">--}}
+            {{--                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.data-explorer')}}"--}}
+            {{--                       href="{{route('projects.data-explorer.samples', [$project])}}">--}}
+            {{--                        <i class="fa-fw fas fa-eye mr-2"></i>--}}
+            {{--                        Explorer--}}
+            {{--                    </a>--}}
+            {{--                </li>--}}
+            {{--            @endif--}}
 
             {{--            <li class="nav-item">--}}
             {{--                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities')}}"--}}

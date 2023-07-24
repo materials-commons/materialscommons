@@ -57,3 +57,16 @@ if (!function_exists("slugify")) {
         return Str::slug($what);
     }
 }
+
+if (!function_exists("line_count")) {
+    function line_count($str, $min = 0)
+    {
+        $lines = preg_split('/\n|\r/', $str);
+        $count = count($lines);
+        if ($count < $min) {
+            return $min;
+        }
+
+        return $count;
+    }
+}

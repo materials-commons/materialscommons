@@ -58,14 +58,14 @@ Breadcrumbs::for('projects.experiments.entities.show', function ($trail, $projec
         route('projects.experiments.entities.show', [$project, $experiment, $entity]));
 });
 
-Breadcrumbs::for('projects.activities.index', function ($trail, $project) {
+Breadcrumbs::for('projects.activities.calculations.index', function ($trail, $project) {
     $trail->parent('projects.show', $project);
-    $trail->push('Processes', route('projects.activities.index', [$project]));
+    $trail->push('Calculations', route('projects.activities.calculations.index', [$project]));
 });
 
-Breadcrumbs::for('projects.activities.show', function ($trail, $project, $activity) {
-    $trail->parent('projects.activities.index', $project);
-    $trail->push($activity->name, route('projects.activities.show', [$project, $activity]));
+Breadcrumbs::for('projects.activities.calculations.show', function ($trail, $project, $activity) {
+    $trail->parent('projects.activities.calculations.index', $project);
+    $trail->push($activity->name, route('projects.activities.calculations.show', [$project, $activity]));
 });
 
 Breadcrumbs::for('projects.entities.index', function ($trail, $project) {
