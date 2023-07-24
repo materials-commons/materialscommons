@@ -9,11 +9,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Datasets for Author {{$author}}
+            Datasets for Author: {{$author}}
         @endslot
 
         @slot('body')
-            <h3>Dataset including author in community {{$community->name}}</h3>
+            <h3>Dataset including author in community: {{$community->name}}</h3>
             <br/>
             <table id="author-matches-in-community" class="table table-hover">
                 <thead>
@@ -41,7 +41,7 @@
             </table>
             <br/>
             <br/>
-            <h3>Dataset including author that are not in community {{$community->name}}</h3>
+            <h3>Dataset including author that are not in community: {{$community->name}}</h3>
             <br/>
             <table id="author-matches-not-in-community" class="table table-hover">
                 <thead>

@@ -9,11 +9,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Datasets for Tag {{$tag}}
+            Datasets for Tag: {{$tag}}
         @endslot
 
         @slot('body')
-            <h3>Dataset with tag in community {{$community->name}}</h3>
+            <h3>Dataset with tag in community: {{$community->name}}</h3>
             <br/>
             <table id="tag-matches-in-community" class="table table-hover">
                 <thead>
@@ -41,7 +41,7 @@
             </table>
             <br/>
             <br/>
-            <h3>Dataset with tag not in community {{$community->name}}</h3>
+            <h3>Dataset with tag not in community: {{$community->name}}</h3>
             <br/>
             <table id="tag-matches-not-in-community" class="table table-hover">
                 <thead>

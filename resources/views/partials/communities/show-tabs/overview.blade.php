@@ -26,7 +26,7 @@
                 @foreach($tags as $tag => $count)
                     <li class="list-inline-item mt-1">
                         <a class="badge badge-success fs-11 td-none"
-                           href="{{route('public.tags.search', ['tag' => $tag])}}">
+                           href="{{route('public.communities.search.tag', [$community, 'tag' => $tag])}}">
                             {{$tag}}
                         </a>
                     </li>
@@ -41,7 +41,8 @@
             <ul class="list-inline">
                 @foreach($contributors as $c => $count)
                     <li class="list-inline-item mt-1">
-                        <a href="#" class="no-underline">{{$c}}</a>
+                        <a href="{{route('public.communities.search.author', [$community, 'author' => $c])}}"
+                           class="no-underline">{{$c}}</a>
                         @if(!$loop->last)
                             ,
                         @endif
