@@ -14,7 +14,8 @@ class ShowPublishedCommunityWebController extends Controller
 {
     public function __invoke(Request $request, $communityId)
     {
-        $community = Community::with(['datasets.owner', 'owner'])->findOrFail($communityId);
+        $community = Community::with(['publishedDatasets.owner', 'owner'])
+                              ->findOrFail($communityId);
         abort_unless($community->public, 404, "No such community");
         $userDatasets = collect();
         if (Auth::check()) {
@@ -34,7 +35,7 @@ class ShowPublishedCommunityWebController extends Controller
     private function getCommunityTags(Community $community)
     {
         $tags = [];
-        foreach ($community->datasets as $ds) {
+        foreach ($community->publishedDatasets as $ds) {
             foreach ($ds->tags as $tag) {
                 if (isset($tags[$tag->name])) {
                     $count = $tags[$tag->name];
@@ -52,7 +53,7 @@ class ShowPublishedCommunityWebController extends Controller
     private function getContributors(Community $community)
     {
         $contributors = [];
-        foreach ($community->datasets as $ds) {
+        foreach ($community->publishedDatasets as $ds) {
             if (is_null($ds->ds_authors)) {
                 continue;
             }
@@ -63,9 +64,10 @@ class ShowPublishedCommunityWebController extends Controller
                 $a = Str::of($author['name'])->trim()->__toString();
                 if (!blank($author['affiliations'])) {
                     $affiliations = Str::of($author['affiliations'])->trim()->__toString();
-                    $a = "{$a} ({$affiliations})";
+                } else {
+                    $affiliations = "";
                 }
-                $contributors[$a] = 1;
+                $contributors[$a] = $affiliations;
             }
         }
         return collect($contributors)->sortKeys()->toArray();

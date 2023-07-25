@@ -39,10 +39,15 @@
         <label>Contributors</label>
         @if(!blank($contributors))
             <ul class="list-inline">
-                @foreach($contributors as $c => $count)
+                @foreach($contributors as $c => $affiliation)
                     <li class="list-inline-item mt-1">
-                        <a href="{{route('public.communities.search.author', [$community, 'author' => $c])}}"
-                           class="no-underline">{{$c}}</a>
+                        @if(blank($affiliation))
+                            <a href="{{route('public.communities.search.author', [$community, 'author' => $c])}}"
+                               class="no-underline">{{$c}}</a>
+                        @else
+                            <a href="{{route('public.communities.search.author', [$community, 'author' => $c])}}"
+                               class="no-underline">{{$c}} ({{$affiliation}})</a>
+                        @endif
                         @if(!$loop->last)
                             ,
                         @endif
