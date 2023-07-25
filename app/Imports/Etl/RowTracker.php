@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 
 class RowTracker
 {
-    public $entityName;
+    public $entityOrActivityName;
     public $activityName;
     public $activityType;
     public $relatedActivityName;
@@ -30,7 +30,7 @@ class RowTracker
     public function __construct(int $rowNumber, $sheetName)
     {
         $this->rowNumber = $rowNumber;
-        $this->entityName = "";
+        $this->entityOrActivityName = "";
         $this->activityName = $sheetName;
         $this->activityType = $sheetName;
         $this->relatedActivityName = "";
@@ -56,9 +56,13 @@ class RowTracker
             }
 
             if ($index === 0) {
-                $this->entityName = $value;
+                // We are processing the first column. At this point we could be reading either an activity
+                // or a sample name. We don't know whether this stands for the name of an entity, in which
+                // case we are processing a sample centric worksheet, or an activity, in which case we are
+                // processing a process centric worksheet. How this field is used will be determined later.
+                $this->entityOrActivityName = $value;
             } elseif ($index === 1) {
-                $header = $headerTracker->getHeaderByIndex($index-1);
+                $header = $headerTracker->getHeaderByIndex($index - 1);
                 if (is_null($header) || Str::lower($header->name) == "parent") {
                     $this->relatedActivityName = $value;
                     $index++;
@@ -94,7 +98,7 @@ class RowTracker
         hash_update($ctx, $this->activityName);
 
         // Add in the entityName to make sure there aren't collisions in the same sheet across different entities
-        hash_update($ctx, $this->entityName);
+        hash_update($ctx, $this->entityOrActivityName);
 
         $this->activityAttributesHash = hash_final($ctx);
     }
@@ -135,6 +139,11 @@ class RowTracker
     private function getCellValue(Cell $cell): string
     {
         $value = $cell->getFormattedValue();
+        if ($cell->isFormula()) {
+            $value = $cell->getCalculatedValue();
+        } else {
+            $value = $cell->getFormattedValue();
+        }
 
         $dataType = $cell->getDataType();
         if ($dataType == DataType::TYPE_FORMULA) {

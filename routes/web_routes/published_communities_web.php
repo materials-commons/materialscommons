@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunityDatasetsWebController;
+<<<<<<< HEAD
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityForDatasetsMatchingTagWebController;
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityForDatasetsWithAuthorWebController;
+=======
+use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForAuthorWebController;
+use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForTagWebController;
+>>>>>>> 2d2932de5cfd97e928d8806d497915a6278e446b
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityFilesWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityLinksWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityWebController;
@@ -24,9 +29,8 @@ Route::get('/communities/{community}/files', ShowPublishedCommunityFilesWebContr
 Route::get('/communities/{community}/links', ShowPublishedCommunityLinksWebController::class)
      ->name('public.communities.links.show');
 
-Route::get('/communities/{community}/search/authors', SearchCommunityForDatasetsWithAuthorWebController::class)
-     ->name('public.communities.search.authors');
-
-Route::get('/communities/{community}/search/tag', SearchCommunityForDatasetsMatchingTagWebController::class)
+Route::get('/communities/{community}/search/tag', SearchCommunityPublishedDatasetsForTagWebController::class)
      ->name('public.communities.search.tag');
 
+Route::get('/communities/{community}/search/author', SearchCommunityPublishedDatasetsForAuthorWebController::class)
+     ->name('public.communities.search.author');
