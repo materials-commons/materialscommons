@@ -2,13 +2,8 @@
 
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunityDatasetsWebController;
-<<<<<<< HEAD
-use App\Http\Controllers\Web\Published\Communities\SearchCommunityForDatasetsMatchingTagWebController;
-use App\Http\Controllers\Web\Published\Communities\SearchCommunityForDatasetsWithAuthorWebController;
-=======
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForAuthorWebController;
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForTagWebController;
->>>>>>> 2d2932de5cfd97e928d8806d497915a6278e446b
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityFilesWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityLinksWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityWebController;
