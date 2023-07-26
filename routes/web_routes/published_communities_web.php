@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunitiesWebController;
 use App\Http\Controllers\Web\Published\Communities\IndexPublishedCommunityDatasetsWebController;
+use App\Http\Controllers\Web\Published\Communities\RequestToAddDatasetToCommunityWebController;
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForAuthorWebController;
 use App\Http\Controllers\Web\Published\Communities\SearchCommunityPublishedDatasetsForTagWebController;
 use App\Http\Controllers\Web\Published\Communities\ShowPublishedCommunityFilesWebController;
@@ -29,3 +30,7 @@ Route::get('/communities/{community}/search/tag', SearchCommunityPublishedDatase
 
 Route::get('/communities/{community}/search/author', SearchCommunityPublishedDatasetsForAuthorWebController::class)
      ->name('public.communities.search.author');
+
+Route::get('/communities/{community}/datasets/{dataset}/request-added',
+    RequestToAddDatasetToCommunityWebController::class)
+     ->name('public.communities.dataset.request-added');

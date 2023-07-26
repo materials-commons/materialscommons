@@ -52,7 +52,7 @@ class Community extends Model implements Searchable
 
     public function datasetsWaitingForApproval()
     {
-        return $this->belongsToMany(Dataset::class, 'community2dataset_waiting_approval', 'community_id', 'dataset_id');
+        return $this->belongsToMany(Dataset::class, 'community2ds_waiting_approval', 'community_id', 'dataset_id');
     }
 
     public function links()

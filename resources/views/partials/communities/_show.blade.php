@@ -17,7 +17,8 @@
                     </a>
                     <div class="dropdown-menu" data-offset="20" data-boundary="viewport">
                         @foreach($userDatasets as $userDataset)
-                            <a class="dropdown-item td-none" href="#">
+                            <a class="dropdown-item td-none"
+                               href="{{route('public.communities.dataset.request-added', [$community, $userDataset])}}">
                                 {{$userDataset->name}}
                             </a>
                         @endforeach

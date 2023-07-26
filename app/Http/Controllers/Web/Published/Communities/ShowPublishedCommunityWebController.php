@@ -78,19 +78,15 @@ class ShowPublishedCommunityWebController extends Controller
         return Dataset::with('communities')
                       ->whereNotNull('published_at')
                       ->where('owner_id', $user->id)
+                      ->whereDoesntHave('communities', function ($query) use ($community) {
+                          $query->where('communities.id', $community->id);
+                      })
+                      ->whereNotIn('id', function ($q) use ($community) {
+                          $q->select('dataset_id')
+                            ->from('community2ds_waiting_approval')
+                            ->where('community_id', $community->id);
+                      })
                       ->orderBy('name')
-                      ->limit(10)
-                      ->get()
-                      ->filter(function (Dataset $dataset) use ($community) {
-                          foreach ($dataset->communities as $c) {
-                              if ($c->id === $community->id) {
-                                  // dataset is already in the community, filter it out.
-                                  return false;
-                              }
-                          }
-
-                          // Dataset is not in the community so keep it.
-                          return true;
-                      });
+                      ->get();
     }
 }
