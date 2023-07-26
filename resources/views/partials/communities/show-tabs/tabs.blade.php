@@ -20,6 +20,15 @@
         </a>
     </li>
 
+    @if(Request::routeIs('communities.*'))
+        <li class="nav-item">
+            <a class="nav-link no-underline {{setActiveNavByName('communities.waiting-approval.index')}}"
+               href="{{route('communities.waiting-approval.index', [$community])}}">
+                Awaiting Approval ({{$community->datasetsWaitingForApproval->count()}})
+            </a>
+        </li>
+    @endif
+
     {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link no-underline {{setActiveNavByName($linksRouteName)}}"--}}
     {{--           href="{{route($linksRouteName, [$community])}}">--}}

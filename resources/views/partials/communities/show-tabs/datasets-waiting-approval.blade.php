@@ -5,11 +5,11 @@
         <th>Dataset</th>
         <th>Description</th>
         <th>Owner</th>
-        <th>Updated</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach($community->publishedDatasets as $dataset)
+    @foreach($community->datasetsWaitingForApproval as $dataset)
         @if(!is_null($dataset->published_at))
             <tr>
                 <td>
@@ -17,7 +17,14 @@
                 </td>
                 <td>{{$dataset->description}}</td>
                 <td>{{$dataset->owner->name}}</td>
-                <td>{{$dataset->updated_at->diffForHumans()}}</td>
+                <td>
+                    <a href="{{route('communities.waiting-approval.approve', [$community, $dataset])}}">
+                        Approve
+                    </a>
+                    <a href="{{route('communities.waiting-approval.reject', [$community, $dataset])}}">
+                        Reject
+                    </a>
+                </td>
             </tr>
         @endif
     @endforeach

@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Web\Communities\ApproveDatasetForCommunityWebController;
 use App\Http\Controllers\Web\Communities\CreateCommunityWebController;
 use App\Http\Controllers\Web\Communities\Datasets\UpdateCommunityDatasetsWebController;
 use App\Http\Controllers\Web\Communities\DeleteCommunityWebController;
 use App\Http\Controllers\Web\Communities\DestroyCommunityWebController;
-use App\Http\Controllers\Web\Communities\EditCommunityDatasetsWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityFilesWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityLinksWebController;
 use App\Http\Controllers\Web\Communities\EditCommunityWebController;
@@ -18,12 +18,14 @@ use App\Http\Controllers\Web\Communities\Files\StoreFilesForCommunityWebControll
 use App\Http\Controllers\Web\Communities\Files\UpdateFileForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Files\UploadFilesToCommunityWebController;
 use App\Http\Controllers\Web\Communities\IndexCommunitiesWebController;
+use App\Http\Controllers\Web\Communities\IndexDatasetsAwaitingApprovalWebController;
 use App\Http\Controllers\Web\Communities\Links\CreateLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\DeleteLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\DestroyLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\EditLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\StoreLinkForCommunityWebController;
 use App\Http\Controllers\Web\Communities\Links\UpdateLinkForCommunityWebController;
+use App\Http\Controllers\Web\Communities\RejectDatasetForCommunityWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityDatasetsWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityFilesWebController;
 use App\Http\Controllers\Web\Communities\ShowCommunityLinksWebController;
@@ -130,6 +132,18 @@ Route::get('/communities/{community}/links/{link}/delete', DeleteLinkForCommunit
 
 Route::delete('/communities/{community}/links/{link}/destroy', DestroyLinkForCommunityWebController::class)
      ->name('communities.links.destroy');
+
+// Dataset Approval
+Route::get('/communities/{community}/waiting-approval/index', IndexDatasetsAwaitingApprovalWebController::class)
+     ->name('communities.waiting-approval.index');
+
+Route::get('/communities/{community}/waiting-approval/{dataset}/approve',
+    ApproveDatasetForCommunityWebController::class)
+     ->name('communities.waiting-approval.approve');
+
+Route::get('/communities/{community}/waiting-approval/{dataset}/reject', RejectDatasetForCommunityWebController::class)
+     ->name('communities.waiting-approval.reject');
+
 
 
 

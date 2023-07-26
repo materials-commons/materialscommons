@@ -17,7 +17,7 @@ class RequestToAddDatasetToCommunityWebController extends Controller
         abort_unless(Auth::check(), 404, "Guest accounts can't add datasets");
         abort_unless(auth()->id() == $dataset->owner_id, 404, "You are not the dataset owner");
         abort_unless((!is_null($dataset->published_at)), 404, "Dataset is not published");
-        $community->datasetsWaitingForApproval()->sync($dataset);
+        $community->datasetsWaitingForApproval()->syncWithoutDetaching($dataset);
         flash("Dataset '{$dataset->name}' sent to community organizer for review")->success();
         return redirect(route('public.communities.show', [$community]));
     }
