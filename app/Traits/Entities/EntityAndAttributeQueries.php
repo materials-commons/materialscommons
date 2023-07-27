@@ -86,6 +86,7 @@ trait EntityAndAttributeQueries
         return DB::table('activities')
                  ->select('name')
                  ->where('project_id', $projectId)
+                 ->whereNull("category")
                  ->where('name', '<>', 'Create Samples')
                  ->distinct()
                  ->orderBy('name')
