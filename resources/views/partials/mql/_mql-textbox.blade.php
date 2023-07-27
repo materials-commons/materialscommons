@@ -17,7 +17,13 @@
                             Run
                         </a>
                     @else
-                        <a class="btn btn-warning" data-toggle="modal" href="#mql-save-query-dialog">Save</a>
+                        <button class="btn btn-warning"
+                                hx-post="{{route('projects.mql.save.text', [$project])}}"
+                                hx-trigger="click"
+                                hx-target="#query-text"
+                                hx-include="#mql-selection"
+                                data-toggle="modal" href="#mql-save-query-dialog">Save
+                        </button>
                         <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
                             Run
                         </a>

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8" id="mql-query">
-            @include('partials.entities.mql._mql-textbox')
+            @include('partials.mql._mql-textbox')
         </div>
     </div>
 </div>

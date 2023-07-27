@@ -12,7 +12,7 @@
                 <form id="mql-save">
                     <div class="form-group">
                         <label>Query</label>
-                        <textarea class="form-control" name="query_text">{{$query}}</textarea>
+                        <textarea class="form-control" name="query_text" id="query-text">{{$query}}</textarea>
                     </div>
                     <div class="form-group">
                         <label>Name</label>
