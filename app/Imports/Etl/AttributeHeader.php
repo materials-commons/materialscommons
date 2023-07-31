@@ -3,6 +3,10 @@
 namespace App\Imports\Etl;
 
 use Illuminate\Support\Str;
+use function strpos;
+use function strrpos;
+use function substr;
+use function trim;
 
 class AttributeHeader
 {
@@ -10,6 +14,7 @@ class AttributeHeader
     public $unit;
     public $attrType;
     public $important;
+    public $attrGroupName;
 
     private static $entityKeywords = [
         "s"      => true,
@@ -60,12 +65,14 @@ class AttributeHeader
         "cal"  => true,
     ];
 
-    public function __construct($name, $unit, $attrType)
+    public function __construct($name, $unit, $attrType, $attrGroupName = "")
     {
         $this->name = $name;
         $this->unit = $unit;
         $this->important = false;
         $this->attrType = $attrType;
+        $this->attrGroupName = $attrGroupName;
+
         if ($attrType == "important-entity") {
             $this->attrType = "entity";
             $this->important = true;
@@ -133,34 +140,49 @@ class AttributeHeader
     {
         $firstColon = strpos($header, ":");
         $secondColon = strrpos($header, ":");
-        if ($firstColon != $secondColon) {
-            // if firstColon != secondColon then there is a description and a path
-            // ie, the format is:  FILE:My description:directory-path/to/file/in/cell/in/materials-commons
-            $filePath = trim(substr($header, $secondColon + 1));
+        if ($firstColon == $secondColon) {
+            // If we are here then firstColon == secondColon, which means the format is:
+            // FILE:directory-path/to/file/in/cell/in/materials-commons, and there is no
+            // group.
+            $filePath = trim(substr($header, $firstColon + 1));
             return new AttributeHeader($filePath, "", "file");
         }
 
-        // If we are here then firstColon == secondColon, which means the format is:
-        // FILE:directory-path/to/file/in/cell/in/materials-commons
-        $filePath = trim(substr($header, $firstColon + 1));
-        return new AttributeHeader($filePath, "", "file");
+        // if we are here then firstColon != secondColon. That means there is a group and a path
+        // ie, the format is:  FILE:My Group:directory-path/to/file/in/cell/in/materials-commons
+        $groupName = AttributeHeader::getGroupName($firstColon, $secondColon, $header);
+        $filePath = trim(substr($header, $secondColon + 1));
+        return new AttributeHeader($filePath, "", "file", $groupName);
     }
 
     private static function parseEntityOrActivityHeader($attrType, $colon, $header)
     {
+        $firstColon = strpos($header, ":");
+        $secondColon = strrpos($header, ":");
+        $groupName = AttributeHeader::getGroupName($firstColon, $secondColon, $header);
         $openParen = strpos($header, "(");
         $closeParen = strpos($header, ")");
         $unit = "";
         // Setting starting position to -1 if colon is true. Setting it to -1 means that we
         // don't have to special case the $startingPos+1 to either add one or not depending
         // on the colon. We just always add 1.
-        $startingPos = $colon === false ? -1 : $colon;
+        $startingPos = $secondColon === false ? -1 : $secondColon;
         if (!$openParen) {
             $name = trim(substr($header, $startingPos + 1));
         } else {
             $name = trim(substr($header, $startingPos + 1, $openParen - $startingPos - 1));
             $unit = trim(substr($header, $openParen + 1, $closeParen - ($openParen + 1)));
         }
-        return new AttributeHeader($name, $unit, $attrType);
+        return new AttributeHeader($name, $unit, $attrType, $groupName);
+    }
+
+    private static function getGroupName($firstColon, $secondColon, $header): string
+    {
+        if ($firstColon == $secondColon) {
+            return "";
+        }
+
+        $length = $secondColon - $firstColon;
+        return substr($header, $firstColon + 1, $length - 1);
     }
 }
