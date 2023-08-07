@@ -10,8 +10,8 @@
         @else
             @if(isset($userDatasets))
                 @if($userDatasets->isNotEmpty())
-                    <div class="dropdown">
-                        <a class="action-link float-right mr-4 dropdown-toggle" data-toggle="dropdown"
+                    <div class="dropdown float-right">
+                        <a class="action-link mr-4 dropdown-toggle" data-toggle="dropdown"
                            data-offset="20" data-boundary="viewport"
                            href="#">
                             <i class="fas fa-plus mr-2"></i>Add Dataset
