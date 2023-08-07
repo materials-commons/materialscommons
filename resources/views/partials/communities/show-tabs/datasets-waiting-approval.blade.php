@@ -5,7 +5,7 @@
         <th>Dataset</th>
         <th>Description</th>
         <th>Owner</th>
-        <th></th>
+        <th style="width:20%"></th>
     </tr>
     </thead>
     <tbody>
@@ -18,12 +18,23 @@
                 <td>{{$dataset->description}}</td>
                 <td>{{$dataset->owner->name}}</td>
                 <td>
-                    <a href="{{route('communities.waiting-approval.approve', [$community, $dataset])}}">
-                        Approve
-                    </a>
-                    <a href="{{route('communities.waiting-approval.reject', [$community, $dataset])}}">
-                        Reject
-                    </a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="{{route('communities.waiting-approval.approve', [$community, $dataset])}}">
+                                <i class="fa fas fa-thumbs-up mr-2"></i>Approve
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('communities.waiting-approval.reject', [$community, $dataset])}}">
+                                <i class="fa fas fa-thumbs-down mr-2"></i>Reject
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:{{$dataset->owner->email}}?subject={{$dataset->name}}">
+                                <i class="fa fas fa-envelope mr-2"></i>Email Owner
+                            </a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         @endif
