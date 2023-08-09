@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Calculations
+            Computations
         @endslot
 
         @slot('body')

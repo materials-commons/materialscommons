@@ -60,7 +60,7 @@ Breadcrumbs::for('projects.experiments.entities.show', function ($trail, $projec
 
 Breadcrumbs::for('projects.activities.calculations.index', function ($trail, $project) {
     $trail->parent('projects.show', $project);
-    $trail->push('Calculations', route('projects.activities.calculations.index', [$project]));
+    $trail->push('Computations', route('projects.activities.calculations.index', [$project]));
 });
 
 Breadcrumbs::for('projects.activities.calculations.show', function ($trail, $project, $activity) {

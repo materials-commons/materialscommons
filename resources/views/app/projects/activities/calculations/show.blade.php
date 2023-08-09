@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Calculation {{$activity->atype}}
+            Computation {{$activity->atype}}
         @endslot
 
         @slot('body')

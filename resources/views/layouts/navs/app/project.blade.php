@@ -67,7 +67,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.activities.calculations')}}"
                    href="{{route('projects.activities.calculations.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
-                    Calculations
+                    Computations
                 </a>
             </li>
 
