@@ -56,10 +56,25 @@
             @endif
 
             <li class="nav-item">
+                <a class="nav-link fs-11 ml-5" href="#">
+                    <i class="fa-fw fas fa-file-excel mr-2 "></i>
+                    ETL Spreadsheets
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
                    href="{{route('projects.entities.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>
                     Samples
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5"
+                   href="#">
+                    <i class="fa-fw fas fa-code-branch mr-2 "></i>
+                    Processes
                 </a>
             </li>
 
@@ -99,7 +114,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-flask mr-2"></i>
-                    Experiments
+                    Studies
                 </a>
             </li>
 
