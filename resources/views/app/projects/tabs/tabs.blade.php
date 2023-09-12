@@ -1,6 +1,12 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}" href="#">
+            Home
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.showx')}}"
            href="{{route('projects.show', [$project])}}">
             Overview
         </a>

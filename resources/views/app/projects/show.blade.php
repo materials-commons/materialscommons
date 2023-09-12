@@ -31,7 +31,7 @@
             @include('app.projects.tabs.tabs')
             <div class="mt-2">
                 @if(Request::routeIs('projects.show'))
-                    @include('app.projects.tabs.overview')
+                    @include('app.projects.tabs.home')
                 @elseif (Request::routeIs('projects.data-dictionary.entities'))
                     @include('app.projects.tabs.entity-attributes')
                 @elseif(Request::routeIs('projects.data-dictionary.activities'))

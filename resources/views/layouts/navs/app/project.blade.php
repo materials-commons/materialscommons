@@ -111,78 +111,22 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5"
-                   href="{{route('projects.workflows.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-project-diagram mr-2"></i>
-                    Workflows
-                </a>
-            </li>
-
             <li class="nav-item mt-2">
                 <span class="ml-5">Actions</span>
             </li>
 
             <li class="nav-item">
-                <div class="dropdown">
-                    <a class="nav-link fs-11 ml-5 dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-fw fas fa-plus-circle mr-2"></i>Add
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item td-none" href="{{route('projects.experiments.create', [$project])}}">
-                            Experiment
-                        </a>
-
-                        <a class="dropdown-item td-none" href="{{route('projects.datasets.create', [$project])}}">
-                            Dataset
-                        </a>
-
-                        <a class="dropdown-item td-none"
-                           href="{{route('projects.upload-files', [$project])}}">
-                            Files
-                        </a>
-
-                        <a class="dropdown-item td-none" href="{{route('projects.entities.create', [$project])}}">
-                            Sample
-                        </a>
-
-                        <a class="dropdown-item td-none" href="{{route('projects.workflows.create', [$project])}}">
-                            Workflow
-                        </a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.uploads.index')}}"
-                   href="{{route('projects.globus.uploads.index', [$project])}}">
-                    <i class="fa-fw fas fa-cloud-upload-alt mr-2"></i>
-                    Globus Uploads
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.downloads.index')}}"
-                   href="{{route('projects.globus.downloads.index', [$project])}}">
-                    <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
-                    Globus Downloads
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link fs-11 ml-5" href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
-                    Publish
+                    Publish Data
                 </a>
             </li>
 
             <x-projects.show-globus-side-nav :project="$project"/>
 
-            <li class="nav-item mt-2">
-                <span class="ml-5">Settings</span>
-            </li>
+            {{--            <li class="nav-item mt-2">--}}
+            {{--                <span class="ml-5">Settings</span>--}}
+            {{--            </li>--}}
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
