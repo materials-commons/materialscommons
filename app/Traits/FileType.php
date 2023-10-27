@@ -88,6 +88,11 @@ trait FileType
             return "text";
         }
 
+        // Handle .hdr files from
+        if (Str::endsWith($file->name, ".hdr")) {
+            return "text";
+        }
+
         return $type;
     }
 
