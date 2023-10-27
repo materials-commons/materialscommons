@@ -59,9 +59,18 @@ trait FileType
         "application/json" => true,
     ];
 
+    protected $htmlTypes = [
+        "text/html" => true,
+    ];
+
     public function fileType($file): string
     {
         $type = $this->fileTypeFromMime($file->mime_type);
+
+        // Hack to work around the check below for startsWith(..., "text/")
+        if ($type == "html") {
+            return "html";
+        }
 
         if (!is_null($file->dataset_id)) {
             if ($type == "text") {
@@ -106,6 +115,10 @@ trait FileType
 
         if ($this->inTable($mime, $this->binaryTypes)) {
             return "binary";
+        }
+
+        if ($this->inTable($mime, $this->htmlTypes)) {
+            return "html";
         }
 
         if ($this->inTable($mime, $this->textTypes)) {
