@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Traits\GetProjectFolderFiles;
 use App\Traits\Projects\UserProjects;
 use App\ViewModels\Folders\ShowFolderViewModel;
+use Illuminate\Support\Str;
 use function auth;
 
 class ShowFolderWebController extends Controller
@@ -21,9 +22,15 @@ class ShowFolderWebController extends Controller
                    ->where('id', $folderId)
                    ->first();
         $files = $this->getProjectFolderFiles($project->id, $folderId);
+
+        $readme = $files->first(function ($file) {
+            return Str::lower($file->name) == "readme.md";
+        });
+
         $projects = $this->getUserProjects(auth()->id());
         $viewModel = (new ShowFolderViewModel($dir, $files))
             ->withProject($project)
+            ->withReadme($readme)
             ->withProjects($projects);
         return view('app.projects.folders.show', $viewModel);
     }

@@ -81,6 +81,10 @@
             </div>
             @break
 
+        @case("markdown")
+            <x-markdown flavor="github">{{$fileContents($file)}}</x-markdown>
+            @break
+
         @default
             <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch

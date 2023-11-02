@@ -84,6 +84,10 @@ trait FileType
             return "jupyter-notebook";
         }
 
+        if (Str::endsWith($file->name, ".md")) {
+            return "markdown";
+        }
+
         if (Str::startsWith($file->mime_type, "text/")) {
             return "text";
         }

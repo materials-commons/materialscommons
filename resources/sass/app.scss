@@ -20,6 +20,26 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.mc-md {
+  font-weight: normal;
+}
+
+.mc-md table {
+  border: 1px solid;
+}
+
+.mc-md th {
+  border: 1px solid;
+}
+
+.mc-md td {
+  border: 1px solid;
+}
+
+.table {
+  border: none !important;
+}
+
 .cursor-pointer {
   cursor: pointer!important;
 }

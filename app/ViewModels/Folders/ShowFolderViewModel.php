@@ -5,15 +5,19 @@ namespace App\ViewModels\Folders;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
+use App\ViewModels\Files\FileView;
 use Spatie\ViewModels\ViewModel;
 
 class ShowFolderViewModel extends ViewModel
 {
+    use FileView;
+
     protected ?File $directory;
     protected ?Project $project;
     protected $files;
     protected ?Dataset $dataset;
     protected $projects;
+    protected $readme;
 
     public function __construct(?File $directory, $files)
     {
@@ -21,6 +25,7 @@ class ShowFolderViewModel extends ViewModel
         $this->files = $files;
         $this->project = null;
         $this->dataset = null;
+        $this->readme = null;
     }
 
     public function withProject($project)
@@ -32,6 +37,12 @@ class ShowFolderViewModel extends ViewModel
     public function withDataset($dataset)
     {
         $this->dataset = $dataset;
+        return $this;
+    }
+
+    public function withReadme($file)
+    {
+        $this->readme = $file;
         return $this;
     }
 
@@ -64,5 +75,10 @@ class ShowFolderViewModel extends ViewModel
     public function projects()
     {
         return $this->projects;
+    }
+
+    public function readme()
+    {
+        return $this->readme;
     }
 }
