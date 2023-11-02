@@ -159,8 +159,6 @@
         </x-slot>
     </x-card>
 
-
-
     @include('app.dialogs._copy-choose-project-dialog')
 
     @push('scripts')

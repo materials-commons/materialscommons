@@ -9,6 +9,8 @@
     <span class="ml-3 fs-10 grey-5">Slug: {{$project->slug}}</span>
 </x-show-standard-details>
 
+<x-display-markdown-file :file="$readme"></x-display-markdown-file>
+
 <form>
     <div class="form-group">
         <label for="counts">Counts</label>
