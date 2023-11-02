@@ -156,16 +156,6 @@
                 </tbody>
             </table>
                 <x-display-markdown-file :file="$readme"></x-display-markdown-file>
-                {{--            @if (!is_null($readme))--}}
-                {{--                <br/>--}}
-                {{--                <br/>--}}
-                {{--                <x-card>--}}
-                {{--                    <x-slot name="header">{{$readme->name}}</x-slot>--}}
-                {{--                    <x-slot name="body">--}}
-                {{--                        <x-markdown class="mc-md" flavor="github">{{$fileContents($readme)}}</x-markdown>--}}
-                {{--                    </x-slot>--}}
-                {{--                </x-card>--}}
-                {{--            @endif--}}
         </x-slot>
     </x-card>
 
