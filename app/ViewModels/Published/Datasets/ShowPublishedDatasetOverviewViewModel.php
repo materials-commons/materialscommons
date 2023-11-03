@@ -15,6 +15,7 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
 
     /** @var \App\Models\Dataset */
     private $dataset;
+    private $readme;
 
     private $dsAnnotation;
 
@@ -35,9 +36,20 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
         return $this;
     }
 
+    public function withReadme($file)
+    {
+        $this->readme = $file;
+        return $this;
+    }
+
     public function dsAnnotation()
     {
         return $this->dsAnnotation;
+    }
+
+    public function readme()
+    {
+        return $this->readme;
     }
 
     public function hasNotificationsForDataset(): bool
