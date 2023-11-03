@@ -82,7 +82,7 @@
             @break
 
         @case("markdown")
-            <x-markdown flavor="github">{{$fileContents($file)}}</x-markdown>
+            <x-markdown flavor="github">{!!$fileContents($file)!!}</x-markdown>
             @break
 
         @default
