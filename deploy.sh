@@ -34,6 +34,6 @@ sudo chown -R $NGINXUSERACC:$NGINXUSERACC ${DEPLOYTO}
 
 SUPERVISORSERVICENAME="${SUPERVISORSERVICE:-supervisord}"
 #sudo systemctl status ${SUPERVISORSERVICENAME}
-#php artisan queue:restart
+php artisan queue:restart
 #sleep 5
 #sudo systemctl status ${SUPERVISORSERVICENAME}
