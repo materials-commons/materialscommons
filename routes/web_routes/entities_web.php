@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
 use App\Http\Controllers\Web\Entities\Mql\RunMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\Mql\ShowMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
+use App\Http\Controllers\Web\Entities\ShowEntityByNameSpreadWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntitySpreadWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityWebController;
@@ -31,6 +32,9 @@ Route::post('/projects/{project}/entities', StoreProjectEntityWebController::cla
 
 Route::get('/projects/{project}/entities/{entity}/spread', ShowEntitySpreadWebController::class)
      ->name('projects.entities.show-spread');
+Route::get('/projects/{project}/experiments/{experiment}/entities-by-name/spread',
+    ShowEntityByNameSpreadWebController::class)
+     ->name('projects.experiments.entities.by-name.spread');
 Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::class)
      ->name('projects.entities.show');
 

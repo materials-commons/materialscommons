@@ -26,9 +26,15 @@
     @foreach($entities as $entity)
         <tr>
             <td>
-                <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
-                    {{$entity->name}}
-                </a>
+                @if(isset($experiment))
+                    <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
+                        {{$entity->name}}
+                    </a>
+                @else
+                    <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
+                        {{$entity->name}}
+                    </a>
+                @endif
             </td>
             @if(isset($showExperiment))
                 <td>
