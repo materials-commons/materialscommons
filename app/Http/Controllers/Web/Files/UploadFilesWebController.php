@@ -11,8 +11,13 @@ class UploadFilesWebController extends Controller
     public function __invoke(Request $request, CreateFilesAction $createFilesAction, $projectId, $directoryId)
     {
         $validated = $request->validate([
-            'files.*' => 'required|file',
+            'files.*'    => 'required|file',
+            'experiment' => 'nullable|integer',
+            'sample'     => 'nullable|string',
         ]);
+
+        ray("experiment {$validated['experiment']}");
+        ray("sample {$validated['sample']}");
 
         $createFilesAction($projectId, $directoryId, $validated['files']);
     }

@@ -10,6 +10,7 @@ class ShowUploadFilesWebController extends Controller
 {
     public function __invoke(Project $project, File $directory)
     {
+        $project->load('experiments');
         return view('app.projects.folders.upload', compact('project', 'directory'));
     }
 }
