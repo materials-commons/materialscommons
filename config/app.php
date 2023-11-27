@@ -194,6 +194,11 @@ return [
          * Batch Update
          */
         Mavinoo\Batch\BatchServiceProvider::class,
+
+        /*
+         * Materials Commons Service Providers
+         */
+        App\Providers\HealthcheckServiceProvider::class,
     ],
 
     /*
