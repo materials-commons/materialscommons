@@ -23,7 +23,7 @@ class RunMqlQueryWebController extends Controller
     {
         $validated = $request->validated();
 
-        $activities = $this->getProjectActivities($project->id);
+        $activities = $this->getProjectExperimentalActivities($project->id);
 
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)

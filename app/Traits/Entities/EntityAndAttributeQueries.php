@@ -81,12 +81,24 @@ trait EntityAndAttributeQueries
                  ->groupBy('activity');
     }
 
-    public function getProjectActivities($projectId): Collection
+    public function getProjectExperimentalActivities($projectId): Collection
     {
         return DB::table('activities')
                  ->select('name')
                  ->where('project_id', $projectId)
                  ->whereNull("category")
+                 ->where('name', '<>', 'Create Samples')
+                 ->distinct()
+                 ->orderBy('name')
+                 ->get();
+    }
+
+    public function getProjectComputationalActivities($projectId): Collection
+    {
+        return DB::table('activities')
+                 ->select('name')
+                 ->where('project_id', $projectId)
+                 ->where("category", "computational")
                  ->where('name', '<>', 'Create Samples')
                  ->distinct()
                  ->orderBy('name')

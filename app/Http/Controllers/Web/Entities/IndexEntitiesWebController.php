@@ -8,17 +8,21 @@ use App\Models\Entity;
 use App\Models\Project;
 use App\Models\SavedQuery;
 use App\Traits\Entities\EntityAndAttributeQueries;
+use Illuminate\Http\Request;
 
 class IndexEntitiesWebController extends Controller
 {
     use EntityAndAttributeQueries;
 
-    public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, Project $project)
+    public function __invoke(Request $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+                             Project $project)
     {
-        $activities = $this->getProjectActivities($project->id);
+        $category = $request->input("category");
+        $activities = $this->getProjectExperimentalActivities($project->id);
 
         $entities = Entity::has('experiments')
                           ->with(['activities', 'experiments'])
+                          ->where('category', $category)
                           ->where('project_id', $project->id)
                           ->get();
 

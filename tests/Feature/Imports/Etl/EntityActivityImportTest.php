@@ -875,7 +875,7 @@ class EntityActivityImportTest extends TestCase
             new EtlState($project->owner_id));
         $importer->execute(Storage::disk('test_data')->path('etl/single-calculation.xlsx'));
         $this->assertEquals(1, Activity::count());
-        $this->assertEquals(0, Entity::count());
+        $this->assertEquals(1, Entity::count());
         $this->assertEquals(3, Attribute::where('attributable_type', Activity::class)->count());
         $this->assertDatabaseHas('attributes',
             ['name' => 'Temperature', 'attributable_type' => Activity::class]);

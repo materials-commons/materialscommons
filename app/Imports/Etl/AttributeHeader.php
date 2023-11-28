@@ -14,7 +14,6 @@ class AttributeHeader
     public $unit;
     public $attrType;
     public $important;
-    public $category;
     public $attrGroupName;
 
     private static $entityKeywords = [

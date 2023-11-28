@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Calculations")
+@section('pageTitle', "{$project->name} - Computations")
 
 @section('nav')
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.activities.calculations.index', $project))
+@section('breadcrumbs', Breadcrumbs::render('projects.activities.computations.index', $project))
 
 @section('content')
     @component('components.card')
@@ -27,7 +27,7 @@
                     @if($activity->name != "")
                         <tr>
                             <td>
-                                <a href="{{route('projects.activities.calculations.show', [$project, $activity])}}">
+                                <a href="{{route('projects.activities.computations.show', [$project, $activity])}}">
                                     {{$activity->name}}
                                 </a>
                             </td>

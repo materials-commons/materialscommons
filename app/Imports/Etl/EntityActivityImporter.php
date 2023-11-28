@@ -46,6 +46,10 @@ class EntityActivityImporter
     private EtlState $etlState;
     private Carbon $now;
 
+    // Category is reset between each sheet. The category determines whether we are
+    // processing computational or experimental data.
+    private string $category;
+
     private static array $ignoreWorksheetKeys = [
         "i"       => true,
         "ignore"  => true,
@@ -129,10 +133,12 @@ class EntityActivityImporter
             }
 
             if ($this->isActivityWorksheet($worksheet)) {
-                $this->processActivityWorksheet($worksheet);
+                $this->category = 'computational';
             } else {
-                $this->processEntityWorksheet($worksheet);
+                $this->category = 'experimental';
             }
+
+            $this->processEntityWorksheet($worksheet);
 
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
@@ -400,6 +406,7 @@ class EntityActivityImporter
     {
         $createEntityAction = new CreateEntityAction();
         $entity = $createEntityAction([
+            'category' => $this->category,
             'name'          => $row->entityOrActivityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
@@ -746,6 +753,8 @@ class EntityActivityImporter
         }
 
         $activity = $createActivityAction([
+            'category' => $this->category,
+            'atype'    => $rowTracker->activityType,
             'name'          => $rowTracker->activityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
