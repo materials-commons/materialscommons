@@ -5,10 +5,18 @@
             Overview
         </a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.experiments.entities')}}"
-           href="{{route('projects.experiments.entities', [$project, $experiment])}}">
-            Samples ({{$experiment->entities_count}})
+           href="{{route('projects.experiments.entities', [$project, $experiment, 'category' => 'experimental'])}}">
+            Samples ({{$experiment->experimental_entities_count}})
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.experiments.computations.entities')}}"
+           href="{{route('projects.experiments.computations.entities', [$project, $experiment, 'category' => 'computational'])}}">
+            Computations ({{$experiment->computational_entities_count}})
         </a>
     </li>
 

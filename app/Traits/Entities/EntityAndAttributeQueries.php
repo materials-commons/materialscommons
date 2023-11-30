@@ -109,6 +109,7 @@ trait EntityAndAttributeQueries
     public function getProjectActivityNamesForEntities($projectId, $entities): Collection
     {
         $entityIds = $entities->pluck('id')->toArray();
+
         return DB::table("activities")
                  ->select("name")
                  ->where("project_id", $projectId)
@@ -121,6 +122,26 @@ trait EntityAndAttributeQueries
                  })
                  ->distinct()
                  ->orderBy("name")
+                 ->get();
+    }
+
+    public function getExperimentActivityNamesEindexForEntities($experimentId, $entities, $orderByColumn): Collection
+    {
+        $entityIds = $entities->pluck('id')->toArray();
+
+        return DB::table('experiment2activity')
+                 ->select('activities.name', 'activities.eindex')
+                 ->where('experiment_id', $experimentId)
+                 ->join('activities', 'experiment2activity.activity_id', '=', 'activities.id')
+                 ->where('activities.name', '<>', 'Create Samples')
+                 ->whereExists(function ($query) use ($entityIds) {
+                     $query->select("*")->from('entities')
+                           ->join("activity2entity", "entities.id", "=", "activity2entity.entity_id")
+                           ->whereColumn("activities.id", "activity2entity.activity_id")
+                           ->whereIn("entity_id", $entityIds);
+                 })
+                 ->distinct()
+                 ->orderBy($orderByColumn)
                  ->get();
     }
 }
