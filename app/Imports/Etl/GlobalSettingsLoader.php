@@ -19,7 +19,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class GlobalSettingsLoader
 {
     /** @var array */
-    public $worksheets;
+    public array $worksheets;
+
+    // These are global flags that control processing.
+    public array $flags;
 
     private const WORKSHEET_NAME_CELL = 0;
     private const ATTRIBUTE_HEADER_CELL = 1;
@@ -46,6 +49,15 @@ class GlobalSettingsLoader
         return [];
     }
 
+    public function getFlagValue($flag): ?string
+    {
+        if (array_key_exists($flag, $this->flags)) {
+            return $this->flags[$flag];
+        }
+
+        return null;
+    }
+
     private function loadRow(Row $row)
     {
         $cellIterator = $row->getCellIterator();
@@ -67,6 +79,11 @@ class GlobalSettingsLoader
         }
     }
 
+    // loadGlobalSettingsForWorksheet will iterate through all the rows for the
+    // global settings worksheet picking out the global attributes for a named
+    // worksheet getting the values. A row consists of 3 columns:
+    // a worksheet, an attribute, and a value for that attribute.
+    //
     private function loadGlobalSettingForWorksheet(RowCellIterator $cellIterator)
     {
         $cellIndex = 0;
@@ -110,6 +127,10 @@ class GlobalSettingsLoader
         }
 
         // If we are here then we have successfully loaded a global setting.
-        array_push($this->worksheets[$worksheet], $globalSetting);
+        if ($globalSetting->attributeHeader->attrType == "flag") {
+            $this->flags[$globalSetting->attributeHeader->name][] = $globalSetting;
+        } else {
+            $this->worksheets[$worksheet][] = $globalSetting;
+        }
     }
 }
