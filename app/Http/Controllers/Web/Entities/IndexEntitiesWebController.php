@@ -18,7 +18,6 @@ class IndexEntitiesWebController extends Controller
                              Project $project)
     {
         $category = $request->input("category");
-        $activities = $this->getProjectExperimentalActivities($project->id);
 
         $entities = Entity::has('experiments')
                           ->with(['activities', 'experiments'])
@@ -26,11 +25,18 @@ class IndexEntitiesWebController extends Controller
                           ->where('project_id', $project->id)
                           ->get();
 
+        $activities = $this->getProjectActivityNamesForEntities($project->id, $entities);
+
         $processAttributes = $this->getProcessAttributes($project->id);
 
         $sampleAttributes = $this->getSampleAttributes($project->id);
 
         $query = "";
+
+        $usedActivities = $createUsedActivities->execute($activities, $entities);
+
+        ray("activities = ", $activities);
+        ray("usedActivities = ", $usedActivities);
 
         return view('app.projects.entities.index', [
             'project'           => $project,
@@ -42,7 +48,7 @@ class IndexEntitiesWebController extends Controller
             'queries'           => SavedQuery::where('owner_id', auth()->id())
                                              ->where('project_id', $project->id)
                                              ->get(),
-            'usedActivities'    => $createUsedActivities->execute($activities, $entities),
+            'usedActivities' => $usedActivities,
         ]);
     }
 }

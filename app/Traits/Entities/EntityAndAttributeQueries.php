@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\EntityState;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use function collect;
 
 trait EntityAndAttributeQueries
 {
@@ -102,6 +103,24 @@ trait EntityAndAttributeQueries
                  ->where('name', '<>', 'Create Samples')
                  ->distinct()
                  ->orderBy('name')
+                 ->get();
+    }
+
+    public function getProjectActivityNamesForEntities($projectId, $entities): Collection
+    {
+        $entityIds = $entities->pluck('id')->toArray();
+        return DB::table("activities")
+                 ->select("name")
+                 ->where("project_id", $projectId)
+                 ->where("name", "<>", "Create Samples")
+                 ->whereExists(function ($query) use ($entityIds) {
+                     $query->select("*")->from('entities')
+                           ->join("activity2entity", "entities.id", "=", "activity2entity.entity_id")
+                           ->whereColumn("activities.id", "activity2entity.activity_id")
+                           ->whereIn("entity_id", $entityIds);
+                 })
+                 ->distinct()
+                 ->orderBy("name")
                  ->get();
     }
 }
