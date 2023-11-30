@@ -35,9 +35,6 @@ class IndexEntitiesWebController extends Controller
 
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
-        ray("activities = ", $activities);
-        ray("usedActivities = ", $usedActivities);
-
         return view('app.projects.entities.index', [
             'project'           => $project,
             'activities'        => $activities,
