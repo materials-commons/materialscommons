@@ -24,6 +24,20 @@
             </div>
             @break
 
+        @case("json")
+            {{--            <div class="ml-3">--}}
+            {{--                <json-viewer data="{{$fileContents($file)}}"></json-viewer>--}}
+            {{--            </div>--}}
+            <div class="ml-3">
+                @if($file->size > 2000000)
+                    <span class="ml-3">File too large to display</span>
+                @else
+                    <pre>{{$fileContents($file)}}</pre>
+                @endif
+                <a href="https://jsoneditoronline.org/#left=json.{{rawurlencode($fileContents($file))}}" target="_blank">online</a>
+            </div>
+            @break
+
         @case("open-visus")
             @php
                 $visusDatasetUrl = \App\Services\OpenVisusApiService::visusDatasetUrl("{$file->uuid}_{$file->name}");

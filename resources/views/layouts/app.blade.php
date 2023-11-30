@@ -36,6 +36,8 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>
 
+    <script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script>
+
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
     @bukStyles
 

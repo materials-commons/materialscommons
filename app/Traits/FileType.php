@@ -56,7 +56,7 @@ trait FileType
     protected $textTypes = [
         "text/plain"       => true,
         "text/csv"         => true,
-        "application/json" => true,
+//        "application/json" => true,
     ];
 
     protected $htmlTypes = [
@@ -86,6 +86,14 @@ trait FileType
 
         if (Str::endsWith($file->name, ".md")) {
             return "markdown";
+        }
+
+        if ($file->mime_type == "application/json") {
+            return "json";
+        }
+
+        if (Str::endsWith($file->name, ".json")) {
+            return "json";
         }
 
         if (Str::startsWith($file->mime_type, "text/")) {
