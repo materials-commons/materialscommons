@@ -18,6 +18,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/projects/{project}/entities', IndexEntitiesWebController::class)
      ->name('projects.entities.index');
+Route::get('/projects/{project}/computations/entities', IndexEntitiesWebController::class)
+     ->name('projects.computations.entities.index');
+
 Route::get('/projects/{project}/datatables/entities', GetProjectEntitiesDatatableWebController::class)
      ->name('dt_get_project_entities');
 
