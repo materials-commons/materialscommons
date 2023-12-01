@@ -23,32 +23,30 @@ class CreateFromJsonAction
         $this->experimentId = $this->getAttribute($data, "experiment_id");
 
         $createdActivities = [];
+        $createActivityAction = new CreateActivityAction();
 
         foreach ($data["activities"] as $a) {
-            if (isset($a["attributes"])) {
-                $this->addAttributesToActivity($a["attributes"], $a);
+            if (!is_null($this->experimentId)) {
+                $a["experiment_id"] = $this->experimentId;
             }
 
+            $a["project_id"] = $projectId;
+
+            $activity = $createActivityAction($a, $userId);
+            $createdActivities[$activity->name] = $activity;
+
             if (isset($a["files"])) {
-                $this->addFilesToActivity($a["files"], $a);
+                $this->addFilesToActivity($a["files"], $activity);
             }
 
             if (isset($a["entities"])) {
-                $this->addEntitiesToActivity($a["entities"], $a);
+                $this->addEntitiesToActivity($a["entities"], $activity);
             }
         }
 
         if (isset($validated["entities"])) {
             $this->addEntitiesToExistingActivities($validated["entities"], $createdActivities);
         }
-    }
-
-    private function addAttributesToActivity($attrs, $activity)
-    {
-        $createActivityAction = new CreateActivityAction();
-        $createActivityAction([
-            'name' => $activity['name'],
-        ]);
     }
 
     private function addFilesToActivity($files, Activity $activity)
