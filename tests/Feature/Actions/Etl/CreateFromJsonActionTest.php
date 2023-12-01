@@ -8,11 +8,9 @@ use Tests\TestCase;
 
 class CreateFromJsonActionTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+    use RefreshDatabase;
+
+    /** @test */
     public function test_example()
     {
         $response = $this->get('/');
