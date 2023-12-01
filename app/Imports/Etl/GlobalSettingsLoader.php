@@ -31,6 +31,7 @@ class GlobalSettingsLoader
     public function __construct()
     {
         $this->worksheets = [];
+        $this->flags = [];
     }
 
     public function loadGlobalWorksheet(Worksheet $worksheet)
@@ -49,7 +50,7 @@ class GlobalSettingsLoader
         return [];
     }
 
-    public function getFlagValue($flag): ?string
+    public function getFlagValue($flag)
     {
         if (array_key_exists($flag, $this->flags)) {
             return $this->flags[$flag];
@@ -122,15 +123,17 @@ class GlobalSettingsLoader
             $cellIndex++;
         }
 
+        if ($globalSetting->attributeHeader->attrType == "flag") {
+            $this->flags[$globalSetting->attributeHeader->name] = $globalSetting;
+            return;
+        }
+
+
         if (blank($worksheet)) {
             return;
         }
 
         // If we are here then we have successfully loaded a global setting.
-        if ($globalSetting->attributeHeader->attrType == "flag") {
-            $this->flags[$globalSetting->attributeHeader->name][] = $globalSetting;
-        } else {
-            $this->worksheets[$worksheet][] = $globalSetting;
-        }
+        $this->worksheets[$worksheet][] = $globalSetting;
     }
 }
