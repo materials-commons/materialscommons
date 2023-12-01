@@ -63,15 +63,13 @@
                 </a>
             </li>
 
-            @if(isInBeta())
-                <li class="nav-item">
-                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
-                       href="{{route('projects.activities.computations.index', ['project' => $project->id, 'category' => 'computational'])}}">
-                        <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
-                        Computations
-                    </a>
-                </li>
-            @endif
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
+                   href="{{route('projects.activities.computations.index', ['project' => $project->id, 'category' => 'computational'])}}">
+                    <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
+                    Computations
+                </a>
+            </li>
 
             {{--            @if(isInBeta())--}}
             {{--                <li class="nav-item">--}}
