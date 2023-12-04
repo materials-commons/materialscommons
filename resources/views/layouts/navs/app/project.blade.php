@@ -176,7 +176,9 @@
                 </a>
             </li>
 
-            <x-projects.show-globus-side-nav :project="$project"/>
+            @if(isInBeta())
+                <x-projects.show-globus-side-nav :project="$project"/>
+            @endif
 
             <li class="nav-item mt-2">
                 <span class="ml-5">Settings</span>
