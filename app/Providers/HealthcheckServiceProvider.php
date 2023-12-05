@@ -29,9 +29,9 @@ class HealthcheckServiceProvider extends ServiceProvider
     {
         Health::checks([
             PingCheck::new()->url(config('app.url')),
-            UsedDiskSpaceCheck::new()->filesystemName(config('filesystems.disks.mcfs.root'))
-                              ->warnWhenUsedSpaceIsAbovePercentage(90)
-                              ->failWhenUsedSpaceIsAbovePercentage(95),
+            //            UsedDiskSpaceCheck::new()->filesystemName(config('filesystems.disks.mcfs.root'))
+            //                              ->warnWhenUsedSpaceIsAbovePercentage(90)
+            //                              ->failWhenUsedSpaceIsAbovePercentage(95),
             DatabaseCheck::new(),
         ]);
     }
