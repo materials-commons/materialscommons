@@ -28,10 +28,10 @@ class HealthcheckServiceProvider extends ServiceProvider
     public function boot()
     {
         Health::checks([
-            PingCheck::new()->url(config('app.url')),
-            UsedDiskSpaceCheck::new()->filesystemName(config('filesystems.disks.mcfs.root'))
-                              ->warnWhenUsedSpaceIsAbovePercentage(85)
-                              ->failWhenUsedSpaceIsAbovePercentage(90),
+//            PingCheck::new()->url(config('app.url')),
+//            UsedDiskSpaceCheck::new()->filesystemName(config('filesystems.disks.mcfs.root'))
+//                              ->warnWhenUsedSpaceIsAbovePercentage(85)
+//                              ->failWhenUsedSpaceIsAbovePercentage(90),
             DatabaseCheck::new(),
         ]);
     }
