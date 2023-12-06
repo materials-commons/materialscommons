@@ -57,6 +57,11 @@ class Project extends Model implements Searchable
             'user_id');
     }
 
+    public function shares()
+    {
+        return $this->hasMany(Share::class, "project_id");
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

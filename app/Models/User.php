@@ -72,6 +72,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Lab::class, 'lab2user', 'user_id', 'lab_id');
     }
 
+    public function shares()
+    {
+        return $this->hasMany(Share::class, "owner_id");
+    }
+
     public function tasks()
     {
         return $this->hasMany(Task::class, 'owner_id');
