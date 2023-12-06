@@ -29,14 +29,25 @@ class CheckForMissingFilesCommand extends Command
     public function handle()
     {
         $missing = 0;
-        foreach (File::with(['directory'])->cursor() as $file) {
+        $projectsWithMissingFiles = [];
+        foreach (File::with(['directory'])->where('mime_type', '<>', 'directory')->cursor() as $file) {
             if (!$file->realFileExists()) {
                 $missing++;
+                if (!array_key_exists($file->project_id, $projectsWithMissingFiles)) {
+                    $projectsWithMissingFiles[$file->project_id] = 1;
+                } else {
+                    $m = $projectsWithMissingFiles[$file->project_id];
+                    $m++;
+                    $projectsWithMissingFiles[$file->project_id] = $m;
+                }
                 echo "{$file->directory->path}/{$file->name} in project {$file->project_id} does not exist\n";
             }
         }
         echo "Total missing files {$missing}\n";
-        
+        foreach ($projectsWithMissingFiles as $key => $value) {
+            echo "Project {$key} missing {$value} files\n";
+        }
+
         return Command::SUCCESS;
     }
 }
