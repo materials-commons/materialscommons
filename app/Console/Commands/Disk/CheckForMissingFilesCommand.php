@@ -12,7 +12,7 @@ class CheckForMissingFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc:check-for-missing-files';
+    protected $signature = 'mc-disk:check-for-missing-files';
 
     /**
      * The console command description.
