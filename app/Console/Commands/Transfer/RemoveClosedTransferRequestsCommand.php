@@ -60,17 +60,31 @@ class RemoveClosedTransferRequestsCommand extends Command
                                }
                            }
                            $transferRequest->transferRequestFiles->each(function (TransferRequestFile $trFile) {
+                               $isUsed = File::where('checksum', $trFile->file->checksum)
+                                             ->where('uses_uuid', $trFile->file->uuid)
+                                             ->first();
+                               if (!is_null($isUsed)) {
+                                   // This file is referenced by another file, so the only thing we need
+                                   // to do is see if it should be converted, and then return.
+                                   if ($trFile->file->shouldBeConverted()) {
+                                       Conversion::create([
+                                           'file_id'    => $trFile->file->id,
+                                           'project_id' => $trFile->file->project_id,
+                                           'owner_id'   => $trFile->file->owner_id,
+                                       ]);
+                                   }
+                                   return;
+                               }
+
+                               // If we are here, then the file isn't being used, so we need to determine
+                               // if its checksum matches any other files, and if it does, point at that
+                               // file and delete the download of this file.
                                $existing = File::where('checksum', $trFile->file->checksum)
                                                ->where('id', '<>', $trFile->file->id)
                                                ->first();
                                if (!is_null($existing)) {
-                                   $usesUuid = $existing->uuid;
-                                   $usesId = $existing->id;
-                                   if (!is_null($existing->uses_uuid)) {
-                                       $usesUuid = $existing->uses_uuid;
-                                       $usesId = $existing->uses_id;
-                                   }
-
+                                   $usesUuid = $existing->getFileUuidToUse();
+                                   $usesId = $existing->getFileUsesIdToUse();
                                    $trFile->file->update([
                                        'uses_uuid' => $usesUuid,
                                        'uses_id'   => $usesId,
