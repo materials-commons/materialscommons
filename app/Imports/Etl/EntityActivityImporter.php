@@ -46,6 +46,10 @@ class EntityActivityImporter
     private EtlState $etlState;
     private Carbon $now;
 
+    // Category is reset between each sheet. The category determines whether we are
+    // processing computational or experimental data.
+    private string $category;
+
     private static array $ignoreWorksheetKeys = [
         "i"       => true,
         "ignore"  => true,
@@ -129,13 +133,51 @@ class EntityActivityImporter
             }
 
             if ($this->isActivityWorksheet($worksheet)) {
-                $this->processActivityWorksheet($worksheet);
+                $this->category = 'computational';
             } else {
-                $this->processEntityWorksheet($worksheet);
+                $this->category = 'experimental';
             }
+
+            $this->overrideCategoryIfGlobalFlagSet();
+
+            $this->processEntityWorksheet($worksheet);
 
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
+        }
+    }
+
+    /*
+     * overrideCategoryIfGlobalFlagSet overrides the $this->category setting if the
+     * global flag:category is set in the GLOBAL_WORKSHEET_NAME worksheet. If its
+     * not set then $this->category is not changed. Additionally, it validates that
+     * flag:category is set to either "experimental" or "computational". If it's not
+     * then it ignore flag:category and leaves $this->category unchanged.
+     */
+    private function overrideCategoryIfGlobalFlagSet()
+    {
+
+        $setting = $this->globalSettings->getFlagValue("category");
+        if (is_null($setting)) {
+            // No global flag was set nothing to check.
+            return;
+        }
+
+        $category = $setting->value;
+
+        // Validate the category setting. If it's not "experimental" or
+        // "computational" then ignore it and leave $this->category set
+        // to current value.
+
+        switch ($category) {
+            case "computational":
+                $this->category = "computational";
+                break;
+            case "experimental";
+                $this->category = "experimental";
+                break;
+            default:
+                // Nothing to do, $category is set to an invalid value.
         }
     }
 
@@ -400,6 +442,7 @@ class EntityActivityImporter
     {
         $createEntityAction = new CreateEntityAction();
         $entity = $createEntityAction([
+            'category' => $this->category,
             'name'          => $row->entityOrActivityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
@@ -746,6 +789,8 @@ class EntityActivityImporter
         }
 
         $activity = $createActivityAction([
+            'category' => $this->category,
+            'atype'    => $rowTracker->activityType,
             'name'          => $rowTracker->activityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,

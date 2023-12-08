@@ -48,6 +48,9 @@ Route::prefix('/projects/{project}')->group(function () {
     Route::get('/experiments/{experiment}/entities', ShowExperimentEntitiesWebController::class)
          ->name('projects.experiments.entities');
 
+    Route::get('/experiments/{experiment}/computations/entities', ShowExperimentEntitiesWebController::class)
+         ->name('projects.experiments.computations.entities');
+
     Route::get('/experiments/{experiment}/workflow', ShowExperimentWorkflowWebController::class)
          ->name('projects.experiments.workflow');
 

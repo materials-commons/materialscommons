@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\EntityState;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use function collect;
 
 trait EntityAndAttributeQueries
 {
@@ -81,7 +82,7 @@ trait EntityAndAttributeQueries
                  ->groupBy('activity');
     }
 
-    public function getProjectActivities($projectId): Collection
+    public function getProjectExperimentalActivities($projectId): Collection
     {
         return DB::table('activities')
                  ->select('name')
@@ -90,6 +91,57 @@ trait EntityAndAttributeQueries
                  ->where('name', '<>', 'Create Samples')
                  ->distinct()
                  ->orderBy('name')
+                 ->get();
+    }
+
+    public function getProjectComputationalActivities($projectId): Collection
+    {
+        return DB::table('activities')
+                 ->select('name')
+                 ->where('project_id', $projectId)
+                 ->where("category", "computational")
+                 ->where('name', '<>', 'Create Samples')
+                 ->distinct()
+                 ->orderBy('name')
+                 ->get();
+    }
+
+    public function getProjectActivityNamesForEntities($projectId, $entities): Collection
+    {
+        $entityIds = $entities->pluck('id')->toArray();
+
+        return DB::table("activities")
+                 ->select("name")
+                 ->where("project_id", $projectId)
+                 ->where("name", "<>", "Create Samples")
+                 ->whereExists(function ($query) use ($entityIds) {
+                     $query->select("*")->from('entities')
+                           ->join("activity2entity", "entities.id", "=", "activity2entity.entity_id")
+                           ->whereColumn("activities.id", "activity2entity.activity_id")
+                           ->whereIn("entity_id", $entityIds);
+                 })
+                 ->distinct()
+                 ->orderBy("name")
+                 ->get();
+    }
+
+    public function getExperimentActivityNamesEindexForEntities($experimentId, $entities, $orderByColumn): Collection
+    {
+        $entityIds = $entities->pluck('id')->toArray();
+
+        return DB::table('experiment2activity')
+                 ->select('activities.name', 'activities.eindex')
+                 ->where('experiment_id', $experimentId)
+                 ->join('activities', 'experiment2activity.activity_id', '=', 'activities.id')
+                 ->where('activities.name', '<>', 'Create Samples')
+                 ->whereExists(function ($query) use ($entityIds) {
+                     $query->select("*")->from('entities')
+                           ->join("activity2entity", "entities.id", "=", "activity2entity.entity_id")
+                           ->whereColumn("activities.id", "activity2entity.activity_id")
+                           ->whereIn("entity_id", $entityIds);
+                 })
+                 ->distinct()
+                 ->orderBy($orderByColumn)
                  ->get();
     }
 }

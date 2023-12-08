@@ -65,6 +65,10 @@ class AttributeHeader
         "cal"  => true,
     ];
 
+    private static $flagKeywords = [
+        "flag" => true,
+    ];
+
     public function __construct($name, $unit, $attrType, $attrGroupName = "")
     {
         $this->name = $name;
@@ -82,7 +86,7 @@ class AttributeHeader
         }
     }
 
-    public static function parse($header)
+    public static function parse($header): AttributeHeader
     {
         // Set the default header type if the user didn't specify one
         $attrType = "activity";
@@ -102,7 +106,7 @@ class AttributeHeader
         return AttributeHeader::parseHeaderType($attrType, $colon, $headerTrimmed);
     }
 
-    private static function getHeaderType($str)
+    private static function getHeaderType($str): string
     {
         if (array_key_exists($str, AttributeHeader::$entityKeywords)) {
             return "entity";
@@ -122,12 +126,14 @@ class AttributeHeader
             return "calculation";
         } elseif (array_key_exists($str, AttributeHeader::$ignoreKeywords)) {
             return "ignore";
+        } elseif (array_key_exists($str, AttributeHeader::$flagKeywords)) {
+            return "flag";
         } else {
             return "unknown";
         }
     }
 
-    private static function parseHeaderType($attrType, $colon, $header)
+    private static function parseHeaderType($attrType, $colon, $header): AttributeHeader
     {
         if ($attrType === "file") {
             return AttributeHeader::parseFileHeader($colon, $header);
@@ -136,7 +142,7 @@ class AttributeHeader
         }
     }
 
-    private static function parseFileHeader($colon, $header)
+    private static function parseFileHeader($colon, $header): AttributeHeader
     {
         $firstColon = strpos($header, ":");
         $secondColon = strrpos($header, ":");
@@ -155,7 +161,7 @@ class AttributeHeader
         return new AttributeHeader($filePath, "", "file", $groupName);
     }
 
-    private static function parseEntityOrActivityHeader($attrType, $colon, $header)
+    private static function parseEntityOrActivityHeader($attrType, $colon, $header): AttributeHeader
     {
         $firstColon = strpos($header, ":");
         $secondColon = strrpos($header, ":");

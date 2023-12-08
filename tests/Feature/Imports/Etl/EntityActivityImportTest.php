@@ -867,15 +867,15 @@ class EntityActivityImportTest extends TestCase
     }
 
     /** @test */
-    public function test_load_single_calculation()
+    public function test_load_single_computation()
     {
         $this->withoutExceptionHandling();
         $project = ProjectFactory::create();
         $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
             new EtlState($project->owner_id));
-        $importer->execute(Storage::disk('test_data')->path('etl/single-calculation.xlsx'));
+        $importer->execute(Storage::disk('test_data')->path('etl/single-computation.xlsx'));
         $this->assertEquals(1, Activity::count());
-        $this->assertEquals(0, Entity::count());
+        $this->assertEquals(1, Entity::count());
         $this->assertEquals(3, Attribute::where('attributable_type', Activity::class)->count());
         $this->assertDatabaseHas('attributes',
             ['name' => 'Temperature', 'attributable_type' => Activity::class]);
@@ -907,10 +907,35 @@ class EntityActivityImportTest extends TestCase
         // Check that the activity is set up correctly
         $this->assertEquals(1, Activity::count());
 
-        $c = Activity::where('name', 'calc1')->first();
-        $this->assertEquals("calc1", $c->name);
-        $this->assertEquals("calculation", $c->category);
-        $this->assertEquals("MonteCarlo", $c->atype);
+        $activity = Activity::where('name', 'MonteCarlo')->first();
+        $this->assertNotNull($activity);
+        $this->assertEquals("MonteCarlo", $activity->name);
+        $this->assertEquals("computational", $activity->category);
+        $this->assertEquals("MonteCarlo", $activity->atype);
+
+        // Check that the entity is set up correctly
+        $this->assertEquals(1, Entity::count());
+
+        $entity = Entity::where('name', 'calc1')->first();
+        $this->assertNotNull($entity);
+        $this->assertEquals("computational", $entity->category);
+    }
+
+    /** @test */
+    public function test_category_override_flag()
+    {
+        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
+        $importer = new EntityActivityImporter($project->id, null, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/single-computation-override-category-flag.xlsx'));
+        $activity = Activity::where('name', 'MonteCarlo')->first();
+        $this->assertNotNull($activity);
+        $this->assertEquals("experimental", $activity->category);
+
+        $entity = Entity::where('name', "calc1")->first();
+        $this->assertNotNull($entity);
+        $this->assertEquals("experimental", $entity->category);
     }
 
     private function hasTags($tags, $tagsItShouldHave)

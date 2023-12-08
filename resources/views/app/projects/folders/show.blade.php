@@ -155,6 +155,7 @@
                 @endforeach
                 </tbody>
             </table>
+                <x-display-markdown-file :file="$readme"></x-display-markdown-file>
         </x-slot>
     </x-card>
 

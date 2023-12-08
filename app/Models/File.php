@@ -263,6 +263,15 @@ class File extends Model implements Searchable
         return $uuid;
     }
 
+    public function getFileUsesIdToUse()
+    {
+        if (!is_null($this->uses_id)) {
+            return $this->uses_id;
+        }
+
+        return $this->id;
+    }
+
     public function pathDirPartial()
     {
         $uuid = $this->getFileUuidToUse();

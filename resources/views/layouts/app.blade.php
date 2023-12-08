@@ -37,6 +37,7 @@
             src="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
+    @bukStyles
 
     @stack('styles')
 
@@ -202,6 +203,8 @@
     });
     window.mc_grids = [];
 </script>
+@bukScripts
+
 @stack('scripts')
 </body>
 </html>

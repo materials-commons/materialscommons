@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
 use App\Http\Controllers\Web\Entities\Mql\RunMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\Mql\ShowMqlQueryWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityAttributesWebController;
+use App\Http\Controllers\Web\Entities\ShowEntityByNameSpreadWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityFilesWebController;
 use App\Http\Controllers\Web\Entities\ShowEntitySpreadWebController;
 use App\Http\Controllers\Web\Entities\ShowEntityWebController;
@@ -17,6 +18,9 @@ use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/projects/{project}/entities', IndexEntitiesWebController::class)
      ->name('projects.entities.index');
+Route::get('/projects/{project}/computations/entities', IndexEntitiesWebController::class)
+     ->name('projects.computations.entities.index');
+
 Route::get('/projects/{project}/datatables/entities', GetProjectEntitiesDatatableWebController::class)
      ->name('dt_get_project_entities');
 
@@ -31,6 +35,9 @@ Route::post('/projects/{project}/entities', StoreProjectEntityWebController::cla
 
 Route::get('/projects/{project}/entities/{entity}/spread', ShowEntitySpreadWebController::class)
      ->name('projects.entities.show-spread');
+Route::get('/projects/{project}/experiments/{experiment}/entities-by-name/spread',
+    ShowEntityByNameSpreadWebController::class)
+     ->name('projects.experiments.entities.by-name.spread');
 Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::class)
      ->name('projects.entities.show');
 

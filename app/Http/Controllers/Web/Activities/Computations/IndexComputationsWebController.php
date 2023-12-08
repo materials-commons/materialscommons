@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Activities\Calculations;
+namespace App\Http\Controllers\Web\Activities\Computations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
@@ -8,15 +8,15 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use function view;
 
-class IndexCalculationsWebController extends Controller
+class IndexComputationsWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
         $calculations = Activity::with(['owner'])
                                 ->where('project_id', $project->id)
-                                ->where('category', 'calculation')
+                                ->where('category', 'computational')
                                 ->get();
-        return view('app.projects.activities.calculations.index', [
+        return view('app.projects.activities.computations.index', [
             'project'    => $project,
             'activities' => $calculations,
         ]);

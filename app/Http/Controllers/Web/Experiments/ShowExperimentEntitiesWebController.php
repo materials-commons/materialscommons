@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Traits\DataDictionaryQueries;
+use App\Traits\Entities\EntityAndAttributeQueries;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ShowExperimentEntitiesWebController extends Controller
@@ -14,10 +16,14 @@ class ShowExperimentEntitiesWebController extends Controller
     use ExcelFilesCount;
     use DataDictionaryQueries;
     use EtlRunsCount;
+    use EntityAndAttributeQueries;
 
-    public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, $projectId, $experimentId)
+    public function __invoke(Request $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities, $projectId,
+                                     $experimentId)
     {
-        $experiment = Experiment::withCount('entities', 'activities', 'workflows')
+        $category = $request->input('category');
+        $experiment = Experiment::withCount('experimental_entities', 'computational_entities', 'activities',
+            'workflows')
                                 ->with('etlruns.files')
                                 ->findOrFail($experimentId);
         $project = Project::with('experiments')->findOrFail($projectId);
@@ -42,16 +48,13 @@ class ShowExperimentEntitiesWebController extends Controller
             $orderByColumn = "eindex";
         }
 
-        $activities = DB::table('experiment2activity')
-                        ->where('experiment_id', $experiment->id)
-                        ->join('activities', 'experiment2activity.activity_id', '=', 'activities.id')
-                        ->where('activities.name', '<>', 'Create Samples')
-                        ->select('activities.name', 'activities.eindex')
-                        ->distinct()
-                        ->orderBy($orderByColumn)
-                        ->get();
+        if ($category == 'experimental') {
+            $entities = $experiment->experimental_entities()->with('activities')->get();
+        } else {
+            $entities = $experiment->computational_entities()->with('activities')->get();
+        }
 
-        $entities = $experiment->entities()->with('activities')->get();
+        $activities = $this->getExperimentActivityNamesEindexForEntities($experiment->id, $entities, $orderByColumn);
 
         return view('app.projects.experiments.show', [
             'project'                 => $project,

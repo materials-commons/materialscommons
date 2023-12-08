@@ -55,6 +55,18 @@ class Experiment extends Model implements Searchable
         return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id');
     }
 
+    public function experimental_entities()
+    {
+        return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id')
+                    ->where('category', 'experimental');
+    }
+
+    public function computational_entities()
+    {
+        return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id')
+                    ->where('category', 'computational');
+    }
+
     public function activities()
     {
         return $this->belongsToMany(Activity::class, 'experiment2activity', 'experiment_id', 'activity_id');

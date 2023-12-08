@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Show Calculation")
+@section('pageTitle', "{$project->name} - Show Computation")
 
 @section('nav')
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.activities.calculations.show', $project, $activity))
+@section('breadcrumbs', Breadcrumbs::render('projects.activities.computations.show', $project, $activity))
 
 @section('content')
     @component('components.card')

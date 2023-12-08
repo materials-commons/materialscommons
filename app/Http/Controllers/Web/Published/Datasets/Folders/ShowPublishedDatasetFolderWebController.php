@@ -9,6 +9,7 @@ use App\Traits\Datasets\GetPublishedDatasetFolderFiles;
 use App\ViewModels\Folders\ShowFolderViewModel;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetFolderViewModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ShowPublishedDatasetFolderWebController extends Controller
 {
@@ -31,7 +32,13 @@ class ShowPublishedDatasetFolderWebController extends Controller
                        ->first();
         }
         $files = $this->getPublishedDatasetFolderFiles($dataset, $folderId);
-        $viewModel = (new ShowPublishedDatasetFolderViewModel($dir, $files))->withDataset($dataset);
+        $readme = $files->first(function ($file) {
+            return Str::lower($file->name) == "readme.md";
+        });
+
+        $viewModel = (new ShowPublishedDatasetFolderViewModel($dir, $files))
+            ->withReadme($readme)
+            ->withDataset($dataset);
         return view('public.datasets.show', $viewModel);
     }
 }

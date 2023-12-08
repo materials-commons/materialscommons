@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\File;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetOverviewViewModel;
 use Illuminate\Support\Facades\DB;
 
@@ -15,13 +16,20 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     public function __invoke($datasetId)
     {
         $this->incrementDatasetViews($datasetId);
-        $dataset = Dataset::with(['workflows', 'tags'])
+        $dataset = Dataset::with(['workflows', 'tags', 'rootDir'])
                           ->withCount(['views', 'downloads'])
                           ->withCounts()
                           ->findOrFail($datasetId);
 
+        $readme = File::where('name', "readme.md")
+                      ->where("dataset_id", $datasetId)
+                      ->where("directory_id", $dataset->rootDir->id)
+                      ->whereNull('deleted_at')
+                      ->first();
+
         $showPublishedDatasetOverviewViewModel = (new ShowPublishedDatasetOverviewViewModel())
             ->withDataset($dataset)
+            ->withReadme($readme)
             ->withDsAnnotation($this->jsonLDAnnotations($dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
             ->withFileTypes($this->getFileTypesGroup($dataset->id))
