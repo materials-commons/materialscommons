@@ -1,13 +1,14 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}" href="#">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
+           href="{{route('projects.show', [$project])}}">
             Home
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.showx')}}"
-           href="{{route('projects.show', [$project])}}">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
+           href="{{route('projects.overview', [$project])}}">
             Overview
         </a>
     </li>
