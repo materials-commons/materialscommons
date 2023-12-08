@@ -62,6 +62,7 @@ class RemoveClosedTransferRequestsCommand extends Command
                            $transferRequest->transferRequestFiles->each(function (TransferRequestFile $trFile) {
                                $isUsed = File::where('checksum', $trFile->file->checksum)
                                              ->where('uses_uuid', $trFile->file->uuid)
+                                             ->whereNull('deleted_at')
                                              ->first();
                                if (!is_null($isUsed)) {
                                    // This file is referenced by another file, so the only thing we need
@@ -81,6 +82,7 @@ class RemoveClosedTransferRequestsCommand extends Command
                                // file and delete the download of this file.
                                $existing = File::where('checksum', $trFile->file->checksum)
                                                ->where('id', '<>', $trFile->file->id)
+                                               ->whereNull('deleted_at')
                                                ->first();
                                if (!is_null($existing)) {
                                    $usesUuid = $existing->getFileUuidToUse();
