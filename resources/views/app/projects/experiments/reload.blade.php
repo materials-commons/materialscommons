@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Reload Experiment')
+@section('pageTitle', "{$project->name} - Reload Experiment")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -22,6 +22,21 @@
                     @csrf
                     @method('put')
                     <div class="form-group">
+                        <p>
+                            <b>If loading from a Google Sheet, you must set the share permissions to "Anyone with the
+                                link"
+                                under General Access in the share popup.</b>
+                        </p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="text-center">
+                                        <img src="{{asset('images/google-sheets-share.png')}}" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
                         <label for="url-id">Reload Experiment From Google Sheet</label>
                         <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
                                id="url-id">

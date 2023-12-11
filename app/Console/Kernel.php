@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Spatie\Health\Commands\RunHealthChecksCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -89,6 +90,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('backup:run')->daily()->at('01:30');
             $schedule->command('mc:generate-site-map')->daily()->at('3:00');
             $schedule->command('mc:generate-usage-statistics')->monthlyOn(1, '02:00');
+            $schedule->command(RunHealthChecksCommand::class)->everyFifteenMinutes();
         }
     }
 

@@ -5,6 +5,7 @@ namespace App\ViewModels\Published\Datasets;
 use App\Models\Dataset;
 use App\Traits\Notifications\NotificationChecker;
 use App\ViewModels\Concerns\HasOverviews;
+use App\ViewModels\Files\FileView;
 use Spatie\ViewModels\ViewModel;
 
 class ShowPublishedDatasetOverviewViewModel extends ViewModel
@@ -14,6 +15,7 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
 
     /** @var \App\Models\Dataset */
     private $dataset;
+    private $readme;
 
     private $dsAnnotation;
 
@@ -34,9 +36,20 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
         return $this;
     }
 
+    public function withReadme($file)
+    {
+        $this->readme = $file;
+        return $this;
+    }
+
     public function dsAnnotation()
     {
         return $this->dsAnnotation;
+    }
+
+    public function readme()
+    {
+        return $this->readme;
     }
 
     public function hasNotificationsForDataset(): bool

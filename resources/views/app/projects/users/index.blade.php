@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Users')
+@section('pageTitle', "{$project->name} - Users")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -80,6 +80,7 @@
         <script>
             $(document).ready(function () {
                 $('#users').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

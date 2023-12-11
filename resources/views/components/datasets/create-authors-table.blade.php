@@ -100,6 +100,7 @@
         let authorTable;
         $(document).ready(function () {
             authorTable = $("#authors").DataTable({
+                pageLength: 100,
                 rowReorder: true,
                 columnDefs: [
                     {targets: 0, visible: false}

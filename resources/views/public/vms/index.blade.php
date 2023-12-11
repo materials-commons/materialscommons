@@ -38,7 +38,7 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
-                $('#vms').DataTable({});
+                $('#vms').DataTable({pageLength: 100});
             });
         </script>
     @endpush

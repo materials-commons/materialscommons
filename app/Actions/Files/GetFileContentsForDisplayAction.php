@@ -4,6 +4,7 @@ namespace App\Actions\Files;
 
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GetFileContentsForDisplayAction
 {
@@ -63,6 +64,10 @@ class GetFileContentsForDisplayAction
             return "application/pdf";
         }
 
+        if (Str::endsWith($file->name, ".ipynb")) {
+            return "text/html";
+        }
+
         return $file->mime_type;
     }
 
@@ -87,6 +92,11 @@ class GetFileContentsForDisplayAction
         if (array_key_exists($file->mime_type, $this->officeTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".pdf";
+        }
+
+        if (Str::endsWith($file->name, ".ipynb")) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".html";
         }
 
         return "{$dirPath}/{$fileName}";

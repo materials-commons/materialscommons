@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Experiments')
+@section('pageTitle', "{$project->name} - Experiments")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -69,6 +69,7 @@
         <script>
             $(document).ready(() => {
                 $('#experiments').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                     columnDefs: [
                         {orderData: [4], targets: [3]},

@@ -37,7 +37,5 @@
     </div>
 </form>
 @include('partials.overview._overview')
-{{--<br/>--}}
-{{--<x-projects.list-notebooks :project="$project"/>--}}
-<br/>
-<x-projects.show-recent-uploads :project="$project"/>
+
+<x-display-markdown-file :file="$readme"></x-display-markdown-file>

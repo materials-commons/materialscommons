@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Traits\FileType;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 trait FileView
 {
@@ -13,9 +14,14 @@ trait FileView
 
     public function fileExists(File $file)
     {
-        return true;
         $filePath = Storage::disk('mcfs')->path($this->fileContentsPathPartial($file));
         return file_exists($filePath);
+    }
+
+    public function fileConversionExists(File $file)
+    {
+        $convertedFilePath = Storage::disk('mcfs')->path($file->convertedPathPartial());
+        return file_exists($convertedFilePath);
     }
 
     public function fileContents(File $file)
@@ -59,6 +65,11 @@ trait FileView
         if ($this->inTable($file->mime_type, $this->powerpointTypes)) {
             $dirPath = $dirPath."/.conversion";
             $fileName = $fileName.".pdf";
+        }
+
+        if (Str::endsWith($file->name, ".ipynb")) {
+            $dirPath = $dirPath."/.conversion";
+            $fileName = $fileName.".html";
         }
 
 //        if (array_key_exists($this->file->mime_type, $this->excelTypes)) {

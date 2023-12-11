@@ -9,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($community->datasets as $dataset)
+    @foreach($community->publishedDatasets as $dataset)
         @if(!is_null($dataset->published_at))
             <tr>
                 <td>
@@ -28,6 +28,7 @@
     <script>
         $(document).ready(() => {
             $('#datasets').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

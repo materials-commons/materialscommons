@@ -86,6 +86,7 @@
     <script>
         $(document).ready(() => {
             $('#attribute-values').DataTable({
+                pageLength: 100,
                 stateSave: true
             });
         });

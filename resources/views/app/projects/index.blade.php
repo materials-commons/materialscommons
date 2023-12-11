@@ -117,6 +117,7 @@
                     $('#welcome-dialog').modal();
                 }
                 $('#projects').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                     columnDefs: [
                         {orderData: [4], targets: [3]},
@@ -125,6 +126,7 @@
                 });
 
                 $('#datasets').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                     columnDefs: [
                         {orderData: [3], targets: [2]},

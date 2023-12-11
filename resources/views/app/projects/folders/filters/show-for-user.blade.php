@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Filter By User')
+@section('pageTitle', "{$project->name} - Filter By User")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -27,6 +27,7 @@
     <script>
         $(document).ready(function () {
             $('#files').DataTable({
+                pageLength: 100,
                 serverSide: true,
                 processing: true,
                 response: true,

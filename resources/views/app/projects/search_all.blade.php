@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Search Results')
+@section('pageTitle', "Search Results")
 
 @section('nav')
     @include('layouts.navs.app')
@@ -49,6 +49,7 @@
     <script>
         $(document).ready(() => {
             $('#dt-table').DataTable({
+                pageLength: 100,
                 language: {
                     search: "Filter:"
                 }

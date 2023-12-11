@@ -46,7 +46,7 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('#datasets').DataTable({});
+            $('#datasets').DataTable({pageLength: 100});
         });
     </script>
 @endpush

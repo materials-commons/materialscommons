@@ -35,7 +35,7 @@ class SetupMigratedPublishedDatasetsAction
                     if (Storage::disk('mcfs')->exists($dataset->publishedGlobusPathPartial())) {
                         $this->setupGlobusAccessForDataset($dataset);
                     } else {
-                        ($this->createDatsetInGlobusAction)($dataset->id, false);
+                        ($this->createDatsetInGlobusAction)($dataset, false);
                     }
                 }
             } catch (\Exception $e) {

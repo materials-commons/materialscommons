@@ -42,6 +42,12 @@ use Spatie\Tags\HasTags;
  * @property string $doi
  * @property integer zipfile_size
  * @property boolean globus_path_exists
+ * @property integer file1_id
+ * @property integer file2_id
+ * @property integer file3_id
+ * @property integer file4_id
+ * @property integer file5_id
+ * @property string app_url
  *
  * @mixin Builder
  */
@@ -73,6 +79,11 @@ class Dataset extends Model implements Searchable
         'workflows_count'    => 'integer',
         'zipfile_size'       => 'integer',
         'globus_path_exists' => 'boolean',
+        'file1_id'           => 'integer',
+        'file2_id'           => 'integer',
+        'file3_id'           => 'integer',
+        'file4_id'           => 'integer',
+        'file5_id'           => 'integer',
     ];
 
     public function owner()
@@ -116,6 +127,31 @@ class Dataset extends Model implements Searchable
                     ->where('path', '/');
     }
 
+    public function file1()
+    {
+        return $this->belongsTo(File::class, 'file1_id');
+    }
+
+    public function file2()
+    {
+        return $this->belongsTo(File::class, 'file2_id');
+    }
+
+    public function file3()
+    {
+        return $this->belongsTo(File::class, 'file3_id');
+    }
+
+    public function file4()
+    {
+        return $this->belongsTo(File::class, 'file4_id');
+    }
+
+    public function file5()
+    {
+        return $this->belongsTo(File::class, 'file5_id');
+    }
+
 //    public function files()
 //    {
 //        $this->belongsTo(File::class, 'dataset_id');
@@ -135,6 +171,12 @@ class Dataset extends Model implements Searchable
     {
         return $this->belongsToMany(Community::class, 'dataset2community', 'dataset_id', 'community_id')
                     ->where('public', true);
+    }
+
+    public function communitiesWaitingForApprovalIn()
+    {
+        return $this->belongsToMany(Community::class, 'community2ds_waiting_approval', 'dataset_id',
+            'community_id');
     }
 
     public function comments()
@@ -328,4 +370,18 @@ class Dataset extends Model implements Searchable
     {
         return $this->files()->where('file_id', $fileId)->count() != 0;
     }
+
+    /*
+     * Laratables
+     */
+
+    // ds_authors column is json. It appears that json columns are case-sensitive. This makes sense
+    // since keys for json are case-sensitive. However, when searching ds_authors column we want to
+    // the query to be case-insensitive. We do this by forcing the collation scheme to be
+    // case-insensitive.
+    public static function laratablesSearchDSAuthors($query, $searchValue)
+    {
+        return $query->orWhereRaw("ds_authors COLLATE utf8mb4_general_ci like '%".$searchValue."%'");
+    }
+
 }

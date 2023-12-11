@@ -16,7 +16,8 @@ class ShowExperimentWorkflowWebController extends Controller
     public function __invoke($projectId, $experimentId)
     {
         $project = Project::with('experiments')->findOrFail($projectId);
-        $experiment = Experiment::withCount('entities', 'activities', 'workflows')
+        $experiment = Experiment::withCount('experimental_entities', 'computational_entities', 'activities',
+            'workflows')
                                 ->with(['workflows', 'etlruns.files'])
                                 ->findOrFail($experimentId);
         $excelFilesCount = $this->getExcelFilesCount($project);

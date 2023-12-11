@@ -16,14 +16,23 @@
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName($filesRouteName)}}"
            href="{{route($filesRouteName, [$community])}}">
-            Files
+            Standards
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName($linksRouteName)}}"
-           href="{{route($linksRouteName, [$community])}}">
-            Links
-        </a>
-    </li>
+    @if(Request::routeIs('communities.*'))
+        <li class="nav-item">
+            <a class="nav-link no-underline {{setActiveNavByName('communities.waiting-approval.index')}}"
+               href="{{route('communities.waiting-approval.index', [$community])}}">
+                Awaiting Approval ({{$community->datasetsWaitingForApproval->count()}})
+            </a>
+        </li>
+    @endif
+
+    {{--    <li class="nav-item">--}}
+    {{--        <a class="nav-link no-underline {{setActiveNavByName($linksRouteName)}}"--}}
+    {{--           href="{{route($linksRouteName, [$community])}}">--}}
+    {{--            Contributors--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 </ul>

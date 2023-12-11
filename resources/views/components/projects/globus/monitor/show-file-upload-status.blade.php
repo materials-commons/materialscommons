@@ -11,6 +11,7 @@
     <script>
         $(document).ready(function () {
             let dt = $('#globus-files').DataTable({
+                pageLength: 100,
                 serverSide: true,
                 processing: true,
                 response: true,

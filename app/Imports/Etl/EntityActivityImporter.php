@@ -20,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use function array_push;
 
 class EntityActivityImporter
 {
@@ -44,6 +45,10 @@ class EntityActivityImporter
     private int $currentSheetPosition;
     private EtlState $etlState;
     private Carbon $now;
+
+    // Category is reset between each sheet. The category determines whether we are
+    // processing computational or experimental data.
+    private string $category;
 
     private static array $ignoreWorksheetKeys = [
         "i"       => true,
@@ -127,9 +132,52 @@ class EntityActivityImporter
                 $this->switchToNewExperiment($worksheet);
             }
 
-            $this->processWorksheet($worksheet);
+            if ($this->isActivityWorksheet($worksheet)) {
+                $this->category = 'computational';
+            } else {
+                $this->category = 'experimental';
+            }
+
+            $this->overrideCategoryIfGlobalFlagSet();
+
+            $this->processEntityWorksheet($worksheet);
+
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
+        }
+    }
+
+    /*
+     * overrideCategoryIfGlobalFlagSet overrides the $this->category setting if the
+     * global flag:category is set in the GLOBAL_WORKSHEET_NAME worksheet. If its
+     * not set then $this->category is not changed. Additionally, it validates that
+     * flag:category is set to either "experimental" or "computational". If it's not
+     * then it ignore flag:category and leaves $this->category unchanged.
+     */
+    private function overrideCategoryIfGlobalFlagSet()
+    {
+
+        $setting = $this->globalSettings->getFlagValue("category");
+        if (is_null($setting)) {
+            // No global flag was set nothing to check.
+            return;
+        }
+
+        $category = $setting->value;
+
+        // Validate the category setting. If it's not "experimental" or
+        // "computational" then ignore it and leave $this->category set
+        // to current value.
+
+        switch ($category) {
+            case "computational":
+                $this->category = "computational";
+                break;
+            case "experimental";
+                $this->category = "experimental";
+                break;
+            default:
+                // Nothing to do, $category is set to an invalid value.
         }
     }
 
@@ -141,6 +189,26 @@ class EntityActivityImporter
     private function isExperimentWorksheet(Worksheet $worksheet): bool
     {
         return $this->worksheetContainsKeyFrom($worksheet, self::$experimentWorksheetKeys);
+    }
+
+    private function isActivityWorksheet(Worksheet $worksheet): bool
+    {
+        $value = $worksheet->getCell('A1')->getValue();
+
+        // If cell A1 has no value then return false. By default, the first column is samples.
+        if (is_null($value)) {
+            return false;
+        }
+
+        // If the user specified a calculation in the first cell then
+        // this is an activity/process/calculations worksheet.
+        $ah = AttributeHeader::parse($value);
+        if ($ah->attrType == "calculation") {
+            return true;
+        }
+
+        // Otherwise it's not a calculation worksheet.
+        return false;
     }
 
     private function worksheetContainsKeyFrom(Worksheet $worksheet, $keys): bool
@@ -242,7 +310,7 @@ class EntityActivityImporter
         return Str::of(substr($title, $parenRight + 1))->trim()->__toString();
     }
 
-    private function processWorksheet(Worksheet $worksheet)
+    private function processActivityWorksheet(Worksheet $worksheet)
     {
         $blankRowCount = 0;
         $this->beforeSheet($worksheet);
@@ -262,7 +330,30 @@ class EntityActivityImporter
                 break;
             }
         }
-        $this->afterSheet();
+        $this->afterActivitySheet();
+    }
+
+    private function processEntityWorksheet(Worksheet $worksheet)
+    {
+        $blankRowCount = 0;
+        $this->beforeSheet($worksheet);
+        $title = $worksheet->getTitle();
+        $this->etlState->logProgress("\nProcessing worksheet {$title}");
+        foreach ($worksheet->getRowIterator() as $row) {
+            if (!$this->onRow($row)) {
+                // saw blank row
+                $blankRowCount++;
+            } else {
+                // Not a blank row so reset blankRowCount
+                $blankRowCount = 0;
+            }
+            if ($blankRowCount >= 10) {
+                // when we've seen 10 or more consecutive blank rows, then
+                // we stop processing data
+                break;
+            }
+        }
+        $this->afterEntitySheet();
     }
 
     private function beforeSheet($worksheet)
@@ -274,14 +365,21 @@ class EntityActivityImporter
         $this->currentSheetRows = collect();
     }
 
-    private function afterSheet()
+    private function afterEntitySheet()
     {
         $this->currentSheetRows->each(function (RowTracker $row) {
-            if (!$this->entityTracker->hasEntity($row->entityName)) {
+            if (!$this->entityTracker->hasEntity($row->entityOrActivityName)) {
                 $this->addNewEntity($row);
             } else {
                 $this->addToExistingEntity($row);
             }
+        });
+    }
+
+    private function afterActivitySheet()
+    {
+        $this->currentSheetRows->each(function (RowTracker $row) {
+            $this->addCalculation($row);
         });
     }
 
@@ -332,7 +430,7 @@ class EntityActivityImporter
     {
         $rowTracker = new RowTracker($this->rowNumber, $this->worksheet->getTitle());
         $rowTracker->loadRow($row, $this->headerTracker);
-        if ($rowTracker->entityName == "") {
+        if ($rowTracker->entityOrActivityName == "") {
             return false;
         }
         $this->rows->push($rowTracker);
@@ -344,7 +442,8 @@ class EntityActivityImporter
     {
         $createEntityAction = new CreateEntityAction();
         $entity = $createEntityAction([
-            'name'          => $row->entityName,
+            'category' => $this->category,
+            'name'          => $row->entityOrActivityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
         ], $this->userId);
@@ -606,7 +705,7 @@ class EntityActivityImporter
         // 1. Create a new entity state and add it to the entity
         // 2. Add all entity attributes to that entity state
         // 3. Create the new activity and associate it with that entity/entity state.
-        $entity = $this->entityTracker->getEntity($row->entityName);
+        $entity = $this->entityTracker->getEntity($row->entityOrActivityName);
         $state = EntityState::create([
             'owner_id'  => $this->userId,
             'entity_id' => $entity->id,
@@ -617,6 +716,49 @@ class EntityActivityImporter
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
+    }
+
+    private function addCalculation(RowTracker $rowTracker)
+    {
+        $createActivityAction = new CreateActivityAction();
+        $attributePosition = 1;
+        $attributes = $rowTracker->activityAttributes->map(function (ColumnAttribute $attr) use (&$attributePosition) {
+            return [
+                'name'                => $attr->name,
+                'value'               => $attr->value,
+                'unit'                => $attr->unit,
+                'eindex'              => $attributePosition++,
+                'marked_important_at' => $attr->important ? $this->now : null,
+            ];
+        })->toArray();
+
+        // Add global settings for worksheet (activity)
+        $globalAttributes = $this->globalSettings->getGlobalSettingsForWorksheet($rowTracker->activityName);
+        foreach ($globalAttributes as $globalAttribute) {
+            if ($globalAttribute->attributeHeader->attrType === "activity") {
+                array_push($attributes, [
+                    'name'   => $globalAttribute->attributeHeader->name,
+                    'unit'   => $globalAttribute->attributeHeader->unit,
+                    'value'  => $globalAttribute->value,
+                    'eindex' => $attributePosition++,
+                ]);
+            }
+        }
+
+        $activity = $createActivityAction([
+            'name'          => $rowTracker->entityOrActivityName,
+            // Processing an activity, so this is the activity name
+            'atype'         => $rowTracker->activityType,
+            'category'      => 'calculation',
+            'project_id'    => $this->projectId,
+            'experiment_id' => $this->experimentId,
+            'attributes'    => $attributes,
+            'eindex'        => $this->currentSheetPosition,
+        ], $this->userId);
+
+        $this->etlState->etlRun->n_activities++;
+
+        return $activity;
     }
 
     private function addNewActivity(Entity $entity, EntityState $entityState, RowTracker $rowTracker)
@@ -647,6 +789,8 @@ class EntityActivityImporter
         }
 
         $activity = $createActivityAction([
+            'category' => $this->category,
+            'atype'    => $rowTracker->activityType,
             'name'          => $rowTracker->activityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
@@ -686,7 +830,7 @@ class EntityActivityImporter
                 // Hook up all the activities who have an entityId === $entityId and that have a name === $row->relatedActivityName
                 // by loop through each of these activities and doing the following: (entity state is the entity state from the
                 // $activity for the given $entity
-                $entity = $activity->entities()->where('name', $row->entityName)->first();
+                $entity = $activity->entities()->where('name', $row->entityOrActivityName)->first();
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)

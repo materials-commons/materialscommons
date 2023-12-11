@@ -13,6 +13,7 @@
     <script>
         $(document).ready(function () {
             $('#files').DataTable({
+                pageLength: 100,
                 serverSide: true,
                 processing: true,
                 response: true,

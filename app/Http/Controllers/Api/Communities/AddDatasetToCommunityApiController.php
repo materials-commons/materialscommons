@@ -14,7 +14,7 @@ class AddDatasetToCommunityApiController extends Controller
         abort_unless($community->owner_id == auth()->id(), 404, "No such dataset");
         abort_unless($dataset->isPublished(), 403, "No such dataset or dataset isn't published");
 
-        $count = $community->datasets()->where('id', $dataset->id)->count();
+        $count = $community->datasets()->where('dataset_id', $dataset->id)->count();
         if ($count == 0) {
             $community->datasets()->attach($dataset->id);
         }

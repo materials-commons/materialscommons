@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Show Globus Upload')
+@section('pageTitle', "{$project->name} - Show Globus Upload")
 
 @section('nav')
     @include('layouts.navs.app.project')

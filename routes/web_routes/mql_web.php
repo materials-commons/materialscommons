@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Entities\Mql\RunSavedMqlQueryWebController;
 use App\Http\Controllers\Web\Mql\IndexSavedMQLQueriesWebController;
+use App\Http\Controllers\Web\Mql\ShowSaveQueryTextWebController;
 use App\Http\Controllers\Web\Mql\StoreMQLQueryWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,7 @@ Route::get('/projects/{project}/mql/index', IndexSavedMQLQueriesWebController::c
 
 Route::get('/projects/{project}/mql/{query}/run', RunSavedMqlQueryWebController::class)
      ->name('projects.mql.run');
+
+Route::post('/projects/{project}/mql/save/text', ShowSaveQueryTextWebController::class)
+     ->name('projects.mql.save.text');
 

@@ -14,9 +14,9 @@ class ShowEntitySpreadWebController extends Controller
     {
         $project = Project::with('entities')->findOrFail($projectId);
         $entityId = $request->route('entity');
-        $entity = Entity::with(['activities'])->findOrFail($entityId);
+        $entity = Entity::with(['activities', 'tags'])->findOrFail($entityId);
         $activityIds = $entity->activities->pluck('id')->toArray();
-        $activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
+        $activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files', 'tags'])
                               ->whereIn('id', $activityIds)
                               ->orderBy('eindex')
                               ->get();

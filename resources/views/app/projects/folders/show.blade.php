@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Files')
+@section('pageTitle', "{$project->name} - Files")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -170,6 +170,7 @@
                     </div>
                 </div>
             </div>
+                <x-display-markdown-file :file="$readme"></x-display-markdown-file>
         </x-slot>
     </x-card>
 
@@ -179,6 +180,7 @@
         <script>
             $(document).ready(() => {
                 $('#files').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                     columnDefs: [
                         {orderData: [3], targets: [2]},

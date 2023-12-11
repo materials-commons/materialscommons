@@ -25,6 +25,7 @@
         $(document).ready(function () {
             $(document).ready(() => {
                 $('#activities').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

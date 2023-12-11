@@ -1,0 +1,63 @@
+{
+    "activities": [
+        {
+            "name": "must-be-unique-name",
+            "description": "",
+            "atype": "",
+            "summary": "",
+            "category": "experimental|computational",
+            "entities": [
+                {
+                    "name": "can-be-reused-between-activities, creates a new state when that is done",
+                    "description": "",
+                    "attributes": [
+                        {
+                            "name": "",
+                            "description": "",
+                            "unit": "",
+                            "value": "json|integer|float|string"
+                        }
+                    ],
+                    "files": [
+                        "/path/to/file/in/project"
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "",
+                    "description": "",
+                    "unit": "",
+                    "value": "json|integer|float|string"
+                }
+            ],
+            "files": [
+                "/path/to/file/in/project"
+            ]
+        }
+    ],
+    "entities": [
+        {
+            "name": "must-be-unique-name",
+            "description": "",
+            "states": [
+                {
+                    "activity": "unique-activity-name-from-activities",
+                    "attributes": [
+                        {
+                            "name": "",
+                            "description": "",
+                            "unit": "",
+                            "value": "json|integer|float|string"
+                        }
+                    ],
+                    "files": [
+                        "/path/to/file/in/project"
+                    ]
+                }
+            ]
+        }
+    ],
+    "experiment_id": "",
+    "category": "computational|experimental"
+}

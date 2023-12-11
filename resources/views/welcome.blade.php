@@ -32,6 +32,13 @@
 </head>
 
 <body class="flex flex-col justify-between min-h-screen bg-gray-100 text-gray-800 leading-normal font-sans">
+@if(!is_null(config('app.banner')))
+    <div style="background-color: hsl(356, 75%, 53%)">
+        <p class="text-white pt-2 pb-2 pl-2 fs-14" style="margin-top: 0; margin-bottom: 0">
+            {{config('app.banner')}}
+        </p>
+    </div>
+@endif
 <header class="flex items-center shadow bg-white border-b h-18 py-4 bg-blue-700" role="banner">
     <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-8">
         <div class="flex items-center">
@@ -83,6 +90,9 @@
                 <p class="text-lg">Give your research a boost with Materials Commons. <br class="hidden sm:block"> Store
                     your results and workflow. Easily share with colleagues or publish online.</p>
 
+                {{--                <p class="text-lg">We have {{$datasets}} high quality published datasets and {{$specialCollectionsDatasets}}--}}
+                {{--                datasets in our special collections.</p>--}}
+
                 <div class="flex my-10">
 
 
@@ -109,13 +119,14 @@
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Browse Published Data
                     </a>
-
-                    {{--                    <a href="{{route('about')}}" title="About Materials Commons"--}}
-                    {{--                       class="bg-gray-400 hover:bg-gray-600 text-blue-900 font-normal hover:text-white rounded py-2 px-6">--}}
-                    {{--                        About Materials Commons--}}
-                    {{--                    </a>--}}
-
                 </div>
+
+                {{--                <div class="flex mt-1 ml-5">--}}
+                {{--                    <ul class="list-unstyled">--}}
+                {{--                        <li>Published Datasets: {{$datasets}}</li>--}}
+                {{--                        <li>Published Special Collections Datasets: {{$specialCollectionsDatasets}}</li>--}}
+                {{--                    </ul>--}}
+                {{--                </div>--}}
             </div>
 
             <img src="{{asset('images/logo-large.svg')}}" alt="Materials Commons large logo"

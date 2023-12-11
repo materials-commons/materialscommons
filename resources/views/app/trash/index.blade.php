@@ -54,6 +54,7 @@
 @push('scripts')
     <script>
         $('#projects-trash').DataTable({
+            pageLength: 100,
             stateSave: true,
             columnDefs: [
                 {orderData: [7], targets: [6]},

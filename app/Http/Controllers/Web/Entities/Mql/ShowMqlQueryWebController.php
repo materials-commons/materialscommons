@@ -16,7 +16,7 @@ class ShowMqlQueryWebController extends Controller
     {
         $validated = $request->validated();
 
-        return view('partials.entities.mql._mql-textbox', [
+        return view('partials.mql._mql-textbox', [
             'project' => $project,
             'query'   => $this->buildMqlQueryText($validated),
             'queries' => SavedQuery::where('owner_id', auth()->id())

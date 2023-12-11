@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'View Project')
+@section('pageTitle', "{$project->name} - View Project")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -31,6 +31,8 @@
             @include('app.projects.tabs.tabs')
             <div class="mt-2">
                 @if(Request::routeIs('projects.show'))
+                    @include('app.projects.tabs.home')
+                @elseif(Request::routeIs('projects.overview'))
                     @include('app.projects.tabs.overview')
                 @elseif (Request::routeIs('projects.data-dictionary.entities'))
                     @include('app.projects.tabs.entity-attributes')

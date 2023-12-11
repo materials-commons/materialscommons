@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Rename Folder')
+@section('pageTitle', "{$project->name} - Rename Folder")
 
 @section('nav')
     @include('layouts.navs.app.project')

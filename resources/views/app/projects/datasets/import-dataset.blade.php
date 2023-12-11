@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Import Dataset')
+@section('pageTitle', "{$project->name} - Import Dataset")
 
 @section('nav')
     @include('layouts.navs.app.project')

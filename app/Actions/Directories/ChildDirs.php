@@ -19,7 +19,7 @@ trait ChildDirs
      * @return array
      */
     public function getDirectoriesToUpdate(File $directory, string $newPath, int $startingFrom,
-        int $oldPathLen): iterable
+                                           int  $oldPathLen): iterable
     {
         $directoriesToUpdate = $this->recursivelyRetrieveAllSubdirs($directory->id);
 
@@ -39,7 +39,7 @@ trait ChildDirs
      *
      * @return \Illuminate\Support\Collection
      */
-    public function recursivelyRetrieveAllSubdirs($directoryId): Collection
+    public function recursivelyRetrieveAllSubdirs($directoryId, $datasetId = null): Collection
     {
         // Here we need to recursively retrieve all directories underneath a root directory.
         // We start with a count of the current collection of $directoriesToReturn and merge into it
@@ -50,12 +50,17 @@ trait ChildDirs
         $directoriesToReturn = collect(); // Initial empty collection of subdirs to update
         $count = $directoriesToReturn->count(); // Initial count
 
-        $dirs = File::where('directory_id', $directoryId)
-                    ->whereNotNull('path')
-                    ->whereNull('dataset_id')
-                    ->whereNull('deleted_at')
-                    ->where('current', true)
-                    ->get(); // Get children of directory being moved
+        $query = File::where('directory_id', $directoryId)
+                     ->where('current', true)
+                     ->whereNotNull('path')
+                     ->whereNull('deleted_at');
+        if (is_null($datasetId)) {
+            $query = $query->whereNull('dataset_id');
+        } else {
+            $query = $query->where('dataset_id', $datasetId);
+        }
+
+        $dirs = $query->get(); // Get children of directory
 
         while (true) {
             $directoriesToReturn = $directoriesToReturn->merge($dirs);
@@ -73,12 +78,18 @@ trait ChildDirs
                 return $item->id;
             })->toArray();
 
-            $dirs = File::whereIn('directory_id', $dirIds)
-                        ->where('current', true)
-                        ->whereNull('dataset_id')
-                        ->whereNull('deleted_at')
-                        ->whereNotNull('path')
-                        ->get();
+            $query = File::whereIn('directory_id', $dirIds)
+                         ->where('current', true)
+                         ->whereNull('deleted_at')
+                         ->whereNotNull('path');
+
+            if (is_null($datasetId)) {
+                $query = $query->whereNull('dataset_id');
+            } else {
+                $query = $query->where('dataset_id', $datasetId);
+            }
+
+            $dirs = $query->get();
         }
 
         return $directoriesToReturn;

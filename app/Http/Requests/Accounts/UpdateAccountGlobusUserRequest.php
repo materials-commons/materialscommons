@@ -24,7 +24,7 @@ class UpdateAccountGlobusUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'globus_user' => 'required|email',
+            'globus_user' => 'required',
         ];
     }
 }

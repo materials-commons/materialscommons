@@ -25,6 +25,7 @@
     <script>
         $(document).ready(() => {
             $('#dt-table').DataTable({
+                pageLength: 100,
                 language: {
                     search: "Filter:"
                 }

@@ -148,4 +148,30 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("abc", $attrHeader->name);
         $this->assertEquals("", $attrHeader->unit);
     }
+
+    /** @test */
+    public function test_calculation()
+    {
+        $header = "calc:my calculations";
+        $attrHeader = AttributeHeader::parse($header);
+        $this->assertEquals("calculation", $attrHeader->attrType);
+        $this->assertEquals("my calculations", $attrHeader->name);
+        $this->assertEquals("", $attrHeader->unit);
+    }
+
+    /** @test */
+    public function test_calculation_no_name()
+    {
+        $header = "c:";
+        $attrHeader = AttributeHeader::parse($header);
+        $this->assertEquals("calculation", $attrHeader->attrType);
+
+        $header = "cal:";
+        $attrHeader = AttributeHeader::parse($header);
+        $this->assertEquals("calculation", $attrHeader->attrType);
+
+        $header = "calc:";
+        $attrHeader = AttributeHeader::parse($header);
+        $this->assertEquals("calculation", $attrHeader->attrType);
+    }
 }

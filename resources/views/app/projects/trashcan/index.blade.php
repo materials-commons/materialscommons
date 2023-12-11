@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Samples')
+@section('pageTitle', "{$project->name} - Trashcan")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -15,19 +15,18 @@
         @endslot
 
         @slot('body')
-            @if(false)
                 @if($nav_trash_count > 0)
-                    <a href="#" class="btn btn-danger">Empty Trash</a>
+                    <a href="{{route('projects.trashcan.empty', [$project])}}" class="btn btn-danger">Empty Trash</a>
                 @else
                     <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
                 @endif
                 <br>
                 <br>
-            @endif
             <table id="trash" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
                     <th>File/Directory</th>
+                    <th>Will be deleted in</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -47,6 +46,7 @@
                                 </a>
                             </td>
                         @endif
+                        <td>{{$item->deleted_at->addDays($expiresInDays)->diffIndays($now)+1}} days</td>
                         <td>
                             <div class="float-right">
                                 <ul class="list-unstyled">
@@ -88,6 +88,7 @@
         <script>
             $(document).ready(() => {
                 $('#trash').DataTable({
+                    pageLength: 100,
                     // stateSave: true,
                 });
             });

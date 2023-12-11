@@ -59,11 +59,20 @@ trait FileType
         "application/json" => true,
     ];
 
+    protected $htmlTypes = [
+        "text/html" => true,
+    ];
+
     public function fileType($file): string
     {
         $type = $this->fileTypeFromMime($file->mime_type);
 
-        if (isInBeta()) {
+        // Hack to work around the check below for startsWith(..., "text/")
+        if ($type == "html") {
+            return "html";
+        }
+
+        if (!is_null($file->dataset_id)) {
             if ($type == "text") {
                 if (Str::endsWith($file->name, ".idx")) {
                     return "open-visus";
@@ -71,7 +80,20 @@ trait FileType
             }
         }
 
+        if (Str::endsWith($file->name, ".ipynb")) {
+            return "jupyter-notebook";
+        }
+
+        if (Str::endsWith($file->name, ".md")) {
+            return "markdown";
+        }
+
         if (Str::startsWith($file->mime_type, "text/")) {
+            return "text";
+        }
+
+        // Handle .hdr files from
+        if (Str::endsWith($file->name, ".hdr")) {
             return "text";
         }
 
@@ -102,6 +124,10 @@ trait FileType
 
         if ($this->inTable($mime, $this->binaryTypes)) {
             return "binary";
+        }
+
+        if ($this->inTable($mime, $this->htmlTypes)) {
+            return "html";
         }
 
         if ($this->inTable($mime, $this->textTypes)) {

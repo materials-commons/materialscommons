@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Files')
+@section('pageTitle', "{$project->name} - Files")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -88,6 +88,7 @@
         <script>
             $(document).ready(() => {
                 $('#files').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

@@ -13,7 +13,7 @@ class IndexPublicCommunitiesApiController extends Controller
     public function __invoke(Request $request)
     {
         $communities = Community::with(['owner'])
-                                ->withCount(['datasets', 'links_count', 'files_count'])
+                                ->withCount(['datasets', 'links', 'files'])
                                 ->where('public', true)
                                 ->get();
         return CommunityResource::collection($communities);

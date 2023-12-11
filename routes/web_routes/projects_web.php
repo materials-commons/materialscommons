@@ -31,6 +31,7 @@ use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectOverviewWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -63,6 +64,9 @@ Route::post('/projects/search', SearchAcrossProjectsWebController::class)
 
 Route::get('/projects/{project}', ShowProjectWebController::class)
      ->name('projects.show');
+
+Route::get('/projects/{project}/overview', ShowProjectOverviewWebController::class)
+     ->name('projects.overview');
 
 //
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Processes')
+@section('pageTitle', "{$project->name} - Processes")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -52,6 +52,7 @@
             $(document).ready(() => {
                 let projectId = "{{$project->id}}";
                 $('#activities').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

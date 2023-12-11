@@ -78,7 +78,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
     private function DownloadSheetAndReturnFileName(): string
     {
         $filename = uniqid().'.xlsx';
-        @Storage::disk('mcfs')->createDir('__sheets');
+        @Storage::disk('mcfs')->makeDirectory('__sheets');
         $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
 
         // Since this is an url we need to download it.

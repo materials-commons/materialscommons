@@ -37,10 +37,10 @@
                 @endif
             </li>
         @endif
-        @include('common.show-more-control', [
-            'items' => $activity->files,
-            'attrName' => $activity->uuid,
-            'msg' => 'files...'
-        ])
     @endforeach
+    @include('common.show-more-control', [
+           'items' => $activity->files,
+           'attrName' => $activity->uuid,
+           'msg' => 'files...'
+       ])
 </ul>

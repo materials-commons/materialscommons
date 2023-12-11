@@ -18,6 +18,7 @@
         $(document).ready(() => {
             let projectId = "{{$project->id}}";
             $('#recently-uploaded').DataTable({
+                pageLength: 100,
                 serverSide: true,
                 processing: true,
                 response: true,

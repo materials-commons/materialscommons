@@ -15,7 +15,11 @@ use Spatie\Tags\HasTags;
  * @property string uuid
  * @property string name
  * @property string description
- * @property integer $project_id
+ * @property string summary
+ * @property integer owner_id
+ * @property integer project_id
+ * @property string category
+ * @property string atype
  * @property mixed experiments
  * @property \Illuminate\Support\Collection $files
  *

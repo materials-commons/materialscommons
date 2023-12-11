@@ -25,6 +25,7 @@
     <script>
         $(document).ready(() => {
             $('#communities').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

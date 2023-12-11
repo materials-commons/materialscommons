@@ -26,6 +26,7 @@
         $(document).ready(function () {
             $(document).ready(() => {
                 $('#dt-table').DataTable({
+                    pageLength: 100,
                     stateSave: true,
                 });
             });

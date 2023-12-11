@@ -19,7 +19,7 @@ class RunSavedMqlQueryWebController extends Controller
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities,
         RunMqlQueryAction $runMqlQueryAction, Project $project, SavedQuery $query)
     {
-        $activities = $this->getProjectActivities($project->id);
+        $activities = $this->getProjectExperimentalActivities($project->id);
 
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)

@@ -26,6 +26,7 @@
     <script>
         $(document).ready(() => {
             $('#team-members').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

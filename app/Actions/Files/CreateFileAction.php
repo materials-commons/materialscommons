@@ -19,11 +19,24 @@ class CreateFileAction
         // Check if the exact file already exists
         $existingFile = $this->matchingFileInDir($directoryId, $checksum, $nameToUse);
         if (!is_null($existingFile)) {
-            $existing = File::where('directory_id', $directoryId)->where('name', $existingFile->name)->get();
+            $existing = File::where('directory_id', $directoryId)
+                            ->where('name', $existingFile->name)
+                            ->whereNull('dataset_id')
+                            ->whereNull('deleted_at')
+                            ->get();
             if ($existing->count() != 1) {
                 File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
+
+                // We need to refresh the state of $existingFile because it may be different from it was when we
+                // first retrieved. If current was true when first retrieved, and it's been set to false above, then
+                // the update below will do nothing as laravel will skip doing the update.
+                $existingFile->refresh();
             }
+
             $existingFile->update(['current' => true]);
+            if ($existingFile->shouldBeConverted()) {
+                ConvertFileJob::dispatch($existingFile)->onQueue('globus');
+            }
             return $existingFile;
         }
 
@@ -54,9 +67,9 @@ class CreateFileAction
             $this->saveFile($file, $fileEntry->uuid);
         } else {
             // Matching file found, so point at it. At this point the match is either the original file that
-            // everything points at or its a file container the pointer (the pointer is uses_uuid and uses_id are set).
+            // everything points at or it's a file container the pointer (the pointer is uses_uuid and uses_id are set).
             // So determine which case and set fileEntry uses_uuid and uses_id the appropriate value (which for a pointer
-            // is the uses_uuid/uses_id, and if its the file everything points at its uuid/id).
+            // is the uses_uuid/uses_id, and if it's the file everything points at its uuid/id).
             $usesUuid = blank($matchingFileChecksum->uses_uuid) ? $matchingFileChecksum->uuid : $matchingFileChecksum->uses_uuid;
             $usesId = blank($matchingFileChecksum->uses_id) ? $matchingFileChecksum->id : $matchingFileChecksum->uses_id;
             $fileEntry->uses_uuid = $usesUuid;
@@ -85,6 +98,7 @@ class CreateFileAction
         return File::where('checksum', $checksum)
                    ->where('directory_id', $directoryId)
                    ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->where('name', $name)
                    ->first();
     }

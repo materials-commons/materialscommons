@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Sample')
+@section('pageTitle', "{$project->name} - Create Sample")
 
 @section('nav')
     @include('layouts.navs.app.project')

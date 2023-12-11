@@ -13,10 +13,15 @@
         <x-show-summary :summary="$dataset->summary"/>
     @endif
 
+    <x-display-markdown-file :file="$readme"></x-display-markdown-file>
+
     <x-datasets.show-funding :dataset="$dataset"/>
 
     <x-datasets.show-papers-list :papers="$dataset->papers"/>
 
     @include('partials.overview._overview')
+
+    <x-datasets.show-overview-files :dataset="$dataset"/>
+
 </form>
 

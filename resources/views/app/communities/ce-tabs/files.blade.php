@@ -36,6 +36,7 @@
     <script>
         $(document).ready(() => {
             $('#files').DataTable({
+                pageLength: 100,
                 stateSave: true,
             });
         });

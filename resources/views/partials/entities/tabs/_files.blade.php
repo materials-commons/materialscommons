@@ -25,6 +25,7 @@
     <script>
         $(document).ready(() => {
             $('#files').DataTable({
+                pageLength: 100,
                 stateSave: true,
                 columnDefs: [
                     {orderData: [3], targets: [2]},

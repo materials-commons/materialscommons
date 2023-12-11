@@ -10,6 +10,8 @@ return [
 
     'survey_url' => env("MC_SURVEY_URL"),
 
+    'banner' => env('MC_BANNER', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -192,6 +194,11 @@ return [
          * Batch Update
          */
         Mavinoo\Batch\BatchServiceProvider::class,
+
+        /*
+         * Materials Commons Service Providers
+         */
+        App\Providers\HealthcheckServiceProvider::class,
     ],
 
     /*

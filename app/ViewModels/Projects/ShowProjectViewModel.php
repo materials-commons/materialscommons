@@ -2,6 +2,7 @@
 
 namespace App\ViewModels\Projects;
 
+use App\Models\File;
 use App\Models\Project;
 use App\ViewModels\Concerns\HasOverviews;
 use Spatie\ViewModels\ViewModel;
@@ -15,6 +16,8 @@ class ShowProjectViewModel extends ViewModel
 
     private int $entityAttributesCount;
     private int $activityAttributesCount;
+
+    private ?File $readme;
 
     public function __construct(Project $project)
     {
@@ -38,6 +41,12 @@ class ShowProjectViewModel extends ViewModel
         return $this;
     }
 
+    public function withReadme(?File $readme)
+    {
+        $this->readme = $readme;
+        return $this;
+    }
+
     public function entityAttributesCount(): int
     {
         return $this->entityAttributesCount;
@@ -46,5 +55,10 @@ class ShowProjectViewModel extends ViewModel
     public function activityAttributesCount(): int
     {
         return $this->activityAttributesCount;
+    }
+
+    public function readme(): ?File
+    {
+        return $this->readme;
     }
 }

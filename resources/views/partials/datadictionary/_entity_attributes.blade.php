@@ -33,6 +33,7 @@
     <script>
         $(document).ready(() => {
             $('#entities-dd').DataTable({
+                pageLength: 100,
                 stateSave: true
             });
         });
