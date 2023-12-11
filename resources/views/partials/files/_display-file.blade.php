@@ -4,11 +4,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="text-center">
-                            <a href="{{$displayRoute}}">
+                        @if(isset($displayRoute))
+                            <div class="text-center">
+                                <a href="{{$displayRoute}}">
+                                    <img src="{{$displayRoute}}" class="img-fluid">
+                                </a>
+                            </div>
+                        @else
+                            <div class="text-center">
                                 <img src="{{$displayRoute}}" class="img-fluid">
-                            </a>
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -16,6 +22,11 @@
 
         @case("text")
             <div class="ml-3">
+                @if(isset($displayRoute))
+                    <a href="{{$displayRoute}}">Fullscreen</a>
+                    <br/>
+                    <br/>
+                @endif
                 @if($file->size > 2000000)
                     <span class="ml-3">File too large to display</span>
                 @else
