@@ -2,7 +2,10 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
+                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}"
+                   data-toggle="tooltip"
+                   title="Goto to the dashboard listing all your projects, and published datasets."
+                   href="{{route('dashboard')}}">
                     <i class="fa-fw fas fa-tachometer-alt mr-2"></i>
                     Dashboard
                 </a>
@@ -10,6 +13,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.show')}}"
+                   data-toggle="tooltip" title="View details about your project."
                    href="{{route('projects.show', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-vector-square mr-2"></i>
                     {{$project->name}}
@@ -22,6 +26,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
+                   data-toggle="tooltip" title="Access your project files."
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
                     Files
@@ -31,6 +36,7 @@
             @if($nav_trash_count > 0)
                 <li class="nav-item ml-3">
                     <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.trashcan')}}"
+                       data-toggle="tooltip" title="View your deleted files and empty the trashcan."
                        href="{{route('projects.trashcan.index', [$project])}}">
                         <i class="fa-fw fas fa-trash-restore mr-2"></i>
                         Trash
@@ -39,6 +45,8 @@
             @else
                 <li class="nav-item ml-3">
                     <a class="nav-link fs-11 ml-5 nav-disabled"
+                       data-toggle="tooltip"
+                       title="Deleted files go here where they will be scheduled for permanent deletion."
                        href="#">
                         <i class="fa-fw fas fa-trash mr-2"></i>
                         Trash
@@ -48,6 +56,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
+                   data-toggle="tooltip" title="View the experimental processes and samples loaded into your project."
                    href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>
                     Samples
@@ -56,6 +65,8 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
+                   data-toggle="tooltip"
+                   title="View the computational activities and entities loaded into your project."
                    href="{{route('projects.activities.computations.index', ['project' => $project->id, 'category' => 'computational'])}}">
                     <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
                     Computations
@@ -68,7 +79,8 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
-                   data-toggle="tooltip" title="An experiment is..."
+                   data-toggle="tooltip"
+                   title="Track your experiments and computational studies. Create new experiments and studies by loading your spreadsheet data."
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-flask mr-2"></i>
                     Experiments
@@ -77,6 +89,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
+                   data-toggle="tooltip" title="Track and publish your research results."
                    href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
                     Datasets
@@ -96,6 +109,7 @@
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
+                   data-toggle="tooltip" title="Control who has access to your project."
                    href="{{route('projects.users.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-users-cog mr-2"></i>
                     Project Members
@@ -109,21 +123,28 @@
             @endif
 
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
+                <a class="nav-link fs-11 {{setActiveNav('communities')}}"
+                   data-toggle="tooltip" title="Create and manage your research communities."
+                   href="{{route('communities.index')}}">
                     <i class="fa-fw fas fa-city mr-2"></i>
                     My Communities
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}" href="{{route('accounts.show')}}">
+                <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}"
+                   data-toggle="tooltip"
+                   title="Access your account details, including changing your password, viewing/changing your API key and other information."
+                   href="{{route('accounts.show')}}">
                     <i class="fa-fw fas fa-user mr-2"></i>
                     Account
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11" href="{{route('public.index')}}">
+                <a class="nav-link fs-11"
+                   data-toggle="tooltip" title="Access the public published datasets site."
+                   href="{{route('public.index')}}">
                     <i class="fa-fw fas fa-globe mr-2"></i>
                     Public Data
                 </a>
