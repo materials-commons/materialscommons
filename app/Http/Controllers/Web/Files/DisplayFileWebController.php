@@ -16,7 +16,7 @@ class DisplayFileWebController extends Controller
     public function __invoke(GetFileContentsForDisplayAction $getFileContentsForDisplayAction, Project $project,
         File $file)
     {
-        if ($this->fileType($file) == "image") {
+        if ($this->fileTypeShouldReturnContents($file)) {
             $f = $getFileContentsForDisplayAction->execute($file);
             abort_if(is_null($f), 404);
             $response = Response::make($f, 200);

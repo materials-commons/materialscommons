@@ -100,6 +100,21 @@ trait FileType
         return $type;
     }
 
+    private function fileTypeShouldReturnContents($file)
+    {
+        $fileType = $this->fileType($file);
+        switch ($fileType) {
+            case "image":
+            case "pdf":
+            case "jupyter-notebook":
+            case "office":
+            case "video":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public function fileTypeFromMime($mime)
     {
         if ($this->inTable($mime, $this->imageTypes)) {
