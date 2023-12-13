@@ -67,7 +67,7 @@
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
                    data-toggle="tooltip"
                    title="View the computational activities and entities loaded into your project."
-                   href="{{route('projects.activities.computations.index', ['project' => $project->id, 'category' => 'computational'])}}">
+                   href="{{route('projects.computations.entities.index', ['project' => $project->id, 'category' => 'computational'])}}">
                     <i class="fa-fw fas fa-square-root-alt mr-2 "></i>
                     Computations
                 </a>
