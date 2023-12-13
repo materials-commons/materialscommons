@@ -102,21 +102,7 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.uploads.index')}}"
-                   href="{{route('projects.globus.uploads.index', [$project])}}">
-                    <i class="fa-fw fas fa-cloud-upload-alt mr-2"></i>
-                    Globus File Upload
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus.downloads.index')}}"
-                   href="{{route('projects.globus.downloads.index', [$project])}}">
-                    <i class="fa-fw fas fa-cloud-download-alt mr-2"></i>
-                    Globus File Download
-                </a>
-            </li>
+            <x-projects.show-old-globus-side-nav :project="$project" :user="auth()->user()"/>
 
             @if(isInBeta())
                 <x-projects.show-globus-side-nav :project="$project"/>
