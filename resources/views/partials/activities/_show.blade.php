@@ -1,6 +1,10 @@
 @component('components.card')
     @slot('header')
-        Process: {{$activity->name}}
+        @if($activity->category == "computational")
+            Activity: {{$activity->name}}
+        @else
+            Process: {{$activity->name}}
+        @endif
         {{--        <a class="float-right action-link" href="#">--}}
         {{--            <i class="fas fa-edit mr-2"></i>Edit--}}
         {{--        </a>--}}
