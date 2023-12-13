@@ -6,7 +6,7 @@
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.activities.show', $project, $activity))
+{{--@section('breadcrumbs', Breadcrumbs::render('projects.activities.show', $project, $activity))--}}
 
 @section('content')
     @include('partials.activities._show', [
