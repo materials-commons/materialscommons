@@ -14,9 +14,11 @@ class IndexEntitiesWebController extends Controller
 {
     use EntityAndAttributeQueries;
 
-    public function __invoke(Request $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-                             Project $project)
-    {
+    public function __invoke(
+        Request $request,
+        CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+        Project $project
+    ) {
         $category = $request->input("category");
 
         $entities = Entity::has('experiments')
@@ -36,6 +38,7 @@ class IndexEntitiesWebController extends Controller
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
         return view('app.projects.entities.index', [
+            'category'          => $category,
             'project'           => $project,
             'activities'        => $activities,
             'entities'          => $entities,
@@ -45,7 +48,7 @@ class IndexEntitiesWebController extends Controller
             'queries'           => SavedQuery::where('owner_id', auth()->id())
                                              ->where('project_id', $project->id)
                                              ->get(),
-            'usedActivities' => $usedActivities,
+            'usedActivities'    => $usedActivities,
         ]);
     }
 }

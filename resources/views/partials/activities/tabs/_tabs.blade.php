@@ -7,7 +7,11 @@
 
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName($entitiesRouteName)}}" href="{{$entitiesRoute}}">
-            Samples
+            @if($activity->category == "computational")
+                Computations
+            @else
+                Samples
+            @endif
         </a>
     </li>
 
