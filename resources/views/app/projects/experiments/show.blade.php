@@ -40,6 +40,8 @@
                 @include('app.projects.experiments.tabs.overview-tab')
             @elseif(Request::routeIs('projects.experiments.entities'))
                 @include('app.projects.experiments.tabs.entities-tab')
+            @elseif(Request::routeIs('projects.experiments.computations.entities'))
+                @include('app.projects.experiments.tabs.entities-tab')
             @elseif(Request::routeIs('projects.experiments.data-dictionary.activities'))
                 @include('app.projects.experiments.tabs.activities-dd-tab')
             @elseif(Request::routeIs('projects.experiments.data-dictionary.entities'))
