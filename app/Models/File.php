@@ -156,6 +156,15 @@ class File extends Model implements Searchable
         return $this->directory->path."/".$this->name;
     }
 
+    public function dirPath()
+    {
+        if ($this->isDir()) {
+            return $this->path;
+        }
+
+        return $this->directory->path;
+    }
+
     // Utility methods
 
     public function toHumanBytes()
