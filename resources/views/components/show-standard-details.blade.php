@@ -2,7 +2,11 @@
     <div class="row">
         <div class="col mb-2">
             <div>
-                <span class="fs-10 grey-5">Last Updated: {{$item->updated_at->diffForHumans()}}</span>
+                @if(isset($item->loading_finished_at) && !blank($item->loading_finished_at))
+                    <span class="fs-10 grey-5">Last Loaded At: {{$item->loading_finished_at->diffForHumans()}}</span>
+                @else
+                    <span class="fs-10 grey-5">Last Updated: {{$item->updated_at->diffForHumans()}}</span>
+                @endif
                 <span class="ml-3 fs-10 grey-5">Owner: {{$item->owner->name}}</span>
                 {{ $slot ?? '' }}
                 @if (isset($item->id))
