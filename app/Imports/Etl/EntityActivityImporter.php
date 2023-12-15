@@ -6,6 +6,7 @@ use App\Actions\Activities\CreateActivityAction;
 use App\Actions\Entities\CreateEntityAction;
 use App\Actions\Etl\GetFileByPathAction;
 use App\Enums\ExperimentStatus;
+use App\Helpers\PathHelpers;
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
@@ -557,12 +558,12 @@ class EntityActivityImporter
         }
 
         $path = "{$headerName}/{$value}";
-        if (strpos($value, "/") !== false) {
+        if ($value[0] == '/') {
             // Cell contains the path, no need to use the header
             $path = $value;
         }
 
-        return $path;
+        return PathHelpers::normalizePath($path);
     }
 
     private function processAndAddFiles($path, $entity, $activity)

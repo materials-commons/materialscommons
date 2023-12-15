@@ -466,10 +466,10 @@ class EntityActivityImportTest extends TestCase
         $importer->execute(Storage::disk('test_data')->path("etl/file_associations.xlsx"));
 
         $activity = Activity::where('name', 'sem')->first();
-        $this->assertEquals(5, $activity->files()->count());
+        $this->assertEquals(4, $activity->files()->count());
 
         $entity = Entity::where('name', 'G181030g')->first();
-        $this->assertEquals(5, $entity->files()->count());
+        $this->assertEquals(4, $entity->files()->count());
     }
 
     /** @test */
@@ -500,6 +500,32 @@ class EntityActivityImportTest extends TestCase
 
         $entity = Entity::where('name', 'G181030g')->first();
         $this->assertEquals(3, $entity->files()->count());
+    }
+
+    /** @test */
+    public function test_relative_file_associations_with_and_without_wildcards()
+    {
+        // Setup
+        $project = ProjectFactory::create();
+        $root = $project->rootDir;
+        $d1 = ProjectFactory::createDirectory($project, $root, "d1");
+        $d2 = ProjectFactory::createDirectory($project, $d1, "d2");
+        ProjectFactory::createFakeFile($project, $d2, "f1.txt");
+        ProjectFactory::createFakeFile($project, $d2, "f2.txt");
+        ProjectFactory::createFakeFile($project, $d2, "f3.jpeg");
+        $experiment = Experiment::factory()->create([
+            'owner_id'   => $project->owner_id,
+            'project_id' => $project->id,
+        ]);
+
+        // Run importer
+        $importer = new EntityActivityImporter($project->id, $experiment->id, $project->owner_id,
+            new EtlState($project->owner_id));
+        $importer->execute(Storage::disk('test_data')->path('etl/single_with_relative_file_some_wildcards.xlsx'));
+
+        // Asserts
+        $activity = Activity::where('name', 'sem')->first();
+        $this->assertEquals(2, $activity->files()->count());
     }
 
     /** @test */
