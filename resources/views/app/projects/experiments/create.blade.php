@@ -107,9 +107,9 @@
                         Create
                     </a>
 
-                    <a class="action-link" href="#" onclick="createAndAddFiles()">
-                        Create And Add Files
-                    </a>
+                    {{--                    <a class="action-link" href="#" onclick="createAndAddFiles()">--}}
+                    {{--                        Create And Add Files--}}
+                    {{--                    </a>--}}
                 </div>
             </form>
         @endslot

@@ -13,10 +13,19 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('experiments', function (Blueprint $table) {
+            $table->string('loaded_file_path')->nullable();
+            $table->string('loaded_sheets_url')->nullable();
+
+            $table->unsignedBigInteger('sheet_id')->nullable();
+            $table->foreign('sheet_id')
+                  ->references('id')
+                  ->on('sheets');
+
             $table->unsignedBigInteger('job_id')->nullable();
             $table->foreign('job_id')
                   ->references('id')
                   ->on('jobs');
+
             $table->datetime('loading_started_at')->nullable();
             $table->datetime('loading_finished_at')->nullable();
         });
