@@ -13,7 +13,8 @@
         <div class="row">
             <div class="col"></div>
             <div class="col col-lg-4 float-right">
-                <select class="selectpicker col-lg-10" data-live-search="true" title="Switch To Experiment">
+                <select id="switch-experiments" class="selectpicker col-lg-10" data-live-search="true"
+                        title="Switch To Experiment">
                     @foreach($project->experiments as $entry)
                         @if ($entry->name != $experiment->name)
                             <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
@@ -60,7 +61,7 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
-                $('select').on('change', () => {
+                $('#switch-experiments').on('change', () => {
                     let selected = $('.selectpicker option:selected').val();
                     window.location.href = route('projects.experiments.show', {
                         project: "{{$project->id}}",
