@@ -44,8 +44,6 @@ class File extends Model implements Searchable
 
     protected $appends = ['selected'];
 
-    protected $dates = ['deleted_at'];
-
     protected $casts = [
         'size'                => 'integer',
         'current'             => 'boolean',
@@ -57,6 +55,7 @@ class File extends Model implements Searchable
         'entities_count'      => 'integer',
         'activities_count'    => 'integer',
         'entity_states_count' => 'integer',
+        'deleted_at' => 'datetime',
     ];
 
     private $selected;

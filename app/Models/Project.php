@@ -35,10 +35,6 @@ class Project extends Model implements Searchable
 
     protected $attributes = [];
 
-    protected $dates = [
-        'deleted_at',
-    ];
-
     protected $casts = [
         'default_project' => 'boolean',
         'is_active'       => 'boolean',
@@ -49,6 +45,7 @@ class Project extends Model implements Searchable
         'file_count'      => 'integer',
         'directory_count' => 'integer',
         'file_types'      => 'array',
+        'deleted_at' => 'datetime',
     ];
 
     public function users()

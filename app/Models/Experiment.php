@@ -35,12 +35,12 @@ class Experiment extends Model implements Searchable
     protected $guarded = ['id'];
 
     protected $casts = [
-        'project_id' => 'integer',
-        'owner_id'   => 'integer',
-        'loading'    => 'boolean',
+        'project_id'          => 'integer',
+        'owner_id'            => 'integer',
+        'loading'             => 'boolean',
+        'loading_started_at'  => 'datetime',
+        'loading_finished_at' => 'datetime',
     ];
-
-    protected $dates = ['loading_started_at', 'loading_finished_at'];
 
     public function project()
     {

@@ -59,31 +59,28 @@ class Dataset extends Model implements Searchable
 
     protected $guarded = ['id'];
 
-    protected $dates = [
-        'published_at',
-        'privately_published_at',
-        'cleanup_started_at',
-        'publish_started_at',
-    ];
-
     protected $casts = [
-        'ds_authors'         => 'array',
-        'file_selection'     => 'array',
-        'owner_id'           => 'integer',
-        'project_id'         => 'integer',
-        'files_count'        => 'integer',
-        'activities_count'   => 'integer',
-        'entities_count'     => 'integer',
-        'experiments_count'  => 'integer',
-        'comments_count'     => 'integer',
-        'workflows_count'    => 'integer',
-        'zipfile_size'       => 'integer',
-        'globus_path_exists' => 'boolean',
-        'file1_id'           => 'integer',
-        'file2_id'           => 'integer',
-        'file3_id'           => 'integer',
-        'file4_id'           => 'integer',
-        'file5_id'           => 'integer',
+        'ds_authors'             => 'array',
+        'file_selection'         => 'array',
+        'owner_id'               => 'integer',
+        'project_id'             => 'integer',
+        'files_count'            => 'integer',
+        'activities_count'       => 'integer',
+        'entities_count'         => 'integer',
+        'experiments_count'      => 'integer',
+        'comments_count'         => 'integer',
+        'workflows_count'        => 'integer',
+        'zipfile_size'           => 'integer',
+        'globus_path_exists'     => 'boolean',
+        'file1_id'               => 'integer',
+        'file2_id'               => 'integer',
+        'file3_id'               => 'integer',
+        'file4_id'               => 'integer',
+        'file5_id'               => 'integer',
+        'published_at'           => 'datetime',
+        'privately_published_at' => 'datetime',
+        'cleanup_started_at'     => 'datetime',
+        'publish_started_at'     => 'datetime',
     ];
 
     public function owner()

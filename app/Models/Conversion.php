@@ -25,14 +25,11 @@ class Conversion extends Model
 
     protected $attributes = [];
 
-    protected $dates = [
-        'conversion_started_at',
-    ];
-
     protected $casts = [
-        'owner_id'   => 'integer',
-        'file_id'    => 'integer',
-        'project_id' => 'integer',
+        'owner_id'              => 'integer',
+        'file_id'               => 'integer',
+        'project_id'            => 'integer',
+        'conversion_started_at' => 'datetime',
     ];
 
     public function owner()

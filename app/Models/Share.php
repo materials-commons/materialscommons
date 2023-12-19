@@ -25,9 +25,10 @@ class Share extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $dates = ['expires_at'];
+
     protected $casts = [
-        'shareable_id' => 'integer'
+        'shareable_id' => 'integer',
+        'expires_at'   => 'datetime',
     ];
 
     public function shareable()

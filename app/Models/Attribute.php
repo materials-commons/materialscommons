@@ -23,11 +23,10 @@ class Attribute extends Model
 
     protected $guarded = ['id'];
 
-    protected $dates = ['marked_important_at'];
-
     protected $casts = [
-        'attributable_id' => 'integer',
-        'best_value_id'   => 'integer',
+        'attributable_id'     => 'integer',
+        'best_value_id'       => 'integer',
+        'marked_important_at' => 'datetime',
     ];
 
     public function attributable()
