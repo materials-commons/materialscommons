@@ -73,7 +73,8 @@ class ShowProjectOverviewWebController extends Controller
             "(select count(*) from experiments where project_id = {$projectId}) as experimentsCount,".
             "(select count(*) from datasets where project_id = {$projectId} and published_at is null) as unpublishedDatasetsCount,".
             "(select count(*) from datasets where project_id = {$projectId} and published_at is not null) as publishedDatasetsCount";
-        $results = DB::select(DB::raw($query));
+        $queryString = DB::raw($query)->getValue(DB::connection()->getQueryGrammar());
+        $results = DB::select($queryString);
         return $results[0];
     }
 }

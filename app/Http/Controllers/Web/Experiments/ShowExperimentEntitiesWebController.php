@@ -57,7 +57,8 @@ class ShowExperimentEntitiesWebController extends Controller
         $activities = $this->getExperimentActivityNamesEindexForEntities($experiment->id, $entities, $orderByColumn);
 
         return view('app.projects.experiments.show', [
-            'category' => $category,
+            'category'       => $category,
+            'showExperiment' => false,
             'project'                 => $project,
             'experiment'              => $experiment,
             'excelFilesCount'         => $this->getExcelFilesCount($project),
