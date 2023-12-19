@@ -12,6 +12,7 @@
     </div>
     <br>
 @endif
+<x-mql.query-builder/>
 <div class="row">
     @if($category == "computational")
         <span class="mr-2"><i class="fa fas fa-filter ml-2 mr-2"></i>Show Computations In:</span>
@@ -75,14 +76,50 @@
 @push('scripts')
     <script>
         let hasExperiment = false;
-        @if(isset($showExperiment))
+        @if($showExperiment)
             hasExperiment = true;
         @endif
+
+        function createFilter() {
+            console.log('createFilter called');
+            let api = $('#entities-with-used-activities').DataTable();
+            let select = $('<select/>').appendTo('#filter').on('change', function () {
+                let columns = api.columns().flatten();
+                let selected = $(this).val();
+                if (selected === '') {
+                    api.search('').columns().search('').draw();
+                    return;
+                }
+                for (let i = 0; i < columns.length; i++) {
+                    let colHeader = api.column(i).header().textContent;
+                    if (selected === colHeader) {
+                        api.search('').columns().search('').draw();
+                        api.column(i).search(`^X$`, true, false).draw();
+                        break;
+                    }
+                }
+            });
+            select.append($(`<option value=""></option>`));
+            api.columns().every(function (idx) {
+                if (idx === 0) {
+                    return;
+                }
+
+                if (hasExperiment && idx === 1) {
+                    return;
+                }
+                let column = this;
+                let headerText = column.header().textContent;
+                select.append($(`<option value="${headerText}">${headerText}</option>`));
+            });
+        }
+
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({
                 pageLength: 100,
                 scrollX: true,
-                initComplete: function () {
+                initCompleteXXX: function () {
+                    console.log('initCompleteXXX called');
                     let api = this.api();
                     let select = $('<select/>').appendTo('#filter').on('change', function () {
                         let columns = api.columns().flatten();
@@ -116,6 +153,7 @@
                 },
             });
 
+            createFilter();
         });
         htmx.on('htmx:after-settle', (evt) => {
             if (evt.target.id === "mql-query") {

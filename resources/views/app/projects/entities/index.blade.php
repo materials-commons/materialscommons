@@ -26,7 +26,7 @@
         @endslot
 
         @slot('body')
-            @include('partials.entities._entities-with-used-activities-table', ['showExperiment' => true])
+            @include('partials.entities._entities-with-used-activities-table', ['showExperiment' => $showExperiment])
         @endslot
     @endcomponent
 @stop

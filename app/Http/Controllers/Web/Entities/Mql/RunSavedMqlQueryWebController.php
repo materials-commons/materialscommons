@@ -35,6 +35,7 @@ class RunSavedMqlQueryWebController extends Controller
         session()->flashInput($query->query);
 
         return view('app.projects.entities.index', [
+            'showExperiment' => true,
             'project'           => $project,
             'activities'        => $activities,
             'entities'          => $entities,
