@@ -18,8 +18,9 @@ return new class extends Migration {
                join entity_states es on es.entity_id = e.id
                join activity2entity_state a2es on a2es.entity_state_id = es.id
                join activities as act on a2es.activity_id = act.id
-               join attributes a on a.attributable_id = es.id and attributable_type = 'App\\Models\\EntityState'
+               join attributes a on a.attributable_id = es.id and attributable_type = 'App\\\Models\\\EntityState'
                join attribute_values av on av.attribute_id = a.id
+           where e.dataset_id is not null
         ");
     }
 
