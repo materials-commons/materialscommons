@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use function is_null;
 
 class GlobalSettingsLoader
 {
@@ -121,6 +122,10 @@ class GlobalSettingsLoader
                     break;
             }
             $cellIndex++;
+        }
+
+        if (is_null($globalSetting->attributeHeader)) {
+            return;
         }
 
         if ($globalSetting->attributeHeader->attrType == "flag") {
