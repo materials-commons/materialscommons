@@ -131,9 +131,13 @@
         }
 
         $(document).ready(() => {
-            $('#entities-with-used-activities').DataTable({
+            let t = $('#entities-with-used-activities').DataTable({
                 pageLength: 100,
                 scrollX: true,
+                fixedHeader: {
+                    header: true,
+                    headerOffset: 46,
+                },
                 initComplete: function () {
                     let api = this.api();
                     $('#activities').on('change', function () {
@@ -152,19 +156,6 @@
                             }
                         }
                     });
-                    // select.append($(`<option value=""></option>`));
-                    // api.columns().every(function (idx) {
-                    //     if (idx === 0) {
-                    //         return;
-                    //     }
-                    //
-                    //     if (hasExperiment && idx === 1) {
-                    //         return;
-                    //     }
-                    //     let column = this;
-                    //     let headerText = column.header().textContent;
-                    //     select.append($(`<option value="${headerText}">${headerText}</option>`));
-                    // });
                 },
             });
 

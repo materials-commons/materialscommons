@@ -31,10 +31,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.css"/>
+          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"/>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>
+            src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
     @bukStyles
