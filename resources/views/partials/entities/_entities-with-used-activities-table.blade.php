@@ -14,13 +14,13 @@
 {{--@endif--}}
 {{--<x-mql.query-builder/>--}}
 <div class="row mb-3">
-@if($category == "computational")
+    @if($category == "computational")
         <h4>Query Computations</h4>
-@else
+    @else
         <h4>Query Samples</h4>
-@endif
-    <button class="btn-primary btn ml-3">Run Query</button>
-    <button class="btn-info btn ml-3">Show Attribute Overview</button>
+    @endif
+    <a href="#" class="btn btn-primary btn-sm ml-3"><i class="fa fas fa-play mr-2"></i>Run Query</a>
+    <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show Attributes Overview</a>
 </div>
 <div class="row">
     <div class="col-3">
@@ -38,7 +38,7 @@
             @endforeach
         </select>
         <div class="row mt-2">
-            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>
+            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>
         </div>
     </div>
 
@@ -56,7 +56,11 @@
             @endforeach
         </select>
         <div class="row mt-2">
-            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Where Value Is</a>
+            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>
+        </div>
+        <hr/>
+        <div class="row mt-2">
+            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>
         </div>
     </div>
 
@@ -74,7 +78,11 @@
             @endforeach
         </select>
         <div class="row mt-2">
-            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Where Value Is</a>
+            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>
+        </div>
+        <hr/>
+        <div class="row mt-2">
+            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>
         </div>
     </div>
 </div>
