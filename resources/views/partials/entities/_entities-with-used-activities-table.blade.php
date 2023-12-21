@@ -13,51 +13,76 @@
 {{--    <br>--}}
 {{--@endif--}}
 {{--<x-mql.query-builder/>--}}
+<div class="row mb-3">
 @if($category == "computational")
-    <h4>Show Computations</h4>
+        <h4>Query Computations</h4>
 @else
-    <h4>Show Samples</h4>
+        <h4>Query Samples</h4>
 @endif
+    <button class="btn-primary btn ml-3">Run Query</button>
+    <button class="btn-info btn ml-3">Show Attribute Overview</button>
+</div>
 <div class="row">
-    @if($category == "computational")
-        <span class="mr-2"><i class="fa fas fa-filter ml-2 mr-2"></i>In Activity:</span>
-    @else
-        <span class="mr-2"><i class="fa fas fa-filter ml-2 mr-2"></i>In Process:</span>
-    @endif
-    <select id="activities">
-        <option value=""></option>
-        @foreach($activities as $activity)
-            <option value="{{$activity->name}}">{{$activity->name}}</option>
-        @endforeach
-    </select>
-    <div id="filter">
+    <div class="col-3">
+        <div class="row mb-2">
+            @if($category == "computational")
+                <span class="mr-2 ml-3">In Activity:</span>
+            @else
+                <span class="mr-2 ml-3">In Process:</span>
+            @endif
+        </div>
+        <select id="activities">
+            <option value=""></option>
+            @foreach($activities as $activity)
+                <option value="{{$activity->name}}">{{$activity->name}}</option>
+            @endforeach
+        </select>
+        <div class="row mt-2">
+            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>
+        </div>
     </div>
-    @if ($category == "computational")
-        <span class="mr-2 ml-3">Having Activity Attribute:</span>
-    @else
-        <span class="mr-2 ml-3">Having Process Attribute:</span>
-    @endif
-    <select id="activity-attributes">
-        @foreach($processAttributes as $attr)
-            <option value="{{$attr->name}}">{{$attr->name}}</option>
-        @endforeach
-    </select>
 
-    @if ($category == "computational")
-        <span class="mr-2 ml-3">Having Computation Attribute:</span>
-    @else
-        <span class="mr-2 ml-3">Having Sample Attribute:</span>
-    @endif
-    <select id="entity-attributes">
-        @foreach($sampleAttributes as $attr)
-            <option value="{{$attr->name}}">{{$attr->name}}</option>
-        @endforeach
-    </select>
+    <div class="col-3">
+        <div class="row mb-2">
+            @if ($category == "computational")
+                <span class="mr-2 ml-3">Having Activity Attribute:</span>
+            @else
+                <span class="mr-2 ml-3">Having Process Attribute:</span>
+            @endif
+        </div>
+        <select id="activity-attributes">
+            @foreach($processAttributes as $attr)
+                <option value="{{$attr->name}}">{{$attr->name}}</option>
+            @endforeach
+        </select>
+        <div class="row mt-2">
+            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Where Value Is</a>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="row mb-2">
+            @if ($category == "computational")
+                <span class="mr-2 ml-3">Having Computation Attribute:</span>
+            @else
+                <span class="mr-2 ml-3">Having Sample Attribute:</span>
+            @endif
+        </div>
+        <select id="entity-attributes">
+            @foreach($sampleAttributes as $attr)
+                <option value="{{$attr->name}}">{{$attr->name}}</option>
+            @endforeach
+        </select>
+        <div class="row mt-2">
+            <a href="#" class="action-link ml-3"><i class="fa fas fa-plus mr-2"></i>Where Value Is</a>
+        </div>
+    </div>
 </div>
 <br/>
 <br/>
 <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
     <thead>
+    <th>Name1</th>
     <th>Name</th>
     @if(isset($showExperiment))
         <th>Experiment</th>
@@ -69,6 +94,7 @@
     <tbody>
     @foreach($entities as $entity)
         <tr>
+            <td>{{$entity->name}}</td>
             <td>
                 @if(isset($experiment))
                     <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
@@ -112,6 +138,9 @@
             hasExperiment = true;
         @endif
 
+        let findMatchingRoute = "{{route('api.queries.find-matching-entities', [$project])}}";
+        let apiToken = "{{auth()->user()->api_token}}";
+
         function setupInProcessingStep() {
 
         }
@@ -138,23 +167,48 @@
                     header: true,
                     headerOffset: 46,
                 },
+                columnDefs: [
+                    {targets: [0], visible: false},
+                ],
                 initComplete: function () {
                     let api = this.api();
                     $('#activities').on('change', function () {
-                        let columns = api.columns().flatten();
                         let selected = $(this).val();
                         if (selected === '') {
                             api.search('').columns().search('').draw();
                             return;
                         }
-                        for (let i = 0; i < columns.length; i++) {
-                            let colHeader = api.column(i).header().textContent;
-                            if (selected === colHeader) {
-                                api.search('').columns().search('').draw();
-                                api.column(i).search(`^X$`, true, false).draw();
-                                break;
+                        axios.post(`${findMatchingRoute}`, {
+                                activities: [
+                                    {
+                                        name: selected,
+                                        operator: "in"
+                                    }
+                                ]
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${apiToken}`
+                                }
                             }
-                        }
+                        ).then((r) => {
+                            if (r.data.entities.length !== 0) {
+                                let searchStr = "";
+                                for (let i = 0; i < r.data.entities.length; i++) {
+                                    let e = r.data.entities[i];
+                                    if (i === 0) {
+                                        searchStr = e;
+                                    } else {
+
+                                        searchStr = searchStr + `|${e}`;
+                                    }
+                                }
+                                api.search('').columns().search('').draw();
+                                api.column(0).search(searchStr, true, false).draw();
+                            }
+                        }).catch((e) => {
+                            console.log("error: ", e);
+                        });
                     });
                 },
             });

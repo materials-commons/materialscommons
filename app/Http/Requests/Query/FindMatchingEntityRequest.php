@@ -16,7 +16,7 @@ class FindMatchingEntityRequest extends FormRequest
         return [
             "activities"                     => "nullable|array",
             "activities.*.name"              => "required|string",
-            "activities.*.operator"          => "required|in:in,not-in",
+            "activities.*.operator" => "required|in:in",
             "activity_attributes"            => "nullable|array",
             "activity_attributes.*.name"     => "required|string",
             "activity_attributes.*.operator" => "required|in:having,having-like,eq,ne,lt,lte,gt,gte,like",
