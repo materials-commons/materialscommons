@@ -90,8 +90,15 @@ class Kernel extends ConsoleKernel
             $schedule->command('backup:run')->daily()->at('01:30');
             $schedule->command('mc:generate-site-map')->daily()->at('3:00');
             $schedule->command('mc:generate-usage-statistics')->monthlyOn(1, '02:00');
-            $schedule->command(RunHealthChecksCommand::class)->everyFifteenMinutes();
+            if ($this->isNotInMaintenanceMode()) {
+                $schedule->command(RunHealthChecksCommand::class)->everyFifteenMinutes();
+            }
         }
+    }
+
+    private function isNotInMaintenanceMode(): bool
+    {
+        return file_exists(storage_path('framework/down'));
     }
 
     /**
