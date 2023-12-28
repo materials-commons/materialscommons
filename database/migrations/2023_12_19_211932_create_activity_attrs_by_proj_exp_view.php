@@ -16,8 +16,8 @@ return new class extends Migration {
                 join experiment2activity e2a on act.id = e2a.activity_id
                 join activity2entity a2e on act.id = a2e.activity_id
                 join entities e on a2e.entity_id = e.id
-                join attributes a on a.attributable_id = act.id and attributable_type = 'App\\\Models\\\Activity'
-                join attribute_values av on av.attribute_id = a.id
+                left join attributes a on a.attributable_id = act.id and attributable_type = 'App\\\Models\\\Activity'
+                left join attribute_values av on av.attribute_id = a.id
         ");
     }
 
