@@ -1,0 +1,24 @@
+<div class="mt-2">
+    <ul class="list-group" style="z-index:999">
+        <li class="list-group-item">
+            <a hx-get="{{route('projects.search.htmx',[$project, 'search' => ''])}}" style="cursor:pointer;"
+               onclick="closeSearch()"
+               hx-target="#search-results"
+               class="float-right">
+                <i class="fa fas fa-times mr-2"></i>close</a>
+        </li>
+        @foreach($searchResults->groupByType() as $type => $modelSearchResults)
+            @foreach($modelSearchResults as $searchResult)
+                <li class="search-item-result">
+                    <a href="{{$searchResult->url}}" class="list-group-item list-group-item-action search-item-result">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{$searchResult->title}}</h5>
+                        </div>
+                        <p class="mb-1">{{$searchResult->searchable->summary}}</p>
+                        <small class="text-muted">{{$searchResult->searchable->type}}</small>
+                    </a>
+                </li>
+            @endforeach
+        @endforeach
+    </ul>
+</div>

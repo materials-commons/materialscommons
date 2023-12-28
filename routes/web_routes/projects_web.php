@@ -198,6 +198,9 @@ Route::get('/projects/{project}/dt/recently-uploaded', GetRecentlyUploadedFilesW
 Route::post('/projects/{project}/search', SearchProjectWebController::class)
      ->name('projects.search');
 
+Route::get('/projects/{project}/search/htmx', SearchProjectWebController::class)
+    ->name('projects.search.htmx');
+
 // Project Globus Bookmark
 Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWebController::class)
      ->name('projects.globus.bookmark');

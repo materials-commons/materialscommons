@@ -31,10 +31,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.css"/>
+          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"/>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4/dt-1.10.24/rr-1.2.7/datatables.min.js"></script>
+            src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
     @bukStyles
@@ -102,14 +111,23 @@
         </ul>
         @auth
             @isset($project)
-                <form method="post"
-                      action="{{route('projects.search', [$project])}}"
-                      class="mx-2 my-auto d-inline w-75">
-                    @csrf
+                <span class="htmx-indicator">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </span>
+                <div style="width:100%">
                     <input type="text"
+                           id="search-project-input"
                            class="form-control form-rounded border border-right-0"
-                           placeholder="Search project..." name="search" aria-label="Search">
-                </form>
+                           placeholder="Search project..."
+                           name="search"
+                           aria-label="Search"
+                           hx-get="{{route('projects.search.htmx', [$project])}}"
+                           hx-target="#search-results"
+                           hx-indicator=".htmx-indicator"
+                           hx-trigger="keyup changed delay:500ms">
+                    <div id="search-results" style="position:absolute; z-index:999; overflow-y: auto; height: 70vh;"></div>
+                </div>
+
             @elseif (Request::routeIs('public.*'))
                 <form method="post"
                       action="{{route('public.search')}}"
@@ -202,6 +220,11 @@
         mcutil.autosizeTextareas();
     });
     window.mc_grids = [];
+
+    function closeSearch() {
+        console.log('closeSearch called');
+        $('#search-project-input').val('');
+    }
 </script>
 @bukScripts
 
