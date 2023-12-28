@@ -57,6 +57,7 @@ class SearchProjectAction
                                   ->addSearchableAttribute('description')
                                   ->where('public', true);
             })
+            ->limitAspectResults(10)
             ->search($search);
     }
 }

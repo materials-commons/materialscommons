@@ -111,14 +111,23 @@
         </ul>
         @auth
             @isset($project)
-                <form method="post"
-                      action="{{route('projects.search', [$project])}}"
-                      class="mx-2 my-auto d-inline w-75">
-                    @csrf
+                <span class="htmx-indicator">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </span>
+                <div style="width:100%">
                     <input type="text"
+                           id="search-project-input"
                            class="form-control form-rounded border border-right-0"
-                           placeholder="Search project..." name="search" aria-label="Search">
-                </form>
+                           placeholder="Search project..."
+                           name="search"
+                           aria-label="Search"
+                           hx-get="{{route('projects.search.htmx', [$project])}}"
+                           hx-target="#search-results"
+                           hx-indicator=".htmx-indicator"
+                           hx-trigger="keyup changed delay:500ms">
+                    <div id="search-results" style="position:absolute; z-index:999; overflow-y: auto; height: 70vh;"></div>
+                </div>
+
             @elseif (Request::routeIs('public.*'))
                 <form method="post"
                       action="{{route('public.search')}}"
@@ -211,6 +220,11 @@
         mcutil.autosizeTextareas();
     });
     window.mc_grids = [];
+
+    function closeSearch() {
+        console.log('closeSearch called');
+        $('#search-project-input').val('');
+    }
 </script>
 @bukScripts
 
