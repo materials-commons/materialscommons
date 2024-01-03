@@ -1,26 +1,25 @@
-{{--@if(Request::routeIs('projects.entities.*'))--}}
-{{--    <div id="mql-query-builder" x-data="initMQLBuilder()">--}}
-{{--        <div id="open-query-builder" x-show="!showBuilder">--}}
-{{--            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>--}}
-{{--            <p>--}}
-{{--                Query for matching samples by process type and attributes.--}}
-{{--            </p>--}}
-{{--        </div>--}}
-{{--        <div id="query-builder" style="display: none" x-show="showBuilder">--}}
-{{--            @include('partials.mql._query-builder')--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <br>--}}
-{{--@endif--}}
-{{--<x-mql.query-builder/>--}}
+@if(Request::routeIs('projects.entities.*'))
+    <div id="mql-query-builder" x-data="initMQLBuilder()">
+        <div id="open-query-builder" x-show="!showBuilder">
+            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
+            <p>
+                Query for matching samples by process type and attributes.
+            </p>
+        </div>
+        <div id="query-builder" style="display: none" x-show="showBuilder">
+            @include('partials.mql._query-builder')
+        </div>
+    </div>
+    <br>
+@endif
 <div class="row mb-3">
     @if($category == "computational")
         <h4>Query Computations</h4>
     @else
         <h4>Query Samples</h4>
     @endif
-    <a href="#" class="btn btn-primary btn-sm ml-3"><i class="fa fas fa-play mr-2"></i>Run Query</a>
-    <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show Attributes Overview</a>
+    {{--    <a href="#" class="btn btn-primary btn-sm ml-3"><i class="fa fas fa-play mr-2"></i>Run Query</a>--}}
+    {{--    <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show Attributes Overview</a>--}}
 </div>
 <div class="row">
     <div class="col-3">
@@ -37,54 +36,54 @@
                 <option value="{{$activity->name}}">{{$activity->name}}</option>
             @endforeach
         </select>
-        <div class="row mt-2">
-            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>
-        </div>
+        {{--        <div class="row mt-2">--}}
+        {{--            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>--}}
+        {{--        </div>--}}
     </div>
 
-    <div class="col-3">
-        <div class="row mb-2">
-            @if ($category == "computational")
-                <span class="mr-2 ml-3">Having Activity Attribute:</span>
-            @else
-                <span class="mr-2 ml-3">Having Process Attribute:</span>
-            @endif
-        </div>
-        <select id="activity-attributes">
-            @foreach($processAttributes as $attr)
-                <option value="{{$attr->name}}">{{$attr->name}}</option>
-            @endforeach
-        </select>
-        <div class="row mt-2">
-            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>
-        </div>
-        <hr/>
-        <div class="row mt-2">
-            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>
-        </div>
-    </div>
+    {{--    <div class="col-3">--}}
+    {{--        <div class="row mb-2">--}}
+    {{--            @if ($category == "computational")--}}
+    {{--                <span class="mr-2 ml-3">Having Activity Attribute:</span>--}}
+    {{--            @else--}}
+    {{--                <span class="mr-2 ml-3">Having Process Attribute:</span>--}}
+    {{--            @endif--}}
+    {{--        </div>--}}
+    {{--        <select id="activity-attributes">--}}
+    {{--            @foreach($processAttributes as $attr)--}}
+    {{--                <option value="{{$attr->name}}">{{$attr->name}}</option>--}}
+    {{--            @endforeach--}}
+    {{--        </select>--}}
+    {{--        <div class="row mt-2">--}}
+    {{--            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>--}}
+    {{--        </div>--}}
+    {{--        <hr/>--}}
+    {{--        <div class="row mt-2">--}}
+    {{--            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
-    <div class="col-3">
-        <div class="row mb-2">
-            @if ($category == "computational")
-                <span class="mr-2 ml-3">Having Computation Attribute:</span>
-            @else
-                <span class="mr-2 ml-3">Having Sample Attribute:</span>
-            @endif
-        </div>
-        <select id="entity-attributes">
-            @foreach($sampleAttributes as $attr)
-                <option value="{{$attr->name}}">{{$attr->name}}</option>
-            @endforeach
-        </select>
-        <div class="row mt-2">
-            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>
-        </div>
-        <hr/>
-        <div class="row mt-2">
-            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>
-        </div>
-    </div>
+    {{--    <div class="col-3">--}}
+    {{--        <div class="row mb-2">--}}
+    {{--            @if ($category == "computational")--}}
+    {{--                <span class="mr-2 ml-3">Having Computation Attribute:</span>--}}
+    {{--            @else--}}
+    {{--                <span class="mr-2 ml-3">Having Sample Attribute:</span>--}}
+    {{--            @endif--}}
+    {{--        </div>--}}
+    {{--        <select id="entity-attributes">--}}
+    {{--            @foreach($sampleAttributes as $attr)--}}
+    {{--                <option value="{{$attr->name}}">{{$attr->name}}</option>--}}
+    {{--            @endforeach--}}
+    {{--        </select>--}}
+    {{--        <div class="row mt-2">--}}
+    {{--            <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-equals mr-2"></i>Where Value Is</a>--}}
+    {{--        </div>--}}
+    {{--        <hr/>--}}
+    {{--        <div class="row mt-2">--}}
+    {{--            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 </div>
 <br/>
 <br/>
@@ -208,7 +207,7 @@
                                         searchStr = e;
                                     } else {
 
-                                        searchStr = searchStr + `|${e}`;
+                                        searchStr = searchStr + `|^${e}$`;
                                     }
                                 }
                                 api.search('').columns().search('').draw();
@@ -224,5 +223,27 @@
             setupHavingActivityAttribute();
             setupHavingEntityAttribute();
         });
+
+        htmx.on('htmx:after-settle', (evt) => {
+            if (evt.target.id === "mql-query") {
+                mcutil.autosizeTextareas();
+            }
+        });
+
+        function initMQLBuilder() {
+            return {
+                showBuilder: false,
+                showSavedQueries: false,
+                toggleShowBuilder() {
+                    this.showBuilder = !this.showBuilder;
+                    if (this.showBuilder) {
+                        mcutil.autosizeTextareas();
+                    }
+                },
+                toggleShowSavedQueries() {
+                    this.showSavedQueries = !this.showSavedQueries;
+                }
+            };
+        }
     </script>
 @endpush
