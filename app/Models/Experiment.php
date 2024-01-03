@@ -12,6 +12,7 @@ use Spatie\Searchable\SearchResult;
 /**
  * @property integer $id
  * @property integer $project_id
+ * @property integer $job_id
  * @property string name
  * @property integer owner_id
  * @property integer status
@@ -19,6 +20,10 @@ use Spatie\Searchable\SearchResult;
  * @property string summary
  * @property mixed workflows
  * @property mixed etlRuns
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property mixed loading_started_at
+ * @property mixed loading_finished_at
  *
  * @mixin Builder
  */
@@ -30,9 +35,11 @@ class Experiment extends Model implements Searchable
     protected $guarded = ['id'];
 
     protected $casts = [
-        'project_id' => 'integer',
-        'owner_id'   => 'integer',
-        'loading'    => 'boolean',
+        'project_id'          => 'integer',
+        'owner_id'            => 'integer',
+        'loading'             => 'boolean',
+        'loading_started_at'  => 'datetime',
+        'loading_finished_at' => 'datetime',
     ];
 
     public function project()

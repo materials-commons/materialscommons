@@ -25,11 +25,10 @@ class TransferRequest extends Model
 
     protected $guarded = ['id'];
 
-    protected $dates = ['last_active_at'];
-
     protected $casts = [
-        'owner_id'   => 'integer',
-        'project_id' => 'integer',
+        'owner_id'       => 'integer',
+        'project_id'     => 'integer',
+        'last_active_at' => 'datetime',
     ];
 
     public function owner()

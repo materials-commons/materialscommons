@@ -57,7 +57,8 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     {
         $query = "select (select count(*) from entities where id in (select entity_id from dataset2entity where dataset_id = {$datasetId})) as entitiesCount,".
             "(select count(*) from activities where id in (select activity_id from dataset2activity where dataset_id = {$datasetId})) as activitiesCount";
-        $results = DB::select(DB::raw($query));
+        $queryString = DB::raw($query)->getValue(DB::connection()->getQueryGrammar());
+        $results = DB::select($queryString);
         return $results[0];
     }
 

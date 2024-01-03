@@ -23,6 +23,10 @@ class SearchProjectAction
                                   ->addSearchableAttribute('path')
                                   ->addSearchableAttribute('mime_type')
                                   ->addSearchableAttribute('media_type_description')
+                                  ->with(['directory'])
+                                  ->whereNull('dataset_id')
+                                  ->whereNull('deleted_at')
+                                  ->where('current', true)
                                   ->where('project_id', $projectId);
             })
             ->registerModel(Experiment::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
@@ -57,6 +61,7 @@ class SearchProjectAction
                                   ->addSearchableAttribute('description')
                                   ->where('public', true);
             })
+            ->limitAspectResults(10)
             ->search($search);
     }
 }

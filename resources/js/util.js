@@ -35,9 +35,19 @@ function toggleShow(count, attrClass, msg) {
     }
 }
 
+function copyToClipboard(what) {
+    if (what.startsWith('#')) {
+        let element = document.getElementById(what.substring(1));
+        navigator.clipboard.writeText(element.textContent);
+    } else {
+        navigator.clipboard.writeText(what);
+    }
+}
+
 module.exports = {
     setupDatatable,
     setupDatatableOnDocumentReady,
     autosizeTextareas,
     toggleShow,
+    copyToClipboard,
 };

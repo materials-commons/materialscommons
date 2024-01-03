@@ -31,6 +31,8 @@ class ShowDatasetOverviewViewModel extends ViewModel
 
     private $editRoute = '';
 
+    private $showExperiment = false;
+
     public function __construct()
     {
         $this->entities = collect();
@@ -123,5 +125,10 @@ class ShowDatasetOverviewViewModel extends ViewModel
     public function editRoute()
     {
         return $this->editRoute;
+    }
+
+    public function showExperiment()
+    {
+        return $this->showExperiment;
     }
 }

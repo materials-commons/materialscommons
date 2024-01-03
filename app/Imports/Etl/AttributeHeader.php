@@ -65,6 +65,10 @@ class AttributeHeader
         "cal"  => true,
     ];
 
+    private static $flagKeywords = [
+        "flag" => true,
+    ];
+
     public function __construct($name, $unit, $attrType, $attrGroupName = "")
     {
         $this->name = $name;
@@ -122,6 +126,8 @@ class AttributeHeader
             return "calculation";
         } elseif (array_key_exists($str, AttributeHeader::$ignoreKeywords)) {
             return "ignore";
+        } elseif (array_key_exists($str, AttributeHeader::$flagKeywords)) {
+            return "flag";
         } else {
             return "unknown";
         }

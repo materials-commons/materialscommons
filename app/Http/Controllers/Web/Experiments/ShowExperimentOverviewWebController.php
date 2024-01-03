@@ -86,7 +86,8 @@ class ShowExperimentOverviewWebController extends Controller
             "(select count(*) from files where id in (select file_id from experiment2file where experiment_id = {$experimentId}) and mime_type <> 'directory') as filesCount,".
             "(select count(*) from datasets where id in (select dataset_id from dataset2experiment where experiment_id = {$experimentId}) and published_at is null) as unpublishedDatasetsCount,".
             "(select count(*) from datasets where id in (select dataset_id from dataset2experiment where experiment_id = {$experimentId}) and published_at is not null) as publishedDatasetsCount";
-        $results = DB::select(DB::raw($query));
+        $queryString = DB::raw($query)->getValue(DB::connection()->getQueryGrammar());
+        $results = DB::select($queryString);
         return $results[0];
     }
 }

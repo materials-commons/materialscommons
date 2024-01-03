@@ -11,7 +11,11 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Samples
+            @if($category == "computational")
+                Computations
+            @else
+                Samples
+            @endif
             {{--            <a class="action-link float-right" href="{{route('projects.entities-export', [$project])}}">--}}
             {{--                <i class="fas fa-download mr-2"></i>Download As Excel--}}
             {{--            </a>--}}
@@ -22,7 +26,7 @@
         @endslot
 
         @slot('body')
-            @include('partials.entities._entities-with-used-activities-table', ['showExperiment' => true])
+            @include('partials.entities._entities-with-used-activities-table', ['showExperiment' => $showExperiment])
         @endslot
     @endcomponent
 @stop

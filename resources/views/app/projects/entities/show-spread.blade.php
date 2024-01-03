@@ -25,7 +25,11 @@
     </div>
     @component('components.card')
         @slot('header')
-            Sample: {{$entity->name}}
+            @if($entity->category == "computational")
+                Computation: {{$entity->name}}
+            @else
+                Sample: {{$entity->name}}
+            @endif
 
             <a class="float-right action-link" href="#"
                onclick="window.location.replace('{{route('projects.entities.show', [$project, $entity])}}')">

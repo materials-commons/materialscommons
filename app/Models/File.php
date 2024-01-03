@@ -55,6 +55,7 @@ class File extends Model implements Searchable
         'entities_count'      => 'integer',
         'activities_count'    => 'integer',
         'entity_states_count' => 'integer',
+        'deleted_at' => 'datetime',
     ];
 
     private $selected;
@@ -152,6 +153,15 @@ class File extends Model implements Searchable
         }
 
         return $this->directory->path."/".$this->name;
+    }
+
+    public function dirPath()
+    {
+        if ($this->isDir()) {
+            return $this->path;
+        }
+
+        return $this->directory->path;
     }
 
     // Utility methods
@@ -261,6 +271,15 @@ class File extends Model implements Searchable
         }
 
         return $uuid;
+    }
+
+    public function getFileUsesIdToUse()
+    {
+        if (!is_null($this->uses_id)) {
+            return $this->uses_id;
+        }
+
+        return $this->id;
     }
 
     public function pathDirPartial()

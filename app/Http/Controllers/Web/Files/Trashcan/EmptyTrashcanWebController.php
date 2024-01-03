@@ -13,6 +13,6 @@ class EmptyTrashcanWebController extends Controller
     {
         EmptyTrashcanJob::dispatch($project);
         flash("Trashcan will be emptied in the background")->success();
-        return redirect(route('projects.trashcan.index'));
+        return redirect(route('projects.trashcan.index', ['project' => $project]));
     }
 }

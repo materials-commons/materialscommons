@@ -39,6 +39,7 @@ class RunMqlQueryWebController extends Controller
         $request->flash();
 
         return view('app.projects.entities.index', [
+            'showExperiment' => true,
             'project'           => $project,
             'activities'        => $activities,
             'entities'          => $entities,

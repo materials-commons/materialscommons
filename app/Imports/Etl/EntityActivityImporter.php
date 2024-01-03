@@ -6,6 +6,7 @@ use App\Actions\Activities\CreateActivityAction;
 use App\Actions\Entities\CreateEntityAction;
 use App\Actions\Etl\GetFileByPathAction;
 use App\Enums\ExperimentStatus;
+use App\Helpers\PathHelpers;
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
@@ -138,10 +139,46 @@ class EntityActivityImporter
                 $this->category = 'experimental';
             }
 
+            $this->overrideCategoryIfGlobalFlagSet();
+
             $this->processEntityWorksheet($worksheet);
 
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
+        }
+    }
+
+    /*
+     * overrideCategoryIfGlobalFlagSet overrides the $this->category setting if the
+     * global flag:category is set in the GLOBAL_WORKSHEET_NAME worksheet. If its
+     * not set then $this->category is not changed. Additionally, it validates that
+     * flag:category is set to either "experimental" or "computational". If it's not
+     * then it ignore flag:category and leaves $this->category unchanged.
+     */
+    private function overrideCategoryIfGlobalFlagSet()
+    {
+
+        $setting = $this->globalSettings->getFlagValue("category");
+        if (is_null($setting)) {
+            // No global flag was set nothing to check.
+            return;
+        }
+
+        $category = $setting->value;
+
+        // Validate the category setting. If it's not "experimental" or
+        // "computational" then ignore it and leave $this->category set
+        // to current value.
+
+        switch ($category) {
+            case "computational":
+                $this->category = "computational";
+                break;
+            case "experimental";
+                $this->category = "experimental";
+                break;
+            default:
+                // Nothing to do, $category is set to an invalid value.
         }
     }
 
@@ -521,12 +558,12 @@ class EntityActivityImporter
         }
 
         $path = "{$headerName}/{$value}";
-        if (strpos($value, "/") !== false) {
+        if ($value[0] == '/') {
             // Cell contains the path, no need to use the header
             $path = $value;
         }
 
-        return $path;
+        return PathHelpers::normalizePath($path);
     }
 
     private function processAndAddFiles($path, $entity, $activity)

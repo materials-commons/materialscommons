@@ -13,7 +13,8 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            File: {{$file->fullPath()}}
+            File: <x-show-dir-path :project="$project" :file="$file->directory"/>{{$file->name}}
+
 
             @isset($project)
                 {{--                <a class="float-right action-link" href="#">--}}

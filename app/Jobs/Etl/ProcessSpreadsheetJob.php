@@ -16,6 +16,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
@@ -49,7 +50,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
     {
         ini_set("memory_limit", "4096M");
         if (!is_null($this->sheetUrl)) {
-            $fileName = $this->DownloadSheetAndReturnFileName();
+            $fileName = $this->downloadSheetAndReturnFileName();
             $filePath = $this->getPathToSheet($fileName);
             $file = null;
             $etlState = new EtlState($this->userId, null);
@@ -63,8 +64,16 @@ class ProcessSpreadsheetJob implements ShouldQueue
 
         $experiment = Experiment::findOrFail($this->experimentId);
         $experiment->etlruns()->save($etlState->etlRun);
+        $experiment->update([
+            'loading_started_at' => Carbon::now(),
+            'job_id'             => $this->job->getJobId(),
+        ]);
         $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
         $importer->execute($filePath);
+        $experiment->update([
+            'loading_finished_at' => Carbon::now(),
+            'job_id'              => null,
+        ]);
         Mail::to(User::findOrFail($this->userId))
             ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId),
                 $experiment,
@@ -75,7 +84,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
         }
     }
 
-    private function DownloadSheetAndReturnFileName(): string
+    private function downloadSheetAndReturnFileName(): string
     {
         $filename = uniqid().'.xlsx';
         @Storage::disk('mcfs')->makeDirectory('__sheets');
