@@ -14,6 +14,7 @@ class UpdateAccountPasswordWebController extends Controller
     {
         $validated = $request->validated();
         $user = auth()->user();
+
         if (!Hash::check($validated['password'], $user->password)) {
             flash("Invalid current password entered")->error();
             return redirect(route('accounts.show'));
@@ -23,6 +24,7 @@ class UpdateAccountPasswordWebController extends Controller
             flash("Passwords don't match")->error();
             return redirect(route('accounts.show'));
         }
+
         $user->update(['password' => Hash::make($validated['new_password'])]);
         flash('Password updated')->success();
         return redirect(route('accounts.show'));
