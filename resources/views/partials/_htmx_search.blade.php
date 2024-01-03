@@ -11,9 +11,23 @@
             @foreach($modelSearchResults as $searchResult)
                 <li class="search-item-result">
                     <a href="{{$searchResult->url}}" class="list-group-item list-group-item-action search-item-result">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{$searchResult->title}}</h5>
-                        </div>
+                        @if($searchResult->searchable->type === "file" || $searchResult->searchable->type == "directory")
+                            <div class="d-flex w-100 justify-content-between">
+                                @if($searchResult->searchable->directory->path === "/")
+                                    <h5 class="mb-1">
+                                        {{$searchResult->searchable->directory->path}}{{$searchResult->title}}
+                                    </h5>
+                                @else
+                                    <h5 class="mb-1">
+                                        {{$searchResult->searchable->directory->path}}/{{$searchResult->title}}
+                                    </h5>
+                                @endif
+                            </div>
+                        @else
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{$searchResult->title}}</h5>
+                            </div>
+                        @endif
                         <p class="mb-1">{{$searchResult->searchable->summary}}</p>
                         <small class="text-muted">{{$searchResult->searchable->type}}</small>
                     </a>
