@@ -18,8 +18,6 @@
     @else
         <h4>Query Samples</h4>
     @endif
-    {{--    <a href="#" class="btn btn-primary btn-sm ml-3"><i class="fa fas fa-play mr-2"></i>Run Query</a>--}}
-    {{--    <a href="#" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show Attributes Overview</a>--}}
 </div>
 <div class="row">
     <div class="col-3">
@@ -84,6 +82,57 @@
     {{--            <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>--}}
     {{--        </div>--}}
     {{--    </div>--}}
+</div>
+<div class="row mt-4 mb-4">
+    <a onclick="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show/Hide
+        All Attributes</a>
+</div>
+<div id="attributes-overview-div" style="display:none">
+    <table id="attributes-overview" class="table table-hover mt-4" style="width: 100%">
+        <thead>
+        <th>Attribute</th>
+        <th>Type</th>
+        <th>Min</th>
+        <th>Max</th>
+        <th>#Unique Values</th>
+        </thead>
+        <tbody>
+        @foreach($processAttributeDetails as $attr)
+            <tr>
+                <td>{{$attr->name}}</td>
+                <td>Process</td>
+                <td>
+                    @if($attr->min != 0 && $attr->max != 0)
+                        {{$attr->min}}
+                    @endif
+                </td>
+                <td>
+                    @if($attr->min != 0 && $attr->max != 0)
+                        {{$attr->max}}
+                    @endif
+                </td>
+                <td>{{$attr->count}}</td>
+            </tr>
+        @endforeach
+        @foreach($sampleAttributeDetails as $attr)
+            <tr>
+                <td>{{$attr->name}}</td>
+                <td>Sample</td>
+                <td>
+                    @if($attr->min != 0 && $attr->max != 0)
+                        {{$attr->min}}
+                    @endif
+                </td>
+                <td>
+                    @if($attr->min != 0 && $attr->max != 0)
+                        {{$attr->max}}
+                    @endif
+                </td>
+                <td>{{$attr->count}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>
 <br/>
 <br/>
@@ -166,8 +215,50 @@
             });
         }
 
+        function setupHavingProcess() {
+            let api = $('#entities-with-used-activities').DataTable();
+            $('#activities').on('change', function () {
+                let selected = $(this).val();
+                if (selected === '') {
+                    api.search('').columns().search('').draw();
+                    return;
+                }
+                axios.post(`${findMatchingRoute}`, {
+                        activities: [
+                            {
+                                name: selected,
+                                operator: "in"
+                            }
+                        ]
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${apiToken}`
+                        }
+                    }
+                ).then((r) => {
+                    if (r.data.entities.length !== 0) {
+                        let searchStr = "";
+                        for (let i = 0; i < r.data.entities.length; i++) {
+                            let e = r.data.entities[i];
+                            if (i === 0) {
+                                searchStr = e;
+                            } else {
+
+                                searchStr = searchStr + `|^${e}$`;
+                            }
+                        }
+                        // api.search('').columns().search('').draw();
+                        api.column(0).search(searchStr, true, false).draw();
+                    }
+                }).catch((e) => {
+                    console.log("error: ", e);
+                });
+            });
+        }
+
         $(document).ready(() => {
-            let t = $('#entities-with-used-activities').DataTable({
+            $('#entities-with-used-activities').DataTable({
                 pageLength: 100,
                 scrollX: true,
                 fixedHeader: {
@@ -177,52 +268,33 @@
                 columnDefs: [
                     {targets: [0], visible: false},
                 ],
-                initComplete: function () {
-                    let api = this.api();
-                    $('#activities').on('change', function () {
-                        let selected = $(this).val();
-                        if (selected === '') {
-                            api.search('').columns().search('').draw();
-                            return;
-                        }
-                        axios.post(`${findMatchingRoute}`, {
-                                activities: [
-                                    {
-                                        name: selected,
-                                        operator: "in"
-                                    }
-                                ]
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${apiToken}`
-                                }
-                            }
-                        ).then((r) => {
-                            if (r.data.entities.length !== 0) {
-                                let searchStr = "";
-                                for (let i = 0; i < r.data.entities.length; i++) {
-                                    let e = r.data.entities[i];
-                                    if (i === 0) {
-                                        searchStr = e;
-                                    } else {
-
-                                        searchStr = searchStr + `|^${e}$`;
-                                    }
-                                }
-                                api.search('').columns().search('').draw();
-                                api.column(0).search(searchStr, true, false).draw();
-                            }
-                        }).catch((e) => {
-                            console.log("error: ", e);
-                        });
-                    });
-                },
             });
 
+            setupHavingProcess();
             setupHavingActivityAttribute();
             setupHavingEntityAttribute();
         });
+
+        let attributesOverviewShown = false;
+
+        function toggleAttributesTable() {
+            if (attributesOverviewShown) {
+                document.getElementById("attributes-overview-div").style.display = "none";
+                attributesOverviewShown = false;
+            } else {
+                document.getElementById("attributes-overview-div").style.display = "";
+                $('#attributes-overview').DataTable().destroy();
+                $('#attributes-overview').DataTable({
+                    pageLength: 100,
+                    scrollX: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                });
+                attributesOverviewShown = true;
+            }
+        }
 
         htmx.on('htmx:after-settle', (evt) => {
             if (evt.target.id === "mql-query") {
