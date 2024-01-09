@@ -1,27 +1,34 @@
 <div>
-    <div id="mql-query-builder" x-data="initMQLBuilder()">
-        <div id="open-query-builder" x-show="!showBuilder">
-            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
-            <p>
-                Query for matching samples by process type and attributes.
-            </p>
-        </div>
-        <div id="query-builder" style="display: none" x-show="showBuilder">
-            @include('partials.mql._query-builder')
-        </div>
-    </div>
-    <br>
+    {{--    <div id="mql-query-builder" x-data="initMQLBuilder()">--}}
+    {{--        <div id="open-query-builder" x-show="!showBuilder">--}}
+    {{--            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>--}}
+    {{--            <p>--}}
+    {{--                Query for matching samples by process type and attributes.--}}
+    {{--            </p>--}}
+    {{--        </div>--}}
+    {{--        <div id="query-builder" style="display: none" x-show="showBuilder">--}}
+    {{--            @include('partials.mql._query-builder')--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+    {{--    <br>--}}
 
-    <div class="row mb-3">
-        @if($category == "computational")
-            <h4>Query Computations</h4>
-        @else
-            <h4>Query Samples</h4>
-        @endif
-    </div>
+    {{--    <div class="row mb-3">--}}
+    {{--        @if($category == "computational")--}}
+    {{--            <h4>Query Computations</h4>--}}
+    {{--        @else--}}
+    {{--            <h4>Query Samples</h4>--}}
+    {{--        @endif--}}
+    {{--    </div>--}}
+
     <x-mql.query-builder.selectors :category="$category" :project="$project" :activities="$activities"
                                    :process-attributes="$processAttributes" :sample-attributes="$sampleAttributes"/>
-    <div class="row mt-4 mb-4">
+
+    <div id="attr-modal-here" class="modal fade" tabindex="-1" aria-hidden="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4">
         <a onclick="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show/Hide
             All Attributes</a>
     </div>
@@ -85,7 +92,7 @@
         </table>
     </div>
     <br/>
-    <br/>
+    {{--    <br/>--}}
     @push('scripts')
         <script>
             let attributesOverviewShown = false;
