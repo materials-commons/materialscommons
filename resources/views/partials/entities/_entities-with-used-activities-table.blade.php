@@ -1,23 +1,5 @@
 @if(Request::routeIs('projects.entities.*'))
-    <div id="mql-query-builder" x-data="initMQLBuilder()">
-        <div id="open-query-builder" x-show="!showBuilder">
-            <a href="#" @click="toggleShowBuilder()">Open Query Builder</a>
-            <p>
-                Query for matching samples by process type and attributes.
-            </p>
-        </div>
-        <div id="query-builder" style="display: none" x-show="showBuilder">
-            @include('partials.mql._query-builder')
-        </div>
-    </div>
-    <br>
-    <x-mql.query-builder :category="$category"
-                         :activities="$activities"
-                         :project="$project"
-                         :process-attributes="$processAttributes"
-                         :sample-attributes="$sampleAttributes"
-                         :process-attribute-details="$processAttributeDetails"
-                         :sample-attribute-details="$sampleAttributeDetails"/>
+    <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
 @endif
 <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
     <thead>

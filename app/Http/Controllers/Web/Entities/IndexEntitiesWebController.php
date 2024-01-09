@@ -6,20 +6,15 @@ use App\Actions\Entities\CreateUsedActivitiesForEntitiesAction;
 use App\Http\Controllers\Controller;
 use App\Models\Entity;
 use App\Models\Project;
-use App\Models\SavedQuery;
 use App\Traits\Entities\EntityAndAttributeQueries;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class IndexEntitiesWebController extends Controller
 {
     use EntityAndAttributeQueries;
 
-    public function __invoke(
-        Request $request,
-        CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-        Project $project
-    )
+    public function __invoke(Request $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+                             Project $project)
     {
         $category = $request->input("category");
 
@@ -30,54 +25,15 @@ class IndexEntitiesWebController extends Controller
                           ->get();
 
         $activities = $this->getProjectActivityNamesForEntities($project->id, $entities);
-
-        $processAttributes = $this->getProcessAttributes($project->id);
-
-        $sampleAttributes = $this->getSampleAttributes($project->id);
-
-        $query = "";
-
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
         return view('app.projects.entities.index', [
             'showExperiment'          => true,
-            'category'          => $category,
-            'project'           => $project,
-            'activities'        => $activities,
-            'entities'          => $entities,
-            'processAttributes' => $processAttributes,
-            'sampleAttributes'  => $sampleAttributes,
-            'processAttributeDetails' => $this->getProcessAttrDetails($project->id),
-            'sampleAttributeDetails'  => $this->getSampleAttrDetails($project->id),
-            'query'             => $query,
-            'queries'           => SavedQuery::where('owner_id', auth()->id())
-                                             ->where('project_id', $project->id)
-                                             ->get(),
-            'usedActivities'    => $usedActivities,
+            'category'       => $category,
+            'project'        => $project,
+            'activities'     => $activities,
+            'entities'       => $entities,
+            'usedActivities' => $usedActivities,
         ]);
-    }
-
-    private function getProcessAttrDetails($projectId)
-    {
-        return $this->getAttrDetails("activity_attrs_by_proj_exp", $projectId);
-    }
-
-    private function getSampleAttrDetails($projectId)
-    {
-        return $this->getAttrDetails("entity_attrs_by_proj_exp", $projectId);
-    }
-
-    private function getAttrDetails($table, $projectId)
-    {
-        $selectRaw = "attribute_name as name, min(cast(attribute_value as real)) as min,".
-            "max(cast(attribute_value as real)) as max,".
-            "count(distinct attribute_value) as count";
-
-        return DB::table($table)
-                 ->selectRaw($selectRaw)
-                 ->where("project_id", $projectId)
-                 ->whereNotNull("attribute_name")
-                 ->groupBy("attribute_name")
-                 ->get();
     }
 }
