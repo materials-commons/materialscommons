@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-2 ml-1">
     <a href="#"
        hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attrName])}}"
        hx-target="#activity-attribute-overview">{{$attrName}}</a>
