@@ -18,9 +18,12 @@ class RunMqlQueryWebController extends Controller
     use MqlQueryBuilder;
     use EntityAndAttributeQueries;
 
-    public function __invoke(MqlSelectionRequest $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-        RunMqlQueryAction $runMqlQueryAction, Project $project)
-    {
+    public function __invoke(
+        MqlSelectionRequest $request,
+        CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+        RunMqlQueryAction $runMqlQueryAction,
+        Project $project
+    ) {
         $validated = $request->validated();
 
         $activities = $this->getProjectExperimentalActivities($project->id);
@@ -39,7 +42,8 @@ class RunMqlQueryWebController extends Controller
         $request->flash();
 
         return view('app.projects.entities.index', [
-            'showExperiment' => true,
+            'category'          => 'experimental',
+            'showExperiment'    => true,
             'project'           => $project,
             'activities'        => $activities,
             'entities'          => $entities,
