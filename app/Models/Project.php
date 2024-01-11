@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -172,5 +173,12 @@ class Project extends Model implements Searchable
                       ->where('owner_id', $userId)
                       ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                       ->get();
+    }
+
+    // Project Directory
+    public function projectFilesDir(): string
+    {
+        $dirGroup = intdiv($this->id, 10);
+        return Storage::disk('mcfs')->path("projects/{$dirGroup}/{$this->id}");
     }
 }
