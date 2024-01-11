@@ -6,7 +6,11 @@
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.entities.index', $project))
+@if(Request::routeIs('projects.entities.*'))
+    @section('breadcrumbs', Breadcrumbs::render('projects.entities.index', $project))
+@else
+    @section('breadcrumbs', Breadcrumbs::render('projects.computations.entities.index', $project))
+@endif
 
 @section('content')
     @component('components.card')

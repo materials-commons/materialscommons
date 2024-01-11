@@ -179,13 +179,25 @@
             <td>{{$entity->name}}</td>
             <td>
                 @if(isset($experiment))
-                    <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
-                        {{$entity->name}}
-                    </a>
+                    @if($category == "experimental")
+                        <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
+                            {{$entity->name}}
+                        </a>
+                    @else
+                        <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
+                            {{$entity->name}}
+                        </a>
+                    @endif
                 @else
-                    <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
-                        {{$entity->name}}
-                    </a>
+                    @if($category == "experimental")
+                        <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
+                            {{$entity->name}}
+                        </a>
+                    @else
+                        <a href="{{route('projects.computations.entities.show-spread', [$project, $entity])}}">
+                            {{$entity->name}}
+                        </a>
+                    @endif
                 @endif
             </td>
             @if(isset($showExperiment))

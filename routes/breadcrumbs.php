@@ -73,9 +73,19 @@ Breadcrumbs::for('projects.entities.index', function ($trail, $project) {
     $trail->push('Samples', route('projects.entities.index', [$project]));
 });
 
+Breadcrumbs::for('projects.computations.entities.index', function ($trail, $project) {
+    $trail->parent('projects.show', $project);
+    $trail->push('Computations', route('projects.entities.index', [$project]));
+});
+
 Breadcrumbs::for('projects.entities.show', function ($trail, $project, $entity) {
     $trail->parent('projects.entities.index', $project);
     $trail->push($entity->name, route('projects.entities.show', [$project, $entity]));
+});
+
+Breadcrumbs::for('projects.computations.entities.show', function ($trail, $project, $entity) {
+    $trail->parent('projects.computations.entities.index', $project);
+    $trail->push($entity->name, route('projects.computations.entities.show', [$project, $entity]));
 });
 
 Breadcrumbs::for('projects.datasets.index', function ($trail, $project) {

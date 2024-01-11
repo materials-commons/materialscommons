@@ -6,14 +6,26 @@
     @include('layouts.navs.app.project')
 @stop
 
-@section('breadcrumbs', Breadcrumbs::render('projects.entities.show', $project, $entity))
+@if(Request::routeIs('projects.entities.*'))
+    @php
+        $title = "Compare Samples";
+        $groupRoute = 'projects.entities.show-spread';
+    @endphp
+    @section('breadcrumbs', Breadcrumbs::render('projects.entities.show', $project, $entity))
+@else
+    @php
+        $title = "Compare Computations";
+        $groupRoute = 'projects.computations.entities.show-spread';
+    @endphp
+    @section('breadcrumbs', Breadcrumbs::render('projects.computations.entities.show', $project, $entity))
+@endif
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col"></div>
             <div class="col col-lg-4 float-right">
-                <select class="selectpicker col-lg-10" data-live-search="true" title="Compare Samples">
+                <select class="selectpicker col-lg-10" data-live-search="true" title="{{$title}}">
                     @foreach($project->entities as $entry)
                         @if ($entry->name != $entity->name)
                             <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
@@ -28,7 +40,7 @@
             Sample: {{$entity->name}}
 
             <a class="float-right action-link" href="#"
-               onclick="window.location.replace('{{route('projects.entities.show-spread', [$project, $entity])}}')">
+               onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
                 <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
             </a>
         @endslot
