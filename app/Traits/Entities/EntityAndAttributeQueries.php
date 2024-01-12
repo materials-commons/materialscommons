@@ -10,6 +10,29 @@ use function collect;
 
 trait EntityAndAttributeQueries
 {
+    private function getProcessAttrDetails($projectId): Collection
+    {
+        return $this->getAttrDetails("activity_attrs_by_proj_exp", $projectId);
+    }
+
+    private function getSampleAttrDetails($projectId): Collection
+    {
+        return $this->getAttrDetails("entity_attrs_by_proj_exp", $projectId);
+    }
+
+    private function getAttrDetails($table, $projectId): Collection
+    {
+        $selectRaw = "attribute_name as name, min(cast(attribute_value as real)) as min,".
+            "max(cast(attribute_value as real)) as max,".
+            "count(distinct attribute_value) as count";
+
+        return DB::table($table)
+                 ->selectRaw($selectRaw)
+                 ->where("project_id", $projectId)
+                 ->whereNotNull("attribute_name")
+                 ->groupBy("attribute_name")
+                 ->get();
+    }
     public function getSampleAttributes($projectId): Collection
     {
         return DB::table('attributes')

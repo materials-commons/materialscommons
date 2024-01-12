@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use function intdiv;
 
 /**
  * @property integer $id
@@ -218,6 +219,12 @@ class File extends Model implements Searchable
     public function mcfsPath()
     {
         return Storage::disk('mcfs')->path($this->realPathPartial());
+    }
+
+    public function projectPathDirPartial(): string
+    {
+        $dirGroup = intdiv($this->id, 10);
+        return "projects/{$dirGroup}/{$this->project_id}";
     }
 
     public function mcfsReplicaPath()

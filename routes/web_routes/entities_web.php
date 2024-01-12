@@ -35,11 +35,21 @@ Route::post('/projects/{project}/entities', StoreProjectEntityWebController::cla
 
 Route::get('/projects/{project}/entities/{entity}/spread', ShowEntitySpreadWebController::class)
      ->name('projects.entities.show-spread');
+Route::get('/projects/{project}/computations/entities/{entity}/spread', ShowEntitySpreadWebController::class)
+     ->name('projects.computations.entities.show-spread');
+
 Route::get('/projects/{project}/experiments/{experiment}/entities-by-name/spread',
     ShowEntityByNameSpreadWebController::class)
      ->name('projects.experiments.entities.by-name.spread');
+Route::get('/projects/{project}/experiments/{experiment}/computations/entities-by-name/spread',
+    ShowEntityByNameSpreadWebController::class)
+     ->name('projects.experiments.computations.entities.by-name.spread');
+
 Route::get('/projects/{project}/entities/{entity}', ShowEntityWebController::class)
      ->name('projects.entities.show');
+
+Route::get('/projects/{project}/computations/entities/{entity}', ShowEntityWebController::class)
+     ->name('projects.computations.entities.show');
 
 Route::get('/projects/{project}/entities/{entity}/files', ShowEntityFilesWebController::class)
      ->name('projects.entities.files');

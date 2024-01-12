@@ -16,7 +16,6 @@
     "ext-zip": "*",
     "bensampo/laravel-enum": "^6.0",
     "bkwld/cloner": "^3.5",
-    "blade-ui-kit/blade-ui-kit": "^0.4.0",
     "diglactic/laravel-breadcrumbs": "^8.0",
     "doctrine/dbal": "^3.0",
     "elegantweb/sanitizer": "^2.0",

@@ -98,7 +98,17 @@
             @break
 
         @case("markdown")
-            <x-markdown class="mc-md" flavor="github">{!!$fileContents($file)!!}</x-markdown>
+            @if(isset($displayRoute))
+                <a href="{{$displayRoute}}">Fullscreen</a>
+                @if($file->size <= 2000000)
+                    <a href="#" onclick="mcutil.copyToClipboard('#file-contents')" class="ml-2">
+                        <i class="fa fas fa-clone"></i>
+                    </a>
+                @endif
+                <br/>
+                <br/>
+            @endif
+            <x-markdown class="mc-md">{!!$fileContents($file)!!}</x-markdown>
             @break
 
         @default

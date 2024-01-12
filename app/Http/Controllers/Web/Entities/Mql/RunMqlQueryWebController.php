@@ -19,15 +19,18 @@ class RunMqlQueryWebController extends Controller
     use EntityAndAttributeQueries;
 
     public function __invoke(MqlSelectionRequest $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-        RunMqlQueryAction $runMqlQueryAction, Project $project)
+                             RunMqlQueryAction   $runMqlQueryAction, Project $project)
     {
-        $validated = $request->validated();
+        $category = $request->input("category");
 
-        $activities = $this->getProjectExperimentalActivities($project->id);
+        $validated = $request->validated();
 
         $entities = Entity::with(['activities', 'experiments'])
                           ->where('project_id', $project->id)
                           ->get();
+
+        $activities = $this->getProjectActivityNamesForEntities($project->id, $entities);
+
 
         $processAttributes = $this->getProcessAttributes($project->id);
 
@@ -39,17 +42,20 @@ class RunMqlQueryWebController extends Controller
         $request->flash();
 
         return view('app.projects.entities.index', [
-            'showExperiment' => true,
-            'project'           => $project,
-            'activities'        => $activities,
-            'entities'          => $entities,
-            'processAttributes' => $processAttributes,
-            'sampleAttributes'  => $sampleAttributes,
-            'query'             => $this->buildMqlQueryText($validated),
-            'queries'           => SavedQuery::where('owner_id', auth()->id())
-                                             ->where('project_id', $project->id)
-                                             ->get(),
-            'usedActivities'    => $createUsedActivities->execute($activities, $entities),
+            'category'                => $category,
+            'showExperiment'          => true,
+            'project'                 => $project,
+            'activities'              => $activities,
+            'entities'                => $entities,
+            'processAttributes'       => $processAttributes,
+            'sampleAttributes'        => $sampleAttributes,
+            'processAttributeDetails' => $this->getProcessAttrDetails($project->id),
+            'sampleAttributeDetails'  => $this->getSampleAttrDetails($project->id),
+            'query'                   => $this->buildMqlQueryText($validated),
+            'queries'                 => SavedQuery::where('owner_id', auth()->id())
+                                                   ->where('project_id', $project->id)
+                                                   ->get(),
+            'usedActivities'          => $createUsedActivities->execute($activities, $entities),
         ]);
     }
 }
