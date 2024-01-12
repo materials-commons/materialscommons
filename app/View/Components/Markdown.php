@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 use function ray;
@@ -28,10 +29,10 @@ class Markdown extends Component
             'allow_unsafe_links' => true,
         ];
 
-        ray("Doing new markdown");
         $environment = new Environment($options);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment->addExtension(new DefaultAttributesExtension());
         $converter = new MarkdownConverter($environment);
         return $converter->convert($markdown);
     }

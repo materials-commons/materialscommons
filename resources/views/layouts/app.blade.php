@@ -213,7 +213,7 @@
 @include('app.dialogs._welcome-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
-{{--@livewireAssets--}}
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     $(document).ready(() => {
@@ -222,7 +222,6 @@
     window.mc_grids = [];
 
     function closeSearch() {
-        console.log('closeSearch called');
         $('#search-project-input').val('');
     }
 </script>
