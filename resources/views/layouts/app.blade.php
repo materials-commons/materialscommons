@@ -47,7 +47,6 @@
             src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
-    @bukStyles
 
     @stack('styles')
 
@@ -227,7 +226,6 @@
         $('#search-project-input').val('');
     }
 </script>
-@bukScripts
 
 @stack('scripts')
 </body>

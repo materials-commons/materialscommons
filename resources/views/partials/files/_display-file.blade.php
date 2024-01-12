@@ -108,7 +108,8 @@
                 <br/>
                 <br/>
             @endif
-            <x-markdown class="mc-md" flavor="github">{!!$fileContents($file)!!}</x-markdown>
+            {{--            <x-markdown.markdown class="mc-md">{!!$fileContents($file)!!}</x-markdown.markdown>--}}
+            <x-markdown class="mc-md">{!!$fileContents($file)!!}</x-markdown>
             @break
 
         @default
