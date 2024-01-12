@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use CommonMark\Extension\Metadata\MetadataExtension;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use League\CommonMark\Environment\Environment;
@@ -33,6 +34,7 @@ class Markdown extends Component
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new DefaultAttributesExtension());
+        $environment->addExtension(new MetadataExtension());
         $converter = new MarkdownConverter($environment);
         return $converter->convert($markdown);
     }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34fae03f5d13985257f53f3d1a9ae9a1",
+    "content-hash": "039c3b8416887ee77b494b50a4bab490",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5720,6 +5720,53 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "rianfuro/commonmark-metadata",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RianFuro/commonmark-metadata.git",
+                "reference": "9ef34cf9e79a817f3a267eb1d4691b5596d36c7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RianFuro/commonmark-metadata/zipball/9ef34cf9e79a817f3a267eb1d4691b5596d36c7a",
+                "reference": "9ef34cf9e79a817f3a267eb1d4691b5596d36c7a",
+                "shasum": ""
+            },
+            "require": {
+                "league/commonmark": "^2.0.2",
+                "php": ">=7.4"
+            },
+            "type": "commonmark-extension",
+            "autoload": {
+                "psr-4": {
+                    "CommonMark\\Extension\\Metadata\\": "src/CommonMark/Extension/Metadata"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Proksch",
+                    "email": "florian.proksch@protonmail.com"
+                }
+            ],
+            "description": "Parse MultiMarkdown-like metadata at the beginning of a markdown document",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "metadata",
+                "multimarkdown"
+            ],
+            "support": {
+                "issues": "https://github.com/RianFuro/commonmark-metadata/issues",
+                "source": "https://github.com/RianFuro/commonmark-metadata/tree/v0.1.2"
+            },
+            "time": "2021-10-02T19:24:17+00:00"
         },
         {
             "name": "spatie/backtrace",
