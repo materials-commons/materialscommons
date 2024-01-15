@@ -34,7 +34,8 @@ class SearchAcrossProjectsAction
                                   ->addSearchableAttribute('mime_type')
                                   ->addSearchableAttribute('media_type_description')
                                   ->with('project')
-                                  ->whereIn('project_id', $projectIds);
+                    ->whereIn('project_id', $projectIds)
+                    ->limit(20);
             })
             ->registerModel(Experiment::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
                 $modelSearchAspect->addSearchableAttribute('name')
@@ -73,6 +74,7 @@ class SearchAcrossProjectsAction
                                   ->addSearchableAttribute('description')
                                   ->where('public', true);
             })
+            ->limitAspectResults(10)
             ->search($search);
     }
 }

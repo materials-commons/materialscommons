@@ -48,6 +48,9 @@ use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
 use App\Http\Controllers\Web\Visus\ShowVisusDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/projects/search-all', SearchAcrossProjectsWebController::class)
+     ->name('projects.search_all');
+
 Route::get('/projects/create', CreateProjectWebController::class)
      ->name('projects.create');
 Route::post('/projects', StoreProjectWebController::class)
@@ -58,9 +61,6 @@ Route::get('/projects', IndexProjectsWebController::class)
 
 Route::get('/projects/{project}/upload', ShowUploadFilesWebController::class)
      ->name('projects.upload-files');
-
-Route::post('/projects/search', SearchAcrossProjectsWebController::class)
-     ->name('projects.search_all');
 
 Route::get('/projects/{project}', ShowProjectWebController::class)
      ->name('projects.show');

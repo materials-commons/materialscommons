@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Published\Datasets\SearchPublishedDatasetWebController;
 use App\Http\Controllers\Web\Published\Datasets\Activities\ShowPublishedDatasetActivityWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\CreateDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DeleteDatasetCommentWebController;
@@ -38,6 +39,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
      ->name('public.datasets.show');
+
+Route::get('/datasets/{dataset}/search', SearchPublishedDatasetWebController::class)
+     ->name('public.datasets.search');
 
 Route::get('/datasets/{dataset}/overview', ShowPublishedDatasetOverviewWebController::class)
      ->name('public.datasets.overview.show');

@@ -108,7 +108,11 @@ class Entity extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('projects.entities.show', [$this->project_id, $this]);
+        if (is_null($this->dataset_id)) {
+            $url = route('projects.entities.show', [$this->project_id, $this]);
+        } else {
+            $url = route('public.datasets.entities.show-spread', [$this->dataset_id, $this]);
+        }
         return new SearchResult($this, $this->name, $url);
     }
 }

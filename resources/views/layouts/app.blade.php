@@ -109,45 +109,9 @@
                 </li>
             @endif
         </ul>
+        @include('partials.navbar._search')
         @auth
-            @isset($project)
-                <span class="htmx-indicator">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </span>
-                <div style="width:100%">
-                    <input type="text"
-                           id="search-project-input"
-                           class="form-control form-rounded border border-right-0"
-                           placeholder="Search project..."
-                           name="search"
-                           aria-label="Search"
-                           hx-get="{{route('projects.search.htmx', [$project])}}"
-                           hx-target="#search-results"
-                           hx-indicator=".htmx-indicator"
-                           hx-trigger="keyup changed delay:500ms">
-                    <div id="search-results" style="position:absolute; z-index:999; overflow-y: auto; height: 70vh;"></div>
-                </div>
-
-            @elseif (Request::routeIs('public.*'))
-                <form method="post"
-                      action="{{route('public.search')}}"
-                      class="mx-2 my-auto d-inline w-75">
-                    @csrf
-                    <input type="text"
-                           class="form-control form-rounded border border-right-0"
-                           placeholder="Search published data..." name="search" aria-label="Search">
-                </form>
-            @else
-                <form method="post"
-                      action="{{route('projects.search_all')}}"
-                      class="mx-2 my-auto d-inline w-75">
-                    @csrf
-                    <input type="text"
-                           class="form-control form-rounded border border-right-0"
-                           placeholder="Search across projects..." name="search" aria-label="Search">
-                </form>
-            @endisset
-            <ul class="navbar-nav">
+            <ul class="navbar-nav pl-4 pr-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
                        role="button"
@@ -166,15 +130,7 @@
                 </li>
             </ul>
         @else
-            <form method="post"
-                  action="{{route('public.search')}}"
-                  class="mx-2 my-auto d-inline w-75">
-                @csrf
-                <input type="text"
-                       class="form-control form-rounded border border-right-0"
-                       placeholder="Search datasets..." name="search" aria-label="Search">
-            </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav pl-4 pr-4">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link td-none" href="{{route('login')}}">Sign in/Register</a>
                 </li>
@@ -229,9 +185,9 @@
     });
     window.mc_grids = [];
 
-    function closeSearch() {
-        $('#search-project-input').val('');
-    }
+    // function closeSearch() {
+    //     $('#search-project-input').val('');
+    // }
 </script>
 
 @stack('scripts')

@@ -28,6 +28,7 @@ class SearchPublishedDataAction
                                   ->addSearchableAttribute('description')
                                   ->where('public', true);
             })
+            ->limitAspectResults(10)
             ->search($search);
     }
 }
