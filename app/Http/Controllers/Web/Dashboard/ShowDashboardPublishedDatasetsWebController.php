@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use App\Traits\Projects\UserProjects;
 use Illuminate\Http\Request;
+use function auth;
 
 class ShowDashboardPublishedDatasetsWebController extends Controller
 {
@@ -18,6 +19,7 @@ class ShowDashboardPublishedDatasetsWebController extends Controller
             'publishedDatasets'      => $publishedDatasets,
             'publishedDatasetsCount' => $publishedDatasets->count(),
             'projectsCount'          => $this->getUserProjects(auth()->id())->count(),
+            'archivedCount' => $this->getUserArchivedProjectsCount(auth()->id()),
         ]);
     }
 
