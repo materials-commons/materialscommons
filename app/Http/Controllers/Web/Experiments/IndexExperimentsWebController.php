@@ -7,10 +7,12 @@ use App\Models\Project;
 
 class IndexExperimentsWebController extends Controller
 {
-    public function __invoke($projectId)
+    public function __invoke(Project $project)
     {
+        $project->load('experiments.owner');
+        auth()->user()->addToRecentlyAccessedProjects($project);
         return view('app.projects.experiments.index', [
-            'project' => Project::with('experiments.owner')->findOrFail($projectId),
+            'project' => $project,
         ]);
     }
 }

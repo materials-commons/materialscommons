@@ -18,6 +18,7 @@ class ShowRootFolderWebController extends Controller
 
     public function __invoke(Project $project)
     {
+        auth()->user()->addToRecentlyAccessedProjects($project);
         $directory = File::where('project_id', $project->id)->where('name', '/')->first();
         $files = $this->getProjectFolderFiles($project->id, '/');
         $readme = $files->first(function ($file) {
