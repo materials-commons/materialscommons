@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Web\Dashboard\IndexGlobusBookmarksWebController;
+use App\Http\Controllers\Web\Dashboard\MarkProjectAsActiveOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardDataDictionaryWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
+use App\Http\Controllers\Web\Dashboard\UnmarkProjectAsActiveOnDashboardWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
@@ -19,3 +21,9 @@ Route::get('/dashboard/data-dictionary', ShowDashboardDataDictionaryWebControlle
 
 Route::get('/dashboard/globus-bookmarks', IndexGlobusBookmarksWebController::class)
      ->name('dashboard.globus-bookmarks.index');
+
+Route::get('/dashboard/project/{project}/mark-as-active', MarkProjectAsActiveOnDashboardWebController::class)
+     ->name('dashboard.project.mark-as-active');
+
+Route::get('/dashboard/project/{project}/unmark-as-active', UnmarkProjectAsActiveOnDashboardWebController::class)
+     ->name('dashboard.project.unmark-as-active');

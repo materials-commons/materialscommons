@@ -3,11 +3,45 @@
 </a>
 <br>
 <br>
+<h4>Active Projects</h4>
+<div class="row">
+    @foreach($projects as $proj)
+        @if(!auth()->user()->isActiveProject($proj))
+            @continue
+        @endif
+
+        @php
+            $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
+        @endphp
+
+        @include('app.dashboard.tabs._project-card')
+    @endforeach
+</div>
+<br/>
+<h4>Recently Accessed Projects</h4>
+<div class="row">
+    @foreach($projects as $proj)
+        @if(auth()->user()->isActiveProject($proj))
+            @continue
+        @endif
+
+        @php
+            $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
+        @endphp
+
+        @if(is_null($recentlyAccessedOn))
+            @continue
+        @endif
+
+        @include('app.dashboard.tabs._project-card')
+    @endforeach
+</div>
+<br>
+<br>
 <table id="projects" class="table table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Project</th>
-        <th>Goto</th>
         <th>Size</th>
         <th>Hidden Size</th>
         <th>Files</th>
@@ -24,31 +58,6 @@
             <td>
                 <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
             </td>
-            <td>
-                <div class="dropdown">
-                    <a class="dropdown-toggle no-underline" href="#" role="button" id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Goto
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item td-none" href="{{route('projects.folders.index', [$proj])}}">
-                            Files
-                        </a>
-                        <a class="dropdown-item td-none" href="{{route('projects.experiments.index', [$proj])}}">
-                            Experiments
-                        </a>
-                        <a class="dropdown-item td-none" href="{{route('projects.entities.index', [$proj])}}">
-                            Samples
-                        </a>
-                        <a class="dropdown-item td-none" href="{{route('projects.datasets.index', [$proj])}}">
-                            Datasets
-                        </a>
-                        <a class="dropdown-item td-none" href="{{route('projects.globus.bookmark', [$proj])}}">
-                            Upload Using Globus
-                        </a>
-                    </div>
-                </div>
-            </td>
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>
             <td>{{number_format($proj->file_count)}}</td>
@@ -58,12 +67,6 @@
             <td>{{$proj->updated_at}}</td>
             <td>
                 <div class="float-right">
-                    <a href="{{route('projects.show', [$proj->id])}}" class="action-link">
-                        <i class="fas fa-fw fa-eye"></i>
-                    </a>
-                    <a href="{{route('projects.edit', [$proj->id])}}" class="action-link">
-                        <i class="fas fa-fw fa-edit"></i>
-                    </a>
                     @if(auth()->id() == $proj->owner_id)
                         <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
                            class="action-link">
@@ -85,18 +88,27 @@
     <script>
         let projectsCount = "{{sizeof($projects)}}";
         $(document).ready(() => {
-            if (projectsCount == 0) {
+            if (projectsCount === "0") {
                 $('#welcome-dialog').modal();
             }
+            // 0 <th>Project</th>
+            // 1 <th>Size</th>
+            // 2 <th>Hidden Size</th>
+            // 3 <th>Files</th>
+            // 4 <th>Samples</th>
+            // 5 <th>Owner</th>
+            // 6 <th>Updated</th>
+            // 7 <th>Date</th>
+            // 8 <th></th>
             $('#projects').DataTable({
-                stateSave: true,
+                // stateSave: true,
                 pageLength: 100,
                 columnDefs: [
-                    {orderData: [8], targets: [7]},
-                    {targets: [8], visible: false, searchable: false},
-                    {orderData: [3], targets: [2]},
-                    {targets: [3], visible: false},
-                ]
+                    {targets: [2], visible: false},
+                    {targets: [7], visible: false, searchable: false},
+                    {orderData: [2], targets: [1]},
+                    {orderData: [7], targets: [6]}
+                ],
             });
         });
     </script>

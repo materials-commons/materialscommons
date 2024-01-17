@@ -4,10 +4,23 @@ namespace App\Traits\Projects;
 
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
+use function array_merge;
+use function collect;
 
 trait UserProjects
 {
     public function getUserProjects($userId)
+    {
+        $teamIds = $this->getUserTeamIds($userId);
+        return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
+                      ->withCount('entities')
+                      ->whereIn('team_id', $teamIds)
+                      ->whereNull('deleted_at')
+                      ->orderBy('name')
+                      ->get();
+    }
+
+    public function getUserTeamIds($userId): array
     {
         $memberTeams = DB::table('team2member')
                          ->where('user_id', $userId)
@@ -21,12 +34,6 @@ trait UserProjects
                         ->get()
                         ->pluck('team_id')
                         ->toArray();
-        $allTeams = collect(array_merge($memberTeams, $adminTeams))->unique()->toArray();
-        return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
-                      ->withCount('entities')
-                      ->whereIn('team_id', $allTeams)
-                      ->whereNull('deleted_at')
-                      ->orderBy('name')
-                      ->get();
+        return collect(array_merge($memberTeams, $adminTeams))->unique()->toArray();
     }
 }

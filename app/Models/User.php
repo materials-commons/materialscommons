@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use function array_diff;
 use function array_merge;
 use function in_array;
@@ -210,5 +212,96 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $merged = array_merge($this->settings, [$key => $value]);
         $this->update(['settings' => $merged]);
+    }
+
+    function addToActiveProjects($project): void
+    {
+        $this->addToProjectSetting("active", $project->id, now());
+    }
+
+    function removeFromActiveProjects($project): void
+    {
+        $this->removeFromProjectSetting("active", $project->id);
+    }
+
+    function addToRecentlyAccessedProjects($project): void
+    {
+        $this->addToProjectSetting("recent", $project->id, now(), true);
+    }
+
+    function removeFromRecentlyAccessedProjects($project): void
+    {
+        $this->removeFromProjectSetting("recent", $project->id);
+    }
+
+    function addToProjectSetting($projectSetting, $projectId, $value, $alwaysSet = false): void
+    {
+        $settings = $this->settings;
+        if (is_null($settings)) {
+            $settings = [];
+        }
+
+        if (!Arr::has($settings, "projects")) {
+            $settings["projects"] = [];
+        }
+
+        if (!Arr::has($settings, "projects.{$projectSetting}")) {
+            $settings["projects"]["{$projectSetting}"] = [];
+        }
+
+        if ($alwaysSet) {
+            $settings["projects"]["{$projectSetting}"]["id_{$projectId}"] = $value;
+            $this->update(["settings" => $settings]);
+        } elseif (!Arr::has($settings, "projects.{$projectSetting}.id_{$projectId}")) {
+            // If the project isn't already active then add it
+            $settings["projects"]["{$projectSetting}"]["id_{$projectId}"] = $value;
+            $this->update(["settings" => $settings]);
+        } else {
+            // if we are here then this project setting was already set and $alwaysSet was false,
+            // so there is nothing to do.
+        }
+    }
+
+    function removeFromProjectSetting($projectSetting, $projectId)
+    {
+        $settings = $this->settings;
+        if (!Arr::has($settings, "projects.{$projectSetting}.id_{$projectId}")) {
+            return;
+        }
+
+        unset($settings['projects']["{$projectSetting}"]["id_{$projectId}"]);
+        $this->update(['settings' => $settings]);
+    }
+
+    function isActiveProject($project)
+    {
+        return Arr::has($this->settings, "projects.active.id_{$project->id}");
+    }
+
+    function projectRecentlyAccessedOn($project)
+    {
+        if (!Arr::has($this->settings, "projects.recent.id_{$project->id}")) {
+            return null;
+        }
+
+        return $this->settings["projects"]["recent"]["id_{$project->id}"];
+    }
+
+    function clearOlderRecentlyAccessedProjects()
+    {
+        if (!Arr::has($this->settings, "projects.recent")) {
+            return;
+        }
+
+        $settings = $this->settings;
+        $now = now();
+        foreach ($this->settings["projects"]["recent"] as $projectKey => $date) {
+            $parsedDate = Carbon::parse($date);
+            if ($parsedDate->diffInDays($now) > 14) {
+                unset($settings["projects"]["recent"][$projectKey]);
+            }
+        }
+
+        $this->update(["settings" => $settings]);
     }
 }

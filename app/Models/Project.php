@@ -24,6 +24,8 @@ use Spatie\Searchable\SearchResult;
  * @property integer directory_count
  * @property array file_types
  * @property mixed deleted_at
+ * @property mixed marked_active_at
+ * @property mixed last_accessed_at
  *
  * @mixin Builder
  */
@@ -37,16 +39,18 @@ class Project extends Model implements Searchable
     protected $attributes = [];
 
     protected $casts = [
-        'default_project' => 'boolean',
-        'is_active'       => 'boolean',
-        'owner_id'        => 'integer',
-        'entities_count'  => 'integer',
-        'is_public'       => 'boolean',
-        'size'            => 'integer',
-        'file_count'      => 'integer',
-        'directory_count' => 'integer',
-        'file_types'      => 'array',
-        'deleted_at' => 'datetime',
+        'default_project'  => 'boolean',
+        'is_active'        => 'boolean',
+        'owner_id'         => 'integer',
+        'entities_count'   => 'integer',
+        'is_public'        => 'boolean',
+        'size'             => 'integer',
+        'file_count'       => 'integer',
+        'directory_count'  => 'integer',
+        'file_types'       => 'array',
+        'deleted_at'       => 'datetime',
+        'last_access_at'   => 'datetime',
+        'marked_active_at' => 'datetime',
     ];
 
     public function users()
