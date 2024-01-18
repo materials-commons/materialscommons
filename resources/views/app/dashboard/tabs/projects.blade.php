@@ -46,6 +46,7 @@
         <th>Hidden Size</th>
         <th>Files</th>
         <th>Samples</th>
+        <th>Computations</th>
         <th>Owner</th>
         <th>Updated</th>
         <th>Date</th>
@@ -61,7 +62,8 @@
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>
             <td>{{number_format($proj->file_count)}}</td>
-            <td>{{number_format($proj->entities_count)}}</td>
+            <td>{{number_format($proj->samples_count)}}</td>
+            <td>{{number_format($proj->computations_count)}}</td>
             <td>{{$proj->owner->name}}</td>
             <td>{{$proj->updated_at->diffForHumans()}}</td>
             <td>{{$proj->updated_at}}</td>
@@ -102,18 +104,19 @@
             // 2 <th>Hidden Size</th>
             // 3 <th>Files</th>
             // 4 <th>Samples</th>
-            // 5 <th>Owner</th>
-            // 6 <th>Updated</th>
-            // 7 <th>Date</th>
-            // 8 <th></th>
+            // 5 <th>Computations</th>
+            // 6 <th>Owner</th>
+            // 7 <th>Updated</th>
+            // 8 <th>Date</th>
+            // 9 <th></th>
             $('#projects').DataTable({
                 stateSave: true,
                 pageLength: 100,
                 columnDefs: [
-                    {targets: [2], visible: false},
-                    {targets: [7], visible: false, searchable: false},
-                    {orderData: [2], targets: [1]},
-                    {orderData: [7], targets: [6]}
+                    {targets: [2], visible: false}, // Hidden Size
+                    {targets: [8], visible: false, searchable: false}, // Date
+                    {orderData: [2], targets: [1]}, // Sort Size [1] on Hidden Size [2]
+                    {orderData: [8], targets: [7]} // Sort Updated [7] on Date [8]
                 ],
             });
         });
