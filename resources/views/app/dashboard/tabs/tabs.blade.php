@@ -20,7 +20,7 @@
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.trash.index')}}"
            href="{{route('dashboard.projects.trash.index')}}">
-            Deleted Projects ({{$deletedCount}})
+            Projects Scheduled For Deletion ({{$deletedCount}})
         </a>
     </li>
 
