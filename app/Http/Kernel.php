@@ -3,7 +3,6 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActivityInProject;
-use App\Http\Middleware\AddAppNavigationBarCounts;
 use App\Http\Middleware\AddProjectNavigationBarCounts;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
@@ -34,8 +33,6 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
-//use YlsIdeas\FeatureFlags\Middleware\FeatureFlagState;
 
 class Kernel extends HttpKernel
 {
@@ -71,7 +68,6 @@ class Kernel extends HttpKernel
             Robots::class,
             UserCanAccessProject::class,
             AddProjectNavigationBarCounts::class,
-            AddAppNavigationBarCounts::class,
             FileInProject::class,
             ActivityInProject::class,
             EntityInProject::class,

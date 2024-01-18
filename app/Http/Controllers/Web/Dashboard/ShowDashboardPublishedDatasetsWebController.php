@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\Project;
 use App\Traits\Projects\UserProjects;
 use Illuminate\Http\Request;
 use function auth;
@@ -18,6 +19,7 @@ class ShowDashboardPublishedDatasetsWebController extends Controller
         return view('app.dashboard.index', [
             'publishedDatasets'      => $publishedDatasets,
             'publishedDatasetsCount' => $publishedDatasets->count(),
+            'deletedCount' => Project::getDeletedTrashCountForUser(auth()->id()),
             'projectsCount'          => $this->getUserProjects(auth()->id())->count(),
             'archivedCount' => $this->getUserArchivedProjectsCount(auth()->id()),
         ]);

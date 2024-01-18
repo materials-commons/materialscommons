@@ -15,13 +15,16 @@
         @endslot
 
         @slot('body')
+            <div class="float-right">
                 @if($nav_trash_count > 0)
                     <a href="{{route('projects.trashcan.empty', [$project])}}" class="btn btn-danger">Empty Trash</a>
                 @else
                     <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
                 @endif
-                <br>
-                <br>
+            </div>
+            <br>
+            <br>
+            <br>
             <table id="trash" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>

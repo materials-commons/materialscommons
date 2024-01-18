@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Web\Dashboard\ArchiveProjectOnDashboardWebController;
+use App\Http\Controllers\Web\Dashboard\ImmediatelyDestroyProjectWebController;
 use App\Http\Controllers\Web\Dashboard\IndexArchivedProjectsOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\IndexGlobusBookmarksWebController;
+use App\Http\Controllers\Web\Dashboard\IndexTrashWebController;
 use App\Http\Controllers\Web\Dashboard\MarkProjectAsActiveOnDashboardWebController;
+use App\Http\Controllers\Web\Dashboard\RestoreProjectFromTrashWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardDataDictionaryWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
@@ -19,14 +22,17 @@ Route::get('/dashboard/projects', ShowDashboardProjectsWebController::class)
 Route::get('/dashboard/projects/archived', IndexArchivedProjectsOnDashboardWebController::class)
     ->name('dashboard.projects.archived.index');
 
+Route::get('/dashboard/projects/trash', IndexTrashWebController::class)
+     ->name('dashboard.projects.trash.index');
+
+Route::get('/dashboard/projects/{project}/trash/restore', RestoreProjectFromTrashWebController::class)
+     ->name('dashboard.projects.trash.restore');
+
 Route::get('/dashboard/published-datasets', ShowDashboardPublishedDatasetsWebController::class)
      ->name('dashboard.published-datasets.show');
 
 Route::get('/dashboard/data-dictionary', ShowDashboardDataDictionaryWebController::class)
      ->name('dashboard.data-dictionary.show');
-
-Route::get('/dashboard/globus-bookmarks', IndexGlobusBookmarksWebController::class)
-     ->name('dashboard.globus-bookmarks.index');
 
 Route::get('/dashboard/projects/{project}/mark-as-active', MarkProjectAsActiveOnDashboardWebController::class)
      ->name('dashboard.projects.mark-as-active');
@@ -39,3 +45,6 @@ Route::get('/dashboard/projects/{project}/archive', ArchiveProjectOnDashboardWeb
 
 Route::get('/dashboard/projects/{project}/unarchive', UnarchiveProjectOnDashboardWebController::class)
      ->name('dashboard.projects.unarchive');
+
+Route::delete('/dashboards/projects/{project}/trash/immediately-destroy', ImmediatelyDestroyProjectWebController::class)
+     ->name('dashboard.projects.trash.immediately-destroy');

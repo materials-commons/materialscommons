@@ -28,6 +28,8 @@
                 @include('app.dashboard.tabs.published-datasets')
             @elseif (Request::routeIs('dashboard.projects.archived.index'))
                 @include('app.dashboard.tabs.archived-projects')
+            @elseif (Request::routeIs('dashboard.projects.trash.index'))
+                @include('app.dashboard.tabs.deleted-projects')
             @endif
         </x-slot>
     </x-card>
