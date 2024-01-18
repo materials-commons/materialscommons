@@ -17,7 +17,7 @@ Route::get('/dashboard/projects', ShowDashboardProjectsWebController::class)
      ->name('dashboard.projects.show');
 
 Route::get('/dashboard/projects/archived', IndexArchivedProjectsOnDashboardWebController::class)
-     ->name('dashboard.projects.show.archived');
+    ->name('dashboard.projects.archived.index');
 
 Route::get('/dashboard/published-datasets', ShowDashboardPublishedDatasetsWebController::class)
      ->name('dashboard.published-datasets.show');

@@ -26,10 +26,8 @@
                 @include('app.dashboard.tabs.projects')
             @elseif (Request::routeIs('dashboard.published-datasets.show'))
                 @include('app.dashboard.tabs.published-datasets')
-            @elseif (Request::routeIs('dashboard.data-dictionary.show'))
-                @include('app.dashboard.tabs.data-dictionary')
-            @elseif(Request::routeIs('dashboard.globus-bookmarks.index'))
-                @include('app.dashboard.tabs.globus-bookmarks')
+            @elseif (Request::routeIs('dashboard.projects.archived.index'))
+                @include('app.dashboard.tabs.archived-projects')
             @endif
         </x-slot>
     </x-card>

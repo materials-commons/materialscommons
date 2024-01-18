@@ -72,6 +72,12 @@
                            class="action-link">
                             <i class="fas fa-fw fa-trash-alt"></i>
                         </a>
+                        <a href="{{route('dashboard.projects.archive',[$proj])}}"
+                           data-toggle="tooltip"
+                           title="Marks project as archived. Project will show up in the Archived Projects tab."
+                           class="action-link">
+                            <i class="fas fa-fw fa-archive"></i>
+                        </a>
                     @endif
                 </div>
                 @if(auth()->id() == $proj->owner_id)
@@ -101,7 +107,7 @@
             // 7 <th>Date</th>
             // 8 <th></th>
             $('#projects').DataTable({
-                // stateSave: true,
+                stateSave: true,
                 pageLength: 100,
                 columnDefs: [
                     {targets: [2], visible: false},

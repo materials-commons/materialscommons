@@ -10,11 +10,14 @@ use function is_null;
 
 trait UserProjects
 {
-    public function getUserArchivedProjects($userId, $teamIds = null)
+    public function getUserArchivedProjects($userId)
     {
-        if (is_null($teamIds)) {
-            $teamIds = $this->getUserTeamIds($userId);
-        }
+        $teamIds = $this->getUserTeamIds($userId);
+        return $this->getUserArchivedProjectsFromTeamIds($teamIds);
+    }
+
+    public function getUserArchivedProjectsFromTeamIds($teamIds)
+    {
         return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
                       ->withCount('entities')
                       ->whereIn('team_id', $teamIds)
@@ -24,22 +27,28 @@ trait UserProjects
                       ->get();
     }
 
-    public function getUserArchivedProjectsCount($userId, $teamIds = null): int
+    public function getUserArchivedProjectsCount($userId): int
     {
-        if (is_null($teamIds)) {
-            $teamIds = $this->getUserTeamIds($userId);
-        }
+        $teamIds = $this->getUserTeamIds($userId);
+        return $this->getUserArchivedProjectsCountFromTeamIds($teamIds);
+    }
+
+    public function getUserArchivedProjectsCountFromTeamIds($teamIds): int
+    {
         return Project::whereIn('team_id', $teamIds)
                       ->whereNull('deleted_at')
                       ->whereNotNull('archived_at')
                       ->count();
     }
 
-    public function getUserProjects($userId, $teamIds = null)
+    public function getUserProjects($userId)
     {
-        if (is_null($teamIds)) {
-            $teamIds = $this->getUserTeamIds($userId);
-        }
+        $teamIds = $this->getUserTeamIds($userId);
+        return $this->getUserProjectsFromTeamIds($teamIds);
+    }
+
+    public function getUserProjectsFromTeamIds($teamIds)
+    {
         return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
                       ->withCount('entities')
                       ->whereIn('team_id', $teamIds)
@@ -49,11 +58,14 @@ trait UserProjects
                       ->get();
     }
 
-    public function getUserProjectsCount($userId, $teamIds = null): int
+    public function getUserProjectsCount($userId): int
     {
-        if (is_null($teamIds)) {
-            $teamIds = $this->getUserTeamIds($userId);
-        }
+        $teamIds = $this->getUserTeamIds($userId);
+        return $this->getUserProjectsCountFromTeamIds($teamIds);
+    }
+
+    public function getUserProjectsCountFromTeamIds($teamIds): int
+    {
         return Project::whereIn('team_id', $teamIds)
                       ->whereNull('deleted_at')
                       ->whereNull('archived_at')
