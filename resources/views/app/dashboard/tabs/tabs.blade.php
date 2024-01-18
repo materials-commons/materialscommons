@@ -25,13 +25,6 @@
     </li>
 
     {{--    <li class="nav-item">--}}
-    {{--        <a class="nav-link no-underline {{setActiveNavByName('dashboard.globus-bookmarks.index')}}"--}}
-    {{--           href="{{route('dashboard.globus-bookmarks.index')}}">--}}
-    {{--            Globus Bookmarks--}}
-    {{--        </a>--}}
-    {{--    </li>--}}
-
-    {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link {{setActiveNavByName('dashboard.data-dictionary.show')}}"--}}
     {{--           href="{{route('dashboard.data-dictionary.show')}}">--}}
     {{--            Data Dictionary--}}
