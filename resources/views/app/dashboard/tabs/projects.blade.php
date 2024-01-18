@@ -4,37 +4,51 @@
 <br>
 <br>
 <h4>Active Projects</h4>
-<div class="row">
-    @foreach($projects as $proj)
-        @if(!auth()->user()->isActiveProject($proj))
-            @continue
-        @endif
+<div class="row ml-4">
+    @if(auth()->user()->hasActiveProjects())
+        @foreach($projects as $proj)
+            @if(!auth()->user()->isActiveProject($proj))
+                @continue
+            @endif
 
-        @php
-            $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
-        @endphp
+            @php
+                $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
+            @endphp
 
-        @include('app.dashboard.tabs._project-card')
-    @endforeach
+            @include('app.dashboard.tabs._project-card')
+        @endforeach
+    @else
+        <h5 class="col-8">
+            There are no active projects. You can mark a project as active by clicking the
+            <span class="grey-8"><i class="fa fas fa-check"></i></span> checkmark in the
+            <strong>"Recently Accessed Projects"</strong> section below, or by clicking the
+            <span class="btn btn-success" style="cursor:default">mark as active project</span> button on the project
+            home page.
+        </h5>
+    @endif
 </div>
 <br/>
 <h4>Recently Accessed Projects</h4>
-<div class="row">
-    @foreach($projects as $proj)
-        @if(auth()->user()->isActiveProject($proj))
-            @continue
-        @endif
+<div class="row ml-4">
+    @if(auth()->user()->hasRecentlyAccessedProjectsThatAreNotActive())
+        @foreach($projects as $proj)
+            @if(auth()->user()->isActiveProject($proj))
+                @continue
+            @endif
+            @php
+                $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
+            @endphp
 
-        @php
-            $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
-        @endphp
+            @if(is_null($recentlyAccessedOn))
+                @continue
+            @endif
 
-        @if(is_null($recentlyAccessedOn))
-            @continue
-        @endif
-
-        @include('app.dashboard.tabs._project-card')
-    @endforeach
+            @include('app.dashboard.tabs._project-card')
+        @endforeach
+    @else
+        <h5 class="col-8">There are no recently accessed projects that aren't active. Projects you accessed within the
+            last 2 weeks, that are not marked as active, will show up here.</h5>
+    @endif
 </div>
 <br>
 <br>

@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use function array_diff;
 use function array_merge;
+use function count;
 use function in_array;
 use function is_array;
 use function is_null;
@@ -285,6 +286,44 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->settings["projects"]["recent"]["id_{$project->id}"];
+    }
+
+    function hasActiveProjects()
+    {
+        if (!Arr::has($this->settings, "projects.active")) {
+            return false;
+        }
+
+        return count($this->settings["projects"]["active"]) != 0;
+    }
+
+    function hasRecentlyAccessedProjectsThatAreNotActive()
+    {
+        if (!Arr::has($this->settings, "projects.recent")) {
+            return false;
+        }
+
+        if (count($this->settings["projects"]["recent"]) == 0) {
+            return false;
+        }
+
+        if (!$this->hasActiveProjects()) {
+            // There are no active projects, but there are recent projects.
+            return true;
+        }
+
+        // If we are here then there are both active and recent projects, We only return
+        // true if there are recent projects that are **NOT** also active.
+        $inactiveCount = 0;
+        foreach ($this->settings["projects"]["recent"] as $key => $value) {
+            if (!Arr::has($this->settings, "projects.active.{$key}")) {
+                $inactiveCount++;
+            }
+        }
+
+        // Return true if inactiveCount is not zero, meaning we found one or more recently
+        // accessed projects that are not active.
+        return $inactiveCount != 0;
     }
 
     function clearOlderRecentlyAccessedProjects()
