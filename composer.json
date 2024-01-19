@@ -31,6 +31,7 @@
     "league/flysystem-aws-s3-v3": "^3.0",
     "maatwebsite/excel": "^3.1",
     "mavinoo/laravel-batch": "^2.0",
+      "repat/laravel-job-models": "^0.8.0",
     "rianfuro/commonmark-metadata": "^0.1.2",
     "spatie/laravel-backup": "^8.0",
     "spatie/laravel-health": "^1.23",

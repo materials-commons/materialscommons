@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "039c3b8416887ee77b494b50a4bab490",
+    "content-hash": "5d9faa614a56cb15763a07eae788b88e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5720,6 +5720,58 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "repat/laravel-job-models",
+            "version": "0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/repat/laravel-job-models.git",
+                "reference": "f290fb4d7606a1ed15d7b200914a50be246081c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/repat/laravel-job-models/zipball/f290fb4d7606a1ed15d7b200914a50be246081c4",
+                "reference": "f290fb4d7606a1ed15d7b200914a50be246081c4",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.7|^6.20.42|^7.30.3|^8.22.1|^9.0|^10.0",
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Repat\\LaravelJobs\\": "src/Repat/LaravelJobs"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "repat",
+                    "email": "repat@repat.de"
+                }
+            ],
+            "description": "Eloquent Models for the tables job and job_fails as created by artisan queue:table and queue:failed-table",
+            "homepage": "https://repat.de",
+            "keywords": [
+                "artisan",
+                "eloquent",
+                "job",
+                "job_fails",
+                "jobs",
+                "laravel",
+                "model",
+                "queue table"
+            ],
+            "support": {
+                "issues": "https://github.com/repat/laravel-job-models/issues",
+                "source": "https://github.com/repat/laravel-job-models/tree/0.8"
+            },
+            "time": "2023-02-14T18:37:21+00:00"
         },
         {
             "name": "rianfuro/commonmark-metadata",

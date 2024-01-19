@@ -6,6 +6,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Repat\LaravelJobs\Job;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -13,6 +14,7 @@ use Spatie\Searchable\SearchResult;
  * @property integer $id
  * @property integer $project_id
  * @property integer $job_id
+ * @property integer $sheet_id
  * @property string name
  * @property integer owner_id
  * @property integer status
@@ -22,6 +24,7 @@ use Spatie\Searchable\SearchResult;
  * @property mixed etlRuns
  * @property mixed created_at
  * @property mixed updated_at
+ * @property string loaded_file_path
  * @property mixed loading_started_at
  * @property mixed loading_finished_at
  *
@@ -37,6 +40,8 @@ class Experiment extends Model implements Searchable
     protected $casts = [
         'project_id'          => 'integer',
         'owner_id'            => 'integer',
+        'job_id'   => 'integer',
+        'sheet_id' => 'integer',
         'loading'             => 'boolean',
         'loading_started_at'  => 'datetime',
         'loading_finished_at' => 'datetime',
@@ -55,6 +60,16 @@ class Experiment extends Model implements Searchable
     public function workflows()
     {
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class, 'job_id');
+    }
+
+    public function sheet()
+    {
+        return $this->belongsTo(Sheet::class, 'sheet_id');
     }
 
     public function entities()
