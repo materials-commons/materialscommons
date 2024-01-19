@@ -87,7 +87,7 @@ Route::post('/projects/{project}/files/{file}/create-experiment',
 Route::get('/projects/{project}/trashcan', IndexFilesTrashcanWebController::class)
      ->name('projects.trashcan.index');
 
-Route::get('/projects/{project}/trashcan/empty', EmptyTrashcanWebController::class)
+Route::delete('/projects/{project}/trashcan/empty', EmptyTrashcanWebController::class)
      ->name('projects.trashcan.empty');
 
 Route::get('/projects/{project}/trashcan/dir/{dir}/restore', RestoreDirectoryFromTrashcanWebController::class)

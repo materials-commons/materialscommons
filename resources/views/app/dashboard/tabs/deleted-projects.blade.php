@@ -35,7 +35,7 @@
                    class="action-link ml-3 text-danger">
                     <i class="fas fa-fw fa-trash-alt"></i> Delete Immediately
                 </a>
-                @include('app.dashboard.partials._immediate-delete-project', ['project' => $proj])
+                @include('app.dashboard.partials._immediate-delete-project-modal', ['project' => $proj])
             </td>
         </tr>
     @endforeach
