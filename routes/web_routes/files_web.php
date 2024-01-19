@@ -22,12 +22,20 @@ use App\Http\Controllers\Web\Files\Trashcan\RestoreDirectoryFromTrashcanWebContr
 use App\Http\Controllers\Web\Files\Trashcan\RestoreFileFromTrashcanWebController;
 use App\Http\Controllers\Web\Files\UpdateRenameFileWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
+use App\Http\Controllers\Web\Sheets\IndexSheetsWebController;
+use App\Http\Controllers\Web\Sheets\ResolveGoogleSheetTitleWebController;
 use App\Models\File;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/projects/{project}/files/{file}/upload', UploadFilesWebController::class)
      ->name('projects.files.upload');
+
+Route::get('/projects/{project}/files/sheets/index', IndexSheetsWebController::class)
+     ->name('projects.files.sheets.index');
+
+Route::get('/projects/{projects}/files/sheets/resolve-google-sheet', ResolveGoogleSheetTitleWebController::class)
+     ->name('projects.files.sheets.resolve-google-sheet');
 
 Route::get('/projects/{project}/files/{file}/show', ShowFileWebController::class)
      ->name('projects.files.show');
