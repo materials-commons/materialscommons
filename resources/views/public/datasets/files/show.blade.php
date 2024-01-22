@@ -12,10 +12,12 @@
     @component('components.card')
         @slot('header')
             File: {{$file->name}}
-            <a class="action-link float-right"
-               href="{{route('public.datasets.download_file', [$dataset, $file])}}">
-                <i class="fas fa-download mr-2"></i>Download File
-            </a>
+            @if(false)
+                <a class="action-link float-right"
+                   href="{{route('public.datasets.download_file', [$dataset, $file])}}">
+                    <i class="fas fa-download mr-2"></i>Download File
+                </a>
+            @endif
         @endslot
 
         @slot('body')

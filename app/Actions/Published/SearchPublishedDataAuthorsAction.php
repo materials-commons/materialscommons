@@ -4,7 +4,7 @@ namespace App\Actions\Published;
 
 use App\Models\Dataset;
 
-class SearchedPublishedDataAuthorsAction
+class SearchPublishedDataAuthorsAction
 {
     public function __invoke($search)
     {

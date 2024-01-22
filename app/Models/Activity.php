@@ -101,7 +101,11 @@ class Activity extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('projects.activities.show', [$this->project_id, $this]);
+        if (is_null($this->dataset_id)) {
+            $url = route('projects.activities.show', [$this->project_id, $this]);
+        } else {
+            $url = route('public.datasets.activities.show', [$this->dataset_id, $this]);
+        }
         return new SearchResult($this, $this->name, $url);
     }
 }

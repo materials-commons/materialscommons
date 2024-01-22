@@ -1,7 +1,7 @@
 <div class="mt-2">
     <ul class="list-group" style="z-index:999">
         <li class="list-group-item">
-            <a hx-get="{{route('projects.search.htmx',[$project, 'search' => ''])}}" style="cursor:pointer;"
+            <a hx-get="{{$searchRoute}}" style="cursor:pointer;"
                onclick="closeSearch()"
                hx-target="#search-results"
                class="float-right">

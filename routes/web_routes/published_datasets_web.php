@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Published\Datasets\SearchPublishedDatasetWebController;
 use App\Http\Controllers\Web\Published\Datasets\Activities\ShowPublishedDatasetActivityWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\CreateDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\DeleteDatasetCommentWebController;
@@ -39,6 +40,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/datasets/{dataset}', ShowPublishedDatasetWebController::class)
      ->name('public.datasets.show');
 
+Route::get('/datasets/{dataset}/search', SearchPublishedDatasetWebController::class)
+     ->name('public.datasets.search');
+
 Route::get('/datasets/{dataset}/overview', ShowPublishedDatasetOverviewWebController::class)
      ->name('public.datasets.overview.show');
 
@@ -55,8 +59,8 @@ Route::get('/datasets/{dataset}/create-account/download/zipfile',
     CreateAccountForPublishedDatasetZipfileDownloadWebController::class)
      ->name('public.datasets.create-account.download.zipfile');
 
-Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
-     ->name('public.datasets.download_file');
+//Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
+//     ->name('public.datasets.download_file');
 
 Route::get('/datasets/{dataset}/globus', DownloadDatasetGlobusRedirectWebController::class)
      ->name('public.datasets.download_globus');

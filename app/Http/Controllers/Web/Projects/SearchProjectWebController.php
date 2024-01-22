@@ -17,6 +17,10 @@ class SearchProjectWebController extends Controller
             return "";
         }
         $searchResults = $searchProjectAction($search, $project->id);
-        return view('partials._htmx_search', compact('project', 'searchResults', 'search'));
+        return view('partials._htmx_search', [
+            'searchResults' => $searchResults,
+            'search'        => $search,
+            'searchRoute'   => route('projects.search.htmx', [$project, 'search' => '']),
+        ]);
     }
 }

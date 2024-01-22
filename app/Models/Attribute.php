@@ -6,6 +6,9 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+use function route;
 
 /**
  * @property integer $id
@@ -16,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin Builder
  */
-class Attribute extends Model
+class Attribute extends Model implements Searchable
 {
     use HasUUID;
     use HasFactory;
@@ -47,5 +50,16 @@ class Attribute extends Model
     public function etlruns()
     {
         return $this->morphedByMany(EtlRun::class, 'item', 'item2attribute');
+    }
+
+    public function getTypeAttribute()
+    {
+        return "attribute";
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('projects.show', [$this->id]);
+        return new SearchResult($this, $this->name, $url);
     }
 }

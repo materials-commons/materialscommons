@@ -207,7 +207,19 @@ class File extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('projects.files.show', [$this->project_id, $this]);
+        if (is_null($this->dataset_id)) {
+            if ($this->mime_type == 'directory') {
+                $url = route('projects.folders.show', [$this->project_id, $this]);
+            } else {
+                $url = route('projects.files.show', [$this->project_id, $this]);
+            }
+        } else {
+            if ($this->mime_type == 'directory') {
+                $url = route('public.datasets.folders.show', [$this->dataset_id, $this]);
+            } else {
+                $url = route('public.datasets.files.show', [$this->dataset_id, $this]);
+            }
+        }
         return new SearchResult($this, $this->name, $url);
     }
 
