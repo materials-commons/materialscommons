@@ -3,8 +3,10 @@
 namespace App\Actions\Experiments;
 
 use App\Enums\ExperimentStatus;
+use App\Helpers\PathHelpers;
 use App\Jobs\Etl\ProcessSpreadsheetJob;
 use App\Models\Experiment;
+use App\Models\File;
 use Illuminate\Support\Str;
 use function array_key_exists;
 use function dirname;
@@ -14,7 +16,7 @@ use const PHP_URL_PATH;
 
 class CreateExperimentAction
 {
-    public function __invoke($data)
+    public function __invoke($data, $sheet = null)
     {
         $experiment = new Experiment(['name' => $data['name'], 'project_id' => $data['project_id']]);
         if (array_key_exists('description', $data)) {
@@ -26,6 +28,15 @@ class CreateExperimentAction
 
         $experiment->owner_id = auth()->id();
         $experiment->status = ExperimentStatus::InProgress;
+        if (!is_null($sheet)) {
+            $experiment->sheet_id = $sheet->id;
+        } elseif (!is_null($data['file_id'])) {
+            $file = File::with('directory')
+                        ->where("id", $data["file_id"])
+                        ->where("project_id", $data["project_id"])
+                        ->first();
+            $experiment->loaded_file_path = PathHelpers::joinPaths($file->directory->path, $file->name);
+        }
         $experiment->save();
         $experiment->refresh();
 

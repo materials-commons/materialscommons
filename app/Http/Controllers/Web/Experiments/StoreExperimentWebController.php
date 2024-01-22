@@ -23,6 +23,7 @@ class StoreExperimentWebController extends Controller
             flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();
             redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
         }
+
         $sheet = null;
         if (!is_null($validated['sheet_url'])) {
             $createGoogleSheetAction = new CreateGoogleSheetAction();
@@ -37,7 +38,7 @@ class StoreExperimentWebController extends Controller
             $validated["sheet_url"] = $sheet->url;
         }
 
-        $experiment = $createExperimentAction($validated);
+        $experiment = $createExperimentAction($validated, $sheet);
         if ($request->input('files-next', false)) {
             $showOverview = $request->input('show-overview', false);
             return redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
