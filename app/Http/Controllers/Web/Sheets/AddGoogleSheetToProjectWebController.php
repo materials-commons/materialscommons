@@ -23,6 +23,14 @@ class AddGoogleSheetToProjectWebController extends Controller
             return redirect(route('projects.files.sheets.index', [$project]));
         }
 
+        $existingSheet = Sheet::where('url', $sheeturl)
+                              ->where('project_id', $project->id)
+                              ->first();
+        if (!is_null($existingSheet)) {
+            flash("Sheet with URL already added to project.")->success();
+            return redirect(route('projects.files.sheets.index', [$project]));
+        }
+
         $title = $getGoogleSheetNameAction->execute($sheeturl);
         if (blank($title)) {
             flash("Unable to resolve google sheet title.")->error();
