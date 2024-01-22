@@ -25,7 +25,6 @@
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Url</th>
                     <th>Directory</th>
                 </tr>
                 </thead>
@@ -37,7 +36,6 @@
                                 <a href="{{$sheet->url}}" class="no-underline" target="_blank">{{$sheet->title}}</a>
                             </td>
                             <td>Google Sheet</td>
-                            <td><a href="{{$sheet->url}}" class="no-underline" target="_blank">{{$sheet->url}}</a></td>
                             <td></td>
                         @else
                             <td>
@@ -51,7 +49,6 @@
                                     Excel
                                 @endif
                             </td>
-                            <td></td>
                             <td>
                                 <a href="{{route('projects.folders.show', [$sheet->project_id, $sheet->directory->id])}}"
                                    class="no-underline">{{$sheet->directory->path}}</a>

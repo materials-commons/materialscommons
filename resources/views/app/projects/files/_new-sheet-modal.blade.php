@@ -9,7 +9,9 @@
             </div>
             <div class="modal-body">
                 <p>Add new Google Sheet to {{$project->name}}</p>
-                <form>
+                <form id="add-sheet-form" method="post"
+                      action="{{route('projects.files.sheets.add-google-sheet', [$project])}}">
+                    @csrf
                     <div class="form-group">
                         <label>Google Sheet URL</label>
                         <input class="form-control" name="sheeturl" value=""
@@ -23,8 +25,8 @@
                     <div id="google-sheet-title"></div>
                     <div class="float-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" data-dismiss="modal"
-                           hx-post="{{route('projects.files.sheets.resolve-google-sheet')}}">Add Google Sheet</a>
+                        <a class="btn btn-primary" type="submit" data-dismiss="modal"
+                           onclick="document.getElementById('add-sheet-form').submit()">Add Google Sheet</a>
                     </div>
                 </form>
             </div>

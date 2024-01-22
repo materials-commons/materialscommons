@@ -15,10 +15,9 @@ class IndexSheetsWebController extends Controller
 
     public function __invoke(Request $request, Project $project)
     {
-        $types = ["text/csv"];
-        ray($this->excelTypes);
+//        $types = ["text/csv"];
+        $types = [];
         foreach ($this->excelTypes as $excelType => $ignore) {
-            ray("excelType = {$excelType}");
             $types[] = $excelType;
         }
 

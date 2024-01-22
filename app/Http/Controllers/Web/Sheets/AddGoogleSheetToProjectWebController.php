@@ -18,7 +18,9 @@ class AddGoogleSheetToProjectWebController extends Controller
      */
     public function __invoke(Request $request, GetGoogleSheetNameAction $getGoogleSheetNameAction, Project $project)
     {
+        ray("AddGoogleSheetToProjectWebController");
         $sheeturl = $request->input("sheeturl");
+        ray("sheeturl = '{$sheeturl}'");
         if (blank($sheeturl)) {
             return redirect(route('projects.files.sheets.index', [$project]));
         }
