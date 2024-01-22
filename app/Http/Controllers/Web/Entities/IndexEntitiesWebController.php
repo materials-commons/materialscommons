@@ -18,6 +18,8 @@ class IndexEntitiesWebController extends Controller
     {
         $category = $request->input("category");
 
+        auth()->user()->addToRecentlyAccessedProjects($project);
+
         $entities = Entity::has('experiments')
                           ->with(['activities', 'experiments'])
                           ->where('category', $category)

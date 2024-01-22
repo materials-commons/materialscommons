@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Traits\DataDictionaryQueries;
 use App\ViewModels\DataDictionary\ShowProjectDataDictionaryViewModel;
 use App\ViewModels\Projects\ShowProjectViewModel;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ShowProjectWebController extends Controller
@@ -20,6 +21,10 @@ class ShowProjectWebController extends Controller
                           ->withCount('experiments', 'entities', 'publishedDatasets', 'unpublishedDatasets')
                           ->where('id', $projectId)
                           ->first();
+        $user = auth()->user();
+
+        $user->addToRecentlyAccessedProjects($project);
+
         $readme = File::where('name', "readme.md")
                       ->where("project_id", $projectId)
                       ->where("directory_id", $project->rootDir->id)

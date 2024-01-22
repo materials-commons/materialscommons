@@ -54,6 +54,14 @@
                 </li>
             @endif
 
+            <li class="nav-item ml-3">
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.files.sheets.index')}}"
+                   data-toggle="tooltip" title="View you Excel spreadsheets, CSV files and Google sheets."
+                   href="{{route('projects.files.sheets.index', [$project])}}">
+                    <i class="fa-fw fas fa-file-excel mr-2"></i>Sheets
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
                    data-toggle="tooltip" title="View the experimental processes and samples loaded into your project."
@@ -101,7 +109,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5" href="{{route('projects.datasets.create', [$project])}}">
+                <a class="nav-link fs-11 ml-5"
+                   data-toggle="tooltip" title="Create and publish a dataset."
+                   href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
                     Publish Data
                 </a>

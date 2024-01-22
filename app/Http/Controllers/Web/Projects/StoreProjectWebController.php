@@ -13,6 +13,7 @@ class StoreProjectWebController extends Controller
         $validated = $request->validated();
         $rv = $createProjectAction->execute($validated, auth()->id());
         $project = $rv['project'];
+        auth()->user()->addToActiveProjects($project);
         if ($request->input('experiments-next', false)) {
             $showOverview = $request->input('show-overview', false);
             return redirect(route('projects.experiments.create', [$project, 'show-overview' => $showOverview]));

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Trash;
+namespace App\Http\Controllers\Web\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
@@ -11,6 +11,6 @@ class RestoreProjectFromTrashWebController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         $project->update(['deleted_at' => null]);
-        return redirect(route('trash'));
+        return redirect(route('dashboard.projects.trash.index'));
     }
 }

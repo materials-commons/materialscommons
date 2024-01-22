@@ -46,7 +46,8 @@ class Project extends Model implements Searchable
         'file_count'      => 'integer',
         'directory_count' => 'integer',
         'file_types'      => 'array',
-        'deleted_at' => 'datetime',
+        'deleted_at'      => 'datetime',
+        'archived_at'     => 'datetime',
     ];
 
     public function users()
@@ -98,6 +99,16 @@ class Project extends Model implements Searchable
     public function entities()
     {
         return $this->hasMany(Entity::class, 'project_id');
+    }
+
+    public function samples()
+    {
+        return $this->hasMany(Entity::class, 'project_id')->where('category', 'experimental');
+    }
+
+    public function computations()
+    {
+        return $this->hasMany(Entity::class, 'project_id')->where('category', 'computational');
     }
 
     public function activities()

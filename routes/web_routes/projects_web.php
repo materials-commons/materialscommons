@@ -27,6 +27,7 @@ use App\Http\Controllers\Web\Projects\Globus\Uploads\ShowProjectGlobusUploadWebC
 use App\Http\Controllers\Web\Projects\Globus\Uploads\StoreGlobusUploadToProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Uploads\UpdateGlobusAccountForUploadsWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
+use App\Http\Controllers\Web\Projects\MarkProjectAsActiveWebController;
 use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Web\Projects\ShowProjectOverviewWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
+use App\Http\Controllers\Web\Projects\UnmarkProjectAsActiveWebController;
 use App\Http\Controllers\Web\Projects\UpdateProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddAdminToProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\AddUserToProjectWebController;
@@ -50,6 +52,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/search-all', SearchAcrossProjectsWebController::class)
      ->name('projects.search_all');
+
+Route::get('/projects/{project}/mark-as-active', MarkProjectAsActiveWebController::class)
+     ->name('projects.mark-as-active');
+
+Route::get('/projects/{project}/unmark-as-active', UnmarkProjectAsActiveWebController::class)
+     ->name('projects.unmark-as-active');
 
 Route::get('/projects/create', CreateProjectWebController::class)
      ->name('projects.create');

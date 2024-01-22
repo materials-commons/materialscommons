@@ -14,7 +14,6 @@ return new class extends Migration {
     {
         Schema::table('experiments', function (Blueprint $table) {
             $table->string('loaded_file_path')->nullable();
-            $table->string('loaded_sheets_url')->nullable();
 
             $table->unsignedBigInteger('sheet_id')->nullable();
             $table->foreign('sheet_id')

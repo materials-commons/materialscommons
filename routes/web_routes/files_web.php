@@ -22,12 +22,24 @@ use App\Http\Controllers\Web\Files\Trashcan\RestoreDirectoryFromTrashcanWebContr
 use App\Http\Controllers\Web\Files\Trashcan\RestoreFileFromTrashcanWebController;
 use App\Http\Controllers\Web\Files\UpdateRenameFileWebController;
 use App\Http\Controllers\Web\Files\UploadFilesWebController;
+use App\Http\Controllers\Web\Sheets\AddGoogleSheetToProjectWebController;
+use App\Http\Controllers\Web\Sheets\IndexSheetsWebController;
+use App\Http\Controllers\Web\Sheets\ResolveGoogleSheetTitleWebController;
 use App\Models\File;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/projects/{project}/files/{file}/upload', UploadFilesWebController::class)
      ->name('projects.files.upload');
+
+Route::get('/projects/{project}/files/sheets/index', IndexSheetsWebController::class)
+     ->name('projects.files.sheets.index');
+
+Route::get('/projects/{project}/files/sheets/resolve-google-sheet', ResolveGoogleSheetTitleWebController::class)
+     ->name('projects.files.sheets.resolve-google-sheet');
+
+Route::post('/projects/{project}/files/sheets/add-google-sheet', AddGoogleSheetToProjectWebController::class)
+     ->name('projects.files.sheets.add-google-sheet');
 
 Route::get('/projects/{project}/files/{file}/show', ShowFileWebController::class)
      ->name('projects.files.show');
@@ -87,7 +99,7 @@ Route::post('/projects/{project}/files/{file}/create-experiment',
 Route::get('/projects/{project}/trashcan', IndexFilesTrashcanWebController::class)
      ->name('projects.trashcan.index');
 
-Route::get('/projects/{project}/trashcan/empty', EmptyTrashcanWebController::class)
+Route::delete('/projects/{project}/trashcan/empty', EmptyTrashcanWebController::class)
      ->name('projects.trashcan.empty');
 
 Route::get('/projects/{project}/trashcan/dir/{dir}/restore', RestoreDirectoryFromTrashcanWebController::class)

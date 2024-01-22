@@ -17,6 +17,7 @@ class CreateProjectAction
         $project = Project::with('rootDir')
                           ->where('name', $data['name'])
                           ->where('owner_id', $ownerId)
+            ->whereNull('deleted_at')
                           ->first();
 
         if ($project !== null) {
