@@ -29,6 +29,7 @@ class CreateExperimentRequest extends FormRequest
             'summary'     => 'nullable|string|max:100',
             'project_id'  => 'required|integer',
             'file_id'     => 'nullable|integer',
+            'sheet_id' => 'nullable|integer',
             'sheet_url'   => 'nullable|url',
             'loading'     => 'boolean',
         ];

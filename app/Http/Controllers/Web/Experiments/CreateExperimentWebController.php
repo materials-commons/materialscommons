@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Experiments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Sheet;
 
 class CreateExperimentWebController extends Controller
 {
@@ -17,6 +18,8 @@ class CreateExperimentWebController extends Controller
             ->whereNull('deleted_at')
             ->where('current', true)
             ->get();
-        return view('app.projects.experiments.create', compact('project', 'excelFiles'));
+        $sheets = Sheet::where('project_id', $project->id)->get();
+        ray($sheets);
+        return view('app.projects.experiments.create', compact('project', 'excelFiles', 'sheets'));
     }
 }
