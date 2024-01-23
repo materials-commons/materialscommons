@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\Files\RenameFileWebController;
 use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
+use App\Http\Controllers\Web\Files\ShowFileByPathWebController;
 use App\Http\Controllers\Web\Files\ShowFileEntitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileExperimentsWebController;
 use App\Http\Controllers\Web\Files\ShowFileVersionsWebController;
@@ -40,6 +41,9 @@ Route::get('/projects/{project}/files/sheets/resolve-google-sheet', ResolveGoogl
 
 Route::post('/projects/{project}/files/sheets/add-google-sheet', AddGoogleSheetToProjectWebController::class)
      ->name('projects.files.sheets.add-google-sheet');
+
+Route::get('/projects/{project}/files/by-path', ShowFileByPathWebController::class)
+     ->name('projects.files.by-path');
 
 Route::get('/projects/{project}/files/{file}/show', ShowFileWebController::class)
      ->name('projects.files.show');
