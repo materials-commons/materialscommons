@@ -80,6 +80,7 @@
                         <label for="sheet_id">Select existing Google Spreadsheet</label>
                         <select name="sheet_id" class="selectpicker col-lg-10" data-live-search="true"
                                 title="Select Google Sheet">
+                            <option value=""></option>
                             @foreach($sheets as $sheet)
                                 <option data-tokens="{{$sheet->id}}" value="{{$sheet->id}}">{{$sheet->title}}</option>
                             @endforeach
@@ -101,6 +102,7 @@
                         <label for="file_id">Select existing Excel Spreadsheet</label>
                         <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
                                 title="Select Spreadsheet" style="text-transform: none">
+                            <option value=""></option>
                             @foreach($excelFiles as $file)
                                 @if ($file->directory->path === "/")
                                     <option data-tokens="{{$file->id}}" value="{{$file->id}}">/{{$file->name}}</option>

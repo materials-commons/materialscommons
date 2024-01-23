@@ -49,6 +49,7 @@
                         <label for="sheet_id">Select existing Google Spreadsheet</label>
                         <select name="sheet_id" class="selectpicker col-lg-10" data-live-search="true"
                                 title="Select Google Sheet">
+                            <option value=""></option>
                             @if(!is_null($sheet))
                                 @foreach($sheets as $s)
                                     <option data-tokens="{{$s->id}}" value="{{$s->id}}"
@@ -66,6 +67,7 @@
                     <label for="file_id">Reload Experiment From</label>
                     <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
                             title="Select Spreadsheet">
+                        <option value=""></option>
                         @if(!is_null($file))
                             @foreach($excelFiles as $f)
                                 @if ($f->directory->path === "/")
