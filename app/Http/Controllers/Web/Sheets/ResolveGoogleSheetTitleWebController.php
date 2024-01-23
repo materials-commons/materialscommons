@@ -11,7 +11,7 @@ class ResolveGoogleSheetTitleWebController extends Controller
 {
     public function __invoke(Request $request, GetGoogleSheetNameAction $getGoogleSheetNameAction, Project $project)
     {
-        $sheetUrl = $request->get("sheeturl");
+        $sheetUrl = $request->get("sheet_url");
         if (blank($sheetUrl)) {
             return '';
         }
@@ -21,6 +21,6 @@ class ResolveGoogleSheetTitleWebController extends Controller
             return '';
         }
 
-        return "<span>Google Sheet Title: {$title}</span><br/><br/><br/>";
+        return "<span>Google Sheet Title: {$title}</span><br/>";
     }
 }

@@ -14,7 +14,7 @@
                     @csrf
                     <div class="form-group">
                         <label>Google Sheet URL</label>
-                        <input class="form-control" name="sheeturl" value=""
+                        <input class="form-control" name="sheet_url" value=""
                                hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"
                                hx-target="#google-sheet-title"
                                hx-indicator=".htmx-indicator"
