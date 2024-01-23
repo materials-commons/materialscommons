@@ -6,12 +6,15 @@ use App\Actions\Entities\CreateUsedActivitiesForEntitiesAction;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use App\Traits\Notifications\NotificationChecker;
+use App\Traits\Projects\UserProjects;
 use Illuminate\Support\Facades\DB;
 use function auth;
+use function collect;
 
 class ShowPublishedDatasetEntitiesWebController extends Controller
 {
     use NotificationChecker;
+    use UserProjects;
 
     public function __invoke(CreateUsedActivitiesForEntitiesAction $createUsedActivities, $datasetId)
     {
@@ -28,9 +31,17 @@ class ShowPublishedDatasetEntitiesWebController extends Controller
                         ->distinct()
                         ->orderBy('name')
                         ->get();
+
+        if (auth()->check()) {
+            $userProjects = $this->getUserProjects(auth()->id());
+        } else {
+            $userProjects = collect();
+        }
+
         return view('public.datasets.show', [
             'dataset'                    => $dataset,
             'entities'                   => $dataset->entities,
+            'userProjects' => $userProjects,
             'activities'                 => $activities,
             'hasNotificationsForDataset' => $this->datasetAlreadySetForNotificationForUser(auth()->user(), $dataset),
             'usedActivities'             => $createUsedActivities->execute($activities, $dataset->entities),

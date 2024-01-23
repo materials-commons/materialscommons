@@ -6,14 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Traits\Datasets\GetPublishedDatasetFolderFiles;
+use App\Traits\Projects\UserProjects;
 use App\ViewModels\Folders\ShowFolderViewModel;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetFolderViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use function auth;
+use function collect;
 
 class ShowPublishedDatasetFolderWebController extends Controller
 {
     use GetPublishedDatasetFolderFiles;
+    use UserProjects;
 
     public function __invoke(Request $request, $datasetId, $folderId)
     {
@@ -36,8 +40,15 @@ class ShowPublishedDatasetFolderWebController extends Controller
             return Str::lower($file->name) == "readme.md";
         });
 
+        if (auth()->check()) {
+            $userProjects = $this->getUserProjects(auth()->id());
+        } else {
+            $userProjects = collect();
+        }
+
         $viewModel = (new ShowPublishedDatasetFolderViewModel($dir, $files))
             ->withReadme($readme)
+            ->withUserProjects($userProjects)
             ->withDataset($dataset);
         return view('public.datasets.show', $viewModel);
     }

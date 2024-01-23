@@ -19,6 +19,8 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
 
     private $dsAnnotation;
 
+    private $userProjects;
+
     public function withDataset(Dataset $dataset)
     {
         $this->dataset = $dataset;
@@ -42,6 +44,12 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
         return $this;
     }
 
+    public function withUserProjects($projects)
+    {
+        $this->userProjects = $projects;
+        return $this;
+    }
+
     public function dsAnnotation()
     {
         return $this->dsAnnotation;
@@ -50,6 +58,11 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
     public function readme()
     {
         return $this->readme;
+    }
+
+    public function userProjects()
+    {
+        return $this->userProjects;
     }
 
     public function hasNotificationsForDataset(): bool

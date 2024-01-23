@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use App\Models\File;
+use App\Traits\Projects\UserProjects;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetOverviewViewModel;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
 {
     use ViewsAndDownloads;
     use GoogleDatasetAnnotations;
+    use UserProjects;
 
     public function __invoke($datasetId)
     {
@@ -27,9 +29,16 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                       ->whereNull('deleted_at')
                       ->first();
 
+        if (auth()->check()) {
+            $userProjects = $this->getUserProjects(auth()->id());
+        } else {
+            $userProjects = collect();
+        }
+
         $showPublishedDatasetOverviewViewModel = (new ShowPublishedDatasetOverviewViewModel())
             ->withDataset($dataset)
             ->withReadme($readme)
+            ->withUserProjects($userProjects)
             ->withDsAnnotation($this->jsonLDAnnotations($dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
             ->withFileTypes($this->getFileTypesGroup($dataset->id))

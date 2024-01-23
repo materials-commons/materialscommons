@@ -26,7 +26,7 @@
                         <i class="fas fa-file-import mr-2"></i>Import Into Project
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectsDropdown">
-                        @foreach(auth()->user()->projects as $project)
+                        @foreach($userProjects as $project)
                             @if($project->owner_id == auth()->id() && $project->id != $dataset->project_id)
                                 <a class="dropdown-item td-none"
                                    href="{{route('public.datasets.import-into-project', [$dataset, $project])}}">
