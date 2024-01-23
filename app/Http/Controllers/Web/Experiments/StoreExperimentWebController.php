@@ -18,6 +18,7 @@ class StoreExperimentWebController extends Controller
     {
 
         $validated = $request->validated();
+        ray("validated =", $validated);
         if (!$this->onlySheetIdOrSheetUrlOrFileIdSpecified($validated)) {
             $showOverview = $request->input('show-overview', false);
             flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();
@@ -25,16 +26,16 @@ class StoreExperimentWebController extends Controller
         }
 
         $sheet = null;
-        if (!is_null($validated['sheet_url'])) {
+        if (isset($validated['sheet_url'])) {
             $createGoogleSheetAction = new CreateGoogleSheetAction();
             $sheet = $createGoogleSheetAction->execute($validated["sheet_url"], $project, auth()->user());
-        } elseif (!is_null($validated["sheet_id"])) {
+        } elseif (isset($validated["sheet_id"])) {
             $sheet = Sheet::where("project_id", $project->id)
                           ->where("id", $validated["sheet_id"])
                           ->first();
         }
 
-        if (!is_null($sheet)) {
+        if (isset($sheet)) {
             $validated["sheet_url"] = $sheet->url;
         }
 
@@ -49,15 +50,15 @@ class StoreExperimentWebController extends Controller
     private function onlySheetIdOrSheetUrlOrFileIdSpecified(mixed $validated)
     {
         $countNotNull = 0;
-        if (!is_null($validated["file_id"])) {
+        if (isset($validated["file_id"])) {
             $countNotNull++;
         }
 
-        if (!is_null($validated["sheet_id"])) {
+        if (isset($validated["sheet_id"])) {
             $countNotNull++;
         }
 
-        if (!is_null($validated["sheet_url"])) {
+        if (isset($validated["sheet_url"])) {
             $countNotNull++;
         }
 

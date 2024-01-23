@@ -40,20 +40,52 @@
                         <label for="url-id">Reload Experiment From Google Sheet</label>
                         <input class="form-control" name="sheet_url" type="url" placeholder="Google Sheet URL.."
                                id="url-id">
+                        <span class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
+                        <div id="google-sheet-title"></div>
                     </div>
+                    @if($sheets->count() !== 0)
+                        <span><b>OR</b></span>
+                        <br>
+                        <label for="sheet_id">Select existing Google Spreadsheet</label>
+                        <select name="sheet_id" class="selectpicker col-lg-10" data-live-search="true"
+                                title="Select Google Sheet">
+                            @if(!is_null($sheet))
+                                @foreach($sheets as $s)
+                                    <option data-tokens="{{$s->id}}" value="{{$s->id}}"
+                                            @selected($s->id == $sheet->id)>{{$s->title}}</option>
+                                @endforeach
+                            @else
+                                @foreach($sheets as $s)
+                                    <option data-tokens="{{$s->id}}" value="{{$s->id}}">{{$s->title}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    @endif
                     <span><b>OR</b></span>
                     <br>
                     <label for="file_id">Reload Experiment From</label>
                     <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
                             title="Select Spreadsheet">
-                        @foreach($excelFiles as $file)
-                            @if ($file->directory->path === "/")
-                                <option data-tokens="{{$file->id}}" value="{{$file->id}}">/{{$file->name}}</option>
-                            @else
-                                <option data-tokens="{{$file->id}}" value="{{$file->id}}">{{$file->directory->path}}
-                                    /{{$file->name}}</option>
-                            @endif
-                        @endforeach
+                        @if(!is_null($file))
+                            @foreach($excelFiles as $f)
+                                @if ($f->directory->path === "/")
+                                    <option data-tokens="{{$f->id}}"
+                                            value="{{$f->id}}" @selected($f->id == $file->id)>/{{$f->name}}</option>
+                                @else
+                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}" @selected($f->id == $file->id)>
+                                        {{$f->directory->path}}/{{$f->name}}</option>
+                                @endif
+                            @endforeach
+                        @else
+                            @foreach($excelFiles as $f)
+                                @if ($f->directory->path === "/")
+                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}">/{{$f->name}}</option>
+                                @else
+                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}">
+                                        {{$f->directory->path}}/{{$f->name}}</option>
+                                @endif
+                            @endforeach
+                        @endif
                     </select>
                     <div class="float-right">
                         <a href="{{route('projects.experiments.show', [$project, $experiment])}}"

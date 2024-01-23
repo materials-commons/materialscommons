@@ -19,8 +19,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
+use function dirname;
+use function parse_url;
 use function uniqid;
+use const PHP_URL_HOST;
+use const PHP_URL_PATH;
 
 class ProcessSpreadsheetJob implements ShouldQueue
 {
@@ -38,7 +43,22 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $this->experimentId = $experimentId;
         $this->userId = $userId;
         $this->fileId = $fileId;
-        $this->sheetUrl = $sheetUrl;
+        $this->sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
+    }
+
+    private function cleanupGoogleSheetUrl($url): ?string
+    {
+        if (Str::contains($url, "/edit?")) {
+            // Remove /edit from the end of the url
+            $path = dirname(parse_url($url, PHP_URL_PATH));
+
+            $host = parse_url($url, PHP_URL_HOST);
+
+            // $path starts with a slash (/), so we don't add one to separate host and path when constructing the url.
+            return "https://{$host}{$path}";
+        }
+
+        return $url;
     }
 
     /**

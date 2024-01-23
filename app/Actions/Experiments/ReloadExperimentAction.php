@@ -6,6 +6,11 @@ use App\Jobs\Etl\ProcessSpreadsheetJob;
 use App\Models\Experiment;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use function dirname;
+use function parse_url;
+use const PHP_URL_HOST;
+use const PHP_URL_PATH;
 
 class ReloadExperimentAction
 {
@@ -16,6 +21,7 @@ class ReloadExperimentAction
                 $experiment->activities()->delete();
                 $experiment->entities()->delete();
                 $experiment->files()->detach();
+                $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
                 ProcessSpreadsheetJob::dispatch($project->id, $experiment->id, $userId, $fileId,
                     $sheetUrl)->onQueue('globus');
             });
@@ -24,5 +30,20 @@ class ReloadExperimentAction
         } catch (\Throwable $e) {
             return false;
         }
+    }
+
+    private function cleanupGoogleSheetUrl($url): ?string
+    {
+        if (Str::contains($url, "/edit?")) {
+            // Remove /edit from the end of the url
+            $path = dirname(parse_url($url, PHP_URL_PATH));
+
+            $host = parse_url($url, PHP_URL_HOST);
+
+            // $path starts with a slash (/), so we don't add one to separate host and path when constructing the url.
+            return "https://{$host}{$path}";
+        }
+
+        return $url;
     }
 }

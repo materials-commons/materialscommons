@@ -16,14 +16,7 @@ return new class extends Migration {
             $table->string('loaded_file_path')->nullable();
 
             $table->unsignedBigInteger('sheet_id')->nullable();
-            $table->foreign('sheet_id')
-                  ->references('id')
-                  ->on('sheets');
-
             $table->unsignedBigInteger('job_id')->nullable();
-            $table->foreign('job_id')
-                  ->references('id')
-                  ->on('jobs');
 
             $table->datetime('loading_started_at')->nullable();
             $table->datetime('loading_finished_at')->nullable();

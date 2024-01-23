@@ -19,7 +19,6 @@ class CreateExperimentWebController extends Controller
             ->where('current', true)
             ->get();
         $sheets = Sheet::where('project_id', $project->id)->get();
-        ray($sheets);
         return view('app.projects.experiments.create', compact('project', 'excelFiles', 'sheets'));
     }
 }
