@@ -16,6 +16,10 @@ class DeleteProjectWebController extends Controller
 
         $deleteProjectAction($project);
 
+        $user = auth()->user();
+        $user->removeFromActiveProjects($project);
+        $user->removeFromRecentlyAccessedProjects($project);
+
         return redirect(route('dashboard.projects.show'));
     }
 
