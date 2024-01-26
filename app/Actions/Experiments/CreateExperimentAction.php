@@ -13,7 +13,6 @@ class CreateExperimentAction
 {
     public function __invoke($data, $sheet = null)
     {
-        ray("data", $data);
         $experiment = new Experiment(['name' => $data['name'], 'project_id' => $data['project_id']]);
         if (array_key_exists('description', $data)) {
             $experiment->description = $data['description'];
@@ -26,7 +25,7 @@ class CreateExperimentAction
         $experiment->status = ExperimentStatus::InProgress;
         if (!is_null($sheet)) {
             $experiment->sheet_id = $sheet->id;
-        } elseif (!is_null($data['file_id'])) {
+        } elseif (isset($data['file_id'])) {
             $file = File::with('directory')
                         ->where("id", $data["file_id"])
                         ->where("project_id", $data["project_id"])
