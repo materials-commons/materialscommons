@@ -18,7 +18,6 @@ class StoreExperimentWebController extends Controller
     {
 
         $validated = $request->validated();
-        ray("validated =", $validated);
         if (!$this->onlySheetIdOrSheetUrlOrFileIdSpecified($validated)) {
             $showOverview = $request->input('show-overview', false);
             flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();

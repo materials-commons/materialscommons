@@ -4,7 +4,6 @@ namespace App\Traits\Mql;
 
 use Illuminate\Support\Str;
 use function blank;
-use function ray;
 
 trait MqlQueryBuilder
 {

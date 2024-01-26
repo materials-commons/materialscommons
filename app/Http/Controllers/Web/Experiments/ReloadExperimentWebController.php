@@ -28,8 +28,6 @@ class ReloadExperimentWebController extends Controller
             'sheet_id'  => 'nullable|integer'
         ]);
 
-        ray($validated);
-
         $fileId = $request->get('file_id');
         $sheetUrl = $request->get('sheet_url');
         $sheetId = $request->get('sheet_id');
@@ -53,7 +51,6 @@ class ReloadExperimentWebController extends Controller
             $sheetUrl = $sheet->url;
         }
 
-        ray("reloadExperiment {$fileId}, {$sheetUrl}");
         if ($reloadExperimentAction->execute($project, $experiment, $fileId, $sheetUrl, auth()->id())) {
             flash("Reloading experiment {$experiment->name} in background.")->success();
         } else {
