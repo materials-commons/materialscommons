@@ -12,9 +12,6 @@
             <div>
                 Globus Transfer URL: <a href="{{$gr->globus_url}}" target="_blank">{{$gr->globus_url}}</a>
             </div>
-            <div>
-                Globus Transfer Activity: <a href=""
-            </div>
             <div class="mt-3">
                 <a class="" href="https://app.globus.org/file-manager/collections/{{$gr->globus_endpoint_id}}/sharing"
                    target="_blank">Endpoint Permissions</a>
