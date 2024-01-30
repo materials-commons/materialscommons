@@ -48,17 +48,18 @@ class ProcessSpreadsheetJob implements ShouldQueue
 
     private function cleanupGoogleSheetUrl($url): ?string
     {
-        if (Str::contains($url, "/edit?")) {
+        $path = parse_url($url, PHP_URL_PATH);
+
+        if (Str::endsWith($path, "/edit")) {
             // Remove /edit from the end of the url
-            $path = dirname(parse_url($url, PHP_URL_PATH));
-
-            $host = parse_url($url, PHP_URL_HOST);
-
-            // $path starts with a slash (/), so we don't add one to separate host and path when constructing the url.
-            return "https://{$host}{$path}";
+            $path = dirname($path);
         }
 
-        return $url;
+        $host = parse_url($url, PHP_URL_HOST);
+
+        // $path starts with a slash (/), so we don't add one to separate host and path
+        // when constructing the url.
+        return "https://{$host}{$path}";
     }
 
     /**
