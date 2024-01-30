@@ -43,25 +43,27 @@
 </table>
 @push('scripts')
     <script>
-        $('#projects-trash').DataTable({
-            pageLength: 100,
-            stateSave: true,
-            // 0 <th>Project</th>
-            // 1 <th>Will be deleted in</th>
-            // 2 <th>Size</th>
-            // 3 <th>Hidden Size</th>
-            // 4 <th>Files</th>
-            // 5 <th>Samples</th>
-            // 6 <th>Owner</th>
-            // 7 <th>Updated</th>
-            // 8 <th>Date</th>
-            // 9 <th></th>
-            columnDefs: [
-                {targets: [3], visible: false}, // Hide Hidden Size
-                {targets: [8], visible: false, searchable: false}, // Hide Date don't make searchable
-                {orderData: [8], targets: [7]}, // Updated [7] uses Date [8] for sorting
-                {orderData: [3], targets: [2]}, // Size [2] uses Hidden Size [3] for sorting
-            ]
+        $(document).ready(() => {
+            $('#projects-trash').DataTable({
+                pageLength: 100,
+                stateSave: true,
+                // 0 <th>Project</th>
+                // 1 <th>Will be deleted in</th>
+                // 2 <th>Size</th>
+                // 3 <th>Hidden Size</th>
+                // 4 <th>Files</th>
+                // 5 <th>Samples</th>
+                // 6 <th>Owner</th>
+                // 7 <th>Updated</th>
+                // 8 <th>Date</th>
+                // 9 <th></th>
+                columnDefs: [
+                    {targets: [3], visible: false}, // Hide Hidden Size
+                    {targets: [8], visible: false, searchable: false}, // Hide Date don't make searchable
+                    {orderData: [8], targets: [7]}, // Updated [7] uses Date [8] for sorting
+                    {orderData: [3], targets: [2]}, // Size [2] uses Hidden Size [3] for sorting
+                ]
+            });
         });
     </script>
 @endpush

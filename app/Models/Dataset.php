@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
+use function auth;
 
 /**
  * @property integer $id
@@ -172,7 +173,9 @@ class Dataset extends Model implements Searchable
 
     public function communitiesWaitingForApprovalIn()
     {
-        return $this->belongsToMany(Community::class, 'community2ds_waiting_approval', 'dataset_id',
+        return $this->belongsToMany(Community::class,
+            'community2ds_waiting_approval',
+            'dataset_id',
             'community_id');
     }
 
@@ -235,7 +238,12 @@ class Dataset extends Model implements Searchable
 
     public function scopeWithCounts($query)
     {
-        return $query->withCount('files', 'entities', 'activities', 'experiments', 'comments', 'workflows',
+        return $query->withCount('files',
+            'entities',
+            'activities',
+            'experiments',
+            'comments',
+            'workflows',
             'communities');
     }
 
@@ -366,6 +374,13 @@ class Dataset extends Model implements Searchable
     public function hasFile($fileId)
     {
         return $this->files()->where('file_id', $fileId)->count() != 0;
+    }
+
+    public static function getPublishedDatasetsCountForUser($userId): int
+    {
+        return Dataset::whereNotNull('published_at')
+                      ->where('owner_id', $userId)
+                      ->count();
     }
 
     /*
