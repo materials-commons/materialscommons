@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Web\Experiments;
 
 use App\Actions\Experiments\ReloadExperimentAction;
 use App\Actions\GoogleSheets\CreateGoogleSheetAction;
+use App\Helpers\PathHelpers;
 use App\Http\Controllers\Controller;
 use App\Models\Experiment;
+use App\Models\File;
 use App\Models\Project;
 use App\Models\Sheet;
 use Illuminate\Http\Request;
@@ -49,6 +51,18 @@ class ReloadExperimentWebController extends Controller
 
         if (!is_null($sheet)) {
             $sheetUrl = $sheet->url;
+            $experiment->update(['sheet_id' => $sheet->id]);
+        } elseif (!is_null($fileId)) {
+            $file = File::with('directory')
+                        ->where("id", $fileId)
+                        ->where("project_id", $project->id)
+                        ->first();
+            if (!is_null($file)) {
+                $experiment->update([
+                    'loaded_file_path' => PathHelpers::joinPaths($file->directory->path,
+                        $file->name)
+                ]);
+            }
         }
 
         if ($reloadExperimentAction->execute($project, $experiment, $fileId, $sheetUrl, auth()->id())) {

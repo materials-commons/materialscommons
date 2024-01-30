@@ -179,7 +179,7 @@
             fontCache: 'global'
         }
     };
-    $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+    // $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     $(document).ready(() => {
         mcutil.autosizeTextareas();
     });
