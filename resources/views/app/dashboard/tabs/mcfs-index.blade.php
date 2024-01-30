@@ -5,6 +5,7 @@
         <th>Transfer Request</th>
         <th>Project</th>
         <th>User</th>
+        <th>Globus Link</th>
         <th>Started On</th>
         <th># Files</th>
     </tr>
@@ -12,9 +13,10 @@
     <tbody>
     @foreach($transferRequests as $tr)
         <tr>
-            <td><a href="">{{$tr->id}}</a></td>
+            <td><a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->id}}</a></td>
             <td><a href="{{route('projects.show', [$tr->project])}}">{{$tr->project->name}}</a></td>
             <td>{{$tr->owner->name}}</td>
+            <td><a href="{{$tr->globusTransfer->globus_url}}" target="_blank">Globus Link</a></td>
             <td>{{$tr->created_at->diffForHumans()}}</td>
             <td>{{$tr->transfer_request_files_count}}</td>
         </tr>

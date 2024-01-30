@@ -27,11 +27,11 @@
 
     @component('components.card')
         @slot('header')
-            Experiment {{$experiment->name}}
-                <a class="action-link float-right"
-                   href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
-                    <i class="fas fa-sync-alt mr-2"></i>Reload Experiment
-                </a>
+            {{$experiment->name}}
+            <a class="action-link float-right"
+               href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
+                <i class="fas fa-sync-alt mr-2"></i>Reload Experiment
+            </a>
         @endslot
 
         @slot('body')
