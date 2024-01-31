@@ -50,4 +50,9 @@ class TransferRequest extends Model
     {
         return $this->hasOne(GlobusTransfer::class, 'transfer_request_id');
     }
+
+    public function mcTransfer()
+    {
+        return $this->hasOne(MCTransfer::class, 'transfer_request_id');
+    }
 }

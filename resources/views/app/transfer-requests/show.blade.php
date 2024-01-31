@@ -13,7 +13,9 @@
         </x-slot>
         <x-slot name="body">
             <x-transfer-requests.show-standard-details :transfer-request="$transferRequest"/>
-            <x-transfer-requests.show-globus-details :globus-transfer="$transferRequest->globusTransfer"/>
+            @if(!is_null($transferRequest->globusTransfer))
+                <x-transfer-requests.show-globus-details :globus-transfer="$transferRequest->globusTransfer"/>
+            @endif
         </x-slot>
     </x-card>
 @stop
