@@ -33,10 +33,13 @@ class ShowDatasetOverviewViewModel extends ViewModel
 
     private $showExperiment = false;
 
+    private $category;
+
     public function __construct()
     {
         $this->entities = collect();
         $this->workflows = collect();
+        $this->category = "experimental";
     }
 
     public function withProject(Project $project)
@@ -114,6 +117,11 @@ class ShowDatasetOverviewViewModel extends ViewModel
     public function directory()
     {
         return $this->directory;
+    }
+
+    public function category()
+    {
+        return $this->category;
     }
 
     public function withEditRoute($route)
