@@ -119,6 +119,12 @@ class ShowDatasetOverviewViewModel extends ViewModel
         return $this->directory;
     }
 
+    public function withCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
     public function category()
     {
         return $this->category;
