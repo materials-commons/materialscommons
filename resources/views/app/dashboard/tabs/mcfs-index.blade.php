@@ -14,13 +14,14 @@
         <th>User</th>
         <th>Globus Link</th>
         <th>Started On</th>
+        <th>Has Activity</th>
         <th># Files</th>
     </tr>
     </thead>
     <tbody>
     @foreach($transferRequests as $tr)
         <tr>
-            <td><a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->id}}</a></td>
+            <td><a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->uuid}}</a></td>
             <td><a href="{{route('projects.show', [$tr->project])}}">{{$tr->project->name}}</a></td>
             <td>{{$tr->owner->name}}</td>
             @if(is_null($tr->globusTransfer))
