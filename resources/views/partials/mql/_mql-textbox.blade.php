@@ -48,7 +48,7 @@
             @foreach($queries as $query)
                 <tr>
                     <td>{{$query->name}}</td>
-                    <td>{{$query->descripton}}</td>
+                    <td>{{$query->description}}</td>
                     <td>{{$query->queryText()}}</td>
                     <td>
                         <a class="btn btn-success" href="{{route('projects.mql.run', [$project, $query])}}">

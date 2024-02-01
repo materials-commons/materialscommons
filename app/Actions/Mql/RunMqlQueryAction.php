@@ -61,23 +61,29 @@ class RunMqlQueryAction
             ];
         });
 
-        $processAttrs = $this->buildAttrsQuery($data['process_attrs'], function ($item) {
-            return [
-                "field_name" => $item["name"],
-                "field_type" => self::PROCESS_ATTR_FIELD,
-                "value"      => $item["value"],
-                "operation"  => $item["operator"],
-            ];
-        });
+        $processAttrs = null;
+        if (isset($data['process_attrs'])) {
+            $processAttrs = $this->buildAttrsQuery($data['process_attrs'], function ($item) {
+                return [
+                    "field_name" => $item["name"],
+                    "field_type" => self::PROCESS_ATTR_FIELD,
+                    "value"      => $item["value"],
+                    "operation"  => $item["operator"],
+                ];
+            });
+        }
 
-        $sampleAttrs = $this->buildAttrsQuery($data['sample_attrs'], function ($item) {
-            return [
-                "field_name" => $item["name"],
-                "field_type" => self::SAMPLE_ATTR_FIELD,
-                "value"      => $item["value"],
-                "operation"  => $item["operator"],
-            ];
-        });
+        $sampleAttrs = null;
+        if (isset($data['sample_attrs'])) {
+            $sampleAttrs = $this->buildAttrsQuery($data['sample_attrs'], function ($item) {
+                return [
+                    "field_name" => $item["name"],
+                    "field_type" => self::SAMPLE_ATTR_FIELD,
+                    "value"      => $item["value"],
+                    "operation"  => $item["operator"],
+                ];
+            });
+        }
 
         $numberOfQueries = 0;
         if (!is_null($processTypesQuery)) {
