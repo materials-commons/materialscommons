@@ -24,11 +24,11 @@ class MqlStoreSaveQueryRequest extends FormRequest
     public function rules()
     {
         return [
-            'activities'    => 'array',
-            'process_attrs' => 'array',
-            'sample_attrs'  => 'array',
+            'activities'    => 'array|nullable',
+            'process_attrs' => 'array|nullable',
+            'sample_attrs'  => 'array|nullable',
             'name'          => 'string|required|max:32',
-            'description'   => 'string|required|max:2048',
+            'description'   => 'string|nullable|max:2048',
         ];
     }
 }
