@@ -16,6 +16,7 @@ class AddProjectNavigationBarCounts
     {
         $projectId = $this->getParameterId('project');
         if ($projectId == '') {
+            View::share('nav_trash_count', 0);
             return $next($request);
         }
 
