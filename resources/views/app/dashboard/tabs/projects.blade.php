@@ -6,15 +6,7 @@
 <h4>Active Projects</h4>
 <div class="row ml-4">
     @if(auth()->user()->hasActiveProjects())
-        @foreach($projects as $proj)
-            @if(!auth()->user()->isActiveProject($proj))
-                @continue
-            @endif
-
-            @php
-                $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
-            @endphp
-
+        @foreach($activeProjects as $proj)
             @include('app.dashboard.tabs._project-card')
         @endforeach
     @else
@@ -31,18 +23,7 @@
 <h4>Recently Accessed Projects</h4>
 <div class="row ml-4">
     @if(auth()->user()->hasRecentlyAccessedProjectsThatAreNotActive())
-        @foreach($projects as $proj)
-            @if(auth()->user()->isActiveProject($proj))
-                @continue
-            @endif
-            @php
-                $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
-            @endphp
-
-            @if(is_null($recentlyAccessedOn))
-                @continue
-            @endif
-
+        @foreach($recentlyAccessedProjects as $proj)
             @include('app.dashboard.tabs._project-card')
         @endforeach
     @else
