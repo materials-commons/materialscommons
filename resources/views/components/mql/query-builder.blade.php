@@ -12,26 +12,20 @@
     </div>
     <br>
 
-    {{--    <div class="row mb-3">--}}
-    {{--        @if($category == "computational")--}}
-    {{--            <h4>Query Computations</h4>--}}
-    {{--        @else--}}
-    {{--            <h4>Query Samples</h4>--}}
-    {{--        @endif--}}
-    {{--    </div>--}}
+    @if(false)
+        <x-mql.query-builder.selectors :category="$category" :project="$project" :activities="$activities"
+                                       :process-attributes="$processAttributes" :sample-attributes="$sampleAttributes"/>
 
-    <x-mql.query-builder.selectors :category="$category" :project="$project" :activities="$activities"
-                                   :process-attributes="$processAttributes" :sample-attributes="$sampleAttributes"/>
-
-    <div id="attr-modal-here" class="modal fade" tabindex="-1" aria-hidden="false">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content"></div>
+        <div id="attr-modal-here" class="modal fade" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content"></div>
+            </div>
         </div>
-    </div>
-    <div class="row mt-2 mb-4">
-        <a onclick="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show/Hide
-            All Attributes</a>
-    </div>
+        <div class="row mt-2 mb-4">
+            <a onclick="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show/Hide
+                All Attributes</a>
+        </div>
+    @endif
     <div id="attributes-overview-div" style="display:none">
         <table id="attributes-overview-table" class="table table-hover mt-4" style="width: 100%">
             <thead>
