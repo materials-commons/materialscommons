@@ -8,6 +8,14 @@
                 </a>
             </li>
 
+            @if(auth()->user()->is_admin)
+                <li class="nav-item">
+                    <a class="nav-link fs-11" href="#">
+                        <i class="fa-fw fas"></i> Admin
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item">
                 <a class="nav-link fs-11" href="{{route('public.index')}}">
                     <i class="fa-fw fas fa-globe mr-2"></i>

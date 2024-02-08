@@ -1,7 +1,8 @@
 <div>
-    <a class="btn btn-success float-right"
+    <a class="btn btn-success float-right ml-3"
        data-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
     @include('app.dashboard.partials._create-transfer-request-modal')
+    <a class="btn btn-success float-right" href="#"><i class="fa fa-fw fa-file-alt mr-2"></i>Log Viewer</a>
 </div>
 <br/>
 <br/>
@@ -18,6 +19,7 @@
         <th>Last Activity At</th>
         <th>Activity Count</th>
         <th>Files Written</th>
+        <th>Annotations</th>
     </tr>
     </thead>
     <tbody>
@@ -29,13 +31,19 @@
         @else
             <tr>
                 @endif
-                <td><a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->uuid}}</a></td>
+                <td>
+                    <a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->uuid}}</a>
+                </td>
                 <td><a href="{{route('projects.show', [$tr->project])}}">{{$tr->project->name}}</a></td>
                 <td>{{$tr->owner->name}}</td>
                 @if(is_null($tr->globusTransfer))
                     <td></td>
                 @else
-                    <td><a href="{{$tr->globusTransfer->globus_url}}" target="_blank">Globus Link</a></td>
+                    <td>
+                        <a href="{{$tr->globusTransfer->globus_url}}" target="_blank">
+                            <i class="fa fa-fw fa-external-link-alt ml-2"></i>Globus
+                        </a>
+                    </td>
                 @endif
                 <td>{{$tr->created_at->diffForHumans()}}</td>
                 @if($transferRequestsStatus->has($tr->uuid))
@@ -56,6 +64,9 @@
                     <td></td>
                 @endif
                 <td>{{$tr->transfer_request_files_count}}</td>
+                <td>
+                    <x-annotations.notes-symbol/>
+                </td>
             </tr>
             @endforeach
     </tbody>

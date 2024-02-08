@@ -25,6 +25,8 @@
             <div class="mt-3">
                 <a class="" href="https://app.globus.org/file-manager/collections/{{$gr->globus_endpoint_id}}/sharing"
                    target="_blank">Endpoint Permissions</a>
+                <a class="ml-3" href="#">Delete ACL</a>
+                <a class="ml-3" href="#">Close Transfer</a>
             </div>
         </div>
     </div>
