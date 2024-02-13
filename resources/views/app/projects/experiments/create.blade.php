@@ -47,91 +47,61 @@
                         <a href="{{makeHelpUrl("reference/spreadsheets")}}" target="_blank">documentation</a>.
                     </p>
 
-                    <div class="form-group">
-                        <p>
-                            <b>If loading from a Google Sheet, you must set the share permissions to "Anyone with the
-                                link"
-                                under General Access in the share popup.</b>
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="text-center">
-                                        <img src="{{asset('images/google-sheets-share.png')}}" class="img-fluid">
+                    <hr/>
+
+                    <div class="row">
+                        <div class="col-6" style="border-right: 2px solid black">
+                            <h4>Using Google Sheet</h4>
+                            @include('app.projects.experiments.partials._new-google-sheet')
+                            @if($sheets->count() !== 0)
+                                @include('app.projects.experiments.partials._existing-google-sheet')
+                            @endif
+                        </div>
+                        <div class="col-6">
+                            <h4><b>OR</b> Using Existing Excel File</h4>
+                            @include('app.projects.experiments.partials._existing-excel-file')
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-10">
+                                <br/>
+                                <p>
+                                    <b>If loading from a Google Sheet, you must set the share permissions to "Anyone
+                                        with the
+                                        link"
+                                        under General Access in the share popup.</b>
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="text-center">
+                                                <img src="{{asset('images/google-sheets-share.png')}}"
+                                                     class="img-fluid">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <br/>
-                        <label for="url-id">Load Experiment From Google Sheet</label>
-                        <input class="form-control"
-                               hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"
-                               hx-target="#google-sheet-title"
-                               hx-indicator=".htmx-indicator"
-                               hx-trigger="keyup changed delay:500ms"
-                               name="sheet_url" type="url" placeholder="Google Sheet URL.."
-                               id="url-id">
-                        <span class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
-                        <div id="google-sheet-title"></div>
                     </div>
-                    @if($sheets->count() !== 0)
-                        <span><b>OR</b></span>
-                        <br>
-                        <label for="sheet_id">Select existing Google Spreadsheet</label>
-                        <select name="sheet_id" class="selectpicker col-lg-10" data-live-search="true"
-                                title="Select Google Sheet">
-                            <option value=""></option>
-                            @foreach($sheets as $sheet)
-                                <option data-tokens="{{$sheet->id}}" value="{{$sheet->id}}">{{$sheet->title}}</option>
-                            @endforeach
-                        </select>
-                    @endif
+                    <hr>
 
-                    {{--                    <div class="row" style="margin-bottom: 10px">--}}
-                    {{--                        <div class="col-10">--}}
-                    {{--                            <a class="btn btn-info"--}}
-                    {{--                               href="{{route('projects.experiments.upload-excel', [$project])}}">--}}
-                    {{--                                <i class="fas fa-plus mr-2"></i>Add Spreadsheets To Import--}}
-                    {{--                            </a>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    <input hidden id="project_id" name="project_id" value="{{$project->id}}">
+                    <div class="float-right">
+                        <a href="{{route('projects.show', ['project' => $project->id])}}"
+                           class="action-link danger mr-3">
+                            Cancel
+                        </a>
 
-                    @if ($excelFiles->count() !== 0)
-                        <span><b>OR</b></span>
-                        <br>
-                        <label for="file_id">Select existing Excel Spreadsheet</label>
-                        <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
-                                title="Select Spreadsheet" style="text-transform: none">
-                            <option value=""></option>
-                            @foreach($excelFiles as $file)
-                                @if ($file->directory->path === "/")
-                                    <option data-tokens="{{$file->id}}" value="{{$file->id}}">/{{$file->name}}</option>
-                                @else
-                                    <option data-tokens="{{$file->id}}" value="{{$file->id}}">{{$file->directory->path}}
-                                        /{{$file->name}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    @else
-                        <span>There are no excel files in the project to build an experiment from.</span>
-                    @endif
-                </div>
-                <hr>
+                        <a class="action-link mr-3" href="#"
+                           onclick="document.getElementById('experiment-create').submit()">
+                            Create
+                        </a>
 
-                <input hidden id="project_id" name="project_id" value="{{$project->id}}">
-                <div class="float-right">
-                    <a href="{{route('projects.show', ['project' => $project->id])}}" class="action-link danger mr-3">
-                        Cancel
-                    </a>
-
-                    <a class="action-link mr-3" href="#"
-                       onclick="document.getElementById('experiment-create').submit()">
-                        Create
-                    </a>
-
-                    {{--                    <a class="action-link" href="#" onclick="createAndAddFiles()">--}}
-                    {{--                        Create And Add Files--}}
-                    {{--                    </a>--}}
+                        {{--                    <a class="action-link" href="#" onclick="createAndAddFiles()">--}}
+                        {{--                        Create And Add Files--}}
+                        {{--                    </a>--}}
+                    </div>
                 </div>
             </form>
         @endslot
