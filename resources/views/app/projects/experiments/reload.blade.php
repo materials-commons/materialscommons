@@ -21,79 +21,43 @@
                       id="experiment-reload">
                     @csrf
                     @method('put')
-                    <div class="form-group">
-                        <p>
-                            <b>If loading from a Google Sheet, you must set the share permissions to "Anyone with the
-                                link"
-                                under General Access in the share popup.</b>
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="text-center">
-                                        <img src="{{asset('images/google-sheets-share.png')}}" class="img-fluid">
+                    <div class="row">
+                        <div class="col-6" style="border-right: 2px solid black">
+                            <h4>Using Google Sheet</h4>
+                            @include('app.projects.experiments.partials._new-google-sheet')
+                            @if($sheets->count() !== 0)
+                                @include('app.projects.experiments.partials._existing-google-sheet')
+                            @endif
+                        </div>
+                        <div class="col-6">
+                            <h4><b>OR</b> Using Existing Excel File</h4>
+                            @include('app.projects.experiments.partials._existing-excel-file')
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-10">
+                                <br/>
+                                <p>
+                                    <b>If loading from a Google Sheet, you must set the share permissions to "Anyone
+                                        with the
+                                        link"
+                                        under General Access in the share popup.</b>
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="text-center">
+                                                <img src="{{asset('images/google-sheets-share.png')}}"
+                                                     class="img-fluid">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <br/>
-                        <label for="url-id">Reload Experiment From Google Sheet</label>
-                        <input class="form-control"
-                               hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"
-                               hx-target="#google-sheet-title"
-                               hx-indicator=".htmx-indicator"
-                               hx-trigger="keyup changed delay:500ms"
-                               name="sheet_url" type="url" placeholder="Google Sheet URL.."
-                               id="url-id">
-                        <span class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
-                        <div id="google-sheet-title"></div>
                     </div>
-                    @if($sheets->count() !== 0)
-                        <span><b>OR</b></span>
-                        <br>
-                        <label for="sheet_id">Select existing Google Spreadsheet</label>
-                        <select name="sheet_id" class="selectpicker col-lg-10" data-live-search="true"
-                                title="Select Google Sheet">
-                            <option value=""></option>
-                            @if(!is_null($sheet))
-                                @foreach($sheets as $s)
-                                    <option data-tokens="{{$s->id}}" value="{{$s->id}}"
-                                            @selected($s->id == $sheet->id)>{{$s->title}}</option>
-                                @endforeach
-                            @else
-                                @foreach($sheets as $s)
-                                    <option data-tokens="{{$s->id}}" value="{{$s->id}}">{{$s->title}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    @endif
-                    <span><b>OR</b></span>
-                    <br>
-                    <label for="file_id">Reload Experiment From</label>
-                    <select name="file_id" class="selectpicker col-lg-10" data-live-search="true"
-                            title="Select Spreadsheet">
-                        <option value=""></option>
-                        @if(!is_null($file))
-                            @foreach($excelFiles as $f)
-                                @if ($f->directory->path === "/")
-                                    <option data-tokens="{{$f->id}}"
-                                            value="{{$f->id}}" @selected($f->id == $file->id)>/{{$f->name}}</option>
-                                @else
-                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}" @selected($f->id == $file->id)>
-                                        {{$f->directory->path}}/{{$f->name}}</option>
-                                @endif
-                            @endforeach
-                        @else
-                            @foreach($excelFiles as $f)
-                                @if ($f->directory->path === "/")
-                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}">/{{$f->name}}</option>
-                                @else
-                                    <option data-tokens="{{$f->id}}" value="{{$f->id}}">
-                                        {{$f->directory->path}}/{{$f->name}}</option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select>
+
+
                     <div class="float-right">
                         <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
                            class="action-link danger mr-3">

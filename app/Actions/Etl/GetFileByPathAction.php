@@ -49,7 +49,8 @@ class GetFileByPathAction
             return null;
         }
 
-        return File::where('directory_id', $dir->id)
+        return File::with('directory')
+                   ->where('directory_id', $dir->id)
                    ->where('name', $fileName)
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')

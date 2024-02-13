@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Experiments;
 
+use App\Actions\Etl\GetFileByPathAction;
 use App\Actions\Experiments\ReloadExperimentAction;
 use App\Actions\GoogleSheets\CreateGoogleSheetAction;
 use App\Helpers\PathHelpers;
@@ -11,13 +12,11 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\Sheet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use function auth;
 use function flash;
 use function is_null;
 use function redirect;
 use function route;
-use const PHP_URL_HOST;
 
 class ReloadExperimentWebController extends Controller
 {
@@ -25,16 +24,18 @@ class ReloadExperimentWebController extends Controller
                              Experiment $experiment)
     {
         $validated = $request->validate([
-            'file_id'   => 'nullable|integer',
+            'file_id'   => 'nullable|string',
+            'file_path' => 'nullable|string',
             'sheet_url' => 'nullable|url',
             'sheet_id'  => 'nullable|integer'
         ]);
 
         $fileId = $request->get('file_id');
+        $filePath = $request->get('file_path');
         $sheetUrl = $request->get('sheet_url');
         $sheetId = $request->get('sheet_id');
 
-        if (!$this->onlySheetIdOrSheetUrlOrFileIdSpecified($validated)) {
+        if (!$this->onlySheetIdOrSheetUrlOrFilePathOrFileIdSpecified($validated)) {
             flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();
             return redirect(route('projects.experiments.show', [$project, $experiment]));
         }
@@ -51,16 +52,22 @@ class ReloadExperimentWebController extends Controller
 
         if (!is_null($sheet)) {
             $sheetUrl = $sheet->url;
-            $experiment->update(['sheet_id' => $sheet->id]);
+            $experiment->update(['sheet_id' => $sheet->id, 'loaded_file_path' => null]);
         } elseif (!is_null($fileId)) {
-            $file = File::with('directory')
-                        ->where("id", $fileId)
-                        ->where("project_id", $project->id)
-                        ->first();
+            $file = File::with('directory')->where('id', $fileId)->first();
+            $experiment->update([
+                'loaded_file_path' => PathHelpers::joinPaths($file->directory->path, $file->name),
+                'sheet_id'         => null,
+            ]);
+        } elseif (!is_null($filePath)) {
+            $getByPath = new GetFileByPathAction();
+            $file = $getByPath->execute($project->id, $filePath);
             if (!is_null($file)) {
+                $fileId = $file->id;
                 $experiment->update([
                     'loaded_file_path' => PathHelpers::joinPaths($file->directory->path,
-                        $file->name)
+                        $file->name),
+                    'sheet_id'         => null,
                 ]);
             }
         }
@@ -74,9 +81,13 @@ class ReloadExperimentWebController extends Controller
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 
-    private function onlySheetIdOrSheetUrlOrFileIdSpecified(mixed $validated)
+    private function onlySheetIdOrSheetUrlOrFilePathOrFileIdSpecified(mixed $validated)
     {
         $countNotNull = 0;
+        if (isset($validated["file_path"])) {
+            $countNotNull++;
+        }
+
         if (isset($validated["file_id"])) {
             $countNotNull++;
         }
