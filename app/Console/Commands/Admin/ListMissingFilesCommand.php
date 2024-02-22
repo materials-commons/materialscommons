@@ -28,7 +28,7 @@ class ListMissingFilesCommand extends Command
     {
         ini_set("memory_limit", "4096M");
         $missingCount = 0;
-        foreach (File::cursor() as $f) {
+        foreach (File::where('mime_type', '<>', 'directory')->cursor() as $f) {
             if (!$f->realFileExists()) {
                 $usesUuid = "no-uses-uuid";
                 if (!blank($f->uses_uuid)) {
