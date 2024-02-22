@@ -51,13 +51,16 @@ class RemoveClosedTransferRequestsCommand extends Command
         TransferRequest::with(['globusTransfer', 'transferRequestFiles.file'])->where('state', 'closed')
                        ->get()
                        ->each(function (TransferRequest $transferRequest) use ($globusApi) {
-                           if (!isset($transferRequest->globusTransfer)) {
+                           if (isset($transferRequest->globusTransfer)) {
                                try {
                                    $globusApi->deleteEndpointAclRule($transferRequest->globusTransfer->globus_endpoint_id,
                                        $transferRequest->globusTransfer->globus_acl_id);
                                } catch (\Exception $e) {
                                    Log::error("Unable to delete acl");
                                }
+                           }
+                           if (!isset($transferRequest->transferRequestFiles)) {
+                               return;
                            }
                            $transferRequest->transferRequestFiles->each(function (TransferRequestFile $trFile) {
                                $isUsed = File::where('checksum', $trFile->file->checksum)
@@ -82,6 +85,7 @@ class RemoveClosedTransferRequestsCommand extends Command
                                // file and delete the download of this file.
                                $existing = File::where('checksum', $trFile->file->checksum)
                                                ->where('id', '<>', $trFile->file->id)
+                                   ->whereNull('dataset_id')
                                                ->whereNull('deleted_at')
                                                ->first();
                                if (!is_null($existing)) {
