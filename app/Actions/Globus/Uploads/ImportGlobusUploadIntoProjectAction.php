@@ -179,10 +179,12 @@ class ImportGlobusUploadIntoProjectAction
 
         $existing = File::where('directory_id', $currentDir->id)->where('name', $fileEntry->name)->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
+                                    ->whereNull('deleted_at')
+                                    ->whereNull('dataset_id')
                                     ->whereNull('uses_uuid')
                                     ->first();
 
-        if (!$matchingFileChecksum) {
+        if (is_null($matchingFileChecksum)) {
             // Just save physical file and insert into database
             if (!$this->moveFileIntoProject($path, $fileEntry)) {
                 return null;

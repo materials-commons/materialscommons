@@ -54,7 +54,7 @@
                 </li>
             @endif
 
-            <li class="nav-item ml-3">
+            <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.files.sheets.index')}}"
                    data-toggle="tooltip" title="View you Excel spreadsheets, CSV files and Google sheets."
                    href="{{route('projects.files.sheets.index', [$project])}}">

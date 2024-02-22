@@ -9,8 +9,8 @@ use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
+use App\Traits\GoogleSheets;
 use App\Traits\PathForFile;
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,17 +19,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
-use function dirname;
-use function parse_url;
 use function uniqid;
-use const PHP_URL_HOST;
-use const PHP_URL_PATH;
 
 class ProcessSpreadsheetJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, PathForFile;
+    use GoogleSheets;
 
     private $projectId;
     private $experimentId;
@@ -46,22 +42,6 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $this->sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
     }
 
-    private function cleanupGoogleSheetUrl($url): ?string
-    {
-        $path = parse_url($url, PHP_URL_PATH);
-
-        if (Str::endsWith($path, "/edit")) {
-            // Remove /edit from the end of the url
-            $path = dirname($path);
-        }
-
-        $host = parse_url($url, PHP_URL_HOST);
-
-        // $path starts with a slash (/), so we don't add one to separate host and path
-        // when constructing the url.
-        return "https://{$host}{$path}";
-    }
-
     /**
      * Execute the job.
      *
@@ -70,7 +50,7 @@ class ProcessSpreadsheetJob implements ShouldQueue
     public function handle()
     {
         ini_set("memory_limit", "4096M");
-        if (!is_null($this->sheetUrl)) {
+        if (!blank($this->sheetUrl)) {
             $fileName = $this->downloadSheetAndReturnFileName();
             $filePath = $this->getPathToSheet($fileName);
             $file = null;

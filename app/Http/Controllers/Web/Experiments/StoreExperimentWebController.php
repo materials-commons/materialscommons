@@ -38,6 +38,14 @@ class StoreExperimentWebController extends Controller
             $validated["sheet_url"] = $sheet->url;
         }
 
+        if (isset($validated["sheet_url"]) || isset($validated["file_id"])) {
+            $message = " from the Google sheet.";
+            if (isset($validated["file_id"])) {
+                $message = " from the given excel file.";
+            }
+            flash("Experiment will be loaded in the background {$message}")->success();
+        }
+
         $experiment = $createExperimentAction($validated, $sheet);
         if ($request->input('files-next', false)) {
             $showOverview = $request->input('show-overview', false);

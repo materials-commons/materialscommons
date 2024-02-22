@@ -1,3 +1,6 @@
+@php
+    $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
+@endphp
 <div class="card bg-light col-lg-4 col-md-6 col-sm-8">
     <div class="card-body">
         <h5 class="card-title">
