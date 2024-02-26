@@ -278,7 +278,17 @@ class Dataset extends Model implements Searchable
 
     public function zipfilePath()
     {
-        return Storage::disk('mcfs')->path($this->zipfilePathPartial());
+        // Handle name changes and multiple zipfiles. We do this by just getting
+        // a list of all the zipfiles and picking the first one. Then returning
+        // its path.
+
+        // List all the zipfiles and pick the first one.
+        $zipPartial = collect(
+            Storage::disk("mcfs")->allFiles($this->zipfileDirPartial())
+        )->first();
+
+        // Construct the full path from the zipfile partial path returned above.
+        return Storage::disk('mcfs')->path($zipPartial);
     }
 
     public function zipfileSize()
