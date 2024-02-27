@@ -85,7 +85,7 @@ class RemoveClosedTransferRequestsCommand extends Command
                                // file and delete the download of this file.
                                $existing = File::where('checksum', $trFile->file->checksum)
                                                ->where('id', '<>', $trFile->file->id)
-                                   ->whereNull('dataset_id')
+                                               ->whereNull('dataset_id')
                                                ->whereNull('deleted_at')
                                                ->first();
                                if (!is_null($existing)) {
