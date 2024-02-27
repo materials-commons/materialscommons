@@ -109,4 +109,5 @@ class RemoveClosedTransferRequestsCommand extends Command
                        });
         return 0;
     }
+
 }
