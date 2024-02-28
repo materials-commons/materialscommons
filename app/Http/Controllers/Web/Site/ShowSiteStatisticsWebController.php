@@ -13,8 +13,10 @@ use App\Models\User;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use function app;
 use function collect;
+use function log;
 
 class ShowSiteStatisticsWebController extends Controller
 {
@@ -24,13 +26,13 @@ class ShowSiteStatisticsWebController extends Controller
     public function __invoke(Request $request)
     {
         return view('app.site.statistics', [
-            'usersChart'             => $this->createUsersChart(),
-            'projectsChart'          => $this->createProjectsChart(),
-            'publishedDatasetsChart' => $this->createPublishedDatasetsChart(),
-            'entitiesChart'          => $this->createEntitiesChart(),
-            'activitiesChart'        => $this->createActivitiesChart(),
-            'attributesChart'        => $this->createAttributesChart(),
-            //            'filesUploadedChart'     => $this->createFilesUploadedChart(),
+            'usersChart'         => $this->createUsersChart(),
+            'projectsChart'      => $this->createProjectsChart(),
+            'datasetsChart'      => $this->createDatasetsChart(),
+            'entitiesChart'      => $this->createEntitiesChart(),
+            'activitiesChart'    => $this->createActivitiesChart(),
+            'attributesChart'    => $this->createAttributesChart(),
+            'filesUploadedChart' => $this->createFilesUploadedChart(),
         ]);
     }
 
@@ -52,19 +54,27 @@ class ShowSiteStatisticsWebController extends Controller
             'Monthly Projects Created');
     }
 
-    private function createPublishedDatasetsChart()
+    private function createDatasetsChart()
     {
         return $this->createChart(Carbon::parse(Dataset::min("created_at")),
             Dataset::class,
-            "PublishedDatasetsCreatedChart",
-            "Datasets Published",
-            "Monthly Datasets Published");
+            "DatasetsCreatedChart",
+            "Datasets Created",
+            "Monthly Datasets Created");
     }
 
     private function createFilesUploadedChart()
     {
-        return $this->createChart(Carbon::parse(File::min("created_at")),
-            File::class,
+        $start = Carbon::parse(File::min("created_at"));
+        $end = Carbon::now();
+        $selectRaw = "YEAR(created_at) as year, MONTH(created_at) as month, COUNT(id) as aggregate";
+        $q = DB::table("files")
+               ->selectRaw($selectRaw)
+               ->where("created_at", ">=", $start)
+               ->where("created_at", "<=", $end)
+               ->groupByRaw("YEAR(created_at), MONTH(created_at)");
+        return $this->createChartFromQuery($start,
+            $q,
             "FilesUploadedChart",
             "Files Uploaded",
             "Monthly Files Uploaded");
@@ -90,11 +100,70 @@ class ShowSiteStatisticsWebController extends Controller
 
     private function createAttributesChart()
     {
-        return $this->createChart(Carbon::parse(Attribute::min("created_at")),
-            Attribute::class,
+        $start = Carbon::parse(File::min("created_at"));
+        $end = Carbon::now();
+        $selectRaw = "YEAR(created_at) as year, MONTH(created_at) as month, COUNT(id) as aggregate";
+        $q = DB::table("attributes")
+               ->selectRaw($selectRaw)
+               ->where("created_at", ">=", $start)
+               ->where("created_at", "<=", $end)
+               ->groupByRaw("YEAR(created_at), MONTH(created_at)");
+        return $this->createChartFromQuery($start,
+            $q,
             "AttributesCreatedChart",
             "Attributes Created",
             "Monthly Attributes Created");
+    }
+
+    private function createChartFromQuery($start, $q, $name, $label, $text)
+    {
+        $accumulator = 0;
+        $dataPerMonth = $q->get()
+                          ->map(function ($data) use (&$accumulator) {
+                              $accumulator = $data->aggregate + $accumulator;
+                              return [
+                                  "count" => $accumulator,
+                                  "month" => Carbon::createFromDate(
+                                      $data->year,
+                                      $data->month
+                                  )->lastOfMonth()->format("Y-m-d")
+                              ];
+                          });
+        $counts = $dataPerMonth->pluck("count")->toArray();
+        $labels = $dataPerMonth->pluck("month")->toArray();
+
+        $chart = app()->chartjs
+            ->name($name)
+            ->type("line")
+            ->size(["width" => 400, "height" => 200])
+            ->labels($labels)
+            ->datasets([
+                [
+                    "label"           => $label,
+                    "backgroundColor" => "rgba(38, 185, 154, 0.31)",
+                    "borderColor"     => "rgba(38, 185, 154, 0.7)",
+                    "data"            => $counts,
+                ]
+            ])
+            ->options([
+                'scales'  => [
+                    'x' => [
+                        'type' => 'time',
+                        'time' => [
+                            'unit' => 'month'
+                        ],
+                        'min'  => $start->format("Y-m-d"),
+                    ]
+                ],
+                'plugins' => [
+                    'title' => [
+                        'display' => true,
+                        'text'    => $text,
+                    ]
+                ],
+            ]);
+
+        return $chart;
     }
 
     private function createChart($start, $cls, $name, $label, $text)
@@ -102,7 +171,7 @@ class ShowSiteStatisticsWebController extends Controller
         $end = Carbon::now();
         $period = CarbonPeriod::create($start, "1 month", $end);
 
-        $projectsPerMonth = collect($period)->map(function ($date) use ($cls) {
+        $dataPerMonth = collect($period)->map(function ($date) use ($cls) {
             $endDate = $date->copy()->endOfMonth();
 
             return [
@@ -111,8 +180,29 @@ class ShowSiteStatisticsWebController extends Controller
             ];
         });
 
-        $data = $projectsPerMonth->pluck("count")->toArray();
-        $labels = $projectsPerMonth->pluck("month")->toArray();
+        $data = $dataPerMonth->pluck("count")->toArray();
+        $labels = $dataPerMonth->pluck("month")->toArray();
+
+        $route = route("dashboard.projects.show");
+
+        $options = <<<OPTS
+{"scales":{"x":{"type":"time","time":{"unit":"month"},"min":"2020-04-06"}},"plugins":{"title":{"display":true,"text":"{$text}"}}},
+OPTS;
+//   "onClick":(e) => {
+//       console.log(e.chart);
+//       let points = e.chart.getElementsAtEventForMode(e, 'nearest', {intersect: true}, true);
+//       if (points.length) {
+//           const firstPoint = points[0];
+//           const label = e.chart.data.labels[firstPoint.index];
+//           const value = e.chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+//           console.log("label =", label);
+//           console.log("value =", value);
+//           window.location.href="{$route}"
+//       }
+//   }
+//}
+//OPTS;
+
 
         $chart = app()
             ->chartjs->name($name)
@@ -127,23 +217,24 @@ class ShowSiteStatisticsWebController extends Controller
                              "data"            => $data
                          ]
                      ])
-                     ->options([
-                         'scales'  => [
-                             'x' => [
-                                 'type' => 'time',
-                                 'time' => [
-                                     'unit' => 'month'
-                                 ],
-                                 'min'  => $start->format("Y-m-d"),
-                             ]
-                         ],
-                         'plugins' => [
-                             'title' => [
-                                 'display' => true,
-                                 'text'    => $text,
-                             ]
-                         ]
-                     ]);
+            ->optionsRaw($options);
+//                     ->options([
+//                         'scales'  => [
+//                             'x' => [
+//                                 'type' => 'time',
+//                                 'time' => [
+//                                     'unit' => 'month'
+//                                 ],
+//                                 'min'  => $start->format("Y-m-d"),
+//                             ]
+//                         ],
+//                         'plugins' => [
+//                             'title' => [
+//                                 'display' => true,
+//                                 'text'    => $text,
+//                             ]
+//                         ]
+//                     ]);
 
         return $chart;
     }

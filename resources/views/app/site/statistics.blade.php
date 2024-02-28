@@ -29,7 +29,7 @@
             <br/>
             <br/>
             <div style="width:75%">
-                {!! $publishedDatasetsChart->render() !!}
+                {!! $datasetsChart->render() !!}
             </div>
 
             <br/>
@@ -50,11 +50,11 @@
                 {!! $attributesChart->render() !!}
             </div>
 
-            {{--            <br/>--}}
-            {{--            <br/>--}}
-            {{--            <div style="width:75%">--}}
-            {{--                {!! $filesUploadedChart->render() !!}--}}
-            {{--            </div>--}}
+            <br/>
+            <br/>
+            <div style="width:75%">
+                {!! $filesUploadedChart->render() !!}
+            </div>
 
         </x-slot>
     </x-card>
