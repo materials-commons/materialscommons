@@ -13,6 +13,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
 use function auth;
+use function collect;
 
 /**
  * @property integer $id
@@ -278,16 +279,19 @@ class Dataset extends Model implements Searchable
 
     public function zipfilePath()
     {
+        return Storage::disk('mcfs')->path($this->zipfilePathPartial());
+    }
+
+    // Handle the case where the dataset name has changed, by constructing a list of zipfiles and getting
+    // the first file.
+    public function publishedZipfilePath()
+    {
         // Handle name changes and multiple zipfiles. We do this by just getting
         // a list of all the zipfiles and picking the first one. Then returning
         // its path.
-
-        // List all the zipfiles and pick the first one.
         $zipPartial = collect(
             Storage::disk("mcfs")->allFiles($this->zipfileDirPartial())
         )->first();
-
-        // Construct the full path from the zipfile partial path returned above.
         return Storage::disk('mcfs')->path($zipPartial);
     }
 
