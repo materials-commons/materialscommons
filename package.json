@@ -35,6 +35,7 @@
     "alpinejs": "^2.8.0",
     "bootstrap-steps": "^1.0.3",
     "canvas-datagrid": "^0.22.17",
+    "chart.js": "^4.4.1",
     "datatables.net-bs4": "^1.10.24",
     "datatables.net-buttons-bs4": "^1.7.0",
     "datatables.net-colreorder-bs4": "^1.5.3",
