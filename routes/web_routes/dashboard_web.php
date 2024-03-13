@@ -4,7 +4,6 @@ use App\Http\Controllers\Web\Dashboard\Admin\MCFS\IndexMCFSWebController;
 use App\Http\Controllers\Web\Dashboard\ArchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\ImmediatelyDestroyProjectWebController;
 use App\Http\Controllers\Web\Dashboard\IndexArchivedProjectsOnDashboardWebController;
-use App\Http\Controllers\Web\Dashboard\IndexGlobusBookmarksWebController;
 use App\Http\Controllers\Web\Dashboard\IndexTrashWebController;
 use App\Http\Controllers\Web\Dashboard\MarkProjectAsActiveOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\RestoreProjectFromTrashWebController;
