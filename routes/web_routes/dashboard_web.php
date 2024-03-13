@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
 use App\Http\Controllers\Web\Dashboard\UnarchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\UnmarkProjectAsActiveOnDashboardWebController;
+use App\Http\Controllers\Web\WebDAV\ResetWebDAVStateForUserWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
@@ -52,3 +53,6 @@ Route::get('/dashboard/projects/{project}/unarchive', UnarchiveProjectOnDashboar
 
 Route::delete('/dashboards/projects/{project}/trash/immediately-destroy', ImmediatelyDestroyProjectWebController::class)
      ->name('dashboard.projects.trash.immediately-destroy');
+
+Route::get('/dashboards/webdav/reset-state', ResetWebDAVStateForUserWebController::class)
+     ->name('dashboards.webdav.reset-state');
