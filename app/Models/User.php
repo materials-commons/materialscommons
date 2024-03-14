@@ -110,6 +110,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->communities->count() > 0;
     }
 
+    public function betaFeatures()
+    {
+        return $this->belongsToMany(BetaFeature::class, 'beta_feature2user', 'user_id', 'beta_feature_id');
+    }
+
     public function datasets()
     {
         return $this->morphToMany(Dataset::class, 'item', 'item2dataset');
