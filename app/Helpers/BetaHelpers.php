@@ -14,7 +14,7 @@ if (!function_exists("isInBeta")) {
                               ->where('feature', $feature)
                               ->whereNotNull('active_at')
                               ->whereHas('users', function ($query) use ($a) {
-                                  $query->where('user_id', $a->id);
+                                  $query->where('user_id', $a->id());
                               })
                               ->first();
 

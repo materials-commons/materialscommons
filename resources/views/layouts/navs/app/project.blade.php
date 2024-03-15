@@ -128,7 +128,7 @@
 
             <x-projects.show-old-globus-side-nav :project="$project" :user="auth()->user()"/>
 
-            @if(isInBeta())
+            @if(isInBeta("globusng"))
                 <x-projects.show-globus-side-nav :project="$project"/>
             @endif
 
