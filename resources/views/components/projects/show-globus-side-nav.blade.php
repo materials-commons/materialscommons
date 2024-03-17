@@ -1,6 +1,6 @@
 <div>
     <li class="nav-item mt-2">
-        <span class="ml-5 italic font-bold">
+        <span class="ml-5 italic font-bold" style="color: #9fc4ed">
             Beta
             <a href="#" data-toggle="tooltip" title="This is a beta for a new way to interact with Globus.
             If you run into any issues or have feedback please send an email to materials-commons-help@umich.edu.
@@ -11,7 +11,7 @@
     </li>
 
     <li class="nav-item mt-2 ml-3">
-        <span class="ml-5">
+        <span class="ml-5" style="color: #9fc4ed">
             <i class="fa-fw fas fa-globe mr-2"></i>
             Globus
         </span>

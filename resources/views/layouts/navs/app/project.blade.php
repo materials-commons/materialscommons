@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-item">
-                <span class="ml-5">Data</span>
+                <span class="ml-5" style="color: #9fc4ed">Data</span>
             </li>
 
             <li class="nav-item">
@@ -82,7 +82,7 @@
             </li>
 
             <li class="nav-item mt-2">
-                <span class="ml-5">Organization</span>
+                <span class="ml-5" style="color: #9fc4ed">Organization</span>
             </li>
 
             <li class="nav-item">
@@ -105,7 +105,7 @@
             </li>
 
             <li class="nav-item mt-2">
-                <span class="ml-5">Actions</span>
+                <span class="ml-5" style="color: #9fc4ed">Actions</span>
             </li>
 
             <li class="nav-item">
