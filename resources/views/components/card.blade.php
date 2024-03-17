@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h5>{{$header}}</h5>
+        <h4>{{$header}}</h4>
     </div>
     <div class="card-body">
         {{$body}}

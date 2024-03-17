@@ -26,7 +26,7 @@
 <div style="width:100%">
     <input type="text"
            id="navbar-search-input"
-           class="form-control form-rounded border border-right-0"
+           class="form-control form-roundedx borderx border-right-0x rounded-pill"
            placeholder="{{$placeholder}}"
            name="search"
            aria-label="Search"

@@ -83,7 +83,7 @@ body {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  //box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
 .sidebar-sticky {
@@ -104,7 +104,8 @@ body {
 
 .sidebar .nav-link {
   font-weight: 400;
-  color: $grey-3;
+  //color: $grey-3;
+  color: white;
   padding: 0.2rem 1rem;
   text-decoration: none;
   //color: #333;
@@ -126,7 +127,8 @@ body {
 //}
 
 .sidebar .nav-link.active {
-  background-color: $grey-8;
+  //background-color: $grey-8;
+  background-color: #3a7fc0;
   font-weight: bold;
   margin-right: 5px;
   border-top-right-radius: 2px;
@@ -226,7 +228,8 @@ a.navbar-brand:hover {
   //background-color: #4299e1;
 
   // darker than base by one
-  background-color: #2b6cb0;
+  //background-color: #2b6cb0;
+  background-color: #1d5ba0;
 }
 
 a.nav-link.action {

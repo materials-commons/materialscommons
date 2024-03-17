@@ -143,7 +143,7 @@
     <div class="row">
         @yield('nav')
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="background-color: #1d5ba0">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
                     <p class="text-white pt-2 pb-2 pl-2 fs-14">
