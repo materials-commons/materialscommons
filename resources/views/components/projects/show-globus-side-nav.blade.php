@@ -4,7 +4,7 @@
             Beta
             <a href="#" data-toggle="tooltip" title="This is a beta for a new way to interact with Globus.
             If you run into any issues or have feedback please send an email to materials-commons-help@umich.edu.
-            ">
+            " style="color: #9fc4ed">
                 <i class="fa-fw fas fa-question-circle"></i>
             </a>
         </span>
