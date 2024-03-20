@@ -1,4 +1,4 @@
-<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10x sidebar" style="background-color: #1d5ba0">
+<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10x sidebar" style="background-color: #2471c7;">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
             <li class="nav-item">

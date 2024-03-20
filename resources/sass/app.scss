@@ -21,18 +21,25 @@
 }
 
 .breadcrumb {
-  background-color: #1d5ba0;
+  //background-color: #1d5ba0;
+  //background-color: #2471c7;
+  background-color: #fff;
 }
 
 .breadcrumb-item > a {
-  color: #ffffff;
+  color: #2471c7;
   text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  //color: rgb(255, 255, 255, 0.5);
+  color: black;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
   float: left;
   padding-right: 0.5rem;
-  color: #ffffff;
+  color: black;
   content: "/";
   font-size: 1rem;
 }
@@ -47,10 +54,6 @@
 .nav-pills .nav-link {
   //color: #3a7fc0;
   color: #77abe6; // 1d5ba0 lightened to 50%
-}
-
-.breadcrumb-item.active {
-  color: rgb(255, 255, 255, 0.5);
 }
 
 .mc-md {
@@ -94,7 +97,8 @@ body {
   //font-family: 'Open Sans', sans-serif;
   //font-size: .825rem;
   font-weight: bold;
-  background-color: #1d5ba0;
+  //background-color: #1d5ba0;
+  background-color: #fff;
   //font-family: sans-serif;
 }
 
@@ -264,7 +268,8 @@ a.navbar-brand:hover {
 
   // darker than base by one
   //background-color: #2b6cb0;
-  background-color: #1d5ba0;
+  //background-color: #1d5ba0;
+  background-color: #2471c7;
 }
 
 a.nav-link.action {
