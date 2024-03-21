@@ -22,7 +22,7 @@
 
 <div class="row">
     <div class="card-deck">
-        <div class="card bg-light">
+        <div class="card bg-light" style="border-color: #b3c2d9">
             <div class="card-body">
                 <h5 class="card-title"><strong>Files</strong></h5>
                 <hr/>
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="card bg-light">
+        <div class="card bg-light" style="border-color: #b3c2d9">
             <div class="card-body">
                 <h5 class="card-title"><strong>Experiments</strong></h5>
                 <hr/>
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div class="card bg-light">
+        <div class="card bg-light" style="border-color: #b3c2d9">
             <div class="card-body">
                 <h5 class="card-title"><strong>Datasets and Communities</strong></h5>
                 <hr/>
