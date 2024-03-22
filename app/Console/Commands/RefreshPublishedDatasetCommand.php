@@ -42,5 +42,6 @@ class RefreshPublishedDatasetCommand extends Command
         $dataset = Dataset::with(['owner'])->findOrFail($this->argument('dataset'));
         $refreshPublishedDatasetAction = new RefreshPublishedDatasetAction();
         $refreshPublishedDatasetAction->execute($dataset, $dataset->owner);
+        return self::SUCCESS;
     }
 }
