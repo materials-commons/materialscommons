@@ -12,7 +12,8 @@ class RefreshPublishedDatasetWebController extends Controller
 {
     public function __invoke(Request $request, Project $project, Dataset $dataset)
     {
-        RefreshPublishedDatasetJob::dispatch($dataset)->onQueue('globus');
+        $dataset->load('owner');
+        RefreshPublishedDatasetJob::dispatch($dataset, $dataset->owner)->onQueue('globus');
         flash("Dataset {$dataset->name} refresh started in background")->success();
         return redirect(route('projects.datasets.show', [$project, $dataset]));
     }
