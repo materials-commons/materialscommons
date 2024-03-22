@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Datasets\DatasetRequest;
 use App\Models\Dataset;
 use App\Models\Project;
+use function redirect;
+use function route;
 
 class UpdateDatasetWebController extends Controller
 {
@@ -16,6 +18,9 @@ class UpdateDatasetWebController extends Controller
         $validated = $request->validated();
         $action = $validated["action"];
         unset($validated["action"]);
+        if (!is_null($dataset->published_at)) {
+            flash("You have updated a published dataset. The dataset will be republished.")->warning();
+        }
         $dataset = $updateDatasetAction($validated, $dataset);
         if ($action === "done") {
             $public = $request->input('public', false);

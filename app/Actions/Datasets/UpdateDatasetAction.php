@@ -2,6 +2,7 @@
 
 namespace App\Actions\Datasets;
 
+use App\Jobs\Datasets\RefreshPublishedDatasetJob;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Paper;
@@ -90,6 +91,17 @@ class UpdateDatasetAction
                 $dataset->papers()->attach($paper);
             });
         });
+
+        // If the dataset is published, then we need to republish it to make all the changes available
+        // on the published dataset site.
+        if (!is_null($dataset->published_at)) {
+            $dataset->load('owner');
+            $user = auth()->user();
+            if (is_null($user)) {
+                $user = $dataset->owner;
+            }
+            RefreshPublishedDatasetJob::dispatch($dataset, $user)->onQueue('globus');
+        }
 
         return Dataset::with('communities')->where('id', $dataset->id)->first();
     }
