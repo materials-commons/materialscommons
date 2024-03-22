@@ -45,6 +45,7 @@
         <th>Files</th>
         <th>Samples</th>
         <th>Computations</th>
+        <th>Published Datasets</th>
         <th>Owner</th>
         <th>Updated</th>
         <th>Date</th>
@@ -62,6 +63,7 @@
             <td>{{number_format($proj->file_count)}}</td>
             <td>{{number_format($proj->samples_count)}}</td>
             <td>{{number_format($proj->computations_count)}}</td>
+            <td>{{number_format($proj->published_datasets_count)}}</td>
             <td>{{$proj->owner->name}}</td>
             <td>{{$proj->updated_at->diffForHumans()}}</td>
             <td>{{$proj->updated_at}}</td>

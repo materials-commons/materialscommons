@@ -50,7 +50,7 @@ trait UserProjects
     public function getUserProjectsFromTeamIds($teamIds)
     {
         return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
-            ->withCount(['samples', 'computations'])
+            ->withCount(['samples', 'computations', 'publishedDatasets'])
                       ->whereIn('team_id', $teamIds)
                       ->whereNull('deleted_at')
             ->whereNull('archived_at')
