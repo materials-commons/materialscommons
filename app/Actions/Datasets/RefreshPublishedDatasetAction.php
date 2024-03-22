@@ -11,7 +11,7 @@ class RefreshPublishedDatasetAction
     {
         $unpublishDatasetAction = new UnpublishDatasetAction();
         $unpublishDatasetAction($dataset, $user);
-        $this->publishDataset($dataset, auth()->user());
+        $this->publishDataset($dataset, $user);
     }
 
 
