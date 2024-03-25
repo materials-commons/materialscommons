@@ -1,6 +1,6 @@
 
 // Body
-$body-bg: #f8fafc;
+$body-bg: #fff;
 
 // Typography
 $font-family-sans-serif: "Nunito", sans-serif;
@@ -74,7 +74,8 @@ $grey-6: hsl(211, 10%, 53%);
 $grey-7: hsl(211, 13%, 65%);
 $grey-8: hsl(210, 16%, 82%);
 $grey-9: hsl(214, 15%, 91%);
-$grey-10: hsl(216, 33%, 97%);
+//$grey-10: hsl(216, 33%, 97%);
+$grey-10: #edf1f8;
 
 $green-1: hsl(170, 97%, 15%);
 $green-2: hsl(168, 80%, 23%);
@@ -127,6 +128,6 @@ $danger: #e53e3e;
 //$card-cap-bg: hsl(204, 100%, 86%);
 
 // Jigsaw colors
-$card-border-color: #2b6cb0;
+$card-border-color: #2b6bb1;
 //$card-border-color: #ffffff;
-$card-cap-bg: #2b6cb0;
+$card-cap-bg: #2b6bb1;
