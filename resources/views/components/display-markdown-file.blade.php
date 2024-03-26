@@ -5,7 +5,7 @@
         <x-card>
             <x-slot name="header">{{$file->name}}</x-slot>
             <x-slot name="body">
-                <x-markdown class="mc-md">{!!$contents!!}</x-markdown>
+                <x-markdown>{!!$contents!!}</x-markdown>
             </x-slot>
         </x-card>
     @endif

@@ -108,7 +108,7 @@
                 <br/>
                 <br/>
             @endif
-            <x-markdown class="mc-md">{!!$fileContents($file)!!}</x-markdown>
+            <x-markdown>{!!$fileContents($file)!!}</x-markdown>
             @break
 
         @default
