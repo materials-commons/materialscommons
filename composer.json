@@ -33,7 +33,7 @@
     "maatwebsite/excel": "^3.1",
     "mauricius/laravel-htmx": "^0.5.0",
     "mavinoo/laravel-batch": "^2.0",
-      "repat/laravel-job-models": "^0.8.0",
+    "repat/laravel-job-models": "^0.8.0",
     "rianfuro/commonmark-metadata": "^0.1.2",
     "spatie/laravel-backup": "^8.0",
     "spatie/laravel-health": "^1.23",
@@ -48,7 +48,7 @@
     "symfony/http-client": "^6.2",
     "symfony/mailgun-mailer": "^6.2",
     "symfony/postmark-mailer": "^6.2",
-      "tightenco/ziggy": "^1.0"
+    "tightenco/ziggy": "^1.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.0",

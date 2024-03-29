@@ -21,20 +21,6 @@
 @endif
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col col-lg-4 float-right">
-                <select class="selectpicker col-lg-10" data-live-search="true" title="{{$title}}">
-                    @foreach($project->entities as $entry)
-                        @if ($entry->name != $entity->name)
-                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
     @component('components.card')
         @slot('header')
             Sample: {{$entity->name}}
@@ -43,6 +29,16 @@
                onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
                 <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
             </a>
+
+            <div class="col col-lg-4 float-right">
+                <select class="selectpicker col-lg-10 mc-select" data-live-search="true" title="{{$title}}">
+                    @foreach($project->entities as $entry)
+                        @if ($entry->name != $entity->name)
+                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
         @endslot
 
         @slot('body')

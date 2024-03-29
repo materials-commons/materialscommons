@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6" style="border-right: solid 1px black">
                         <h4>{{$entity1->name}}</h4>
                         <x-show-standard-details :item="$entity1"/>
 
@@ -69,7 +69,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6" style="border-left: solid 1px black">
                         <h4>{{$entity2->name}}</h4>
                         <x-show-standard-details :item="$entity2"/>
 
