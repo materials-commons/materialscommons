@@ -46,7 +46,7 @@
 
             <div class="row ml-1">
                 @foreach($activityTypes as $activityType)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 rounded border-blue border">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 tile">
                         @include('partials.activities.activity-type-card', [
                             'activityType' => $activityType,
                             'files' => $filesByActivityType->get($activityType->name, []),
