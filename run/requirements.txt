@@ -1,0 +1,17 @@
+libcasm-global
+libcasm-xtal
+libcasm-composition
+libcasm-mapping
+libcasm-clexulator
+libcasm-configuration
+libcasm-monte
+scipy
+numpy
+pandas
+matplotlib
+bokeh
+materials-commons-cli
+scikit-learn
+tensorflow
+keras
+torch
