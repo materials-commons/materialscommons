@@ -20,6 +20,8 @@ class RunUserPythonScriptJob implements ShouldQueue
 
     public $project;
 
+    public $run;
+
     private $containerId;
 
     /**
