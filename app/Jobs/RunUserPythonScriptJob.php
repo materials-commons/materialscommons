@@ -2,6 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Models\File;
+use App\Models\Project;
+use App\Models\Script;
+use App\Models\ScriptRun;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,20 +21,15 @@ class RunUserPythonScriptJob implements ShouldQueue
 
     public $tries = 1;
 
-    public $script;
-
-    public $project;
-
-    public $run;
-
+    public ScriptRun $run;
     private $containerId;
 
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(ScriptRun $run)
     {
-        //
+        $this->run = $run;
     }
 
     /**
@@ -37,26 +37,25 @@ class RunUserPythonScriptJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
         $dockerRunCommand = "docker run -d -it -v /some/path:/data -v /some/output/path:/out mc/mcpyimage";
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
-        $dockerRunProcess->start(null, [
-            "environment variables" => "here",
-        ]);
+        $dockerRunProcess->start(null, []);
         $dockerRunProcess->wait();
         $this->containerId = $dockerRunProcess->getOutput();
 
-        $dockerExecCommand = "docker exec -it {$this->containerId} {$this->script}";
+        $scriptDir = $this->run->script->scriptFile->directory->path;
+        $scriptName = $this->run->script->scriptFile->name;
+        $dockerExecCommand = "docker exec -it {$this->run->script->container} /data/{$scriptDir}/{$scriptName}";
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start(null, [
-            "environment variables" => "here",
+            "SCRIPT_DIR" => "/data/{$scriptDir}",
         ]);
         $dockerExecProcess->wait();
 
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start(null, [
-            "environment variables" => "here",
-        ]);
+        $dockerContainerRmProcess->start(null, []);
         $dockerContainerRmProcess->wait();
     }
 
@@ -64,16 +63,12 @@ class RunUserPythonScriptJob implements ShouldQueue
     {
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start(null, [
-            "environment variables" => "here",
-        ]);
+        $dockerContainerStopProcess->start(null, []);
         $dockerContainerStopProcess->wait();
 
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start(null, [
-            "environment variables" => "here",
-        ]);
+        $dockerContainerRmProcess->start(null, []);
         $dockerContainerRmProcess->wait();
     }
 }

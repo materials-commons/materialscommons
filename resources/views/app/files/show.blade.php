@@ -13,7 +13,8 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            File: <x-show-dir-path :project="$project" :file="$file->directory"/>{{$file->name}}
+            File:
+            <x-show-dir-path :project="$project" :file="$file->directory"/>{{$file->name}}
 
 
             @isset($project)
@@ -43,6 +44,12 @@
                 <a class="action-link float-right mr-4" href="{{route('projects.files.rename', [$project, $file])}}">
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
+
+                @if($file->isRunnable())
+                    <a class="action-link float-right mr-4" href="#">
+                        <i class="fas fa-fw fa-play-circle mr-2"></i>Run
+                    </a>
+                @endif
             @endisset
 
         @endslot

@@ -186,6 +186,15 @@ class File extends Model implements Searchable
         return !$this->isDir();
     }
 
+    public function isRunnable(): bool
+    {
+        if (Str::endsWith($this->name, ".py")) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getSelectedAttribute()
     {
         return $this->selected;
