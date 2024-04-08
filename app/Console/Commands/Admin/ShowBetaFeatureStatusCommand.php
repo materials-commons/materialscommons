@@ -3,24 +3,23 @@
 namespace App\Console\Commands\Admin;
 
 use App\Models\BetaFeature;
-use App\Models\User;
 use Illuminate\Console\Command;
 
-class AddUserToBetaFeatureCommand extends Command
+class ShowBetaFeatureStatusCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'mc-admin:add-user-to-beta-feature {feature : feature name} {user : user id to add to feature}';
+    protected $signature = 'mc-admin:show-beta-feature-status {feature : feature name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Add user to beta feature';
+    protected $description = 'Show whether beta feature is active';
 
     /**
      * Execute the console command.
@@ -34,12 +33,12 @@ class AddUserToBetaFeatureCommand extends Command
             return 1;
         }
 
-        $user = User::findOrFail($this->argument('user'));
+        if (is_null($feature->active_at)) {
+            echo "{$feature->name} is not active\n";
+        } else {
+            echo "{$feature->name} is active\n";
+        }
 
-        $feature->users()->syncWithoutDetaching($user);
-
-        echo "Added user {$user->email} to feature {$name}\n";
-
-        return 0;
+        return self::SUCCESS;
     }
 }

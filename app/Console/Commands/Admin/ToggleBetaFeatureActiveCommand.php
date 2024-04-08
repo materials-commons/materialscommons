@@ -3,24 +3,25 @@
 namespace App\Console\Commands\Admin;
 
 use App\Models\BetaFeature;
-use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
+use function is_null;
 
-class AddUserToBetaFeatureCommand extends Command
+class ToggleBetaFeatureActiveCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'mc-admin:add-user-to-beta-feature {feature : feature name} {user : user id to add to feature}';
+    protected $signature = 'mc-admin:toggle-beta-feature-active {feature : beta feature}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Add user to beta feature';
+    protected $description = 'Toggle active status of beta feature';
 
     /**
      * Execute the console command.
@@ -34,12 +35,12 @@ class AddUserToBetaFeatureCommand extends Command
             return 1;
         }
 
-        $user = User::findOrFail($this->argument('user'));
-
-        $feature->users()->syncWithoutDetaching($user);
-
-        echo "Added user {$user->email} to feature {$name}\n";
-
-        return 0;
+        if (is_null($feature->active_at)) {
+            $feature->update(['active_at' => null]);
+            echo "Set feature {$name} to inactive\n";
+        } else {
+            $feature->update(['active_at' => Carbon::now()]);
+            echo "Set feature {$name} to active\n";
+        }
     }
 }

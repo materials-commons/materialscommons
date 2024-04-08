@@ -21,7 +21,7 @@ class RemoveUserFromBetaFeatureCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Remove user from beta feature';
 
     /**
      * Execute the console command.
