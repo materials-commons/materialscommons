@@ -13,6 +13,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 class RunUserPythonScriptJob implements ShouldQueue
@@ -38,24 +40,30 @@ class RunUserPythonScriptJob implements ShouldQueue
     public function handle(): void
     {
         $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
-        $dockerRunCommand = "docker run -d -it -v /some/path:/data -v /some/output/path:/out mc/mcpyimage";
-        $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
-        $dockerRunProcess->start(null, []);
-        $dockerRunProcess->wait();
-        $this->containerId = $dockerRunProcess->getOutput();
-
+        $inputPath = Storage::disk("mcfs")->path("__script_runs/{$this->run->uuid}");
+        Storage::disk("scripts_out")->makeDirectory($this->run->uuid);
+        $outputPath = Storage::disk("scripts_out")->path($this->run->uuid);
         $scriptDir = $this->run->script->scriptFile->directory->path;
+        $dockerRunCommand = "docker run -d -it -e SCRIPT_DIR='/data/${scriptDir}' -v {$inputPath}:/data -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
+        $dockerRunProcess->start();
+        $dockerRunProcess->wait();
+        $this->containerId = Str::squish($dockerRunProcess->getOutput());
+
         $scriptName = $this->run->script->scriptFile->name;
-        $dockerExecCommand = "docker exec -it {$this->run->script->container} /data/{$scriptDir}/{$scriptName}";
+        $dockerExecCommand = "docker exec -it {$this->containerId} python /data/{$scriptDir}/{$scriptName}";
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
-        $dockerExecProcess->start(null, [
-            "SCRIPT_DIR" => "/data/{$scriptDir}",
-        ]);
+        $dockerExecProcess->start();
         $dockerExecProcess->wait();
+
+        $dockerContainerStopCommand = "docker stop {$this->containerId}";
+        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
+        $dockerContainerStopProcess->start();
+        $dockerContainerStopProcess->wait();
 
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start(null, []);
+        $dockerContainerRmProcess->start();
         $dockerContainerRmProcess->wait();
     }
 
@@ -63,12 +71,12 @@ class RunUserPythonScriptJob implements ShouldQueue
     {
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start(null, []);
+        $dockerContainerStopProcess->start();
         $dockerContainerStopProcess->wait();
 
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start(null, []);
+        $dockerContainerRmProcess->start();
         $dockerContainerRmProcess->wait();
     }
 }
