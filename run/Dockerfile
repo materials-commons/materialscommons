@@ -1,7 +1,7 @@
 FROM python:3.12
 
 RUN apt-get update -y \
-    && apt-get install -y libsasl2-dev libldap2-dev libssl-dev libsnmp-dev
+    && apt-get install -y build-essential
 
 COPY . /opt/app
 
