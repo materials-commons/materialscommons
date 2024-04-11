@@ -5,12 +5,9 @@ namespace Tests\Feature\Actions\Projects;
 use App\Actions\Projects\CreateProjectFilesAtLocationAction;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
-
-use Illuminate\Support\Str;
 
 class CreateProjectFilesAtLocationActionTest extends TestCase
 {
