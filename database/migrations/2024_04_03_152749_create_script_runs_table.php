@@ -16,6 +16,8 @@ return new class extends Migration {
 
             $table->string('arguments');
 
+            $table->string("docker_container_id");
+
             $table->unsignedBigInteger('script_id');
             $table->foreign('script_id')
                   ->references('id')
@@ -34,7 +36,7 @@ return new class extends Migration {
 
             $table->datetime("started_at");
             $table->datetime("finished_at");
-            $table->datetime("aborted_at");
+            $table->datetime("failed_at");
 
             $table->timestamps();
         });
