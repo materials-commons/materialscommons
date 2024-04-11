@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Script;
@@ -42,10 +43,11 @@ class RunUserPythonScriptJob implements ShouldQueue
     {
         $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
         $inputPath = Storage::disk("mcfs")->path("__script_runs_in/{$this->run->uuid}");
-        Storage::disk("scripts_out")->makeDirectory($this->run->uuid);
-        $outputPath = Storage::disk("scripts_out")->path($this->run->uuid);
-        $scriptDir = $this->run->script->scriptFile->directory->path;
-        $dockerRunCommand = "docker run -d -it -e SCRIPT_DIR='/data/${scriptDir}' -v {$inputPath}:/data -v {$outputPath}:/out mc/mcpyimage";
+        Storage::disk("script_runs_out")->makeDirectory($this->run->uuid);
+        $outputPath = Storage::disk("script_runs_out")->path($this->run->uuid);
+        $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
+        $dockerRunCommand = "docker run -d -it -e SCRIPT_DIR='${scriptDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        echo "dockerRunCommand = {$dockerRunCommand}\n";
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
         $dockerRunProcess->wait();
@@ -57,7 +59,9 @@ class RunUserPythonScriptJob implements ShouldQueue
         ]);
 
         $scriptName = $this->run->script->scriptFile->name;
-        $dockerExecCommand = "docker exec -it {$this->containerId} python /data/{$scriptDir}/{$scriptName}";
+        $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
+        $dockerExecCommand = "docker exec -t {$this->containerId} python ${scriptPath} > /tmp/script.out 2>&1";
+        echo "dockerExecCommand = {$dockerExecCommand}\n";
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start();
         $dockerExecProcess->wait();

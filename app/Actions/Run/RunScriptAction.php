@@ -23,7 +23,7 @@ class RunScriptAction
     private User $user;
     private ScriptRun $run;
 
-    public function execute(File $file, Project $project, User $user)
+    public function execute(File $file, Project $project, User $user, $synchronous = false)
     {
         $this->project = $project;
         $this->user = $user;
@@ -46,8 +46,14 @@ class RunScriptAction
             'project_id' => $project->id,
         ]);
 
+        if ($synchronous) {
+            $this->runSynchronously();
+            return $this->run;
+        }
+
         Bus::chain([
             function () {
+                echo "running CreateProjectFilesAtLocatonAction\n";
                 $createProjectFilesAtLocationAction = new CreateProjectFilesAtLocationAction();
                 $createProjectFilesAtLocationAction->execute($this->project,
                     "mcfs",
@@ -55,6 +61,7 @@ class RunScriptAction
             },
             new RunUserPythonScriptJob($this->run),
             function () {
+                echo "Running ImportFilesIntoProjectAtLocationAction\n";
                 $action = new ImportFilesIntoProjectAtLocationAction();
                 $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
             },
@@ -63,8 +70,25 @@ class RunScriptAction
                 Mail::to($this->run->owner)
                     ->queue(new ScriptRunCompletedMail($this->run));
             }
-        ]);
+        ])->onQueue('globus')->dispatch();
 
         return $this->run;
+    }
+
+    private function runSynchronously()
+    {
+        echo "running CreateProjectFilesAtLocatonAction\n";
+        $createProjectFilesAtLocationAction = new CreateProjectFilesAtLocationAction();
+        $createProjectFilesAtLocationAction->execute($this->project, "mcfs", "__script_runs_in/{$this->run->uuid}");
+
+        RunUserPythonScriptJob::dispatchSync($this->run);
+
+//        echo "Running ImportFilesIntoProjectAtLocationAction\n";
+//        $action = new ImportFilesIntoProjectAtLocationAction();
+//        $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
+
+        //$this->run->load('owner');
+//        Mail::to($this->run->owner)
+//            ->queue(new ScriptRunCompletedMail($this->run));
     }
 }
