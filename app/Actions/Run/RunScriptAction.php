@@ -65,6 +65,6 @@ class RunScriptAction
             }
         ]);
 
-
+        return $this->run;
     }
 }

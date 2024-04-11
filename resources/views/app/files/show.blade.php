@@ -45,10 +45,13 @@
                     <i class="fas fa-fw fa-edit mr-2"></i>Rename
                 </a>
 
-                @if($file->isRunnable())
-                    <a class="action-link float-right mr-4" href="#">
-                        <i class="fas fa-fw fa-play-circle mr-2"></i>Run
-                    </a>
+                @if(isInBeta('run_scripts'))
+                    @if($file->isRunnable())
+                        <a class="action-link float-right mr-4"
+                           href="{{route('projects.files.run-script', [$project, $file])}}">
+                            <i class="fas fa-fw fa-play-circle mr-2"></i>Run
+                        </a>
+                    @endif
                 @endif
             @endisset
 

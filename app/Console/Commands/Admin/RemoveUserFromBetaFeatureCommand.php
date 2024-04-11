@@ -35,7 +35,12 @@ class RemoveUserFromBetaFeatureCommand extends Command
             return 1;
         }
 
-        $user = User::findOrFail($this->argument('user'));
+        $user = User::where('email', $this->argument('user'))->first();
+        if (is_null($user)) {
+            $email = $this->argument('user');
+            echo "No such user {$email}\n";
+            return 1;
+        }
 
         $feature->users()->detach($user);
 
