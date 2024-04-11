@@ -13,7 +13,7 @@ class AddUserToBetaFeatureCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-admin:add-user-to-beta-feature {feature : feature name} {user : user id to add to feature}';
+    protected $signature = 'mc-admin:add-user-to-beta-feature {feature : feature name} {user : user email to add to feature}';
 
     /**
      * The console command description.
@@ -34,7 +34,12 @@ class AddUserToBetaFeatureCommand extends Command
             return 1;
         }
 
-        $user = User::findOrFail($this->argument('user'));
+        $user = User::where('email', $this->argument('user'))->first();
+        if (is_null($user)) {
+            $email = $this->argument('user');
+            echo "No such user {$email}\n";
+            return 1;
+        }
 
         $feature->users()->syncWithoutDetaching($user);
 

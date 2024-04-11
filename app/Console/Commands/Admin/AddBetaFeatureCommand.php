@@ -27,6 +27,12 @@ class AddBetaFeatureCommand extends Command
      */
     public function handle()
     {
+        $feature = BetaFeature::where('feature', $this->argument('feature'))->first();
+        if (!is_null($feature)) {
+            echo "Feature {$feature->feature} already exists.\n";
+            return 0;
+        }
+
         $feature = BetaFeature::create([
             'feature'   => $this->argument('feature'),
             'active_at' => Carbon::now(),
