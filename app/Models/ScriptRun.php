@@ -10,12 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer id
  * @property string uuid
+ * @property string docker_container_id
  * @property integer script_id
  * @property integer owner_id
  * @property integer project_id
  * @property mixed started_at
  * @property mixed finished_at
- * @property mixed aborted_at
+ * @property mixed failed_at
  *
  * @mixin Builder
  */
@@ -32,7 +33,7 @@ class ScriptRun extends Model
         'project_id'  => 'integer',
         'started_at'  => 'datetime',
         'finished_at' => 'datetime',
-        'aborted_at'  => 'datetime',
+        'failed_at' => 'datetime',
     ];
 
     public function owner()
