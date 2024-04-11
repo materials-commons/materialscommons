@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->uuid()->unique();
 
-            $table->string('arguments');
+            $table->string('arguments')->nullable();
 
-            $table->string("docker_container_id");
+            $table->string("docker_container_id")->nullable();
 
             $table->unsignedBigInteger('script_id');
             $table->foreign('script_id')
@@ -34,9 +34,9 @@ return new class extends Migration {
                   ->on('projects')
                   ->onDelete('cascade');
 
-            $table->datetime("started_at");
-            $table->datetime("finished_at");
-            $table->datetime("failed_at");
+            $table->datetime("started_at")->nullable();
+            $table->datetime("finished_at")->nullable();
+            $table->datetime("failed_at")->nullable();
 
             $table->timestamps();
         });
