@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
@@ -50,11 +51,18 @@ class RunUserPythonScriptJob implements ShouldQueue
         $dockerRunProcess->wait();
         $this->containerId = Str::squish($dockerRunProcess->getOutput());
 
+        $this->run->update([
+            'docker_container_id' => $this->containerId,
+            'started_at'          => Carbon::now(),
+        ]);
+
         $scriptName = $this->run->script->scriptFile->name;
         $dockerExecCommand = "docker exec -it {$this->containerId} python /data/{$scriptDir}/{$scriptName}";
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start();
         $dockerExecProcess->wait();
+
+        $this->run->update(['finished_at' => Carbon::now()]);
 
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
@@ -69,6 +77,8 @@ class RunUserPythonScriptJob implements ShouldQueue
 
     public function failed($exception)
     {
+        $this->run->update(['failed_at' => Carbon::now()]);
+
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
         $dockerContainerStopProcess->start();
