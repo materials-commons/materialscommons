@@ -108,6 +108,7 @@ class ImportFilesIntoProjectAtLocationAction
 
     private function processFile($path, \SplFileInfo $finfo)
     {
+        echo "processFile({$path})\n";
         // Find or create directory file is in
         $currentDir = $this->processDir(dirname($path));
         $finfo->getSize();
@@ -177,22 +178,25 @@ class ImportFilesIntoProjectAtLocationAction
         return $fileEntry;
     }
 
-    private function moveFileIntoProject($path, $file)
+    private function moveFileIntoProject($from, $file): bool
     {
         try {
             $uuid = $this->getUuid($file);
-            $to = $this->getDirPathForFile($file)."/{$uuid}";
-            $pathPart = Storage::disk('mcfs')->path("__globus_uploads");
-            $filePath = Str::replaceFirst($pathPart, "__globus_uploads", $path);
+            $to = Storage::disk('mcfs')->path($this->getDirPathForFile($file)."/{$uuid}");
 
-            if (Storage::disk('mcfs')->move($filePath, $to) !== true) {
-                $status = Storage::disk('mcfs')->copy($filePath, $to);
-                $fpath = Storage::disk('mcfs')->path($to);
-                chmod($fpath, 0777);
-                unlink($path);
+            $dirpath = dirname($to);
+            \File::ensureDirectoryExists($dirpath);
 
-                return $status;
+            if (!\File::move($from, $to)) {
+                if (!\File::copy($from, $to)) {
+                    return false;
+                }
+
+                \File::delete($from);
             }
+
+            chmod($to, 0777);
+
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             return false;

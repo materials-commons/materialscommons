@@ -40,7 +40,7 @@ class RunUserPythonScriptJob implements ShouldQueue
     public function handle(): void
     {
         $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
-        $inputPath = Storage::disk("mcfs")->path("__script_runs/{$this->run->uuid}");
+        $inputPath = Storage::disk("mcfs")->path("__script_runs_in/{$this->run->uuid}");
         Storage::disk("scripts_out")->makeDirectory($this->run->uuid);
         $outputPath = Storage::disk("scripts_out")->path($this->run->uuid);
         $scriptDir = $this->run->script->scriptFile->directory->path;
