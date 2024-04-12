@@ -3,13 +3,8 @@
 namespace App\Jobs;
 
 use App\Helpers\PathHelpers;
-use App\Models\File;
-use App\Models\Project;
-use App\Models\Script;
 use App\Models\ScriptRun;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
+use function get_current_user;
 
 class RunUserPythonScriptJob implements ShouldQueue
 {
@@ -43,11 +39,20 @@ class RunUserPythonScriptJob implements ShouldQueue
     {
         $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
         $inputPath = Storage::disk("mcfs")->path("__script_runs_in/{$this->run->uuid}");
+
         Storage::disk("script_runs_out")->makeDirectory($this->run->uuid);
         $outputPath = Storage::disk("script_runs_out")->path($this->run->uuid);
+
+        // Setup logging dir
+        Storage::disk('mcfs')->makeDirectory("__run_script_logs");
+        $logPathPartial = "__run_script_logs/{$this->run->uuid}.log";
+        $logPath = Storage::disk('mcfs')->path($logPathPartial);
+
+        // Run container
         $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
-        $dockerRunCommand = "docker run -d -it -e SCRIPT_DIR='${scriptDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
-        echo "dockerRunCommand = {$dockerRunCommand}\n";
+        $user = posix_getuid();
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e SCRIPT_DIR='${scriptDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
         $dockerRunProcess->wait();
@@ -58,21 +63,24 @@ class RunUserPythonScriptJob implements ShouldQueue
             'started_at'          => Carbon::now(),
         ]);
 
+        // Run python script
         $scriptName = $this->run->script->scriptFile->name;
         $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
-        $dockerExecCommand = "docker exec -t {$this->containerId} python ${scriptPath} > /tmp/script.out 2>&1";
-        echo "dockerExecCommand = {$dockerExecCommand}\n";
+        $dockerExecCommand = "docker exec --user {$user}:{$user} -t {$this->containerId} python ${scriptPath} >> {$logPath} 2>&1";
+        Storage::disk('mcfs')->append($logPathPartial, "{$dockerExecCommand}\n");
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start();
         $dockerExecProcess->wait();
 
         $this->run->update(['finished_at' => Carbon::now()]);
 
+        // Stop container
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
         $dockerContainerStopProcess->start();
         $dockerContainerStopProcess->wait();
 
+        // Delete container
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
         $dockerContainerRmProcess->start();
@@ -83,11 +91,13 @@ class RunUserPythonScriptJob implements ShouldQueue
     {
         $this->run->update(['failed_at' => Carbon::now()]);
 
+        // Stop container
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
         $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
         $dockerContainerStopProcess->start();
         $dockerContainerStopProcess->wait();
 
+        // Delete container
         $dockerContainerRmCommand = "docker container rm {$this->containerId}";
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
         $dockerContainerRmProcess->start();

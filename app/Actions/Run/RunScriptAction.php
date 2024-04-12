@@ -53,7 +53,6 @@ class RunScriptAction
 
         Bus::chain([
             function () {
-                echo "running CreateProjectFilesAtLocatonAction\n";
                 $createProjectFilesAtLocationAction = new CreateProjectFilesAtLocationAction();
                 $createProjectFilesAtLocationAction->execute($this->project,
                     "mcfs",
@@ -61,7 +60,6 @@ class RunScriptAction
             },
             new RunUserPythonScriptJob($this->run),
             function () {
-                echo "Running ImportFilesIntoProjectAtLocationAction\n";
                 $action = new ImportFilesIntoProjectAtLocationAction();
                 $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
             },
@@ -77,18 +75,16 @@ class RunScriptAction
 
     private function runSynchronously()
     {
-        echo "running CreateProjectFilesAtLocatonAction\n";
         $createProjectFilesAtLocationAction = new CreateProjectFilesAtLocationAction();
         $createProjectFilesAtLocationAction->execute($this->project, "mcfs", "__script_runs_in/{$this->run->uuid}");
 
         RunUserPythonScriptJob::dispatchSync($this->run);
 
-//        echo "Running ImportFilesIntoProjectAtLocationAction\n";
-//        $action = new ImportFilesIntoProjectAtLocationAction();
-//        $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
+        $action = new ImportFilesIntoProjectAtLocationAction();
+        $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
 
-        //$this->run->load('owner');
-//        Mail::to($this->run->owner)
-//            ->queue(new ScriptRunCompletedMail($this->run));
+        $this->run->load('owner');
+        Mail::to($this->run->owner)
+            ->queue(new ScriptRunCompletedMail($this->run));
     }
 }

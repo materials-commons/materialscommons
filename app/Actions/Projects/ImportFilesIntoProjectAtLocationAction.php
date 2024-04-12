@@ -108,7 +108,6 @@ class ImportFilesIntoProjectAtLocationAction
 
     private function processFile($path, \SplFileInfo $finfo)
     {
-        echo "processFile({$path})\n";
         // Find or create directory file is in
         $currentDir = $this->processDir(dirname($path));
         $finfo->getSize();
@@ -199,7 +198,7 @@ class ImportFilesIntoProjectAtLocationAction
 
         } catch (\Exception $e) {
             $msg = $e->getMessage();
-            return false;
+            return true;
         }
 
         return true;
