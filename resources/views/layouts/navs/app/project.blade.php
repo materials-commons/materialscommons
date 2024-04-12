@@ -81,6 +81,18 @@
                 </a>
             </li>
 
+            @if(isInBeta('run_scripts'))
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.runs')}}"
+                       data-toggle="tooltip"
+                       title="View job run status and results"
+                       href="{{route('projects.runs.index', [$project])}}">
+                        <i class="fa-fw fas fa-terminal mr-2 "></i>
+                        Run Results
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item mt-2">
                 <span class="ml-5">Organization</span>
             </li>
