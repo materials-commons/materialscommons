@@ -6,6 +6,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property integer id
@@ -49,5 +50,25 @@ class ScriptRun extends Model
     public function script()
     {
         return $this->belongsTo(Script::class, 'script_id');
+    }
+
+    public function logPath(): string
+    {
+        return Storage::disk('mcfs')->path($this->partialLogPath());
+    }
+
+    public function deleteLog(): bool
+    {
+        return Storage::disk('mcfs')->delete($this->partialLogPath());
+    }
+
+    public function getLogContents(): ?string
+    {
+        return Storage::disk('mcfs')->get($this->partialLogPath());
+    }
+
+    public function partialLogPath(): string
+    {
+        return "__run_script_logs/{$this->uuid}.log";
     }
 }
