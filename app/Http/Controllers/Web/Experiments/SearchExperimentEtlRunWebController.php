@@ -46,6 +46,6 @@ class SearchExperimentEtlRunWebController extends Controller
         }
 
         fclose($fd);
-        return "<pre>{$content}</pre>";
+        return "<pre style='white-space: pre-wrap'>{$content}</pre>";
     }
 }
