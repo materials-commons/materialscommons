@@ -4,10 +4,7 @@ namespace App\Mail\Runs;
 
 use App\Models\ScriptRun;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class ScriptRunCompletedMail extends Mailable
