@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{--    <META NAME="ROBOTS" CONTENT="NOFOLLOW">--}}
+    <META NAME="ROBOTS" CONTENT="NOFOLLOW">
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
