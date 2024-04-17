@@ -7,11 +7,13 @@ use App\Models\Attribute;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\EntityState;
+use App\ViewModels\Export\ActivityExportViewModel;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use function collect;
+use function strlen;
 use function view;
 
 class ActivityExport implements FromView, WithTitle
@@ -33,21 +35,11 @@ class ActivityExport implements FromView, WithTitle
     public function view(): View
     {
         $activities = $this->getActivities();
-        $uniqueAttributeNames = $this->getUniqueActivityAttributeNames($activities);
         $samples = $this->getEntities($activities);
-        $longestSampleNameLen = 0;
-        $samples->each(function ($entityActivity) use (&$longestSampleNameLen) {
-            $entity = $entityActivity[0];
-            $len = strlen($entity->name);
-            if ($len > $longestSampleNameLen) {
-                $longestSampleNameLen = $len;
-            }
-        });
-        return view('exports.activity', [
-            'samples'              => $samples,
-            'longestSampleNameLen' => $longestSampleNameLen,
-            'uniqueAttributeNames' => $uniqueAttributeNames,
-        ]);
+
+        $viewModel = new ActivityExportViewModel($activities, $samples);
+
+        return view('exports.activity', $viewModel);
     }
 
     private function getActivities()
@@ -56,24 +48,6 @@ class ActivityExport implements FromView, WithTitle
                        ->where("dataset_id", $this->dataset->id)
                        ->where("name", $this->activityName)
                        ->get();
-    }
-
-    private function getUniqueActivityAttributeNames($activities)
-    {
-        $uniqueAttributeNames = collect();
-        $activities->each(function (Activity $activity) use ($uniqueAttributeNames) {
-            $activity->attributes->each(function (Attribute $attribute) use ($uniqueAttributeNames) {
-                $unit = "";
-                if ($attribute->values->count() !== 0) {
-                    if (!blank($attribute->values[0]->unit)) {
-                        $unit = "({$attribute->values[0]->unit})";
-                    }
-                }
-                $uniqueAttributeNames->put($attribute->name, $unit);
-            });
-        });
-
-        return $uniqueAttributeNames;
     }
 
     private function getEntities($activities)
