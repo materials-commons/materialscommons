@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
+use function collect;
+use function is_null;
 
 /**
  * @property integer id
@@ -32,5 +35,34 @@ class Script extends Model
     public function scriptFile(): BelongsTo
     {
         return $this->belongsTo(File::class, 'script_file_id');
+    }
+
+    public static function listForProject(Project $project): Collection
+    {
+        $dir = File::where('path', "/scripts")
+                   ->where('project_id', $project->id)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
+                   ->first();
+
+        if (is_null($dir)) {
+            return collect();
+        }
+
+        $scriptFiles = File::with('directory')
+                           ->where('directory_id', $dir->id)
+                           ->whereNull('dataset_id')
+                           ->whereNull('deleted_at')
+                           ->where('current', true)
+                           ->where('name', 'like', '%.py')
+                           ->get();
+
+        if (($scriptFiles->count() == 0)) {
+            return collect();
+        }
+
+        return Script::with('scriptFile.directory')
+                     ->whereIn("script_file_id", $scriptFiles->pluck('id'))
+                     ->get();
     }
 }

@@ -141,6 +141,9 @@ class File extends Model implements Searchable
 
     public function fullPath()
     {
+        if (is_null($this->directory)) {
+            $this->load('directory');
+        }
         if ($this->isDir()) {
             return $this->path;
         }

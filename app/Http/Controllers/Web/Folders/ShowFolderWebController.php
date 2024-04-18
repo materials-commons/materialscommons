@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Folders;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
+use App\Models\Script;
 use App\Traits\GetProjectFolderFiles;
 use App\Traits\Projects\UserProjects;
 use App\ViewModels\Folders\ShowFolderViewModel;
@@ -31,6 +32,7 @@ class ShowFolderWebController extends Controller
         $viewModel = (new ShowFolderViewModel($dir, $files))
             ->withProject($project)
             ->withReadme($readme)
+            ->withScripts(Script::listForProject($project))
             ->withProjects($projects);
         return view('app.projects.folders.show', $viewModel);
     }

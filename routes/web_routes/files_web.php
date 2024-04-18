@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
 use App\Http\Controllers\Web\Files\RenameFileWebController;
 use App\Http\Controllers\Web\Files\Scripts\RunScriptWebController;
+use App\Http\Controllers\Web\Files\Scripts\RunScriptWithFolderContextWebController;
 use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
@@ -78,6 +79,9 @@ Route::get('/projects/{project}/files/{file}/download', DownloadFileWebControlle
 
 Route::get('/projects/{project}/files/{file}/run', RunScriptWebController::class)
      ->name('projects.files.run-script');
+
+Route::get("/projects/{project}/dir/{dir}/files/{file}/run", RunScriptWithFolderContextWebController::class)
+     ->name('projects.files.run-script-with-folder-context');
 
 Route::get('/projects/{project}/files/{file}/create-experiment', function (Project $project, File $file) {
     return view('app.files.import', compact('project', 'file'));

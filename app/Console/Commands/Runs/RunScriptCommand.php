@@ -34,7 +34,7 @@ class RunScriptCommand extends Command
         $file = File::findOrFail($this->argument('file'));
         $user = User::where('email', $this->argument('email'))->first();
 
-        $run = $action->execute($file, $project, $user, true);
+        $run = $action->execute($file, $project, $user, null, true);
 
         return 0;
     }

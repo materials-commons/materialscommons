@@ -20,13 +20,15 @@ class RunScriptAction
     private Script $script;
     private Project $project;
 
+    private ?File $dir;
     private User $user;
     private ScriptRun $run;
 
-    public function execute(File $file, Project $project, User $user, $synchronous = false)
+    public function execute(File $file, Project $project, User $user, ?File $dir = null, $synchronous = false)
     {
         $this->project = $project;
         $this->user = $user;
+        $this->dir = $dir;
         $s = Script::where('script_file_id', $file->id)->first();
         if (is_null($s)) {
             // Create a new script
@@ -58,10 +60,13 @@ class RunScriptAction
                     "mcfs",
                     "__script_runs_in/{$this->run->uuid}");
             },
-            new RunUserPythonScriptJob($this->run),
+            new RunUserPythonScriptJob($this->run, $this->dir),
             function () {
                 $action = new ImportFilesIntoProjectAtLocationAction();
                 $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
+            },
+            function () {
+
             },
             function () {
                 $this->run->load('owner');

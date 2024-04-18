@@ -14,58 +14,61 @@
             {{--            <a class="float-right action-link" href="#">--}}
             {{--                <i class="fas fa-trash mr-2"></i>Delete Files--}}
             {{--            </a>--}}
+            <div class="float-right" style="padding-right:80px">
+                <div class="dropdown">
+                    <a class="dropdown-toggle action-link" data-toggle="dropdown" aria-expanded="false">
+                        Actions
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item"
+                           href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
+                            <i class="fas fa-fw fa-plus mr-2"></i>Add Files
+                        </a>
 
-            <a class="float-right action-link mr-4" data-toggle="modal" href="#copy-choose-project-dialog">
-                <i class="fas fa-copy mr-2"></i>Copy Files/Dirs
-            </a>
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.move', [$project, $directory])}}">
-                <i class="fas fa-angle-double-right mr-2"></i>Move Files
-            </a>
+                        <a class="dropdown-item" data-toggle="modal" href="#copy-choose-project-dialog">
+                            <i class="fas fa-copy mr-2"></i>Copy Files/Dirs
+                        </a>
 
-            {{--            @if($directory->name == "/")--}}
-            {{--                <a class="float-right action-link mr-4"--}}
-            {{--                   href="{{route('projects.folders.move', [$project, $directory])}}">--}}
-            {{--                    <i class="fas fa-angle-double-right mr-2"></i>Move Files--}}
-            {{--                </a>--}}
-            {{--            @else--}}
-            {{--                <a class="float-right action-link mr-4" href="#">--}}
-            {{--                    <i class="fas fa-trash mr-2"></i> Delete Directory--}}
-            {{--                </a>--}}
-            {{--                <a class="float-right action-link"--}}
-            {{--                   href="{{route('projects.folders.move', [$project, $directory])}}">--}}
-            {{--                    <i class="fas fa-angle-double-right mr-2"></i>Move Files--}}
-            {{--                </a>--}}
-            {{--            @endif--}}
+                        <a class="dropdown-item"
+                           href="{{route('projects.folders.move', [$project, $directory])}}">
+                            <i class="fas fa-angle-double-right mr-2"></i>Move Files
+                        </a>
 
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
-                <i class="fas fa-fw fa-plus mr-2"></i>Add Files
-            </a>
+                        <a class="dropdown-item"
+                           href="{{route('projects.folders.create', [$project, $directory])}}">
+                            <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
+                        </a>
 
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.create', [$project, $directory])}}">
-                <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
-            </a>
+                        @if($directory->name !== "/" && $files->count() === 0)
+                            <a class="dropdown-item"
+                               href="{{route('projects.folders.destroy', [$project, $directory])}}">
+                                <i class="fas fa-fw fa-trash mr-2"></i>Delete Directory
+                            </a>
+                        @endif
 
-            @if($directory->name !== "/" && $files->count() === 0)
-                <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.destroy', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-trash mr-2"></i>Delete
-                </a>
-            @endif
+                        @if($directory->name !== "/")
+                            <a class="dropdown-item"
+                               href="{{route('projects.folders.rename', [$project, $directory])}}">
+                                <i class="fas fa-fw fa-edit mr-2"></i>Rename Directory
+                            </a>
+                        @endif
 
-            @if($directory->name !== "/")
-                <a class="float-right action-link mr-4"
-                   href="{{route('projects.folders.rename', [$project, $directory])}}">
-                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
-                </a>
-            @endif
+                        @if(isInBeta('run_scripts'))
+                            @if($scripts->count() != 0)
+                                <a class="dropdown-item" data-toggle="modal" href="#select-script-dialog">
+                                    <i class="fas fa-fw fa-play-circle mr-2"></i>Run Script
+                                </a>
+                            @endif
+                        @endif
 
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.index-images', [$project, $directory])}}">
-                <i class="fas fa-fw fa-images mr-2"></i>View Images
-            </a>
+                        <a class="dropdown-item"
+                           href="{{route('projects.folders.index-images', [$project, $directory])}}">
+                            <i class="fas fa-fw fa-images mr-2"></i>View Images
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </x-slot>
 
         <x-slot name="body">
@@ -160,6 +163,10 @@
     </x-card>
 
     @include('app.dialogs._copy-choose-project-dialog')
+
+    @if($scripts->count() != 0)
+        @include('app.dialogs._select-script-dialog')
+    @endif
 
     @push('scripts')
         <script>

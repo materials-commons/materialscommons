@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Helpers\PathHelpers;
+use App\Models\File;
 use App\Models\ScriptRun;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,14 +23,16 @@ class RunUserPythonScriptJob implements ShouldQueue
     public $tries = 1;
 
     public ScriptRun $run;
-    private $containerId;
+    public ?File $dir;
+    private string $containerId;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(ScriptRun $run)
+    public function __construct(ScriptRun $run, ?File $dir)
     {
         $this->run = $run;
+        $this->dir = $dir;
     }
 
     /**
@@ -51,7 +54,8 @@ class RunUserPythonScriptJob implements ShouldQueue
         // Run container
         $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
         $user = posix_getuid();
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e SCRIPT_DIR='${scriptDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $contextDir = $this->getContextDir();
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e CONTEXT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
@@ -85,6 +89,15 @@ class RunUserPythonScriptJob implements ShouldQueue
         $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
         $dockerContainerRmProcess->start();
         $dockerContainerRmProcess->wait();
+    }
+
+    private function getContextDir()
+    {
+        if (is_null($this->dir)) {
+            return "/data";
+        }
+
+        return PathHelpers::normalizePath("/data{$this->dir->path}");
     }
 
     public function failed($exception)
