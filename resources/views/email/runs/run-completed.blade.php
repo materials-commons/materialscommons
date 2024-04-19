@@ -6,15 +6,17 @@
     </p>
     <p>
         Your run of {{$run->script->scriptFile->name}} in project {{$run->project->name}}
-        @if(is_null($run->aborted))
+        @if(is_null($run->failed_at))
             completed at {{$run->finished_at}}.
         @else
-            aborted at {{$run->aborted_at}}.
+            failed at {{$run->failed_at}}.
         @endif
 
     </p>
     <p>
-        You can find the logs for your run at __link__here__. Any files that your job created
+        You can find the details and log for your run <a
+                href="{{route('projects.runs.show', [$run->project_id, $run->id])}}">here</a>. Any files that your job
+        created
         have been imported into the project.
     </p>
     <p>
