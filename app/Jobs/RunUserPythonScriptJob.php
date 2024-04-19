@@ -76,8 +76,13 @@ class RunUserPythonScriptJob implements ShouldQueue
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start();
         $dockerExecProcess->wait();
+        $exitCode = $dockerExecProcess->getExitCode();
 
-        $this->run->update(['finished_at' => Carbon::now()]);
+        if ($exitCode != 0) {
+            $this->run->update(['failed_at' => Carbon::now()]);
+        } else {
+            $this->run->update(['finished_at' => Carbon::now()]);
+        }
 
         // Stop container
         $dockerContainerStopCommand = "docker stop {$this->containerId}";
