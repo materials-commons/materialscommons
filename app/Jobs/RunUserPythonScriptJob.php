@@ -44,6 +44,7 @@ class RunUserPythonScriptJob implements ShouldQueue
         $inputPath = Storage::disk("mcfs")->path("__script_runs_in/{$this->run->uuid}");
 
         Storage::disk("script_runs_out")->makeDirectory($this->run->uuid);
+        $this->createContextDir();
         $outputPath = Storage::disk("script_runs_out")->path($this->run->uuid);
 
         // Setup logging dir
@@ -98,6 +99,19 @@ class RunUserPythonScriptJob implements ShouldQueue
         }
 
         return PathHelpers::normalizePath("/out/{$this->dir->path}");
+    }
+
+    private function createContextDir()
+    {
+        if (is_null($this->dir)) {
+            return;
+        }
+
+        if ($this->dir->path == "/") {
+            return;
+        }
+
+        Storage::disk("script_runs_out")->makeDirectory("{$this->run->uuid}{$this->dir->path}");
     }
 
     public function failed($exception)
