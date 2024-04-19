@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Files;
 use App\Actions\Files\CreateFileAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Files\FileResource;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class UploadFileNamedApiController extends Controller
@@ -17,7 +18,9 @@ class UploadFileNamedApiController extends Controller
 
         $files = $validated['files'];
         abort_unless(sizeof($files) == 1, 403);
+
+        $dir = File::findOrFail($directoryId);
         $createFileAction = new CreateFileAction();
-        return FileResource::collection(collect([$createFileAction($projectId, $directoryId, '', $files[0], $name)]));
+        return FileResource::collection(collect([$createFileAction($projectId, $dir, '', $files[0], $name)]));
     }
 }

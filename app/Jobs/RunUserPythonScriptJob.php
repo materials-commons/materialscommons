@@ -94,10 +94,10 @@ class RunUserPythonScriptJob implements ShouldQueue
     private function getContextDir()
     {
         if (is_null($this->dir)) {
-            return "/data";
+            return "/out";
         }
 
-        return PathHelpers::normalizePath("/data{$this->dir->path}");
+        return PathHelpers::normalizePath("/out/{$this->dir->path}");
     }
 
     public function failed($exception)

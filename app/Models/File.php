@@ -191,6 +191,14 @@ class File extends Model implements Searchable
 
     public function isRunnable(): bool
     {
+        if (is_null($this->directory)) {
+            $this->load('directory');
+        }
+
+        if ($this->directory->path != "/scripts") {
+            return false;
+        }
+
         if (Str::endsWith($this->name, ".py")) {
             return true;
         }

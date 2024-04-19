@@ -37,6 +37,21 @@ class Script extends Model
         return $this->belongsTo(File::class, 'script_file_id');
     }
 
+    public static function createScriptForFileIfNeeded(File $file)
+    {
+        $existingScript = Script::where('script_file_id', $file->id)->first();
+        if (!is_null($existingScript)) {
+            return $existingScript;
+        }
+
+        return Script::create([
+            'description'    => 'Create script run',
+            'queue'          => 'globus',
+            'container'      => 'mc/mcpyimage',
+            'script_file_id' => $file->id,
+        ]);
+    }
+
     public static function listForProject(Project $project): Collection
     {
         $dir = File::where('path', "/scripts")

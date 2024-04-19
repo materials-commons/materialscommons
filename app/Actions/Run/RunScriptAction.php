@@ -12,6 +12,8 @@ use App\Models\Script;
 use App\Models\ScriptRun;
 use App\Models\User;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 use function is_null;
 
@@ -66,7 +68,11 @@ class RunScriptAction
                 $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
             },
             function () {
-
+                try {
+                    Storage::disk('mcfs')->deleteDirectory("__script_runs_in/{$this->run->uuid}");
+                } catch (\Exception $e) {
+                    Log::error("Unable to delete run script dir __script_runs_in/{$this->run->uuid}: {$e->getMessage()}");
+                }
             },
             function () {
                 $this->run->load('owner');

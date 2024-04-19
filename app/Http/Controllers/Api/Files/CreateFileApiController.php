@@ -6,6 +6,7 @@ use App\Actions\Files\CreateFileAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Files\CreateFileRequest;
 use App\Http\Resources\Files\FileResource;
+use App\Models\File;
 
 class CreateFileApiController extends Controller
 {
@@ -25,8 +26,9 @@ class CreateFileApiController extends Controller
             $description = $validated['description'];
         }
 
-        $file = $createFileAction($validated["project_id"], $validated["directory_id"], $description,
-            $validated["file"]);
+        $dir = File::findOrFail($validated["directory_id"]);
+
+        $file = $createFileAction($validated["project_id"], $dir, $description, $validated["file"]);
 
         return new FileResource($file);
     }

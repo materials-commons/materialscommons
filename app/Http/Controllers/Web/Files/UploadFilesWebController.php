@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Files;
 
 use App\Actions\Files\CreateFilesAction;
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class UploadFilesWebController extends Controller
@@ -14,6 +15,8 @@ class UploadFilesWebController extends Controller
             'files.*' => 'required|file',
         ]);
 
-        $createFilesAction($projectId, $directoryId, $validated['files']);
+        $dir = File::findOrFail($directoryId);
+
+        $createFilesAction($projectId, $dir, $validated['files']);
     }
 }

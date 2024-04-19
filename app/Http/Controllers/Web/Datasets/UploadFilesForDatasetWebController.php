@@ -20,7 +20,7 @@ class UploadFilesForDatasetWebController extends Controller
         ]);
 
         $directory = File::findOrFail($directoryId);
-        $files = $createFilesAction($projectId, $directoryId, $validated['files']);
+        $files = $createFilesAction($projectId, $directory, $validated['files']);
 
         // If in root dir then path is blank because construction of the file path includes a '/' separator.
         $path = $directory->path === '/' ? '' : $directory->path;
