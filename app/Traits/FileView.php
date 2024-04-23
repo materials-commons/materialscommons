@@ -1,9 +1,8 @@
 <?php
 
-namespace App\ViewModels\Files;
+namespace App\Traits;
 
 use App\Models\File;
-use App\Traits\FileType;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

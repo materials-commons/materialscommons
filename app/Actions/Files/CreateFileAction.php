@@ -64,7 +64,11 @@ class CreateFileAction
             'disk'         => 'mcfs',
         ]);
 
-        $existing = File::where('directory_id', $dir->id)->where('name', $fileEntry->name)->get();
+        $existing = File::where('directory_id', $dir->id)
+                        ->whereNull('dataset_id')
+                        ->whereNull('deleted_at')
+                        ->where('name', $fileEntry->name)
+                        ->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
                                     ->whereNull('deleted_at')
                                     ->first();

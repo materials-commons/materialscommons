@@ -1,11 +1,7 @@
-<span class="fs-10 grey-5">Path: {{$file->fullPath()}}</span>
-<a href="#" onclick="mcutil.copyToClipboard('{{$file->fullPath()}}')" class="ml-2">
-    <i class="fa fas fa-clone"></i>
-</a>
-<x-show-standard-details :item="$file">
-    <span class="ml-3 fs-10 grey-5">Mediatype: {{$file->mime_type}}</span>
-    <span class="ml-3 fs-10 grey-5">Size: {{$file->toHumanBytes()}}</span>
-</x-show-standard-details>
+@include('partials.files._file-header-controls', [
+    'displayRoute' => route('projects.files.display', [$project, $file]),
+    'editRoute' => route('projects.files.edit', [$project, $file]),
+])
 {{--<form>--}}
 {{--    <div class="form-group">--}}
 {{--        <label>Tags <a href="#" class="ml-3 action-linkx">edit</a></label>--}}
