@@ -6,6 +6,7 @@ use App\Actions\Files\SaveFile;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
+use App\Models\Script;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use function auth;
@@ -51,6 +52,10 @@ class SaveEditedProjectFileWebController extends Controller
         $fileEntry->save();
 
         $this->saveFileContents($fileEntry, $contents);
+
+        if ($fileEntry->isRunnable()) {
+            Script::createScriptForFileIfNeeded($fileEntry);
+        }
 
         return redirect(route('projects.files.show', [$project, $fileEntry]));
     }
