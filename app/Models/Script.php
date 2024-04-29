@@ -18,6 +18,8 @@ use function is_null;
  * @property string queue
  * @property string container
  * @property integer script_file_id
+ * @property mixed created_at
+ * @property mixed updated_at
  *
  * @mixin Builder
  */
