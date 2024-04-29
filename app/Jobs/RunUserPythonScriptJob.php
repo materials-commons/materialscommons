@@ -56,7 +56,7 @@ class RunUserPythonScriptJob implements ShouldQueue
         $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
         $user = posix_getuid();
         $contextDir = $this->getContextDir();
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e CONTEXT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e SCRIPT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
