@@ -6,6 +6,8 @@ use App\Actions\Files\CreateFileAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Files\FileResource;
 use App\Models\File;
+use App\Models\Project;
+use App\Models\ScriptTrigger;
 use Illuminate\Http\Request;
 
 class UploadFileNamedApiController extends Controller
@@ -20,7 +22,11 @@ class UploadFileNamedApiController extends Controller
         abort_unless(sizeof($files) == 1, 403);
 
         $dir = File::findOrFail($directoryId);
-        $createFileAction = new CreateFileAction();
-        return FileResource::collection(collect([$createFileAction($projectId, $dir, '', $files[0], $name)]));
+        $project = Project::findOrFail($projectId);
+
+        $triggers = ScriptTrigger::getProjectTriggers($project);
+        $createFileAction = new CreateFileAction($triggers);
+
+        return FileResource::collection(collect([$createFileAction($project, $dir, '', $files[0], $name)]));
     }
 }

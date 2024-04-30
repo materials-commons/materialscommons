@@ -24,15 +24,17 @@ class RunUserPythonScriptJob implements ShouldQueue
 
     public ScriptRun $run;
     public ?File $dir;
+    public ?File $inputFile;
     private string $containerId;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(ScriptRun $run, ?File $dir)
+    public function __construct(ScriptRun $run, ?File $dir, ?File $inputFile = null)
     {
         $this->run = $run;
         $this->dir = $dir;
+        $this->inputFile = $inputFile;
     }
 
     /**
@@ -56,7 +58,13 @@ class RunUserPythonScriptJob implements ShouldQueue
         $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
         $user = posix_getuid();
         $contextDir = $this->getContextDir();
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e SCRIPT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+
+        $inputFilePath = "";
+        if (!is_null($this->inputFile)) {
+            $inputFilePath = PathHelpers::normalizePath("/data/{$this->inputFile->fullPath()}");
+        }
+
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e INPUT_FILE='${inputFilePath}' -e SCRIPT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();

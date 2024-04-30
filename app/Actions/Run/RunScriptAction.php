@@ -26,7 +26,8 @@ class RunScriptAction
     private User $user;
     private ScriptRun $run;
 
-    public function execute(File $file, Project $project, User $user, ?File $dir = null, $synchronous = false)
+    public function execute(File $file, Project $project, User $user, ?File $dir = null, ?File $inputFile = null,
+                                 $synchronous = false)
     {
         $this->project = $project;
         $this->user = $user;
@@ -51,7 +52,7 @@ class RunScriptAction
         ]);
 
         if ($synchronous) {
-            $this->runSynchronously();
+            $this->runSynchronously($inputFile);
             return $this->run;
         }
 
@@ -62,7 +63,7 @@ class RunScriptAction
                     "mcfs",
                     "__script_runs_in/{$this->run->uuid}");
             },
-            new RunUserPythonScriptJob($this->run, $this->dir),
+            new RunUserPythonScriptJob($this->run, $this->dir, $inputFile),
             function () {
                 $action = new ImportFilesIntoProjectAtLocationAction();
                 $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
@@ -84,12 +85,12 @@ class RunScriptAction
         return $this->run;
     }
 
-    private function runSynchronously()
+    private function runSynchronously($inputFile): void
     {
         $createProjectFilesAtLocationAction = new CreateProjectFilesAtLocationAction();
         $createProjectFilesAtLocationAction->execute($this->project, "mcfs", "__script_runs_in/{$this->run->uuid}");
 
-        RunUserPythonScriptJob::dispatchSync($this->run);
+        RunUserPythonScriptJob::dispatchSync($this->run, $this->dir, $inputFile);
 
         $action = new ImportFilesIntoProjectAtLocationAction();
         $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);

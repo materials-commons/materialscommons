@@ -7,18 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Files\CreateFileRequest;
 use App\Http\Resources\Files\FileResource;
 use App\Models\File;
+use App\Models\Project;
+use App\Models\ScriptTrigger;
 
 class CreateFileApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \App\Http\Requests\Files\CreateFileRequest  $request
-     * @param  \App\Actions\Files\CreateFileAction  $createFileAction
-     *
-     * @return \App\Http\Resources\Files\FileResource
-     */
-    public function __invoke(CreateFileRequest $request, CreateFileAction $createFileAction)
+    public function __invoke(CreateFileRequest $request)
     {
         $validated   = $request->validated();
         $description = '';
@@ -27,8 +21,12 @@ class CreateFileApiController extends Controller
         }
 
         $dir = File::findOrFail($validated["directory_id"]);
+        $project = Project::findOrFail($validated["project_id"]);
 
-        $file = $createFileAction($validated["project_id"], $dir, $description, $validated["file"]);
+        $triggers = ScriptTrigger::getProjectTriggers($project);
+        $createFileAction = new CreateFileAction($triggers);
+
+        $file = $createFileAction($project, $dir, $description, $validated["file"]);
 
         return new FileResource($file);
     }

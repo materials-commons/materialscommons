@@ -31,10 +31,6 @@ return new class extends Migration {
                   ->constrained('users')
                   ->onDelete('cascade');
 
-            $table->foreignId('script_id')
-                  ->constrained('scripts')
-                  ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

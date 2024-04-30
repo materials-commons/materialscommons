@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Run\RunScriptAction;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,5 +52,30 @@ class ScriptTrigger extends Model
         return $this->belongsTo(Script::class, 'script_id');
     }
 
+    public static function getProjectTriggers(Project $project)
+    {
+        return ScriptTrigger::where('project_id', $project->id)->get();
+    }
 
+    public function fileWillActivateTrigger(File $file): bool
+    {
+        // For now the only supported trigger is when == "upload", and what being equal to the
+        // path of the file.
+        if ($this->when !== "upload") {
+            return false;
+        }
+
+        if ($this->what !== $file->fullPath()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function execute(Project $project, File $file, User $user)
+    {
+        $this->load('script.scriptFile.directory');
+        $runScriptionAction = new RunScriptAction();
+        $runScriptionAction->execute($this->script->scriptFile, $project, $user, null, $file);
+    }
 }

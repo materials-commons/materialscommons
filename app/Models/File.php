@@ -139,11 +139,12 @@ class File extends Model implements Searchable
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
-    public function fullPath()
+    public function fullPath(): ?string
     {
         if (is_null($this->directory)) {
             $this->load('directory');
         }
+
         if ($this->isDir()) {
             return $this->path;
         }
@@ -159,7 +160,7 @@ class File extends Model implements Searchable
         return $this->directory->path."/".$this->name;
     }
 
-    public function dirPath()
+    public function dirPath(): ?string
     {
         if ($this->isDir()) {
             return $this->path;
@@ -170,7 +171,7 @@ class File extends Model implements Searchable
 
     // Utility methods
 
-    public function toHumanBytes()
+    public function toHumanBytes(): string
     {
         return formatBytes($this->size);
     }

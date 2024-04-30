@@ -5,13 +5,25 @@ namespace App\Actions\Files;
 use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
 use App\Models\Script;
+use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
 
 class CreateFileAction
 {
     use SaveFile;
 
-    public function __invoke($projectId, $dir, $description, $file, $name = null)
+    private Collection $triggers;
+
+    function __construct(?Collection $triggers = null)
+    {
+        if (is_null($triggers)) {
+            $this->triggers = collect();
+        } else {
+            $this->triggers = $triggers;
+        }
+    }
+
+    public function __invoke($project, $dir, $description, $file, $name = null)
     {
         umask(0);
         $nameToUse = $name ?? $file->getClientOriginalName();
@@ -44,6 +56,8 @@ class CreateFileAction
                 Script::createScriptForFileIfNeeded($existingFile);
             }
 
+            $this->fireTriggers($existingFile);
+
             return $existingFile;
         }
 
@@ -59,7 +73,7 @@ class CreateFileAction
             'owner_id'     => auth()->id(),
             'current'      => true,
             'description'  => $description,
-            'project_id'   => $projectId,
+            'project_id' => $project->id,
             'directory_id' => $dir->id,
             'disk'         => 'mcfs',
         ]);
@@ -105,6 +119,8 @@ class CreateFileAction
             Script::createScriptForFileIfNeeded($fileEntry);
         }
 
+        $this->fireTriggers($fileEntry);
+
         return $fileEntry;
     }
 
@@ -116,6 +132,15 @@ class CreateFileAction
                    ->whereNull('dataset_id')
                    ->where('name', $name)
                    ->first();
+    }
+
+    private function fireTriggers(File $file)
+    {
+        foreach ($this->triggers as $trigger) {
+            if ($trigger->fileWillActivateTrigger($file)) {
+                $trigger->execute();
+            }
+        }
     }
 
 }
