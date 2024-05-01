@@ -15,9 +15,9 @@
             <table id="runs" class="table table-hover" style="width: 100%">
                 <thead>
                 <tr>
+                    <th>Script</th>
                     <th>When</th>
                     <th>Status</th>
-                    <th>Script</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,12 +25,17 @@
                     <tr>
                         <td>
                             <a href="{{route('projects.runs.show', [$project, $run])}}">
+                                {{$run->script->scriptFile->fullPath()}}
+                            </a>
+                        </td>
+                        <td>
+                            <span>
                                 @if(!is_null($run->started_at))
                                     {{$run->started_at->diffForHumans()}}
                                 @else
                                     Hasn't Run
                                 @endif
-                            </a>
+                            </span>
                         </td>
                         <td>
                             @if(is_null($run->started_at))
@@ -40,15 +45,6 @@
                             @else
                                 Errored
                             @endif
-                        </td>
-                        <td>
-                            <a href="{{route('projects.files.show', [$project, $run->script->scriptFile])}}">
-                                @if($run->script->scriptFile->directory->name == "/")
-                                    /{{$run->script->scriptFile->name}}
-                                @else
-                                    {{$run->script->scriptFile->directory->path}}/{{$run->script->scriptFile->name}}
-                                @endif
-                            </a>
                         </td>
                     </tr>
                 @endforeach
