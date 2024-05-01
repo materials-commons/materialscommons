@@ -24,7 +24,7 @@ class ScriptRunCompletedMail extends Mailable
     public function build()
     {
         $this->run->load(['project', 'owner', 'script.scriptFile.directory']);
-        return $this->subject("Your script run of {{$this->run->script->scriptFile->name}} completed")
+        return $this->subject("Your script run of {$this->run->script->scriptFile->fullPath()} completed")
                     ->view('email.runs.run-completed', [
                         'run' => $this->run,
                     ]);
