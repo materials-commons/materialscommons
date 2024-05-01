@@ -82,6 +82,7 @@ class RunUserPythonScriptJob implements ShouldQueue
         $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
         $dockerExecCommand = "docker exec --user {$user}:{$user} -t {$this->containerId} python ${scriptPath} >> {$logPath} 2>&1";
         Storage::disk('mcfs')->append($logPathPartial, "{$dockerExecCommand}\n");
+        Storage::disk('mcfs')->append($logPathPartial, "-------- script log starts --------\n\n");
         $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
         $dockerExecProcess->start();
         $dockerExecProcess->wait();

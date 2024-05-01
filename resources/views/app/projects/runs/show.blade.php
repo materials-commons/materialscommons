@@ -27,11 +27,14 @@
                     {{$run->script->scriptFile->directory->path}}/{{$run->script->scriptFile->name}}
                 @endif
             </a>
+                <div class="row border">
+                    <x-display-file :file="$run->script->scriptFile"
+                                    :display-route="route('projects.files.display', [$project, $run->script->scriptFile])"></x-display-file>
+                </div>
             <br/>
-            <br/>
-            <h5>Log</h5>
-            <div class="col-8">
-                <pre style="white-space: pre-wrap">{{$log}}</pre>
+                <h4>Log</h4>
+                <div class="row border">
+                    <pre class="ml-3 mt-2" style="white-space: pre-wrap">{{$log}}</pre>
             </div>
         </x-slot:body>
     </x-card>

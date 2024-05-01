@@ -21,7 +21,7 @@
             @break
 
         @case("text")
-            <div class="ml-3">
+            <div class="ml-3 mt-2">
                 @if($file->size > 2000000)
                     <span class="ml-3">File too large to display</span>
                 @else
