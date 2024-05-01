@@ -144,6 +144,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/query_web.php');
     require base_path('routes/web_routes/site_web.php');
     require base_path('routes/web_routes/runs_web.php');
+    require base_path('routes/web_routes/triggers_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 

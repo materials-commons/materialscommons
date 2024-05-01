@@ -91,6 +91,16 @@
                         Run Results
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.triggers')}}"
+                       data-toggle="tooltip"
+                       title="View job run status and results"
+                       href="{{route('projects.triggers.index', [$project])}}">
+                        <i class="fa-fw fas fa-bolt mr-2 "></i>
+                        Triggers
+                    </a>
+                </li>
             @endif
 
             <li class="nav-item mt-2">
