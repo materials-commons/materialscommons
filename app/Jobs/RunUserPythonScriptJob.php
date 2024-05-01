@@ -51,6 +51,7 @@ class RunUserPythonScriptJob implements ShouldQueue
 
         // Setup logging dir
         Storage::disk('mcfs')->makeDirectory("__run_script_logs");
+        chmod(Storage::disk('mcfs')->path("__run_script_logs"), 0777);
         $logPathPartial = "__run_script_logs/{$this->run->uuid}.log";
         $logPath = Storage::disk('mcfs')->path($logPathPartial);
 
