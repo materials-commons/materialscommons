@@ -14,17 +14,13 @@
             {{--            <a class="float-right action-link" href="#">--}}
             {{--                <i class="fas fa-trash mr-2"></i>Delete Files--}}
             {{--            </a>--}}
-            <div class="float-right" style="padding-right:80px">
+
+            <div class="float-right" style="padding-right:60px">
                 <div class="dropdown">
                     <a class="dropdown-toggle action-link" data-toggle="dropdown" aria-expanded="false">
                         Actions
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item"
-                           href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
-                            <i class="fas fa-fw fa-plus mr-2"></i>Add Files
-                        </a>
-
                         <a class="dropdown-item" data-toggle="modal" href="#copy-choose-project-dialog">
                             <i class="fas fa-copy mr-2"></i>Copy Files/Dirs
                         </a>
@@ -69,6 +65,10 @@
                 </div>
             </div>
 
+            <a class="float-right action-link mr-4"
+               href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
+                <i class="fas fa-fw fa-plus mr-2"></i>Add Files
+            </a>
         </x-slot>
 
         <x-slot name="body">
