@@ -58,14 +58,14 @@ class RunUserPythonScriptJob implements ShouldQueue
         // Run container
         $scriptDir = PathHelpers::normalizePath("/data/{$this->run->script->scriptFile->directory->path}");
         $user = posix_getuid();
-        $contextDir = $this->getContextDir();
+        $runDir = $this->getRunDir();
 
         $inputFilePath = "";
         if (!is_null($this->inputFile)) {
             $inputFilePath = PathHelpers::normalizePath("/data/{$this->inputFile->fullPath()}");
         }
 
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e INPUT_FILE='${inputFilePath}' -e SCRIPT_DIR='${contextDir}' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
@@ -107,13 +107,13 @@ class RunUserPythonScriptJob implements ShouldQueue
         $dockerContainerRmProcess->wait();
     }
 
-    private function getContextDir()
+    private function getRunDir()
     {
         if (is_null($this->dir)) {
-            return "/out";
+            return "";
         }
 
-        return PathHelpers::normalizePath("/out/{$this->dir->path}");
+        return substr($this->dir->path, 1);
     }
 
     private function createContextDir()
