@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Actions\Run\RunScriptAction;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,9 +53,11 @@ class ScriptTrigger extends Model
         return $this->belongsTo(Script::class, 'script_id');
     }
 
-    public static function getProjectTriggers(Project $project)
+    public static function getProjectTriggers(Project $project): Collection|array
     {
-        return ScriptTrigger::where('project_id', $project->id)->get();
+        return ScriptTrigger::with(['script.scriptFile.directory', 'owner'])
+                            ->where('project_id', $project->id)
+                            ->get();
     }
 
     public function fileWillActivateTrigger(File $file): bool
