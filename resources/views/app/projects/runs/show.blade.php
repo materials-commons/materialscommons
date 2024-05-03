@@ -21,11 +21,7 @@
             @endif
             <br>
             <a href="{{route('projects.files.show', [$project, $run->script->scriptFile])}}">
-                @if($run->script->scriptFile->directory->name == "/")
-                    /{{$run->script->scriptFile->name}}
-                @else
-                    {{$run->script->scriptFile->directory->path}}/{{$run->script->scriptFile->name}}
-                @endif
+                {{$run->script->scriptFile->fullPath()}}
             </a>
                 <div class="row border">
                     <x-display-file :file="$run->script->scriptFile"
