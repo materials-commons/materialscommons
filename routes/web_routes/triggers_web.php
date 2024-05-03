@@ -30,6 +30,6 @@ Route::put('/projects/{project}/triggers/{trigger}', UpdateTriggerWebController:
 
 Route::get('/projects/{project}/triggers/{trigger}/delete', DeleteTriggerWebController::class)
      ->name('projects.triggers.delete');
-Route::delete('/projects/{project}/triggers/{trigger}', DestroyTriggerWebController::class)
+Route::get('/projects/{project}/triggers/{trigger}', DestroyTriggerWebController::class)
     ->name('projects.triggers.destroy');
 
