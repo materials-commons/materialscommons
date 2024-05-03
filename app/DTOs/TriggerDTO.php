@@ -2,7 +2,7 @@
 
 namespace App\DTOs;
 
-class CreateTriggerDTO
+class TriggerDTO
 {
     public string $name;
     public string $description;

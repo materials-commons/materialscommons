@@ -25,7 +25,7 @@ Route::get('/projects/{project}/triggers/{trigger}/show', ShowTriggerWebControll
 Route::get('/projects/{project}/triggers/{trigger}/edit', EditTriggerWebController::class)
     ->name('projects.triggers.edit');
 
-Route::patch('/projects/{project}/triggers/{trigger}', UpdateTriggerWebController::class)
+Route::put('/projects/{project}/triggers/{trigger}', UpdateTriggerWebController::class)
     ->name('projects.triggers.update');
 
 Route::get('/projects/{project}/triggers/{trigger}/delete', DeleteTriggerWebController::class)

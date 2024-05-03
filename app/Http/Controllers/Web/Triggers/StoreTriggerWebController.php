@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Triggers;
 
-use App\DTOs\CreateTriggerDTO;
+use App\DTOs\TriggerDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Script;
@@ -24,7 +24,7 @@ class StoreTriggerWebController extends Controller
             'script_file_id' => 'required|integer',
         ]);
 
-        $triggerDTO = CreateTriggerDTO::fromArray($validated);
+        $triggerDTO = TriggerDTO::fromArray($validated);
 
         $script = Script::where('script_file_id', $triggerDTO->scriptFileId)
                         ->first();

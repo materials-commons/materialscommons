@@ -219,6 +219,10 @@ a.navbar-brand:hover {
     text-decoration: none;
 }
 
+.btn-no-tt {
+    text-transform: none !important;
+}
+
 .bg-nav {
     // Current website
     //background-color: $indigo-4;
