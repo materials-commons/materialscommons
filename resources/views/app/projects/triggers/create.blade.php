@@ -25,13 +25,13 @@
 
                 <div class="form-group">
                     <label for="what">What</label>
-                    <input class="form-control" id="what" name="what" type="text" value=""
+                    <input class="form-control" id="what" name="what" type="text" value="{{old('what')}}"
                            placeholder="What...">
                 </div>
 
                 <div class="form-group">
                     <label for="name">When</label>
-                    <input class="form-control" id="when" name="when" type="text" value=""
+                    <input class="form-control" id="when" name="when" type="text" value="{{old('when')}}"
                            placeholder="When...">
                 </div>
 
