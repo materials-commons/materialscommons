@@ -56,6 +56,7 @@
                        href="#" onclick="document.getElementById('trigger-create').submit()">
                         Create
                     </a>
+                </div>
             </form>
         </x-slot:body>
     </x-card>
