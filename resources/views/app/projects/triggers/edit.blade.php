@@ -8,7 +8,7 @@
 
 @section('content')
     <x-card>
-        <x-slot:header>Edit Trigger {{$trigger->name}}</x-slot:header>
+        <x-slot:header>Edit Trigger: {{$trigger->name}}</x-slot:header>
         <x-slot:body>
             <form method="post" action="{{route('projects.triggers.update', [$project, $trigger])}}" id="trigger-edit">
                 @method('PUT')
@@ -36,10 +36,8 @@
                            placeholder="When...">
                 </div>
 
-                <button class="btn-light"></button>
-
                 <div class="form-group">
-                    <label for="name">Select Script</label>
+                    <label for="script_file_id">Select Script</label>
                     <select name="script_file_id" class="selectpicker col-lg-10" data-live-search="true"
                             data-style="btn-light no-tt"
                             title="Select Script">

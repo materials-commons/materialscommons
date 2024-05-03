@@ -45,6 +45,6 @@ class UpdateTriggerWebController extends Controller
             'script_file_id' => $triggerDTO->scriptFileId,
         ]);
 
-        return redirect(route('projects.trigger.show', [$project, $trigger]));
+        return redirect(route('projects.triggers.show', [$project, $trigger]));
     }
 }
