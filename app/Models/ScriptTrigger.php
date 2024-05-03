@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use function is_null;
 
 /**
  * @property integer id
@@ -78,7 +79,60 @@ class ScriptTrigger extends Model
     public function execute(Project $project, File $file, User $user)
     {
         $this->load('script.scriptFile.directory');
+
+        // update to the latest version of the script before firing the trigger.
+        $this->loadLatestVersionOfScript();
+
+        // sanity check - Make sure we aren't executing a script that has been marked
+        // for deletion.
+        if ($this->triggerScriptHasBeenMarkedForDeletion()) {
+            return;
+        }
+
         $runScriptionAction = new RunScriptAction();
         $runScriptionAction->execute($this->script->scriptFile, $project, $user, null, $file);
+    }
+
+    // loadLatestVersionOfScript checks if the trigger is pointing at the most
+    // current version of the script, and if it isn't it updates the trigger
+    // to the latest version.
+    private function loadLatestVersionOfScript(): void
+    {
+        if ($this->script->scriptFile->current && is_null($this->script->scriptFile->deleted_at)) {
+            // already has the latest version of script
+            return;
+        }
+
+        $latestFile = File::where('directory_id', $this->script->scriptFile->directory_id)
+                          ->where('name', $this->script->scriptFile->name)
+                          ->whereNull('deleted_at')
+                          ->whereNull('dataset_id')
+                          ->where('current', true)
+                          ->first();
+
+        if (is_null($latestFile)) {
+            // There is no latest file...
+            return;
+        }
+        $latestScript = Script::where('script_file_id', $latestFile->id)->first();
+
+        if (!is_null($latestScript)) {
+            // There is a new version of the script, so update to it.
+            $this->update(['script_id' => $latestScript->id]);
+            $this->load('script.scriptFile.directory');
+        }
+    }
+
+    private function triggerScriptHasBeenMarkedForDeletion(): bool
+    {
+        if (!is_null($this->script->scriptFile->directory->deleted_at)) {
+            return true;
+        }
+
+        if (!is_null($this->script->scriptFile->deleted_at)) {
+            return true;
+        }
+
+        return false;
     }
 }
