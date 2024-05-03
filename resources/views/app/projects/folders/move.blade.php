@@ -25,6 +25,7 @@
                 <div class="form-group">
                     <label for="directories">Move to directory</label>
                     <select name="directory" class="selectpicker col-lg-8"
+                            data-style="btn-light no-tt"
                             title="directories" data-live-search="true">
                         @foreach($dirsInProject as $dir)
                             <option data-token="{{$dir->id}}" value="{{$dir->id}}">

@@ -23,6 +23,7 @@
         <div class="form-group">
             <label for="experiments">Experiments</label>
             <select name="experiment_id" class="selectpicker col-lg-8"
+                    data-style="btn-light no-tt"
                     title="experiments"
                     data-live-search="true">
                 @foreach($experiments as $experiment)

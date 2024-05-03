@@ -79,6 +79,7 @@
     <div class="form-group">
         <label for="license">License</label>
         <select name="license" class="selectpicker col-lg-8" data-live-search="true"
+                data-style="btn-light no-tt"
                 value="{{$dataset->license}}"
                 title="License">
             <option data-token="No License" value="No License"
@@ -107,6 +108,7 @@
     <div class="form-group">
         <label for="experiments">Experiments</label>
         <select name="experiments[]" class="selectpicker col-lg-8" data-live-search="true" multiple
+                data-style="btn-light no-tt"
                 title="Experiments">
             @foreach($experiments as $experiment)
                 <option data-token="{{$experiment->id}}"
@@ -119,6 +121,7 @@
     <div class="form-group">
         <label for="communities">Communities</label>
         <select name="communities[]" class="selectpicker col-lg-8" data-live-search="true" multiple
+                data-style="btn-light no-tt"
                 title="Communities">
             @foreach($communities as $community)
                 <option data-token="{{$community->id}}"

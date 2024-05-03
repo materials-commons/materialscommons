@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label for="name">Select Script</label>
                     <select name="script_file_id" class="selectpicker col-lg-10" data-live-search="true"
-                            data-style="btn-light btn-no-tt"
+                            data-style="btn-light no-tt"
                             title="Select Script">
                         <option value=""></option>
                         @foreach($scripts as $script)

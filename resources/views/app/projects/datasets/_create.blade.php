@@ -67,6 +67,7 @@
     <div class="form-group">
         <label for="license">License</label>
         <select name="license" class="selectpicker col-lg-8" data-live-search="true"
+                data-style="btn-light no-tt"
                 title="License">
             <option data-token="No License" value="No License">No License</option>
             <option data-token="Public Domain Dedication and License (PDDL)"
@@ -89,6 +90,7 @@
         <div class="form-group">
             <label for="experiments">Experiments</label>
             <select name="experiments[]" class="selectpicker col-lg-8"
+                    data-style="btn-light no-tt"
                     title="experiments"
                     data-live-search="true" multiple>
                 @foreach($experiments as $experiment)
@@ -103,6 +105,7 @@
     <div class="form-group">
         <label for="communities">Communities</label>
         <select name="communities[]" class="selectpicker col-lg-8"
+                data-style="btn-light no-tt"
                 title="communities"
                 data-live-search="true" multiple>
             @foreach($communities as $community)

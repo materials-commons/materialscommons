@@ -9,6 +9,7 @@
             </div>
             <div class="modal-body">
                 <select id="project-select" class="selectpicker col-lg-10" data-live-search="true"
+                        data-style="btn-light no-tt"
                         title="Select Project To Copy To/From">
                     <option data-tokens="{{$project->id}}" value="{{$project->id}}"
                             data-root-id="{{$project->rootDir->id}}">

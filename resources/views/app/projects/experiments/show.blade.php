@@ -42,7 +42,8 @@
                 </a>
             @endif
             <div class="col col-lg-4 float-right">
-                <select id="switch-experiments" class="selectpicker col-lg-10 mc-select" data-live-search="true"
+                <select id="switch-experiments" class="selectpicker col-lg-10 mc-select"
+                        data-live-search="true" data-style="btn-light no-tt"
                         title="Switch To Experiment">
                     @foreach($project->experiments as $entry)
                         @if ($entry->name != $experiment->name)

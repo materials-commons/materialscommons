@@ -31,7 +31,9 @@
             </a>
 
             <div class="col col-lg-4 float-right">
-                <select class="selectpicker col-lg-10 mc-select" data-live-search="true" title="{{$title}}">
+                <select class="selectpicker col-lg-10 mc-select"
+                        data-style="btn-light no-tt"
+                        data-live-search="true" title="{{$title}}">
                     @foreach($project->entities as $entry)
                         @if ($entry->name != $entity->name)
                             <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
