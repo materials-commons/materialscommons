@@ -15,9 +15,9 @@
             </div>
         </div>
     </div>
-    @if(!blank($item->description))
+    @if(isset($item->description) && !blank($item->description))
         <x-show-description :description="$item->description"/>
-    @elseif (!blank($item->summary))
+    @elseif (isset($item->summary) && !blank($item->summary))
         <x-show-summary :summary="$item->summary"/>
     @endif
 </form>
