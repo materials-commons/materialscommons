@@ -107,6 +107,8 @@
                     <th>Type</th>
                     <th>Size</th>
                     <th>Real Size</th>
+                    <th>Last Updated</th>
+                    <th>Real Updated</th>
                     <th>Thumbnail</th>
                     <th></th>
                 </tr>
@@ -132,6 +134,8 @@
                             <td>{{$file->toHumanBytes()}}</td>
                         @endif
                         <td>{{$file->size}}</td>
+                        <td>{{$file->created_at->diffForHumans()}}</td>
+                        <td>{{$file->created_at}}</td>
                         <td>
                             @if($file->isImage())
                                 <a href="{{route('projects.files.display', [$project, $file])}}">
@@ -177,6 +181,8 @@
                     columnDefs: [
                         {orderData: [3], targets: [2]},
                         {targets: [3], visible: false},
+                        {orderData: [5], targets: [4]},
+                        {targets: [5], visible: false},
                     ]
                 });
             });
