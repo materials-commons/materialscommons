@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class RemoveClosedTransferRequestsCommand extends Command
+class ProcessClosedGlobusTransferRequestsCommand extends Command
 {
     use PathForFile;
 
@@ -21,7 +21,7 @@ class RemoveClosedTransferRequestsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-transfer:remove-closed-transfer-requests';
+    protected $signature = 'mc-transfer:process-closed-globus-transfer-requests';
 
     /**
      * The console command description.

@@ -13,6 +13,8 @@ use App\Http\Controllers\Web\Projects\Globus\Downloads\IndexProjectGlobusDownloa
 use App\Http\Controllers\Web\Projects\Globus\Downloads\ShowProjectGlobusDownloadWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\StoreGlobusDownloadProjectWebController;
 use App\Http\Controllers\Web\Projects\Globus\Downloads\UpdateGlobusAccountWebController;
+use App\Http\Controllers\Web\Projects\Globus\NG2\CloseOpenGlobus2TransfersWebController;
+use App\Http\Controllers\Web\Projects\Globus\NG2\StartGlobus2TransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\RedirectToProjectGlobusSiteWebController;
 use App\Http\Controllers\Web\Projects\Globus\ShowStartedGlobusTransferWebController;
 use App\Http\Controllers\Web\Projects\Globus\StartGlobusTransferWebController;
@@ -179,17 +181,27 @@ Route::get('/projects/{project}/globus/downloads/{globusDownload}', ShowProjectG
 Route::get('/projects/{project}/globus/start', StartGlobusTransferWebController::class)
      ->name('projects.globus.start');
 
-Route::get('/projects/{project}/globus/{globusTransfer}/show-started', ShowStartedGlobusTransferWebController::class)
-     ->name('projects.globus.show-started');
-
 Route::get('/projects/{project}/globus/close', CloseOpenGlobusTransfersWebController::class)
      ->name('projects.globus.close');
+
+Route::get('/projects/{project}/globus/{globusTransfer}/show-started', ShowStartedGlobusTransferWebController::class)
+     ->name('projects.globus.show-started');
 
 Route::get('/projects/{project}/data-dictionary/activities', ShowProjectActivitiesDataDictionaryWebController::class)
      ->name('projects.data-dictionary.activities');
 
 Route::get('/projects/{project}/data-dictionary/entities', ShowProjectEntitiesDataDictionaryWebController::class)
      ->name('projects.data-dictionary.entities');
+
+// Globus NG2
+Route::get('/projects/{project}/globus2/start', StartGlobus2TransferWebController::class)
+     ->name('projects.globus2.start');
+
+Route::get('/projects/{project}/globus2/close', CloseOpenGlobus2TransfersWebController::class)
+     ->name('projects.globus2.close');
+
+Route::get('/projects/{project}/globus2/{globusTransfer}/show-started', ShowStartedGlobusTransferWebController::class)
+     ->name('projects.globus2.show-started');
 
 //Route::get('/projects/{project}/globus/monitor', MonitorGlobusTransferWebController::class)
 //     ->name('projects.globus.monitor');

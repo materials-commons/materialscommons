@@ -132,6 +132,10 @@
                 <x-projects.show-globus-side-nav :project="$project"/>
             @endif
 
+            @if(isInBeta("globusng2"))
+                <x-projects.show-globus2-side-nav :project="$project"/>
+            @endif
+
             @if(isInBeta('run_scripts'))
                 <li class="nav-item">
                     <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.runs')}}"
