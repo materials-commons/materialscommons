@@ -21,7 +21,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('script_id');
             $table->foreign('script_id')
                   ->references('id')
-                  ->on('scripts');
+                ->on('scripts')
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
