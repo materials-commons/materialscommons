@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Projects\Globus\NG2;
 
-use App\Actions\Globus\CloseGlobusTransferAction;
+use App\Actions\Globus\CloseGlobus2TransferAction;
 use App\Actions\Globus\GlobusApi;
 use App\Http\Controllers\Controller;
 use App\Models\GlobusTransfer;
@@ -18,14 +18,15 @@ class CloseOpenGlobus2TransfersWebController extends Controller
     {
         $user = auth()->user();
 
-        $closeGlobusRequestAction = new CloseGlobusTransferAction(GlobusApi::createGlobusApi());
+        $closeGlobus2RequestAction = new CloseGlobus2TransferAction(GlobusApi::createGlobusApi());
 
-        GlobusTransfer::where('project_id', $project->id)
+        GlobusTransfer::with('transferRequest')
+                      ->where('project_id', $project->id)
                       ->where('owner_id', $user->id)
                       ->where('state', 'open')
                       ->get()
-                      ->each(function (GlobusTransfer $globusTransfer) use ($closeGlobusRequestAction) {
-                          $closeGlobusRequestAction->execute($globusTransfer);
+                      ->each(function (GlobusTransfer $globusTransfer) use ($closeGlobus2RequestAction) {
+                          $closeGlobus2RequestAction->execute($globusTransfer);
                       });
         flash("Marked globus transfers as finished.")->success();
         return redirect()->back();
