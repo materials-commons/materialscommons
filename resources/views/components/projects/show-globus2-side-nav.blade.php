@@ -49,7 +49,7 @@
 
         <li class="nav-item ml-3">
             <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.globus2.close')}}"
-               href="{{route('projects.globus.close', [$project])}}">
+               href="{{route('projects.globus2.close', [$project])}}">
                 <i class="fa-fw fas fa-check mr-2"></i>
                 Done
             </a>
