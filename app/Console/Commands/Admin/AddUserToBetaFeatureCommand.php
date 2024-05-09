@@ -13,7 +13,7 @@ class AddUserToBetaFeatureCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-admin:add-user-to-beta-feature {feature : feature name} {user : user email to add to feature}';
+    protected $signature = 'mc-admin:add-user-to-beta-feature {user : user email to add to feature} {feature : feature name}';
 
     /**
      * The console command description.

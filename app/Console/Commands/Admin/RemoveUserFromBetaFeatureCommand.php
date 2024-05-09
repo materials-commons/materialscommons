@@ -14,7 +14,7 @@ class RemoveUserFromBetaFeatureCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-admin:remove-user-from-beta-feature {feature : feature name} {user : user id to add to feature}';
+    protected $signature = 'mc-admin:remove-user-from-beta-feature {user : user id to add to feature} {feature : feature name}';
 
     /**
      * The console command description.
