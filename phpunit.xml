@@ -22,6 +22,8 @@
     <env name="SESSION_DRIVER" value="array"/>
     <env name="DB_CONNECTION" value="sqlite"/>
     <env name="MCFS_DIR" value="/home/gtarcea/workspace/src/github.com/materials-commons/materialscommons/storage/app/mcfs"/>
+      <env name="SCRIPT_RUNS_OUT_DIR"
+           value="/home/gtarcea/workspace/src/github.com/materials-commons/materialscommons/storage/app/script_runs_out"/>
     <env name="DB_DATABASE" value=":memory:"/>
     <!--        <env name="DB_DATABASE" value="mctest"/>-->
     <env name="TELESCOPE_ENABLED" value="false"/>

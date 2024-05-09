@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
 
         // This command runs periodically to clean up any globus requests that didn't properly close.
-        $schedule->command('mc-transfer:remove-closed-transfer-requests')
+        $schedule->command('mc-transfer:process-closed-globus-transfer-requests')
                  ->everyFiveMinutes()
                  ->runInBackground()
                  ->withoutOverlapping();

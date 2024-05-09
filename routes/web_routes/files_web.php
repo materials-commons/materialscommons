@@ -2,11 +2,17 @@
 
 use App\Http\Controllers\Web\Files\CompareFilesWebController;
 use App\Http\Controllers\Web\Files\CreateExperimentFromSpreadsheetWebController;
+use App\Http\Controllers\Web\Files\CreateProjectFileWebController;
 use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
+use App\Http\Controllers\Web\Files\EditProjectFileWebController;
 use App\Http\Controllers\Web\Files\RenameFileWebController;
+use App\Http\Controllers\Web\Files\SaveCreatedProjectFileWebController;
+use App\Http\Controllers\Web\Files\SaveEditedProjectFileWebController;
+use App\Http\Controllers\Web\Files\Scripts\RunScriptWebController;
+use App\Http\Controllers\Web\Files\Scripts\RunScriptWithFolderContextWebController;
 use App\Http\Controllers\Web\Files\SetAsActiveFileVersionWebController;
 use App\Http\Controllers\Web\Files\ShowFileActivitiesWebController;
 use App\Http\Controllers\Web\Files\ShowFileAttributesWebController;
@@ -75,6 +81,12 @@ Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController:
 Route::get('/projects/{project}/files/{file}/download', DownloadFileWebController::class)
      ->name('projects.files.download');
 
+Route::get('/projects/{project}/files/{file}/run', RunScriptWebController::class)
+     ->name('projects.files.run-script');
+
+Route::get("/projects/{project}/dir/{dir}/files/{file}/run", RunScriptWithFolderContextWebController::class)
+     ->name('projects.files.run-script-with-folder-context');
+
 Route::get('/projects/{project}/files/{file}/create-experiment', function (Project $project, File $file) {
     return view('app.files.import', compact('project', 'file'));
 });
@@ -90,6 +102,16 @@ Route::get('/projects/{project}/files/{file}/rename', RenameFileWebController::c
      ->name('projects.files.rename');
 Route::put('/projects/{project}/files/{file}/rename', UpdateRenameFileWebController::class)
      ->name('projects.files.rename.update');
+
+Route::get('/projects/{project}/files/{file}/edit', EditProjectFileWebController::class)
+     ->name('projects.files.edit');
+Route::post('/projects/{project}/files/{file}/save-edited', SaveEditedProjectFileWebController::class)
+     ->name('projects.files.save-edited');
+
+Route::get('/projects/{project}/directory/{dir}/create-file', CreateProjectFileWebController::class)
+     ->name('projects.files.create-file');
+Route::post('/projects/{project}/directory/{dir}/save-created-file', SaveCreatedProjectFileWebController::class)
+     ->name('projects.files.save-created');
 
 //Route::get('/projects/{project}/file_path/{path}', function (Project $project, $path) {
 //    dd($path);

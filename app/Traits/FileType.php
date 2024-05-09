@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Models\File;
 use Illuminate\Support\Str;
-use function isInBeta;
 use const PATHINFO_EXTENSION;
 
 trait FileType

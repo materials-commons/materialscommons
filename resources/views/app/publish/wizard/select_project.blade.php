@@ -17,6 +17,7 @@
                 <div class="form-group">
                     <label for="projects">Projects</label>
                     <select name="project" class="selectpicker col-9" title="projects"
+                            data-style="btn-light no-tt"
                             data-live-search="true" id="select-project">
                         @foreach($projects as $project)
                             <option data-token="{{$project->id}}" value="{{$project->id}}">

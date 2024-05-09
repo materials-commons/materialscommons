@@ -10,6 +10,6 @@ class DownloadDatasetZipfileWebController extends Controller
 {
     public function __invoke(Project $project, Dataset $dataset)
     {
-        return response()->download($dataset->zipfilePath());
+        return response()->download($dataset->publishedZipfilePath());
     }
 }

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 
 class UnpublishDatasetAction
 {
-    public function __invoke(Dataset $dataset, User $user)
+    public function __invoke(Dataset $dataset, User $user, $republish = false)
     {
         $dataset->update([
             'published_at'       => null,
@@ -24,13 +24,19 @@ class UnpublishDatasetAction
         ]);
         Bus::chain([
             new DeletePublishedFilesJob($dataset),
-            new DeleteDatasetGlobusAndZipfilesJob($dataset),
             new DeleteDatasetRelationshipsJob($dataset),
+            new DeleteDatasetGlobusAndZipfilesJob($dataset),
             function () use ($dataset, $user) {
                 $dataset->update(['cleanup_started_at' => null]);
                 $mail = new UnpublishDatasetCompleteMail($dataset, $user);
                 Mail::to($user)->send($mail);
             },
+            function () use ($dataset, $user, $republish) {
+                if ($republish) {
+                    $publishAction = new PublishDatasetAction2();
+                    $publishAction->execute($dataset, $user);
+                }
+            }
         ])->onQueue('globus')->dispatch();
 
         return $dataset->fresh();

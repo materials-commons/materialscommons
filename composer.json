@@ -22,6 +22,7 @@
     "freshbitsweb/laratables": "^3.0",
     "graham-campbell/markdown": "^15.0",
     "guzzlehttp/guzzle": "^7.0.1",
+    "icehouse-ventures/laravel-chartjs": "^1.0",
     "josiasmontag/laravel-recaptchav3": "^1.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "^10.0",
@@ -47,8 +48,8 @@
     "symfony/http-client": "^6.2",
     "symfony/mailgun-mailer": "^6.2",
     "symfony/postmark-mailer": "^6.2",
-    "tightenco/ziggy": "^1.0",
-    "ylsideas/feature-flags": "^2.0"
+      "tightenco/ziggy": "^1.0",
+      "ext-posix": "*"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.0",

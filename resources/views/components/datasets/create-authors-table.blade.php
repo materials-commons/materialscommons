@@ -107,7 +107,7 @@
                 ],
                 fnRowCallback: function (nRow, data) {
                     nRow.children[0].className = "cursor-move";
-                    if (nRow.id == "" || nRow.id == null) {
+                    if (nRow.id === "" || nRow.id == null) {
                         nRow.id = `row-${data[0]}`;
                     }
                 }

@@ -6,7 +6,7 @@
     @include('layouts.navs.app.project')
 @stop
 
-@if(Request::routeIs('projects.entities.*'))
+@if(Request::routeIs('projects.entities.*') || Request::routeIs('projects.experiments.entities*'))
     @php
         $title = "Compare Samples";
         $groupRoute = 'projects.entities.show';
@@ -21,20 +21,6 @@
 @endif
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col col-lg-4 float-right">
-                <select class="selectpicker col-lg-10" data-live-search="true" title="{{$title}}">
-                    @foreach($project->entities as $entry)
-                        @if ($entry->name != $entity->name)
-                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
     @component('components.card')
         @slot('header')
             @if($entity->category == "computational")
@@ -47,6 +33,18 @@
                onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
                 <i class="fas fa-object-group mr-2"></i>Group By Process Type
             </a>
+
+            <div class="col col-lg-4 float-right">
+                <select class="selectpicker col-lg-10 mc-select"
+                        data-style="btn-light no-tt"
+                        data-live-search="true" title="{{$title}}">
+                    @foreach($project->entities as $entry)
+                        @if ($entry->name != $entity->name)
+                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
         @endslot
 
         @slot('body')
@@ -54,7 +52,7 @@
 
             <div class="row ml-1">
                 @foreach($activities as $activity)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 rounded border-blue border">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 tile">
                         @include('partials.activities.activity-card', ['activity' => $activity])
                     </div>
                 @endforeach

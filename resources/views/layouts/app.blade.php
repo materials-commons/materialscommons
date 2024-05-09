@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{--    <META NAME="ROBOTS" CONTENT="NOFOLLOW">--}}
+    <META NAME="ROBOTS" CONTENT="NOFOLLOW">
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
@@ -37,6 +37,9 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"/>
 
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.bootstrap4.css"/>
+
     <script type="text/javascript"
             src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
@@ -45,6 +48,9 @@
 
     <script type="text/javascript"
             src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 

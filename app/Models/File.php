@@ -139,8 +139,12 @@ class File extends Model implements Searchable
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
-    public function fullPath()
+    public function fullPath(): ?string
     {
+        if (is_null($this->directory)) {
+            $this->load('directory');
+        }
+
         if ($this->isDir()) {
             return $this->path;
         }
@@ -156,7 +160,7 @@ class File extends Model implements Searchable
         return $this->directory->path."/".$this->name;
     }
 
-    public function dirPath()
+    public function dirPath(): ?string
     {
         if ($this->isDir()) {
             return $this->path;
@@ -167,7 +171,7 @@ class File extends Model implements Searchable
 
     // Utility methods
 
-    public function toHumanBytes()
+    public function toHumanBytes(): string
     {
         return formatBytes($this->size);
     }
@@ -184,6 +188,23 @@ class File extends Model implements Searchable
     public function isFile()
     {
         return !$this->isDir();
+    }
+
+    public function isRunnable(): bool
+    {
+        if (is_null($this->directory)) {
+            $this->load('directory');
+        }
+
+        if ($this->directory->path != "/scripts") {
+            return false;
+        }
+
+        if (Str::endsWith($this->name, ".py")) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getSelectedAttribute()

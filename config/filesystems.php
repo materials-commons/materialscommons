@@ -85,6 +85,11 @@ return [
             'root'   => storage_path('test_data'),
         ],
 
+        'script_runs_out' => [
+            'driver' => 'local',
+            'root'   => env('SCRIPT_RUNS_OUT_DIR', storage_path('app/script_runs_out')),
+        ],
+
         's3' => [
             'driver'   => 's3',
             'key'      => env('S3_ACCESS_KEY_ID'),

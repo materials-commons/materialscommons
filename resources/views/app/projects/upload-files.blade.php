@@ -26,6 +26,7 @@
     <div class="form-group">
         <label for="directories">Select Directory You Are Uploading To</label>
         <select name="directory" class="selectpicker col-lg-8" id="dir-picker"
+                data-style="btn-light no-tt"
                 title="directories" data-live-search="true">
             @foreach($folders as $dir)
                 <option data-token="{{$dir->id}}" value="{{$dir->id}}">

@@ -3,20 +3,13 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
+use App\Models\User;
 
 class RefreshPublishedDatasetAction
 {
-    public function execute(Dataset $dataset)
+    public function execute(Dataset $dataset, User $user)
     {
         $unpublishDatasetAction = new UnpublishDatasetAction();
-        $unpublishDatasetAction($dataset, auth()->user());
-        $this->publishDataset($dataset, auth()->user());
-    }
-
-
-    private function publishDataset(Dataset $dataset)
-    {
-        $publishAction = new PublishDatasetAction2();
-        $publishAction->execute($dataset, auth()->user());
+        $unpublishDatasetAction($dataset, $user, true);
     }
 }

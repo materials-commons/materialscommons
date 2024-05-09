@@ -4,6 +4,7 @@ namespace App\ViewModels\Files;
 
 use App\Models\Community;
 use App\Models\File;
+use App\Traits\FileView;
 use Spatie\ViewModels\ViewModel;
 
 class ShowCommunityFileViewModel extends ViewModel

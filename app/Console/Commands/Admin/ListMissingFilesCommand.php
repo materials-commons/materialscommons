@@ -27,10 +27,18 @@ class ListMissingFilesCommand extends Command
     public function handle()
     {
         ini_set("memory_limit", "4096M");
-        foreach (File::cursor() as $f) {
+        $missingCount = 0;
+        foreach (File::where('mime_type', '<>', 'directory')->cursor() as $f) {
             if (!$f->realFileExists()) {
-                echo "{$f->name}:{$f->id}:{$f->project_id}:{$f->mcfsPath()}\n";
+                $usesUuid = "no-uses-uuid";
+                if (!blank($f->uses_uuid)) {
+                    $usesUuid = $f->uses_uuid;
+                }
+
+                echo "{$f->name},{$f->id},{$f->directory_id},{$f->project_id},{$f->dataset_id},{$f->mcfsPath()},{$usesUuid},{$f->checksum},{$f->owner_id},{$f->created_at}\n";
+                $missingCount++;
             }
         }
+        echo "\n\nTotal Missing: {$missingCount}\n";
     }
 }

@@ -27,8 +27,8 @@ class CreateFileActionTest extends TestCase
         $fakeFile = UploadedFile::fake()->image('random.jpg');
 
         $createFileAction = new CreateFileAction();
-        $f = $createFileAction($project->id, $rootDir->id, "", $fakeFile);
-        $f2 = $createFileAction($project->id, $rootDir->id, "", $fakeFile);
+        $f = $createFileAction($project, $rootDir, "", $fakeFile);
+        $f2 = $createFileAction($project, $rootDir, "", $fakeFile);
 
         $this->assertEquals($f->id, $f2->id);
         $this->assertDatabaseCount("files", 2);
@@ -51,8 +51,8 @@ class CreateFileActionTest extends TestCase
         $fake2 = UploadedFile::fake()->image('random2.jpg');
 
         $createFileAction = new CreateFileAction();
-        $f = $createFileAction($project->id, $rootDir->id, "", $fake1);
-        $f2 = $createFileAction($project->id, $rootDir->id, "", $fake2);
+        $f = $createFileAction($project, $rootDir, "", $fake1);
+        $f2 = $createFileAction($project, $rootDir, "", $fake2);
 
         $this->assertNotEquals($f->id, $f2->id);
         $this->assertDatabaseCount("files", 3);

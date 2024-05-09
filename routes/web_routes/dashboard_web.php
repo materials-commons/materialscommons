@@ -4,7 +4,6 @@ use App\Http\Controllers\Web\Dashboard\Admin\MCFS\IndexMCFSWebController;
 use App\Http\Controllers\Web\Dashboard\ArchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\ImmediatelyDestroyProjectWebController;
 use App\Http\Controllers\Web\Dashboard\IndexArchivedProjectsOnDashboardWebController;
-use App\Http\Controllers\Web\Dashboard\IndexGlobusBookmarksWebController;
 use App\Http\Controllers\Web\Dashboard\IndexTrashWebController;
 use App\Http\Controllers\Web\Dashboard\MarkProjectAsActiveOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\RestoreProjectFromTrashWebController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
 use App\Http\Controllers\Web\Dashboard\UnarchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\UnmarkProjectAsActiveOnDashboardWebController;
+use App\Http\Controllers\Web\WebDAV\ResetWebDAVStateForUserWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
@@ -52,3 +52,6 @@ Route::get('/dashboard/projects/{project}/unarchive', UnarchiveProjectOnDashboar
 
 Route::delete('/dashboards/projects/{project}/trash/immediately-destroy', ImmediatelyDestroyProjectWebController::class)
      ->name('dashboard.projects.trash.immediately-destroy');
+
+Route::get('/dashboards/webdav/reset-state', ResetWebDAVStateForUserWebController::class)
+     ->name('dashboards.webdav.reset-state');

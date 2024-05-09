@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Files;
 use App\Actions\Files\CreateFilesAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Files\FileResource;
+use App\Models\File;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class UploadFileApiController extends Controller
@@ -15,6 +17,9 @@ class UploadFileApiController extends Controller
             'files.*' => 'required|file',
         ]);
 
-        return FileResource::collection(collect($createFilesAction($projectId, $directoryId, $validated['files'])));
+        $dir = File::findOrFail($directoryId);
+        $project = Project::findOrFail($projectId);
+
+        return FileResource::collection(collect($createFilesAction($project, $dir, $validated['files'])));
     }
 }

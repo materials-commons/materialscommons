@@ -3,7 +3,7 @@
 namespace App\View\Components;
 
 use App\Models\File;
-use App\ViewModels\Files\FileView;
+use App\Traits\FileView;
 use Illuminate\View\Component;
 
 class DisplayFile extends Component

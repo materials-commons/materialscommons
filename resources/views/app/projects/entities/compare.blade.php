@@ -9,15 +9,15 @@
 
 @section('content')
     <div x-data="initFilterProcesses()" class="here-i-am">
-        @component('components.card')
-            @slot('header')
+        <x-card>
+            <x-slot name='header'>
                 Compare sample {{$entity1->name}} to {{$entity2->name}}
                 <a class="action-link float-right" href="#" @click="showFilter = !showFilter">
                     <i class="fas fa-filter mr-2"></i>Filter Processes
                 </a>
-            @endslot
+            </x-slot>
 
-            @slot('body')
+            <x-slot name='body'>
                 <div style="display: none" x-show="showFilter">
                     <h4>Select/Deselect processes to show <a href="#" class="ml-1"
                                                              @click="showFilter = false">(Hide)</a></h4>
@@ -58,32 +58,46 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <h4>{{$entity1->name}}</h4>
-                        <x-show-standard-details :item="$entity1"/>
-
-                        <div class="row ml-1">
-                            @foreach($entity1Activities as $e1activity)
-                                <div class="col-10 bg-grey-9 mt-2" x-show="sample1Processes['{{$e1activity->uuid}}']">
-                                    @include('partials.activities.activity-card', ['activity' => $e1activity])
+                        <x-card>
+                            <x-slot name="header">
+                                <h5>{{$entity1->name}}</h5>
+                            </x-slot>
+                            <x-slot name="body">
+                                <x-show-standard-details :item="$entity1"/>
+                                <div class="row">
+                                    @foreach($entity1Activities as $e1activity)
+                                        <div class="col-12 tile mt-2"
+                                             x-show="sample1Processes['{{$e1activity->uuid}}']">
+                                            @include('partials.activities.activity-card', ['activity' => $e1activity])
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
-                        </div>
+                            </x-slot>
+                        </x-card>
                     </div>
                     <div class="col-6">
-                        <h4>{{$entity2->name}}</h4>
-                        <x-show-standard-details :item="$entity2"/>
-
-                        <div class="row ml-1">
-                            @foreach($entity2Activities as $e2activity)
-                                <div class="col-10 bg-grey-9 mt-2" x-show="sample2Processes['{{$e2activity->uuid}}']">
-                                    @include('partials.activities.activity-card', ['activity' => $e2activity])
+                        <x-card>
+                            <x-slot name="header">
+                                <h5>{{$entity2->name}}</h5>
+                            </x-slot>
+                            <x-slot name="body">
+                                <x-show-standard-details :item="$entity2"/>
+                                <div class="row">
+                                    @foreach($entity2Activities as $e2activity)
+                                        <div class="col-12 tile mt-2"
+                                             x-show="sample2Processes['{{$e2activity->uuid}}']">
+                                            @include('partials.activities.activity-card', ['activity' => $e2activity])
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
-                        </div>
+                            </x-slot>
+                        </x-card>
+
+
                     </div>
                 </div>
-            @endslot
-        @endcomponent
+            </x-slot>
+        </x-card>
     </div>
 @endsection
 

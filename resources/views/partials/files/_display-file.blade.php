@@ -21,17 +21,7 @@
             @break
 
         @case("text")
-            <div class="ml-3">
-                @if(isset($displayRoute))
-                    <a href="{{$displayRoute}}">Fullscreen</a>
-                    @if($file->size <= 2000000)
-                        <a href="#" onclick="mcutil.copyToClipboard('#file-contents')" class="ml-2">
-                            <i class="fa fas fa-clone"></i>
-                        </a>
-                    @endif
-                    <br/>
-                    <br/>
-                @endif
+            <div class="ml-3 mt-2">
                 @if($file->size > 2000000)
                     <span class="ml-3">File too large to display</span>
                 @else
@@ -98,17 +88,7 @@
             @break
 
         @case("markdown")
-            @if(isset($displayRoute))
-                <a href="{{$displayRoute}}">Fullscreen</a>
-                @if($file->size <= 2000000)
-                    <a href="#" onclick="mcutil.copyToClipboard('#file-contents')" class="ml-2">
-                        <i class="fa fas fa-clone"></i>
-                    </a>
-                @endif
-                <br/>
-                <br/>
-            @endif
-            <x-markdown class="mc-md">{!!$fileContents($file)!!}</x-markdown>
+            <x-markdown>{!!$fileContents($file)!!}</x-markdown>
             @break
 
         @default

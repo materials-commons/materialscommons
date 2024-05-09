@@ -35,7 +35,7 @@ class PublishedDatasetUpdatedMail extends Mailable
     public function build()
     {
         return $this->subject("Published dataset on Materials Commons updated")
-                    ->view('view.name', [
+                    ->view('email.datasets.published-dataset-updated', [
                         'dataset' => $this->dataset,
                         'user'    => $this->user,
                     ]);

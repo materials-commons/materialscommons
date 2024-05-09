@@ -9,7 +9,6 @@ use App\Models\Project;
 
 class StartGlobusTransferWebController extends Controller
 {
-
     public function __invoke(Project $project)
     {
         $user = auth()->user();

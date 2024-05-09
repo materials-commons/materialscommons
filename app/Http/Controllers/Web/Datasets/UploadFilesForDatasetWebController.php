@@ -7,20 +7,23 @@ use App\Actions\Files\CreateFilesAction;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
 use App\Models\File;
+use App\Models\Project;
+use App\Models\ScriptTrigger;
 use Illuminate\Http\Request;
 
 // Upload file(s) and set each as selected in the dataset
 class UploadFilesForDatasetWebController extends Controller
 {
     public function __invoke(Request $request, CreateFilesAction $createFilesAction,
-        UpdateDatasetFileSelectionAction $updateFileSelectionAction, $projectId, Dataset $dataset, $directoryId)
+                             UpdateDatasetFileSelectionAction $updateFileSelectionAction, Project $project,
+                             Dataset                          $dataset, $directoryId)
     {
         $validated = $request->validate([
             'files.*' => 'required|file',
         ]);
 
         $directory = File::findOrFail($directoryId);
-        $files = $createFilesAction($projectId, $directoryId, $validated['files']);
+        $files = $createFilesAction($project, $directory, $validated['files']);
 
         // If in root dir then path is blank because construction of the file path includes a '/' separator.
         $path = $directory->path === '/' ? '' : $directory->path;
@@ -28,7 +31,7 @@ class UploadFilesForDatasetWebController extends Controller
         // Set each file that was uploaded in the dataset context as selected
         foreach ($files as $file) {
             $updateFileSelectionAction([
-                'project_id'   => $projectId,
+                'project_id' => $project->id,
                 'include_file' => "{$path}/{$file->name}",
             ], $dataset);
         }

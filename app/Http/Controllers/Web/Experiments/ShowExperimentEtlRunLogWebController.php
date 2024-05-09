@@ -14,6 +14,6 @@ class ShowExperimentEtlRunLogWebController extends Controller
     public function __invoke(Request $request, Project $project, Experiment $experiment, EtlRun $etlRun)
     {
         $content = Storage::disk('mcfs')->get("etl_logs/{$etlRun->uuid}.log");
-        return "<pre>{$content}</pre>";
+        return "<pre style='white-space: pre-wrap'>{$content}</pre>";
     }
 }

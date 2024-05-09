@@ -3,7 +3,7 @@
 namespace App\View\Components\Datasets;
 
 use App\Models\Dataset;
-use App\ViewModels\Files\FileView;
+use App\Traits\FileView;
 use Illuminate\View\Component;
 
 class ShowOverviewFiles extends Component

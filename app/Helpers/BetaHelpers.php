@@ -1,23 +1,24 @@
 <?php
 
+use App\Models\BetaFeature;
+
 if (!function_exists("isInBeta")) {
-    function isInBeta()
+    function isInBeta($feature): bool
     {
         $a = auth();
         if (is_null($a)) {
             return false;
         }
 
-        switch ($a->id()) {
-            case 316: /* Tracy Berman */
-            case 173: /* John Allison */
-            case 101: /* David Montiel */
-            case 130: /* Glenn Tarcea */
-            case 65:  /* Brian Puchala */
-                return true;
-            default:
-                return false;
-        }
+        $feature = BetaFeature::with(['users'])
+                              ->where('feature', $feature)
+                              ->whereNotNull('active_at')
+                              ->whereHas('users', function ($query) use ($a) {
+                                  $query->where('user_id', $a->id());
+                              })
+                              ->first();
+
+        return !is_null($feature);
     }
 }
 

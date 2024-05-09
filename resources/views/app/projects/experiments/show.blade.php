@@ -9,25 +9,26 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.experiments.show', $project, $experiment))
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col col-lg-4 float-right">
-                <select id="switch-experiments" class="selectpicker col-lg-10" data-live-search="true"
-                        title="Switch To Experiment">
-                    @foreach($project->experiments as $entry)
-                        @if ($entry->name != $experiment->name)
-                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
+    {{--    <div class="container">--}}
+    {{--        <div class="row">--}}
+    {{--            <div class="col"></div>--}}
+    {{--            <div class="col col-lg-4 float-right">--}}
+    {{--                <select id="switch-experiments" class="selectpicker col-lg-10" data-live-search="true"--}}
+    {{--                        title="Switch To Experiment">--}}
+    {{--                    @foreach($project->experiments as $entry)--}}
+    {{--                        @if ($entry->name != $experiment->name)--}}
+    {{--                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>--}}
+    {{--                        @endif--}}
+    {{--                    @endforeach--}}
+    {{--                </select>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
     @component('components.card')
         @slot('header')
             {{$experiment->name}}
+
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
                 @include('app.projects.experiments.modals._reload-experiment-modal')
                 <a data-toggle="modal" href="#reload-experiment-modal"
@@ -40,6 +41,17 @@
                     <i class="fas fa-sync-alt mr-2"></i>Reload Experiment
                 </a>
             @endif
+            <div class="col col-lg-4 float-right">
+                <select id="switch-experiments" class="selectpicker col-lg-10 mc-select"
+                        data-live-search="true" data-style="btn-light no-tt"
+                        title="Switch To Experiment">
+                    @foreach($project->experiments as $entry)
+                        @if ($entry->name != $experiment->name)
+                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
         @endslot
 
         @slot('body')

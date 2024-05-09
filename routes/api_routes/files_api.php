@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Files\IndexAllProjectsForFilesMatchingApiController
 use App\Http\Controllers\Api\Files\IndexProjectForFilesMatchingApiController;
 use App\Http\Controllers\Api\Files\MoveFileApiController;
 use App\Http\Controllers\Api\Files\RenameFileApiController;
+use App\Http\Controllers\Api\Files\Scripts\RunScriptApiController;
 use App\Http\Controllers\Api\Files\SetAsActiveFileVersionApiController;
 use App\Http\Controllers\Api\Files\ShowFileApiController;
 use App\Http\Controllers\Api\Files\ShowFileVersionsApiController;
@@ -28,6 +29,7 @@ Route::post('/files/{file}/move', MoveFileApiController::class);
 Route::post('/files/{file}/rename', RenameFileApiController::class);
 Route::get('/projects/{project}/files/{file}/download', DownloadFileApiController::class);
 Route::post('/files/by_path', GetFileByPathApiController::class);
+Route::post('/projects/{project}/files/{file}/run-script', RunScriptApiController::class);
 Route::post('/projects/{project}/files/{file}/upload', UploadFileApiController::class)
      ->name('api.projects.files.upload');
 Route::post('/projects/{project}/files/{file}/upload/{name}', UploadFileNamedApiController::class)

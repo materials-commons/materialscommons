@@ -5,6 +5,7 @@ namespace App\ViewModels\Files;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\FileView;
 use Spatie\ViewModels\ViewModel;
 
 class ShowFileViewModel extends ViewModel
