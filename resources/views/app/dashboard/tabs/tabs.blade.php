@@ -24,15 +24,6 @@
         </a>
     </li>
 
-    @if(auth()->user()->is_admin)
-        <li class="nav-item">
-            <a class="nav-link no-underline {{setActiveNavByName('dashboard.admin.mcfs.index')}}"
-               href="{{route('dashboard.admin.mcfs.index')}}">
-                MCFS
-            </a>
-        </li>
-    @endif
-
     {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link {{setActiveNavByName('dashboard.data-dictionary.show')}}"--}}
     {{--           href="{{route('dashboard.data-dictionary.show')}}">--}}

@@ -12,6 +12,7 @@
     "ext-dom": "*",
     "ext-fileinfo": "*",
     "ext-json": "*",
+    "ext-posix": "*",
     "ext-simplexml": "*",
     "ext-zip": "*",
     "bensampo/laravel-enum": "^6.0",
@@ -48,8 +49,7 @@
     "symfony/http-client": "^6.2",
     "symfony/mailgun-mailer": "^6.2",
     "symfony/postmark-mailer": "^6.2",
-      "tightenco/ziggy": "^1.0",
-      "ext-posix": "*"
+    "tightenco/ziggy": "^1.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.0",

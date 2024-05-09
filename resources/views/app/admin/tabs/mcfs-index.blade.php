@@ -1,7 +1,7 @@
 <div>
     <a class="btn btn-success float-right ml-3"
        data-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
-    @include('app.dashboard.partials._create-transfer-request-modal')
+    @include('app.admin.partials._create-transfer-request-modal')
     <a class="btn btn-success float-right" href="#"><i class="fa fa-fw fa-file-alt mr-2"></i>Log Viewer</a>
 </div>
 <br/>
@@ -32,7 +32,7 @@
             <tr>
                 @endif
                 <td>
-                    <a href="{{route('mcfs.transfer-requests.show', [$tr])}}">{{$tr->uuid}}</a>
+                    <a href="{{route('admin.dashboard.mcfs.transfer-requests.show', [$tr])}}">{{$tr->uuid}}</a>
                 </td>
                 <td><a href="{{route('projects.show', [$tr->project])}}">{{$tr->project->name}}</a></td>
                 <td>{{$tr->owner->name}}</td>

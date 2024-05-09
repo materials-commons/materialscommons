@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Dashboard\Admin\MCFS;
+namespace App\Http\Controllers\Web\Admin\MCFS;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
@@ -29,7 +29,7 @@ class IndexMCFSWebController extends Controller
 
         $transferRequestsStatus = MCFSApiService::getStatusAllTransferRequests();
 
-        return view('app.dashboard.index', [
+        return view('app.admin.dashboard', [
             'projectsCount'          => $this->getUserProjectsCount(auth()->id()),
             'deletedCount'           => Project::getDeletedTrashCountForUser(auth()->id()),
             'archivedCount'          => $this->getUserArchivedProjectsCount(auth()->id()),

@@ -10,8 +10,16 @@
 
             @if(auth()->user()->is_admin)
                 <li class="nav-item">
-                    <a class="nav-link fs-11" href="#">
-                        <i class="fa-fw fas"></i> Admin
+                    <a class="nav-link fs-11 {{setActiveNav('admin')}}" href="{{route('admin.dashboard')}}">
+                        <i class="fa-fw fas fa-user-shield mr-2"></i> Admin
+                    </a>
+                </li>
+            @endif
+
+            @if(isInBeta('site-statistics'))
+                <li class="nav-item">
+                    <a class="nav-link fs-11 {{setActiveNav('site')}}" href="{{route('site.statistics')}}">
+                        <i class="fa-fw fas fa-chart-line mr-2"></i> Site Statistics
                     </a>
                 </li>
             @endif

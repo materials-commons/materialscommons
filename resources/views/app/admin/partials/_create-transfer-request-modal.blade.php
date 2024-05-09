@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <p>Create New Transfer Request For Project</p>
                 <form id="create-transfer-request-form" method="post"
-                      action="{{route('mcfs.transfer-requests.create')}}">
+                      action="{{route('admin.dashboard.mcfs.transfer-requests.create')}}">
                     @csrf
                     <div class="form-group">
                         <label>Find Project</label>

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Web\Dashboard\Admin\MCFS\IndexMCFSWebController;
 use App\Http\Controllers\Web\Dashboard\ArchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\ImmediatelyDestroyProjectWebController;
 use App\Http\Controllers\Web\Dashboard\IndexArchivedProjectsOnDashboardWebController;
@@ -34,9 +33,6 @@ Route::get('/dashboard/published-datasets', ShowDashboardPublishedDatasetsWebCon
 
 Route::get('/dashboard/data-dictionary', ShowDashboardDataDictionaryWebController::class)
      ->name('dashboard.data-dictionary.show');
-
-Route::get('/dashboard/admin/mcfs/index', IndexMCFSWebController::class)
-     ->name('dashboard.admin.mcfs.index');
 
 Route::get('/dashboard/projects/{project}/mark-as-active', MarkProjectAsActiveOnDashboardWebController::class)
      ->name('dashboard.projects.mark-as-active');

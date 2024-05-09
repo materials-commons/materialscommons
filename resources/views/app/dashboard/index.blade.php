@@ -31,7 +31,7 @@
             @elseif (Request::routeIs('dashboard.projects.trash.index'))
                 @include('app.dashboard.tabs.deleted-projects')
             @elseif(Request::routeIs('dashboard.admin.mcfs.index'))
-                @include('app.dashboard.tabs.mcfs-index')
+                @include('app.admin.tabs.mcfs-index')
             @endif
         </x-slot>
     </x-card>
