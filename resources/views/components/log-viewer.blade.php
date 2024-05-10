@@ -1,15 +1,21 @@
 <div>
+    @include('components.partials._set-log-level-modal')
     <x-card>
         <x-slot name="header">
+            @if(!is_null($setLogLevelRoute))
+                <a class="action-link float-right ml-4"
+                   data-toggle="modal" href="#set-log-level-modal">
+                    <i class="fas fa-fw fa-edit mr-2"></i>Set Log Level
+                </a>
+            @endif
+
             <a class="action-link float-right" style="cursor: pointer"
                hx-get="{{$loadLogRoute}}"
                onclick="clearSearchInputOnReload()"
                hx-target="#etl-log"
                hx-swap="innerHTML scroll:bottom">
-                <i class="fas fa-sync-alt mr-2"></i>Refresh Log
+                <i class="fas fa-fw fa-sync-alt mr-2"></i>Refresh Log
             </a>
-            {{--            @if(!is_null(""))--}}
-            {{--            @endif--}}
         </x-slot>
         <x-slot name="body">
             <h3>

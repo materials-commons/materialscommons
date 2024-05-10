@@ -11,10 +11,13 @@ class LogViewer extends Component
     public string $loadLogRoute;
     public string $searchLogRoute;
 
-    public function __construct($loadLogRoute, $searchLogRoute)
+    public ?string $setLogLevelRoute;
+
+    public function __construct($loadLogRoute, $searchLogRoute, $setLogLevelRoute = null)
     {
         $this->loadLogRoute = $loadLogRoute;
         $this->searchLogRoute = $searchLogRoute;
+        $this->setLogLevelRoute = $setLogLevelRoute;
     }
 
     public function render(): View|Closure|string
