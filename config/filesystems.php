@@ -85,6 +85,11 @@ return [
             'root'   => storage_path('test_data'),
         ],
 
+        'mc_logs' => [
+            'driver' => 'local',
+            'root'   => env('MC_LOGS', '/usr/local/materialscommons/logs')
+        ],
+
         'script_runs_out' => [
             'driver' => 'local',
             'root'   => env('SCRIPT_RUNS_OUT_DIR', storage_path('app/script_runs_out')),

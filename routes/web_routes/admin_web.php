@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Admin\MCFS\CreateTransferRequestWebController;
 use App\Http\Controllers\Web\Admin\MCFS\SearchMCFSLogWebController;
 use App\Http\Controllers\Web\Admin\MCFS\SetMCFSLogLevelWebController;
+use App\Http\Controllers\Web\Admin\MCFS\ShowMCFSLogViewerWebController;
 use App\Http\Controllers\Web\Admin\MCFS\ShowMCFSLogWebController;
 use App\Http\Controllers\Web\Admin\MCFS\ShowTransferRequestWebController;
 use App\Http\Controllers\Web\Admin\ShowAdminDashboardWebController;
@@ -30,4 +31,13 @@ Route::get('/admin/dashboard/mcfs/log/search', SearchMCFSLogWebController::class
 
 Route::get('/dashboard/admin/mcfs/index', IndexMCFSWebController::class)
      ->name('admin.dashboard.mcfs.index');
+
+Route::get('/dashboard/admin/mcfs/show-log-viewer', ShowMCFSLogViewerWebController::class)
+     ->name('admin.dashboard.mcfs.show-log-viewer');
+
+Route::get('/dashboard/admin/mcfs/show-log', ShowMCFSLogWebController::class)
+     ->name('admin.dashboard.mcfs.show-log');
+
+Route::get('/dashboard/admin/mcfs/search-log', SearchMCFSLogWebController::class)
+     ->name('admin.dashboard.mcfs.search-log');
 
