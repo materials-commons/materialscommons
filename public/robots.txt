@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /public/datasets/*/zipfile
 Disallow: /public/datasets/*/globus
+Disallow: /public/datasets/folders
