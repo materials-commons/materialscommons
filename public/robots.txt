@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: /public/datasets/*/zipfile
+Disallow: /public/datasets/*/globus
