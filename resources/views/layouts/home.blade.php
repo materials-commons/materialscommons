@@ -6,7 +6,15 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <META NAME="ROBOTS" CONTENT="NOFOLLOW">
+
+    @if(Request::routeIs('public.datasets.show'))
+        <META NAME="ROBOTS" CONTENT="NOFOLLOW">
+    @elseif(Request::routeIs('public.datasets.*'))
+        <META NAME="ROBOTS" CONTENT="NOINDEX">
+    @else
+        <META NAME="ROBOTS" CONTENT="NOFOLLOW">
+    @endif
+
     <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
