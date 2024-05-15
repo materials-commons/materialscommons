@@ -1,3 +1,5 @@
+User-agent: Bytespider
+Disallow: /
 User-agent: *
 Disallow: /public/datasets/*/zipfile
 Disallow: /public/datasets/*/globus
