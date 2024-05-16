@@ -65,17 +65,25 @@ class RunUserPythonScriptJob implements ShouldQueue
             $inputFilePath = PathHelpers::normalizePath("/data/{$this->inputFile->fullPath()}");
         }
 
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it -e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
-        Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommand}\n");
+        $mcapikey = $this->run->owner->api_token;
+        $projectId = $this->run->project_id;
+
+        $dockerEnvVarsWithAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='{$mcapikey}'";
+        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+
+        $dockerEnvVarsWithoutAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='...not shown...'";
+        $dockerRunCommandToLog = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommandToLog}\n");
+
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
         $dockerRunProcess->wait();
         $this->containerId = Str::squish($dockerRunProcess->getOutput());
 
         $this->run->update([
-            'docker_container_id' => $this->containerId,
-            'started_at'          => Carbon::now(),
-        ]);
+                               'docker_container_id' => $this->containerId,
+                               'started_at'          => Carbon::now(),
+                           ]);
 
         // Run python script
         $scriptName = $this->run->script->scriptFile->name;
