@@ -68,14 +68,14 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
     {
         $countsById = array();
         foreach ($cursor as $item) {
-            if (!$this->ids->has($item->id)) {
+            if (!$this->ids->has($item[$idName])) {
                 continue;
             }
             $countsById[$item[$idName]] = 0;
         }
 
         foreach ($cursor2 as $item) {
-            if (!$this->ids->has($item->id)) {
+            if (!$this->ids->has($item[$idName])) {
                 continue;
             }
             if (Str::contains($item->who, ".") && !Str::contains($item->who, "@")) {
