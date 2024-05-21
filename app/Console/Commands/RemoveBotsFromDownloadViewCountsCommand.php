@@ -49,6 +49,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
     public function handle()
     {
         $this->ids = $this->getNonOpenVisusDatasetIds();
+        echo "Length of ids is {$this->ids->count()}\n";
         $botsList = [];
         $handle = fopen("/tmp/COUNTER_Robots_list.txt", "r");
         while (($line = fgets($handle)) !== false) {
@@ -68,14 +69,14 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
     {
         $countsById = array();
         foreach ($cursor as $item) {
-            if (!$this->ids->has($item[$idName])) {
+            if (!$this->ids->contains($item[$idName])) {
                 continue;
             }
             $countsById[$item[$idName]] = 0;
         }
 
         foreach ($cursor2 as $item) {
-            if (!$this->ids->has($item[$idName])) {
+            if (!$this->ids->contains($item[$idName])) {
                 continue;
             }
             if (Str::contains($item->who, ".") && !Str::contains($item->who, "@")) {
