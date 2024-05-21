@@ -6,7 +6,9 @@ use App\Models\Dataset;
 use App\Models\Download;
 use App\Models\View;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use function config;
 
 class RemoveBotsFromDownloadViewCountsCommand extends Command
 {
@@ -26,6 +28,8 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
 
     private $badAddresses;
 
+    private $ids;
+
     /**
      * Create a new command instance.
      *
@@ -44,6 +48,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
      */
     public function handle()
     {
+        $this->ids = $this->getNonOpenVisusDatasetIds();
         $botsList = [];
         $handle = fopen("/tmp/COUNTER_Robots_list.txt", "r");
         while (($line = fgets($handle)) !== false) {
@@ -63,10 +68,16 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
     {
         $countsById = array();
         foreach ($cursor as $item) {
+            if (!$this->ids->has($item->id)) {
+                continue;
+            }
             $countsById[$item[$idName]] = 0;
         }
 
         foreach ($cursor2 as $item) {
+            if (!$this->ids->has($item->id)) {
+                continue;
+            }
             if (Str::contains($item->who, ".") && !Str::contains($item->who, "@")) {
                 $host = $this->tryGetHost($item->who);
                 if ($host !== $item->who) {
@@ -143,5 +154,16 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
             }
         }
         return false;
+    }
+
+    private function getNonOpenVisusDatasetIds(): Collection
+    {
+        return Dataset::query()
+                      ->whereDoesntHave('tags', function ($q) {
+                          $q->where('tags.id', config('visus.import_tag_id'));
+                      })
+                      ->whereNotNull('published_at')
+                      ->select('id')
+                      ->get();
     }
 }
