@@ -112,13 +112,13 @@ class ImportGlobusUploadIntoProjectAction
                                                 ]);
                     return false;
                 }
-                $this->trackForTriggers($file);
+//                $this->trackForTriggers($file);
                 $fileCount++;
             }
         }
 
         $this->globusUpload->load('owner');
-        $this->fireTriggers($this->globusUpload->owner);
+//        $this->fireTriggers($this->globusUpload->owner);
 
         return true;
     }
