@@ -14,6 +14,12 @@ trait FiresTriggers
     private Collection $triggersByPath;
     private bool $populatedTriggers = false;
 
+    public function __constructFireTriggers()
+    {
+        $this->filesMatchingTriggerPath = collect();
+        $this->triggersByPath = collect();
+    }
+
     public function trackForTriggers(File $file): void
     {
         $this->populateTriggers($file);

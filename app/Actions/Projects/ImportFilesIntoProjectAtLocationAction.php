@@ -22,6 +22,11 @@ class ImportFilesIntoProjectAtLocationAction
     private string $disk;
     private string $location;
 
+    public function __construct()
+    {
+        $this->__constructFireTriggers();
+    }
+
     public function execute(Project $project, $disk, $location, User $owner)
     {
         $this->project = $project;
