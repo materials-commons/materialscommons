@@ -31,23 +31,49 @@
             project: "{{$project->id}}",
             folder: "{{$directory->id}}",
         });
-        const uppy = Uppy({
+        const uppy = new Uppy({
             restrictions: {
                 maxFileSize: 250 * 1024 * 1024
+            },
+            onBeforeFileAdded: (currentFile, files) => {
+                console.log(currentFile);
+                if (currentFile.data.webkitRelativePath === "") {
+                    console.log("webkitRelativePath is blank");
+                    return currentFile;
+                }
+
+                console.log('sending modified currentFile');
+                const modifiedFile = {
+                    ...currentFile,
+                };
+
+                modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+                console.log("modifiedFile", modifiedFile);
+
+                return modifiedFile;
             }
         }).use(UppyDashboard, {
             trigger: '#file-upload',
             inline: true,
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
-        }).use(UppyXHRUpload, {endpoint: r});
+            fileManagerSelectionType: "both"
+        }).use(UppyXHRUpload, {endpoint: r, formData: true});
 
-        uppy.on('file-added', () => {
+        uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});
+            // console.log(f);
+            // if (f.data.webkitRelativePath === "") {
+            //     console.log("relativePath is blank");
+            //     uppy.setFileMeta(f.id, {"relativePath": ""});
+            // } else {
+            //     console.log("relativePath: ", f.data.webkitRelativePath);
+            //     uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+            // }
         });
 
-        uppy.on('complete', (result) => {
-            setTimeout(() => window.location.replace(folderUrl), 1000);
-        });
+        // uppy.on('complete', (result) => {
+        //     setTimeout(() => window.location.replace(folderUrl), 1000);
+        // });
     </script>
 @endpush
