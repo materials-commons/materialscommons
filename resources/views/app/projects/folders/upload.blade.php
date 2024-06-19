@@ -36,19 +36,15 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                console.log(currentFile);
                 if (currentFile.data.webkitRelativePath === "") {
-                    console.log("webkitRelativePath is blank");
                     return currentFile;
                 }
 
-                console.log('sending modified currentFile');
                 const modifiedFile = {
                     ...currentFile,
                 };
 
                 modifiedFile.meta.name = currentFile.data.webkitRelativePath;
-                console.log("modifiedFile", modifiedFile);
 
                 return modifiedFile;
             }
@@ -62,18 +58,15 @@
 
         uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});
-            // console.log(f);
-            // if (f.data.webkitRelativePath === "") {
-            //     console.log("relativePath is blank");
-            //     uppy.setFileMeta(f.id, {"relativePath": ""});
-            // } else {
-            //     console.log("relativePath: ", f.data.webkitRelativePath);
-            //     uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
-            // }
+            if (f.data.webkitRelativePath === "") {
+                uppy.setFileMeta(f.id, {"relativePath": ""});
+            } else {
+                uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+            }
         });
 
-        // uppy.on('complete', (result) => {
-        //     setTimeout(() => window.location.replace(folderUrl), 1000);
-        // });
+        uppy.on('complete', () => {
+            setTimeout(() => window.location.replace(folderUrl), 1000);
+        });
     </script>
 @endpush
