@@ -7,12 +7,14 @@ use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
 use App\Traits\CopyFiles;
+use App\Traits\CreateDirectories;
 use App\Traits\GetProjectFiles;
 
 class ImportDatasetIntoProjectAction
 {
     use GetProjectFiles;
     use CopyFiles;
+    use CreateDirectories;
 
     /**
      * @var CreateDirectoryAction
