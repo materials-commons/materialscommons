@@ -2,12 +2,12 @@
 
 namespace App\Actions\Directories;
 
-use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use App\Services\AuthService;
 use App\Traits\CopyFiles;
+use App\Traits\CreateDirectories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -15,6 +15,7 @@ class CopyDirectoryAction
 {
     use ChildDirs;
     use CopyFiles;
+    use CreateDirectories;
 
     private array $dirsByPath = [];
     private Project $project;

@@ -68,6 +68,9 @@ trait FileType
 
         // Hack to work around the check below for startsWith(..., "text/")
         if ($type == "html") {
+            if (Str::endsWith($file->name, ".php")) {
+                return "text";
+            }
             return "html";
         }
 
