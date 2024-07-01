@@ -4,12 +4,14 @@ namespace App\Actions\Projects;
 
 use App\Models\Project;
 use App\Traits\CopyFiles;
+use App\Traits\CreateDirectories;
 use App\Traits\GetProjectFiles;
 
 class CopyProjectAction
 {
     use GetProjectFiles;
     use CopyFiles;
+    use CreateDirectories;
 
     public function copyProject(Project $fromProject, Project $toProject)
     {

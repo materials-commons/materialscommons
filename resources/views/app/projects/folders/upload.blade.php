@@ -31,22 +31,41 @@
             project: "{{$project->id}}",
             folder: "{{$directory->id}}",
         });
-        const uppy = Uppy({
+        const uppy = new Uppy({
             restrictions: {
                 maxFileSize: 250 * 1024 * 1024
+            },
+            onBeforeFileAdded: (currentFile, files) => {
+                if (currentFile.data.webkitRelativePath === "") {
+                    return currentFile;
+                }
+
+                const modifiedFile = {
+                    ...currentFile,
+                };
+
+                modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+
+                return modifiedFile;
             }
         }).use(UppyDashboard, {
             trigger: '#file-upload',
             inline: true,
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
-        }).use(UppyXHRUpload, {endpoint: r});
+            fileManagerSelectionType: "both"
+        }).use(UppyXHRUpload, {endpoint: r, formData: true});
 
-        uppy.on('file-added', () => {
+        uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});
+            if (f.data.webkitRelativePath === "") {
+                uppy.setFileMeta(f.id, {"relativePath": ""});
+            } else {
+                uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+            }
         });
 
-        uppy.on('complete', (result) => {
+        uppy.on('complete', () => {
             setTimeout(() => window.location.replace(folderUrl), 1000);
         });
     </script>

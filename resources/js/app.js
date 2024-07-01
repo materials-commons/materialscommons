@@ -22,13 +22,25 @@ window.datagrid = require('canvas-datagrid');
 require('alpinejs');
 window.htmx = require('htmx.org');
 
-window.Uppy = require('@uppy/core');
-window.UppyXHRUpload = require('@uppy/xhr-upload');
-window.UppyDashboard = require('@uppy/dashboard');
+// window.Uppy = require('@uppy/core');
+// window.UppyXHRUpload = require('@uppy/xhr-upload');
+// window.UppyDashboard = require('@uppy/dashboard');
+
+import Uppy from '@uppy/core';
+import Dashboard from '@uppy/dashboard';
+import XHR from '@uppy/xhr-upload';
+
+window.Uppy = Uppy;
+window.UppyDashboard = Dashboard;
+window.UppyXHRUpload = XHR;
 
 // Uppy styles for dashboard
-require('@uppy/core/dist/style.css');
-require('@uppy/dashboard/dist/style.css');
+// require('@uppy/core/dist/style.css');
+// require('@uppy/dashboard/dist/style.css');
+import '@uppy/core/dist/style.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+
+
 window.Tagify = require('@yaireo/tagify');
 
 // 
