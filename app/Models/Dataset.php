@@ -6,6 +6,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,6 +15,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
 use function auth;
 use function collect;
+use function config;
 
 /**
  * @property integer $id
@@ -395,6 +397,16 @@ class Dataset extends Model implements Searchable
         return Dataset::whereNotNull('published_at')
                       ->where('owner_id', $userId)
                       ->count();
+    }
+
+    public static function getPublishedNonOpenVisusDatasets(): Collection
+    {
+        return Dataset::query()
+                      ->whereDoesntHave('tags', function ($q) {
+                          $q->where('tags.id', config('visus.import_tag_id'));
+                      })
+                      ->whereNotNull('published_at')
+                      ->get();
     }
 
     /*
