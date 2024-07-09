@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Tests\Utils\StorageUtils;
 
 class PublishDatasetJobTest extends TestCase
 {
@@ -51,6 +52,6 @@ class PublishDatasetJobTest extends TestCase
         $this->assertDatabaseHas('dataset2activity', ['dataset_id' => $dataset->id, 'activity_id' => $activity->id]);
         $this->assertEquals(1, $dataset->activities()->count());
 
-        Storage::disk('mcfs')->deleteDirectory("__datasets/{$dataset->uuid}");
+        StorageUtils::clearStorage();
     }
 }
