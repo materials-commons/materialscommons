@@ -33,8 +33,8 @@ class GetAndSavePublishedDatasetCitationsActionTest extends TestCase
 
         $getAndSaveDSCitations = new GetAndSavePublishedDatasetCitationsAction();
         $getAndSaveDSCitations->execute($dataset);
-        $path = Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}/paper_10.1007_s11661-022-06702-5.json");
-        echo "file path = {$path}\n";
+        $path = Storage::disk('mcfs')->path("__published_datasets/{$dataset->uuid}/citations.json");
+//        echo "file path = {$path}\n";
         $this->assertFileExists($path);
         StorageUtils::clearStorage();
     }

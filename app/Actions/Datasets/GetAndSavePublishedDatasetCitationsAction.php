@@ -12,16 +12,34 @@ use function file_put_contents;
 use function is_null;
 use function json_encode;
 use const JSON_PRETTY_PRINT;
+use const JSON_UNESCAPED_SLASHES;
+
+class CitationsX
+{
+    public $dataset;
+    public $papers;
+
+    public function __construct()
+    {
+        $this->papers = [];
+        $this->dataset = new \stdClass();
+    }
+}
 
 class GetAndSavePublishedDatasetCitationsAction
 {
     public function execute(Dataset $ds)
     {
+        $hasCitations = false;
+        $citation = new CitationsX();
+
         if (!is_null($ds->doi)) {
             $doi = Str::after($ds->doi, "doi:");
             $citations = CrossrefApiService::getCitationForDOI($doi);
+
             if (!is_null($citations)) {
-                $this->saveCitationsToFileForDOI($ds, $citations, $doi);
+                $hasCitations = true;
+                $citation->dataset = $citations;
             }
         }
 
@@ -40,23 +58,22 @@ class GetAndSavePublishedDatasetCitationsAction
                 if (!blank($doi)) {
                     $citations = CrossrefApiService::getCitationForDOI($doi);
                     if (!is_null($citations)) {
-                        $this->saveCitationsToFileForDOI($ds, $citations, $doi, true);
+                        $hasCitations = true;
+                        $citation->papers[] = $citations;
                     }
                 }
             }
         }
+
+        if ($hasCitations) {
+            $this->saveCitationsToFile($ds, $citation);
+        }
     }
 
-    private function saveCitationsToFileForDOI($dataset, $citations, $doi, $isPaper = false): void
+    private function saveCitationsToFile($dataset, $citationsObj): void
     {
-        $str = json_encode($citations, JSON_PRETTY_PRINT);
-        $doiUnderscore = Str::replace("/", "_", $doi);
-        if ($isPaper) {
-            $filepath = "{$dataset->publishedGlobusPath()}/paper_{$doiUnderscore}.json";
-        } else {
-            $filepath = "{$dataset->publishedGlobusPath()}/{$doiUnderscore}.json";
-        }
-
+        $str = json_encode($citationsObj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $filepath = "{$dataset->publishedGlobusPath()}/citations.json";
         file_put_contents($filepath, $str);
     }
 }
