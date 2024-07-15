@@ -50,7 +50,14 @@ trait MqlQueryBuilder
             if ($i !== 0) {
                 $processQuery .= " AND ";
             }
-            $processQuery .= "has-process:'{$activities[$i]}'";
+            $activityName = $activities[$i];
+            $isNot = Str::startsWith($activityName, '!');
+            if ($isNot) {
+                $activityName = substr($activityName, 1);
+                $processQuery .= "not-has-process:'{$activityName}'";
+            } else {
+                $processQuery .= "has-process:'{$activityName}'";
+            }
         }
         $processQuery .= ")";
 
