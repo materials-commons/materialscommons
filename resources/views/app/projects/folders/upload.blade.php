@@ -53,7 +53,7 @@
             inline: true,
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
-            fileManagerSelectionType: "both"
+            fileManagerSelectionType: "both",
         }).use(UppyXHRUpload, {endpoint: r, formData: true});
 
         uppy.on('file-added', (f) => {

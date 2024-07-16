@@ -54,19 +54,38 @@
                 uppy.close();
             }
 
-            uppy = Uppy({
+            uppy = new Uppy({
                 restrictions: {
                     maxFileSize: 250 * 1024 * 1024
+                },
+                onBeforeFileAdded: (currentFile, files) => {
+                    if (currentFile.data.webkitRelativePath === "") {
+                        return currentFile;
+                    }
+
+                    const modifiedFile = {
+                        ...currentFile,
+                    };
+
+                    modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+
+                    return modifiedFile;
                 }
             }).use(UppyDashboard, {
                 trigger: '#file-upload',
                 inline: true,
                 showProgressDetails: true,
                 proudlyDisplayPoweredByUppy: false,
-            }).use(UppyXHRUpload, {endpoint: r});
+                fileManagerSelectionType: "both",
+            }).use(UppyXHRUpload, {endpoint: r, formData: true});
 
             uppy.on('file-added', () => {
                 uppy.setMeta({_token: csrf});
+                if (f.data.webkitRelativePath === "") {
+                    uppy.setFileMeta(f.id, {"relativePath": ""});
+                } else {
+                    uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+                }
             });
 
             {{--uppy.on('complete', (result) => {--}}
