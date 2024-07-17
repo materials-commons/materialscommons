@@ -16,6 +16,8 @@ use Spatie\Tags\HasTags;
 use function auth;
 use function collect;
 use function config;
+use function file_get_contents;
+use function json_decode;
 
 /**
  * @property integer $id
@@ -409,6 +411,15 @@ class Dataset extends Model implements Searchable
                       ->get();
     }
 
+    public function getCitations()
+    {
+        if (!Storage::disk('mcfs')->exists("__published_datasets/{$this->uuid}/citations.json")) {
+            return null;
+        }
+
+        $citationsFilePath = Storage::disk('mcfs')->path("__published_datasets/{$this->uuid}/citations.json");
+        return json_decode(file_get_contents($citationsFilePath), false);
+    }
     /*
      * Laratables
      */
