@@ -10,7 +10,7 @@
     @component('components.card')
         @slot('header')
             Project Members
-            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()))
+            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()) || auth()->user()->is_admin)
                 <a class="action-link float-right"
                    href="{{route('projects.users.edit', [$project])}}">
                     <i class="fas fa-plus mr-2"></i>Add Users
