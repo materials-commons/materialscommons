@@ -3,7 +3,7 @@
         <span class="ml-3 fs-10 grey-5">Size: {{formatBytes($dataset->total_files_size)}}</span>
     </x-datasets.show-overview>
 
-    <x-datasets.show-citations/>
+    <x-datasets.show-citations :dataset="$dataset"/>
 
     <x-datasets.show-authors :authors="$dataset->ds_authors"/>
 
