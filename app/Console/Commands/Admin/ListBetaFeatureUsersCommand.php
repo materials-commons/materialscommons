@@ -13,7 +13,7 @@ class ListBetaFeatureUsersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-admin:list-beta-feature-users {feature : feature name}';
+    protected $signature = 'mc-admin:list-beta-feature-users {feature? : feature name}';
 
     /**
      * The console command description.
@@ -28,18 +28,40 @@ class ListBetaFeatureUsersCommand extends Command
     public function handle()
     {
         $name = $this->argument('feature');
+
+        if (blank($name)) {
+            $this->listAllBetaFeaturesWithUsers();
+            return 0;
+        }
+
+        $this->listSpecificBetaFeatureWithUsers($name);
+        return 0;
+    }
+
+    public function listAllBetaFeaturesWithUsers()
+    {
+        BetaFeature::with(['users'])->each(function (BetaFeature $feature) {
+            echo "Feature: {$feature->feature}\n";
+            foreach ($feature->users as $user) {
+                echo "  {$user->name}/{$user->email}\n";
+            }
+            echo "\n";
+        });
+    }
+
+    public function listSpecificBetaFeatureWithUsers($name)
+    {
         $feature = BetaFeature::with(['users'])
                               ->where('feature', $name)
                               ->first();
         if (is_null($feature)) {
             echo "No such feature {$name}\n";
-            return 1;
+            return;
         }
 
+        echo "Feature: {$name}\n";
         foreach ($feature->users as $user) {
-            echo "{$user->name}/{$user->email}\n";
+            echo "  {$user->name}/{$user->email}\n";
         }
-
-        return 0;
     }
 }
