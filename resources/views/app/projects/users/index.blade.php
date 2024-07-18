@@ -51,20 +51,22 @@
                         </td>
                         <td>
                             @if($project->owner_id != $member->id)
-                                @if($project->team->members->contains('id', $member->id))
-                                    <a href="{{route('projects.users.remove', [$project, $member])}}">
-                                        <i class="fa fas fa-trash"></i></a>
-                                    <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
-                                       class="ml-4">
-                                        <i class="fa fas fa-fw fa-edit"></i>Make Admin
-                                    </a>
-                                @else
-                                    <a href="{{route('projects.admins.remove', [$project, $member])}}">
-                                        <i class="fa fas fa-trash"></i></a>
-                                    <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
-                                       class="ml-4">
-                                        <i class="fa fas fa-fw fa-edit"></i>Make Member
-                                    </a>
+                                @if(auth()->id() == $project->owner_id || $project->team->admins->contains('id', auth()->id()))
+                                    @if($project->team->members->contains('id', $member->id))
+                                        <a href="{{route('projects.users.remove', [$project, $member])}}">
+                                            <i class="fa fas fa-trash"></i></a>
+                                        <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
+                                           class="ml-4">
+                                            <i class="fa fas fa-fw fa-edit"></i>Make Admin
+                                        </a>
+                                    @else
+                                        <a href="{{route('projects.admins.remove', [$project, $member])}}">
+                                            <i class="fa fas fa-trash"></i></a>
+                                        <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
+                                           class="ml-4">
+                                            <i class="fa fas fa-fw fa-edit"></i>Make Member
+                                        </a>
+                                    @endif
                                 @endif
                             @endif
                         </td>
