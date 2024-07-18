@@ -34,7 +34,7 @@ class ProjectPolicy
             return true;
         }
 
-        return $this->userIsAdminInTeamThatContainsProject($user->id, $project->id);
+        return $this->userIsAdminInTeamThatContainsProject($user->id, $project->team_id);
     }
 
     public function userIsAdminForProject(User $user, Project $project)
@@ -44,15 +44,12 @@ class ProjectPolicy
         });
     }
 
-    private function userIsAdminInTeamThatContainsProject($userId, $projectId)
+    private function userIsAdminInTeamThatContainsProject($userId, $teamId)
     {
         $count = DB::table('team2admin')
                    ->where('user_id', $userId)
-                   ->whereIn('team_id',
-                       DB::table('teams')
-                         ->select('id')
-                         ->where('project_id', $projectId)
-                   )->count();
+            ->where('team_id', $teamId)
+            ->count();
         return $count !== 0;
     }
 
