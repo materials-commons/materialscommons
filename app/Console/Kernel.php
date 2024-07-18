@@ -85,11 +85,24 @@ class Kernel extends ConsoleKernel
                  ->runInBackground()
                  ->withoutOverlapping();
 
+        // Published Dataset citations
+        $schedule->command("mc-datasets:update-citation-counts-for-published-datasets")
+                 ->weekly()
+                 ->runInBackground()
+                 ->withoutOverlapping();
+
         if (config('app.env') == 'production') {
             $schedule->command('backup:clean')->daily()->at('01:00');
             $schedule->command('backup:run')->daily()->at('01:30');
             $schedule->command('mc:generate-site-map')->daily()->at('3:00');
             $schedule->command('mc:generate-usage-statistics')->monthlyOn(1, '02:00');
+
+            // Published Dataset citations
+            $schedule->command("mc-datasets:update-citation-counts-for-published-datasets")
+                     ->weekly()
+                     ->runInBackground()
+                     ->withoutOverlapping();
+
             if ($this->isNotInMaintenanceMode()) {
                 $schedule->command(RunHealthChecksCommand::class)->everyFifteenMinutes();
             }
