@@ -68,11 +68,14 @@ class RunUserPythonScriptJob implements ShouldQueue
         $mcapikey = $this->run->owner->api_token;
         $projectId = $this->run->project_id;
 
+        $scriptName = $this->run->script->scriptFile->name;
+        $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
+
         $dockerEnvVarsWithAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='{$mcapikey}'";
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommand = "docker run --rm --user {$user}:{$user} -it {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
 
         $dockerEnvVarsWithoutAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='...not shown...'";
-        $dockerRunCommandToLog = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommandToLog = "docker run --rm --user {$user}:{$user} -it {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommandToLog}\n");
 
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
@@ -103,16 +106,16 @@ class RunUserPythonScriptJob implements ShouldQueue
         }
 
         // Stop container
-        $dockerContainerStopCommand = "docker stop {$this->containerId}";
-        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start();
-        $dockerContainerStopProcess->wait();
+//        $dockerContainerStopCommand = "docker stop {$this->containerId}";
+//        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
+//        $dockerContainerStopProcess->start();
+//        $dockerContainerStopProcess->wait();
 
         // Delete container
-        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
-        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start();
-        $dockerContainerRmProcess->wait();
+//        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
+//        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
+//        $dockerContainerRmProcess->start();
+//        $dockerContainerRmProcess->wait();
     }
 
     private function getRunDir()
@@ -142,15 +145,15 @@ class RunUserPythonScriptJob implements ShouldQueue
         $this->run->update(['failed_at' => Carbon::now()]);
 
         // Stop container
-        $dockerContainerStopCommand = "docker stop {$this->containerId}";
-        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start();
-        $dockerContainerStopProcess->wait();
+//        $dockerContainerStopCommand = "docker stop {$this->containerId}";
+//        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
+//        $dockerContainerStopProcess->start();
+//        $dockerContainerStopProcess->wait();
 
         // Delete container
-        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
-        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start();
-        $dockerContainerRmProcess->wait();
+//        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
+//        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
+//        $dockerContainerRmProcess->start();
+//        $dockerContainerRmProcess->wait();
     }
 }
