@@ -42,6 +42,8 @@
                                 Waiting To Run
                             @elseif(!is_null($run->finished_at))
                                 Successful
+                            @elseif(is_null($run->failed_at))
+                                Running
                             @else
                                 Errored
                             @endif
