@@ -7,7 +7,9 @@ use App\Traits\GetRequestParameterId;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use function parse_url;
 use function view;
+use const PHP_URL_PATH;
 
 class LoginController extends Controller
 {
@@ -52,6 +54,10 @@ class LoginController extends Controller
             $routeToUse = route('login-for-dataset-zipfile-download', [$datasetId]);
         }
 
+        $previous = url()->previous();
+        $previousPath = parse_url($previous, PHP_URL_PATH);
+        session(['url.previous' => $previousPath]);
+
         return view('auth.login', [
             'routeToUse' => $routeToUse,
         ]);
@@ -75,7 +81,12 @@ class LoginController extends Controller
             return route('public.datasets.overview.show', [$datasetId]);
         }
 
-        return route('dashboard');
+        $previous = session()->get('url.previous');
+        if ($previous === "/") {
+            return route('dashboard');
+        }
+
+        return $previous;
     }
 
     public function authenticated(Request $request, $user)
