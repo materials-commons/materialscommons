@@ -73,6 +73,7 @@ class GetAndSavePublishedDatasetCitationsAction
     private function saveCitationsToFile($dataset, $citationsObj): void
     {
         $str = json_encode($citationsObj, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $dataset->ensurePublishedGlobusPath();
         $filepath = "{$dataset->publishedGlobusPath()}/citations.json";
         file_put_contents($filepath, $str);
     }

@@ -318,6 +318,11 @@ class Dataset extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->publishedGlobusPathPartial());
     }
 
+    public function ensurePublishedGlobusPath()
+    {
+        Storage::disk('mcfs')->makeDirectory($this->publishedGlobusPathPartial());
+    }
+
     public function privateGlobusPath()
     {
         return Storage::disk('mcfs')->path($this->privateGlobusPathPartial());
