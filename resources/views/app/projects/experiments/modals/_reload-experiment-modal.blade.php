@@ -1,20 +1,24 @@
 <div class="modal" tabindex="-1" id="reload-experiment-modal" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Reload Experiment</h5>
+            <div class="modal-header bg-nav">
+                <h5 class="modal-title help-color">Reload Experiment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 @if(!is_null($experiment->sheet))
-                    You have an existing Google sheet you last loaded the experiment from
+                    You have an existing Google sheet you last loaded the experiment from:
                     <a href="{{$experiment->sheet->url}}" target="_blank">{{$experiment->sheet->title}}</a>.
                 @else
-                    You have an existing file to excel you lasted loaded the experiment from
-                    <a href="{{route('projects.files.by-path', [$project, 'path' => $experiment->loaded_file_path])}}"
-                       class="no-underline">{{$experiment->loaded_file_path}}</a>
+                    <div>
+                        <h5>
+                            You have an existing excel file you lasted loaded the experiment from:
+                            <a href="{{route('projects.files.by-path', [$project, 'path' => $experiment->loaded_file_path])}}"
+                               class="no-underline">{{$experiment->loaded_file_path}}</a>
+                        </h5>
+                    </div>
                 @endif
             </div>
             <div class="modal-footer">
