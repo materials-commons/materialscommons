@@ -12,7 +12,6 @@
                     <thead>
                     <tr>
                         <th>Script</th>
-                        <th>Description</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -21,9 +20,6 @@
                         <tr>
                             <td>
                                 {{$script->scriptFile->fullPath()}}
-                            </td>
-                            <td>
-                                Not available yet
                             </td>
                             <td>
                                 <a class="action-link float-right mr-4"
