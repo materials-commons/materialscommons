@@ -59,7 +59,7 @@ class ActivityExportViewModel extends ViewModel
 
     public function uniqueEntityAttributeNames(): Collection
     {
-
+        return collect();
     }
 
     public function longestSampleNameLen(): int
