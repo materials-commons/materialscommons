@@ -33,7 +33,7 @@ class GetAndSavePublishedDatasetCitationsAction
         $hasCitations = false;
         $citation = new CitationsX();
 
-        if (!is_null($ds->doi)) {
+        if (!blank($ds->doi)) {
             $doi = Str::after($ds->doi, "doi:");
             $citations = CrossrefApiService::getCitationForDOI($doi);
 
@@ -46,9 +46,9 @@ class GetAndSavePublishedDatasetCitationsAction
         if (isset($ds->papers) && $ds->papers->isNotEmpty()) {
             foreach ($ds->papers as $paper) {
                 $doi = "";
-                if (!is_null($paper->doi)) {
+                if (!blank($paper->doi)) {
                     $doi = Str::after($paper->doi, "doi:");
-                } elseif (Str::contains($paper->url, "doi")) {
+                } elseif (!blank($paper->url) && Str::contains($paper->url, "doi")) {
                     $parts = explode("/", $paper->url);
                     $pieceLast = array_pop($parts);
                     $piece2ndToLast = array_pop($parts);
