@@ -320,7 +320,10 @@ class Dataset extends Model implements Searchable
 
     public function ensurePublishedGlobusPath()
     {
-        Storage::disk('mcfs')->makeDirectory($this->publishedGlobusPathPartial());
+        if (!Storage::disk('mcfs')->exists($this->publishedGlobusPathPartial())) {
+            Storage::disk('mcfs')->makeDirectory($this->publishedGlobusPathPartial());
+            chmod(Storage::disk('mcfs')->path($this->publishedGlobusPathPartial()), 0777);
+        }
     }
 
     public function privateGlobusPath()
