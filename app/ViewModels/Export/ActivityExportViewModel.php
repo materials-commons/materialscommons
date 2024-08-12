@@ -6,23 +6,35 @@ namespace App\ViewModels\Export;
 use App\Models\Activity;
 use App\Models\Attribute;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Spatie\ViewModels\ViewModel;
 use function blank;
 use function collect;
+use function dump;
+use function is_null;
 
 class ActivityExportViewModel extends ViewModel
 {
+
+    private $activityName;
     private Collection $activities;
+    private $activityAttributes = [];
+    private $entityAttributes = [];
 
-    private Collection $samples;
+    private $entities = [];
 
-    private Collection $uniqueActivityAttributeNames;
+    private $entity2Activity = [];
 
-    public function __construct($activities, $samples)
+    private int $longestEntityNameLen = 0;
+
+    public function __construct($activities, $activityName)
     {
+        $this->activityName = $activityName;
         $this->activities = $activities;
-        $this->samples = $samples;
-        $this->uniqueActivityAttributeNames = collect();
+        $this->activityAttributes = $this->getActivityAttributes();
+        $this->entityAttributes = $this->getEntityAttributes();
+        $this->loadUniqueEntityNames();
+        $this->loadEntity2Activity();
     }
 
     public function activities(): Collection
@@ -30,43 +42,129 @@ class ActivityExportViewModel extends ViewModel
         return $this->activities;
     }
 
-    public function samples(): Collection
+    public function activityAttributes()
     {
-        return $this->samples;
+        return $this->activityAttributes;
     }
 
-    public function uniqueActivityAttributeNames(): Collection
+    public function entityAttributes()
     {
-        if ($this->uniqueActivityAttributeNames->count() != 0) {
-            return $this->uniqueActivityAttributeNames;
+        return $this->entityAttributes;
+    }
+
+    public function entities()
+    {
+        return $this->entities;
+    }
+
+    public function longestEntityNameLen(): int
+    {
+        return $this->longestEntityNameLen;
+    }
+
+    public function entity2Activity()
+    {
+        return $this->entity2Activity;
+    }
+
+    public function getActivityAttributeValueForEntity($entityName, $attrName)
+    {
+        $activity = $this->entity2Activity[$entityName];
+        foreach ($activity->attributes as $attr) {
+            if ($attr->name === $attrName) {
+                return $attr->values[0]->val["value"];
+            }
         }
 
-        $this->uniqueActivityAttributeNames = collect();
-        $this->activities->each(function (Activity $activity) {
-            $activity->attributes->each(function (Attribute $attribute) {
-                $unit = "";
-                if ($attribute->values->count() !== 0) {
-                    if (!blank($attribute->values[0]->unit)) {
-                        $unit = "({$attribute->values[0]->unit})";
-                    }
+        return "";
+    }
+
+    public function getEntityAttributeValue($entityName, $attrName)
+    {
+        $activity = $this->entity2Activity[$entityName];
+        foreach ($activity->entityStates as $entityState) {
+            if ($entityState->pivot->direction !== "out") {
+                continue;
+            }
+            foreach ($entityState->attributes as $attr) {
+                if ($attr->name === $attrName) {
+                    $val = $attr->values[0]->val["value"];
+                    return Str::replace("=", "", $val);
+//                    return $attr->values[0]->val["value"];
                 }
-                $this->uniqueActivityAttributeNames->put($attribute->name, $unit);
+            }
+        }
+
+        return "";
+    }
+
+    private function getActivityAttributes()
+    {
+        $attrs = [];
+        $this->activities->each(function ($activity) use (&$attrs) {
+            $activity->attributes->each(function ($attribute) use (&$attrs) {
+                if ($attribute->values->isNotEmpty()) {
+                    $attrs[$attribute->name] = $attribute->values[0];
+                } else {
+                    $attrs[$attribute->name] = null;
+                }
+            });
+        });
+        return $attrs;
+    }
+
+    private function getEntityAttributes()
+    {
+        $attrs = [];
+        $this->activities->filter(function ($activity) use (&$attrs) {
+            return !is_null($activity->entityStates);
+        })->each(function ($activity) use (&$attrs) {
+            $activity->entityStates->filter(function ($entityState) use (&$attrs) {
+                return $entityState->pivot->direction == "out";
+            })->each(function ($entityState) use (&$attrs) {
+                $entityState->attributes->each(function ($attribute) use (&$attrs) {
+                    if ($attribute->values->isNotEmpty()) {
+                        $attrs[$attribute->name] = $attribute->values[0];
+                    } else {
+                        $attrs[$attribute->name] = null;
+                    }
+                });
             });
         });
 
-        return $this->uniqueActivityAttributeNames;
+        return $attrs;
     }
 
-    public function uniqueEntityAttributeNames(): Collection
+    private function loadUniqueEntityNames()
     {
-        return collect();
-    }
-
-    public function longestSampleNameLen(): int
-    {
-        $longest = $this->samples->max(function ($sample) {
-            return strlen($sample[0]->name);
+        $this->activities->filter(function ($activity) {
+            return !is_null($activity->entityStates);
+        })->each(function ($activity) {
+            $activity->entityStates->filter(function ($entityState) {
+                return $entityState->pivot->direction == "in";
+            })->each(function ($entityState) {
+                $len = strlen($entityState->entity->name);
+                if ($this->longestEntityNameLen < $len) {
+                    $this->longestEntityNameLen = $len;
+                }
+                $this->entities[$entityState->entity->name] = $entityState->entity->name;
+            });
         });
-        return $longest;
+    }
+
+    private function loadEntity2Activity()
+    {
+        foreach ($this->activities as $activity) {
+            foreach ($activity->entityStates as $entityState) {
+                if (is_null($entityState->entity)) {
+                    continue;
+                }
+
+                if (!blank($entityState->entity->name)) {
+                    $this->entity2Activity[$entityState->entity->name] = $activity;
+                    break;
+                }
+            }
+        }
     }
 }

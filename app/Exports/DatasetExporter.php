@@ -24,7 +24,7 @@ class DatasetExporter implements WithMultipleSheets
         $sheets = [];
         $this->getDatasetActivities()
              ->each(function ($activityName) use (&$sheets) {
-                 $sheets[] = new ActivityExport($activityName, $this->dataset);
+                 $sheets[] = new DatasetActivityExport($activityName, $this->dataset);
              });
         return $sheets;
     }

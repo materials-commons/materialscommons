@@ -3,20 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Activity;
-use App\Models\Attribute;
 use App\Models\Dataset;
 use App\Models\Entity;
-use App\Models\EntityState;
 use App\ViewModels\Export\ActivityExportViewModel;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use function collect;
-use function strlen;
 use function view;
 
-class ActivityExport implements FromView, WithTitle
+class DatasetActivityExport implements FromView, WithTitle
 {
     private string $activityName;
     private Dataset $dataset;

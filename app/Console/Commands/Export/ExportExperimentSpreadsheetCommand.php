@@ -30,9 +30,9 @@ class ExportExperimentSpreadsheetCommand extends Command
     public function handle()
     {
         $experimentId = $this->argument('experimentId');
-        $experiment = Experiment::findOrFail($experimentId);
+        $experiment = Experiment::with(['activities'])->findOrFail($experimentId);
         $exporter = new ExperimentExporter($experiment);
         $name = Str::replace(" ", "_", $experiment->name);
-        Excel::store($exporter, "/tmp/{$name}.xlsx");
+        Excel::store($exporter, "ss.xlsx");
     }
 }

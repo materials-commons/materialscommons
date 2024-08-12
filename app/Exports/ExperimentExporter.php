@@ -18,16 +18,14 @@ class ExperimentExporter implements WithMultipleSheets
     public function sheets(): array
     {
         $sheets = [];
-        $this->getExperimentActivities()
-             ->each(function ($activityName) use (&$sheets) {
-
-             });
+        foreach ($this->getExperimentActivities() as $activityName) {
+            $sheets[] = new ExperimentActivityExport($activityName, $this->experiment);
+        }
         return $sheets;
     }
 
     private function getExperimentActivities()
     {
-        $this->experiment->load('activities');
         return $this->experiment->activities->map(function ($activity) {
             return $activity->name;
         })->unique();
