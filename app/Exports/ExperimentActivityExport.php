@@ -30,7 +30,7 @@ class ExperimentActivityExport implements FromView, WithTitle
     public function view(): View
     {
         $activities = $this->getActivities();
-        $viewModel = new ActivityExportViewModel($activities, $this->activityName);
+        $viewModel = new ActivityExportViewModel($activities);
 
         return view('exports.activity', $viewModel);
     }

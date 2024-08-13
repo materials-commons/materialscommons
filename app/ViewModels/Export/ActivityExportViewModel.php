@@ -15,8 +15,6 @@ use function is_null;
 
 class ActivityExportViewModel extends ViewModel
 {
-
-    private $activityName;
     private Collection $activities;
     private $activityAttributes = [];
     private $entityAttributes = [];
@@ -27,9 +25,8 @@ class ActivityExportViewModel extends ViewModel
 
     private int $longestEntityNameLen = 0;
 
-    public function __construct($activities, $activityName)
+    public function __construct($activities)
     {
-        $this->activityName = $activityName;
         $this->activities = $activities;
         $this->activityAttributes = $this->getActivityAttributes();
         $this->entityAttributes = $this->getEntityAttributes();
