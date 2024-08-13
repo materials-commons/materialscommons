@@ -80,7 +80,7 @@ class RunScriptAction
                 Mail::to($this->run->owner)
                     ->queue(new ScriptRunCompletedMail($this->run));
             }
-        ])->onQueue('globus')->dispatch();
+        ])->onQueue('scripts')->dispatch();
 
         return $this->run;
     }
