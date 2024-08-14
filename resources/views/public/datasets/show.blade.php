@@ -12,6 +12,11 @@
     @component('components.card')
         @slot('header')
             Dataset: {{$dataset->name}}
+            <div class="dropdown float-right mr-4">
+                @if(!blank($dataset->doi))
+                    <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
+                                class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
+                @endif
             @auth
                 {{--                @if($dataset->canEdit())--}}
                 {{--                    <a class="action-link float-right mr-4"--}}
@@ -20,11 +25,6 @@
                 {{--                    </a>--}}
                 {{--                @endif--}}
 
-                <div class="dropdown float-right mr-4">
-                    @if(!blank($dataset->doi))
-                        <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
-                                    class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
-                    @endif
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-file-import mr-2"></i>Import Into Project
@@ -62,10 +62,6 @@
                             <i class="fas fa-fw fa-bell-slash"></i>
                         </a>
                     @endif
-                </div>
-
-
-
                 {{--                @if(auth()->user()->hasCommunities())--}}
                 {{--                    <div class="dropdown float-right mr-4">--}}
                 {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
@@ -82,6 +78,7 @@
                 {{--                    </div>--}}
                 {{--                @endif--}}
             @endauth
+            </div>
         @endslot
 
         @slot('body')
