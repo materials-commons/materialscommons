@@ -21,6 +21,10 @@
                 {{--                @endif--}}
 
                 <div class="dropdown float-right mr-4">
+                    @if(!blank($dataset->doi))
+                        <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
+                                    class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
+                    @endif
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-file-import mr-2"></i>Import Into Project
@@ -103,6 +107,8 @@
 
         @endslot
     @endcomponent
+
+    @include("public.datasets.cite-dataset-modal")
 
     @isset($dsAnnotation)
         @push('googleds')
