@@ -25,13 +25,28 @@
             </a>
                 <div class="row border">
                     <x-display-file :file="$run->script->scriptFile"
-                                    :display-route="route('projects.files.display', [$project, $run->script->scriptFile])"></x-display-file>
+                                    :display-route="route('projects.files.display', [$project, $run->script->scriptFile])"/>
                 </div>
+
+                <br/>
+                @foreach($run->files as $file)
+                    <h5>File:
+                        <a href="{{route('projects.files.show', [$project, $file])}}">{{$file->fullPath()}}</a>
+                    </h5>
+                    <div class="row border">
+                        <div class="m-2">
+                            <x-display-file :file="$file"
+                                            :display-route="route('projects.files.display', [$project, $file])"/>
+                        </div>
+                    </div>
+                @endforeach
+
             <br/>
                 <h4>Log</h4>
                 <div class="row border">
                     <pre class="ml-3 mt-2" style="white-space: pre-wrap">{{$log}}</pre>
             </div>
+
         </x-slot:body>
     </x-card>
 @stop

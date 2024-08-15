@@ -22,8 +22,8 @@ class RunScriptWithFolderContextWebController extends Controller
         }
 
         $action = new RunScriptAction();
-        $action->execute($file, $project, auth()->user(), $dir);
+        $run = $action->execute($file, $project, auth()->user(), $dir);
         flash("Queued up {$file->name} to run")->info();
-        return redirect(route('projects.folders.show', [$project, $dir]));
+        return redirect(route('projects.runs.show', [$project, $run]));
     }
 }
