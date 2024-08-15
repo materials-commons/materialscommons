@@ -32,18 +32,7 @@ class RunScriptAction
         $this->project = $project;
         $this->user = $user;
         $this->dir = $dir;
-        $s = Script::where('script_file_id', $file->id)->first();
-        if (is_null($s)) {
-            // Create a new script
-            $s = Script::create([
-                'description'    => 'Create script run',
-                'queue'          => 'globus',
-                'container'      => 'mc/mcpyimage',
-                'script_file_id' => $file->id,
-            ]);
-        }
-
-        $this->script = $s;
+        $this->script = Script::createScriptForFileIfNeeded($file);
 
         $this->run = ScriptRun::create([
             'script_id'  => $this->script->id,
