@@ -55,7 +55,7 @@ class RunScriptAction
             new RunUserPythonScriptJob($this->run, $this->dir, $inputFile),
             function () {
                 $action = new ImportFilesIntoProjectAtLocationAction();
-                $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
+                $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user, $this->run);
             },
             function () {
                 try {

@@ -53,7 +53,7 @@ trait ImportFiles
         ]);
     }
 
-    private function processFile($path, $disk, $location, $projectId, $ownerId, \SplFileInfo $finfo)
+    private function processFile($path, $disk, $location, $projectId, $ownerId, \SplFileInfo $finfo, $attachTo = null)
     {
         // Find or create directory file is in
         $currentDir = $this->processDir(dirname($path), $disk, $location, $projectId, $ownerId);
@@ -111,6 +111,10 @@ trait ImportFiles
         }
 
         $fileEntry->save();
+
+        if (!is_null($attachTo)) {
+            $attachTo->files()->attach($fileEntry);
+        }
 
         if ($existing->isNotEmpty()) {
             // Existing files to mark as not current
