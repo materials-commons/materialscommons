@@ -36,6 +36,7 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
+                // console.log('onBeforeFileAdded', currentFile)
                 if (currentFile.data.webkitRelativePath === "") {
                     return currentFile;
                 }
@@ -54,7 +55,7 @@
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
             fileManagerSelectionType: "both",
-        }).use(UppyXHRUpload, {endpoint: r, formData: true});
+        }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
 
         uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});
