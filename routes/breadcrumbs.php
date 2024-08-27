@@ -201,6 +201,21 @@ Breadcrumbs::for('public.datasets.comments.index', function ($trail, $dataset) {
     $trail->push('Comments', route('public.datasets.comments.index', [$dataset]));
 });
 
+Breadcrumbs::for('public.datasets.data-dictionary.all', function ($trail, $dataset) {
+    $trail->parent('public.datasets.show', $dataset);
+    $trail->push('Data Dictionary', route('public.datasets.data-dictionary.all', [$dataset]));
+});
+
+Breadcrumbs::for('public.datasets.data-dictionary.entities', function ($trail, $dataset) {
+    $trail->parent('public.datasets.data-dictionary.all', $dataset);
+    $trail->push('Samples', route('public.datasets.data-dictionary.entities', [$dataset]));
+});
+
+Breadcrumbs::for('public.datasets.data-dictionary.activities', function ($trail, $dataset) {
+    $trail->parent('public.datasets.data-dictionary.all', $dataset);
+    $trail->push('Samples', route('public.datasets.data-dictionary.activities', [$dataset]));
+});
+
 Breadcrumbs::for('public.datasets.files.show', function ($trail, $dataset, $file) {
     $trail->parent('public.datasets.folders.show', $dataset, $file->directory_id);
     $trail->push($file->name, route('public.datasets.folders.show', [$dataset, $file->directory_id]));

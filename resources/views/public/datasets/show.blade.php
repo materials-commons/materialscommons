@@ -17,13 +17,13 @@
                     <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
                                 class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
                 @endif
-            @auth
-                {{--                @if($dataset->canEdit())--}}
-                {{--                    <a class="action-link float-right mr-4"--}}
-                {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
-                {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
-                {{--                    </a>--}}
-                {{--                @endif--}}
+                    @auth
+                        {{--                @if($dataset->canEdit())--}}
+                        {{--                    <a class="action-link float-right mr-4"--}}
+                        {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
+                        {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
+                        {{--                    </a>--}}
+                        {{--                @endif--}}
 
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -62,22 +62,22 @@
                             <i class="fas fa-fw fa-bell-slash"></i>
                         </a>
                     @endif
-                {{--                @if(auth()->user()->hasCommunities())--}}
-                {{--                    <div class="dropdown float-right mr-4">--}}
-                {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
-                {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
-                {{--                        </a>--}}
-                {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
-                {{--                            @foreach(auth()->user()->communities as $community)--}}
-                {{--                                @if(!$dataset->isInCommunity($community->id))--}}
-                {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
-                {{--                                @endif--}}
-                {{--                            @endforeach--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                @endif--}}
-            @endauth
+                        {{--                @if(auth()->user()->hasCommunities())--}}
+                        {{--                    <div class="dropdown float-right mr-4">--}}
+                        {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
+                        {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                        {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
+                        {{--                        </a>--}}
+                        {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
+                        {{--                            @foreach(auth()->user()->communities as $community)--}}
+                        {{--                                @if(!$dataset->isInCommunity($community->id))--}}
+                        {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
+                        {{--                                @endif--}}
+                        {{--                            @endforeach--}}
+                        {{--                        </div>--}}
+                        {{--                    </div>--}}
+                        {{--                @endif--}}
+                    @endauth
             </div>
         @endslot
 
@@ -100,6 +100,12 @@
                 @include('public.datasets.tabs.communities')
             @elseif (Request::routeIs('public.datasets.comments*'))
                 @include('public.datasets.tabs.comments-tab')
+            @elseif(Request::routeIs('public.datasets.data-dictionary.all'))
+                @include('public.datasets.tabs.data-dictionary.all')
+            @elseif(Request::routeIs('public.datasets.data-dictionary.entities'))
+                @include('public.datasets.tabs.data-dictionary.entities')
+            @elseif(Request::routeIs('public.datasets.data-dictionary.activities'))
+                @include('public.datasets.tabs.data-dictionary.activities')
             @endif
 
         @endslot

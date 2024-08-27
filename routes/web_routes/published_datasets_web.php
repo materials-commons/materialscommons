@@ -8,6 +8,9 @@ use App\Http\Controllers\Web\Published\Datasets\Comments\DestroyDatasetCommentWe
 use App\Http\Controllers\Web\Published\Datasets\Comments\EditDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\StoreDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\UpdateDatasetCommentWebController;
+use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowAllPublishedDatasetDataDictionaryAttributesWebController;
+use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowPublishedDatasetDataDictionaryActivityAttributesWebController;
+use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowPublishedDatasetDataDictionaryEntityAttributesWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetActivitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetFilesDatatableWebController;
@@ -141,6 +144,19 @@ Route::get('/datasets/{dataset}/comments/{comment}/delete', DeleteDatasetComment
 
 Route::delete('/datasets/{dataset}/comments/{comment}', DestroyDatasetCommentWebController::class)
      ->name('public.datasets.comments.destroy');
+
+// Data Dictionary
+Route::get('/datasets/{dataset}/data-dictionary/all',
+    ShowAllPublishedDatasetDataDictionaryAttributesWebController::class)
+     ->name('public.datasets.data-dictionary.all');
+
+Route::get('/datasets/{dataset}/data-dicationary/entities',
+    ShowPublishedDatasetDataDictionaryEntityAttributesWebController::class)
+     ->name('public.datasets.data-dictionary.entities');
+
+Route::get('/datasets/{dataset}/data-dicationary/activities',
+    ShowPublishedDatasetDataDictionaryActivityAttributesWebController::class)
+     ->name('public.datasets.data-dictionary.activities');
 
 // Notifications
 Route::get('/datasets/{dataset}/mark-for-notification', MarkDatasetForNotificationsWebController::class)

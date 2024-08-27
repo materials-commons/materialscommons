@@ -19,6 +19,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link no-underline {{setActiveNavByName('public.datasets.data-dictionary.*')}}"
+           href="{{route('public.datasets.data-dictionary.all', [$dataset])}}">
+            Data Dictionary
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('public.datasets.workflows')}}"
            href="{{route('public.datasets.workflows.index', ['dataset' => $dataset])}}">
             Workflows ({{$dataset->workflows_count}})
