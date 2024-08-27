@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Web\Published\Datasets;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dataset;
 use App\Models\File;
-use App\Traits\Projects\UserProjects;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetOverviewViewModel;
 use Illuminate\Support\Facades\DB;
 
@@ -13,36 +11,26 @@ class ShowPublishedDatasetOverviewWebController extends Controller
 {
     use ViewsAndDownloads;
     use GoogleDatasetAnnotations;
-    use UserProjects;
+    use LoadDatasetContext;
 
     public function __invoke($datasetId)
     {
+        $this->loadDatasetContext($datasetId);
         $this->incrementDatasetViews($datasetId);
-        $dataset = Dataset::with(['workflows', 'tags', 'rootDir'])
-                          ->withCount(['views', 'downloads'])
-                          ->withCounts()
-                          ->findOrFail($datasetId);
-
         $readme = File::where('name', "readme.md")
                       ->where("dataset_id", $datasetId)
-                      ->where("directory_id", $dataset->rootDir->id)
+            ->where("directory_id", $this->dataset->rootDir->id)
                       ->whereNull('deleted_at')
                       ->first();
 
-        if (auth()->check()) {
-            $userProjects = $this->getUserProjects(auth()->id());
-        } else {
-            $userProjects = collect();
-        }
-
         $showPublishedDatasetOverviewViewModel = (new ShowPublishedDatasetOverviewViewModel())
-            ->withDataset($dataset)
+            ->withDataset($this->dataset)
             ->withReadme($readme)
-            ->withUserProjects($userProjects)
-            ->withDsAnnotation($this->jsonLDAnnotations($dataset))
+            ->withUserProjects($this->userProjects)
+            ->withDsAnnotation($this->jsonLDAnnotations($this->dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
-            ->withFileTypes($this->getFileTypesGroup($dataset->id))
-            ->withTotalFilesSize($this->getDatasetTotalFilesSize($dataset->id));
+            ->withFileTypes($this->getFileTypesGroup($this->dataset->id))
+            ->withTotalFilesSize($this->getDatasetTotalFilesSize($this->dataset->id));
         return view('public.datasets.show', $showPublishedDatasetOverviewViewModel);
     }
 
@@ -84,7 +72,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                  ->flatMap(function ($item) {
                      return [$item->mime_type => $item->count];
                  })
-                 ->all();;
+            ->all();
     }
 
     private function getDatasetTotalFilesSize($datasetId)
