@@ -20,7 +20,7 @@
 
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('public.datasets.data-dictionary.*')}}"
-           href="{{route('public.datasets.data-dictionary.all', [$dataset])}}">
+           href="{{route('public.datasets.data-dictionary.entities', [$dataset])}}">
             Data Dictionary
         </a>
     </li>
