@@ -19,6 +19,8 @@ class ShowProjectActivityAttributeWebController extends Controller
         $viewModel = (new ShowAttributeViewModel())
             ->withProject($project)
             ->withAttributeName($attributeName)
+            ->withActivityRouteName('projects.activities.show')
+            ->withEntityRouteName('projects.entities.show')
             ->withAttributeValues($this->getActivityAttributeForProject($project->id, $attributeName));
         return view('app.projects.attributes.show', $viewModel);
     }

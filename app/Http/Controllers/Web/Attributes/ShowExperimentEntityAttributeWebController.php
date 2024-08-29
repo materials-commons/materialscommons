@@ -21,6 +21,8 @@ class ShowExperimentEntityAttributeWebController extends Controller
             ->withAttributeName($attributeName)
             ->withProject($project)
             ->withExperiment($experiment)
+            ->withActivityRouteName('projects.activities.show')
+            ->withEntityRouteName('projects.entities.show')
             ->withAttributeValues($this->getEntityAttributeForExperiment($experiment->id, $attributeName));
         return view('app.projects.experiments.attributes.show', $viewModel);
     }

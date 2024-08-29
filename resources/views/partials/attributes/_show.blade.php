@@ -65,11 +65,11 @@
                         {{--                        <td>Processes here</td>--}}
                         <td>
                             @if($attr->object_type === 'entity')
-                                <a href="{{route('projects.entities.show', [$project, $attr->object_id])}}">
+                                <a href="{{$entityRoute($attr->object_id)}}">
                                     {{$attr->object_name}}
                                 </a>
                             @else
-                                <a href="{{route('projects.activities.show', [$project, $attr->object_id])}}">
+                                <a href="{{$activityRoute($attr->object_id)}}">
                                     {{$attr->object_name}}
                                 </a>
                             @endif

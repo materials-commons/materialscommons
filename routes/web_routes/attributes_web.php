@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Attributes\ShowProjectActivityAttributeWebControlle
 use App\Http\Controllers\Web\Attributes\ShowProjectEntityAttributeWebController;
 use Illuminate\Support\Facades\Route;
 
+// Data Dictionary details for an project attribute
 Route::prefix('/projects/{project}')->group(function () {
     Route::get('/entity-attributes/show', ShowProjectEntityAttributeWebController::class)
          ->name('projects.entity-attributes.show');
@@ -15,6 +16,7 @@ Route::prefix('/projects/{project}')->group(function () {
          ->name('projects.activity-attributes.show');
 });
 
+// Data Dictionary details for an experiment attribute
 Route::prefix('/projects/{project}/experiments/{experiment}')->group(function () {
     Route::get('/entity-attributes/show', ShowExperimentEntityAttributeWebController::class)
          ->name('projects.experiments.entity-attributes.show');
@@ -22,6 +24,7 @@ Route::prefix('/projects/{project}/experiments/{experiment}')->group(function ()
          ->name('projects.experiments.activity-attributes.show');
 });
 
+// Query builder details for an attribute
 Route::get('/projects/{project}/activities/attributes/{name}/show-details-by-name',
     ShowActivityAttributeDetailsByNameWebController::class)
      ->name('projects.activities.attributes.show-details-by-name');

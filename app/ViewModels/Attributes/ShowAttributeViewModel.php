@@ -2,24 +2,28 @@
 
 namespace App\ViewModels\Attributes;
 
+use App\Models\Dataset;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\ViewModels\DataDictionary\AttributeStatistics;
 use Spatie\ViewModels\ViewModel;
+use function route;
 
 class ShowAttributeViewModel extends ViewModel
 {
     use AttributeStatistics;
 
-    /** @var \App\Models\Project */
-    private $project;
+    private $project = null;
 
-    /** @var \App\Models\Experiment */
-    private $experiment;
+    private $experiment = null;
+
+    private $dataset = null;
 
     private $attributeValues;
 
     private $attributeName;
+    private $entityRouteName;
+    private $activityRouteName;
 
     public function withProject(Project $project)
     {
@@ -30,6 +34,12 @@ class ShowAttributeViewModel extends ViewModel
     public function withExperiment(Experiment $experiment)
     {
         $this->experiment = $experiment;
+        return $this;
+    }
+
+    public function withDataset(Dataset $dataset)
+    {
+        $this->dataset = $dataset;
         return $this;
     }
 
@@ -45,6 +55,38 @@ class ShowAttributeViewModel extends ViewModel
         return $this;
     }
 
+    public function withEntityRouteName($routeName)
+    {
+        $this->entityRouteName = $routeName;
+        return $this;
+    }
+
+    public function withActivityRouteName($routeName)
+    {
+        $this->activityRouteName = $routeName;
+        return $this;
+    }
+
+    public function entityRoute($attrId)
+    {
+        if (isset($this->project)) {
+            return route($this->entityRouteName, [$this->project, $attrId]);
+        } else {
+            // Dataset route
+            return route($this->entityRouteName, [$this->dataset, $attrId]);
+        }
+    }
+
+    public function activityRoute($attrId)
+    {
+        if (isset($this->project)) {
+            return route($this->activityRouteName, [$this->project, $attrId]);
+        } else {
+            // Dataset route
+            return route($this->activityRouteName, [$this->dataset, $attrId]);
+        }
+    }
+
     public function project()
     {
         return $this->project;
@@ -53,6 +95,11 @@ class ShowAttributeViewModel extends ViewModel
     public function experiment()
     {
         return $this->experiment;
+    }
+
+    public function dataset()
+    {
+        return $this->dataset;
     }
 
     public function attributeValues()

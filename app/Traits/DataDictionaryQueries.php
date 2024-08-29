@@ -200,6 +200,28 @@ trait DataDictionaryQueries
                  ->where('attributable_type', Activity::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->orderBy('name')
+            ->distinct()
+            ->get()
+            ->groupBy('name');
+    }
+
+    public function getActivityAttributeForDataset($datasetId, $attrName)
+    {
+        return DB::table('attributes')
+                 ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
+                     'activities.name as object_name', 'activities.id as object_id',
+                     DB::raw("'activity' as object_type"))
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('dataset2activity')
+                       ->select('activity_id')
+                       ->where('experiment_id', $datasetId)
+                 )
+                 ->where('attributable_type', Activity::class)
+                 ->where('attributes.name', $attrName)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->join('activities', 'attributes.attributable_id', '=', 'activities.id')
+                 ->orderBy('name')
                  ->distinct()
                  ->get()
                  ->groupBy('name');
@@ -222,6 +244,31 @@ trait DataDictionaryQueries
                  ->distinct()
                  ->get()
                  ->groupBy('name');
+    }
+
+    public function getEntityAttributeForDataset($datasetId, $attrName)
+    {
+        return DB::table('attributes')
+                 ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
+                     'entities.name as object_name', 'entities.id as object_id', DB::raw("'entity' as object_type"))
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('dataset2entity')
+                       ->select('entity_states.id')
+                       ->where('experiment_id', $datasetId)
+                       ->join('entity_states', 'dataset2entity.entity_id', '=',
+                           'entity_states.entity_id')
+                 )
+                 ->where('attributable_type', EntityState::class)
+                 ->where('attributes.name', $attrName)
+                 ->join('attribute_values', 'attributes.id', '=',
+                     'attribute_values.attribute_id')
+                 ->join('entity_states', 'attributes.attributable_id', '=',
+                     'entity_states.id')
+                 ->join('entities', 'entity_states.entity_id', '=', 'entities.id')
+                 ->distinct()
+                 ->get()
+                 ->groupBy('attributes.name');
     }
 
     public function getUniqueEntityAttributesForProjects($projectIds)
