@@ -9,18 +9,12 @@
 @section('breadcrumbs', Breadcrumbs::render('public.datasets.activities.show', $dataset, $activity))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Process: {{$activity->name}}
-        @endslot
-
-        @slot('body')
-            <x-show-standard-details :item="$activity"/>
-            <br>
-
-            <h4>Process Attributes</h4>
-            <hr>
-            @include('partials.attributes_table', ['attributes' => $activity->attributes])
-        @endslot
-    @endcomponent
-@stop
+    @include('partials.activities._show', [
+        'showRouteName' => 'public.datasets.activities.show',
+        'showRoute' => route('public.datasets.activities.show', [$dataset, $activity]),
+        'entitiesRouteName' => 'public.datasets.entities.show',
+        'entitiesRoute' => route('public.datasets.entities.show', [$project, $experiment, $activity]),
+        'filesRouteName' => 'projects.experiments.activities.files',
+        'filesRoute' => route('projects.experiments.activities.files', [$project, $experiment, $activity])
+    ])
+@endsection

@@ -4,6 +4,7 @@ namespace App\ViewModels\DataDictionary;
 
 use App\Models\Dataset;
 use Spatie\ViewModels\ViewModel;
+use function route;
 
 class ShowPublishedDatasetDataDictionaryViewModel extends AbstractShowDataDictionaryViewModel
 {
@@ -50,11 +51,13 @@ class ShowPublishedDatasetDataDictionaryViewModel extends AbstractShowDataDictio
 
     public function activityAttributeRoute($attrName)
     {
-        return "#";
+        return route('public.datasets.activity-attributes.show',
+            [$this->dataset, 'attribute' => $attrName]);
     }
 
     public function entityAttributeRoute($attrName)
     {
-        return "#";
+        return route('public.datasets.entity-attributes.show',
+            [$this->dataset, 'attribute' => $attrName]);
     }
 }

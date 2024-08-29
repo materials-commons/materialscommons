@@ -8,7 +8,8 @@ use App\Http\Controllers\Web\Published\Datasets\Comments\DestroyDatasetCommentWe
 use App\Http\Controllers\Web\Published\Datasets\Comments\EditDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\StoreDatasetCommentWebController;
 use App\Http\Controllers\Web\Published\Datasets\Comments\UpdateDatasetCommentWebController;
-use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowAllPublishedDatasetDataDictionaryAttributesWebController;
+use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowDatasetActivityAttributeWebController;
+use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowDatasetEntityAttributeWebController;
 use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowPublishedDatasetDataDictionaryActivityAttributesWebController;
 use App\Http\Controllers\Web\Published\Datasets\DataDictionary\ShowPublishedDatasetDataDictionaryEntityAttributesWebController;
 use App\Http\Controllers\Web\Published\Datasets\Datatables\GetDatasetActivitiesDatatableWebController;
@@ -146,9 +147,6 @@ Route::delete('/datasets/{dataset}/comments/{comment}', DestroyDatasetCommentWeb
      ->name('public.datasets.comments.destroy');
 
 // Data Dictionary
-Route::get('/datasets/{dataset}/data-dictionary/all',
-    ShowAllPublishedDatasetDataDictionaryAttributesWebController::class)
-     ->name('public.datasets.data-dictionary.all');
 
 Route::get('/datasets/{dataset}/data-dicationary/entities',
     ShowPublishedDatasetDataDictionaryEntityAttributesWebController::class)
@@ -157,6 +155,12 @@ Route::get('/datasets/{dataset}/data-dicationary/entities',
 Route::get('/datasets/{dataset}/data-dicationary/activities',
     ShowPublishedDatasetDataDictionaryActivityAttributesWebController::class)
      ->name('public.datasets.data-dictionary.activities');
+
+Route::get('/datasets/{dataset}/entity-attributes/show', ShowDatasetEntityAttributeWebController::class)
+     ->name('public.datasets.entity-attributes.show');
+
+Route::get('/datasets/{dataset}/activity-attributes/show', ShowDatasetActivityAttributeWebController::class)
+     ->name('public.datasets.activity-attributes.show');
 
 // Notifications
 Route::get('/datasets/{dataset}/mark-for-notification', MarkDatasetForNotificationsWebController::class)
