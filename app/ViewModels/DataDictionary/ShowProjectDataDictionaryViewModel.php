@@ -11,6 +11,8 @@ class ShowProjectDataDictionaryViewModel extends AbstractShowDataDictionaryViewM
     /** @var \App\Models\Project */
     private $project;
 
+    private $experiments;
+
     public function withProject(Project $project)
     {
         $this->project = $project;
@@ -20,6 +22,22 @@ class ShowProjectDataDictionaryViewModel extends AbstractShowDataDictionaryViewM
     public function project()
     {
         return $this->project;
+    }
+
+    public function withExperiments($experiments)
+    {
+        $this->experiments = $experiments;
+        return $this;
+    }
+
+    public function experiments()
+    {
+        return $this->experiments;
+    }
+
+    public function query()
+    {
+        return '';
     }
 
     public function activityAttributeRoute($attrName)
