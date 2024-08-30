@@ -6,12 +6,12 @@
     @include('layouts.navs.public')
 @stop
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot:header>
             Select Project Step
-        @endslot
+        </x-slot:header>
 
-        @slot('body')
+        <x-slot:body>
             <h5>Select Project</h5>
             <form class="col-8">
                 <div class="form-group">
@@ -33,8 +33,8 @@
                     </div>
                 </div>
             </form>
-        @endslot
-    @endcomponent
+        </x-slot:body>
+    </x-card>
 @stop
 
 @push('scripts')
