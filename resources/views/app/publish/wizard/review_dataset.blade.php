@@ -7,13 +7,14 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot:header>
             Review Dataset
-        @endslot
+        </x-slot:header>
+        >
 
-        @slot('body')
+        <x-slot:body>
             Review Dataset
-        @endslot
-    @endcomponent
+        </x-slot:body>
+    </x-card>>
 @stop

@@ -6,12 +6,12 @@
     @include('layouts.navs.public')
 @stop
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot:header>
             Create Project Step
-        @endslot
+        </x-slot:header>
 
-        @slot('body')
+        <x-slot:body>
             @if($projectsCount == 0)
                 <p>
                     It doesn't appear you have any projects. In Materials Commons all data is stored in a project. In
@@ -35,6 +35,6 @@
                 'createProjectRoute' => route('public.publish.wizard.store_project'),
                 'cancelRoute' => route('welcome')
             ])
-        @endslot
-    @endcomponent
+        </x-slot:body>
+    </x-card>>
 @stop
