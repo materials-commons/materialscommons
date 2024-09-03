@@ -15,7 +15,7 @@ class ShowResultsWebController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         $experiments = Experiment::where('project_id', $project->id)->get();
-        $query = "'select s:'stress', s:'strain'";
+        $query = "s:'stress', s:'strain'";
         $chart = app()->chartjs
             ->name('StressStrain')
             ->type('line')

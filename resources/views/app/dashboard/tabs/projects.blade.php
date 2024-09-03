@@ -81,11 +81,11 @@
                             <i class="fas fa-fw fa-archive"></i>
                         </a>
                     @endif
+                        @if(auth()->id() == $proj->owner_id)
+                            @component('app.projects.delete-project', ['project' => $proj])
+                            @endcomponent
+                        @endif
                 </div>
-                @if(auth()->id() == $proj->owner_id)
-                    @component('app.projects.delete-project', ['project' => $proj])
-                    @endcomponent
-                @endif
             </td>
         </tr>
     @endforeach

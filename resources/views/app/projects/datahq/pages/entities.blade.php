@@ -9,8 +9,7 @@
         {{--                <th>Avg</th>--}}
         {{--                <th>Mode</th>--}}
         <th># Values</th>
-        <th>Query On</th>
-        <th>Select</th>
+        <th>Query</th>
     </tr>
     </thead>
     <tbody>
@@ -26,32 +25,18 @@
             {{--                    <td>{{$average($attrs)}}</td>--}}
             {{--                    <td>{{$mode($attrs)}}</td>--}}
             <td>{{$attrs->count()}}</td>
-            @if($loop->index == 1)
-                <td>
-                    <input type="checkbox" checked="true" name="x"/>
-                    <div class="row ml-1">
-                        <select id="select-{{$loop->index}}"
-                                class="selectpicker col-6">
-                            <option>Select</option>
-                            <option>=</option>
-                            <option>></option>
-                            <option>>=</option>
-                            <option><</option>
-                            <option><=</option>
-                            <option><></option>
-                        </select>
-                        <input type="text" placeholder="Value..." class="col-4">
-                    </div>
-                </td>
-            @else
-                <td><input type="checkbox"></td>
-            @endif
 
-            <td><input type="checkbox"></td>
+            <td>
+                <a href="#query-dialog" data-toggle="modal" class="action-link">
+                    <i class="fas fa-fw fa-edit"></i>
+                </a>
+            </td>
         </tr>
     @endforeach
     </tbody>
 </table>
+
+@include('app.projects.datahq.pages._query-dialog')
 
 @push('scripts')
     <script>
