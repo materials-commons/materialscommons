@@ -41,16 +41,31 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group col-12">
-                                <label for="select">Show</label>
-                                <input type="text" class="col-12" value="{{$query}}" placeholder="what to show...">
+                                <label for="select">Get:</label>
+                                <select name="what" class="selectpicker" title="What To Get"
+                                        data-style="btn-light no-tt">
+                                    <option value="proj">Samples</option>
+                                    <option value="proj">Computations</option>
+                                    <option value="proj">Processes</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-12">
-                                <label for="mql">When</label>
-                                <textarea class="form-control col-12" id="mql" placeholder="what to match on..."
+                                <label for="mql">Filter:</label>
+                                <textarea class="form-control col-12" id="mql" placeholder="Filter by..."
                                           rows="{{line_count($query, 2)+1}}"></textarea>
 
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="mql">Show Results As:</label>
+                                <select name="what" class="selectpicker" title="Show As"
+                                        data-style="btn-light no-tt">
+                                    <option value="proj">Table</option>
+                                    <option value="proj">Chart</option>
+                                </select>
                             </div>
                         </div>
                     </form>
