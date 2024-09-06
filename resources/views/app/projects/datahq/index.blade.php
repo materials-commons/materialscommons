@@ -41,13 +41,13 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group col-12">
-                                <label for="select">Select</label>
+                                <label for="select">Show</label>
                                 <input type="text" class="col-12" value="{{$query}}" placeholder="what to show...">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-12">
-                                <label for="mql">Where</label>
+                                <label for="mql">When</label>
                                 <textarea class="form-control col-12" id="mql" placeholder="what to match on..."
                                           rows="{{line_count($query, 2)+1}}"></textarea>
 

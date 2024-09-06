@@ -113,7 +113,7 @@
                    data-toggle="tooltip" title="Explore, chart and query your data."
                    href="{{route('projects.datahq.index', [$project])}}">
                     <i class="fa-fw fas fa-database mr-2"></i>
-                    Data Explorer
+                    Explore Data
                 </a>
             </li>
 
