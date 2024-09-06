@@ -1,4 +1,4 @@
-<div style="width:58%;">
+<div class="col-11">
     <label>Show Data As:</label>
     <select name="what" class="selectpicker"
             data-style="btn-light no-tt">

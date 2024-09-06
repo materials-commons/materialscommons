@@ -15,14 +15,14 @@
             Data Explorer
             <div class="col-lg-8 float-right">
                 <label>Select Data For:</label>
-                <select name="what" class="selectpicker"
+                <select name="what" class="selectpicker" id="select-data-for"
                         data-style="btn-light no-tt">
-                    <option value="proj">Project</option>
+                    <option value="p:{{$project->id}}:de:state">Project</option>
                     @foreach($experiments as $experiment)
-                        <option value="exp:{{$experiment->id}}">Experiment: {{$experiment->name}}</option>
+                        <option value="exp:{{$experiment->id}}:de:state">Experiment: {{$experiment->name}}</option>
                     @endforeach
-                    <option value="ds:DS1">Dataset DS1</option>
-                    <option value="ds:DS2">Dataset DS2</option>
+                    <option value="ds:DS1:de:state">Dataset DS1</option>
+                    <option value="ds:DS2:de:state">Dataset DS2</option>
                 </select>
                 <select name="what" class="selectpicker" title="Load Saved Query"
                         data-style="btn-light no-tt">
@@ -167,6 +167,20 @@
                 if (r !== "") {
                     window.location.href = r;
                 }
+            });
+
+            const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";
+            $('#select-data-for').on('change', function () {
+                let selected = $(this).val();
+                console.log("selected = ", selected);
+                let formData = new FormData();
+                formData.append("data_for", selected);
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                axios.post(selectDataForRoute, formData, config);
             });
         </script>
     @endpush

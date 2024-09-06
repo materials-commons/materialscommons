@@ -8,6 +8,8 @@ use App\Models\Project;
 use App\Traits\DataDictionaryQueries;
 use App\ViewModels\DataDictionary\ShowProjectDataDictionaryViewModel;
 use Illuminate\Http\Request;
+use function ray;
+use function session;
 use function view;
 
 class ShowEntityAttributesWebController extends Controller
@@ -17,6 +19,11 @@ class ShowEntityAttributesWebController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         $experiments = Experiment::where('project_id', $project->id)->get();
+        ray($request->session()->all());
+        $dataFor = session("{$project->id}:de:data-for");
+        ray("dataFor = {$dataFor}");
+        $deState = session($dataFor);
+        ray("deState =", $deState);
         $viewModel = (new ShowProjectDataDictionaryViewModel())
             ->withProject($project)
             ->withExperiments($experiments)
