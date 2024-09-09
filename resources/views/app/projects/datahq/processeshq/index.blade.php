@@ -1,0 +1,192 @@
+@extends('layouts.app')
+
+@section('pageTitle', "{$project->name} - Data Explorer")
+
+@section('nav')
+    @include('layouts.navs.app.project')
+@stop
+
+{{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
+
+@section('content')
+
+    <x-card>
+        <x-slot:header>
+            Data Explorer
+            <div class="col-lg-8 float-right">
+                <label>Select Data For:</label>
+                <select name="what" class="selectpicker" id="select-data-for"
+                        data-style="btn-light no-tt">
+                    <option value="p:{{$project->id}}:de:state">Project</option>
+                    @foreach($experiments as $experiment)
+                        <option value="exp:{{$experiment->id}}:de:state">Experiment: {{$experiment->name}}</option>
+                    @endforeach
+                    <option value="ds:DS1:de:state">Dataset DS1</option>
+                    <option value="ds:DS2:de:state">Dataset DS2</option>
+                </select>
+                <select name="what" class="selectpicker" title="Load Saved Query"
+                        data-style="btn-light no-tt">
+                    <option value="proj">Annealed Samples</option>
+                    <option value="proj">Stress vs Strain</option>
+                </select>
+                <a class="btn btn-danger ml-4" href="#">Reset</a>
+                <a class="btn btn-warning" href="#">Save</a>
+                <a class="btn btn-success" href="#">Run</a>
+            </div>
+        </x-slot:header>
+
+        <x-slot:body>
+            <div class="row">
+                <div class="col-6">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="select">Get:</label>
+                                <select name="what" class="selectpicker" title="What To Get"
+                                        data-style="btn-light no-tt">
+                                    <option value="proj">Samples</option>
+                                    <option value="proj">Computations</option>
+                                    <option value="proj">Processes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="mql">Filter:</label>
+                                <textarea class="form-control col-12" id="mql" placeholder="Filter by..."
+                                          rows="{{line_count($query, 2)+1}}"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="mql">Show Results As:</label>
+                                <select name="what" class="selectpicker" title="Show As"
+                                        data-style="btn-light no-tt">
+                                    <option value="proj">Table</option>
+                                    <option value="proj">Chart</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <form>
+                        <label>Overview</label>
+                        <p>
+                            This area to be used for an overview of the data shown on the page. For example:
+                        </p>
+                        @if(Request::routeIs('projects.datahq.entities'))
+                            <p>
+                                These attributes are from 2 samples (
+                                <a href="#">S1 (experiment E1)</a>
+                                <a href="#">S1 (experiment E2)</a>).
+                                These samples are used in 6 process (<a href="#">Aging Analysis</a>,
+                                <a href="#">Aging HT</a>
+                                <a href="#">Cogging</a>
+                                <a href="#">Extrusion</a>
+                                <a href="#">Hardness Test</a>
+                                <a href="#">Solution HT</a>).
+
+                            </p>
+                        @elseif(Request::routeIs('projects.datahq.index'))
+                            <p>
+                                There are 2 samples (<a href="#">S1 (experiment E1)</a>
+                                <a href="#">S1 (experiment E2)</a>) used in these samples.
+                                There are 13 process attributes used in these processes.
+                            </p>
+                        @elseif(Request::routeIs('projects.datahq.results'))
+                            <p>
+                                You have selected 2 attributes (<a href="#">stress</a>, <a href="#">strain</a>).
+                            </p>
+                        @endif
+                        <p>Other stuff?? What format/layout?</p>
+
+                    </form>
+                </div>
+            </div>
+            <label>Show:</label>
+            <select id="dhq_page" name="what" class="selectpicker"
+                    data-style="btn-light no-tt">
+                <option value="samples">Samples</option>
+                <option value="computations">Computations</option>
+                <option value="processes" @if(Request::routeIs('projects.datahq.index')) selected @endif>Processes
+                </option>
+                <option value="sample_attributes" @if(Request::routeIs('projects.datahq.entities')) selected @endif>
+                    Sample Attributes
+                </option>
+                <option value="process_attributes">Process Attributes</option>
+                <option value="computation_attributes">Computation Attributes</option>
+                <option value="results" @if(Request::routeIs('projects.datahq.results')) selected @endif>Results
+                </option>
+            </select>
+
+            <hr>
+            <div class="mt-2">
+                <div class="card bg-light" style="border-color: #b3c2d9">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Data Explorer</strong></h5>
+                        <hr/>
+                        <p class="card-text">
+                            The data explorer helps you to understand your data. Start by selecting
+                            the type of data you want to look at in the "Get" dropdown. You will be
+                            able to choose "Samples", "Computations" or "Processes". Then explore
+                            the related data. You can build our a query to look at the data
+                            in different ways, and explore the data in both table and chart formats.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </x-slot:body>
+    </x-card>
+
+    @push('scripts')
+        <script>
+            $('#dhq_page').on('change', function () {
+                let r = "";
+                let selected = $(this).val();
+                switch (selected) {
+                    case 'samples':
+                        break;
+                    case 'computations':
+                        break;
+                    case 'processes':
+                        r = "{{route('projects.datahq.index', [$project])}}";
+                        break;
+                    case 'activities':
+                        break;
+                    case 'sample_attributes':
+                        r = "{{route('projects.datahq.entities', [$project])}}";
+                        break;
+                    case 'process_attributes':
+                        break;
+                    case 'computation_attributes':
+                        break;
+                    case 'activity_attributes':
+                        break;
+                    case 'results':
+                        r = "{{route('projects.datahq.results', [$project])}}";
+                        break;
+                }
+                if (r !== "") {
+                    window.location.href = r;
+                }
+            });
+
+            const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";
+            $('#select-data-for').on('change', function () {
+                let selected = $(this).val();
+                console.log("selected = ", selected);
+                let formData = new FormData();
+                formData.append("data_for", selected);
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                axios.post(selectDataForRoute, formData, config);
+            });
+        </script>
+    @endpush
+
+@stop

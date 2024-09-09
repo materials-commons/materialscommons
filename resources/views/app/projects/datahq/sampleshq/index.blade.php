@@ -13,15 +13,8 @@
     <x-card>
         <x-slot:header>
             Data Explorer
-            <div class="col-lg-8 float-right">
-                <label for="select">View:</label>
-                <select name="what" class="selectpicker" title="View" id="view_data"
-                        data-style="btn-light no-tt">
-                    <option value="samples">Samples</option>
-                    <option value="computations">Computations</option>
-                    <option value="processes">Processes</option>
-                </select>
-                <label class="ml-4">Select Data For:</label>
+            <div class="col-lg-10 float-right">
+                <label>Select Data For:</label>
                 <select name="what" class="selectpicker" id="select-data-for"
                         data-style="btn-light no-tt">
                     <option value="p:{{$project->id}}:de:state">Project</option>
@@ -31,33 +24,56 @@
                     <option value="ds:DS1:de:state">Dataset DS1</option>
                     <option value="ds:DS2:de:state">Dataset DS2</option>
                 </select>
+                <label for="select" class="ml-4">View:</label>
+                <select name="what" class="selectpicker" title="View" id="view_data"
+                        data-style="btn-light no-tt">
+                    <option value="samples" selected>Samples</option>
+                    <option value="computations">Computations</option>
+                    <option value="processes">Processes</option>
+                </select>
+
             </div>
         </x-slot:header>
 
         <x-slot:body>
             <div class="row">
-                <div class="offset-2 col-8">
-                    <div class="card bg-light" style="border-color: #b3c2d9">
-                        <div class="card-body">
-                            <h5 class="card-title"><strong>Data Explorer</strong></h5>
-                            <hr/>
-                            <ul>
-                                <li>Should this page start with an overview of the data?</li>
-                                <li>Or... Should it start at a default, such as View: Samples, Select Data For:
-                                    Project?
-                                </li>
-                                <li>Or should we show help here?</li>
-                            </ul>
-                            <p class="card-text">
-                                The data explorer helps you to understand your data. Start by selecting
-                                the type of data you want to look at in the "Get" dropdown. You will be
-                                able to choose "Samples", "Computations" or "Processes". Then explore
-                                the related data. You can build our a query to look at the data
-                                in different ways, and explore the data in both table and chart formats.
-                            </p>
+                <div class="col-8">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="mql">Filter:</label>
+                                <textarea class="form-control col-12" id="mql" placeholder="Filter by..."
+                                          rows="{{line_count($query, 2)+1}}"></textarea>
+                            </div>
                         </div>
+                    </form>
+                </div>
+                <div class="col-4">
+                    <div class="row col-12">
+                        <a class="btn btn-danger" href="#">Reset</a>
+                        <a class="btn btn-warning ml-2" href="#">Save</a>
+                        <a class="btn btn-success ml-2" href="#">Run</a>
+                    </div>
+
+                    <div class="row col-12">
+                        <select name="what" class="selectpicker mt-4" title="Load Saved Filter"
+                                data-style="btn-light no-tt">
+                            <option value="proj">Annealed Samples</option>
+                            <option value="proj">Stress vs Strain</option>
+                        </select>
                     </div>
                 </div>
+            </div>
+            <hr>
+            @include('app.projects.datahq.sampleshq.tabs.tabs')
+            <div class="mt-2">
+                @if(Request::routeIs('projects.datahq.sampleshq.index'))
+                    @include('app.projects.datahq.sampleshq.tabs.samples')
+                @elseif(Request::routeIs('projects.datahq.entities'))
+                    @include('app.projects.datahq.pages.entities')
+                @elseif(Request::routeIs('projects.datahq.results'))
+                    @include('app.projects.datahq.pages.results')
+                @endif
             </div>
         </x-slot:body>
     </x-card>
@@ -87,6 +103,7 @@
             const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";
             $('#select-data-for').on('change', function () {
                 let selected = $(this).val();
+                console.log("selected = ", selected);
                 let formData = new FormData();
                 formData.append("data_for", selected);
                 let config = {

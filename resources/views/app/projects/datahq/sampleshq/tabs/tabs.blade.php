@@ -1,11 +1,10 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.datahq.results')}}"
-           href="{{route('projects.datahq.results', [$project])}}">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.datahq.sampleshq.index')}}"
+           href="{{route('projects.datahq.sampleshq.index', [$project])}}">
             Samples
         </a>
     </li>
-
     <li class="nav-item">
         <a class="nav-link no-underline  {{setActiveNavByName('projects.datahq.index')}}"
            href="{{route('projects.datahq.index', [$project])}}">
@@ -23,5 +22,4 @@
             Process Attributes
         </a>
     </li>
-
 </ul>
