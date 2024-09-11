@@ -13,10 +13,11 @@
     <select name="what" class="selectpicker" title="View" id="view-data"
             data-style="btn-light no-tt">
         <option value="overview" @selected(Request::routeIs('projects.datahq.index'))>Overview</option>
-        <option value="samples" @selected(Request::routeIs('projects.datahq.sampleshq.*'))>Samples</option>
-        <option value="computations" @selected(Request::routeIs('projects.datahq.computationshq.*'))>Computations
+        <option value="samples" @selected(Request::routeIs('projects.datahq.sampleshq.*'))>Sample Explorer</option>
+        <option value="computations" @selected(Request::routeIs('projects.datahq.computationshq.*'))>Computation
+            Explorer
         </option>
-        <option value="processes" @selected(Request::routeIs('projects.datahq.processeshq.*'))>Processes</option>
+        <option value="processes" @selected(Request::routeIs('projects.datahq.processeshq.*'))>Process Explorer</option>
     </select>
 
     @push('scripts')
