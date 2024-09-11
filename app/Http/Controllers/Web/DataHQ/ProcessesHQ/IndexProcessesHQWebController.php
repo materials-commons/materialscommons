@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers\Web\DataHQ\ProcessesHQ;
 
+use App\DTO\DataExplorerState;
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use function session;
+use function view;
 
 class IndexProcessesHQWebController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, Project $project)
     {
-        //
+        $deState = session("p:{$project->id}:de:state", new DataExplorerState());
+        $deState->dataFor = "p:{$project->id}:de:state";
+        session(["p:{$project->id}:de:state" => $deState]);
+        session(["{$project->id}:de:data-for" => $deState->dataFor]);
+
+        return view('app.projects.datahq.processeshq.index', [
+            'project'  => $project,
+            'deState'  => $deState,
+            'query'    => '',
+            'category' => 'experimental',
+        ]);
     }
 }

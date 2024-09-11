@@ -34,8 +34,6 @@ class IndexSamplesHQWebController extends Controller
         $activities = $this->getProjectActivityNamesForEntities($project->id, $entities);
         $createUsedActivities = new  CreateUsedActivitiesForEntitiesAction();
         $usedActivities = $createUsedActivities->execute($activities, $entities);
-        $sampleAttributes = $this->getSampleAttributes($project->id);
-        $processAttributes = $this->getProcessAttributes($project->id);
         return view('app.projects.datahq.sampleshq.index', [
             'project'           => $project,
             'experiments'       => $experiments,
@@ -45,8 +43,6 @@ class IndexSamplesHQWebController extends Controller
             'category'          => 'experimental',
             'entities'          => $entities,
             'usedActivities'    => $usedActivities,
-            //            'sampleAttributes'  => $sampleAttributes,
-            //            'processAttributes' => $processAttributes,
         ]);
     }
 }
