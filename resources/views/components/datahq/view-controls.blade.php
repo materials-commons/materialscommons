@@ -6,9 +6,15 @@
             <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
                     data-style="btn-light no-tt">
                 {{--                <option value="samples">Samples</option>--}}
-                <option value="processes">Processes</option>
-                <option value="sample-attributes">Sample Attributes</option>
-                <option value="process-attributes">Process Attributes</option>
+                <option value="processes" @selected(Request::routeIs('projects.datahq.sampleshq.activities.filters'))>
+                    Processes
+                </option>
+                <option value="sample-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))>
+                    Sample Attributes
+                </option>
+                <option value="process-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))>
+                    Process Attributes
+                </option>
             </select>
         </div>
         <div class="form-group">
@@ -77,57 +83,60 @@
 
     <div class="row mt-2">
         <div class="form-group">
-            <label>Show Existing Views:</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-attributes"
+            <label>Views:</label>
+            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"
                     title="existing views"
                     data-live-search="true">
-                <option value="samples" selected>All Samples</option>
+                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All Samples
+                </option>
                 <option value="sc: stress, strain">Scatter: stress, strain</option>
                 <option value="hc: time, temperature">Histogram: time, temperature</option>
             </select>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            $('#filter-on').on('change', function () {
+                let selected = $(this).val();
+                let r = "";
+                switch (selected) {
+                    case 'processes':
+                        r = "{{route('projects.datahq.sampleshq.activities.filters', [$project])}}";
+                        break;
+                    case 'sample-attributes':
+                        r = "{{route('projects.datahq.sampleshq.entity-attributes.filters', [$project])}}";
+                        break;
+                    case 'process-attributes':
+                        r = "{{route('projects.datahq.sampleshq.activity-attributes.filters', [$project])}}";
+                        break;
+                }
+
+                if (r !== "") {
+                    window.location.href = r;
+                }
+            });
+
+            $('#existing-views').on('change', function () {
+                let selected = $(this).val();
+                if (selected === 'all-samples') {
+                    window.location.href = "{{route('projects.datahq.sampleshq.index', [$project])}}"
+                }
+            });
+
+            $("#view-as").on('change', function () {
+                let selected = $(this).val();
+                switch (selected) {
+                    case 'table':
+                        $('#table-controls').show();
+                        $('#chart-controls').hide();
+                        break;
+                    default:
+                        $('#table-controls').hide();
+                        $('#chart-controls').show();
+                        break;
+                }
+            });
+        </script>
+    @endpush
 </div>
-
-@push('scripts')
-    <script>
-        $('#filter-on').on('change', function () {
-            let selected = $(this).val();
-            let r = "";
-            switch (selected) {
-                case 'processes':
-                    r = "{{route('projects.datahq.sampleshq.activities.filters', [$project])}}";
-                    break;
-                case 'sample-attributes':
-                    r = "{{route('projects.datahq.sampleshq.entity-attributes.filters', [$project])}}";
-                    break;
-                case 'process-attributes':
-                    r = "{{route('projects.datahq.sampleshq.activity-attributes.filters', [$project])}}";
-                    break;
-            }
-
-            if (r !== "") {
-                window.location.href = r;
-            }
-        });
-
-        $('#filter-on').on('change', function () {
-            let selected = $(this).val();
-
-        });
-
-        $("#view-as").on('change', function () {
-            let selected = $(this).val();
-            switch (selected) {
-                case 'table':
-                    $('#table-controls').show();
-                    $('#chart-controls').hide();
-                    break;
-                default:
-                    $('#table-controls').hide();
-                    $('#chart-controls').show();
-                    break;
-            }
-        });
-    </script>
-@endpush

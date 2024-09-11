@@ -24,7 +24,7 @@
                     <option value="ds:DS1:de:state">Dataset DS1</option>
                     <option value="ds:DS2:de:state">Dataset DS2</option>
                 </select>
-                <label for="select" class="ml-4">View:</label>
+                <label for="select" class="ml-4">Show:</label>
                 <select name="what" class="selectpicker" title="View" id="view_data"
                         data-style="btn-light no-tt">
                     <option value="samples" selected>Samples</option>
@@ -65,14 +65,17 @@
                 </div>
             </div>
             <hr>
-            @include('app.projects.datahq.sampleshq.tabs.tabs')
             <div class="mt-2">
+                <x-datahq.view-controls :project="$project"/>
+                <br/>
                 @if(Request::routeIs('projects.datahq.sampleshq.index'))
-                    @include('app.projects.datahq.sampleshq.tabs.samples')
-                @elseif(Request::routeIs('projects.datahq.entities'))
-                    @include('app.projects.datahq.pages.entities')
-                @elseif(Request::routeIs('projects.datahq.results'))
-                    @include('app.projects.datahq.pages.results')
+                    @include('app.projects.datahq.sampleshq.pages.samples')
+                @elseif(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))
+                    @include('app.projects.datahq.sampleshq.pages.entity-attribute-filters')
+                @elseif(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))
+                    @include('app.projects.datahq.sampleshq.pages.activity-attribute-filters')
+                @elseif(Request::routeIs('projects.datahq.sampleshq.activities.filters'))
+                    @include('app.projects.datahq.sampleshq.pages.activity-filters')
                 @endif
             </div>
         </x-slot:body>
@@ -103,9 +106,7 @@
             const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";
             $('#select-data-for').on('change', function () {
                 let selected = $(this).val();
-                console.log("selected = ", selected);
                 let formData = new FormData();
-                formData.append("data_for", selected);
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data'

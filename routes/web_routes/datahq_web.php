@@ -4,6 +4,9 @@ use App\Http\Controllers\Web\DataHQ\ComputationsHQ\IndexComputationsHQWebControl
 use App\Http\Controllers\Web\DataHQ\IndexDataHQWebController;
 use App\Http\Controllers\Web\DataHQ\ProcessesHQ\IndexProcessesHQWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\IndexSamplesHQWebController;
+use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowActivityFiltersSampleHQWebController;
+use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowActivityAttributeFiltersSampleHQWebController;
+use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowEntityAttributeFiltersSampleHQWebController;
 use App\Http\Controllers\Web\DataHQ\SaveDataForWebController;
 use App\Http\Controllers\Web\DataHQ\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\DataHQ\ShowResultsWebController;
@@ -25,6 +28,17 @@ Route::post('/projects/{project}/save-data-for', SaveDataForWebController::class
 
 Route::get('/projects/{project}/datahq/sampleshq', IndexSamplesHQWebController::class)
      ->name('projects.datahq.sampleshq.index');
+
+Route::get('/projects/{project}/datahq/sampleshq/entities/filters',
+    ShowEntityAttributeFiltersSampleHQWebController::class)
+     ->name('projects.datahq.sampleshq.entity-attributes.filters');
+
+Route::get('/projects/{project}/datahq/sampleshq/activities/filters',
+    ShowActivityAttributeFiltersSampleHQWebController::class)
+     ->name('projects.datahq.sampleshq.activity-attributes.filters');
+
+Route::get('/projects/{project}/datahq/samples/activities/filters', ShowActivityFiltersSampleHQWebController::class)
+     ->name('projects.datahq.sampleshq.activities.filters');
 
 // ComputationsHQ
 

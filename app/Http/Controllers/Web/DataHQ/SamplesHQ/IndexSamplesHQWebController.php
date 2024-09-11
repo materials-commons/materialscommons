@@ -36,8 +36,6 @@ class IndexSamplesHQWebController extends Controller
         $usedActivities = $createUsedActivities->execute($activities, $entities);
         $sampleAttributes = $this->getSampleAttributes($project->id);
         $processAttributes = $this->getProcessAttributes($project->id);
-        ray("processAttributes", $processAttributes);
-        ray("sampleAttributes", $sampleAttributes);
         return view('app.projects.datahq.sampleshq.index', [
             'project'           => $project,
             'experiments'       => $experiments,
@@ -47,8 +45,8 @@ class IndexSamplesHQWebController extends Controller
             'category'          => 'experimental',
             'entities'          => $entities,
             'usedActivities'    => $usedActivities,
-            'sampleAttributes'  => $sampleAttributes,
-            'processAttributes' => $processAttributes,
+            //            'sampleAttributes'  => $sampleAttributes,
+            //            'processAttributes' => $processAttributes,
         ]);
     }
 }

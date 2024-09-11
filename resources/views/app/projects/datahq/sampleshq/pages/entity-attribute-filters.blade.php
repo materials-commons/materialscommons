@@ -15,9 +15,7 @@
     <tbody>
     @foreach($entityAttributes as $name => $attrs)
         <tr>
-            <td>
-                <a href="{{$entityAttributeRoute($name)}}">{{$name}}</a>
-            </td>
+            <td>{{$name}}</td>
             <td>{{$units($attrs)}}</td>
             <td>{{$min($attrs)}}</td>
             <td>{{$max($attrs)}}</td>

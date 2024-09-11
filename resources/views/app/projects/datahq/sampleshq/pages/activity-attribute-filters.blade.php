@@ -1,4 +1,4 @@
-<table id="entities-dd" class="table table-hover" style="width:100%">
+<table id="activities-dd" class="table table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Attribute</th>
@@ -9,15 +9,13 @@
         {{--                <th>Avg</th>--}}
         {{--                <th>Mode</th>--}}
         <th># Values</th>
-        <th>Query</th>
+        <th>Add Filter</th>
     </tr>
     </thead>
     <tbody>
-    @foreach($entityAttributes as $name => $attrs)
+    @foreach($activityAttributes as $name => $attrs)
         <tr>
-            <td>
-                <a href="{{$entityAttributeRoute($name)}}">{{$name}}</a>
-            </td>
+            <td>{{$name}}</td>
             <td>{{$units($attrs)}}</td>
             <td>{{$min($attrs)}}</td>
             <td>{{$max($attrs)}}</td>
@@ -40,7 +38,7 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('#entities-dd').DataTable({
+            $('#activities-dd').DataTable({
                 pageLength: 100,
                 stateSave: true
             });
