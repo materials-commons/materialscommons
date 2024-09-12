@@ -25,7 +25,7 @@
                     @elseif(hasTabParam('computations'))
                         <x-projects.computations.computations-table :project="$project"/>
                     @elseif(hasTabParam('processes'))
-                        Processes table here
+                        <x-projects.processes.processes-table :project="$project"/>
                     @elseif(hasTabParam('sampleattrs'))
                         Sample Attributes here
                     @elseif(hasTabParam('computationattrs'))
