@@ -19,7 +19,22 @@
         <x-slot:body>
             @include('app.projects.datahq.pages.tabs')
             <div class="mt-2">
-                Put details here
+                @if(hasTabParam('samples'))
+                    <x-projects.samples.samples-table :project="$project"/>
+                @elseif(hasTabParam('computations'))
+                    Computations table here
+                @elseif(hasTabParam('processes'))
+                    Processes table here
+                @elseif(hasTabParam('sampleattrs'))
+                    Sample Attributes here
+                @elseif(hasTabParam('computationattrs'))
+                    Computation Attributes here
+                @elseif(hasTabParam('processattrs'))
+                    Process Attributes here
+                @else
+                    {{-- default to samples if no param passed in --}}
+                    <x-projects.samples.samples-table :project="$project"/>
+                @endif
             </div>
         </x-slot:body>
     </x-card>

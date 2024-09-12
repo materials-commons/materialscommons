@@ -37,6 +37,45 @@ if (!function_exists("setActiveNavByOneOf")) {
     }
 }
 
+if (!function_exists("setActiveNavByHasParam")) {
+    function setActiveNavByHasParam($name): string
+    {
+        return Request::has($name) ? 'active' : '';
+    }
+}
+
+if (!function_exists("setActiveNavByTabParam")) {
+    function setActiveNavByTabParam($value): string
+    {
+        $tabValue = Request::input('tab', null);
+        if (is_null($tabValue)) {
+            return '';
+        }
+
+        if ($tabValue == $value) {
+            return 'active';
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists("hasTabParam")) {
+    function hasTabParam($value): bool
+    {
+        $tabValue = Request::input('tab', null);
+        if (is_null($tabValue)) {
+            return false;
+        }
+
+        if ($tabValue == $value) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists("getPreviousRouteName")) {
     function getPreviousRouteName()
     {

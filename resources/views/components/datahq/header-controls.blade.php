@@ -13,11 +13,12 @@
     <select name="what" class="selectpicker" title="View" id="view-data"
             data-style="btn-light no-tt">
         <option value="overview" @selected(Request::routeIs('projects.datahq.index'))>Overview</option>
-        <option value="samples" @selected(Request::routeIs('projects.datahq.sampleshq.*'))>Sample Explorer</option>
-        <option value="computations" @selected(Request::routeIs('projects.datahq.computationshq.*'))>Computation
+        <option value="samples" @selected(Request::routeIs('projects.datahq.sampleshq.*'))>Samples Explorer</option>
+        <option value="computations" @selected(Request::routeIs('projects.datahq.computationshq.*'))>Computations
             Explorer
         </option>
-        <option value="processes" @selected(Request::routeIs('projects.datahq.processeshq.*'))>Process Explorer</option>
+        <option value="processes" @selected(Request::routeIs('projects.datahq.processeshq.*'))>Processes Explorer
+        </option>
     </select>
 
     @push('scripts')
@@ -27,7 +28,7 @@
                 let selected = $(this).val();
                 switch (selected) {
                     case 'overview':
-                        r = "{{route('projects.datahq.index', [$project])}}";
+                        r = "{{route('projects.datahq.index', [$project, 'tab' => 'samples'])}}";
                         break;
                     case 'samples':
                         r = "{{route('projects.datahq.sampleshq.index', [$project])}}";
