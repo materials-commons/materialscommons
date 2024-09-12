@@ -43,7 +43,7 @@ class ShowResultsWebController extends Controller
                         'text'    => "Stress vs Strain",
                     ]
                 ],
-            ]);;
+            ]);
         return view('app.projects.datahq.index', [
             'experiments' => $experiments,
             'project'     => $project,
