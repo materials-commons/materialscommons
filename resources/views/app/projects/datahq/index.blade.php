@@ -27,14 +27,11 @@
                     @elseif(hasTabParam('processes'))
                         <x-projects.processes.processes-table :project="$project"/>
                     @elseif(hasTabParam('sampleattrs'))
-                        Sample Attributes here
+                        <x-projects.samples.sample-attributes-table :project="$project"/>
                     @elseif(hasTabParam('computationattrs'))
-                        Computation Attributes here
+                        <x-projects.computations.computation-attributes-table :project="$project"/>
                     @elseif(hasTabParam('processattrs'))
-                        Process Attributes here
-                    @else
-                        {{-- default to samples if no param passed in --}}
-                        <x-projects.samples.samples-table :project="$project"/>
+                        <x-projects.processes.process-attributes-table :project="$project"/>
                     @endif
                 </div>
             </div>

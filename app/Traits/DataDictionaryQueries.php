@@ -140,7 +140,7 @@ trait DataDictionaryQueries
                  ->groupBy('name');
     }
 
-    public function getUniqueEntityAttributesForProjectFragment($projectId)
+    public function getUniqueEntityAttributesForProjectFragment($projectId, $category = 'experimental')
     {
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
@@ -149,6 +149,7 @@ trait DataDictionaryQueries
                      DB::table('entities')
                        ->select('entity_states.id')
                        ->where('project_id', $projectId)
+                         ->where('entities.category', $category)
                        ->join('entity_states', 'entities.id', '=', 'entity_states.entity_id')
 
                  )
@@ -157,9 +158,9 @@ trait DataDictionaryQueries
                  ->distinct();
     }
 
-    public function getUniqueEntityAttributesForProject($projectId)
+    public function getUniqueEntityAttributesForProject($projectId, $category = 'experimental')
     {
-        return $this->getUniqueEntityAttributesForProjectFragment($projectId)->get()->groupBy('name');
+        return $this->getUniqueEntityAttributesForProjectFragment($projectId, $category)->get()->groupBy('name');
     }
 
     public function getEntityAttributeForProject($projectId, $attrName)
