@@ -12,11 +12,14 @@ class ViewControls extends Component
 {
     use EntityAndAttributeQueries;
 
-    public ?Project $project = null;
+    public Project $project;
 
-    public function __construct(?Project $project = null)
+    public bool $showFilters;
+
+    public function __construct(Project $project, $showFilters = false)
     {
         $this->project = $project;
+        $this->showFilters = $showFilters;
     }
 
     /**

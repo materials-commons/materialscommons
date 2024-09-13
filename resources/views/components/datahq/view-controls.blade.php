@@ -1,26 +1,33 @@
 <div class="col-12">
     <br/>
     <div class="row">
+        @if($showFilters)
+            <div class="form-group">
+                <label>Add Filter On:</label>
+                <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
+                        data-style="btn-light no-tt">
+                    {{--                <option value="samples">Samples</option>--}}
+                    <option value="processes" @selected(Request::routeIs('projects.datahq.sampleshq.activities.filters'))>
+                        Processes
+                    </option>
+                    <option value="sample-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))>
+                        Sample Attributes
+                    </option>
+                    <option value="process-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))>
+                        Process Attributes
+                    </option>
+                </select>
+            </div>
+        @endif
         <div class="form-group">
-            <label>Add Filter On:</label>
-            <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
-                    data-style="btn-light no-tt">
-                {{--                <option value="samples">Samples</option>--}}
-                <option value="processes" @selected(Request::routeIs('projects.datahq.sampleshq.activities.filters'))>
-                    Processes
-                </option>
-                <option value="sample-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))>
-                    Sample Attributes
-                </option>
-                <option value="process-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))>
-                    Process Attributes
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="ml-4">View Data As:</label>
+            @if($showFilters)
+                <label class="ml-4">View Data As:</label>
+            @else
+                <label>View Data As:</label>
+            @endif
             <select name="what" class="selectpicker" title="Type of View (Table/Chart)" id="view-as"
                     data-style="btn-light no-tt">
+                <option value="close">(X) Close</option>
                 <option value="table">Table</option>
                 <option value="line-chart">Line Chart</option>
                 <option value="bar-chart">Bar Chart</option>
@@ -130,6 +137,12 @@
                     case 'table':
                         $('#table-controls').show();
                         $('#chart-controls').hide();
+                        break;
+                    case 'close':
+                        $('#table-controls').hide();
+                        $('#chart-controls').hide();
+                        $(this).val('');
+                        $(this).selectpicker('deselectAll');
                         break;
                     default:
                         $('#table-controls').hide();
