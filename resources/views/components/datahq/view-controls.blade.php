@@ -88,19 +88,19 @@
         </div>
     </div>
 
-    <div class="row mt-2">
-        <div class="form-group">
-            <label>Views:</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"
-                    title="existing views"
-                    data-live-search="true">
-                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All Samples
-                </option>
-                <option value="sc: stress, strain">Scatter: stress, strain</option>
-                <option value="hc: time, temperature">Histogram: time, temperature</option>
-            </select>
-        </div>
-    </div>
+    {{--    <div class="row mt-2">--}}
+    {{--        <div class="form-group">--}}
+    {{--            <label>Views:</label>--}}
+    {{--            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"--}}
+    {{--                    title="existing views"--}}
+    {{--                    data-live-search="true">--}}
+    {{--                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All Samples--}}
+    {{--                </option>--}}
+    {{--                <option value="sc: stress, strain">Scatter: stress, strain</option>--}}
+    {{--                <option value="hc: time, temperature">Histogram: time, temperature</option>--}}
+    {{--            </select>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 
     @push('scripts')
         <script>
