@@ -24,8 +24,9 @@
                 {{--                <br/>--}}
                 @if(hasTabParam('all-samples'))
                     <x-datahq.sampleshq.all-samples-view :project="$project"/>
-                @elseif(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))
-                    @include('app.projects.datahq.sampleshq.pages.entity-attribute-filters')
+                @elseif(hasTabParam("fv1"))
+                    <x-datahq.mql-controls/>
+                    <x-datahq.sampleshq.all-samples-view :project="$project"/>
                 @elseif(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))
                     @include('app.projects.datahq.sampleshq.pages.activity-attribute-filters')
                 @elseif(Request::routeIs('projects.datahq.sampleshq.activities.filters'))

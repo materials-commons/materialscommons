@@ -1,4 +1,7 @@
 <div class="row">
+    @php
+        $filters = "";
+    @endphp
     <div class="col-8">
         <form>
             <div class="form-row">

@@ -1,4 +1,18 @@
 <div class="col-12">
+    <div class="form-group float-right">
+        <label>Views:</label>
+        <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"
+                title="existing views"
+                data-live-search="true">
+            <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All
+                Samples
+            </option>
+            <option value="sc: stress, strain">Scatter: stress, strain</option>
+            <option value="hc: time, temperature">Histogram: time, temperature</option>
+        </select>
+    </div>
+
+    <br/>
     <br/>
     <div class="row">
         @if($showFilters)
@@ -7,13 +21,16 @@
                 <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
                         data-style="btn-light no-tt">
                     {{--                <option value="samples">Samples</option>--}}
-                    <option value="processes" @selected(Request::routeIs('projects.datahq.sampleshq.activities.filters'))>
+                    <option
+                        value="processes" @selected(Request::routeIs('projects.datahq.sampleshq.activities.filters'))>
                         Processes
                     </option>
-                    <option value="sample-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))>
+                    <option
+                        value="sample-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.entity-attributes.filters'))>
                         Sample Attributes
                     </option>
-                    <option value="process-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))>
+                    <option
+                        value="process-attributes" @selected(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))>
                         Process Attributes
                     </option>
                 </select>
@@ -36,7 +53,7 @@
         </div>
     </div>
 
-    <div class="row mt-2" id="chart-controls" style="display: none">
+    <div class="rowx mt-2" id="chart-controls" style="display: none">
         <div class="form-group">
             <label>Sample X:</label>
             <select name="x" class="selectpicker" data-style="btn-light no-tt"
@@ -66,7 +83,7 @@
         </div>
     </div>
 
-    <div class="row mt-2" id="table-controls" style="display: none">
+    <div class="rowx mt-2" id="table-controls" style="display: none">
         <div class="form-group">
             <label>Sample Attributes</label>
             <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-attributes"
@@ -94,7 +111,8 @@
     {{--            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"--}}
     {{--                    title="existing views"--}}
     {{--                    data-live-search="true">--}}
-    {{--                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All Samples--}}
+    {{--                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All--}}
+    {{--                    Samples--}}
     {{--                </option>--}}
     {{--                <option value="sc: stress, strain">Scatter: stress, strain</option>--}}
     {{--                <option value="hc: time, temperature">Histogram: time, temperature</option>--}}
