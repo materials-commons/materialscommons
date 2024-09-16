@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class DataExplorerState
+class DataHQState
 {
     public $whatToGet;
     public $loadedQuery;
