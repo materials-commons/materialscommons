@@ -17,21 +17,12 @@
         </x-slot:header>
 
         <x-slot:body>
-            {{--            <x-datahq.mql-controls/>--}}
-            {{--            <hr>--}}
-            <div class="mt-2xxx">
-                {{--                <x-datahq.view-controls :project="$project"/>--}}
-                {{--                <br/>--}}
-                @if(hasTabParam('all-samples'))
-                    <x-datahq.sampleshq.all-samples-view :project="$project"/>
-                @elseif(hasTabParam("fv1"))
-                    <x-datahq.mql-controls/>
-                    <x-datahq.sampleshq.all-samples-view :project="$project"/>
-                @elseif(Request::routeIs('projects.datahq.sampleshq.activity-attributes.filters'))
-                    @include('app.projects.datahq.sampleshq.pages.activity-attribute-filters')
-                @elseif(Request::routeIs('projects.datahq.sampleshq.activities.filters'))
-                    @include('app.projects.datahq.sampleshq.pages.activity-filters')
-                @endif
+            <div>
+                <x-datahq.explorer.tabs :project="$project" :state-service="'sampleshq'"/>
+                <br/>
+                <div id="xxx">
+                    <x-datahq.sampleshq.tab-view-handler :project="$project"/>
+                </div>
             </div>
         </x-slot:body>
     </x-card>

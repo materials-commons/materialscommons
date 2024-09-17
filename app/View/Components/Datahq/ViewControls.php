@@ -27,7 +27,6 @@ class ViewControls extends Component
      */
     public function render(): View|Closure|string
     {
-        ray("render view controls called");
         return view('components.datahq.view-controls', [
             'sampleAttributes'  => $this->getSampleAttributes($this->project->id),
             'processAttributes' => $this->getProcessAttributes($this->project->id),

@@ -2,24 +2,24 @@
 
 namespace App\Services\DataHQ;
 
-use App\DTO\DataHQState;
+use App\DTO\DataHQ\State;
 use App\Models\Dataset;
 use App\Models\Experiment;
 use App\Models\Project;
 
 interface DataHQStateStoreInterface
 {
-    public function getOrCreateStateForProject(Project $project): ?DataHQState;
+    public function getOrCreateStateForProject(Project $project): ?State;
 
-    public function saveStateForProject(Project $project, DataHQState $state): void;
+    public function saveStateForProject(Project $project, State $state): void;
 
-    public function getOrCreateStateForExperiment(Experiment $experiment): ?DataHQState;
+    public function getOrCreateStateForExperiment(Experiment $experiment): ?State;
 
-    public function saveStateForExperiment(Experiment $experiment, DataHQState $state): void;
+    public function saveStateForExperiment(Experiment $experiment, State $state): void;
 
-    public function getOrCreateStateForDataset(Dataset $dataset): ?DataHQState;
+    public function getOrCreateStateForDataset(Dataset $dataset): ?State;
 
-    public function saveStateForDataset(Dataset $dataset, DataHQState $state): void;
+    public function saveStateForDataset(Dataset $dataset, State $state): void;
 
     public function getProjectContext(Project $project): string;
 

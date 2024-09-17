@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\DataHQ\AddFilteredViewWebController;
 use App\Http\Controllers\Web\DataHQ\ComputationsHQ\IndexComputationsHQWebController;
 use App\Http\Controllers\Web\DataHQ\IndexDataHQWebController;
 use App\Http\Controllers\Web\DataHQ\ProcessesHQ\IndexProcessesHQWebController;
@@ -12,8 +13,12 @@ use App\Http\Controllers\Web\DataHQ\ShowEntityAttributesWebController;
 use App\Http\Controllers\Web\DataHQ\ShowResultsWebController;
 use Illuminate\Support\Facades\Route;
 
+// DataHQ
 Route::get('/projects/{project}/datahq', IndexDataHQWebController::class)
      ->name('projects.datahq.index');
+
+Route::get('/projects/{project}/datahq/add-filtered-view', AddFilteredViewWebController::class)
+     ->name('projects.datahq.add-filtered-view');
 
 Route::get('/projects/{project}/datahq/entities', ShowEntityAttributesWebController::class)
      ->name('projects.datahq.entities');
