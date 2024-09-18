@@ -1,10 +1,10 @@
 <div class="col-12">
     @if($showFilters)
-        <x-datahq.mql-controls/>
+        <x-datahq.mql-controls :project="$project"/>
     @endif
 
     <div class="row">
-        <div class="form-group float-leftx">
+        <div class="form-group">
             <label class="ml-4">Views:</label>
             <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"
                     title="existing views"
@@ -17,7 +17,7 @@
             </select>
         </div>
 
-        <div class="form-group float-leftx">
+        <div class="form-group">
             <label class="ml-4">View Data As:</label>
             <select name="what" class="selectpicker" title="Type of View (Table/Chart)" id="view-as"
                     data-style="btn-light no-tt">

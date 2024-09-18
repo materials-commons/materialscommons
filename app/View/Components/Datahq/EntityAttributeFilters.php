@@ -2,18 +2,23 @@
 
 namespace App\View\Components\Datahq;
 
+use App\Models\Project;
+use App\Traits\DataDictionaryQueries;
+use App\ViewModels\DataDictionary\AttributeStatistics;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class EntityAttributeFilters extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    use DataDictionaryQueries;
+    use AttributeStatistics;
+
+    public Project $project;
+
+    public function __construct(Project $project)
     {
-        //
+        $this->project = $project;
     }
 
     /**
@@ -21,6 +26,8 @@ class EntityAttributeFilters extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.datahq.entity-attribute-filters');
+        return view('components.datahq.entity-attribute-filters', [
+            'entityAttributes' => $this->getUniqueEntityAttributesForProject($this->project->id, 'experimental'),
+        ]);
     }
 }

@@ -36,24 +36,25 @@
             <label class="ml-4">Add Filter On:</label>
             <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
                     data-style="btn-light no-tt">
-                {{--                <option value="samples">Samples</option>--}}
-                <option
-                        value="processes">
-                    Processes
-                </option>
-                <option
-                        value="sample-attributes">
-                    Sample Attributes
-                </option>
-                <option
-                        value="process-attributes">
-                    Process Attributes
-                </option>
+                <option value="close">(X) Close</option>
+                <option value="processes">Processes</option>
+                <option value="sample-attributes">Sample Attributes</option>
+                <option value="process-attributes">Process Attributes</option>
             </select>
         </div>
     </div>
     <div class="row">
+        <div class="col-12" id="activity-filters" style="display: none">
+            <x-datahq.activity-filters :project="$project"/>
+        </div>
 
+        <div class="col-12" id="entity-attribute-filters" style="display: none">
+            <x-datahq.entity-attribute-filters :project="$project"/>
+        </div>
+
+        <div class="col-12" id="activity-attribute-filters" style="display: none">
+            <x-datahq.activity-attribute-filters :project="$project"/>
+        </div>
     </div>
     <hr/>
     @push('scripts')
@@ -63,14 +64,27 @@
                 let r = "";
                 switch (selected) {
                     case 'processes':
-                        {{--r = "{{route('projects.datahq.sampleshq.activities.filters', [$project])}}";--}}
-                            break;
+                        $('#activity-filters').show();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').hide();
+                        break;
                     case 'sample-attributes':
-                        {{--r = "{{route('projects.datahq.sampleshq.entity-attributes.filters', [$project])}}";--}}
-                            break;
+                        $('#activity-filters').hide();
+                        $('#entity-attribute-filters').show();
+                        $('#activity-attribute-filters').hide();
+                        break;
                     case 'process-attributes':
-                        {{--r = "{{route('projects.datahq.sampleshq.activity-attributes.filters', [$project])}}";--}}
-                            break;
+                        $('#activity-filters').hide();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').show();
+                        break;
+                    case 'close':
+                        $('#activity-filters').hide();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').hide();
+                        $(this).val('');
+                        $(this).selectpicker('deselectAll');
+                        break;
                 }
             });
         </script>

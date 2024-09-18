@@ -2,18 +2,18 @@
 
 namespace App\View\Components\Datahq;
 
+use App\Models\Project;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class MqlControls extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public Project $project;
+
+    public function __construct(Project $project)
     {
-        //
+        $this->project = $project;
     }
 
     /**
@@ -23,6 +23,7 @@ class MqlControls extends Component
     {
         return view('components.datahq.mql-controls', [
             'filters' => '',
+            'project' => $this->project,
         ]);
     }
 }

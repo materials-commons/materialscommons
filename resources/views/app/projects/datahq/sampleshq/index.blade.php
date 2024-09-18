@@ -20,7 +20,7 @@
             <div>
                 <x-datahq.explorer.tabs :project="$project" :state-service="'sampleshq'"/>
                 <br/>
-                <div id="xxx">
+                <div>
                     <x-datahq.sampleshq.tab-view-handler :project="$project"/>
                 </div>
             </div>
