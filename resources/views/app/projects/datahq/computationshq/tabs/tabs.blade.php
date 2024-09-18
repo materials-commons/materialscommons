@@ -1,13 +1,13 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link no-underline  {{setActiveNavByName('projects.datahq.index')}}"
-           href="{{route('projects.datahq.index', [$project])}}">
+        <a class="nav-link no-underline"
+           href="#">
             Processes
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.datahq.entities')}}"
-           href="{{route('projects.datahq.entities', [$project])}}">
+        <a class="nav-link no-underline"
+           href="#">
             Computation Attributes
         </a>
     </li>
@@ -17,8 +17,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.datahq.results')}}"
-           href="{{route('projects.datahq.results', [$project])}}">
+        <a class="nav-link no-underline"
+           href="#">
             Computations
         </a>
     </li>

@@ -34,8 +34,6 @@
         </tbody>
     </table>
 
-    @include('app.projects.datahq.pages._query-dialog')
-
     @push('scripts')
         <script>
             $(document).ready(() => {

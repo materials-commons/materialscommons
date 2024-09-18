@@ -18,7 +18,7 @@
 
         <x-slot:body>
             <div>
-                @include('app.projects.datahq.pages.tabs')
+                @include('app.projects.datahq.tabs')
                 <div class="mt-2">
                     @if(hasTabParam('samples'))
                         <x-projects.samples.samples-table :project="$project"/>
