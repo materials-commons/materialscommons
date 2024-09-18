@@ -2,15 +2,11 @@
 
 use App\Http\Controllers\Web\DataHQ\AddFilteredViewWebController;
 use App\Http\Controllers\Web\DataHQ\ComputationsHQ\IndexComputationsHQWebController;
+use App\Http\Controllers\Web\DataHQ\GetAttributeDetailsForQueryBuilder;
 use App\Http\Controllers\Web\DataHQ\IndexDataHQWebController;
 use App\Http\Controllers\Web\DataHQ\ProcessesHQ\IndexProcessesHQWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\IndexSamplesHQWebController;
-use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowActivityAttributeFiltersSampleHQWebController;
-use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowActivityFiltersSampleHQWebController;
-use App\Http\Controllers\Web\DataHQ\SamplesHQ\ShowEntityAttributeFiltersSampleHQWebController;
 use App\Http\Controllers\Web\DataHQ\SaveDataForWebController;
-use App\Http\Controllers\Web\DataHQ\ShowEntityAttributesWebController;
-use App\Http\Controllers\Web\DataHQ\ShowResultsWebController;
 use Illuminate\Support\Facades\Route;
 
 // DataHQ
@@ -22,6 +18,9 @@ Route::get('/projects/{project}/datahq/add-filtered-view', AddFilteredViewWebCon
 
 Route::post('/projects/{project}/save-data-for', SaveDataForWebController::class)
      ->name('projects.datahq.save-data-for');
+
+Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQueryBuilder::class)
+     ->name('projects.datahq.qb-attribute-details');
 
 // SamplesHQ
 

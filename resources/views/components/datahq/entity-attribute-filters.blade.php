@@ -10,7 +10,7 @@
             {{--                <th>Avg</th>--}}
             {{--                <th>Mode</th>--}}
             <th># Values</th>
-            <th>Query</th>
+            <th>Filter/Details</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                 {{--            <td>{{$mode($attrs)}}</td>--}}
                 <td>{{$attrs->count()}}</td>
                 <td>
-                    <a href="#query-dialog" data-toggle="modal" class="action-link">
+                    <a class="action-link" onclick="clickHandler(event, 'entity', '{{$name}}')">
                         <i class="fas fa-fw fa-filter"></i>
                     </a>
                 </td>
@@ -36,12 +36,32 @@
 
     @push('scripts')
         <script>
+            var table;
             $(document).ready(() => {
-                $('#entities-dd').DataTable({
+                table = $('#entities-dd').DataTable({
                     pageLength: 100,
                     stateSave: true
                 });
             });
+
+            let projectId = "{{$project->id}}";
+
+            function clickHandler(e, attrType, attrName) {
+                let tr = e.target.closest('tr');
+                let row = table.row(tr);
+                if (row.child.isShown()) {
+                    row.child.hide();
+                } else {
+                    let r = route('projects.datahq.qb-attribute-details', {
+                        project: projectId,
+                        attrType: attrType,
+                        attrName: attrName
+                    });
+                    axios.get(r).then((r) => {
+                        row.child(r.data).show();
+                    });
+                }
+            }
         </script>
     @endpush
 

@@ -25,7 +25,7 @@
                 {{--            <td>{{$mode($attrs)}}</td>--}}
                 <td>{{$attrs->count()}}</td>
                 <td>
-                    <a href="#query-dialog" data-toggle="modal" class="action-link">
+                    <a href="#" data-toggle="modal" class="action-link">
                         <i class="fas fa-fw fa-filter"></i>
                     </a>
                 </td>

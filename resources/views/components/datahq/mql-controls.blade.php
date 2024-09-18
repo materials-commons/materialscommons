@@ -61,7 +61,6 @@
         <script>
             $('#filter-on').on('change', function () {
                 let selected = $(this).val();
-                let r = "";
                 switch (selected) {
                     case 'processes':
                         $('#activity-filters').show();
