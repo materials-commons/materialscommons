@@ -24,14 +24,8 @@
                 {{--            <td>{{$average($attrs)}}</td>--}}
                 {{--            <td>{{$mode($attrs)}}</td>--}}
                 <td>{{$attrs->count()}}</td>
-                @php
-                    $attrVals = $attrs->pluck('val')->map(function ($val) {
-                                    $decoded = json_decode($val, true);
-                                    return $decoded["value"];
-                 });
-                @endphp
                 <td>
-                    <a class="action-link" onclick='clickHandler(event, "entity", "{{$name}}", @json($attrVals))'>
+                    <a class="action-link" onclick="clickHandler(event, 'entity', '{{$name}}')">
                         <i class="fas fa-fw fa-filter"></i>
                     </a>
                 </td>
@@ -41,10 +35,7 @@
     </table>
 
     @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@^4"></script>
-        <script src="https://cdn.jsdelivr.net/npm/luxon@^2"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
-        <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/numeral.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
         <script>
             var table;
             $(document).ready(() => {
@@ -56,7 +47,7 @@
 
             let projectId = "{{$project->id}}";
 
-            function clickHandler(e, attrType, attrName, data) {
+            function clickHandler(e, attrType, attrName) {
                 let tr = e.target.closest('tr');
                 let row = table.row(tr);
                 if (row.child.isShown()) {
@@ -68,26 +59,22 @@
                         attrName: attrName
                     });
                     axios.get(r).then((r) => {
-                        let firstLetter = attrName.charAt(0);
-                        let labels = [];
-                        for (let i = 0; i < data.length; i++) {
-                            labels.push('');
-                        }
                         row.child(r.data).show();
+
                         let element = document.getElementById(`chart-${attrName}-${attrType}`);
-                        console.log(element);
-                        new Chart(element, {
-                            type: 'bar',
-                            data: {
-                                labels: labels,
-                                datasets: [
-                                    {
-                                        label: attrName,
-                                        data: data
-                                    }
-                                ]
-                            }
-                        });
+                        let chartValues = element.getAttribute('data-chart-values');
+                        let data = JSON.parse(chartValues);
+
+                        let nbins = 20;
+                        if (data.length < 18) {
+                            nbins = data.length + 2;
+                        }
+
+                        Plotly.newPlot(element, [{
+                            x: data,
+                            type: 'histogram',
+                            nbinsx: nbins,
+                        }], {title: attrName});
                     });
                 }
             }

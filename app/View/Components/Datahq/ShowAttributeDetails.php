@@ -31,11 +31,13 @@ class ShowAttributeDetails extends Component
         if ($this->attrType === 'entity') {
             $details = $this->getSampleAttributeDetails($this->project->id, $this->attrName);
         } else {
-            // $this->attrType == 'activity'
+            // attrType == 'activity'
             $details = $this->getProcessAttributeDetails($this->project->id, $this->attrName);
         }
+        $jsonData = json_encode(array_values($details->values->toArray()));
         return view('components.datahq.show-attribute-details', [
-            'details' => $details,
+            'details'  => $details,
+            'jsonData' => $jsonData,
         ]);
     }
 }
