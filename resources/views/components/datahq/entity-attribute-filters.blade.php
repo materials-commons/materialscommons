@@ -35,7 +35,6 @@
     </table>
 
     @push('scripts')
-        <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
         <script>
             var table;
             $(document).ready(() => {

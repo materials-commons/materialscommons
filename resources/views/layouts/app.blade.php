@@ -57,6 +57,8 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
 
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
     @stack('styles')
