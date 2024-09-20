@@ -1,38 +1,31 @@
 <div>
     <div class="row">
         <div class="col-8">
-            <div class="row ml-1">
-                @if($details->isNumeric)
-                    Numeric Attribute -
-                @else
-                    String Attribute -
-                @endif
-            </div>
-            @if($details->isNumeric)
-                <div class="row">
-                    <ul class="ml-4x">
-                        <li>
-                            Min: {{$details->min}}
-                        </li>
-                        <li>
-                            Max: {{$details->max}}
-                        </li>
-                    </ul>
-                </div>
-            @endif
-            <div class="row ml-1">
-                Showing {{$details->values->count()}} of {{$details->uniqueCount}} unique values -
-            </div>
             <div class="row">
-                <ul class="ml-4x">
-                    @foreach($details->values as $value)
-                        <li>{{$value}}</li>
-                    @endforeach
-                </ul>
+                <div class="col-4">
+                    @if($details->isNumeric)
+                        <x-datahq.show-numeric-attribute-details :details="$details"/>
+                    @else
+                        <x-datahq.show-string-attribute-details :details="$details"/>
+                    @endif
+                </div>
+                <div class="col-8">
+                    @if($details->isNumeric)
+                        <x-datahq.show-numeric-attribute-filters :project="$project"
+                                                                 :attr-name="$attrName"
+                                                                 :attr-type="$attrType"
+                                                                 :attr-details="$details"/>
+                    @else
+                        <x-datahq.show-string-attribute-filters :project="$project"
+                                                                :attr-name="$attrName"
+                                                                :attr-type="$attrType"
+                                                                :attr-details="$details"/>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="col-4 border">
-            <div id="chart-{{$attrName}}-{{$attrType}}" data-chart-values='{{$jsonData}}'></div>
+            <div style="height: 300px" id="chart-{{$attrName}}-{{$attrType}}" data-chart-values='{{$jsonData}}'></div>
         </div>
     </div>
 </div>
