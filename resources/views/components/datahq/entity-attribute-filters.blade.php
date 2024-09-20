@@ -44,9 +44,8 @@
                 });
             });
 
-            let projectId = "{{$project->id}}";
-
             function clickHandler(e, attrType, attrName) {
+                let projectId = "{{$project->id}}";
                 let tr = e.target.closest('tr');
                 let row = table.row(tr);
                 if (row.child.isShown()) {
@@ -73,7 +72,17 @@
                             x: data,
                             type: 'histogram',
                             nbinsx: nbins,
-                        }], {title: attrName});
+                            nbinsy: data.length,
+                        }], {
+                            title: attrName,
+                            xaxis: {
+                                rangeslider: {visible: true},
+                            },
+                            yaxis: {
+                                fixedrange: true,
+                                rangemode: 'tozero',
+                            }
+                        });
                     });
                 }
             }
