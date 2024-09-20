@@ -32,7 +32,7 @@
     <div class="mt-2" id="chart-controls" style="display: none">
         <div class="form-group">
             <label>Sample X:</label>
-            <select name="x" class="selectpicker" data-style="btn-light no-tt"
+            <select name="x" class="selectpicker" data-style="btn-light no-tt" id="x-attr"
                     data-live-search="true" title="x attribute">
                 @foreach($sampleAttributes as $attr)
                     <option value="{{$attr->name}}">s:{{$attr->name}}</option>
@@ -44,7 +44,7 @@
             </select>
 
             <label class="ml-4">Y:</label>
-            <select name="Y" class="selectpicker" data-style="btn-light no-tt"
+            <select name="Y" class="selectpicker" data-style="btn-light no-tt" id="y-attr"
                     data-live-search="true" title="y attribute">
                 @foreach($sampleAttributes as $attr)
                     <option value="{{$attr->name}}">s:{{$attr->name}}</option>
@@ -62,7 +62,7 @@
     <div class="mt-2" id="table-controls" style="display: none">
         <div class="form-group">
             <label>Sample Attributes</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-attributes"
+            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-sample-attributes"
                     data-live-search="true" data-actions-box="true" multiple>
                 @foreach($sampleAttributes as $attr)
                     <option value="{{$attr->name}}">{{$attr->name}}</option>
@@ -70,19 +70,44 @@
             </select>
 
             <label class="ml-4">Process Attributes</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-attributes"
+            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-process-attributes"
                     data-live-search="true" data-actions-box="true" multiple>
                 @foreach($processAttributes as $attr)
                     <option value="{{$attr->name}}">{{$attr->name}}</option>
                 @endforeach
             </select>
 
-            <a class="btn btn-success" href="#">Create View</a>
+            <a class="btn btn-success" onclick="handleCreateView(event)">Create View</a>
         </div>
     </div>
 
     @push('scripts')
         <script>
+            function handleCreateView(e) {
+                let viewType = $('#view-as').val();
+                if (viewType === 'table') {
+                    handleCreateViewForTable();
+                } else {
+                    handleCreateViewForChart(viewType);
+                }
+            }
+
+            function handleCreateViewForTable() {
+                let projectId = "{{$project->id}}";
+                let processAttrs = $("#table-process-attributes").val();
+                let sampleAttrs = $("#table-sample-attributes").val();
+                let r = route('projects.datahq.sampleshq.create-table-view', {
+                    project: projectId,
+                });
+                let formData = new FormData();
+                formData.append("entityAttrs", sampleAttrs);
+                formData.append("activityAttrs", processAttrs);
+            }
+
+            function handleCreateViewForChart(viewType) {
+                let x = $("x-attr").val();
+                let y = $("y-attr").val();
+            }
 
             $('#existing-views').on('change', function () {
                 let selected = $(this).val();

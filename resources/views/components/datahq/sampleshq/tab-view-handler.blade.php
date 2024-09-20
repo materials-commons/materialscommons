@@ -6,4 +6,5 @@
         <x-datahq.view-controls :project="$project" :show-filters="true"/>
         <x-projects.samples.samples-table :project="$project"/>
     @endif
+        <div id="view-here">Appending Here</div>
 </div>

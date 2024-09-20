@@ -16,7 +16,7 @@ class AddFilteredViewWebController extends Controller
 
         // 1 tab will the default tab, all other tabs will be filtered views. So subtract one from
         // the count to get the next filtered tab name
-        $count = $state->tabs->count() - 1;
+        $count = $state->tabs->count();
 
         $name = "Filtered View {$count}";
         $key = "fv{$count}";
