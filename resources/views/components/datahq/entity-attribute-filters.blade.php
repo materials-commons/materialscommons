@@ -64,15 +64,14 @@
                         let data = JSON.parse(chartValues);
 
                         let nbins = 20;
-                        if (data.length < 18) {
-                            nbins = data.length + 2;
-                        }
+                        // if (data.length < 18) {
+                        //     nbins = data.length + 2;
+                        // }
 
                         Plotly.newPlot(element, [{
                             x: data,
                             type: 'histogram',
                             nbinsx: nbins,
-                            nbinsy: data.length,
                         }], {
                             title: attrName,
                             xaxis: {
