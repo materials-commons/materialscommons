@@ -3,31 +3,47 @@
         <x-datahq.mql-controls :project="$project"/>
     @endif
 
-    <div class="row">
-        <div class="form-group">
-            <label class="ml-4">Views:</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"
-                    title="existing views"
-                    data-live-search="true">
-                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All
-                    Samples
-                </option>
-                <option value="sc: stress, strain">Scatter: stress, strain</option>
-                <option value="hc: time, temperature">Histogram: time, temperature</option>
-            </select>
-        </div>
+        <a class="action-link float-right ml-4"
+           href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+            <i class="fa fas fa-table mr-2"></i> New Table
+        </a>
 
-        <div class="form-group">
-            <label class="ml-4">View Data As:</label>
-            <select name="what" class="selectpicker" title="Type of View (Table/Chart)" id="view-as"
-                    data-style="btn-light no-tt">
-                <option value="close">(X) Close</option>
-                <option value="table">Table</option>
-                <option value="line-chart">Line Chart</option>
-                <option value="bar-chart">Bar Chart</option>
-                <option value="scatter-chart">Scatter Chart</option>
-            </select>
-        </div>
+        <a class="action-link float-right"
+           href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+            <i class="fa fas fa-chart-area mr-2"></i> New Chart
+        </a>
+        <nav class="nav nav-pills mb-3">
+            <a class="nav-link active no-underline" href="#">Table: Samples</a>
+            <a class="nav-link no-underline" href="#">Scatter: stress, strain</a>
+            <a class="nav-link no-underline" href="#">Histogram: temperature</a>
+        </nav>
+
+
+        <div class="row">
+            {{--        <div class="form-group">--}}
+            {{--            <label class="ml-4">Views:</label>--}}
+            {{--            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"--}}
+            {{--                    title="existing views"--}}
+            {{--                    data-live-search="true">--}}
+            {{--                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All--}}
+            {{--                    Samples--}}
+            {{--                </option>--}}
+            {{--                <option value="sc: stress, strain">Scatter: stress, strain</option>--}}
+            {{--                <option value="hc: time, temperature">Histogram: time, temperature</option>--}}
+            {{--            </select>--}}
+            {{--        </div>--}}
+
+            {{--        <div class="form-group">--}}
+            {{--            <label class="ml-4">View Data As:</label>--}}
+            {{--            <select name="what" class="selectpicker" title="Type of View (Table/Chart)" id="view-as"--}}
+            {{--                    data-style="btn-light no-tt">--}}
+            {{--                <option value="close">(X) Close</option>--}}
+            {{--                <option value="table">Table</option>--}}
+            {{--                <option value="line-chart">Line Chart</option>--}}
+            {{--                <option value="bar-chart">Bar Chart</option>--}}
+            {{--                <option value="scatter-chart">Scatter Chart</option>--}}
+            {{--            </select>--}}
+            {{--        </div>--}}
     </div>
     <div class="mt-2" id="chart-controls" style="display: none">
         <div class="form-group">
