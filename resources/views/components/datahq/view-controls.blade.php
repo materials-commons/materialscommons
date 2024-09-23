@@ -38,147 +38,86 @@
         <hr/>
     @endif
 
-    <a class="action-link float-right ml-4"
-       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+        <a class="action-link float-right ml-4" href="#create-table-modal" data-toggle="modal">
         <i class="fa fas fa-table mr-2"></i> New Table
     </a>
 
-    <a class="action-link float-right"
-       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+        <a class="action-link float-right" href="#create-chart-modal" data-toggle="modal">
         <i class="fa fas fa-chart-area mr-2"></i> New Chart
     </a>
+
     <nav class="nav nav-pills mb-3">
         <a class="nav-link active no-underline rounded-pill" href="#">Table: Samples</a>
         <a class="nav-link no-underline rounded-pill" href="#">Scatter: stress, strain</a>
         <a class="nav-link no-underline rounded-pill" href="#">Histogram: temperature</a>
     </nav>
 
-    <div class="mt-2" id="chart-controls" style="display: none">
-        <div class="form-group">
-            <label>Sample X:</label>
-            <select name="x" class="selectpicker" data-style="btn-light no-tt" id="x-attr"
-                    data-live-search="true" title="x attribute">
-                @foreach($sampleAttributes as $attr)
-                    <option value="{{$attr->name}}">s:{{$attr->name}}</option>
-                @endforeach
-                <option data-divider="true"></option>
-                @foreach($processAttributes as $attr)
-                    <option value="{{$attr->name}}">p:{{$attr->name}}</option>
-                @endforeach
-            </select>
-
-            <label class="ml-4">Y:</label>
-            <select name="Y" class="selectpicker" data-style="btn-light no-tt" id="y-attr"
-                    data-live-search="true" title="y attribute">
-                @foreach($sampleAttributes as $attr)
-                    <option value="{{$attr->name}}">s:{{$attr->name}}</option>
-                @endforeach
-                <option data-divider="true">--Processes--</option>
-                @foreach($processAttributes as $attr)
-                    <option value="{{$attr->name}}">p:{{$attr->name}}</option>
-                @endforeach
-            </select>
-
-            <a class="btn btn-success" href="#">Create View</a>
+        <div class="modal fade" tabindex="-1" id="create-table-modal" role="dialog">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-nav">
+                        <h5 class="modal-title help-color">Create New Table</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="help-color">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <x-datahq.create-table :project="$project"
+                                               :process-attributes="$processAttributes"
+                                               :sample-attributes="$sampleAttributes"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
         </div>
     </div>
 
-    <div class="mt-2" id="table-controls" style="display: none">
-        <div class="form-group">
-            <label>Sample Attributes</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-sample-attributes"
-                    data-live-search="true" data-actions-box="true" multiple>
-                @foreach($sampleAttributes as $attr)
-                    <option value="{{$attr->name}}">{{$attr->name}}</option>
-                @endforeach
-            </select>
-
-            <label class="ml-4">Process Attributes</label>
-            <select name="" class="selectpicker" data-style="btn-light no-tt" id="table-process-attributes"
-                    data-live-search="true" data-actions-box="true" multiple>
-                @foreach($processAttributes as $attr)
-                    <option value="{{$attr->name}}">{{$attr->name}}</option>
-                @endforeach
-            </select>
-
-            <a class="btn btn-success" onclick="handleCreateView(event)">Create View</a>
+        <div class="modal fade" tabindex="-1" id="create-chart-modal" role="dialog">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-nav">
+                        <h5 class="modal-title help-color">Create New Chart</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="help-color">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <x-datahq.create-chart :project="$project"
+                                               :process-attributes="$processAttributes"
+                                               :sample-attributes="$sampleAttributes"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            function handleCreateView(e) {
-                let viewType = $('#view-as').val();
-                if (viewType === 'table') {
-                    handleCreateViewForTable();
-                } else {
-                    handleCreateViewForChart(viewType);
-                }
-            }
 
-            function handleCreateViewForTable() {
-                let projectId = "{{$project->id}}";
-                let processAttrs = $("#table-process-attributes").val();
-                let sampleAttrs = $("#table-sample-attributes").val();
-                let r = route('projects.datahq.sampleshq.create-table-view', {
-                    project: projectId,
-                });
-                let formData = new FormData();
-                formData.append("entityAttrs", sampleAttrs);
-                formData.append("activityAttrs", processAttrs);
-            }
+        @if(!$showFilters)
+            @push('scripts')
+                <script>
 
-            @if(!$showFilters)
-            function toggleProcesses(e) {
-                $("#activity-filters").toggle();
-                $('#entity-attribute-filters').hide();
-                $('#activity-attribute-filters').hide();
-            }
+                    function toggleProcesses(e) {
+                        $("#activity-filters").toggle();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').hide();
+                    }
 
-            function toggleSampleAttributes(e) {
-                $("#activity-filters").hide();
-                $('#entity-attribute-filters').toggle();
-                $('#activity-attribute-filters').hide();
-            }
+                    function toggleSampleAttributes(e) {
+                        $("#activity-filters").hide();
+                        $('#entity-attribute-filters').toggle();
+                        $('#activity-attribute-filters').hide();
+                    }
 
-            function toggleProcessAttributes(e) {
-                $("#activity-filters").hide();
-                $('#entity-attribute-filters').hide();
-                $('#activity-attribute-filters').toggle();
-            }
-            @endif
+                    function toggleProcessAttributes(e) {
+                        $("#activity-filters").hide();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').toggle();
+                    }
 
-            function handleCreateViewForChart(viewType) {
-                let x = $("x-attr").val();
-                let y = $("y-attr").val();
-            }
-
-            $('#existing-views').on('change', function () {
-                let selected = $(this).val();
-                if (selected === 'all-samples') {
-                    window.location.href = "{{route('projects.datahq.sampleshq.index', [$project])}}"
-                }
-            });
-
-            $("#view-as").on('change', function () {
-                let selected = $(this).val();
-                switch (selected) {
-                    case 'table':
-                        $('#table-controls').show();
-                        $('#chart-controls').hide();
-                        break;
-                    case 'close':
-                        $('#table-controls').hide();
-                        $('#chart-controls').hide();
-                        $(this).val('');
-                        $(this).selectpicker('deselectAll');
-                        break;
-                    default:
-                        $('#table-controls').hide();
-                        $('#chart-controls').show();
-                        break;
-                }
-            });
-        </script>
-    @endpush
+                </script>
+            @endpush
+        @endif
 </div>
