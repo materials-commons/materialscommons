@@ -1,4 +1,6 @@
 <div>
+    <h5>Sample Attributes</h5>
+    <br/>
     <table id="entities-dd" class="table table-hover" style="width:100%">
         <thead>
         <tr>
@@ -25,7 +27,8 @@
                 {{--            <td>{{$mode($attrs)}}</td>--}}
                 <td>{{$attrs->count()}}</td>
                 <td>
-                    <a class="action-link" onclick="clickHandler(event, 'entity', '{{$name}}')">
+                    <a class="action-link cursor-pointer"
+                       onclick="entityAttributeClickHandler(event, 'entity', '{{$name}}')">
                         <i class="fas fa-fw fa-filter"></i>
                     </a>
                 </td>
@@ -36,15 +39,16 @@
 
     @push('scripts')
         <script>
-            var table;
+            // var table;
             $(document).ready(() => {
-                table = $('#entities-dd').DataTable({
+                $('#entities-dd').DataTable({
                     pageLength: 100,
                     stateSave: true
                 });
             });
 
-            function clickHandler(e, attrType, attrName) {
+            function entityAttributeClickHandler(e, attrType, attrName) {
+                let table = $('#entities-dd').DataTable();
                 let projectId = "{{$project->id}}";
                 let tr = e.target.closest('tr');
                 let row = table.row(tr);

@@ -33,59 +33,56 @@
     </div>
     <div class="row">
         <div class="form-group">
-            <label class="ml-4">Add Filter On:</label>
-            <select name="filteron" class="selectpicker" title="Add Filter" id="filter-on"
-                    data-style="btn-light no-tt">
-                <option value="close">(X) Close</option>
-                <option value="processes">Processes</option>
-                <option value="sample-attributes">Sample Attributes</option>
-                <option value="process-attributes">Process Attributes</option>
-            </select>
+            <label class="ml-4">Show/Add Filter On:</label>
+            <div class="btn-group" role="group">
+                <a class="action-link ml-3 cursor-pointer" onclick="toggleProcesses(event)">
+                    <i class="fa fas fa-code-branch mr-2"></i>Processes</a>
+                <a class="action-link ml-4 cursor-pointer" onclick="toggleSampleAttributes(event)">
+                    <i class="fa fas fa-cubes mr-2"></i>Sample Attributes</a>
+                <a class="action-link ml-4 cursor-pointer" onclick="toggleProcessAttributes(event)">
+                    <i class="fa fas fa-project-diagram mr-2"></i>Process Attributes</a>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-12" id="activity-filters" style="display: none">
+        <div class="col-12 border rounded" id="activity-filters" style="display: none">
+            <br/>
             <x-datahq.activity-filters :project="$project"/>
+            <br/>
         </div>
 
-        <div class="col-12" id="entity-attribute-filters" style="display: none">
+        <div class="col-12 border rounded" id="entity-attribute-filters" style="display: none">
+            <br/>
             <x-datahq.entity-attribute-filters :project="$project"/>
+            <br/>
         </div>
 
-        <div class="col-12" id="activity-attribute-filters" style="display: none">
+        <div class="col-12 border rounded" id="activity-attribute-filters" style="display: none">
+            <br/>
             <x-datahq.activity-attribute-filters :project="$project"/>
+            <br/>
         </div>
     </div>
     <hr/>
     @push('scripts')
         <script>
-            $('#filter-on').on('change', function () {
-                let selected = $(this).val();
-                switch (selected) {
-                    case 'processes':
-                        $('#activity-filters').show();
-                        $('#entity-attribute-filters').hide();
-                        $('#activity-attribute-filters').hide();
-                        break;
-                    case 'sample-attributes':
-                        $('#activity-filters').hide();
-                        $('#entity-attribute-filters').show();
-                        $('#activity-attribute-filters').hide();
-                        break;
-                    case 'process-attributes':
-                        $('#activity-filters').hide();
-                        $('#entity-attribute-filters').hide();
-                        $('#activity-attribute-filters').show();
-                        break;
-                    case 'close':
-                        $('#activity-filters').hide();
-                        $('#entity-attribute-filters').hide();
-                        $('#activity-attribute-filters').hide();
-                        $(this).val('');
-                        $(this).selectpicker('deselectAll');
-                        break;
-                }
-            });
+            function toggleProcesses(e) {
+                $("#activity-filters").toggle();
+                $('#entity-attribute-filters').hide();
+                $('#activity-attribute-filters').hide();
+            }
+
+            function toggleSampleAttributes(e) {
+                $("#activity-filters").hide();
+                $('#entity-attribute-filters').toggle();
+                $('#activity-attribute-filters').hide();
+            }
+
+            function toggleProcessAttributes(e) {
+                $("#activity-filters").hide();
+                $('#entity-attribute-filters').hide();
+                $('#activity-attribute-filters').toggle();
+            }
         </script>
     @endpush
 </div>

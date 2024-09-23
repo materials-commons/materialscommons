@@ -1,50 +1,58 @@
 <div class="col-12">
     @if($showFilters)
         <x-datahq.mql-controls :project="$project"/>
+    @else
+        <div class="form-group">
+            <label class="ml-4">Show:</label>
+            <div class="btn-group" role="group">
+                <a class="action-link ml-3 cursor-pointer" onclick="toggleProcesses(event)">
+                    <i class="fa fas fa-code-branch mr-2"></i>Processes
+                </a>
+                <a class="action-link ml-4 cursor-pointer" onclick="toggleSampleAttributes(event)">
+                    <i class="fa fas fa-cubes mr-2"></i>Sample Attributes
+                </a>
+                <a class="action-link ml-4 cursor-pointer" onclick="toggleProcessAttributes(event)">
+                    <i class="fa fas fa-project-diagram mr-2"></i>Process Attributes
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 border rounded" id="activity-filters" style="display: none">
+                <br/>
+                <x-projects.processes.processes-table :project="$project"/>
+                <br/>
+            </div>
+
+            <div class="col-12 border rounded" id="entity-attribute-filters" style="display: none">
+                <br/>
+                <x-projects.samples.sample-attributes-table :project="$project"/>
+                <br/>
+            </div>
+
+            <div class="col-12 border rounded" id="activity-attribute-filters" style="display: none">
+                <br/>
+                <x-projects.processes.process-attributes-table :project="$project"/>
+                <br/>
+            </div>
+        </div>
+        <hr/>
     @endif
 
-        <a class="action-link float-right ml-4"
-           href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
-            <i class="fa fas fa-table mr-2"></i> New Table
-        </a>
+    <a class="action-link float-right ml-4"
+       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+        <i class="fa fas fa-table mr-2"></i> New Table
+    </a>
 
-        <a class="action-link float-right"
-           href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
-            <i class="fa fas fa-chart-area mr-2"></i> New Chart
-        </a>
-        <nav class="nav nav-pills mb-3">
-            <a class="nav-link active no-underline" href="#">Table: Samples</a>
-            <a class="nav-link no-underline" href="#">Scatter: stress, strain</a>
-            <a class="nav-link no-underline" href="#">Histogram: temperature</a>
-        </nav>
+    <a class="action-link float-right"
+       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+        <i class="fa fas fa-chart-area mr-2"></i> New Chart
+    </a>
+    <nav class="nav nav-pills mb-3">
+        <a class="nav-link active no-underline rounded-pill" href="#">Table: Samples</a>
+        <a class="nav-link no-underline rounded-pill" href="#">Scatter: stress, strain</a>
+        <a class="nav-link no-underline rounded-pill" href="#">Histogram: temperature</a>
+    </nav>
 
-
-        <div class="row">
-            {{--        <div class="form-group">--}}
-            {{--            <label class="ml-4">Views:</label>--}}
-            {{--            <select name="" class="selectpicker" data-style="btn-light no-tt" id="existing-views"--}}
-            {{--                    title="existing views"--}}
-            {{--                    data-live-search="true">--}}
-            {{--                <option value="all-samples" @selected(Request::routeIs('projects.datahq.sampleshq.index'))>All--}}
-            {{--                    Samples--}}
-            {{--                </option>--}}
-            {{--                <option value="sc: stress, strain">Scatter: stress, strain</option>--}}
-            {{--                <option value="hc: time, temperature">Histogram: time, temperature</option>--}}
-            {{--            </select>--}}
-            {{--        </div>--}}
-
-            {{--        <div class="form-group">--}}
-            {{--            <label class="ml-4">View Data As:</label>--}}
-            {{--            <select name="what" class="selectpicker" title="Type of View (Table/Chart)" id="view-as"--}}
-            {{--                    data-style="btn-light no-tt">--}}
-            {{--                <option value="close">(X) Close</option>--}}
-            {{--                <option value="table">Table</option>--}}
-            {{--                <option value="line-chart">Line Chart</option>--}}
-            {{--                <option value="bar-chart">Bar Chart</option>--}}
-            {{--                <option value="scatter-chart">Scatter Chart</option>--}}
-            {{--            </select>--}}
-            {{--        </div>--}}
-    </div>
     <div class="mt-2" id="chart-controls" style="display: none">
         <div class="form-group">
             <label>Sample X:</label>
@@ -119,6 +127,26 @@
                 formData.append("entityAttrs", sampleAttrs);
                 formData.append("activityAttrs", processAttrs);
             }
+
+            @if(!$showFilters)
+            function toggleProcesses(e) {
+                $("#activity-filters").toggle();
+                $('#entity-attribute-filters').hide();
+                $('#activity-attribute-filters').hide();
+            }
+
+            function toggleSampleAttributes(e) {
+                $("#activity-filters").hide();
+                $('#entity-attribute-filters').toggle();
+                $('#activity-attribute-filters').hide();
+            }
+
+            function toggleProcessAttributes(e) {
+                $("#activity-filters").hide();
+                $('#entity-attribute-filters').hide();
+                $('#activity-attribute-filters').toggle();
+            }
+            @endif
 
             function handleCreateViewForChart(viewType) {
                 let x = $("x-attr").val();

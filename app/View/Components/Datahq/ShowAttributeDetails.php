@@ -34,6 +34,7 @@ class ShowAttributeDetails extends Component
             // attrType == 'activity'
             $details = $this->getProcessAttributeDetails($this->project->id, $this->attrName);
         }
+
         $jsonData = json_encode(array_values($details->values->toArray()));
         return view('components.datahq.show-attribute-details', [
             'details'  => $details,
