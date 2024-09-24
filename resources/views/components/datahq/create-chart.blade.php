@@ -2,6 +2,22 @@
     <div class="mt-2 ml-4" id="chart-controls">
         <div class="row">
             <div class="form-group">
+                <input type="text" class="form-control" id="chart-name" placeholder="Enter chart name..."/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>Chart Type:</label>
+                <select name="chart_type" class="selectpicker" data-style="btn-light no-tt" id="chart-type"
+                        data-live-search="true" title="Select chart type...">
+                    <option value="histogram">Histogram</option>
+                    <option value="line">Line</option>
+                    <option value="scatter">Scatter</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="display: none" id="x-attr-select">
+            <div class="form-group">
                 <label>Select X Attribute Type:</label>
                 <select name="x_attribute_type" class="selectpicker" data-style="btn-light no-tt" id="x-attr-type"
                         title="select X attribute type">
@@ -34,7 +50,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="display: none" id="y-attr-select">
             <div class="form-group">
                 <label>Select Y Attribute Type: </label>
                 <select name="y_attribute_type" class="selectpicker" data-style="btn-light no-tt"
@@ -74,6 +90,18 @@
 
     @push('scripts')
         <script>
+
+            $('#chart-type').on('change', function () {
+                let selected = $(this).val();
+                if (selected === 'histogram') {
+                    $('#y-attr-select').show();
+                    $('#x-attr-select').hide();
+                } else {
+                    $('#y-attr-select').show();
+                    $('#x-attr-select').show();
+                }
+            });
+
             $('#x-attr-type').on('change', function () {
                 let selected = $(this).val();
                 if (selected === "sample-attributes") {
@@ -97,8 +125,11 @@
             });
 
             function handleCreateViewForChart(viewType) {
-                let x = $("x-attr").val();
-                let y = $("y-attr").val();
+                let projectId = "{{$project->id}}";
+                let xAttr = $("x-attr").val();
+                let yAttr = $("y-attr").val();
+                let chartType = $("#chart-type").val();
+                let chartName = $("chart-name").val();
             }
         </script>
     @endpush
