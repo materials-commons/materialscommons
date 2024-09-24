@@ -16,10 +16,16 @@ class ViewControls extends Component
 
     public bool $showFilters;
 
-    public function __construct(Project $project, $showFilters = false)
+    public string $tab;
+
+    public string $stateService;
+
+    public function __construct(Project $project, string $tab, string $stateService, $showFilters = false)
     {
         $this->project = $project;
         $this->showFilters = $showFilters;
+        $this->tab = $tab;
+        $this->stateService = $stateService;
     }
 
     /**

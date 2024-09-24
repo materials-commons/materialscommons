@@ -76,6 +76,39 @@ if (!function_exists("hasTabParam")) {
     }
 }
 
+if (!function_exists("setActiveNavByParam")) {
+    function setActiveNavByParam($param, $value): string
+    {
+        $paramValue = Request::input($param, null);
+        ray("  setActiveNavByParam {$param} = {$paramValue}, looking for {$value}");
+        if (is_null($paramValue)) {
+            return '';
+        }
+
+        if ($paramValue == $value) {
+            return 'active';
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists("hasParam")) {
+    function hasParam($param, $value): bool
+    {
+        $paramValue = Request::input($param, null);
+        if (is_null($paramValue)) {
+            return false;
+        }
+
+        if ($paramValue == $value) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists("getPreviousRouteName")) {
     function getPreviousRouteName()
     {

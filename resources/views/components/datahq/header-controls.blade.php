@@ -31,7 +31,7 @@
                         r = "{{route('projects.datahq.index', [$project, 'tab' => 'samples'])}}";
                         break;
                     case 'samples':
-                        r = "{{route('projects.datahq.sampleshq.index', [$project, 'tab' => 'all-samples'])}}";
+                        r = "{!!route('projects.datahq.sampleshq.index', [$project, 'tab' => 'all-samples', 'subview' => 'all-samples'])!!}";
                         break;
                     case 'computations':
                         r = "{{route('projects.datahq.computationshq.index', [$project])}}";

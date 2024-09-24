@@ -3,6 +3,7 @@
 namespace App\Services\DataHQ;
 
 use App\DTO\DataHQ\State;
+use App\DTO\DataHQ\SubviewState;
 use App\DTO\DataHQ\TabState;
 use App\Models\Dataset;
 use App\Models\Experiment;
@@ -15,7 +16,11 @@ class SamplesHQStateStore implements DataHQStateStoreInterface
     {
         return session("state:samplehq:p:state:{$project->id}", function () use ($project) {
             $state = new State();
-            $state->tabs->push(new TabState('All Samples', 'all-samples'));
+            $ts = new TabState('All Samples', 'all-samples');
+            $subviewState = new SubviewState('All Samples', 'all-samples', 'samples');
+            $ts->subviews->push($subviewState);
+            $state->tabs->push($ts);
+            ray($state);
             session(["state:samplehq:p:state:{$project->id}" => $state]);
             return $state;
         });

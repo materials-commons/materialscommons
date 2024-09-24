@@ -46,11 +46,12 @@
         <i class="fa fas fa-chart-area mr-2"></i> New Chart
     </a>
 
-    <nav class="nav nav-pills mb-3">
-        <a class="nav-link active no-underline rounded-pill" href="#">Table: Samples</a>
-        <a class="nav-link no-underline rounded-pill" href="#">Scatter: stress, strain</a>
-        <a class="nav-link no-underline rounded-pill" href="#">Histogram: temperature</a>
-    </nav>
+        {{--    <nav class="nav nav-pills mb-3">--}}
+        {{--        <a class="nav-link active no-underline rounded-pill" href="#">Table: Samples</a>--}}
+        {{--        <a class="nav-link no-underline rounded-pill" href="#">Scatter: stress, strain</a>--}}
+        {{--        <a class="nav-link no-underline rounded-pill" href="#">Histogram: temperature</a>--}}
+        {{--    </nav>--}}
+        <x-datahq.explorer.tab-subviews :project="$project" :tab="$tab" :state-service="$stateService"/>
 
         <div class="modal fade" tabindex="-1" id="create-table-modal" role="dialog">
             <div class="modal-dialog modal-xl" role="document">

@@ -4,7 +4,7 @@ namespace App\DTO\DataHQ;
 
 use Illuminate\Support\Collection;
 
-class ViewState
+class SubviewState
 {
     public string $name;
     public string $key;

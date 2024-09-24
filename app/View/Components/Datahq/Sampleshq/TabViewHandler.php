@@ -23,8 +23,13 @@ class TabViewHandler extends Component
     public function render(): View|Closure|string
     {
         $tab = Request::input('tab');
+        $subview = Request::input('subview');
+        if ($subview == "") {
+            $subview = "all-samples";
+        }
         return view('components.datahq.sampleshq.tab-view-handler', [
-            'tab' => $tab,
+            'tab'     => $tab,
+            'subview' => $subview,
         ]);
     }
 }

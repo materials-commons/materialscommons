@@ -12,4 +12,15 @@ class State
     {
         $this->tabs = collect();
     }
+
+    public function getTabStateByKey(string $key): ?TabState
+    {
+        foreach ($this->tabs as $tab) {
+            if ($tab->key === $key) {
+                return $tab;
+            }
+        }
+
+        return null;
+    }
 }
