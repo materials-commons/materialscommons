@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\DataHQ\ComputationsHQ\IndexComputationsHQWebControl
 use App\Http\Controllers\Web\DataHQ\GetAttributeDetailsForQueryBuilder;
 use App\Http\Controllers\Web\DataHQ\IndexDataHQWebController;
 use App\Http\Controllers\Web\DataHQ\ProcessesHQ\IndexProcessesHQWebController;
+use App\Http\Controllers\Web\DataHQ\SamplesHQ\CreateDataChartWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\IndexSamplesHQWebController;
 use App\Http\Controllers\Web\DataHQ\SaveDataForWebController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,9 @@ Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQue
 
 Route::get('/projects/{project}/datahq/sampleshq', IndexSamplesHQWebController::class)
      ->name('projects.datahq.sampleshq.index');
+
+Route::get('/projects/{project}/datahq/sampleshq/create-chart', CreateDataChartWebController::class)
+     ->name('projects.datahq.sampleshq.create-chart');
 
 // ComputationsHQ
 
