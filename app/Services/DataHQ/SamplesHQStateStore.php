@@ -20,7 +20,6 @@ class SamplesHQStateStore implements DataHQStateStoreInterface
             $subviewState = new SubviewState('All Samples', 'all-samples', 'samples');
             $ts->subviews->push($subviewState);
             $state->tabs->push($ts);
-            ray($state);
             session(["state:samplehq:p:state:{$project->id}" => $state]);
             return $state;
         });

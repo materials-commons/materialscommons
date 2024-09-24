@@ -28,7 +28,6 @@ class TabSubviews extends Component
     {
         $state = $this->stateStore->getOrCreateStateForProject($this->project);
         $tabState = $state->getTabStateByKey($this->tab);
-        ray("TabSubviews", $tabState);
         return view('components.datahq.explorer.tab-subviews', [
             'subviews' => $tabState->subviews,
         ]);

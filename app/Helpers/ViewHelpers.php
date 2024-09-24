@@ -80,7 +80,6 @@ if (!function_exists("setActiveNavByParam")) {
     function setActiveNavByParam($param, $value): string
     {
         $paramValue = Request::input($param, null);
-        ray("  setActiveNavByParam {$param} = {$paramValue}, looking for {$value}");
         if (is_null($paramValue)) {
             return '';
         }
