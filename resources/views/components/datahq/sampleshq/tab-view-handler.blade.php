@@ -1,5 +1,5 @@
 <div>
-    @if($tab == 'all-samples')
+        @if($tab == 'index')
                 <x-datahq.view-controls :project="$project" :tab="$tab" :state-service="'sampleshq'"
                                         :show-filters="false"/>
         <x-projects.samples.samples-table :project="$project"/>

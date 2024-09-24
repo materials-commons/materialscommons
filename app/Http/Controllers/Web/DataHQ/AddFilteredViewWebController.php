@@ -22,11 +22,11 @@ class AddFilteredViewWebController extends Controller
         $name = "Filtered View {$count}";
         $key = "fv{$count}";
         $ts = new TabState($name, $key);
-        $subviewState = new SubviewState('All Samples', 'all-samples', 'samples');
+        $subviewState = new SubviewState('All Samples', 'index', 'samples');
         $ts->subviews->push($subviewState);
         $state->tabs->push($ts);
         $stateService->saveStateForProject($project, $state);
         return redirect()->route('projects.datahq.sampleshq.index',
-            [$project, 'tab' => $key, 'subview' => 'all-samples']);
+            [$project, 'tab' => $key, 'subview' => 'index']);
     }
 }

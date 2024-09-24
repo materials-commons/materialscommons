@@ -16,8 +16,8 @@ class SamplesHQStateStore implements DataHQStateStoreInterface
     {
         return session("state:samplehq:p:state:{$project->id}", function () use ($project) {
             $state = new State();
-            $ts = new TabState('All Samples', 'all-samples');
-            $subviewState = new SubviewState('All Samples', 'all-samples', 'samples');
+            $ts = new TabState('All Samples', 'index');
+            $subviewState = new SubviewState('All Samples', 'index', 'samples');
             $ts->subviews->push($subviewState);
             $state->tabs->push($ts);
             session(["state:samplehq:p:state:{$project->id}" => $state]);

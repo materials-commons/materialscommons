@@ -7,7 +7,7 @@
         @foreach($tabs as $tab)
             <li class="nav-item">
                 <a class="nav-link no-underline {{setActiveNavByTabParam($tab->key)}}"
-                   href="{{route('projects.datahq.sampleshq.index', [$project, 'tab' => $tab->key])}}">
+                   href="{!!route('projects.datahq.sampleshq.index', [$project, 'tab' => $tab->key, 'subview' => 'index'])!!}">
                     {{$tab->name}}
                 </a>
             </li>

@@ -25,7 +25,7 @@ class TabViewHandler extends Component
         $tab = Request::input('tab');
         $subview = Request::input('subview');
         if ($subview == "") {
-            $subview = "all-samples";
+            $subview = "index";
         }
         return view('components.datahq.sampleshq.tab-view-handler', [
             'tab'     => $tab,
