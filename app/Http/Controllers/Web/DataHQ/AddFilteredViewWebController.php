@@ -26,6 +26,7 @@ class AddFilteredViewWebController extends Controller
         $ts->subviews->push($subviewState);
         $state->tabs->push($ts);
         $stateService->saveStateForProject($project, $state);
-        return redirect()->route('projects.datahq.sampleshq.index', [$project, 'tab' => $key]);
+        return redirect()->route('projects.datahq.sampleshq.index',
+            [$project, 'tab' => $key, 'subview' => 'all-samples']);
     }
 }
