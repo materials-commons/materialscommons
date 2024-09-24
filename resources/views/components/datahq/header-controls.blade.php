@@ -46,18 +46,18 @@
                 }
             });
 
-            const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";
-            $('#select-data-for').on('change', function () {
-                let selected = $(this).val();
-                let formData = new FormData();
-                formData.append("data_for", selected);
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-                axios.post(selectDataForRoute, formData, config);
-            });
+            {{--const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";--}}
+            {{--$('#select-data-for').on('change', function () {--}}
+            {{--    let selected = $(this).val();--}}
+            {{--    let formData = new FormData();--}}
+            {{--    formData.append("data_for", selected);--}}
+            {{--    let config = {--}}
+            {{--        headers: {--}}
+            {{--            'Content-Type': 'multipart/form-data'--}}
+            {{--        }--}}
+            {{--    }--}}
+            {{--    axios.post(selectDataForRoute, formData, config);--}}
+            {{--});--}}
         </script>
     @endpush
 </div>
