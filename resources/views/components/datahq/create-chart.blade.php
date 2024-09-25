@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="row">
-        <a class="btn btn-success ml-4" href="#">Create View</a>
+        <a class="btn btn-success ml-4" onclick="handleCreateViewForChart()">Create View</a>
     </div>
 
     @push('scripts')
@@ -124,12 +124,45 @@
                 }
             });
 
-            function handleCreateViewForChart(viewType) {
+            function handleCreateViewForChart() {
+                let tab = "{{$tab}}";
+                let stateService = "{{$stateService}}";
                 let projectId = "{{$project->id}}";
+
                 let xAttr = $("x-attr").val();
                 let yAttr = $("y-attr").val();
                 let chartType = $("#chart-type").val();
                 let chartName = $("chart-name").val();
+                let formData = new FormData();
+
+                formData.append('tab', tab);
+                formData.append("xattr", xAttr);
+                formData.append('yattr', yAttr);
+                formData.append('chart_type', chartType);
+                formData.append('chart_name', chartName);
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                switch (stateService) {
+                    case 'sampleshq':
+                        let r = route('projects.datahq.sampleshq.create-chart', {
+                            project: projectId,
+                        });
+                        axios.post(r, formData, config).then((resp) => {
+                            let view = resp.data;
+                            window.location.href = route('projects.datahq.sampleshq.index', {
+                                tab: tab,
+                                view: view
+                            });
+                        })
+                        break;
+                    default:
+                        break;
+                }
             }
         </script>
     @endpush

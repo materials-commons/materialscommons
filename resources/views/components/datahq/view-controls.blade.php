@@ -86,6 +86,8 @@
                     <div class="modal-body">
                         <x-datahq.create-chart :project="$project"
                                                :process-attributes="$processAttributes"
+                                               :tab="$tab"
+                                               :state-service="$stateService"
                                                :sample-attributes="$sampleAttributes"/>
                     </div>
                     <div class="modal-footer">

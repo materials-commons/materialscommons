@@ -13,11 +13,17 @@ class CreateChart extends Component
     public $sampleAttributes;
     public $processAttributes;
 
-    public function __construct($project, $sampleAttributes, $processAttributes)
+    public string $tab;
+
+    public string $stateService;
+
+    public function __construct($project, $sampleAttributes, $processAttributes, $tab, $stateService)
     {
         $this->project = $project;
         $this->sampleAttributes = $sampleAttributes;
         $this->processAttributes = $processAttributes;
+        $this->tab = $tab;
+        $this->stateService = $stateService;
     }
 
     /**

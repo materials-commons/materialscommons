@@ -28,7 +28,7 @@ Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQue
 Route::get('/projects/{project}/datahq/sampleshq', IndexSamplesHQWebController::class)
      ->name('projects.datahq.sampleshq.index');
 
-Route::get('/projects/{project}/datahq/sampleshq/create-chart', CreateDataChartWebController::class)
+Route::post('/projects/{project}/datahq/sampleshq/create-chart', CreateDataChartWebController::class)
      ->name('projects.datahq.sampleshq.create-chart');
 
 // ComputationsHQ
