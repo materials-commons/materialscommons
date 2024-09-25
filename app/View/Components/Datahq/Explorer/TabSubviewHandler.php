@@ -2,18 +2,27 @@
 
 namespace App\View\Components\Datahq\Explorer;
 
+use App\Models\Project;
+use App\Services\DataHQ\DataHQStateStoreInterface;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class TabSubviewHandler extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public Project $project;
+    public string $tab;
+    public string $stateService;
+    public string $subview;
+
+    private DataHQStateStoreInterface $stateStore;
+
+    public function __construct(Project $project, string $tab, string $subview, string $stateService)
     {
-        //
+        $this->project = $project;
+        $this->tab = $tab;
+        $this->subview = $subview;
+        $this->stateService = $stateService;
     }
 
     /**
@@ -21,6 +30,13 @@ class TabSubviewHandler extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.datahq.explorer.tab-subview-handler');
+        $this->stateStore = app($this->stateService);
+        $state = $this->stateStore->getOrCreateStateForProject($this->project);
+        $tabState = $state->getTabStateByKey($this->tab);
+        $subviewState = $tabState->getSubviewStateByKey($this->subview);
+
+        return view('components.datahq.explorer.tab-subview-handler', [
+            'subviewState' => $subviewState,
+        ]);
     }
 }

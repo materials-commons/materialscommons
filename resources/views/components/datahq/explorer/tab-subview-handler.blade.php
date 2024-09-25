@@ -1,3 +1,7 @@
 <div>
-    <!-- You must be the change you wish to see in the world. - Mahatma Gandhi -->
+        @if($subview == "index")
+                <x-projects.samples.samples-table :project="$project"/>
+        @else
+                <h2>Tab Subview Handler for {{$subview}}</h2>
+        @endif
 </div>

@@ -16,4 +16,15 @@ class TabState
         $this->key = $key;
         $this->subviews = collect();
     }
+
+    public function getSubviewStateByKey(string $key): ?SubviewState
+    {
+        foreach ($this->subviews as $subview) {
+            if ($subview->key === $key) {
+                return $subview;
+            }
+        }
+
+        return null;
+    }
 }

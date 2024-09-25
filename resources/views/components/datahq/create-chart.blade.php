@@ -21,8 +21,8 @@
                 <label>Select X Attribute Type:</label>
                 <select name="x_attribute_type" class="selectpicker" data-style="btn-light no-tt" id="x-attr-type"
                         title="select X attribute type">
-                    <option value="sample-attributes">Sample Attributes</option>
-                    <option value="process-attributes">Process Attributes</option>
+                    <option value="sample">Sample Attributes</option>
+                    <option value="process">Process Attributes</option>
                 </select>
             </div>
             <div id="show-x-sample-attrs" style="display: none">
@@ -55,8 +55,8 @@
                 <label>Select Y Attribute Type: </label>
                 <select name="y_attribute_type" class="selectpicker" data-style="btn-light no-tt"
                         id="y-attr-type" title="select Y attribute type">
-                    <option value="sample-attributes">Sample Attributes</option>
-                    <option value="process-attributes">Process Attributes</option>
+                    <option value="sample">Sample Attributes</option>
+                    <option value="process">Process Attributes</option>
                 </select>
             </div>
 
@@ -104,7 +104,7 @@
 
             $('#x-attr-type').on('change', function () {
                 let selected = $(this).val();
-                if (selected === "sample-attributes") {
+                if (selected === "sample") {
                     $("#show-x-sample-attrs").show();
                     $("#show-x-process-attrs").hide();
                 } else {
@@ -115,7 +115,7 @@
 
             $('#y-attr-type').on('change', function () {
                 let selected = $(this).val();
-                if (selected === "sample-attributes") {
+                if (selected === "sample") {
                     $("#show-y-sample-attrs").show();
                     $("#show-y-process-attrs").hide();
                 } else {
@@ -129,14 +129,32 @@
                 let stateService = "{{$stateService}}";
                 let projectId = "{{$project->id}}";
 
-                let xAttr = $("x-attr").val();
-                let yAttr = $("y-attr").val();
+                let xAttrType = $("#x-attr-type").val();
+                let xAttr = $("#x-sample-attrs").val();
+                if (xAttrType === 'process') {
+                    xAttr = $("#x-process-attrs").val();
+                }
+
+                console.log(`xAttrType = ${xAttrType}`);
+                console.log(`xAttr = ${xAttr}`);
+
+                let yAttrType = $("#y-attr-type").val()
+                let yAttr = $("#y-sample-attrs").val();
+                if (yAttrType === 'process') {
+                    yAttr = $("#y-process-attrs").val();
+                }
+
+                console.log(`yAttrType = ${yAttrType}`);
+                console.log(`yAttr = ${yAttr}`);
+
                 let chartType = $("#chart-type").val();
-                let chartName = $("chart-name").val();
+                let chartName = $("#chart-name").val();
                 let formData = new FormData();
 
                 formData.append('tab', tab);
+                formData.append("xattr_type", xAttrType)
                 formData.append("xattr", xAttr);
+                formData.append("yattr_type", yAttrType);
                 formData.append('yattr', yAttr);
                 formData.append('chart_type', chartType);
                 formData.append('chart_name', chartName);
@@ -154,10 +172,13 @@
                         });
                         axios.post(r, formData, config).then((resp) => {
                             let view = resp.data;
-                            window.location.href = route('projects.datahq.sampleshq.index', {
+                            let routeToGoTo = route('projects.datahq.sampleshq.index', {
+                                project: projectId,
                                 tab: tab,
                                 view: view
                             });
+                            console.log('routeToGoTo = ', routeToGoTo)
+                            window.location.href = routeToGoTo;
                         })
                         break;
                     default:
