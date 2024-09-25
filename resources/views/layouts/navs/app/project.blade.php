@@ -104,6 +104,15 @@
                 </a>
             </li>
 
+            @if(isInBeta('charts'))
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.charts.create')}}"
+                       href="{{route('projects.charts.create', [$project])}}">
+                        <i class="fa-fw fas fa-chart-bar mr-2"></i> Charts
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item mt-2">
                 <span class="ml-5">Actions</span>
             </li>
