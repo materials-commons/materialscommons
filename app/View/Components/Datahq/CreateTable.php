@@ -12,12 +12,14 @@ class CreateTable extends Component
     public Project $project;
     public $sampleAttributes;
     public $processAttributes;
+    public string $modalId;
 
-    public function __construct($project, $sampleAttributes, $processAttributes)
+    public function __construct($project, $sampleAttributes, $processAttributes, $modalId)
     {
         $this->project = $project;
         $this->sampleAttributes = $sampleAttributes;
         $this->processAttributes = $processAttributes;
+        $this->modalId = $modalId;
     }
 
     /**

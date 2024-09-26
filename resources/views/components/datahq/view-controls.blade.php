@@ -46,57 +46,17 @@
         <i class="fa fas fa-chart-area mr-2"></i> New Chart
     </a>
 
-        {{--    <nav class="nav nav-pills mb-3">--}}
-        {{--        <a class="nav-link active no-underline rounded-pill" href="#">Table: Samples</a>--}}
-        {{--        <a class="nav-link no-underline rounded-pill" href="#">Scatter: stress, strain</a>--}}
-        {{--        <a class="nav-link no-underline rounded-pill" href="#">Histogram: temperature</a>--}}
-        {{--    </nav>--}}
-        <x-datahq.explorer.tab-subviews :project="$project" :tab="$tab" :state-service="$stateService"/>
+        <x-datahq.create-table :modal-id="'create-table-modal'"
+                               :project="$project"
+                               :process-attributes="$processAttributes"
+                               :sample-attributes="$sampleAttributes"/>
 
-        <div class="modal fade" tabindex="-1" id="create-table-modal" role="dialog">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-nav">
-                        <h5 class="modal-title help-color">Create New Table</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="help-color">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <x-datahq.create-table :project="$project"
-                                               :process-attributes="$processAttributes"
-                                               :sample-attributes="$sampleAttributes"/>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-        </div>
-    </div>
-
-        <div class="modal fade" tabindex="-1" id="create-chart-modal" role="dialog">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-nav">
-                        <h5 class="modal-title help-color">Create New Chart</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="help-color">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <x-datahq.create-chart :project="$project"
-                                               :process-attributes="$processAttributes"
-                                               :tab="$tab"
-                                               :state-service="$stateService"
-                                               :sample-attributes="$sampleAttributes"/>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-        </div>
-    </div>
-
+        <x-datahq.create-chart :modal-id="'create-chart-modal'"
+                               :project="$project"
+                               :process-attributes="$processAttributes"
+                               :tab="$tab"
+                               :state-service="$stateService"
+                               :sample-attributes="$sampleAttributes"/>
 
         @if(!$showFilters)
             @push('scripts')
