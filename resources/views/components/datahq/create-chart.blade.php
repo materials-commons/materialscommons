@@ -171,11 +171,11 @@
                             project: projectId,
                         });
                         axios.post(r, formData, config).then((resp) => {
-                            let view = resp.data;
+                            let subview = resp.data;
                             let routeToGoTo = route('projects.datahq.sampleshq.index', {
                                 project: projectId,
                                 tab: tab,
-                                view: view
+                                subview: subview
                             });
                             console.log('routeToGoTo = ', routeToGoTo)
                             window.location.href = routeToGoTo;

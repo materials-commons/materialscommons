@@ -24,12 +24,14 @@ class TabViewHandler extends Component
     {
         $tab = Request::input('tab');
         $subview = Request::input('subview');
-        if ($subview == "") {
-            $subview = "index";
+        $showFilters = true;
+        if ($tab === 'index') {
+            $showFilters = false;
         }
         return view('components.datahq.sampleshq.tab-view-handler', [
-            'tab'     => $tab,
-            'subview' => $subview,
+            'tab'         => $tab,
+            'subview'     => $subview,
+            'showFilters' => $showFilters,
         ]);
     }
 }
