@@ -443,7 +443,7 @@ class EntityActivityImporter
     {
         $createEntityAction = new CreateEntityAction();
         $entity = $createEntityAction([
-            'category' => $this->category,
+            'category'      => $this->category,
             'name'          => $row->entityOrActivityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,
@@ -475,8 +475,8 @@ class EntityActivityImporter
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
-                                           RowTracker $rowTracker)
-    {
+                                           RowTracker $rowTracker
+    ) {
         $seenAttributes = collect();
         $attributePosition = 1;
         $entityAttributes->each(function ($attr) use ($state, $entity, $seenAttributes, &$attributePosition) {
@@ -790,8 +790,8 @@ class EntityActivityImporter
         }
 
         $activity = $createActivityAction([
-            'category' => $this->category,
-            'atype'    => $rowTracker->activityType,
+            'category'      => $this->category,
+            'atype'         => $rowTracker->activityType,
             'name'          => $rowTracker->activityName,
             'project_id'    => $this->projectId,
             'experiment_id' => $this->experimentId,

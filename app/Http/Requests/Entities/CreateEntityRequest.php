@@ -30,6 +30,7 @@ class CreateEntityRequest extends FormRequest
             'name'               => 'required|string|max:80',
             'description'        => 'nullable|string|max:8192',
             'summary'            => 'nullable|string|max:100',
+            'category'           => 'required|in:experimental,computational',
             'project_id'         => 'nullable|integer',
             'experiment_id'      => 'nullable|integer',
             'activity_id'        => 'required|integer',

@@ -10,22 +10,11 @@ use App\Models\Activity;
 
 class AddEntityStatesToActivityApiController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \App\Http\Requests\Activities\EntityStates\AddEntityStatesToActivityRequest  $request
-     * @param  \App\Actions\Activities\EntityStates\AddEntityStatesToActivityAction  $addEntityStatesToActivityAction
-     * @param  \App\Models\Activity  $activity
-     * @return \App\Http\Resources\Activities\ActivityResource
-     */
-    public function __invoke(
-        AddEntityStatesToActivityRequest $request,
-        AddEntityStatesToActivityAction $addEntityStatesToActivityAction,
-        Activity $activity
-    )
+    public function __invoke(AddEntityStatesToActivityRequest $request,
+                             AddEntityStatesToActivityAction  $addEntityStatesToActivityAction, Activity $activity)
     {
         $entityStates = $request->input('entity_states');
-        $activity     = $addEntityStatesToActivityAction($activity, $entityStates);
+        $activity = $addEntityStatesToActivityAction($activity, $entityStates);
         return new ActivityResource($activity);
     }
 }
