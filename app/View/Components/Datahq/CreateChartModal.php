@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CreateChart extends Component
+class CreateChartModal extends Component
 {
     public Project $project;
     public $sampleAttributes;
@@ -32,6 +32,6 @@ class CreateChart extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.datahq.create-chart');
+        return view('components.datahq.create-chart-modal');
     }
 }

@@ -38,49 +38,49 @@
         <hr/>
     @endif
 
-        <a class="action-link float-right ml-4" href="#create-table-modal" data-toggle="modal">
+    <a class="action-link float-right ml-4" href="#create-table-modal" data-toggle="modal">
         <i class="fa fas fa-table mr-2"></i> New Table
     </a>
 
-        <a class="action-link float-right" href="#create-chart-modal" data-toggle="modal">
+    <a class="action-link float-right" href="#create-chart-modal" data-toggle="modal">
         <i class="fa fas fa-chart-area mr-2"></i> New Chart
     </a>
 
-        <x-datahq.create-table :modal-id="'create-table-modal'"
-                               :project="$project"
-                               :process-attributes="$processAttributes"
-                               :sample-attributes="$sampleAttributes"/>
+    <x-datahq.create-table :modal-id="'create-table-modal'"
+                           :project="$project"
+                           :process-attributes="$processAttributes"
+                           :sample-attributes="$sampleAttributes"/>
 
-        <x-datahq.create-chart :modal-id="'create-chart-modal'"
-                               :project="$project"
-                               :process-attributes="$processAttributes"
-                               :tab="$tab"
-                               :state-service="$stateService"
-                               :sample-attributes="$sampleAttributes"/>
+    <x-datahq.create-chart-modal :modal-id="'create-chart-modal'"
+                                 :project="$project"
+                                 :process-attributes="$processAttributes"
+                                 :tab="$tab"
+                                 :state-service="$stateService"
+                                 :sample-attributes="$sampleAttributes"/>
 
-        @if(!$showFilters)
-            @push('scripts')
-                <script>
+    @if(!$showFilters)
+        @push('scripts')
+            <script>
 
-                    function toggleProcesses(e) {
-                        $("#activity-filters").toggle();
-                        $('#entity-attribute-filters').hide();
-                        $('#activity-attribute-filters').hide();
-                    }
+                function toggleProcesses(e) {
+                    $("#activity-filters").toggle();
+                    $('#entity-attribute-filters').hide();
+                    $('#activity-attribute-filters').hide();
+                }
 
-                    function toggleSampleAttributes(e) {
-                        $("#activity-filters").hide();
-                        $('#entity-attribute-filters').toggle();
-                        $('#activity-attribute-filters').hide();
-                    }
+                function toggleSampleAttributes(e) {
+                    $("#activity-filters").hide();
+                    $('#entity-attribute-filters').toggle();
+                    $('#activity-attribute-filters').hide();
+                }
 
-                    function toggleProcessAttributes(e) {
-                        $("#activity-filters").hide();
-                        $('#entity-attribute-filters').hide();
-                        $('#activity-attribute-filters').toggle();
-                    }
+                function toggleProcessAttributes(e) {
+                    $("#activity-filters").hide();
+                    $('#entity-attribute-filters').hide();
+                    $('#activity-attribute-filters').toggle();
+                }
 
-                </script>
-            @endpush
-        @endif
+            </script>
+        @endpush
+    @endif
 </div>
