@@ -7,7 +7,8 @@ use App\DTO\DataHQ\ViewAttr;
 use App\DTO\DataHQ\ViewStateData;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Services\DataHQ\DataHQStateStoreInterface;
+use App\Services\DataHQ\DataHQContextStateStoreInterface;
+use App\Services\DataHQ\DataHQStateStore;
 use Illuminate\Http\Request;
 
 class CreateDataChartWebController extends Controller
@@ -27,8 +28,8 @@ class CreateDataChartWebController extends Controller
             'yattr_type' => 'required|string', // Turn into an enum
         ]);
 
-        $stateService = app('sampleshq');
-        $state = $stateService->getOrCreateStateForProject($project);
+        $stateService = DataHQStateStore::getState()->getContextStateStore();
+        $state = $stateService->getOrCreateState();
         $tabState = $state->getTabStateByKey($validatedData['tab']);
         $subviewState = new SubviewState($validatedData['chart_name'], SubviewState::makeKey(), 'chart');
         $yattr = new ViewAttr($validatedData['yattr_type'], $validatedData['yattr']);
@@ -40,7 +41,7 @@ class CreateDataChartWebController extends Controller
         $viewStateData = ViewStateData::makeChartViewStateData($validatedData['chart_type'], $xattr, $yattr);
         $subviewState->viewData = $viewStateData;
         $tabState->subviews->push($subviewState);
-        $stateService->saveStateForProject($project, $state);
+        $stateService->saveState($state);
         return $subviewState->key;
     }
 }

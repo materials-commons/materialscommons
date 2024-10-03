@@ -1,6 +1,6 @@
 <div>
     <a class="action-link float-right"
-       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => 'sampleshq'])}}">
+       href="{{route('projects.datahq.add-filtered-view', [$project, 'state-service' => $stateService])}}">
         <i class="fa fas fa-plus mr-2"></i> Add Filtered View
     </a>
     <ul class="nav nav-tabs col-12">

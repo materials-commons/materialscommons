@@ -4,7 +4,7 @@ namespace App\View\Components\Datahq\Explorer;
 
 use App\DTO\DataHQ\SubviewState;
 use App\Models\Project;
-use App\Services\DataHQ\DataHQStateStoreInterface;
+use App\Services\DataHQ\DataHQContextStateStoreInterface;
 use App\Traits\Entities\EntityAndAttributeQueries;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,18 +15,14 @@ class ShowSubviewChart extends Component
     use EntityAndAttributeQueries;
 
     public Project $project;
-    public string $stateService;
     public SubviewState $subviewState;
     public string $subview;
-    private DataHQStateStoreInterface $stateStore;
 
-    public function __construct(Project $project, string $subview, SubviewState $subviewState, string $stateService)
+    public function __construct(Project $project, string $subview, SubviewState $subviewState)
     {
         $this->project = $project;
-        $this->stateService = $stateService;
         $this->subviewState = $subviewState;
         $this->subview = $subview;
-        $this->stateStore = app($this->stateService);
     }
 
     /**

@@ -6,17 +6,17 @@ use App\DTO\DataHQ\SubviewState;
 use App\DTO\DataHQ\TabState;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Services\DataHQ\DataHQStateStore;
 use Illuminate\Http\Request;
 
 class AddFilteredViewWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        $stateService = app($request->input('state-service'));
-        $state = $stateService->getOrCreateStateForProject($project);
+        $stateService = DataHQStateStore::getState()->getContextStateStore();
+        $state = $stateService->getOrCreateState();
 
-        // 1 tab will the default tab, all other tabs will be filtered views. So subtract one from
-        // the count to get the next filtered tab name
+        // 1st tab will the default (index) tab, all other tabs will be filtered views.
         $count = $state->tabs->count();
 
         $name = "Filtered View {$count}";
@@ -25,7 +25,7 @@ class AddFilteredViewWebController extends Controller
         $subviewState = new SubviewState('All Samples', 'index', 'samples');
         $ts->subviews->push($subviewState);
         $state->tabs->push($ts);
-        $stateService->saveStateForProject($project, $state);
+        $stateService->saveState($state);
         return redirect()->route('projects.datahq.sampleshq.index',
             [$project, 'tab' => $key, 'subview' => 'index']);
     }

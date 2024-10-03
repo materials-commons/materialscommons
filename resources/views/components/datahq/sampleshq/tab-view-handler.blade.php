@@ -5,11 +5,9 @@
                             :show-filters="$showFilters"/>
 
     <x-datahq.explorer.tab-subviews :project="$project"
-                                    :tab="$tab"
-                                    :state-service="'sampleshq'"/>
+                                    :tab="$tab"/>
 
     <x-datahq.explorer.tab-subview-handler :project="$project"
                                            :tab="$tab"
-                                           :state-service="'sampleshq'"
                                            :subview="$subview"/>
 </div>

@@ -3,6 +3,7 @@
 namespace App\View\Components\Datahq\Explorer;
 
 use App\Models\Project;
+use App\Services\DataHQ\DataHQStateStore;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -13,10 +14,9 @@ class Tabs extends Component
 
     public Project $project;
 
-    public function __construct(Project $project, string $stateService)
+    public function __construct(Project $project)
     {
         $this->project = $project;
-        $this->stateService = $stateService;
     }
 
     /**
@@ -24,8 +24,10 @@ class Tabs extends Component
      */
     public function render(): View|Closure|string
     {
-        $s = app($this->stateService);
-        $state = $s->getOrCreateStateForProject($this->project);
+        $dataHQState = DataHQStateStore::getState();
+        $s = $dataHQState->getContextStateStore();
+        $this->stateService = $dataHQState->stateContextService;
+        $state = $s->getOrCreateState();
         return view('components.datahq.explorer.tabs', [
             'tabs' => $state->tabs,
         ]);

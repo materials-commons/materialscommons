@@ -3,7 +3,6 @@
                 <x-projects.samples.samples-table :project="$project"/>
         @elseif($subviewState->viewType === 'chart')
                 <x-datahq.explorer.show-subview-chart :project="$project"
-                                                      :state-service="$stateService"
                                                       :subview="$subview"
                                                       :subview-state="$subviewState"/>
         @elseif($subviewState->viewType === 'table')

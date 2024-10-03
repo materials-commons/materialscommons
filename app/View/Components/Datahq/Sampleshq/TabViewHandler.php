@@ -25,9 +25,18 @@ class TabViewHandler extends Component
         $tab = Request::input('tab');
         $subview = Request::input('subview');
         $showFilters = true;
+        if (is_null($tab)) {
+            $tab = "index";
+        }
+
         if ($tab === 'index') {
             $showFilters = false;
         }
+
+        if (is_null($subview)) {
+            $subview = "index";
+        }
+
         return view('components.datahq.sampleshq.tab-view-handler', [
             'tab'         => $tab,
             'subview'     => $subview,

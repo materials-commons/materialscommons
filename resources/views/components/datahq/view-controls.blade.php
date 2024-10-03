@@ -53,28 +53,28 @@
 
     <x-datahq.create-chart-modal :modal-id="'create-chart-modal'"
                                  :project="$project"
-                                 :process-attributes="$processAttributes"
                                  :tab="$tab"
                                  :state-service="$stateService"
+                                 :process-attributes="$processAttributes"
                                  :sample-attributes="$sampleAttributes"/>
 
     @if(!$showFilters)
         @push('scripts')
             <script>
 
-                function toggleProcesses(e) {
+                function toggleProcesses() {
                     $("#activity-filters").toggle();
                     $('#entity-attribute-filters').hide();
                     $('#activity-attribute-filters').hide();
                 }
 
-                function toggleSampleAttributes(e) {
+                function toggleSampleAttributes() {
                     $("#activity-filters").hide();
                     $('#entity-attribute-filters').toggle();
                     $('#activity-attribute-filters').hide();
                 }
 
-                function toggleProcessAttributes(e) {
+                function toggleProcessAttributes() {
                     $("#activity-filters").hide();
                     $('#entity-attribute-filters').hide();
                     $('#activity-attribute-filters').toggle();

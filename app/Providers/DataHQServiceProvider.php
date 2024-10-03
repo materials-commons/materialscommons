@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\DataHQ\SamplesHQStateStore;
+use App\Services\DataHQ\SamplesHQContextStateStore;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -15,7 +15,7 @@ class DataHQServiceProvider extends ServiceProvider implements DeferrableProvide
     public function register(): void
     {
         $this->app->singleton('sampleshq', function (Application $app) {
-            return new SamplesHQStateStore();
+            return new SamplesHQContextStateStore();
         });
     }
 
