@@ -114,6 +114,11 @@ class Dataset extends Model implements Searchable
         return $this->belongsToMany(Activity::class, 'dataset2activity', 'dataset_id', 'activity_id');
     }
 
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
+    }
+
     public function usedInProjects()
     {
         return $this->belongsToMany(Project::class, 'project2imported_dataset', 'dataset_id', 'project_id');

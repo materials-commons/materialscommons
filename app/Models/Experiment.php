@@ -77,6 +77,11 @@ class Experiment extends Model implements Searchable
         return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id');
     }
 
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
+    }
+
     public function experimental_entities()
     {
         return $this->belongsToMany(Entity::class, 'experiment2entity', 'experiment_id', 'entity_id')
