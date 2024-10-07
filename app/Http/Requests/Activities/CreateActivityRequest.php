@@ -30,7 +30,7 @@ class CreateActivityRequest extends FormRequest
             'name'               => 'required|string|max:80',
             'description'        => 'nullable|string|max:2048',
             'project_id'         => 'required|integer',
-            'experiment_id'      => 'integer',
+            'experiment_id' => 'null|integer',
             'attributes'         => 'array',
             'attributes.*.value' => 'required',
             'attributes.*.name'  => 'required|string|max:80',
