@@ -1,29 +1,24 @@
-@extends('layouts.app')
+<x-layouts.project :project="$project">
+    <x-slot:pageTitle>
+        "{{$project->name}} - Data Explorer"
+    </x-slot:pageTitle>
 
-@section('pageTitle', "{$project->name} - Data Explorer")
+    <x-slot:content>
+        <x-card>
+            <x-slot:header>
+                Data Explorer
+                <x-datahq.header-controls :project="$project"/>
+            </x-slot:header>
 
-@section('nav')
-    @include('layouts.navs.app.project')
-@stop
-
-{{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
-
-@section('content')
-
-    <x-card>
-        <x-slot:header>
-            Data Explorer
-            <x-datahq.header-controls :project="$project"/>
-        </x-slot:header>
-
-        <x-slot:body>
-            <div>
-                <x-datahq.explorer.tabs :project="$project"/>
-                <br/>
+            <x-slot:body>
                 <div>
-                    <x-datahq.sampleshq.tab-view-handler :project="$project"/>
+                    <x-datahq.explorer.tabs :project="$project"/>
+                    <br/>
+                    <div>
+                        <x-datahq.sampleshq.tab-view-handler :project="$project"/>
+                    </div>
                 </div>
-            </div>
-        </x-slot:body>
-    </x-card>
-@stop
+            </x-slot:body>
+        </x-card>
+    </x-slot:content>
+</x-layouts.project>
