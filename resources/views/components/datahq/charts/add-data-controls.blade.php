@@ -1,4 +1,4 @@
-<div class="mt-2 ml-4" id="chart-controls">
+<div class="mt-2 ml-4 col-12" id="chart-controls">
     <form id="chart-controls-form">
         <div class="row">
             <div class="form-group">
@@ -9,6 +9,10 @@
                     <option value="line">Line</option>
                     <option value="scatter">Scatter</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-success ml-4 cursor-pointer" onclick="addDataControlsCB({{$callback}})"
+                   roll="button" aria-disabled="true">Add To Chart</a>
             </div>
         </div>
         <div class="row" style="display: none" id="x-attr-select">
@@ -66,7 +70,7 @@
                     </select>
                 </div>
             </div>
-            <div id="show-y-process-attrs" style="display: none">
+            <div id="show-y-process-attrs" style="display: none" class="col-8">
                 <div class="form-group">
                     <label class="ml-4">Y:</label>
                     <select name="Y" class="selectpicker" data-style="btn-light no-tt" id="y-process-attrs"
@@ -76,14 +80,20 @@
                         @endforeach
                     </select>
                 </div>
+
             </div>
         </div>
 
-{{--        <a class="btn btn-success" onclick="handleCreateViewForChart()">Create View</a>--}}
+
     </form>
 
     @push('scripts')
         <script>
+
+            function addDataControlsCB(cb) {
+                console.log("addDataControlsCB");
+                cb();
+            }
 
             $('#chart-type').on('change', function () {
                 let selected = $(this).val();

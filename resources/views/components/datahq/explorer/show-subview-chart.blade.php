@@ -19,7 +19,8 @@
     </div>
     <div class="row" id="chart-data-controls" style="display: none">
         <x-datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
-                                           :process-attributes="$processAttributes"/>
+                                           :process-attributes="$processAttributes"
+                                           :callback="'controlsCallback'"/>
     </div>
     <div class="row">
         <form class="ml-5">
@@ -43,6 +44,10 @@
                 $("#chart-data-controls").toggle();
             }
 
+            function controlsCallback() {
+                console.log("controlsCallback called");
+            }
+
             function drawChart() {
                 let e = document.getElementById('scatter-chart');
                 let chartTitle = $("#chart-title").val();
@@ -51,18 +56,18 @@
 
                 Plotly.purge(e);
                 Plotly.newPlot(e, [
-                    {
-                        x: [1, 2, 3, 4, 5],
-                        y: [1, 6, 3, 6, 1],
-                        mode: 'markers',
-                        type: 'scatter',
-                        marker: {size: 12},
-                    },
-                    {
-                        x: [20, 30, 40, 50],
-                        y: [10, 20, 70, 80],
-                        type: 'line'
-                    }
+                    // {
+                    //     x: [1, 2, 3, 4, 5],
+                    //     y: [1, 6, 3, 6, 1],
+                    //     mode: 'markers',
+                    //     type: 'scatter',
+                    //     marker: {size: 12},
+                    // },
+                    // {
+                    //     x: [20, 30, 40, 50],
+                    //     y: [10, 20, 70, 80],
+                    //     type: 'line'
+                    // }
                 ], {
                     title: chartTitle,
                     xaxis: {title: xAxisTitle},

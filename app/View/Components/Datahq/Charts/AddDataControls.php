@@ -10,11 +10,13 @@ class AddDataControls extends Component
 {
     public $sampleAttributes;
     public $processAttributes;
+    public string $callback;
 
-    public function __construct($sampleAttributes, $processAttributes)
+    public function __construct($sampleAttributes, $processAttributes, $callback)
     {
         $this->sampleAttributes = $sampleAttributes;
         $this->processAttributes = $processAttributes;
+        $this->callback = $callback;
     }
 
     /**
