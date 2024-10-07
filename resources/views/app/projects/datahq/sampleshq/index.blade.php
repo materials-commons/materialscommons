@@ -1,6 +1,6 @@
 <x-layouts.project :project="$project">
     <x-slot:pageTitle>
-        "{{$project->name}} - Data Explorer"
+        "{{$project->name}} - Samples Data Explorer"
     </x-slot:pageTitle>
 
     <x-slot:content>
@@ -11,13 +11,7 @@
             </x-slot:header>
 
             <x-slot:body>
-                <div>
-                    <x-datahq.explorer.tabs :project="$project"/>
-                    <br/>
-                    <div>
-                        <x-datahq.sampleshq.tab-view-handler :project="$project"/>
-                    </div>
-                </div>
+                <x-datahq.sampleshq :project="$project"/>
             </x-slot:body>
         </x-card>
     </x-slot:content>
