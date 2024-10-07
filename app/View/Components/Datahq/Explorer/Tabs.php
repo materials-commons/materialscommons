@@ -25,8 +25,8 @@ class Tabs extends Component
     public function render(): View|Closure|string
     {
         $dataHQState = DataHQStateStore::getState();
-        $s = $dataHQState->getContextStateStore();
         $this->stateService = $dataHQState->stateContextService;
+        $s = $dataHQState->getContextStateStore();
         $state = $s->getOrCreateState();
         return view('components.datahq.explorer.tabs', [
             'tabs' => $state->tabs,

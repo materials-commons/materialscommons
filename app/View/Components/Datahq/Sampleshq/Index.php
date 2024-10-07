@@ -6,6 +6,7 @@ use App\Models\Project;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Request;
 
 class Index extends Component
 {
@@ -13,6 +14,7 @@ class Index extends Component
 
     public function __construct(Project $project)
     {
+        ray("Initializing samplesHQ");
         $this->project = $project;
     }
 
@@ -21,6 +23,13 @@ class Index extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.datahq.sampleshq.index');
+        $activeTab = Request::input('tab');
+        $activeSubview = Request::input('subview');
+        ray("activeSubview = {$activeSubview}");
+        ray("activeTab = {$activeTab}");
+        return view('components.datahq.sampleshq.index', [
+            'activeTab'     => $activeTab,
+            'activeSubview' => $activeSubview,
+        ]);
     }
 }

@@ -6,15 +6,18 @@ use App\Models\Project;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Request;
 
 class TabViewHandler extends Component
 {
     public Project $project;
+    public string $activeTab;
+    public string $activeSubview;
 
-    public function __construct(Project $project)
+    public function __construct(Project $project, string $activeTab, string $activeSubview)
     {
         $this->project = $project;
+        $this->activeTab = $activeTab;
+        $this->activeSubview = $activeSubview;
     }
 
     /**
@@ -22,24 +25,13 @@ class TabViewHandler extends Component
      */
     public function render(): View|Closure|string
     {
-        $tab = Request::input('tab');
-        $subview = Request::input('subview');
         $showFilters = true;
-        if (is_null($tab)) {
-            $tab = "index";
-        }
 
-        if ($tab === 'index') {
+        if ($this->activeTab === 'index') {
             $showFilters = false;
         }
 
-        if (is_null($subview)) {
-            $subview = "index";
-        }
-
         return view('components.datahq.sampleshq.tab-view-handler', [
-            'tab'         => $tab,
-            'subview'     => $subview,
             'showFilters' => $showFilters,
         ]);
     }
