@@ -11,7 +11,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <a class="btn btn-success ml-4 cursor-pointer" onclick="addDataControlsCB({{$callback}})"
+                <a class="btn btn-success ml-4 cursor-pointer disabled"
+                   id="add-to-chart"
+                   onclick="mcutil.getAppComponentMethod('datahq.charts.add-data-controls._handleAddToChart')('{{$callback}}')"
                    roll="button" aria-disabled="true">Add To Chart</a>
             </div>
         </div>
@@ -89,102 +91,89 @@
 
     @push('scripts')
         <script>
+            (function () {
+                let componentPath = "datahq.charts.add-data-controls";
 
-            function addDataControlsCB(cb) {
-                console.log("addDataControlsCB");
-                cb();
-            }
+                $('#chart-type').on('change', function () {
+                    let selected = $(this).val();
+                    if (selected === 'histogram') {
+                        $('#y-attr-select').show();
+                        $('#x-attr-select').hide();
+                    } else {
+                        $('#y-attr-select').show();
+                        $('#x-attr-select').show();
+                    }
+                });
 
-            $('#chart-type').on('change', function () {
-                let selected = $(this).val();
-                if (selected === 'histogram') {
-                    $('#y-attr-select').show();
-                    $('#x-attr-select').hide();
-                } else {
-                    $('#y-attr-select').show();
-                    $('#x-attr-select').show();
-                }
-            });
+                $('#x-attr-type').on('change', function () {
+                    let selected = $(this).val();
+                    if (selected === "sample") {
+                        $("#show-x-sample-attrs").show();
+                        $("#show-x-process-attrs").hide();
+                    } else {
+                        $("#show-x-sample-attrs").hide();
+                        $("#show-x-process-attrs").show();
+                    }
+                });
 
-            $('#x-attr-type').on('change', function () {
-                let selected = $(this).val();
-                if (selected === "sample") {
-                    $("#show-x-sample-attrs").show();
-                    $("#show-x-process-attrs").hide();
-                } else {
-                    $("#show-x-sample-attrs").hide();
-                    $("#show-x-process-attrs").show();
-                }
-            });
+                $('#y-process-attrs').on('change', function () {
+                    console.log('removing disabled class');
+                    $('#add-to-chart').removeClass("disabled");
+                });
 
-            $('#y-attr-type').on('change', function () {
-                let selected = $(this).val();
-                if (selected === "sample") {
-                    $("#show-y-sample-attrs").show();
-                    $("#show-y-process-attrs").hide();
-                } else {
-                    $("#show-y-sample-attrs").hide();
-                    $("#show-y-process-attrs").show();
-                }
-            });
+                $('#y-sample-attrs').on('change', function () {
+                    console.log("removing disabled class");
+                    $('#add-to-chart').removeClass("disabled");
+                });
 
-            function addDataControlsInit() {
-                $('#chart-controls-form').trigger("reset");
-            }
+                $('#y-attr-type').on('change', function () {
+                    let selected = $(this).val();
+                    if (selected === "sample") {
+                        $("#show-y-sample-attrs").show();
+                        $("#show-y-process-attrs").hide();
+                    } else {
+                        $("#show-y-sample-attrs").hide();
+                        $("#show-y-process-attrs").show();
+                    }
+                });
 
-            function handleCreateViewForChart() {
-                {{--let tab = "{{$tab}}";--}}
-                {{--let stateService = "{{$stateService}}";--}}
-                {{--let projectId = "{{$project->id}}";--}}
+                mcutil.addAppComponentMethod(componentPath, "resetControls", function () {
+                    $('#chart-controls-form')[0].reset();
+                    $("#chart-type").selectpicker('refresh');
+                    $("#y-attr-type").selectpicker('refresh');
+                    $("#y-sample-attrs").selectpicker('refresh');
+                    $("#y-process-attrs").selectpicker('refresh');
+                    $("#x-attr-type").selectpicker('refresh');
+                    $("#x-sample-attrs").selectpicker('refresh');
+                    $("#x-process-attrs").selectpicker('refresh');
+                    $('#add-to-chart').addClass("disabled");
+                });
 
-                let xAttrType = $("#x-attr-type").val();
-                let xAttr = $("#x-sample-attrs").val();
-                if (xAttrType === 'process') {
-                    xAttr = $("#x-process-attrs").val();
-                }
+                mcutil.addAppComponentMethod(componentPath, "_handleAddToChart", function (cbName) {
+                    console.log("_handleAddToChart called:", cbName);
+                    let xAttrType = $("#x-attr-type").val();
+                    let xAttr = $("#x-sample-attrs").val();
+                    if (xAttrType === 'process') {
+                        xAttr = $("#x-process-attrs").val();
+                    }
 
-                let yAttrType = $("#y-attr-type").val()
-                let yAttr = $("#y-sample-attrs").val();
-                if (yAttrType === 'process') {
-                    yAttr = $("#y-process-attrs").val();
-                }
-
-                let chartType = $("#chart-type").val();
-                let chartName = $("#chart-name").val();
-                // let formData = new FormData();
-
-                // formData.append('tab', tab);
-                // formData.append("xattr_type", xAttrType)
-                // formData.append("xattr", xAttr);
-                // formData.append("yattr_type", yAttrType);
-                // formData.append('yattr', yAttr);
-                // formData.append('chart_type', chartType);
-                // formData.append('chart_name', chartName);
-                //
-                // let config = {
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data'
-                //     }
-                // };
-
-                // switch (stateService) {
-                //     case 'sampleshq':
-                //         let r = route('projects.datahq.sampleshq.create-chart', {
-                //             project: projectId,
-                //         });
-                //         axios.post(r, formData, config).then((resp) => {
-                //             let subview = resp.data;
-                //             window.location.href = route('projects.datahq.sampleshq.index', {
-                //                 project: projectId,
-                //                 tab: tab,
-                //                 subview: subview
-                //             });
-                //         });
-                //         break;
-                //     default:
-                //         break;
-                // }
-            }
+                    let yAttrType = $("#y-attr-type").val()
+                    let yAttr = $("#y-sample-attrs").val();
+                    if (yAttrType === 'process') {
+                        yAttr = $("#y-process-attrs").val();
+                    }
+                    let chartType = $("#chart-type").val();
+                    let data = {
+                        xAttrType,
+                        xAttr,
+                        yAttrType,
+                        yAttr,
+                        chartType
+                    }
+                    let cb = mcutil.getAppComponentMethod(cbName);
+                    cb(data);
+                });
+            })();
         </script>
     @endpush
 </div>
