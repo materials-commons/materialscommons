@@ -1,10 +1,10 @@
-<div>
+<div x-data="showSubviewChart">
     <br/>
     <div class="form-group">
         <label class="ml-4">Chart Controls:</label>
         <div class="btn-group" role="group">
             <a class="action-link ml-3 cursor-pointer"
-               onclick="mcutil.getAppComponentMethod('datahq.explorer.show-subview-chart._toggleShowChartDataControls')()">
+               @click.prevent="toggleShowChartDataControls()">
                 <i class="fa fas fa-plus mr-2"></i>Add Data
             </a>
             <a class="action-link ml-4 cursor-pointer" onclick="">
@@ -14,7 +14,7 @@
                 <i class="fa fas fa-save mr-2"></i>Save Chart
             </a>
             <a class="action-link ml-4 cursor-pointer"
-               onclick="mcutil.getAppComponentMethod('datahq.explorer.show-subview-chart._drawChart')()">
+               @click.prevent="drawChart()">
                 <i class="fa fas fa-redo mr-2"></i>Redraw
             </a>
         </div>
@@ -22,7 +22,7 @@
     <div class="row" id="chart-data-controls" style="display: none">
         <x-datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
                                            :process-attributes="$processAttributes"
-                                           :callback="'datahq.explorer.show-subview-chart.chartDataCallback'"/>
+                                           :callback="'showSubviewChartCallback'"/>
     </div>
     <div class="row">
         <form class="ml-5">
@@ -42,57 +42,62 @@
     <div id="scatter-chart"></div>
     @push('scripts')
         <script>
-            (function () {
-                let componentPath = "datahq.explorer.show-subview-chart";
-                let chartData = null;
+            function showSubviewChart() {
+                return {
+                    chartData: null,
+                    init() {
+                        window.showSubviewChartCallback = this.showSubviewChartCallback;
+                        $(document).ready(() => {
+                            this.drawChart();
+                        });
+                    },
 
-                mcutil.addAppComponentMethod(componentPath, "_toggleShowChartDataControls", function () {
-                    mcutil.getAppComponentMethod("datahq.charts.add-data-controls.resetControls")();
+                    toggleShowChartDataControls() {
+                        if (typeof window.addDataControlsComponent.resetControls === 'function') {
+                            window.addDataControlsComponent.resetControls();
+                        }
+                        $("#chart-data-controls").toggle();
+                    },
 
-                    $("#chart-data-controls").toggle();
-                });
+                    showSubviewChartCallback(data) {
+                        console.log("chartDataCallback called", data);
+                        this.chartData = data;
+                        if (typeof window.addDataControlsComponent.resetControls === 'function') {
+                            window.addDataControlsComponent.resetControls();
+                        }
+                    },
 
-                mcutil.addAppComponentMethod(componentPath, "chartDataCallback", function (data) {
-                    console.log("chartDataCallback called", data);
-                    chartData = data;
-                });
+                    drawChart() {
+                        let e = document.getElementById('scatter-chart');
+                        let chartTitle = $("#chart-title").val();
+                        let xAxisTitle = $("#x-axis-title").val();
+                        let yAxisTitle = $("#y-axis-title").val();
 
-                function _drawChart() {
-                    let e = document.getElementById('scatter-chart');
-                    let chartTitle = $("#chart-title").val();
-                    let xAxisTitle = $("#x-axis-title").val();
-                    let yAxisTitle = $("#y-axis-title").val();
-
-                    Plotly.purge(e);
-                    Plotly.newPlot(e, [
-                        // {
-                        //     x: [1, 2, 3, 4, 5],
-                        //     y: [1, 6, 3, 6, 1],
-                        //     mode: 'markers',
-                        //     type: 'scatter',
-                        //     marker: {size: 12},
-                        // },
-                        // {
-                        //     x: [20, 30, 40, 50],
-                        //     y: [10, 20, 70, 80],
-                        //     type: 'line'
-                        // }
-                    ], {
-                        title: chartTitle,
-                        xaxis: {title: xAxisTitle},
-                        yaxis: {title: yAxisTitle},
-                    }, {
-                        displaylogo: false,
-                        responsive: true,
-                    })
+                        Plotly.purge(e);
+                        Plotly.newPlot(e, [
+                            // {
+                            //     x: [1, 2, 3, 4, 5],
+                            //     y: [1, 6, 3, 6, 1],
+                            //     mode: 'markers',
+                            //     type: 'scatter',
+                            //     marker: {size: 12},
+                            // },
+                            // {
+                            //     x: [20, 30, 40, 50],
+                            //     y: [10, 20, 70, 80],
+                            //     type: 'line'
+                            // }
+                        ], {
+                            title: chartTitle,
+                            xaxis: {title: xAxisTitle},
+                            yaxis: {title: yAxisTitle},
+                        }, {
+                            displaylogo: false,
+                            responsive: true,
+                        })
+                    },
                 }
-
-                mcutil.addAppComponentMethod(componentPath, "drawChart", drawChart);
-
-                $(document).ready(() => {
-                    _drawChart();
-                });
-            })();
+            }
         </script>
     @endpush
 </div>

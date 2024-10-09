@@ -1,4 +1,4 @@
-<div class="mt-2 ml-4 col-12" id="chart-controls">
+<div class="mt-2 ml-4 col-12" id="chart-controls" x-data="addDataControlsComponent">
     <form id="chart-controls-form">
         <div class="row">
             <div class="form-group">
@@ -13,7 +13,7 @@
             <div class="form-group">
                 <a class="btn btn-success ml-4 cursor-pointer disabled"
                    id="add-to-chart"
-                   onclick="mcutil.getAppComponentMethod('datahq.charts.add-data-controls._handleAddToChart')('{{$callback}}')"
+                   @click.prevent="handleAddToChart({{$callback}})"
                    roll="button" aria-disabled="true">Add To Chart</a>
             </div>
         </div>
@@ -91,89 +91,92 @@
 
     @push('scripts')
         <script>
-            (function () {
-                let componentPath = "datahq.charts.add-data-controls";
+            function addDataControlsComponent() {
+                return {
+                    init() {
+                        window.addDataControlsComponent = this;
 
-                $('#chart-type').on('change', function () {
-                    let selected = $(this).val();
-                    if (selected === 'histogram') {
-                        $('#y-attr-select').show();
+                        $('#chart-type').on('change', function () {
+                            let selected = $(this).val();
+                            if (selected === 'histogram') {
+                                $('#y-attr-select').show();
+                                $('#x-attr-select').hide();
+                            } else {
+                                $('#y-attr-select').show();
+                                $('#x-attr-select').show();
+                            }
+                        });
+
+                        $('#x-attr-type').on('change', function () {
+                            let selected = $(this).val();
+                            if (selected === "sample") {
+                                $("#show-x-sample-attrs").show();
+                                $("#show-x-process-attrs").hide();
+                            } else {
+                                $("#show-x-sample-attrs").hide();
+                                $("#show-x-process-attrs").show();
+                            }
+                        });
+
+                        $('#y-process-attrs').on('change', function () {
+                            $('#add-to-chart').removeClass("disabled");
+                        });
+
+                        $('#y-sample-attrs').on('change', function () {
+                            $('#add-to-chart').removeClass("disabled");
+                        });
+
+                        $('#y-attr-type').on('change', function () {
+                            let selected = $(this).val();
+                            if (selected === "sample") {
+                                $("#show-y-sample-attrs").show();
+                                $("#show-y-process-attrs").hide();
+                            } else {
+                                $("#show-y-sample-attrs").hide();
+                                $("#show-y-process-attrs").show();
+                            }
+                        });
+                    },
+
+                    handleAddToChart(cb) {
+                        console.log("handleAddToChart called");
+                        let xAttrType = $("#x-attr-type").val();
+                        let xAttr = $("#x-sample-attrs").val();
+                        if (xAttrType === 'process') {
+                            xAttr = $("#x-process-attrs").val();
+                        }
+
+                        let yAttrType = $("#y-attr-type").val()
+                        let yAttr = $("#y-sample-attrs").val();
+                        if (yAttrType === 'process') {
+                            yAttr = $("#y-process-attrs").val();
+                        }
+                        let chartType = $("#chart-type").val();
+                        let data = {
+                            xAttrType,
+                            xAttr,
+                            yAttrType,
+                            yAttr,
+                            chartType
+                        }
+                        cb(data);
+                    },
+
+                    resetControls() {
+                        $('#chart-controls-form')[0].reset();
+                        $("#chart-type").selectpicker('refresh');
+                        $("#y-attr-type").selectpicker('refresh');
+                        $("#y-sample-attrs").selectpicker('refresh');
+                        $("#y-process-attrs").selectpicker('refresh');
+                        $("#x-attr-type").selectpicker('refresh');
+                        $("#x-sample-attrs").selectpicker('refresh');
+                        $("#x-process-attrs").selectpicker('refresh');
+                        $('#add-to-chart').addClass("disabled");
+                        $('#y-attr-select').hide();
                         $('#x-attr-select').hide();
-                    } else {
-                        $('#y-attr-select').show();
-                        $('#x-attr-select').show();
                     }
-                });
-
-                $('#x-attr-type').on('change', function () {
-                    let selected = $(this).val();
-                    if (selected === "sample") {
-                        $("#show-x-sample-attrs").show();
-                        $("#show-x-process-attrs").hide();
-                    } else {
-                        $("#show-x-sample-attrs").hide();
-                        $("#show-x-process-attrs").show();
-                    }
-                });
-
-                $('#y-process-attrs').on('change', function () {
-                    console.log('removing disabled class');
-                    $('#add-to-chart').removeClass("disabled");
-                });
-
-                $('#y-sample-attrs').on('change', function () {
-                    console.log("removing disabled class");
-                    $('#add-to-chart').removeClass("disabled");
-                });
-
-                $('#y-attr-type').on('change', function () {
-                    let selected = $(this).val();
-                    if (selected === "sample") {
-                        $("#show-y-sample-attrs").show();
-                        $("#show-y-process-attrs").hide();
-                    } else {
-                        $("#show-y-sample-attrs").hide();
-                        $("#show-y-process-attrs").show();
-                    }
-                });
-
-                mcutil.addAppComponentMethod(componentPath, "resetControls", function () {
-                    $('#chart-controls-form')[0].reset();
-                    $("#chart-type").selectpicker('refresh');
-                    $("#y-attr-type").selectpicker('refresh');
-                    $("#y-sample-attrs").selectpicker('refresh');
-                    $("#y-process-attrs").selectpicker('refresh');
-                    $("#x-attr-type").selectpicker('refresh');
-                    $("#x-sample-attrs").selectpicker('refresh');
-                    $("#x-process-attrs").selectpicker('refresh');
-                    $('#add-to-chart').addClass("disabled");
-                });
-
-                mcutil.addAppComponentMethod(componentPath, "_handleAddToChart", function (cbName) {
-                    console.log("_handleAddToChart called:", cbName);
-                    let xAttrType = $("#x-attr-type").val();
-                    let xAttr = $("#x-sample-attrs").val();
-                    if (xAttrType === 'process') {
-                        xAttr = $("#x-process-attrs").val();
-                    }
-
-                    let yAttrType = $("#y-attr-type").val()
-                    let yAttr = $("#y-sample-attrs").val();
-                    if (yAttrType === 'process') {
-                        yAttr = $("#y-process-attrs").val();
-                    }
-                    let chartType = $("#chart-type").val();
-                    let data = {
-                        xAttrType,
-                        xAttr,
-                        yAttrType,
-                        yAttr,
-                        chartType
-                    }
-                    let cb = mcutil.getAppComponentMethod(cbName);
-                    cb(data);
-                });
-            })();
+                }
+            }
         </script>
     @endpush
 </div>

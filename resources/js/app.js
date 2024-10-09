@@ -19,13 +19,17 @@ window.mcutil = require('./util');
 // window.Intercooler = require('intercooler');
 window.xlsx = require('xlsx');
 window.datagrid = require('canvas-datagrid');
-require('alpinejs');
+// require('alpinejs');
 window.htmx = require('htmx.org');
 window.App = {};
 
 // window.Uppy = require('@uppy/core');
 // window.UppyXHRUpload = require('@uppy/xhr-upload');
 // window.UppyDashboard = require('@uppy/dashboard');
+
+// import Alpine from 'alpinejs';
+// window.Alpine = Alpine;
+// Alpine.start();
 
 import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
