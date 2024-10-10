@@ -34,7 +34,7 @@
 
                 switch (stateService) {
                     case 'sampleshq':
-                        let r = route('projects.datahq.sampleshq.create-chart', {
+                        let r = route('projects.datahq.sampleshq.create-chart-subview', {
                             project: projectId,
                         });
                         axios.post(r, formData, config).then((resp) => {

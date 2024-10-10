@@ -11,7 +11,7 @@ use App\Services\DataHQ\DataHQContextStateStoreInterface;
 use App\Services\DataHQ\DataHQStateStore;
 use Illuminate\Http\Request;
 
-class CreateDataChartWebController extends Controller
+class CreateChartSubviewWebController extends Controller
 {
     /**
      * Handle the incoming request.
