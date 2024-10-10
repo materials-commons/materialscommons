@@ -12,7 +12,9 @@
                 {{$body}}
             </div>
             <div class="modal-footer">
-                {{$footer}}
+                @if(isset($footer))
+                    {{$footer}}
+                @endif
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>

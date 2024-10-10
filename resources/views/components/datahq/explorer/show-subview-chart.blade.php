@@ -1,5 +1,10 @@
 <div x-data="showSubviewChart">
     <br/>
+    <x-modal :id="'sv-not-implemented'" :title="'Not Implemented Yet'">
+        <x-slot:body>
+            <h5>Not Implemented Yet</h5>
+        </x-slot:body>
+    </x-modal>
     <div class="form-group">
         <label class="ml-4">Chart Controls:</label>
         <div class="btn-group" role="group">
@@ -7,10 +12,10 @@
                @click.prevent="toggleShowChartDataControls()">
                 <i class="fa fas fa-plus mr-2"></i>Add Data
             </a>
-            <a class="action-link ml-4 cursor-pointer" onclick="">
+            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-trash mr-2"></i>Delete Data
             </a>
-            <a class="action-link ml-4 cursor-pointer" onclick="">
+            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-save mr-2"></i>Save Chart
             </a>
             <a class="action-link ml-4 cursor-pointer"
@@ -44,7 +49,7 @@
         <script>
             function showSubviewChart() {
                 return {
-                    chartData: null,
+                    chartData: [],
                     init() {
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
                         $(document).ready(() => {
@@ -61,7 +66,6 @@
 
                     showSubviewChartCallback(data) {
                         console.log("chartDataCallback called", data);
-                        this.chartData = data;
                         if (typeof window.addDataControlsComponent.resetControls === 'function') {
                             window.addDataControlsComponent.resetControls();
                         }
@@ -72,29 +76,30 @@
                         let chartTitle = $("#chart-title").val();
                         let xAxisTitle = $("#x-axis-title").val();
                         let yAxisTitle = $("#y-axis-title").val();
+                        //[
+                        // {
+                        //     x: [1, 2, 3, 4, 5],
+                        //     y: [1, 6, 3, 6, 1],
+                        //     mode: 'markers',
+                        //     type: 'scatter',
+                        //     marker: {size: 12},
+                        // },
+                        // {
+                        //     x: [20, 30, 40, 50],
+                        //     y: [10, 20, 70, 80],
+                        //     type: 'line'
+                        // }
+                        //],
 
                         Plotly.purge(e);
-                        Plotly.newPlot(e, [
-                            // {
-                            //     x: [1, 2, 3, 4, 5],
-                            //     y: [1, 6, 3, 6, 1],
-                            //     mode: 'markers',
-                            //     type: 'scatter',
-                            //     marker: {size: 12},
-                            // },
-                            // {
-                            //     x: [20, 30, 40, 50],
-                            //     y: [10, 20, 70, 80],
-                            //     type: 'line'
-                            // }
-                        ], {
+                        Plotly.newPlot(e, this.chartData, {
                             title: chartTitle,
                             xaxis: {title: xAxisTitle},
                             yaxis: {title: yAxisTitle},
                         }, {
                             displaylogo: false,
                             responsive: true,
-                        })
+                        });
                     },
                 }
             }

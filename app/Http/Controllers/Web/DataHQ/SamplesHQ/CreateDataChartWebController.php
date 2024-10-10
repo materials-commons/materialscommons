@@ -20,26 +20,13 @@ class CreateDataChartWebController extends Controller
     {
         $validatedData = $request->validate([
             'tab'        => 'required|string',
-            'chart_type' => 'required|string', // Turn into an enum
             'chart_name' => 'required|string',
-            'xattr_type' => 'nullable|string', // Turn into an enum
-            'xattr'      => 'nullable|string',
-            'yattr'      => 'required|string',
-            'yattr_type' => 'required|string', // Turn into an enum
         ]);
 
         $stateService = DataHQStateStore::getState()->getContextStateStore();
         $state = $stateService->getOrCreateState();
         $tabState = $state->getTabStateByKey($validatedData['tab']);
         $subviewState = new SubviewState($validatedData['chart_name'], SubviewState::makeKey(), 'chart');
-        $yattr = new ViewAttr($validatedData['yattr_type'], $validatedData['yattr']);
-        $xattr = null;
-        if (isset($validatedData['xattr'])) {
-            $xattr = new ViewAttr($validatedData['xattr_type'], $validatedData['xattr']);
-        }
-
-        $viewStateData = ViewStateData::makeChartViewStateData($validatedData['chart_type'], $xattr, $yattr);
-        $subviewState->viewData = $viewStateData;
         $tabState->subviews->push($subviewState);
         $stateService->saveState($state);
         return $subviewState->key;
