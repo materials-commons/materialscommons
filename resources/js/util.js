@@ -46,31 +46,6 @@ function toCamelCase(str) {
         .join(''); // Join them back into a single string
 }
 
-// addAppComponentMethod adds a component path method to the App variable. For example
-// calling: addAppComponentMethod("datahq.explorer.show-data", "toggleShow", function(){})
-// would result in app having:
-// App["datahq.explorer.show-data"]["toggleShow"] = function(){}
-function addAppComponentMethod(componentPath, fname, f) {
-    if (App[componentPath] === undefined) {
-        App[componentPath] = {};
-    }
-
-    App[componentPath][fname] = f
-}
-
-// getAppComponentMethod takes a full component path to a method
-// and returns the underling function. For example, if the window.App
-// looks like window.App["datahq.explorer.show-data"]["toggleShow"] = function() {...}
-// then you would call this as: getAppComponentMethod("datahq.explorer.show-data.toggleShow")
-// and it would return App["datahq.explorer.show-data"]["toggleShow"], which would
-// be the defined function.
-function getAppComponentMethod(methodPath) {
-    const lastDotIndex = methodPath.lastIndexOf('.');
-    const componentPath = methodPath.substring(0, lastDotIndex);
-    const methodName = methodPath.substring(lastDotIndex + 1);
-    return App[componentPath][methodName];
-}
-
 function copyToClipboard(what) {
     if (what.startsWith('#')) {
         let element = document.getElementById(what.substring(1));
@@ -87,6 +62,4 @@ module.exports = {
     toggleShow,
     copyToClipboard,
     toCamelCase,
-    addAppComponentMethod,
-    getAppComponentMethod,
 };
