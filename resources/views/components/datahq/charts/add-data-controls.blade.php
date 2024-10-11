@@ -13,7 +13,7 @@
             <div class="form-group">
                 <a class="btn btn-success ml-4 cursor-pointer disabled"
                    id="add-to-chart"
-                   @click.prevent="handleAddToChart({{$callback}})"
+                   @click.prevent="handleAddToChart()"
                    roll="button" aria-disabled="true">Add To Chart</a>
             </div>
         </div>
@@ -93,6 +93,7 @@
         <script>
             function addDataControlsComponent() {
                 return {
+                    eventName: "{{$eventName}}",
                     init() {
                         window.addDataControlsComponent = this;
 
@@ -138,8 +139,8 @@
                         });
                     },
 
-                    handleAddToChart(cb) {
-                        console.log("handleAddToChart called");
+                    handleAddToChart() {
+                        console.log("handleAddToChart called:", this.eventName);
                         let xAttrType = $("#x-attr-type").val();
                         let xAttr = $("#x-sample-attrs").val();
                         if (xAttrType === 'process') {
@@ -159,7 +160,10 @@
                             yAttr,
                             chartType
                         }
-                        cb(data);
+                        // cb(data);
+                        this.$dispatch(this.eventName, {
+                            data,
+                        });
                     },
 
                     resetControls() {

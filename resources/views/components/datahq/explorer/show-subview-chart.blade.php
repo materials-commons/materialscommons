@@ -1,4 +1,4 @@
-<div x-data="showSubviewChart">
+<div x-data="showSubviewChart" @add-data="onAddData">
     <br/>
     <x-modal :id="'sv-not-implemented'" :title="'Not Implemented Yet'">
         <x-slot:body>
@@ -27,7 +27,7 @@
     <div class="row" id="chart-data-controls" style="display: none">
         <x-datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
                                            :process-attributes="$processAttributes"
-                                           :callback="'showSubviewChartCallback'"/>
+                                           :event-name="'add-data'"/>
     </div>
     <div class="row">
         <form class="ml-5">
@@ -51,10 +51,20 @@
                 return {
                     chartData: [],
                     init() {
+                        this.chartData.push({
+                            x: [100, 200],
+                            y: [30, 40, 50],
+                            type: 'line',
+                        });
+                        console.log('init chartData =', this.chartData);
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
                         $(document).ready(() => {
                             this.drawChart();
                         });
+                    },
+
+                    onAddData2(event) {
+                        console.log('onAddData received', event.detail);
                     },
 
                     toggleShowChartDataControls() {
@@ -64,11 +74,36 @@
                         $("#chart-data-controls").toggle();
                     },
 
-                    showSubviewChartCallback(data) {
-                        console.log("chartDataCallback called", data);
+                    onAddData(event) {
+                        console.log("chartDataCallback called", event);
                         if (typeof window.addDataControlsComponent.resetControls === 'function') {
                             window.addDataControlsComponent.resetControls();
                         }
+
+                        let formData = new FormData();
+                        formData.append('xattr', event.detail.data.xAttr);
+                        formData.append('xattr_type', event.detail.data.xAttrType);
+                        formData.append('yattr', event.detail.data.yAttr);
+                        formData.append('yattr_type', event.detail.data.yAttrType);
+                        let config = {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        };
+
+                        let r = route('projects.datahq.sampleshq.get-chart-data', {
+                            project: "{{$project->id}}",
+                        });
+                        axios.post(r, formData, config).then(resp => {
+                            console.log("get-chart-data response:", resp);
+                            console.log("this.chartData = ", this.chartData);
+                            this.chartData.push({
+                                x: [1, 2, 3, 4, 5, 6],
+                                y: [8, 9, 10, 11, 12, 13, 14],
+                                type: 'line',
+                            });
+                            this.drawChart();
+                        });
                     },
 
                     drawChart() {
@@ -91,6 +126,7 @@
                         // }
                         //],
 
+                        console.log("drawChart chartData = ", this.chartData);
                         Plotly.purge(e);
                         Plotly.newPlot(e, this.chartData, {
                             title: chartTitle,
