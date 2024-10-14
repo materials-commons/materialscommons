@@ -51,12 +51,6 @@
                 return {
                     chartData: [],
                     init() {
-                        this.chartData.push({
-                            x: [100, 200],
-                            y: [30, 40, 50],
-                            type: 'line',
-                        });
-                        console.log('init chartData =', this.chartData);
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
                         $(document).ready(() => {
                             this.drawChart();
@@ -97,10 +91,20 @@
                         axios.post(r, formData, config).then(resp => {
                             console.log("get-chart-data response:", resp);
                             console.log("this.chartData = ", this.chartData);
+                            let x = [];
+                            let y = [];
+                            let text = [];
+                            resp.data.forEach(function (item) {
+                                x.push(item.x);
+                                y.push(item.y);
+                                text.push(item.entity);
+                            });
                             this.chartData.push({
-                                x: [1, 2, 3, 4, 5, 6],
-                                y: [8, 9, 10, 11, 12, 13, 14],
-                                type: 'line',
+                                x: x,
+                                y: y,
+                                text: text,
+                                mode: 'markers',
+                                type: 'scatter',
                             });
                             this.drawChart();
                         });

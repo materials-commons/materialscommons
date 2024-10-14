@@ -122,7 +122,7 @@ trait DataDictionaryQueries
     {
         return DB::table('attributes')
                  ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
-                     'activities.name as object_name', 'activities.id as object_id',
+                     'activities.name as object_name', 'activities.id as object_id', 'entities.name as entity_name',
                      DB::raw("'activity' as object_type"))
                  ->whereIn(
                      'attributable_id',
@@ -134,6 +134,8 @@ trait DataDictionaryQueries
                  ->where('attributes.name', $attrName)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->join('activities', 'attributes.attributable_id', '=', 'activities.id')
+                 ->join('activity2entity', 'activities.id', '=', 'activity2entity.activity_id')
+                 ->join('entities', 'activity2entity.entity_id', '=', 'entities.id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -184,7 +186,7 @@ trait DataDictionaryQueries
                  ->join('entities', 'entity_states.entity_id', '=', 'entities.id')
                  ->distinct()
                  ->get()
-                 ->groupBy('attributes.name');
+            ->groupBy('name');
     }
 
     public function getUniqueActivityAttributesForDataset($datasetId)

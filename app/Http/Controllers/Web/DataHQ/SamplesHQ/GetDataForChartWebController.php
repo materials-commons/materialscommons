@@ -36,9 +36,39 @@ class GetDataForChartWebController extends Controller
             $yattrValues = collect();
         }
 
-        return response()->json([
-            'xattrValues' => $xattrValues,
-            'yattrValues' => $yattrValues,
-        ]);
+        $xyMatches = $this->createXYMatches($xattrValues->get($validatedData['xattr']),
+            $yattrValues->get($validatedData['yattr']));
+        return response()->json(array_values($xyMatches));
     }
+
+    private function createXYMatches($xattrValues, $yattrValues)
+    {
+        $xKeyName = "object_name";
+        if (isset($xattrValues[0]->entity_name)) {
+            $xKeyName = "entity_name";
+        }
+
+        $yKeyName = "object_name";
+        if (isset($yattrValues[0]->entity_name)) {
+            $yKeyName = "entity_name";
+        }
+
+        $xattrsByEntity = $xattrValues->keyBy($xKeyName);
+        $yattrsByEntity = $yattrValues->keyBy($yKeyName);
+        $xy = $xattrsByEntity->map(function ($xattr, $xattrKey) use ($yattrsByEntity, $xKeyName) {
+            $yattr = $yattrsByEntity->get($xattrKey);
+            if ($yattr) {
+                $entry = new \stdClass();
+                $entry->x = json_decode($xattr->val)->value;
+                $entry->y = json_decode($yattr->val)->value;
+                $entry->entity = $xattr->{$xKeyName};
+                return $entry;
+            }
+            return null;
+        });
+        return $xy->values()->filter(function ($entry) {
+            return !is_null($entry);
+        })->sortBy("x")->toArray();
+    }
+
 }
