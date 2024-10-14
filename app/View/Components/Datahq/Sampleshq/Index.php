@@ -14,7 +14,6 @@ class Index extends Component
 
     public function __construct(Project $project)
     {
-        ray("Initializing samplesHQ");
         $this->project = $project;
     }
 
@@ -25,8 +24,6 @@ class Index extends Component
     {
         $activeTab = Request::input('tab');
         $activeSubview = Request::input('subview');
-        ray("activeSubview = {$activeSubview}");
-        ray("activeTab = {$activeTab}");
         return view('components.datahq.sampleshq.index', [
             'activeTab'     => $activeTab,
             'activeSubview' => $activeSubview,
