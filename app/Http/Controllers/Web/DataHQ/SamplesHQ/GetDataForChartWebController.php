@@ -18,7 +18,10 @@ class GetDataForChartWebController extends Controller
             'xattr_type' => 'required|in:process,sample,computation',
             'yattr'      => 'required|string',
             'yattr_type' => 'required|in:process,sample,computation',
+            'filters' => 'nullable|string',
         ]);
+
+        ray("filters: ".$validatedData['filters']);
 
         if ($validatedData['xattr_type'] == 'process') {
             $xattrValues = $this->getActivityAttributeForProject($project->id, $validatedData['xattr']);

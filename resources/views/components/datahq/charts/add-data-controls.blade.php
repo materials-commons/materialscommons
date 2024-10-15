@@ -85,7 +85,12 @@
 
             </div>
         </div>
-
+        <div class="row col-12x" style="display: none" id="show-chart-filters">
+            <div class="form-group col-12">
+                <label>Chart Data Filters:</label>
+                <textarea class="form-control col-4" id="chart-filters" placeholder="Filters..."></textarea>
+            </div>
+        </div>
 
     </form>
 
@@ -106,6 +111,8 @@
                                 $('#y-attr-select').show();
                                 $('#x-attr-select').show();
                             }
+
+                            $("#show-chart-filters").show();
                         });
 
                         $('#x-attr-type').on('change', function () {
@@ -153,14 +160,15 @@
                             yAttr = $("#y-process-attrs").val();
                         }
                         let chartType = $("#chart-type").val();
+                        let filters = $("#chart-filters").val();
                         let data = {
                             xAttrType,
                             xAttr,
                             yAttrType,
                             yAttr,
-                            chartType
+                            chartType,
+                            filters,
                         }
-                        // cb(data);
                         this.$dispatch(this.eventName, {
                             data,
                         });
@@ -178,6 +186,12 @@
                         $('#add-to-chart').addClass("disabled");
                         $('#y-attr-select').hide();
                         $('#x-attr-select').hide();
+                        $("#show-x-sample-attrs").hide();
+                        $("#show-x-process-attrs").hide();
+                        $("#show-y-sample-attrs").hide();
+                        $("#show-y-process-attrs").hide();
+                        $("#chart-filters").val("");
+                        $("#show-chart-filters").hide();
                     }
                 }
             }

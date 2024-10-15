@@ -74,11 +74,13 @@
                             window.addDataControlsComponent.resetControls();
                         }
 
+                        console.log("chartDataCallback called", event);
                         let formData = new FormData();
                         formData.append('xattr', event.detail.data.xAttr);
                         formData.append('xattr_type', event.detail.data.xAttrType);
                         formData.append('yattr', event.detail.data.yAttr);
                         formData.append('yattr_type', event.detail.data.yAttrType);
+                        formData.append('filters', event.detail.data.filters);
                         let config = {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
