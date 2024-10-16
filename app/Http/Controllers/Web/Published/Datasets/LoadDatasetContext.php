@@ -16,7 +16,7 @@ trait LoadDatasetContext
 
     private Dataset $dataset;
     private $userProjects;
-    private User $user;
+    private ?User $user;
     private bool $hasNotificationsForDataset;
 
     private function loadDatasetContext($datasetId)
