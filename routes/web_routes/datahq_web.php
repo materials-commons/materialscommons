@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\DataHQ\GetAttributeDetailsForQueryBuilder;
 use App\Http\Controllers\Web\DataHQ\IndexDataHQWebController;
 use App\Http\Controllers\Web\DataHQ\ProcessesHQ\IndexProcessesHQWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\CreateChartSubviewWebController;
+use App\Http\Controllers\Web\DataHQ\SamplesHQ\DownloadDataForChartWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\GetDataForChartWebController;
 use App\Http\Controllers\Web\DataHQ\SamplesHQ\IndexSamplesHQWebController;
 use App\Http\Controllers\Web\DataHQ\SaveDataForWebController;
@@ -21,7 +22,7 @@ Route::get('/projects/{project}/datahq/add-filtered-view', AddFilteredViewWebCon
 Route::post('/projects/{project}/save-data-for', SaveDataForWebController::class)
      ->name('projects.datahq.save-data-for');
 
-Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQueryBuilder::class)
+Route::post('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQueryBuilder::class)
      ->name('projects.datahq.qb-attribute-details');
 
 // SamplesHQ
@@ -34,6 +35,9 @@ Route::post('/projects/{project}/datahq/sampleshq/create-chart', CreateChartSubv
 
 Route::post('/projects/{project}/datahq/sampleshq/get-chart-data', GetDataForChartWebController::class)
      ->name('projects.datahq.sampleshq.get-chart-data');
+
+Route::get('/projects/{project}/datahq/sampleshq/download-chart-data', DownloadDataForChartWebController::class)
+     ->name('projects.datahq.sampleshq.download-chart-data');
 
 // ComputationsHQ
 

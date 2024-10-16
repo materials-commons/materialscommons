@@ -13,6 +13,12 @@
                 <i class="fa fas fa-plus mr-2"></i>Add Data
             </a>
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
+                <i class="fa fas fa-eye mr-2"></i>View Data
+            </a>
+            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
+                <i class="fa fas fa-download mr-2"></i>Download Chart Data
+            </a>
+            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-trash mr-2"></i>Delete Data
             </a>
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
@@ -23,6 +29,16 @@
                 <i class="fa fas fa-redo mr-2"></i>Redraw
             </a>
         </div>
+    </div>
+    <div style="display:none">
+        <form id="download-data" action="{{route('projects.datahq.sampleshq.download-chart-data', [$project])}}"
+              method="post">
+            @csrf
+            <input id="dl-xattr" name="xattr" type="hidden"/>
+            <input id="dl-xattr-type" name="xattr_type" type="hidden"/>
+            <input id="dl-yattr" name="xattr" type="hidden"/>
+            <input id="dl-yattr-type" name="xattr_type" type="hidden"/>
+        </form>
     </div>
     <div class="row" id="chart-data-controls" style="display: none">
         <x-datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
@@ -57,10 +73,6 @@
                         });
                     },
 
-                    onAddData2(event) {
-                        console.log('onAddData received', event.detail);
-                    },
-
                     toggleShowChartDataControls() {
                         if (typeof window.addDataControlsComponent.resetControls === 'function') {
                             window.addDataControlsComponent.resetControls();
@@ -69,12 +81,10 @@
                     },
 
                     onAddData(event) {
-                        console.log("chartDataCallback called", event);
                         if (typeof window.addDataControlsComponent.resetControls === 'function') {
                             window.addDataControlsComponent.resetControls();
                         }
 
-                        console.log("chartDataCallback called", event);
                         let formData = new FormData();
                         formData.append('xattr', event.detail.data.xAttr);
                         formData.append('xattr_type', event.detail.data.xAttrType);
@@ -91,8 +101,6 @@
                             project: "{{$project->id}}",
                         });
                         axios.post(r, formData, config).then(resp => {
-                            console.log("get-chart-data response:", resp);
-                            console.log("this.chartData = ", this.chartData);
                             let x = [];
                             let y = [];
                             let text = [];
@@ -112,27 +120,20 @@
                         });
                     },
 
+                    downloadChartData() {
+                        let r = route('projects.datahq.sampleshq.download-chart-data', {
+                            project: "{{$project->id}}",
+                        });
+
+
+                    },
+
                     drawChart() {
                         let e = document.getElementById('scatter-chart');
                         let chartTitle = $("#chart-title").val();
                         let xAxisTitle = $("#x-axis-title").val();
                         let yAxisTitle = $("#y-axis-title").val();
-                        //[
-                        // {
-                        //     x: [1, 2, 3, 4, 5],
-                        //     y: [1, 6, 3, 6, 1],
-                        //     mode: 'markers',
-                        //     type: 'scatter',
-                        //     marker: {size: 12},
-                        // },
-                        // {
-                        //     x: [20, 30, 40, 50],
-                        //     y: [10, 20, 70, 80],
-                        //     type: 'line'
-                        // }
-                        //],
 
-                        console.log("drawChart chartData = ", this.chartData);
                         Plotly.purge(e);
                         Plotly.newPlot(e, this.chartData, {
                             title: chartTitle,
