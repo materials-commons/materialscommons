@@ -13,7 +13,7 @@ class CreateEntityAction
 
     public function __invoke($data, $userId)
     {
-        $entitiesData = collect($data)->except('experiment_id')->toArray();
+        $entitiesData = collect($data)->except(['experiment_id'])->toArray();
         $entitiesData['owner_id'] = $userId;
         $entity = Entity::create($entitiesData);
         $entityState = EntityState::create([
