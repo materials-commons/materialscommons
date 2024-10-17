@@ -6,7 +6,6 @@ use App\Models\Dataset;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Paper;
-use App\Models\Project;
 use App\Traits\HasTagsInRequest;
 use Illuminate\Support\Facades\DB;
 
