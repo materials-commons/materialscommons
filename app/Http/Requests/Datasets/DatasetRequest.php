@@ -59,8 +59,10 @@ class DatasetRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'tags' => json_decode($this->tags, true),
-        ]);
+        if (is_string($this->tags)) {
+            $this->merge([
+                             'tags' => json_decode($this->tags, true),
+                         ]);
+        }
     }
 }
