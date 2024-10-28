@@ -17,9 +17,9 @@ class ChartRequestDTO
         $dto = new self();
 
         $dto->xattr = $data['xattr'];
-        $dto->xattrType = $data['xattrType'];
+        $dto->xattrType = $data['xattr_type'];
         $dto->yattr = $data['yattr'];
-        $dto->yattrType = $data['yattrType'];
+        $dto->yattrType = $data['yattr_type'];
         if (isset($data['filters'])) {
             $dto->filters = $data['filters'];
         } else {
