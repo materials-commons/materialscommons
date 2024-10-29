@@ -19,10 +19,9 @@ class DeleteGlobusUploadAction
     public function __invoke(GlobusUploadDownload $globusUpload)
     {
         try {
-            $this->globusApi->deleteEndpointAclRule($globusUpload->globus_endpoint_id,
-                $globusUpload->globus_acl_id);
+            $this->globusApi->deleteACLsOnPath($globusUpload->globus_endpoint_id, $globusUpload->globus_path);
         } catch (\Exception $e) {
-            Log::error("Unable to delete acl");
+            Log::error("Unable to delete all acls on globus upload path: ".$globusUpload->globus_path);
         }
 
         try {

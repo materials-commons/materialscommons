@@ -5,6 +5,8 @@ namespace App\Actions\Globus;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use function config;
 
 class GlobusApi
 {
@@ -167,6 +169,20 @@ class GlobusApi
         }
 
         return json_decode($resp->getBody(), true);
+    }
+
+    public function deleteACLsOnPath($endpointId, $globusPath)
+    {
+        $rules = $this->getEndpointAccessRules($endpointId);
+        foreach ($rules['DATA'] as $rule) {
+            if ($rule['path'] == $globusPath) {
+                try {
+                    $this->deleteEndpointAclRule($endpointId, $rule['id']);
+                } catch (\Exception $e) {
+                    Log::error("Unable to delete acl {$rule['id']} on {$globusPath}");
+                }
+            }
+        }
     }
 
     private function createParams($queryParams)
