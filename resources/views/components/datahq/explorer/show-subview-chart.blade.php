@@ -15,7 +15,7 @@
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-eye mr-2"></i>View Data
             </a>
-            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
+            <a class="action-link ml-4 cursor-pointer" @click.prevent="downloadChartData()">
                 <i class="fa fas fa-download mr-2"></i>Download Chart Data
             </a>
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
@@ -36,8 +36,9 @@
             @csrf
             <input id="dl-xattr" name="xattr" type="hidden"/>
             <input id="dl-xattr-type" name="xattr_type" type="hidden"/>
-            <input id="dl-yattr" name="xattr" type="hidden"/>
-            <input id="dl-yattr-type" name="xattr_type" type="hidden"/>
+            <input id="dl-yattr" name="yattr" type="hidden"/>
+            <input id="dl-yattr-type" name="yattr_type" type="hidden"/>
+            <input id="dl-filters" name="filters" type="hidden"/>
         </form>
     </div>
     <div class="row" id="chart-data-controls" style="display: none">
@@ -66,6 +67,8 @@
             function showSubviewChart() {
                 return {
                     chartData: [],
+                    chartDataChoices: [],
+
                     init() {
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
                         $(document).ready(() => {
@@ -97,6 +100,13 @@
                             }
                         };
 
+                        this.chartDataChoices.push({
+                            xattr: event.detail.data.xAttr,
+                            xattr_type: event.detail.data.xAttrType,
+                            yattr: event.detail.data.yAttr,
+                            yattr_type: event.detail.data.yAttrType,
+                            filters: event.detail.data.filters
+                        });
                         let r = route('projects.datahq.sampleshq.get-chart-data', {
                             project: "{{$project->id}}",
                         });
@@ -121,11 +131,13 @@
                     },
 
                     downloadChartData() {
-                        let r = route('projects.datahq.sampleshq.download-chart-data', {
-                            project: "{{$project->id}}",
-                        });
-
-
+                        let firstChart = this.chartDataChoices[0];
+                        $("#dl-xattr").val(firstChart.xattr);
+                        $("#dl-xattr-type").val(firstChart.xattr_type);
+                        $("#dl-yattr").val(firstChart.yattr);
+                        $("#dl-yattr-type").val(firstChart.yattr_type);
+                        $("#dl-filters").val(firstChart.filters);
+                        document.getElementById('download-data').submit();
                     },
 
                     drawChart() {

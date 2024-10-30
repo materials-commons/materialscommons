@@ -16,15 +16,20 @@ class ChartRequestDTO
     {
         $dto = new self();
 
-        $dto->xattr = $data['xattr'];
-        $dto->xattrType = $data['xattr_type'];
-        $dto->yattr = $data['yattr'];
-        $dto->yattrType = $data['yattr_type'];
-        if (isset($data['filters'])) {
-            $dto->filters = $data['filters'];
-        } else {
-            $dto->filters = '';
-        }
+        $dto->xattr = self::getDataAttr($data, 'xattr');
+        $dto->xattrType = self::getDataAttr($data, 'xattr_type');
+        $dto->yattr = self::getDataAttr($data, 'yattr');
+        $dto->yattrType = self::getDataAttr($data, 'yattr_type');
+        $dto->filters = self::getDataAttr($data, 'filters');
         return $dto;
+    }
+
+    private static function getDataAttr($data, $attr)
+    {
+        if (isset($data[$attr])) {
+            return $data[$attr];
+        }
+
+        return '';
     }
 }

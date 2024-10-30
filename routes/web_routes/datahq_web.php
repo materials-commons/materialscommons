@@ -36,7 +36,7 @@ Route::post('/projects/{project}/datahq/sampleshq/create-chart', CreateChartSubv
 Route::post('/projects/{project}/datahq/sampleshq/get-chart-data', GetDataForChartWebController::class)
      ->name('projects.datahq.sampleshq.get-chart-data');
 
-Route::get('/projects/{project}/datahq/sampleshq/download-chart-data', DownloadDataForChartWebController::class)
+Route::post('/projects/{project}/datahq/sampleshq/download-chart-data', DownloadDataForChartWebController::class)
      ->name('projects.datahq.sampleshq.download-chart-data');
 
 // ComputationsHQ

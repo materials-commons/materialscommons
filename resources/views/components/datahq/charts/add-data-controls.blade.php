@@ -1,6 +1,6 @@
 <div class="mt-2 ml-4 col-12" id="chart-controls" x-data="addDataControlsComponent">
     <form id="chart-controls-form">
-        <div class="row">
+        <div class="row" style="display: none">
             <div class="form-group">
                 <label>Chart Type:</label>
                 <select name="chart_type" class="selectpicker" data-style="btn-light no-tt" id="chart-type"
@@ -10,14 +10,14 @@
                     <option value="scatter">Scatter</option>
                 </select>
             </div>
-            <div class="form-group">
-                <a class="btn btn-success ml-4 cursor-pointer disabled"
-                   id="add-to-chart"
-                   @click.prevent="handleAddToChart()"
-                   roll="button" aria-disabled="true">Add To Chart</a>
-            </div>
+            {{--            <div class="form-group">--}}
+            {{--                <a class="btn btn-success ml-4 cursor-pointer disabled"--}}
+            {{--                   id="add-to-chart"--}}
+            {{--                   @click.prevent="handleAddToChart()"--}}
+            {{--                   roll="button" aria-disabled="true">Add To Chart</a>--}}
+            {{--            </div>--}}
         </div>
-        <div class="row" style="display: none" id="x-attr-select">
+        <div class="row" stylex="display: none" id="x-attr-select">
             <div class="form-group">
                 <label>Select X Attribute Type:</label>
                 <select name="x_attribute_type" class="selectpicker" data-style="btn-light no-tt" id="x-attr-type"
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="row" style="display: none" id="y-attr-select">
+        <div class="row" stylex="display: none" id="y-attr-select">
             <div class="form-group">
                 <label>Select Y Attribute Type: </label>
                 <select name="y_attribute_type" class="selectpicker" data-style="btn-light no-tt"
@@ -83,6 +83,14 @@
                     </select>
                 </div>
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <a class="btn btn-success ml-4 cursor-pointer disabled"
+                   id="add-to-chart"
+                   @click.prevent="handleAddToChart()"
+                   roll="button" aria-disabled="true">Add To Chart</a>
             </div>
         </div>
         <div class="row col-12x" style="display: none" id="show-chart-filters">
@@ -159,7 +167,7 @@
                         if (yAttrType === 'process') {
                             yAttr = $("#y-process-attrs").val();
                         }
-                        let chartType = $("#chart-type").val();
+                        let chartType = "scatter"; // $("#chart-type").val();
                         let filters = $("#chart-filters").val();
                         let data = {
                             xAttrType,
@@ -184,8 +192,8 @@
                         $("#x-sample-attrs").selectpicker('refresh');
                         $("#x-process-attrs").selectpicker('refresh');
                         $('#add-to-chart').addClass("disabled");
-                        $('#y-attr-select').hide();
-                        $('#x-attr-select').hide();
+                        // $('#y-attr-select').hide();
+                        // $('#x-attr-select').hide();
                         $("#show-x-sample-attrs").hide();
                         $("#show-x-process-attrs").hide();
                         $("#show-y-sample-attrs").hide();

@@ -15,6 +15,13 @@
     @push('scripts')
         <script>
 
+            $('#chart-name').on('keydown', function (event) {
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    event.preventDefault();
+                    handleCreateViewForChart();
+                }
+            });
+
             function handleCreateViewForChart() {
                 let tab = "{{$tab}}";
                 let stateService = "{{$stateService}}";
