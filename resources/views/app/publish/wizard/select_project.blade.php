@@ -26,10 +26,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-10">
+                <div class="col-10" x-data="selectProject">
                     <div class="float-right">
                         <a class="action-link danger mr-3" href="#">Cancel</a>
-                        <a class="action-link mr-3" href="#" onclick="gotoCreateDataset()">Use Selected Project</a>
+                        <a class="action-link mr-3" href="#" @click.prevent="gotoCreateDataset()">Use Selected
+                            Project</a>
                     </div>
                 </div>
             </form>
@@ -39,15 +40,13 @@
 
 @push('scripts')
     <script>
-        let projectId = null;
-        $(document).ready(() => {
-            $('#select-project').on('changed.bs.select', function (e) {
-                projectId = e.target.value;
-            });
+        mcutil.onAlpineInit("selectProject", () => {
+            return {
+                gotoCreateDataset() {
+                    let projectId = $('#select-project').val();
+                    window.location.href = route('projects.datasets.create', {project: projectId});
+                }
+            }
         });
-
-        function gotoCreateDataset() {
-            window.location.href = route('projects.datasets.create', {project: projectId});
-        }
     </script>
 @endpush
