@@ -64,7 +64,7 @@
     <div id="scatter-chart"></div>
     @push('scripts')
         <script>
-            function showSubviewChart() {
+            mcutil.onAlpineInit('showSubviewChart', () => {
                 return {
                     chartData: [],
                     chartDataChoices: [],
@@ -157,7 +157,7 @@
                         });
                     },
                 }
-            }
+            });
         </script>
     @endpush
 </div>
