@@ -25,21 +25,21 @@
 
     @push('scripts')
         <script>
-            function setupHavingEntityAttribute() {
-                let projectId = "{{$project->id}}";
-                $('#entity-attributes').on('change', function () {
-                    let value = $(this).val();
-                    if (value !== "") {
-                        let r = route('projects.entities.attributes.show-details-by-name', [projectId, value])
-                        htmx.ajax("GET", r, '#entity-attribute-overview');
-                    } else {
-                        let r = route('projects.attributes.close-details-by-name', [projectId, 'xx'])
-                        htmx.ajax("GET", r, '#entity-attribute-overview');
-                    }
-                });
-            }
-
             $(document).ready(() => {
+                function setupHavingEntityAttribute() {
+                    let projectId = "{{$project->id}}";
+                    $('#entity-attributes').on('change', function () {
+                        let value = $(this).val();
+                        if (value !== "") {
+                            let r = route('projects.entities.attributes.show-details-by-name', [projectId, value])
+                            htmx.ajax("GET", r, '#entity-attribute-overview');
+                        } else {
+                            let r = route('projects.attributes.close-details-by-name', [projectId, 'xx'])
+                            htmx.ajax("GET", r, '#entity-attribute-overview');
+                        }
+                    });
+                }
+
                 setupHavingEntityAttribute();
             });
         </script>

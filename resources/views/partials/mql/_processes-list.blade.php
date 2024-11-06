@@ -80,26 +80,27 @@
 
 @push('scripts')
     <script>
-        function toggleCheckboxState(checkbox, id) {
-            console.log(`id = ${id}`);
-            let checkboxes = $(`#${id} td input`);
+        if (typeof toggleCheckboxState === 'undefined') {
+            function toggleCheckboxState(checkbox, id) {
+                let checkboxes = $(`#${id} td input`);
 
-            // There are two checkboxes for the In Process choices, Y(es) and N(o). When a checkbox is
-            // checked, we want to disable the opposite checkbox. If a checkbox is unchecked then we want
-            // to enable both checkboxes.
-            let yesCheckbox = checkboxes[0];
-            let noCheckbox = checkboxes[1];
+                // There are two checkboxes for the In Process choices, Y(es) and N(o). When a checkbox is
+                // checked, we want to disable the opposite checkbox. If a checkbox is unchecked then we want
+                // to enable both checkboxes.
+                let yesCheckbox = checkboxes[0];
+                let noCheckbox = checkboxes[1];
 
-            if (yesCheckbox.checked) {
-                // yes checkbox has been checked so disable the no checkbox.
-                noCheckbox.disabled = true;
-            } else if (noCheckbox.checked) {
-                // no checkbox has been checked so disable the yes checkbox.
-                yesCheckbox.disabled = true;
-            } else {
-                // Neither checkbox is checked, so this is an uncheck event. Enable both checkboxes.
-                yesCheckbox.disabled = false;
-                noCheckbox.disabled = false;
+                if (yesCheckbox.checked) {
+                    // yes checkbox has been checked so disable the no checkbox.
+                    noCheckbox.disabled = true;
+                } else if (noCheckbox.checked) {
+                    // no checkbox has been checked so disable the yes checkbox.
+                    yesCheckbox.disabled = true;
+                } else {
+                    // Neither checkbox is checked, so this is an uncheck event. Enable both checkboxes.
+                    yesCheckbox.disabled = false;
+                    noCheckbox.disabled = false;
+                }
             }
         }
     </script>

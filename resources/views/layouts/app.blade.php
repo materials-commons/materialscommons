@@ -201,9 +201,6 @@
     });
     window.mc_grids = [];
 
-    // function closeSearch() {
-    //     $('#search-project-input').val('');
-    // }
 </script>
 
 @stack('scripts')

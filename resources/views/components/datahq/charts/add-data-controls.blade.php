@@ -104,7 +104,7 @@
 
     @push('scripts')
         <script>
-            function addDataControlsComponent() {
+            mcutil.onAlpineInit("addDataControlsComponent", () => {
                 return {
                     eventName: "{{$eventName}}",
                     init() {
@@ -202,7 +202,7 @@
                         $("#show-chart-filters").hide();
                     }
                 }
-            }
+            });
         </script>
     @endpush
 </div>

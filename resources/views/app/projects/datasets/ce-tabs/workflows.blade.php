@@ -24,7 +24,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody x-data="ceTabsWorkflows">
             @foreach($workflows as $workflow)
                 <tr>
                     <td>
@@ -54,12 +54,6 @@
 
 @push('scripts')
     <script>
-        let projectId = "{{$project->id}}";
-        let datasetId = "{{$dataset->id}}";
-        let apiToken = "{{$user->api_token}}";
-        let route = "{{route('api.projects.datasets.workflows', [$dataset])}}";
-        let workflowsCount = {{$dataset->workflows->count()}};
-
         $(document).ready(() => {
             $('#entities').DataTable({
                 pageLength: 100,
@@ -67,49 +61,59 @@
             });
         });
 
-        function updateWorkflowSelection(workflow, checkbox) {
-            if (checkbox.checked) {
-                workflowsCount++;
-                addWorkflow(workflow);
-            } else {
-                workflowsCount--;
-                removeWorkflow(workflow);
+        mcutil.onAlpineInit('ceTabsWorkflows', () => {
+            return {
+                projectId: "{{$project->id}}",
+                datasetId: "{{$dataset->id}}",
+                apiToken: "{{$user->api_token}}",
+                route: "{{route('api.projects.datasets.workflows', [$dataset])}}",
+                workflowsCount: {{$dataset->workflows->count()}},
+
+                updateWorkflowSelection(workflow, checkbox) {
+                    if (checkbox.checked) {
+                        this.workflowsCount++;
+                        this.addWorkflow(workflow);
+                    } else {
+                        this.workflowsCount--;
+                        this.removeWorkflow(workflow);
+                    }
+
+                    if (this.workflowsCount > 0) {
+                        this.setWorkflowsStatusPositive();
+                    } else {
+                        this.setWorkflowsStatusMissing();
+                    }
+                },
+
+                addWorkflow(workflow) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        project_id: this.projectId,
+                        workflow_id: workflow.id,
+                    });
+                },
+
+                removeWorkflow(workflow) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        project_id: this.projectId,
+                        workflow_id: workflow.id,
+                    });
+                },
+
+                setWorkflowsStatusPositive() {
+                    // first clear classes, then add the classes we want
+                    $('#workflows-step').removeClass('step-success')
+                        .addClass('step-success');
+                    $('#workflows-circle').removeClass('fa-check fa-circle')
+                        .addClass('fa-check');
+                },
+
+                setWorkflowsStatusMissing() {
+                    // first clear classes, then add the classes we want
+                    $('#workflows-step').removeClass('step-success');
+                    $('#workflows-circle').removeClass('fa-check fa-circle')
+                        .addClass('fa-circle');
+                }
             }
-
-            if (workflowsCount > 0) {
-                setWorkflowsStatusPositive();
-            } else {
-                setWorkflowsStatusMissing();
-            }
-        }
-
-        function addWorkflow(workflow) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                workflow_id: workflow.id,
-            });
-        }
-
-        function removeWorkflow(workflow) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                workflow_id: workflow.id,
-            });
-        }
-
-        function setWorkflowsStatusPositive() {
-            // first clear classes, then add the classes we want
-            $('#workflows-step').removeClass('step-success')
-                .addClass('step-success');
-            $('#workflows-circle').removeClass('fa-check fa-circle')
-                .addClass('fa-check');
-        }
-
-        function setWorkflowsStatusMissing() {
-            // first clear classes, then add the classes we want
-            $('#workflows-step').removeClass('step-success');
-            $('#workflows-circle').removeClass('fa-check fa-circle')
-                .addClass('fa-circle');
-        }
+        });
     </script>
 @endpush

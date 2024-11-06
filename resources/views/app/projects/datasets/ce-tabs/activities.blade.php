@@ -1,5 +1,5 @@
 @include('app.projects.datasets.ce-tabs._short-overview')
-<table id="activities" class="table table-hover" style="width:100%">
+<table id="activities" class="table table-hover" style="width:100%" x-data="datasetsCETabsActivities">
     <thead>
     <tr>
         <th>Name</th>
@@ -28,11 +28,6 @@
 
 @push('scripts')
     <script>
-        let projectId = "{{$project->id}}";
-        let datasetId = "{{$dataset->id}}";
-        let apiToken = "{{$user->api_token}}";
-        let route = "{{route('api.projects.datasets.activities.selection', [$dataset])}}";
-
         $(document).ready(() => {
             $('#activities').DataTable({
                 pageLength: 100,
@@ -40,33 +35,35 @@
             });
         });
 
-        function updateActivitySelection(activity, checkbox) {
-            if (checkbox.checked) {
-                addActivity(activity);
-            } else {
-                removeActivity(activity);
+        mcutil.onAlpineInit("datasetsCETabsActivities", () => {
+            return {
+                projectId: "{{$project->id}}",
+                datasetId: "{{$dataset->id}}",
+                apiToken: "{{$user->api_token}}",
+                route: "{{route('api.projects.datasets.activities.selection', [$dataset])}}",
+
+                updateActivitySelection(activity, checkbox) {
+                    if (checkbox.checked) {
+                        this.addActivity(activity);
+                    } else {
+                        this.removeActivity(activity);
+                    }
+                },
+
+                addActivity(activity) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        project_id: this.projectId,
+                        activity_id: activity.id,
+                    });
+                },
+
+                removeActivity(activity) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        project_id: this.projectId,
+                        activity_id: activity.id,
+                    });
+                }
             }
-        }
-
-        function addActivity(activity) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                activity_id: activity.id,
-            });
-        }
-
-        function removeActivity(activity) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                activity_id: activity.id,
-            });
-        }
-
-        let x = 'steffan';
-        let jewel4 = x;
-
-        jewels = ['glenn', 'jewel5', 'jewel6'];
-        jewels.append('steffan');
-        jewels.prepend('luna');
+        });
     </script>
 @endpush

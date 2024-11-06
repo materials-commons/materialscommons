@@ -33,9 +33,11 @@
 
 @push('scripts')
     <script>
-        function fireEvent(id) {
-            let event = new Event('changed.bs.select');
-            document.querySelector(id).dispatchEvent(event);
+        if (typeof fireEvent === 'undefined') {
+            function fireEvent(id) {
+                let event = new Event('changed.bs.select');
+                document.querySelector(id).dispatchEvent(event);
+            }
         }
     </script>
 @endpush

@@ -78,13 +78,6 @@
 
 @push('scripts')
     <script>
-        let hasExperiment = false;
-        @if($showExperiment)
-            hasExperiment = true;
-        @endif
-
-        let projectId = "{{$project->id}}";
-
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({
                 pageLength: 100,

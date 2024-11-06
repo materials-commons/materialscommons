@@ -110,12 +110,12 @@
     @include('common.errors')
 @endsection
 
-@push('scripts')
-    <script>
-        function createAndAddFiles() {
-            let actionRoute = "{!!route('projects.experiments.store', [$project, 'files-next' => true, 'show-overview' => request()->input('show-overview', false)])!!}";
-            $("#experiment-create").attr('action', actionRoute);
-            document.getElementById('experiment-create').submit();
-        }
-    </script>
-@endpush
+{{--@push('scripts')--}}
+{{--    <script>--}}
+{{--        function createAndAddFiles() {--}}
+{{--            let actionRoute = "{!!route('projects.experiments.store', [$project, 'files-next' => true, 'show-overview' => request()->input('show-overview', false)])!!}";--}}
+{{--            $("#experiment-create").attr('action', actionRoute);--}}
+{{--            document.getElementById('experiment-create').submit();--}}
+{{--        }--}}
+{{--    </script>--}}
+{{--@endpush--}}

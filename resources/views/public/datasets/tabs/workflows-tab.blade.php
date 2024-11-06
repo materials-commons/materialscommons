@@ -30,7 +30,6 @@
 
 @push('scripts')
     <script>
-        let chart;
         $(document).ready(() => {
             $('#workflows').DataTable({
                 stateSave: true,
@@ -47,13 +46,17 @@
             @endif
         });
 
-        function showWorkflow(code, name) {
-            if (chart) {
-                chart.clean();
+        if (typeof showWorkflow === 'undefined') {
+            let chart;
+
+            function showWorkflow(code, name) {
+                if (chart) {
+                    chart.clean();
+                }
+                $("#workflowtitle").html(name);
+                let fl = simplefl.parseSimpleFlowchart(code);
+                chart = mcfl.drawFlowchart('workflow', fl);
             }
-            $("#workflowtitle").html(name);
-            let fl = simplefl.parseSimpleFlowchart(code);
-            chart = mcfl.drawFlowchart('workflow', fl);
         }
     </script>
 @endpush

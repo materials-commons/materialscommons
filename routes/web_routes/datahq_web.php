@@ -22,7 +22,7 @@ Route::get('/projects/{project}/datahq/add-filtered-view', AddFilteredViewWebCon
 Route::post('/projects/{project}/save-data-for', SaveDataForWebController::class)
      ->name('projects.datahq.save-data-for');
 
-Route::post('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQueryBuilder::class)
+Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQueryBuilder::class)
      ->name('projects.datahq.qb-attribute-details');
 
 // SamplesHQ

@@ -11,7 +11,7 @@
 
             <a class="action-link float-right" style="cursor: pointer"
                hx-get="{{$loadLogRoute}}"
-               onclick="clearSearchInputOnReload()"
+               onclick="clearLogSearchInputOnReload()"
                hx-target="#etl-log"
                hx-swap="innerHTML scroll:bottom">
                 <i class="fas fa-fw fa-sync-alt mr-2"></i>Refresh Log
@@ -39,8 +39,10 @@
     </x-card>
     @push('scripts')
         <script>
-            function clearSearchInputOnReload() {
-                document.getElementById('search-input').value = '';
+            if (typeof clearLogSearchInputOnReload === 'undefined') {
+                function clearLogSearchInputOnReload() {
+                    document.getElementById('search-input').value = '';
+                }
             }
         </script>
     @endpush

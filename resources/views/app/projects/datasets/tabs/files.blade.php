@@ -62,16 +62,14 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            $(document).ready(() => {
-                $('#files').DataTable({
-                    pageLength: 100,
-                    stateSave: true,
-                    columnDefs: [
-                        {orderData: [3], targets: [2]},
-                        {targets: [3], visible: false},
-                    ]
-                });
+        $(document).ready(() => {
+            $('#files').DataTable({
+                pageLength: 100,
+                stateSave: true,
+                columnDefs: [
+                    {orderData: [3], targets: [2]},
+                    {targets: [3], visible: false},
+                ]
             });
         });
     </script>

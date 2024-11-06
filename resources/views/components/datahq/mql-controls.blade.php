@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" x-data="datahqMqlControls">
     <h4>Filter Controls</h4>
     <div class="row col-12">
         @php
@@ -35,11 +35,11 @@
         <div class="form-group">
             <label class="ml-4">Show/Add Filter On:</label>
             <div class="btn-group" role="group">
-                <a class="action-link ml-3 cursor-pointer" onclick="toggleProcesses(event)">
+                <a class="action-link ml-3 cursor-pointer" @click.prevent="toggleProcesses()">
                     <i class="fa fas fa-code-branch mr-2"></i>Processes</a>
-                <a class="action-link ml-4 cursor-pointer" onclick="toggleSampleAttributes(event)">
+                <a class="action-link ml-4 cursor-pointer" @click.prevent="toggleSampleAttributes()">
                     <i class="fa fas fa-cubes mr-2"></i>Sample Attributes</a>
-                <a class="action-link ml-4 cursor-pointer" onclick="toggleProcessAttributes(event)">
+                <a class="action-link ml-4 cursor-pointer" @click.prevent="toggleProcessAttributes()">
                     <i class="fa fas fa-project-diagram mr-2"></i>Process Attributes</a>
             </div>
         </div>
@@ -66,23 +66,27 @@
     <hr/>
     @push('scripts')
         <script>
-            function toggleProcesses(e) {
-                $("#activity-filters").toggle();
-                $('#entity-attribute-filters').hide();
-                $('#activity-attribute-filters').hide();
-            }
+            mcutil.onAlpineInit("datahqMqlControls", function () {
+                return {
+                    toggleProcesses() {
+                        $("#activity-filters").toggle();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').hide();
+                    },
 
-            function toggleSampleAttributes(e) {
-                $("#activity-filters").hide();
-                $('#entity-attribute-filters').toggle();
-                $('#activity-attribute-filters').hide();
-            }
+                    toggleSampleAttributes() {
+                        $("#activity-filters").hide();
+                        $('#entity-attribute-filters').toggle();
+                        $('#activity-attribute-filters').hide();
+                    },
 
-            function toggleProcessAttributes(e) {
-                $("#activity-filters").hide();
-                $('#entity-attribute-filters').hide();
-                $('#activity-attribute-filters').toggle();
-            }
+                    toggleProcessAttributes() {
+                        $("#activity-filters").hide();
+                        $('#entity-attribute-filters').hide();
+                        $('#activity-attribute-filters').toggle();
+                    }
+                }
+            });
         </script>
     @endpush
 </div>

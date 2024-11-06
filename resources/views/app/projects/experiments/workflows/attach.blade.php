@@ -15,7 +15,7 @@
         @endslot
 
         @slot('body')
-            <table id="workflows" class="table table-hover">
+            <table id="workflows" class="table table-hover" x-data="experimentWorkflowsAttach">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -32,7 +32,7 @@
                             <div class="form-group form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
                                        {{$workflowInExperiment($workflow) ? 'checked' : ''}}
-                                       onclick="updateWorkflowSelection({{$workflow}}, this)">
+                                       @click.prevent="updateWorkflowSelection({{$workflow}}, this)">
                             </div>
                         </td>
                     </tr>
@@ -50,23 +50,27 @@
 
 @push('scripts')
     <script>
-        let projectId = "{{$project->id}}";
-        let apiToken = "{{$user->api_token}}";
-        let route = "{{route('api.projects.experiments.workflows.selection', [$experiment])}}";
-
         $(document).ready(() => {
             $('#workflows').DataTable({stateSave: true});
         });
 
-        function updateWorkflowSelection(wf, checkbox) {
-            toggleWorkflow(wf);
-        }
+        mcutil.onAlpineInit("experimentWorkflowsAttach", () => {
+            return {
+                projectId: "{{$project->id}}",
+                apiToken: "{{$user->api_token}}",
+                route: "{{route('api.projects.experiments.workflows.selection', [$experiment])}}",
 
-        function toggleWorkflow(wf) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                workflow_id: wf.id,
-            });
-        }
+                updateWorkflowSelection(wf, checkbox) {
+                    this.toggleWorkflow(wf);
+                },
+
+                toggleWorkflow(wf) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        project_id: this.projectId,
+                        workflow_id: wf.id,
+                    });
+                }
+            }
+        });
     </script>
 @endpush

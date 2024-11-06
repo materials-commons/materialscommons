@@ -13,7 +13,7 @@
         @endslot
 
         @slot('body')
-            <table id="datasets" class="table table-hover" style="width:100%">
+            <table id="datasets" class="table table-hover" style="width:100%" x-data="communitiesUpdateDatasets">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -34,7 +34,7 @@
                             <div class="form-group form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$dataset->uuid}}"
                                        {{$dataset->communities->contains($community->id) ? 'checked' : ''}}
-                                       onclick="updateSelection({{$dataset}}, this)">
+                                       @click.prevent="updateSelection({{$dataset}}, this)">
                             </div>
                         </td>
                     </tr>
@@ -51,9 +51,6 @@
 
 @push('scripts')
     <script>
-        let route = "{{route('api.communities.datasets.selection', [$community])}}";
-        let apiToken = "{{$user->api_token}}";
-
         $(document).ready(() => {
             $('#datasets').DataTable({
                 pageLength: 100,
@@ -61,10 +58,17 @@
             });
         });
 
-        function updateSelection(dataset) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                dataset_id: dataset.id,
-            });
-        }
+        mcutil.onAlpineInit("communitiesUpdateDatasets", () => {
+            return {
+                route: "{{route('api.communities.datasets.selection', [$community])}}",
+                apiToken: "{{$user->api_token}}",
+
+                updateSelection(dataset) {
+                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
+                        dataset_id: dataset.id,
+                    });
+                }
+            }
+        });
     </script>
 @endpush

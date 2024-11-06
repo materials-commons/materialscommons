@@ -8,7 +8,7 @@
 
 
 @section('content')
-    <div x-data="initFilterProcesses()" class="here-i-am">
+    <div x-data="initFilterProcesses">
         <x-card>
             <x-slot name='header'>
                 Compare sample {{$entity1->name}} to {{$entity2->name}}
@@ -92,8 +92,6 @@
                                 </div>
                             </x-slot>
                         </x-card>
-
-
                     </div>
                 </div>
             </x-slot>
@@ -104,7 +102,7 @@
 
 @push('scripts')
     <script>
-        function initFilterProcesses() {
+        mcutil.onAlpineInit("initFilterProcesses", () => {
             let xdata = {
                 showFilter: false,
                 sample1Processes: {},
@@ -152,8 +150,7 @@
                 xdata.sample2Processes["{{$e2activity->uuid}}"] = true;
             @endforeach
 
-
                 return xdata;
-        }
+        });
     </script>
 @endpush

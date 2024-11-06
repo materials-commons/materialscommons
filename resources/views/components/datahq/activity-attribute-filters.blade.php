@@ -1,4 +1,4 @@
-<div>
+<div x-data="datahqActivityAttributeFilters">
     <h5>Process Attributes</h5>
     <br/>
     <table id="activities-dd" class="table table-hover" style="width:100%">
@@ -28,7 +28,7 @@
                 <td>{{$attrs->count()}}</td>
                 <td>
                     <a class="action-link cursor-pointer"
-                       onclick="activityAttributeClickHandler(event, 'activity', '{{$name}}')">
+                       @click.prevent="activityAttributeClickHandler(event, 'activity', '{{$name}}')">
                         <i class="fas fa-fw fa-filter"></i>
                     </a>
                 </td>
@@ -46,48 +46,52 @@
                 });
             });
 
-            function activityAttributeClickHandler(e, attrType, attrName) {
-                let table = $('#activities-dd').DataTable();
-                let projectId = "{{$project->id}}";
-                let tr = e.target.closest('tr');
-                let row = table.row(tr);
-                if (row.child.isShown()) {
-                    row.child.hide();
-                } else {
-                    let r = route('projects.datahq.qb-attribute-details', {
-                        project: projectId,
-                        attrType: attrType,
-                        attrName: attrName
-                    });
-                    axios.get(r).then((r) => {
-                        row.child(r.data).show();
+            mcutil.onAlpineInit("datahqActivityAttributeFilters", () => {
+                return {
+                    projectId: "{{$project->id}}",
+                    activityAttributeClickHandler(e, attrType, attrName) {
+                        let table = $('#activities-dd').DataTable();
+                        let tr = e.target.closest('tr');
+                        let row = table.row(tr);
+                        if (row.child.isShown()) {
+                            row.child.hide();
+                        } else {
+                            let r = route('projects.datahq.qb-attribute-details', {
+                                project: this.projectId,
+                                attrType: attrType,
+                                attrName: attrName
+                            });
+                            axios.get(r).then((r) => {
+                                row.child(r.data).show();
 
-                        let element = document.getElementById(`chart-${attrName}-${attrType}`);
-                        let chartValues = element.getAttribute('data-chart-values');
-                        let data = JSON.parse(chartValues);
+                                let element = document.getElementById(`chart-${attrName}-${attrType}`);
+                                let chartValues = element.getAttribute('data-chart-values');
+                                let data = JSON.parse(chartValues);
 
-                        let nbins = 20;
-                        // if (data.length < 18) {
-                        //     nbins = data.length + 2;
-                        // }
+                                let nbins = 20;
+                                // if (data.length < 18) {
+                                //     nbins = data.length + 2;
+                                // }
 
-                        Plotly.newPlot(element, [{
-                            x: data,
-                            type: 'histogram',
-                            nbinsx: nbins,
-                        }], {
-                            title: attrName,
-                            xaxis: {
-                                rangeslider: {visible: true},
-                            },
-                            yaxis: {
-                                fixedrange: true,
-                                rangemode: 'tozero',
-                            }
-                        });
-                    });
+                                Plotly.newPlot(element, [{
+                                    x: data,
+                                    type: 'histogram',
+                                    nbinsx: nbins,
+                                }], {
+                                    title: attrName,
+                                    xaxis: {
+                                        rangeslider: {visible: true},
+                                    },
+                                    yaxis: {
+                                        fixedrange: true,
+                                        rangemode: 'tozero',
+                                    }
+                                });
+                            });
+                        }
+                    }
                 }
-            }
+            });
         </script>
     @endpush
 

@@ -1,5 +1,5 @@
 @if($hasErrorsWarningsAndOrRecommendations)
-    <div x-data="initDatasetIssues()">
+    <div x-data="initDatasetIssues">
         <a href="#" @click="showIssues=!showIssues" x-text="showIssuesLinkText()">
         </a>
         <ul class="list-unstyled ml-3 mt-2" x-show="showIssues" style="display: none">
@@ -55,7 +55,7 @@
                         choose a license for your dataset.
                     </li>
                 </template>
-                <template x-if="dataset.authors.length == 0">
+                <template x-if="dataset.authors && dataset.authors.length == 0">
                     <li class="mt-2">
                         <x-warning-icon/>
                         Your dataset has no authors. An authors list helps others evaluate your dataset.
@@ -74,7 +74,7 @@
 
     @push('scripts')
         <script>
-            function initDatasetIssues() {
+            mcutil.onAlpineInit("initDatasetIssues", () => {
                 return {
                     showIssues: false,
                     dataset: {
@@ -94,7 +94,7 @@
                         return "Hide issues, warnings and recommendations";
                     },
                 };
-            }
+            });
         </script>
     @endpush
 

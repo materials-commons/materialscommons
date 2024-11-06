@@ -80,7 +80,7 @@
 
     @push('scripts')
         <script>
-            $(document).ready(function () {
+            $(document).ready(() => {
                 $('#users').DataTable({
                     pageLength: 100,
                     stateSave: true,
