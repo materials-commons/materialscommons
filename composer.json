@@ -31,6 +31,7 @@
     "laravel/tinker": "^2.0",
     "laravel/ui": "^4.0",
     "league/flysystem-aws-s3-v3": "^3.0",
+    "livewire/livewire": "^3.5",
     "maatwebsite/excel": "^3.1",
     "mauricius/laravel-htmx": "^0.5.0",
     "mavinoo/laravel-batch": "^2.0",
