@@ -55,6 +55,12 @@ function copyToClipboard(what) {
     }
 }
 
+function onAlpineInit(name, fn) {
+    document.addEventListener('alpine:init', () => {
+        Alpine.data(name, fn);
+    }, {once: true});
+}
+
 module.exports = {
     setupDatatable,
     setupDatatableOnDocumentReady,
@@ -62,4 +68,5 @@ module.exports = {
     toggleShow,
     copyToClipboard,
     toCamelCase,
+    onAlpineInit,
 };
