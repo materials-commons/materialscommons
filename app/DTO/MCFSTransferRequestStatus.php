@@ -23,6 +23,11 @@ class MCFSTransferRequestStatus
     public static function fromArray($items)
     {
         $c = collect();
+
+        if (empty($items)) {
+            return $c;
+        }
+
         foreach($items as $item) {
             $requestStatus = new self($item);
             $uuid = $item['transfer_request']['uuid'];
