@@ -2,7 +2,7 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}"
+                <a wire:navigate class="nav-link fs-11 {{setActiveNav('dashboard')}}"
                    data-toggle="tooltip"
                    title="Goto to the dashboard listing all your projects, and published datasets."
                    href="{{route('dashboard')}}">
@@ -12,7 +12,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.show')}}"
+                <a wire:navigate class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.show')}}"
                    data-toggle="tooltip" title="View details about your project."
                    href="{{route('projects.show', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-vector-square mr-2"></i>
@@ -25,7 +25,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
+                <a wire:navigate
+                   class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                    data-toggle="tooltip" title="Access your project files."
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
@@ -55,7 +56,7 @@
             @endif
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.files.sheets.index')}}"
+                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.files.sheets.index')}}"
                    data-toggle="tooltip" title="View you Excel spreadsheets, CSV files and Google sheets."
                    href="{{route('projects.files.sheets.index', [$project])}}">
                     <i class="fa-fw fas fa-file-excel mr-2"></i>Sheets
@@ -63,7 +64,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
+                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
                    data-toggle="tooltip" title="View the experimental processes and samples loaded into your project."
                    href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>
@@ -72,7 +73,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
+                <a wire:navigate
+                   class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.computations.entities.index')}}"
                    data-toggle="tooltip"
                    title="View the computational activities and entities loaded into your project."
                    href="{{route('projects.computations.entities.index', ['project' => $project->id, 'category' => 'computational'])}}">
@@ -86,7 +88,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
+                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
                    data-toggle="tooltip"
                    title="Track your experiments and computational studies. Create new experiments and studies by loading your spreadsheet data."
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
@@ -96,7 +98,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
+                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datasets')}}"
                    data-toggle="tooltip" title="Track and publish your research results."
                    href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-book mr-2"></i>
@@ -129,7 +131,7 @@
             @endif
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5"
+                <a wire:navigate class="nav-link fs-11 ml-5"
                    data-toggle="tooltip" title="Create and publish a dataset."
                    href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
@@ -138,7 +140,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
+                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.users')}}"
                    data-toggle="tooltip" title="Control who has access to your project."
                    href="{{route('projects.users.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-users-cog mr-2"></i>
@@ -158,7 +160,7 @@
 
             @if(isInBeta('run_scripts'))
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.runs')}}"
+                    <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.runs')}}"
                        data-toggle="tooltip"
                        title="View job run status and results"
                        href="{{route('projects.runs.index', [$project])}}">

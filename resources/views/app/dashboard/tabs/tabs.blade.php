@@ -1,24 +1,24 @@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.show')}}"
+        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('dashboard.projects.show')}}"
            href="{{route('dashboard.projects.show')}}">
             Projects ({{$projectsCount}})
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('dashboard.published-datasets.show')}}"
+        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('dashboard.published-datasets.show')}}"
            href="{{route('dashboard.published-datasets.show')}}">
             Published Datasets ({{$publishedDatasetsCount}})
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.archived.index')}}"
+        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('dashboard.projects.archived.index')}}"
            href="{{route('dashboard.projects.archived.index')}}">
             Archived Projects ({{$archivedCount}})
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.trash.index')}}"
+        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('dashboard.projects.trash.index')}}"
            href="{{route('dashboard.projects.trash.index')}}">
             Projects Scheduled For Deletion ({{$deletedCount}})
         </a>
