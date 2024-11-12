@@ -13,7 +13,7 @@
         @foreach($workflows as $workflow)
             <tr>
                 <td>
-                    <a onclick="showWorkflow(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
+                    <a onclick="showWorkflowForWorkflowsTab(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
                        href="#">{{$workflow->name}}</a>
                 </td>
                 <td>{{$workflow->description}}</td>
@@ -42,14 +42,14 @@
                 ]
             });
             @if(sizeof($workflows) !== 0)
-            showWorkflow(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
+            showWorkflowForWorkflowsTab(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
             @endif
         });
 
-        if (typeof showWorkflow === 'undefined') {
+        if (typeof showWorkflowForWorkflowsTab === 'undefined') {
             let chart;
 
-            function showWorkflow(code, name) {
+            function showWorkflowForWorkflowsTab(code, name) {
                 if (chart) {
                     chart.clean();
                 }

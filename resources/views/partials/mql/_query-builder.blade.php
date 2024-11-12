@@ -30,14 +30,3 @@
     </div>
 </form>
 <hr>
-
-@push('scripts')
-    <script>
-        if (typeof fireEvent === 'undefined') {
-            function fireEvent(id) {
-                let event = new Event('changed.bs.select');
-                document.querySelector(id).dispatchEvent(event);
-            }
-        }
-    </script>
-@endpush

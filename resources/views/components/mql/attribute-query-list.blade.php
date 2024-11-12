@@ -86,4 +86,15 @@
             <div id="{{slugify($attr->name)}}" class="row ml-4 mt-2"></div>
         </li>
     @endforeach
+
+        @push('scripts')
+            <script>
+                if (typeof fireEvent === 'undefined') {
+                    function fireEvent(id) {
+                        let event = new Event('changed.bs.select');
+                        document.querySelector(id).dispatchEvent(event);
+                    }
+                }
+            </script>
+        @endpush
 </ul>
