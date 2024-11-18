@@ -123,6 +123,7 @@ trait DataDictionaryQueries
         return DB::table('attributes')
                  ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
                      'activities.name as object_name', 'activities.id as object_id', 'entities.name as entity_name',
+                     'experiment2entity.experiment_id as experiment_id',
                      DB::raw("'activity' as object_type"))
                  ->whereIn(
                      'attributable_id',
@@ -136,6 +137,7 @@ trait DataDictionaryQueries
                  ->join('activities', 'attributes.attributable_id', '=', 'activities.id')
                  ->join('activity2entity', 'activities.id', '=', 'activity2entity.activity_id')
                  ->join('entities', 'activity2entity.entity_id', '=', 'entities.id')
+                 ->join('experiment2entity', 'entities.id', 'experiment2entity.entity_id')
                  ->orderBy('name')
                  ->distinct()
                  ->get()
@@ -169,7 +171,9 @@ trait DataDictionaryQueries
     {
         return DB::table('attributes')
                  ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
-                     'entities.name as object_name', 'entities.id as object_id', DB::raw("'entity' as object_type"))
+                     'entities.name as object_name', 'entities.id as object_id',
+                     'experiment2entity.experiment_id as experiment_id',
+                     DB::raw("'entity' as object_type"))
                  ->whereIn(
                      'attributable_id',
                      DB::table('entities')
@@ -184,9 +188,10 @@ trait DataDictionaryQueries
                  ->join('entity_states', 'attributes.attributable_id', '=',
                      'entity_states.id')
                  ->join('entities', 'entity_states.entity_id', '=', 'entities.id')
+                 ->join('experiment2entity', 'entities.id', 'experiment2entity.entity_id')
                  ->distinct()
                  ->get()
-            ->groupBy('name');
+                 ->groupBy('name');
     }
 
     public function getUniqueActivityAttributesForDataset($datasetId)

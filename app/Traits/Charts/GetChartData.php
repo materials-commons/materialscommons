@@ -43,6 +43,7 @@ trait GetChartData
                 $entry->x = json_decode($xattr->val)->value;
                 $entry->y = json_decode($yattr->val)->value;
                 $entry->entity = $xattr->{$xKeyName};
+                $entry->experiment_id = $xattr->experiment_id;
                 return $entry;
             }
             return null;

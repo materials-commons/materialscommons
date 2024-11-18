@@ -68,6 +68,7 @@
                 return {
                     chartData: [],
                     chartDataChoices: [],
+                    projectId: "{{$project->id}}",
 
                     init() {
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
@@ -154,6 +155,11 @@
                         }, {
                             displaylogo: false,
                             responsive: true,
+                        });
+
+                        e.on('plotly_click', function (data) {
+                            let point = data.points[0];
+                            window.open('https://www.google.com', '_blank');
                         });
                     },
                 }
