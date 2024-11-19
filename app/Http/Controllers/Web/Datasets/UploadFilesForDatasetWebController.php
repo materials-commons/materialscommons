@@ -15,14 +15,9 @@ use Illuminate\Http\Request;
 // Upload file(s) and set each as selected in the dataset
 class UploadFilesForDatasetWebController extends Controller
 {
-    public function __invoke(
-        Request $request,
-        CreateFilesAction $createFilesAction,
-        UpdateDatasetFileSelectionAction $updateFileSelectionAction,
-        Project $project,
-        Dataset $dataset,
-        $directoryId
-    ) {
+    public function __invoke(Request $request, CreateFilesAction $createFilesAction,
+        UpdateDatasetFileSelectionAction $updateFileSelectionAction, Project $project, Dataset $dataset, $directoryId)
+    {
         $validated = $request->validate([
             'files.*' => 'nullable|file',
             'file'    => 'nullable|file',
@@ -41,7 +36,7 @@ class UploadFilesForDatasetWebController extends Controller
         // Set each file that was uploaded in the dataset context as selected
         foreach ($files as $file) {
             $updateFileSelectionAction([
-                'project_id' => $project->id,
+                'project_id'   => $project->id,
                 'include_file' => "{$path}/{$file->name}",
             ], $dataset);
         }

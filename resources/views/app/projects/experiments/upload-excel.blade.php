@@ -69,7 +69,7 @@
                 inline: true,
                 showProgressDetails: true,
                 proudlyDisplayPoweredByUppy: false,
-            }).use(UppyXHRUpload, {endpoint: r, formData: true});
+            }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
 
             uppy.on('file-added', () => {
                 uppy.setMeta({_token: csrf});
