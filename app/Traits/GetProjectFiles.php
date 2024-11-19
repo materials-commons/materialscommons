@@ -26,4 +26,14 @@ trait GetProjectFiles
                    ->where('current', true)
                    ->cursor();
     }
+
+    public function getFilesCursorForProjectAndDataset($projectId, $datasetId)
+    {
+        return File::with('directory')
+                   ->where('project_id', $projectId)
+                   ->where('dataset_id', $datasetId)
+                   ->whereNull('deleted_at')
+                   ->where('current', true)
+                   ->cursor();
+    }
 }
