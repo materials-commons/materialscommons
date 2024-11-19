@@ -68,6 +68,7 @@
                 return {
                     chartData: [],
                     chartDataChoices: [],
+                    projectId: "{{$project->id}}",
 
                     init() {
                         window.showSubviewChartCallback = this.showSubviewChartCallback;
@@ -114,15 +115,18 @@
                             let x = [];
                             let y = [];
                             let text = [];
+                            let experimentIds = [];
                             resp.data.forEach(function (item) {
                                 x.push(item.x);
                                 y.push(item.y);
                                 text.push(item.entity);
+                                experimentIds.push(item.experiment_id);
                             });
                             this.chartData.push({
                                 x: x,
                                 y: y,
                                 text: text,
+                                experimentIds: experimentIds,
                                 mode: 'markers',
                                 type: 'scatter',
                             });
@@ -154,6 +158,19 @@
                         }, {
                             displaylogo: false,
                             responsive: true,
+                        });
+
+                        e.on('plotly_click', function (data) {
+                            let point = data.points[0];
+                            let pointIndex = point.pointIndex;
+                            let experimentId = point.data.experimentIds[pointIndex + 1];
+                            let entity = point.data.text[pointIndex + 1];
+                            let r = route('projects.experiments.entities.by-name.spread', {
+                                project: "{{$project->id}}",
+                                experiment: experimentId,
+                                name: entity,
+                            });
+                            window.open(r, '_blank');
                         });
                     },
                 }

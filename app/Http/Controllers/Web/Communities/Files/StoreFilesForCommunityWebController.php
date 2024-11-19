@@ -9,13 +9,22 @@ use Illuminate\Http\Request;
 
 class StoreFilesForCommunityWebController extends Controller
 {
-    public function __invoke(Request $request, CreateFilesForCommunityAction $createFilesForCommunityAction,
-        Community $community)
-    {
+    public function __invoke(
+        Request $request,
+        CreateFilesForCommunityAction $createFilesForCommunityAction,
+        Community $community
+    ) {
         $validated = $request->validate([
-            'files.*' => 'required|file',
+            'files.*' => 'nullable|file',
+            'file'    => 'nullable|file',
         ]);
 
-        $createFilesForCommunityAction->execute($community, $validated['files']);
+        if (isset($validated['files'])) {
+            $files = $validated['files'];
+        } else {
+            $files = [$validated['file']];
+        }
+
+        $createFilesForCommunityAction->execute($community, $files);
     }
 }
