@@ -8,8 +8,6 @@ use App\Models\Project;
 use App\Traits\Charts\GetChartData;
 use App\Traits\DataDictionaryQueries;
 use App\Traits\Entities\EntityAndAttributeQueries;
-use Closure;
-use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use function view;
@@ -30,12 +28,12 @@ class ShowSubviewChart extends Component
         $chartDataRequest = ChartRequestDTO::fromArray($data);
 
         $xattrValues = $this->getAttributeDataForProject($chartDataRequest->xattrType, $chartDataRequest->xattr,
-            $this->project);
+                                                         $this->project);
         $yattrValues = $this->getAttributeDataForProject($chartDataRequest->yattrType, $chartDataRequest->yattr,
-            $this->project);
+                                                         $this->project);
 
         $xyMatches = $this->createXYMatches($xattrValues->get($chartDataRequest->xattr),
-            $yattrValues->get($chartDataRequest->yattr));
+                                            $yattrValues->get($chartDataRequest->yattr));
         $this->dispatch('add-data', $xyMatches);
     }
 
