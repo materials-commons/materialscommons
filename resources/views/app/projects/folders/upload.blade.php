@@ -36,7 +36,6 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                // console.log('onBeforeFileAdded', currentFile)
                 if (currentFile.data.webkitRelativePath === "") {
                     return currentFile;
                 }

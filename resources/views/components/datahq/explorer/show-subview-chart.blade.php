@@ -42,7 +42,7 @@
         </form>
     </div>
     <div class="row" id="chart-data-controls" style="display: none">
-        <x-datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
+        <livewire:datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
                                            :process-attributes="$processAttributes"
                                            :event-name="'add-data'"/>
     </div>

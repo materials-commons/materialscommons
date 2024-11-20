@@ -155,7 +155,6 @@
                     },
 
                     handleAddToChart() {
-                        console.log("handleAddToChart called:", this.eventName);
                         let xAttrType = $("#x-attr-type").val();
                         let xAttr = $("#x-sample-attrs").val();
                         if (xAttrType === 'process') {
