@@ -17,11 +17,17 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     {
         $this->loadDatasetContext($datasetId);
         $this->incrementDatasetViews($datasetId);
-        $readme = File::where('name', "readme.md")
-                      ->where("dataset_id", $datasetId)
-            ->where("directory_id", $this->dataset->rootDir->id)
-                      ->whereNull('deleted_at')
-                      ->first();
+        $readme = null;
+
+        // Handle the case where the user published a dataset with directories, but no files
+        if (!is_null($this->dataset->rootDir)) {
+            $this->incrementDatasetDownloads($this->dataset->rootDir->id);
+            $readme = File::where('name', "readme.md")
+                          ->where("dataset_id", $datasetId)
+                          ->where("directory_id", $this->dataset->rootDir->id)
+                          ->whereNull('deleted_at')
+                          ->first();
+        }
 
         $showPublishedDatasetOverviewViewModel = (new ShowPublishedDatasetOverviewViewModel())
             ->withDataset($this->dataset)
