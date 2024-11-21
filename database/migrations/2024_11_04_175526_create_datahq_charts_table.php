@@ -16,7 +16,10 @@ return new class extends Migration {
 
             $table->string('name');
             $table->string('description');
-            $table->string('attributes')->nullable();
+            $table->string('attribute1')->nullable();
+            $table->string('attribute1_type')->nullable();
+            $table->string('attribute2')->nullable();
+            $table->string('attribute2_type')->nullable();
             $table->string('chart_type')->nullable();
             $table->string('mql')->nullable();
 
