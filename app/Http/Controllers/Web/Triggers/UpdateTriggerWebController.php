@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\Triggers;
 
-use App\DTOs\TriggerDTO;
+use App\DTO\TriggerDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Script;
