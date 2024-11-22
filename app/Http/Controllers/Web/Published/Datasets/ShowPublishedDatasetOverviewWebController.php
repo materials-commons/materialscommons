@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
+use App\Traits\Datasets\DatasetInfo;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetOverviewViewModel;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +13,7 @@ class ShowPublishedDatasetOverviewWebController extends Controller
     use ViewsAndDownloads;
     use GoogleDatasetAnnotations;
     use LoadDatasetContext;
+    use DatasetInfo;
 
     public function __invoke($datasetId)
     {
@@ -79,16 +81,5 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                      return [$item->mime_type => $item->count];
                  })
             ->all();
-    }
-
-    private function getDatasetTotalFilesSize($datasetId)
-    {
-        return DB::table('dataset2file')
-                 ->where('dataset2file.dataset_id', $datasetId)
-                 ->join('files', 'files.id', '=', 'dataset2file.file_id')
-                 ->where('files.mime_type', '<>', 'directory')
-                 ->distinct()
-                 ->select('files.size', 'file.id')
-                 ->sum('files.size');
     }
 }

@@ -7,6 +7,7 @@ use App\Mail\Datasets\PublishedDatasetReadyMail;
 use App\Models\Dataset;
 use App\Models\Notification;
 use App\Models\User;
+use App\Traits\Datasets\DatasetInfo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +16,7 @@ use Symfony\Component\Process\Process;
 
 class PublishDatasetAction2
 {
+    use DatasetInfo;
     public function execute(Dataset $dataset, User $user, $publishAsPrivate = false)
     {
         $now = Carbon::now();
@@ -23,11 +25,13 @@ class PublishDatasetAction2
             $publishedAtField    => $now,
             'publish_started_at' => $now,
         ]);
+//        $datasetFileSize = 0;
         Bus::chain([
-            function () use ($dataset) {
+            function () use ($dataset, &$datasetFileSize) {
                 ini_set("memory_limit", "4096M");
                 $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
                 $createDatasetFilesTableAction->execute($dataset);
+//                $datasetFileSize = $this->getDatasetTotalFilesSize($dataset->id);
             },
             function () use ($dataset) {
                 ini_set("memory_limit", "4096M");
