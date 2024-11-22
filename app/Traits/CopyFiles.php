@@ -21,7 +21,7 @@ trait CopyFiles
             'owner_id'     => $dir->owner_id,
             'current'      => true,
             'project_id'   => $dir->project_id,
-            'dataset_id' => null,
+            'dataset_id'   => null,
         ]);
 
         $f->save();
