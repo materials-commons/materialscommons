@@ -4,34 +4,35 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('datahq_tabs', function (Blueprint $table) {
+        Schema::create('datahq_views', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('name');
+            $table->string('view_type');
 
-            $table->foreignId('user_id')
-                  ->constrained()
+            $table->foreignId('owner_id')
+                  ->constrained('users')
+                  ->onDelete('cascade');
+
+            $table->foreignId('datahq_instance_id')
+                  ->constrained('datahq_instances')
                   ->onDelete('cascade');
 
             $table->foreignId('project_id')
-                  ->constrained()
+                  ->constrained('projects')
                   ->onDelete('cascade');
 
             $table->foreignId('experiment_id')
-                  ->nullable()
-                  ->constrained()
+                  ->constrained('experiments')
                   ->onDelete('cascade');
 
             $table->foreignId('dataset_id')
-                  ->nullable()
-                  ->constrained()
+                  ->constrained('datasets')
                   ->onDelete('cascade');
 
             $table->timestamps();
@@ -43,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datahq_tabs');
+        Schema::dropIfExists('datahq_views');
     }
 };

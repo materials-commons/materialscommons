@@ -11,21 +11,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property string $uuid
  * @property integer $owner_id
- * @property string $name
- * @property integer $datahq_view_id
- * @property string $mql
+ * @property mixed $active_at
  *
  * @mixin Builder
  */
-class DatahqTab extends Model
+class DatahqInstance extends Model
 {
     use HasFactory;
     use HasUUID;
 
     protected $guarded = ['id'];
     protected $casts = [
-        'owner_id'       => 'integer',
-        'datahq_view_id' => 'integer',
+        'active_at' => 'datetime',
     ];
 
     public function owner()
@@ -35,12 +32,11 @@ class DatahqTab extends Model
 
     public function datahqView()
     {
-        return $this->belongsTo(DatahqView::class, 'datahq_view_id');
+        return $this->hasOne(DatahqView::class, 'datahq_instance_id');
     }
 
-    public function datahqSubviews()
+    public function isActive()
     {
-        return $this->hasMany(DatahqSubview::class, 'datahq_tab_id');
+        return !is_null($this->last_active);
     }
 }
-

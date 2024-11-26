@@ -10,19 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('datahq_tab2chart', function (Blueprint $table) {
+        Schema::create('datahq_subviews', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->string('name');
 
-            $table->unsignedBigInteger('tab_id');
-            $table->foreign('tab_id')
-                  ->references('id')
-                  ->on('datahq_tabs')
+            $table->foreignId('owner_id')
+                  ->constrained('users')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('chart_id');
-            $table->foreign('chart_id')
-                  ->references('id')
-                  ->on('datahq_charts')
+            $table->foreignId('datahq_tab_id')
+                  ->constrained('datahq_tabs')
                   ->onDelete('cascade');
 
             $table->timestamps();
@@ -34,6 +32,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('datahq_tab2chart');
+        Schema::dropIfExists('datahq_sub_views');
     }
 };

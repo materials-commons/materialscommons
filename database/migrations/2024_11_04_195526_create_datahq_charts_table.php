@@ -15,33 +15,24 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('attribute1')->nullable();
             $table->string('attribute1_type')->nullable();
             $table->string('attribute2')->nullable();
             $table->string('attribute2_type')->nullable();
             $table->string('chart_type')->nullable();
-            $table->string('mql')->nullable();
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->onDelete('cascade');
-
-            $table->foreignId('project_id')
-                  ->constrained()
-                  ->onDelete('cascade');
-
-            $table->foreignId('experiment_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('cascade');
-
-            $table->foreignId('dataset_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('cascade');
-
+            $table->string('xaxis_name')->nullable();
+            $table->string('yaxis_name')->nullable();
             $table->datetime('shared_at')->nullable();
+
+            $table->foreignId('owner_id')
+                  ->constrained('users')
+                  ->onDelete('cascade');
+
+            $table->foreignId('datahq_subview_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
