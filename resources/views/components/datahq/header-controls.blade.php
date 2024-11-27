@@ -2,12 +2,10 @@
     <label>Select Data For:</label>
     <select name="what" class="selectpicker" id="select-data-for"
             data-style="btn-light no-tt">
-        <option value="p:{{$project->id}}:de:state">Project</option>
+        <option value="p:{{$project->id}}">Project</option>
         @foreach($experiments as $experiment)
-            <option value="exp:{{$experiment->id}}:de:state">Experiment: {{$experiment->name}}</option>
+            <option value="exp:{{$experiment->id}}">Experiment: {{$experiment->name}}</option>
         @endforeach
-        <option value="ds:DS1:de:state">Dataset DS1</option>
-        <option value="ds:DS2:de:state">Dataset DS2</option>
     </select>
     <label class="ml-4">Show:</label>
     <select name="what" class="selectpicker" title="View" id="view-data"
@@ -44,6 +42,15 @@
                 if (r !== "") {
                     window.location.href = r;
                 }
+            });
+
+            $('#select-data-for').on('change', function () {
+                let selected = $(this).val();
+                let splitValue = selected.split(":");
+
+                let type = splitValue[0]; // 'p' or 'exp'
+                let id = splitValue[1]; // respective IDs
+
             });
 
             {{--const selectDataForRoute = "{{route('projects.datahq.save-data-for', [$project])}}";--}}

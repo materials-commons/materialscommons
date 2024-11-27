@@ -19,7 +19,7 @@ class IndexSamplesHQWebController extends Controller
 
     public function __invoke(Request $request, Project $project)
     {
-//        $user = auth()->user();
+        $user = auth()->user();
 //        $tabs = DatahqTab::with('datahqCharts')
 //                         ->where('project_id', $project->id)
 //                         ->where('user_id', $user->id)
