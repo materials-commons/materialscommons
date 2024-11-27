@@ -24,14 +24,17 @@ return new class extends Migration {
                   ->onDelete('cascade');
 
             $table->foreignId('project_id')
+                ->nullable()
                   ->constrained('projects')
                   ->onDelete('cascade');
 
             $table->foreignId('experiment_id')
+                ->nullable()
                   ->constrained('experiments')
                   ->onDelete('cascade');
 
             $table->foreignId('dataset_id')
+                ->nullable()
                   ->constrained('datasets')
                   ->onDelete('cascade');
 
