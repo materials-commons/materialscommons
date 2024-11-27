@@ -24,6 +24,16 @@ return new class extends Migration {
                   ->constrained('projects')
                   ->onDelete('cascade');
 
+            $table->foreignId('experiment_id')
+                  ->nullable()
+                  ->constrained('experiments')
+                  ->onDelete('cascade');
+
+            $table->foreignId('dataset_id')
+                  ->nullable()
+                  ->constrained('datasets')
+                  ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

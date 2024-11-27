@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');
+            $table->integer('eindex');
 
             $table->foreignId('owner_id')
                   ->constrained('users')

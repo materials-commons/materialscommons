@@ -23,20 +23,7 @@ return new class extends Migration {
                   ->constrained('datahq_instances')
                   ->onDelete('cascade');
 
-            $table->foreignId('project_id')
-                ->nullable()
-                  ->constrained('projects')
-                  ->onDelete('cascade');
-
-            $table->foreignId('experiment_id')
-                ->nullable()
-                  ->constrained('experiments')
-                  ->onDelete('cascade');
-
-            $table->foreignId('dataset_id')
-                ->nullable()
-                  ->constrained('datasets')
-                  ->onDelete('cascade');
+            $table->datetime('active_at')->nullable();
 
             $table->timestamps();
         });

@@ -12,10 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property integer $owner_id
  * @property integer $datahq_instance_id
- * @property integer $project_id
- * @property integer $experiment_id
- * @property integer $dataset_id
  * @property string $view_type
+ * @property mixed $active_at
  *
  * @mixin Builder
  */
@@ -28,6 +26,7 @@ class DatahqView extends Model
     protected $casts = [
         'owner_id'           => 'integer',
         'datahq_instance_id' => 'integer',
+        'active_at' => 'datetime'
     ];
 
     public function owner()
@@ -43,20 +42,5 @@ class DatahqView extends Model
     public function datahqTabs()
     {
         return $this->hasMany(DatahqTab::class, 'datahq_view_id');
-    }
-
-    public function project()
-    {
-        return $this->belongsTo(Project::class, 'project_id');
-    }
-
-    public function experiment()
-    {
-        return $this->belongsTo(Experiment::class, 'experiment_id');
-    }
-
-    public function dataset()
-    {
-        return $this->belongsTo(Dataset::class, 'dataset_id');
     }
 }
