@@ -19,6 +19,11 @@ return new class extends Migration {
                   ->constrained('users')
                   ->onDelete('cascade');
 
+            $table->foreignId('project_id')
+                  ->nullable()
+                  ->constrained('projects')
+                  ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
