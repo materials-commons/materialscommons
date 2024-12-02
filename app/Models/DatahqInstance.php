@@ -100,6 +100,11 @@ class DatahqInstance extends Model
         return $instance;
     }
 
+    public function currentDatahqView()
+    {
+        return $this->datahqViews->firstWhere('active_at', '!=', null);
+    }
+
     public function getOrCreateDatahqView($viewType)
     {
         $view = $this->datahqViews->firstWhere('view_type', $viewType);

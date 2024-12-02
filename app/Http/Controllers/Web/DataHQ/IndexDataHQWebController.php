@@ -12,9 +12,11 @@ class IndexDataHQWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
+        $instance = DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $project);
         return view('app.projects.datahq.index', [
             'project'  => $project,
-            'instance' => DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $project),
+            'instance' => $instance,
+            'view'     => $instance->currentDatahqView(),
             'tab'      => $request->input('tab', 'samples')
         ]);
     }

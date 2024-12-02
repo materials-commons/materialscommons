@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Datahq;
+namespace App\Livewire\Datahq\DataExplorer;
 
 use App\Models\DatahqInstance;
 use App\Models\Project;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class DataExplorer extends Component
+class OverviewExplorer extends Component
 {
     public DatahqInstance $instance;
     public Project $project;
@@ -22,6 +22,6 @@ class DataExplorer extends Component
 
     public function render()
     {
-        return view('livewire.datahq.data-explorer');
+        return view('livewire.datahq.data-explorer.overview-explorer');
     }
 }

@@ -11,10 +11,22 @@ use Illuminate\View\Component;
 class HeaderControls extends Component
 {
     public ?Project $project = null;
+    public $selectedData = '';
+    public $selectedView = '';
 
     public function __construct(?Project $project = null)
     {
         $this->project = $project;
+    }
+
+    public function setSelectedData($data): void
+    {
+        $this->selectedData = $data;
+    }
+
+    public function setSelectedView($view): void
+    {
+        $this->selectedView = $view;
     }
 
     /**
