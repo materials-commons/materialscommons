@@ -9,5 +9,5 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    <livewire:datahq.data-explorer :project="$project" :instance="$instance"/>
+    <livewire:datahq.data-explorer :project="$project" :instance="$instance" :tab="$tab"/>
 @stop
