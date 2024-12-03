@@ -139,11 +139,6 @@ class RowTracker
     private function getCellValue(Cell $cell): string
     {
         $value = $cell->getFormattedValue();
-        if ($cell->isFormula()) {
-            $value = $cell->getCalculatedValue();
-        } else {
-            $value = $cell->getFormattedValue();
-        }
 
         $dataType = $cell->getDataType();
         if ($dataType == DataType::TYPE_FORMULA) {
