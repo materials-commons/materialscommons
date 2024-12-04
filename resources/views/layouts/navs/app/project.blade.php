@@ -123,7 +123,7 @@
                 <li class="nav-item">
                     <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datahq')}}"
                        data-toggle="tooltip" title="Explore, chart and query your data."
-                       href="{{route('projects.datahq.index', [$project, 'tab' => 'samples'])}}">
+                       href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'samples', 'context' => 'project'])}}">
                         <i class="fa-fw fas fa-database mr-2"></i>
                         Explore Data
                     </a>

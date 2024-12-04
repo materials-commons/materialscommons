@@ -1,4 +1,4 @@
-<table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
+<table id="computations-with-used-activities" class="table table-hover mt-4" style="width: 100%">
     <thead>
     <th>Name1</th>
     <th>Name</th>
@@ -57,7 +57,7 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
-                $('#entities-with-used-activities').DataTable({
+                $('#computations-with-used-activities').DataTable({
                     pageLength: 100,
                     scrollX: true,
                     fixedHeader: {
