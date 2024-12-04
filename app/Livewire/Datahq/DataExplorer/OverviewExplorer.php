@@ -22,6 +22,7 @@ class OverviewExplorer extends Component
 
     public function render()
     {
+        ray("OverviewExplorer::render called");
         return view('livewire.datahq.data-explorer.overview-explorer');
     }
 }

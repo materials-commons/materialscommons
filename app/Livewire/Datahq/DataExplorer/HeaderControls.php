@@ -29,7 +29,7 @@ class HeaderControls extends Component
         // route could determine if this is project or experiment based.
 //        $this->redirectRoute('projects.datahq.sampleshq.index',
 //            [$this->project, 'tab' => 'index', 'subview' => 'index']);
-        $this->dispatch('reload-instance');
+        $this->dispatch('reload-instance', $selectedView);
     }
 
     public function render()
