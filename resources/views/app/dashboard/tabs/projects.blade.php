@@ -80,11 +80,9 @@
                            class="action-link">
                             <i class="fas fa-fw fa-archive"></i>
                         </a>
+                        @component('app.projects.delete-project', ['project' => $proj])
+                        @endcomponent
                     @endif
-                        @if(auth()->id() == $proj->owner_id)
-                            @component('app.projects.delete-project', ['project' => $proj])
-                            @endcomponent
-                        @endif
                 </div>
             </td>
         </tr>

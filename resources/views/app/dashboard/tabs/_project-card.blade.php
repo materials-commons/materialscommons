@@ -41,9 +41,21 @@
            title="Goto experiments for project."
            class="card-link"><i class="fa fas fa-flask"></i></a>
 
-        <a href="{{route('dashboard.projects.archive',[$proj])}}"
-           data-toggle="tooltip"
-           title="Marks project as archived. Project will show up in the Archived Projects tab."
-           class="card-link"><i class="fas fa-fw fa-archive"></i></a>
+        @if(auth()->id() == $proj->owner_id)
+            <a href="{{route('dashboard.projects.archive',[$proj])}}"
+               data-toggle="tooltip"
+               title="Marks project as archived. Project will show up in the Archived Projects tab."
+               class="card-link"><i class="fas fa-fw fa-archive"></i></a>
+
+
+            <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+               title="Marks a project for deletion"
+               class="card-link">
+                <i class="fas fa-fw fa-trash-alt"></i>
+            </a>
+
+            @component('app.projects.delete-project', ['project' => $proj])
+            @endcomponent
+        @endif
     </div>
 </div>
