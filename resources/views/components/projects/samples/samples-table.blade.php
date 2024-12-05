@@ -1,4 +1,4 @@
-<table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%" x-data="samplesTable">
+<table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
     <thead>
     <th>Name1</th>
     <th>Name</th>
@@ -54,23 +54,18 @@
 
     @push('scripts')
         <script>
-            mcutil.onAlpineInit("samplesTable", () => {
-                return {
-                    dt: null,
-                    init() {
-                        this.dt = mcutil.initDataTable('#entities-with-used-activities', {
-                            pageLength: 100,
-                            scrollX: true,
-                            fixedHeader: {
-                                header: true,
-                                headerOffset: 46,
-                            },
-                            columnDefs: [
-                                {targets: [0], visible: false},
-                            ],
-                        });
-                    }
-                }
+            $(document).ready(() => {
+                mcutil.initDataTable('#entities-with-used-activities', {
+                    pageLength: 100,
+                    scrollX: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                    columnDefs: [
+                        {targets: [0], visible: false},
+                    ],
+                });
             });
         </script>
     @endpush

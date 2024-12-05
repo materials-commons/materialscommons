@@ -4,7 +4,6 @@ namespace App\Livewire\Datahq\DataExplorer;
 
 use App\Models\DatahqInstance;
 use App\Models\Project;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class OverviewExplorer extends Component
@@ -12,8 +11,8 @@ class OverviewExplorer extends Component
     public DatahqInstance $instance;
     public Project $project;
 
-    #[Url(history: true)]
     public $tab = 'samples';
+    public $context = 'project';
 
     public function setTab($tab): void
     {

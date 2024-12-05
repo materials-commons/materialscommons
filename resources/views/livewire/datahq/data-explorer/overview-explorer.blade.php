@@ -1,43 +1,43 @@
 <div>
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'samples'])
-               wire:click.prevent="setTab('samples')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'samples'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'samples', 'context' => $context])}}">
                 Samples
             </a>
         </li>
 
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'computations'])
-               wire:click.prevent="setTab('computations')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'computations'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'computations', 'context' => $context])}}">
                 Computations
             </a>
         </li>
 
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'processes'])
-               wire:click.prevent="setTab('processes')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'processes'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'processes', 'context' => $context])}}">
                 Processes
             </a>
         </li>
 
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'sampleattrs'])
-               wire:click.prevent="setTab('sampleattrs')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'sampleattrs'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'sampleattrs', 'context' => $context])}}">
                 Sample Attributes
             </a>
         </li>
 
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'computationattrs'])
-               wire:click.prevent="setTab('computationattrs')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'computationattrs'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'computationattrs', 'context' => $context])}}">
                 Computation Attributes
             </a>
         </li>
 
         <li class="nav-item">
-            <a @class(["nav-link", "no-underline", "active" => $tab == 'processattrs'])
-               wire:click.prevent="setTab('processattrs')" href="#">
+            <a wire:navigate @class(["nav-link", "no-underline", "active" => $tab == 'processattrs'])
+            href="{{route('projects.datahq.index', [$project, 'view' => 'overview', 'tab' => 'processattrs', 'context' => $context])}}">
                 Process Attributes
             </a>
         </li>

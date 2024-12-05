@@ -1,4 +1,4 @@
-<table id="activities-dd" class="table table-hover" style="width:100%" x-data="processAttributesTable">
+<table id="activities-dd" class="table table-hover" style="width:100%">
     <thead>
     <tr>
         <th>Attribute</th>
@@ -29,19 +29,14 @@
     </tbody>
 
     @script
-        <script>
-            mcutil.onAlpineInit("processAttributesTable", () => {
-                return {
-                    dt: null,
-                    init() {
-                        this.dt = mcutil.initDataTable("#activities-dd", {
-                            pageLength: 100,
-                            stateSave: true
-                        });
-                    }
-                }
+    <script>
+        $(document).ready(() => {
+            mcutil.initDataTable("#activities-dd", {
+                pageLength: 100,
+                stateSave: true
             });
-        </script>
+        });
+    </script>
     @endscript
 </table>
 
