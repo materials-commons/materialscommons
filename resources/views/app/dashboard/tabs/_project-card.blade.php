@@ -1,6 +1,7 @@
 @php
     $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
 @endphp
+
 <div class="card bg-light col-lg-4 col-md-6 col-sm-8">
     <div class="card-body">
         <h5 class="card-title">
@@ -41,9 +42,21 @@
            title="Goto experiments for project."
            class="card-link"><i class="fa fas fa-flask"></i></a>
 
-        <a wire:navigate href="{{route('dashboard.projects.archive',[$proj])}}"
-           data-toggle="tooltip"
-           title="Marks project as archived. Project will show up in the Archived Projects tab."
-           class="card-link"><i class="fas fa-fw fa-archive"></i></a>
+        @if(auth()->id() == $proj->owner_id)
+            <a wire:navigate href="{{route('dashboard.projects.archive',[$proj])}}"
+               data-toggle="tooltip"
+               title="Marks project as archived. Project will show up in the Archived Projects tab."
+               class="card-link"><i class="fas fa-fw fa-archive"></i></a>
+
+
+            <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+               title="Marks a project for deletion"
+               class="card-link">
+                <i class="fas fa-fw fa-trash-alt"></i>
+            </a>
+
+            @component('app.projects.delete-project', ['project' => $proj])
+            @endcomponent
+        @endif
     </div>
 </div>

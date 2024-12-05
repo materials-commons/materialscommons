@@ -1,5 +1,8 @@
 <br/>
 <table id="projects-trash" class="table table-hover" style="width:100%">
+    @php
+        use Illuminate\Support\Str;
+    @endphp
     <thead>
     <tr>
         <th>Project</th>
@@ -17,7 +20,13 @@
     <tbody>
     @foreach($deletedProjects as $proj)
         <tr>
-            <td><a href="{{route('projects.show', [$proj])}}">{{$proj->name}}</a></td>
+            @php
+                $name = $proj->name;
+                if (Str::startsWith($proj->name, "{$proj->uuid}-")) {
+                    $name = Str::replaceStart("{$proj->uuid}-", '', $proj->name);
+                }
+            @endphp
+            <td><a href="{{route('projects.show', [$proj])}}">{{$name}}</a></td>
             <td>{{$proj->deleted_at->addDays($expiresInDays)->diffIndays($now)+1}} days</td>
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>

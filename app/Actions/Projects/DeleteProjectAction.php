@@ -9,12 +9,9 @@ class DeleteProjectAction
 {
     public function __invoke(Project $project)
     {
-        $project->update(['deleted_at' => Carbon::now()]);
-//        DB::transaction(function () use ($project) {
-//            $team = $project->team;
-//            $project->files()->delete();
-//            $project->delete();
-//            $team->delete();
-//        });
+        $project->update([
+            'deleted_at' => Carbon::now(),
+            'name'       => "{$project->uuid}-{$project->name}"
+        ]);
     }
 }

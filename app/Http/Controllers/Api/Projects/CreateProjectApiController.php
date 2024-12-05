@@ -31,6 +31,9 @@ class CreateProjectApiController extends Controller
     {
         $validated = $request->validated();
         $data = $createProjectAction->execute($validated, auth()->id());
+        if (is_null($data['project'])) {
+            return response()->json(['message' => "Unable to create project with name {$validated['name']}"], 409);
+        }
         $project = $data['project'];
         $project->load(['rootDir', 'owner', 'team.members', 'team.admins']);
         $statusCode = $data['created'] ? 201 : 200;
