@@ -54,6 +54,10 @@
 
     @push('scripts')
         <script>
+            document.addEventListener('livewire:navigating', () => {
+                $('#entities-with-used-activities').DataTable().destroy();
+            }, {once: true});
+
             $(document).ready(() => {
                 mcutil.initDataTable('#entities-with-used-activities', {
                     pageLength: 100,

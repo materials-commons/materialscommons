@@ -2,7 +2,9 @@
     <x-card>
         <x-slot:header>
             Data Explorer
-            <livewire:datahq.data-explorer.header-controls :project="$project"/>
+            <livewire:datahq.data-explorer.header-controls :project="$project"
+                                                           :selected-data="$context"
+                                                           :selected-view="$view"/>
         </x-slot:header>
 
         <x-slot:body>
