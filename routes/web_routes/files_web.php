@@ -39,8 +39,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/projects/{project}/files/{file}/upload', UploadFilesWebController::class)
      ->name('projects.files.upload');
 
-Route::get('/projects/{project}/files/sheets/index', IndexSheetsWebController::class)
-     ->name('projects.files.sheets.index');
+Route::get('/projects/{project}/sheets/index', IndexSheetsWebController::class)
+     ->name('projects.sheets.index');
 
 Route::get('/projects/{project}/files/sheets/resolve-google-sheet', ResolveGoogleSheetTitleWebController::class)
      ->name('projects.files.sheets.resolve-google-sheet');
