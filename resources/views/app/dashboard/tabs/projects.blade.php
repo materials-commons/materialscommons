@@ -92,6 +92,10 @@
 
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#projects').DataTable().destroy();
+        }, {once: true});
+
         let projectsCount = "{{sizeof($projects)}}";
         $(document).ready(() => {
             if (projectsCount === "0") {

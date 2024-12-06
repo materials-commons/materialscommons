@@ -52,6 +52,10 @@
 </table>
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#projects-trash').DataTable().destroy();
+        }, {once: true});
+
         $(document).ready(() => {
             $('#projects-trash').DataTable({
                 pageLength: 100,

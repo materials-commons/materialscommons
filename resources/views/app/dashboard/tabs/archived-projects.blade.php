@@ -58,6 +58,10 @@
 
     @push('scripts')
         <script>
+            document.addEventListener('livewire:navigating', () => {
+                $('#archived-projects').DataTable().destroy();
+            }, {once: true});
+
             $(document).ready(() => {
                 // 0 <th>Project</th>
                 // 1 <th>Size</th>
