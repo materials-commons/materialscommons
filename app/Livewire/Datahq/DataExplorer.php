@@ -5,15 +5,24 @@ namespace App\Livewire\Datahq;
 use App\Models\DatahqInstance;
 use App\Models\Project;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class DataExplorer extends Component
 {
     private DatahqInstance $instance;
     public Project $project;
+
+    #[Url(history: true)]
     public string $context = '';
+
+    #[Url(history: true)]
     public string $view = '';
+
+    #[Url(history: true)]
     public string $tab = '';
+
+    #[Url(history: true)]
     public string $subview = '';
 
 
@@ -28,8 +37,9 @@ class DataExplorer extends Component
     }
 
     #[On('reload-instance')]
-    public function reloadInstance(): void
+    public function reloadInstance($selectedView): void
     {
+        $this->view = $selectedView;
         $this->instance = DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $this->project);
     }
 

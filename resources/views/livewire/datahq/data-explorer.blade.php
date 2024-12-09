@@ -14,7 +14,7 @@
                                                                  :context="$context"
                                                                  :tab="$tab"/>
             @elseif($view == "samples-explorer")
-                <h3>Show samples explorer</h3>
+                <x-datahq.sampleshq.index :project="$project"/>
             @elseif($view == "computations-explorer")
                 <h3>Show computations explorer</h3>
             @elseif($view == "processes-explorer")

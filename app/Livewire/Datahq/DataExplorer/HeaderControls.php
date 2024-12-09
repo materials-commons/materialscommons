@@ -34,6 +34,7 @@ class HeaderControls extends Component
 
     public function render()
     {
+        ray("HeaderControls::render called");
         $experiments = Experiment::where('project_id', $this->project->id)->get();
         return view('livewire.datahq.data-explorer.header-controls', [
             'experiments' => $experiments,
