@@ -62,100 +62,98 @@
         </form>
     </div>
     <div id="scatter-chart"></div>
-    @push('scripts')
-        <script>
-            mcutil.onAlpineInit('showSubviewChart', () => {
-                return {
-                    chartData: [],
-                    chartDataChoices: [],
-                    projectId: "{{$project->id}}",
+    @script
+    <script>
+        Alpine.data('showSubviewChart', () => {
+            return {
+                chartData: [],
+                chartDataChoices: [],
+                projectId: "{{$project->id}}",
 
-                    init() {
-                        window.showSubviewChartCallback = this.showSubviewChartCallback;
-                        $(document).ready(() => {
-                            this.drawChart();
-                        });
-                    },
+                init() {
+                    window.showSubviewChartCallback = this.showSubviewChartCallback;
+                    this.drawChart();
+                },
 
-                    toggleShowChartDataControls() {
+                toggleShowChartDataControls() {
+                    if (typeof window.addDataControlsComponent.resetControls === 'function') {
+                        window.addDataControlsComponent.resetControls();
+                    }
+                    $("#chart-data-controls").toggle();
+                },
+
+                onAddData(event) {
+                    let data = event.detail[0];
+                    let x = [];
+                    let y = [];
+                    let text = [];
+                    let experimentIds = [];
+                    Object.entries(data).forEach(function ([key, item]) {
+                        x.push(item.x);
+                        y.push(item.y);
+                        text.push(item.entity);
+                        experimentIds.push(item.experiment_id);
+                    });
+                    this.chartData.push({
+                        x: x,
+                        y: y,
+                        text: text,
+                        experimentIds: experimentIds,
+                        mode: 'markers',
+                        type: 'scatter',
+                    });
+
+                    this.drawChart();
+                },
+
+                downloadChartData() {
+                    let firstChart = this.chartDataChoices[0];
+                    $("#dl-xattr").val(firstChart.xattr);
+                    $("#dl-xattr-type").val(firstChart.xattr_type);
+                    $("#dl-yattr").val(firstChart.yattr);
+                    $("#dl-yattr-type").val(firstChart.yattr_type);
+                    $("#dl-filters").val(firstChart.filters);
+                    document.getElementById('download-data').submit();
+                },
+
+                drawChart() {
+                    let chartData = this.chartData;
+                    setTimeout(() => {
                         if (typeof window.addDataControlsComponent.resetControls === 'function') {
                             window.addDataControlsComponent.resetControls();
                         }
-                        $("#chart-data-controls").toggle();
-                    },
+                        let e = document.getElementById('scatter-chart');
+                        let chartTitle = $("#chart-title").val();
+                        let xAxisTitle = $("#x-axis-title").val();
+                        let yAxisTitle = $("#y-axis-title").val();
 
-                    onAddData(event) {
-                        let data = event.detail[0];
-                        let x = [];
-                        let y = [];
-                        let text = [];
-                        let experimentIds = [];
-                        Object.entries(data).forEach(function ([key, item]) {
-                            x.push(item.x);
-                            y.push(item.y);
-                            text.push(item.entity);
-                            experimentIds.push(item.experiment_id);
-                        });
-                        this.chartData.push({
-                            x: x,
-                            y: y,
-                            text: text,
-                            experimentIds: experimentIds,
-                            mode: 'markers',
-                            type: 'scatter',
+                        Plotly.purge(e);
+                        Plotly.newPlot(e, chartData, {
+                            title: chartTitle,
+                            xaxis: {title: xAxisTitle},
+                            yaxis: {title: yAxisTitle},
+                        }, {
+                            displaylogo: false,
+                            responsive: true,
                         });
 
-                        this.drawChart();
-                    },
-
-                    downloadChartData() {
-                        let firstChart = this.chartDataChoices[0];
-                        $("#dl-xattr").val(firstChart.xattr);
-                        $("#dl-xattr-type").val(firstChart.xattr_type);
-                        $("#dl-yattr").val(firstChart.yattr);
-                        $("#dl-yattr-type").val(firstChart.yattr_type);
-                        $("#dl-filters").val(firstChart.filters);
-                        document.getElementById('download-data').submit();
-                    },
-
-                    drawChart() {
-                        let chartData = this.chartData;
-                        setTimeout(() => {
-                            if (typeof window.addDataControlsComponent.resetControls === 'function') {
-                                window.addDataControlsComponent.resetControls();
-                            }
-                            let e = document.getElementById('scatter-chart');
-                            let chartTitle = $("#chart-title").val();
-                            let xAxisTitle = $("#x-axis-title").val();
-                            let yAxisTitle = $("#y-axis-title").val();
-
-                            Plotly.purge(e);
-                            Plotly.newPlot(e, chartData, {
-                                title: chartTitle,
-                                xaxis: {title: xAxisTitle},
-                                yaxis: {title: yAxisTitle},
-                            }, {
-                                displaylogo: false,
-                                responsive: true,
+                        e.on('plotly_click', function (data) {
+                            let point = data.points[0];
+                            let pointIndex = point.pointIndex;
+                            let experimentId = point.data.experimentIds[pointIndex + 1];
+                            let entity = point.data.text[pointIndex + 1];
+                            let r = route('projects.experiments.entities.by-name.spread', {
+                                project: "{{$project->id}}",
+                                experiment: experimentId,
+                                name: entity,
                             });
-
-                            e.on('plotly_click', function (data) {
-                                let point = data.points[0];
-                                let pointIndex = point.pointIndex;
-                                let experimentId = point.data.experimentIds[pointIndex + 1];
-                                let entity = point.data.text[pointIndex + 1];
-                                let r = route('projects.experiments.entities.by-name.spread', {
-                                    project: "{{$project->id}}",
-                                    experiment: experimentId,
-                                    name: entity,
-                                });
-                                window.open(r, '_blank');
-                            });
+                            window.open(r, '_blank');
                         });
-                    },
-                }
-            });
-        </script>
-    @endpush
+                    });
+                },
+            }
+        });
+    </script>
+    @endscript
 </div>
 
