@@ -15,7 +15,7 @@ class IndexDataHQWebController extends Controller
         $tab = $request->input('tab', 'samples');
         $subview = $request->input('subview', '');
         return view('app.projects.datahq.index', [
-            'project'  => $project,
+            'project' => $project,
             'context' => $context,
             'view'    => $view,
             'tab'     => $tab,

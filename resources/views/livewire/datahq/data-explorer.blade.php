@@ -14,11 +14,11 @@
                                                                  :context="$context"
                                                                  :tab="$tab"/>
             @elseif($view == "samples-explorer")
-                <x-datahq.sampleshq.index :project="$project"/>
+                <livewire:datahq.data-explorer.samples-explorer :project="$project"/>
             @elseif($view == "computations-explorer")
-                <h3>Show computations explorer</h3>
+                <livewire:datahq.data-explorer.computations-explorer :project="$project"/>
             @elseif($view == "processes-explorer")
-                <h3>show processes explorer</h3>
+                <livewire:datahq.data-explorer.processes-explorer :project="$project"/>
             @endif
         </x-slot:body>
     </x-card>

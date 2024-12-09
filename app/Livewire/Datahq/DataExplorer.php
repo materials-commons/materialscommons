@@ -43,6 +43,13 @@ class DataExplorer extends Component
         $this->instance = DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $this->project);
     }
 
+    #[On('selected-data')]
+    public function handleSelectedData($selectedData): void
+    {
+        ray("handleSelectedData: {$selectedData}");
+        $this->context = $selectedData;
+    }
+
     public function render()
     {
         ray("DataExplorer::render called");
