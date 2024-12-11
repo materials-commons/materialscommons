@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class DataExplorer extends Component
 {
-    private DatahqInstance $instance;
+    private ?DatahqInstance $instance;
     public Project $project;
 
     #[Url(history: true)]
@@ -33,14 +33,14 @@ class DataExplorer extends Component
         $this->view = $view;
         $this->tab = $tab;
         $this->subview = $subview;
-        $this->instance = DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $this->project);
+        $this->instance = null;
     }
 
     #[On('reload-instance')]
     public function reloadInstance($selectedView): void
     {
         $this->view = $selectedView;
-        $this->instance = DatahqInstance::getOrCreateActiveDatahqInstanceForUser(auth()->user(), $this->project);
+        $this->instance = null;
     }
 
     #[On('selected-data')]

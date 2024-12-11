@@ -13,7 +13,13 @@ return new class extends Migration {
         Schema::create('datahq_instances', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->datetime('active_at')->nullable();
+            $table->string('current_view')->nullable();
+            $table->string('current_context')->nullable();
+
+            $table->json('overview_view')->nullable();
+            $table->json('samples_view')->nullable();
+            $table->json('processes_view')->nullable();
+            $table->json('computations_view')->nullable();
 
             $table->foreignId('owner_id')
                   ->constrained('users')

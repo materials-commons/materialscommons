@@ -5,6 +5,7 @@ namespace App\Casts;
 use App\DTO\DataHQ\OverviewState;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use function is_null;
 
 class OverviewStateCast implements CastsAttributes
 {
@@ -13,8 +14,12 @@ class OverviewStateCast implements CastsAttributes
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function get(Model $model, string $key, mixed $value, array $attributes): OverviewState
+    public function get(Model $model, string $key, mixed $value, array $attributes): ?OverviewState
     {
+        if (is_null($value)) {
+            return null;
+        }
+
         $data = json_decode($value, true);
         return new OverviewState($data['projectContext'], collect($data['experimentContext']),
             collect($data['experimentContext']));

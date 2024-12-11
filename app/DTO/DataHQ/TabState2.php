@@ -18,7 +18,7 @@ class TabState2 implements JsonSerializable
     {
         return [
             'subviews' => $this->subviews->map(function ($subview, $key) {
-                return [$key => $subview->jsonSerialize()];
+                return $subview->jsonSerialize();
             })->toArray()
         ];
     }

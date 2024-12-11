@@ -3,8 +3,9 @@
 namespace App\DTO\DataHQ;
 
 use Illuminate\Support\Collection;
+use JsonSerializable;
 
-class ContextState implements \JsonSerializable
+class ContextState implements JsonSerializable
 {
 
     public Collection $tabs;
@@ -14,12 +15,12 @@ class ContextState implements \JsonSerializable
         $this->tabs = $tabs;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'tabs' => $this->tabs->map(function ($tab, $key) {
-                return [$key => $tab->jsonSerialize()];
-            })
+                return $tab->jsonSerialize();
+            })->toArray()
         ];
     }
 }

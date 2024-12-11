@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
+use App\Casts\ExplorerViewStateCast;
+use App\Casts\OverviewStateCast;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use function is_null;
-use function now;
 
 /**
  * @property integer $id
  * @property string $uuid
+ * @property string $current_view
+ * @property string $current_context
+ * @property mixed $overview_view
+ * @property mixed $samples_view
+ * @property mixed $processes_view
+ * @property mixed $computations_view;
  * @property integer $owner_id
- * @property mixed $active_at
  * @property integer $project_id
  * @property integer $experiment_id
  * @property integer $dataset_id
@@ -27,21 +32,19 @@ class DatahqInstance extends Model
 
     protected $guarded = ['id'];
     protected $casts = [
-        'active_at'     => 'datetime',
-        'owner_id'      => 'integer',
-        'project_id'    => 'integer',
-        'experiment_id' => 'integer',
-        'dataset_id'    => 'integer'
+        'owner_id'          => 'integer',
+        'project_id'        => 'integer',
+        'experiment_id'     => 'integer',
+        'dataset_id'        => 'integer',
+        'overview_view'     => OverviewStateCast::class,
+        'samples_view'      => ExplorerViewStateCast::class,
+        'computations_view' => ExplorerViewStateCast::class,
+        'processes_view'    => ExplorerViewStateCast::class,
     ];
 
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
-    }
-
-    public function datahqViews()
-    {
-        return $this->hasMany(DatahqView::class, 'datahq_instance_id');
     }
 
     public function project()
@@ -57,163 +60,5 @@ class DatahqInstance extends Model
     public function experiment()
     {
         return $this->belongsTo(Experiment::class, 'experiment_id');
-    }
-
-    public function isActive()
-    {
-        return !is_null($this->last_active);
-    }
-
-    public static function getOrCreateDatahqInstance($user, $project, $view, $tab, $experiment = null)
-    {
-        $q = self::with('datahqViews.datahqTabs')
-                 ->where('owner_id', $user->id)
-                 ->where('project_id', $project->id);
-
-        if (is_null($experiment)) {
-            $q->whereNull('experiment_id');
-        } else {
-            $q->where('experiment_id', $experiment->id);
-        }
-
-        $instances = $q->get();
-        if ($instances->isEmpty()) {
-            return self::createActiveInstance($user, $project, $view, $tab, $experiment);
-        }
-
-        foreach ($instances as $instance) {
-            if ($instance->datahqViews->isEmpty()) {
-                continue;
-            }
-
-            $matchingView = $instance->datahqViews->firstWhere('name', $view);
-            if (is_null($matchingView)) {
-                // No matching view, so let's continue and see if there is a different instance that
-                // contains a matching view.
-                continue;
-            }
-
-            // If we are here then it doesn't matter if there is a matching tab. We will let the upper
-            // layers deal with the lack of a tab. A few steps before continuing:
-            //   1. Mark all instances as not active
-            //   2. Mark this instance as active
-            //   3. Mark instance views inactive
-            //   4. Mark matching view as active.
-            DatahqInstance::query()
-                          ->where('owner_id', $user->id)
-                          ->where('project_id', $project->id)
-                          ->update(['active_at' => null]);
-            $instance->update(['active_at' => now()]);
-            DatahqView::where('datahq_instance_id', $instance->id)->update(['active_at' => null]);
-            $matchingView->update(['active_at' => now()]);
-            $instance->load('datahqViews.datahqTabs');
-            return $instance;
-        }
-
-        // if we are here then nothing matched, so create instance
-        return self::createActiveInstance($user, $project, $view, $tab, $experiment);
-    }
-
-    // createActiveInstance will create a new DatahqInstance, and corresponding view (if not null) and tab (if not null).
-    // It will mark other instances as inactive before it creates a new instance.
-    public static function createActiveInstance($user, $project, $view, $tab, $experiment = null)
-    {
-        DatahqInstance::query()
-                      ->where('owner_id', $user->id)
-                      ->where('project_id', $project->id)
-                      ->update(['active_at' => null]);
-
-        $instance = DatahqInstance::create([
-            'owner_id'      => $user->id,
-            'project_id'    => $project->id,
-            'experiment_id' => is_null($experiment) ? null : $experiment->id,
-            'active_at'     => now()
-        ]);
-
-        if (!is_null($view)) {
-            DatahqView::create([
-                'owner_id'           => $user->id,
-                'datahq_instance_id' => $instance->id,
-                'view_type'          => $view,
-                'active_at'          => now(),
-            ]);
-        }
-
-        return $instance;
-    }
-
-    public static function getOrCreateActiveDatahqInstanceForUser($user, $project, $experiment = null)
-    {
-        $q = self::query()
-                 ->where('owner_id', $user->id)
-                 ->where('project_id', $project->id);
-
-        if (is_null($experiment)) {
-            $q->whereNull('experiment_id');
-        } else {
-            $q->where('experiment_id', $experiment->id);
-        }
-
-        $instance = $q->whereNotNull('active_at')->first();
-        if (!is_null($instance)) {
-            return $instance;
-        } else {
-            $instance = DatahqInstance::create([
-                'owner_id'      => $user->id,
-                'project_id'    => $project->id,
-                'experiment_id' => is_null($experiment) ? null : $experiment->id,
-                'active_at'     => now()
-            ]);
-
-            DatahqView::create([
-                'datahq_instance_id' => $instance->id,
-                'owner_id'           => $user->id,
-                'view_type'          => 'overview',
-                'active_at'          => now(),
-            ]);
-        }
-
-        $instance->load('datahqViews');
-
-        return $instance;
-    }
-
-    public function currentDatahqView()
-    {
-        return $this->datahqViews->firstWhere('active_at', '!=', null);
-    }
-
-    public function getOrCreateDatahqView($viewType)
-    {
-        $view = $this->datahqViews->firstWhere('view_type', $viewType);
-        if (!is_null($view)) {
-            if (is_null($view->active_at)) {
-                // Make other views null, and mark this view as active
-                DatahqView::where('datahq_instance_id', $this->id)->update(['active_at' => null]);
-                $view->active_at = now();
-                $view->save();
-
-                // Reload our instance and relations
-                $this->refresh();
-                $this->load('datahqViews');
-            }
-            return $view;
-        }
-
-        // No view of that type exists. First mark other views as inactive, then create
-        // a new view of the given type and mark it as active.
-        DatahqView::where('datahq_instance_id', $this->id)->update(['active_at' => null]);
-
-        $view = DatahqView::create([
-            'datahq_instance_id' => $this->id,
-            'owner_id'           => $this->user_id,
-            'view_type'          => $viewType,
-            'active_at'          => now(),
-        ]);
-
-        // Reload our instance and relations
-        $this->refresh();
-        $this->load('datahqViews');
-        return $view;
     }
 }
