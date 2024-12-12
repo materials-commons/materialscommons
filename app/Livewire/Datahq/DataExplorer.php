@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class DataExplorer extends Component
 {
-    private ?DatahqInstance $instance;
+    public DatahqInstance $instance;
     public Project $project;
 
     #[Url(history: true)]
@@ -20,27 +20,15 @@ class DataExplorer extends Component
     public string $view = '';
 
     #[Url(history: true)]
-    public string $tab = '';
+    public string $explorer = '';
 
     #[Url(history: true)]
     public string $subview = '';
 
-
-    public function mount(Project $project, string $context, string $view, string $tab, string $subview): void
-    {
-        $this->project = $project;
-        $this->context = $context;
-        $this->view = $view;
-        $this->tab = $tab;
-        $this->subview = $subview;
-        $this->instance = null;
-    }
-
     #[On('reload-instance')]
-    public function reloadInstance($selectedView): void
+    public function reloadInstance($selectedExplorer): void
     {
-        $this->view = $selectedView;
-        $this->instance = null;
+        $this->explorer = $selectedExplorer;
     }
 
     #[On('selected-data')]
@@ -53,8 +41,6 @@ class DataExplorer extends Component
     public function render()
     {
         ray("DataExplorer::render called");
-        return view('livewire.datahq.data-explorer', [
-            'instance' => $this->instance,
-        ]);
+        return view('livewire.datahq.data-explorer');
     }
 }

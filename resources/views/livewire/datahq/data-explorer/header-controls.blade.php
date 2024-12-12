@@ -16,12 +16,12 @@
         <select name="what" class="selectpicker" title="View" id="view-data"
                 data-container="#view-data-wrapper"
                 data-style="btn-light no-tt">
-            <option value="overview" @selected($selectedView == "overview")>Overview</option>
-            <option value="samples-explorer" @selected($selectedView == "samples-explorer")>Samples Explorer</option>
-            <option value="computations-explorer" @selected($selectedView == "computations-explorer")>Computations
+            <option value="overview" @selected($selectedExplorer == "overview")>Overview</option>
+            <option value="samples" @selected($selectedExplorer == "samples")>Samples Explorer</option>
+            <option value="computations" @selected($selectedExplorer == "computations")>Computations
                 Explorer
             </option>
-            <option value="processes-explorer" @selected($selectedView == "processes-explorer")>Processes Explorer
+            <option value="processes" @selected($selectedExplorer == "processes")>Processes Explorer
             </option>
         </select>
         </span>
@@ -45,7 +45,7 @@
 
                             $('#view-data').on('change', function () {
                                 let selected = $(this).val();
-                                $wire.dispatch('selected-view', {selectedView: selected});
+                                $wire.dispatch('selected-explorer', {selectedExplorer: selected});
                             });
                         }
                     }

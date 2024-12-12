@@ -8,18 +8,18 @@ use JsonSerializable;
 class ContextState implements JsonSerializable
 {
 
-    public Collection $tabs;
+    public Collection $views;
 
-    public function __construct(Collection $tabs)
+    public function __construct(Collection $views)
     {
-        $this->tabs = $tabs;
+        $this->views = $views;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'tabs' => $this->tabs->map(function ($tab, $key) {
-                return $tab->jsonSerialize();
+            'views' => $this->views->map(function ($view, $key) {
+                return $view->jsonSerialize();
             })->toArray()
         ];
     }

@@ -4,20 +4,20 @@
             Data Explorer
             <livewire:datahq.data-explorer.header-controls :project="$project"
                                                            :selected-data="$context"
-                                                           :selected-view="$view"/>
+                                                           :selected-explorer="$explorer"/>
         </x-slot:header>
 
         <x-slot:body>
-            @if($view == "overview")
+            @if($explorer == "overview")
                 <livewire:datahq.data-explorer.overview-explorer :project="$project"
                                                                  :instance="$instance"
                                                                  :context="$context"
-                                                                 :tab="$tab"/>
-            @elseif($view == "samples-explorer")
+                                                                 :view="$view"/>
+            @elseif($explorer == "samples")
                 <livewire:datahq.data-explorer.samples-explorer :project="$project"/>
-            @elseif($view == "computations-explorer")
+            @elseif($explorer == "computations-explorer")
                 <livewire:datahq.data-explorer.computations-explorer :project="$project"/>
-            @elseif($view == "processes-explorer")
+            @elseif($explorer == "processes-explorer")
                 <livewire:datahq.data-explorer.processes-explorer :project="$project"/>
             @endif
         </x-slot:body>

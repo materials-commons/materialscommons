@@ -11,7 +11,7 @@ class HeaderControls extends Component
 {
     public ?Project $project = null;
     public $selectedData = "";
-    public $selectedView = "";
+    public $selectedExplorer = "";
 
     #[On('selected-data')]
     public function handleSelectedData($selectedData): void
@@ -20,16 +20,16 @@ class HeaderControls extends Component
         $this->selectedData = $selectedData;
     }
 
-    #[On('selected-view')]
-    public function handleSelectedView($selectedView): void
+    #[On('selected-explorer')]
+    public function handleSelectedExplorer($selectedExplorer): void
     {
-        $this->selectedView = $selectedView;
-        ray("handleSelectedView: {$selectedView}");
+        $this->selectedExplorer = $selectedExplorer;
+        ray("handleSelectedExplorer: {$selectedExplorer}");
         // This will need to be changed, based on the selected data. Either redirect for project or experiment? Or the
         // route could determine if this is project or experiment based.
 //        $this->redirectRoute('projects.datahq.sampleshq.index',
 //            [$this->project, 'tab' => 'index', 'subview' => 'index']);
-        $this->dispatch('reload-instance', $selectedView);
+        $this->dispatch('reload-instance', $selectedExplorer);
     }
 
     public function render()

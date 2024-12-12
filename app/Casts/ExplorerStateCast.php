@@ -3,27 +3,27 @@
 namespace App\Casts;
 
 use App\DTO\DataHQ\ContextState;
-use App\DTO\DataHQ\ExplorerViewState;
+use App\DTO\DataHQ\ExplorerState;
 use App\DTO\DataHQ\SubviewState2;
-use App\DTO\DataHQ\TabState2;
+use App\DTO\DataHQ\ViewState;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class ExplorerViewStateCast implements CastsAttributes
+class ExplorerStateCast implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function get(Model $model, string $key, mixed $value, array $attributes): ?ExplorerViewState
+    public function get(Model $model, string $key, mixed $value, array $attributes): ?ExplorerState
     {
         if (is_null($value)) {
             return null;
         }
 
         $data = json_decode($value, true);
-        $currentTab = $data['currentTab'];
+        $currentTab = $data['currentView'];
         $currentSubview = $data['currentSubview'];
         $contextsArray = [];
         foreach ($data['contexts'] as $contextKey => $context) {
@@ -40,11 +40,11 @@ class ExplorerViewStateCast implements CastsAttributes
                         $subview['yAttrName'],
                     );
                 }
-                $tabsArray[$tabKey] = new TabState2(collect($subviewsArray));
+                $tabsArray[$tabKey] = new ViewState(collect($subviewsArray));
             }
             $contextsArray[$contextKey] = new ContextState(collect($tabsArray));
         }
-        return new ExplorerViewState($currentSubview, $currentTab, collect($contextsArray));
+        return new ExplorerState($currentSubview, $currentTab, collect($contextsArray));
     }
 
     /**
@@ -54,7 +54,7 @@ class ExplorerViewStateCast implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if (!($value instanceof ExplorerViewState)) {
+        if (!($value instanceof ExplorerState)) {
             return $value;
         }
 

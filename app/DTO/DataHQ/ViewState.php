@@ -5,7 +5,7 @@ namespace App\DTO\DataHQ;
 use Illuminate\Support\Collection;
 use JsonSerializable;
 
-class TabState2 implements JsonSerializable
+class ViewState implements JsonSerializable
 {
     public Collection $subviews;
 
