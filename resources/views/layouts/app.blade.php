@@ -161,7 +161,7 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
-                    <p class="text-white pt-2 pb-2 pl-2 fs-14">
+                    <p class="text-white pt-2 pb-2 pl-2 fs-14" style="text-align: center">
                         {{config('app.banner')}}
                     </p>
                 </div>
