@@ -59,6 +59,7 @@
             }, {once: true});
 
             $(document).ready(() => {
+                console.log('document.ready');
                 mcutil.initDataTable('#entities-with-used-activities', {
                     pageLength: 100,
                     scrollX: true,
@@ -73,4 +74,25 @@
             });
         </script>
     @endpush
+
+    @script
+    <script>
+        $wire.on('reload-component', () => {
+            $('#entities-with-used-activities').DataTable().destroy();
+            setTimeout(() => {
+                $('#entities-with-used-activities').DataTable({
+                    pageLength: 100,
+                    scrollX: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                    columnDefs: [
+                        {targets: [0], visible: false},
+                    ],
+                });
+            });
+        });
+    </script>
+    @endscript
 </table>

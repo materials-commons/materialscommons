@@ -33,7 +33,31 @@
         $(document).ready(() => {
             mcutil.initDataTable("#activities-dd", {
                 pageLength: 100,
-                stateSave: true
+                scrollX: true,
+                stateSave: true,
+                fixedHeader: {
+                    header: true,
+                    headerOffset: 46,
+                },
+            });
+        });
+    </script>
+    @endscript
+
+    @script
+    <script>
+        $wire.on('reload-component', () => {
+            $('#activities-dd').DataTable().destroy();
+            setTimeout(() => {
+                $('#activities-dd').DataTable({
+                    pageLength: 100,
+                    scrollX: true,
+                    stateSave: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                });
             });
         });
     </script>

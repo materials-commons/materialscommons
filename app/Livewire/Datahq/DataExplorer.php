@@ -3,7 +3,9 @@
 namespace App\Livewire\Datahq;
 
 use App\Models\DatahqInstance;
+use App\Models\Experiment;
 use App\Models\Project;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -12,6 +14,7 @@ class DataExplorer extends Component
 {
     public DatahqInstance $instance;
     public Project $project;
+    public ?Experiment $experiment = null;
 
     #[Url(history: true)]
     public string $context = '';
@@ -34,13 +37,16 @@ class DataExplorer extends Component
     #[On('selected-data')]
     public function handleSelectedData($selectedData): void
     {
-        ray("handleSelectedData: {$selectedData}");
         $this->context = $selectedData;
+        $this->dispatch("reload-{$this->explorer}-explorer", $this->context);
     }
 
     public function render()
     {
-        ray("DataExplorer::render called");
+        if (Str::startsWith($this->context, 'e-')) {
+            $experimentId = Str::after($this->context, 'e-');
+            $this->experiment = Experiment::find($experimentId);
+        }
         return view('livewire.datahq.data-explorer');
     }
 }

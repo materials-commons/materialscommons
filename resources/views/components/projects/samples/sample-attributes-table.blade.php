@@ -33,11 +33,35 @@
             $(document).ready(() => {
                 $('#entities-dd').DataTable({
                     pageLength: 100,
-                    stateSave: true
+                    scrollX: true,
+                    stateSave: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
                 });
             });
         </script>
     @endpush
+
+    @script
+    <script>
+        $wire.on('reload-component', () => {
+            $('#entities-dd').DataTable().destroy();
+            setTimeout(() => {
+                $('#entities-dd').DataTable({
+                    pageLength: 100,
+                    scrollX: true,
+                    stateSave: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                });
+            });
+        });
+    </script>
+    @endscript
 </table>
 
 

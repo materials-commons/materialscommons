@@ -10,6 +10,7 @@
         <x-slot:body>
             @if($explorer == "overview")
                 <livewire:datahq.data-explorer.overview-explorer :project="$project"
+                                                                 :experiment="$experiment"
                                                                  :instance="$instance"
                                                                  :context="$context"
                                                                  :view="$view"/>

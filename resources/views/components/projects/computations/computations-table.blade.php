@@ -71,6 +71,27 @@
             });
         </script>
     @endpush
+
+    @script
+    <script>
+        $wire.on('reload-component', () => {
+            $('#computations-with-used-activities').DataTable().destroy();
+            setTimeout(() => {
+                $('#computations-with-used-activities').DataTable({
+                    pageLength: 100,
+                    scrollX: true,
+                    fixedHeader: {
+                        header: true,
+                        headerOffset: 46,
+                    },
+                    columnDefs: [
+                        {targets: [0], visible: false},
+                    ],
+                });
+            });
+        });
+    </script>
+    @endscript
 </table>
 
 

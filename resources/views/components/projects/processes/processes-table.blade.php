@@ -31,10 +31,34 @@
                 $(document).ready(() => {
                     $('#activities').DataTable({
                         pageLength: 100,
+                        scrollX: true,
                         stateSave: true,
+                        fixedHeader: {
+                            header: true,
+                            headerOffset: 46,
+                        },
                     });
                 });
             </script>
         @endpush
+
+        @script
+        <script>
+            $wire.on('reload-component', () => {
+                $('#activities').DataTable().destroy();
+                setTimeout(() => {
+                    $('#activities').DataTable({
+                        pageLength: 100,
+                        scrollX: true,
+                        stateSave: true,
+                        fixedHeader: {
+                            header: true,
+                            headerOffset: 46,
+                        },
+                    });
+                });
+            });
+        </script>
+        @endscript
     </table>
 </div>

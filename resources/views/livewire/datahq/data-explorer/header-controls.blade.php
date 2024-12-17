@@ -7,7 +7,7 @@
                 data-style="btn-light no-tt">
             <option value="project" @selected($selectedData == "project")>Project</option>
             @foreach($experiments as $experiment)
-                <option value="e-{{$experiment->id}}" @selected($selectedData == "e-{{$experiment->id}}")>Experiment: {{$experiment->name}}</option>
+                <option value="e-{{$experiment->id}}" @selected($selectedData == "e-{$experiment->id}")>Experiment: {{$experiment->name}}</option>
             @endforeach
         </select>
         </span>
@@ -37,7 +37,6 @@
                         init() {
                             $("#select-data-for").selectpicker('show');
                             $("#view-data").selectpicker('show');
-                            let $wire = this.$wire;
                             $('#select-data-for').on('change', function () {
                                 let selected = $(this).val();
                                 $wire.dispatch('selected-data', {selectedData: selected});
