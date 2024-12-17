@@ -26,6 +26,7 @@ class OverviewExplorer extends Component
     public function handleReloadOverviewExplorer($context): void
     {
         $this->context = $context;
+        ray("handleReloadOverviewExplorer: {$context}");
         $this->dispatch('reload-component');
     }
 

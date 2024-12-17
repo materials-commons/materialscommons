@@ -28,10 +28,12 @@ class DataExplorer extends Component
     #[Url(history: true)]
     public string $subview = '';
 
-    #[On('reload-instance')]
-    public function reloadInstance($selectedExplorer): void
+    #[On('reload-selected-explorer')]
+    public function handleReloadSelectedExplorer($selectedExplorer): void
     {
         $this->explorer = $selectedExplorer;
+        ray("handleReloadSelectedExplorer: {$selectedExplorer}");
+        $this->dispatch("reload-{$this->explorer}-explorer", $this->context);
     }
 
     #[On('selected-data')]

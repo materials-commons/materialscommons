@@ -59,7 +59,6 @@
             }, {once: true});
 
             $(document).ready(() => {
-                console.log('document.ready');
                 mcutil.initDataTable('#entities-with-used-activities', {
                     pageLength: 100,
                     scrollX: true,

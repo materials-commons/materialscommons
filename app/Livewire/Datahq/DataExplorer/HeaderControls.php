@@ -24,17 +24,23 @@ class HeaderControls extends Component
     public function handleSelectedExplorer($selectedExplorer): void
     {
         $this->selectedExplorer = $selectedExplorer;
-        ray("handleSelectedExplorer: {$selectedExplorer}");
-        // This will need to be changed, based on the selected data. Either redirect for project or experiment? Or the
-        // route could determine if this is project or experiment based.
-//        $this->redirectRoute('projects.datahq.sampleshq.index',
-//            [$this->project, 'tab' => 'index', 'subview' => 'index']);
-        $this->dispatch('reload-instance', $selectedExplorer);
+        /*
+         * $context = $request->input('context', 'project');
+        $explorer = $request->input('explorer', 'overview');
+        $view = $request->input('view', 'samples');
+        $subview = $request->input('subview', '');
+         */
+        $this->redirectRoute('projects.datahq.index', [
+            $this->project,
+            'explorer' => $selectedExplorer,
+            'context'  => Request()->input('context', 'project'),
+            'view'     => Request()->input('view', 'samples'),
+        ]);
+//        $this->dispatch('reload-selected-explorer', $selectedExplorer);
     }
 
     public function render()
     {
-        ray("HeaderControls::render called");
         $experiments = Experiment::where('project_id', $this->project->id)->get();
         return view('livewire.datahq.data-explorer.header-controls', [
             'experiments' => $experiments,
