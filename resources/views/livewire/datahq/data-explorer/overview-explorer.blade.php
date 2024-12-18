@@ -45,7 +45,7 @@
     </ul>
     <div class="mt-2">
         @if($view == 'samples')
-            <x-projects.samples.samples-table :project="$project" :experiment="$experiment"/>
+            <livewire:projects.entities.entities-table :project="$project" :experiment="$experiment"/>
         @elseif($view == 'computations')
             <x-projects.computations.computations-table :project="$project"/>
         @elseif($view == 'processes')
