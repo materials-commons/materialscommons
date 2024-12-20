@@ -79,6 +79,36 @@
     margin: 0 .2rem;
 }
 
+.page-link {
+    color: #2B6BB1;
+    font-weight: 700;
+}
+
+.page-item:first-child .page-link {
+    margin-left: 0;
+    border-radius: 0.25rem;
+}
+
+.page-item:last-child .page-link {
+    border-radius: 0.25rem;
+}
+
+.pagination-lg .page-item:first-child .page-link {
+    border-radius: 0.3rem;
+}
+
+.pagination-lg .page-item:last-child .page-link {
+    border-radius: 0.3rem;
+}
+
+.pagination-sm .page-item:first-child .page-link {
+    border-radius: 0.2rem;
+}
+
+.pagination-sm .page-item:last-child .page-link {
+    border-radius: 0.2rem;
+}
+
 .border-grey {
     border: 1px solid #b3c2d9;
 }
