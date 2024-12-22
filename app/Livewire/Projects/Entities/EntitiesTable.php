@@ -10,6 +10,7 @@ use App\Traits\Entities\EntityAndAttributeQueries;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function is_null;
@@ -20,6 +21,8 @@ class EntitiesTable extends Component
     use EntityAndAttributeQueries;
     use WithPagination;
 
+    #[Url]
+    public $search = '';
     public Project $project;
     public ?Experiment $experiment = null;
     public $category = 'experimental';
@@ -31,6 +34,15 @@ class EntitiesTable extends Component
         } else {
             return $this->createExperimentEntitiesView();
         }
+    }
+
+    private function applySearch($query)
+    {
+        if ($this->search != '') {
+            $query->where('name', 'like', '%'.$this->search.'%');
+        }
+
+        return $query;
     }
 
     private function createProjectEntitiesView(): View|Closure|string
@@ -45,11 +57,14 @@ class EntitiesTable extends Component
         $activities = $this->getProjectActivityNamesForEntities($this->project->id, $entities);
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
-        $paged = Entity::has('experiments')
+        $query = Entity::has('experiments')
                        ->with(['activities', 'experiments'])
                        ->where('category', $this->category)
-                       ->where('project_id', $this->project->id)
-                       ->paginate(10);
+                       ->where('project_id', $this->project->id);
+
+        $query = $this->applySearch($query);
+
+        $paged = $query->paginate(10);
 
         return view('livewire.projects.entities.entities-table', [
             'entities'       => $paged,
@@ -84,10 +99,14 @@ class EntitiesTable extends Component
 
         if ($this->category == 'experimental') {
             $entities = $this->experiment->experimental_entities()->with('activities')->get();
-            $paged = $this->experiment->experimental_entities()->with('activities')->paginate(10);
+            $query = $this->experiment->experimental_entities()->with('activities');
+            $query = $this->applySearch($query);
+            $paged = $query->paginate(10);
         } else {
             $entities = $this->experiment->computational_entities()->with('activities')->get();
-            $paged = $this->experiment->computational_entities()->with('activities')->paginate(10);
+            $query = $this->experiment->computational_entities()->with('activities');
+            $query = $this->applySearch($query);
+            $paged = $query->paginate(10);
         }
 
         $activities = $this->getExperimentActivityNamesEindexForEntities($this->experiment->id, $entities,

@@ -1,7 +1,7 @@
 <div>
     <div class="col-3 no-padding-left mt-3 form-group has-search">
         <span class="fa fa-search form-control-feedback"></span>
-        <input class="form-control" placeholder="Search...">
+        <input wire:model.live.debounce="search" type="text" class="form-control" placeholder="Search...">
     </div>
     <table id="entities-with-used-activities" class="table table-hover mt-2"
            style="width: 100%;">
