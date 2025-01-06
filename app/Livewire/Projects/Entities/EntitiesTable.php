@@ -23,6 +23,13 @@ class EntitiesTable extends Component
 
     #[Url]
     public $search = '';
+
+    #[Url]
+    public $sortCol = '';
+
+    #[Url]
+    public bool $sortAsc = false;
+
     public Project $project;
     public ?Experiment $experiment = null;
     public $category = 'experimental';
@@ -36,6 +43,16 @@ class EntitiesTable extends Component
         }
     }
 
+    public function sortBy($column)
+    {
+        if ($this->sortCol == $column) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortCol = $column;
+            $this->sortAsc = false;
+        }
+    }
+
     private function applySearch($query)
     {
         if ($this->search != '') {
@@ -43,6 +60,15 @@ class EntitiesTable extends Component
         }
 
         return $query;
+    }
+
+    private function applySort($query)
+    {
+        if (blank($this->sortCol)) {
+            return $query;
+        }
+
+        return $query->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc');
     }
 
     private function createProjectEntitiesView(): View|Closure|string
@@ -63,8 +89,9 @@ class EntitiesTable extends Component
                        ->where('project_id', $this->project->id);
 
         $query = $this->applySearch($query);
+        $query = $this->applySort($query);
 
-        $paged = $query->paginate(10);
+        $paged = $query->paginate(100);
 
         return view('livewire.projects.entities.entities-table', [
             'entities'       => $paged,
@@ -101,12 +128,14 @@ class EntitiesTable extends Component
             $entities = $this->experiment->experimental_entities()->with('activities')->get();
             $query = $this->experiment->experimental_entities()->with('activities');
             $query = $this->applySearch($query);
-            $paged = $query->paginate(10);
+            $query = $this->applySort($query);
+            $paged = $query->paginate(100);
         } else {
             $entities = $this->experiment->computational_entities()->with('activities')->get();
             $query = $this->experiment->computational_entities()->with('activities');
             $query = $this->applySearch($query);
-            $paged = $query->paginate(10);
+            $query = $this->applySort($query);
+            $paged = $query->paginate(100);
         }
 
         $activities = $this->getExperimentActivityNamesEindexForEntities($this->experiment->id, $entities,

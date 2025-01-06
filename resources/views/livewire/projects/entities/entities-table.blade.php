@@ -1,15 +1,18 @@
 <div>
     <div class="col-3 no-padding-left mt-3 form-group has-search">
         <span class="fa fa-search form-control-feedback"></span>
-        <input wire:model.live.debounce="search" type="text" class="form-control" placeholder="Search...">
+        <input wire:model.live.debounce.250ms="search" type="text" class="form-control" placeholder="Search...">
     </div>
     <table id="entities-with-used-activities" class="table table-hover mt-2"
            style="width: 100%;">
         <thead class="thead-fixed">
         <th>
-            <a class="btn tt-none">
-                <div>Name<i class="fa fa-fw fa-sort"></i></div>
-            </a>
+            <x-table.col-sortable :column="'name'" :sort-col="$sortCol" :sort-asc="$sortAsc">
+                Name
+            </x-table.col-sortable>
+            {{--            <a class="btn tt-none" wire:click="sortBy('name')">--}}
+            {{--                <div>Name<i class="fa fa-fw fa-sort"></i></div>--}}
+            {{--            </a>--}}
         </th>
         @if(isset($showExperiment))
             <th>Experiment</th>

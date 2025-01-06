@@ -23,6 +23,9 @@
     background: #fff;
 }
 
+// When using a fixed header this keeps the border for the header.
+// See: https://stackoverflow.com/questions/57166162/table-headers-positionsticky-and-border-issue
+// (Second answer, not the top picked answer)
 .table {
     border-collapse: separate;
     border-spacing: 0;
