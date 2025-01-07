@@ -24,6 +24,17 @@
                 <span class="ml-5">Data</span>
             </li>
 
+            @if(isInBeta('datahq'))
+                <li class="nav-item">
+                    <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datahq')}}"
+                       data-toggle="tooltip" title="Explore, chart and query your data."
+                       href="{{route('projects.datahq.index', [$project, 'explorer' => 'overview', 'view' => 'samples', 'context' => 'project'])}}">
+                        <i class="fa-fw fas fa-binoculars mr-2"></i>
+                        Explore Data
+                    </a>
+                </li>
+            @endif
+
             <li class="nav-item">
                 <a wire:navigate
                    class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
@@ -118,17 +129,6 @@
             <li class="nav-item mt-2">
                 <span class="ml-5">Actions</span>
             </li>
-
-            @if(isInBeta('datahq'))
-                <li class="nav-item">
-                    <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.datahq')}}"
-                       data-toggle="tooltip" title="Explore, chart and query your data."
-                       href="{{route('projects.datahq.index', [$project, 'explorer' => 'overview', 'view' => 'samples', 'context' => 'project'])}}">
-                        <i class="fa-fw fas fa-database mr-2"></i>
-                        Explore Data
-                    </a>
-                </li>
-            @endif
 
             <li class="nav-item">
                 <a wire:navigate class="nav-link fs-11 ml-5"
