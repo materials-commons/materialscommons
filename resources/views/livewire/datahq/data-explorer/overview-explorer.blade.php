@@ -47,13 +47,16 @@
         @if($view == 'samples')
             <livewire:projects.entities.entities-table :project="$project" :experiment="$experiment"/>
         @elseif($view == 'computations')
-            <x-projects.computations.computations-table :project="$project"/>
+            <livewire:projects.entities.entities-table :project="$project" :experiment="$experiment"
+                                                       :category="'computational'"/>
         @elseif($view == 'processes')
             <x-projects.processes.processes-table :project="$project"/>
         @elseif($view == 'sampleattrs')
-            <x-projects.samples.sample-attributes-table :project="$project"/>
+            <livewire:projects.entities.entity-attributes-table :project="$project" :experiment="$experiment"
+                                                                :category="'experimental'"/>
         @elseif($view == 'computationattrs')
-            <x-projects.computations.computation-attributes-table :project="$project"/>
+            <livewire:projects.entities.entity-attributes-table :project="$project" :experiment="$experiment"
+                                                                :category="'computational'"/>
         @elseif($view == 'processattrs')
             <x-projects.processes.process-attributes-table :project="$project"/>
         @endif

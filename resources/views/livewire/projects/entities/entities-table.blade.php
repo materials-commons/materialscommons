@@ -1,8 +1,5 @@
 <div>
-    <div class="col-3 no-padding-left mt-3 form-group has-search">
-        <span class="fa fa-search form-control-feedback"></span>
-        <input wire:model.live.debounce.250ms="search" type="text" class="form-control" placeholder="Search...">
-    </div>
+    <x-table.table-search/>
     <table id="entities-with-used-activities" class="table table-hover mt-2"
            style="width: 100%;">
         <thead class="thead-fixed">
@@ -23,7 +20,7 @@
         </thead>
         <tbody>
         @foreach($entities as $entity)
-            <tr>
+            <tr wire:key="{{$entity->id}}">
                 <td>
                     @if(isset($experiment))
                         <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">

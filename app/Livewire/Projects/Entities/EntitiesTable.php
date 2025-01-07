@@ -7,10 +7,10 @@ use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\Project;
 use App\Traits\Entities\EntityAndAttributeQueries;
+use App\Traits\Table\BaseLivewireTable;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function is_null;
@@ -20,15 +20,7 @@ class EntitiesTable extends Component
 {
     use EntityAndAttributeQueries;
     use WithPagination;
-
-    #[Url]
-    public $search = '';
-
-    #[Url]
-    public $sortCol = '';
-
-    #[Url]
-    public bool $sortAsc = false;
+    use BaseLivewireTable;
 
     public Project $project;
     public ?Experiment $experiment = null;
@@ -40,16 +32,6 @@ class EntitiesTable extends Component
             return $this->createProjectEntitiesView();
         } else {
             return $this->createExperimentEntitiesView();
-        }
-    }
-
-    public function sortBy($column)
-    {
-        if ($this->sortCol == $column) {
-            $this->sortAsc = !$this->sortAsc;
-        } else {
-            $this->sortCol = $column;
-            $this->sortAsc = false;
         }
     }
 
