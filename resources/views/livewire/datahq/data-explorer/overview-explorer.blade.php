@@ -45,20 +45,25 @@
     </ul>
     <div class="mt-2">
         @if($view == 'samples')
-            <livewire:projects.entities.entities-table :project="$project" :experiment="$experiment"/>
+            <livewire:projects.entities.entities-table :project="$project"
+                                                       :experiment="$experiment"/>
         @elseif($view == 'computations')
-            <livewire:projects.entities.entities-table :project="$project" :experiment="$experiment"
+            <livewire:projects.entities.entities-table :project="$project"
+                                                       :experiment="$experiment"
                                                        :category="'computational'"/>
         @elseif($view == 'processes')
             <x-projects.processes.processes-table :project="$project"/>
         @elseif($view == 'sampleattrs')
-            <livewire:projects.entities.entity-attributes-table :project="$project" :experiment="$experiment"
+            <livewire:projects.entities.entity-attributes-table :project="$project"
+                                                                :experiment="$experiment"
                                                                 :category="'experimental'"/>
         @elseif($view == 'computationattrs')
-            <livewire:projects.entities.entity-attributes-table :project="$project" :experiment="$experiment"
+            <livewire:projects.entities.entity-attributes-table :project="$project"
+                                                                :experiment="$experiment"
                                                                 :category="'computational'"/>
         @elseif($view == 'processattrs')
-            <x-projects.processes.process-attributes-table :project="$project"/>
+            <livewire:projects.activities.activity-attributes-table :project="$project"
+                                                                    :experiment="$experiment"/>
         @endif
     </div>
 </div>

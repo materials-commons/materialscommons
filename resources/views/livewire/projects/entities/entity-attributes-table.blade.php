@@ -3,7 +3,11 @@
     <table id="entities-dd" class="table table-hover mt-2" style="width:100%">
         <thead class="thead-fixed">
         <tr>
-            <th>Attribute</th>
+            <th>
+                <x-table.col-sortable :column="'name'" :sort-col="$sortCol" :sort-asc="$sortAsc">
+                    Attribute
+                </x-table.col-sortable>
+            </th>
             <th>Units</th>
             <th>Min</th>
             <th>Max</th>

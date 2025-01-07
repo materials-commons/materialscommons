@@ -24,6 +24,11 @@ class EntityAttributesTable extends Component
     public ?Experiment $experiment = null;
     public $category = 'experimental';
 
+    public function mount()
+    {
+        $this->sortAsc = true;
+    }
+
     public function render()
     {
         if (is_null($this->experiment)) {
@@ -51,6 +56,11 @@ class EntityAttributesTable extends Component
 
     private function getUniqueEntityAttributesForProject(): Collection
     {
+        $order = 'asc';
+        if (!$this->sortAsc) {
+            $order = 'desc';
+        }
+
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
                  ->whereIn(
@@ -65,7 +75,7 @@ class EntityAttributesTable extends Component
                  ->where('attributable_type', EntityState::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
-                 ->orderBy('name')
+            ->orderBy('name', $order)
                  ->get()
                  ->groupBy('name');
     }
@@ -82,6 +92,11 @@ class EntityAttributesTable extends Component
 
     private function getUniqueEntityAttributesForExperiment(): Collection
     {
+        $order = 'asc';
+        if (!$this->sortAsc) {
+            $order = 'desc';
+        }
+
         return DB::table('attributes')
                  ->select('name', 'unit', 'val')
                  ->whereIn(
@@ -98,7 +113,7 @@ class EntityAttributesTable extends Component
                  ->where('attributable_type', EntityState::class)
                  ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
-                 ->orderBy('name')
+            ->orderBy('name', $order)
                  ->get()
                  ->groupBy('name');
     }
