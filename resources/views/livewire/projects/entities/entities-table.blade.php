@@ -11,7 +11,7 @@
             {{--                <div>Name<i class="fa fa-fw fa-sort"></i></div>--}}
             {{--            </a>--}}
         </th>
-        @if(isset($showExperiment))
+        @if($showExperiment)
             <th>Experiment</th>
         @endif
         @foreach($activities as $activity)
@@ -38,7 +38,7 @@
                         @endif
                     @endif
                 </td>
-                @if(isset($showExperiment))
+                @if($showExperiment)
                     <td>
                         @if(isset($entity->experiments))
                             @if($entity->experiments->count() > 0)
