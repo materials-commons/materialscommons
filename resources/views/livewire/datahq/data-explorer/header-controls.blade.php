@@ -2,7 +2,7 @@
     <div class="col-lg-10 float-right" x-data="dataExplorerHeaderControls">
         <label>Select Data For:</label>
         <span wire:ignore id="select-data-for-wrapper">
-        <select name="what" class="selectpicker" id="select-data-for" title="Select Data For"
+        <select name="what" class="custom-select col-4 font-weight-bolder" id="select-data-for" title="Select Data For"
                 data-container="#select-data-for-wrapper"
                 data-style="btn-light no-tt">
             <option value="project" @selected($selectedData == "project")>Project</option>
@@ -13,7 +13,7 @@
         </span>
         <label class="ml-4">Show:</label>
         <span wire:ignore id="view-data-wrapper">
-        <select name="what" class="selectpicker" title="View" id="view-data"
+        <select name="what" class="custom-select col-4 font-weight-bolder" title="View" id="view-data"
                 data-container="#view-data-wrapper"
                 data-style="btn-light no-tt">
             <option value="overview" @selected($selectedExplorer == "overview")>Overview</option>
@@ -28,15 +28,15 @@
         @script
             <script>
                 document.addEventListener('livewire:navigating', () => {
-                    $("#select-data-for").selectpicker('destroy');
-                    $("#view-data").selectpicker('destroy');
+                    // $("#select-data-for").selectpicker('destroy');
+                    // $("#view-data").selectpicker('destroy');
                 }, {once: true});
 
                 Alpine.data("dataExplorerHeaderControls", () => {
                     return {
                         init() {
-                            $("#select-data-for").selectpicker('show');
-                            $("#view-data").selectpicker('show');
+                            // $("#select-data-for").selectpicker('show');
+                            // $("#view-data").selectpicker('show');
                             $('#select-data-for').on('change', function () {
                                 let selected = $(this).val();
                                 $wire.dispatch('selected-data', {selectedData: selected});
