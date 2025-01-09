@@ -17,6 +17,11 @@ class HeaderControls extends Component
         $this->dispatch('selected-data', $this->selectedData);
     }
 
+    public function updatedSelectedExplorer()
+    {
+        $this->dispatch('selected-explorer', $this->selectedExplorer);
+    }
+
     public function render()
     {
         $experiments = Experiment::where('project_id', $this->project->id)->get();
