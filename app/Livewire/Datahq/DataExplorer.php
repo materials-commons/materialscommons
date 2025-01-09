@@ -40,7 +40,9 @@ class DataExplorer extends Component
     public function handleSelectedData($selectedData): void
     {
         $this->context = $selectedData;
-        $this->dispatch("reload-{$this->explorer}-explorer", $this->context);
+        if (!Str::startsWith($this->context, 'e-')) {
+            $this->experiment = null;
+        }
     }
 
     public function render()
