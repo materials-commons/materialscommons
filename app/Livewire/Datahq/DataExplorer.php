@@ -28,12 +28,10 @@ class DataExplorer extends Component
     #[Url(history: true)]
     public string $subview = '';
 
-    #[On('reload-selected-explorer')]
-    public function handleReloadSelectedExplorer($selectedExplorer): void
+    #[On('selected-explorer')]
+    public function handleSelectedExplorer($selectedExplorer): void
     {
         $this->explorer = $selectedExplorer;
-        ray("handleReloadSelectedExplorer: {$selectedExplorer}");
-        $this->dispatch("reload-{$this->explorer}-explorer", $this->context);
     }
 
     #[On('selected-data')]
@@ -51,6 +49,9 @@ class DataExplorer extends Component
             $experimentId = Str::after($this->context, 'e-');
             $this->experiment = Experiment::find($experimentId);
         }
-        return view('livewire.datahq.data-explorer');
+
+        return view('livewire.datahq.data-explorer', [
+            'key' => "{$this->context}-{$this->explorer}",
+        ]);
     }
 }
