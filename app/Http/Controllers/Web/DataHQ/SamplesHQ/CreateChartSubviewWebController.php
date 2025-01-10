@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Web\DataHQ\SamplesHQ;
 
-use App\DTO\DataHQ\SubviewState;
-use App\DTO\DataHQ\ViewAttr;
-use App\DTO\DataHQ\ViewStateData;
+use App\DTO\DataHQOld\SubviewState;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Services\DataHQ\DataHQContextStateStoreInterface;
 use App\Services\DataHQ\DataHQStateStore;
 use Illuminate\Http\Request;
 

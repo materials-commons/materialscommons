@@ -2,9 +2,8 @@
 
 namespace App\View\Components\Datahq\Explorer;
 
-use App\DTO\DataHQ\SubviewState;
+use App\DTO\DataHQOld\SubviewState;
 use App\Models\Project;
-use App\Services\DataHQ\DataHQContextStateStoreInterface;
 use App\Traits\Entities\EntityAndAttributeQueries;
 use Closure;
 use Illuminate\Contracts\View\View;

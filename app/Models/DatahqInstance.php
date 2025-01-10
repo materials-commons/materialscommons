@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Casts\ExplorerStateCast;
 use App\Casts\OverviewStateCast;
-use App\DTO\DataHQ\OverviewState;
+use App\DTO\DataHQOld\OverviewState;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,16 +14,16 @@ use function collect;
 /**
  * @property integer $id
  * @property string $uuid
- * @property string $current_explorer
- * @property string $current_context
- * @property mixed $overview_explorer_state
- * @property mixed $samples_explorer_state
- * @property mixed $processes_explorer_state
- * @property mixed $computations_explorer_state;
  * @property integer $owner_id
  * @property integer $project_id
  * @property integer $experiment_id
  * @property integer $dataset_id
+ * @property mixed $current_at
+ * @property string $current_explorer
+ * @property mixed $overview_explorer_state
+ * @property mixed $samples_explorer_state
+ * @property mixed $processes_explorer_state
+ * @property mixed $computations_explorer_state;
  *
  * @mixin Builder
  */
@@ -110,10 +110,9 @@ class DatahqInstance extends Model
         return $instance;
     }
 
-    private static function createDefaultOverviewState(
-        ?Experiment $experiment = null,
-        ?Dataset    $dataset = null
-    ): OverviewState {
+    private static function createDefaultOverviewState(?Experiment $experiment = null,
+                                                       ?Dataset    $dataset = null): OverviewState
+    {
         if (is_null($experiment)) {
             $experimentsContext = collect();
         } else {

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Web\DataHQ\SamplesHQ;
 
-use App\DTO\DataHQ\ChartRequestDTO;
+use App\DTO\DataHQOld\ChartRequestDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DataHQ\ChartDataRequest;
 use App\Models\Project;
 use App\Traits\Charts\GetChartData;
 use App\Traits\DataDictionaryQueries;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use function array_values;
 use function response;
 use function uniqid;
 

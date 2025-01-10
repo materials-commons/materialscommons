@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\DataHQ\SamplesHQ;
 
-use App\DTO\DataHQ\DataHQState;
+use App\DTO\DataHQOld\DataHQState;
 use App\Http\Controllers\Controller;
 use App\Models\DatahqTab;
 use App\Models\Project;

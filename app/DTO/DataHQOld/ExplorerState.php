@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\DataHQ;
+namespace App\DTO\DataHQOld;
 
 use Illuminate\Support\Collection;
 use JsonSerializable;

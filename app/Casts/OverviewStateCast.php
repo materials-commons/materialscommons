@@ -2,7 +2,7 @@
 
 namespace App\Casts;
 
-use App\DTO\DataHQ\OverviewState;
+use App\DTO\DataHQOld\OverviewState;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use function is_null;

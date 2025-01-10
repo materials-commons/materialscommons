@@ -2,10 +2,7 @@
 
 namespace App\Services\DataHQ;
 
-use App\DTO\DataHQ\State;
-use App\Models\Dataset;
-use App\Models\Experiment;
-use App\Models\Project;
+use App\DTO\DataHQOld\State;
 
 interface DataHQContextStateStoreInterface
 {

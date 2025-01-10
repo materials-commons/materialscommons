@@ -2,10 +2,10 @@
 
 namespace App\Casts;
 
-use App\DTO\DataHQ\ContextState;
-use App\DTO\DataHQ\ExplorerState;
-use App\DTO\DataHQ\SubviewState2;
-use App\DTO\DataHQ\ViewState;
+use App\DTO\DataHQOld\ContextState;
+use App\DTO\DataHQOld\ExplorerState;
+use App\DTO\DataHQOld\SubviewState2;
+use App\DTO\DataHQOld\ViewState;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 

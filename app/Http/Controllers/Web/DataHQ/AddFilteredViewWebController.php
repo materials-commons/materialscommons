@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Web\DataHQ;
 
-use App\DTO\DataHQ\SubviewState;
-use App\DTO\DataHQ\TabState;
+use App\DTO\DataHQOld\SubviewState;
+use App\DTO\DataHQOld\TabState;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Services\DataHQ\DataHQStateStore;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\DataHQ;
+namespace App\DTO\DataHQOld;
 
 use Livewire\Wireable;
 use Ramsey\Uuid\Uuid;

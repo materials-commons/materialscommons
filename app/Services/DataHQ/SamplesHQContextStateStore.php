@@ -2,9 +2,9 @@
 
 namespace App\Services\DataHQ;
 
-use App\DTO\DataHQ\State;
-use App\DTO\DataHQ\SubviewState;
-use App\DTO\DataHQ\TabState;
+use App\DTO\DataHQOld\State;
+use App\DTO\DataHQOld\SubviewState;
+use App\DTO\DataHQOld\TabState;
 use function session;
 
 class SamplesHQContextStateStore implements DataHQContextStateStoreInterface

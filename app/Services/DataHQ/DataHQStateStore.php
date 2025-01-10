@@ -2,7 +2,7 @@
 
 namespace App\Services\DataHQ;
 
-use App\DTO\DataHQ\DataHQState;
+use App\DTO\DataHQOld\DataHQState;
 
 class DataHQStateStore
 {

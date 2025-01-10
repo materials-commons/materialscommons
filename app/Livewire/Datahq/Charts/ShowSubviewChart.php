@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Datahq\Charts;
 
-use App\DTO\DataHQ\ChartRequestDTO;
-use App\DTO\DataHQ\SubviewState;
+use App\DTO\DataHQOld\ChartRequestDTO;
+use App\DTO\DataHQOld\SubviewState;
 use App\Models\Project;
 use App\Traits\Charts\GetChartData;
 use App\Traits\DataDictionaryQueries;
