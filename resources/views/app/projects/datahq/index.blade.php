@@ -9,6 +9,11 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    <livewire:datahq.data-explorer :project="$project" :context="$context" :explorer="$explorer" :view="$view"
-                                   :subview="$subview" :instance="$instance"/>
+    <livewire:datahq.data-explorer :project="$project"
+                                   :experiment="$experiment"
+                                   :context="$context"
+                                   :explorer="$explorer"
+                                   :view="$view"
+                                   :subview="$subview"
+                                   :instance="$instance"/>
 @stop

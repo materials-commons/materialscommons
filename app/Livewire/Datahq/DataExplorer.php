@@ -13,7 +13,7 @@ use Livewire\Component;
 class DataExplorer extends Component
 {
     public DatahqInstance $instance;
-    public Project $project;
+    public ?Project $project;
     public ?Experiment $experiment = null;
 
     #[Url(history: true)]
@@ -50,8 +50,17 @@ class DataExplorer extends Component
             $this->experiment = Experiment::find($experimentId);
         }
 
+        $idPartOfKey = "";
+        if (!is_null($this->project)) {
+            $idPartOfKey .= "p-{$this->project->id}";
+        }
+
+        if (!is_null($this->experiment)) {
+            $idPartOfKey .= "e-{$this->experiment->id}";
+        }
+
         return view('livewire.datahq.data-explorer', [
-            'key' => "{$this->context}-{$this->explorer}",
+            'key' => "{$this->context}-{$this->explorer}{$idPartOfKey}",
         ]);
     }
 }

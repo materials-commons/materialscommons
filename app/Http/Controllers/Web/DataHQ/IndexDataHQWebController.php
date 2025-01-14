@@ -17,12 +17,13 @@ class IndexDataHQWebController extends Controller
         $subview = $request->input('subview', '');
         $instance = DatahqInstance::getOrCreateInstanceForProject($project, auth()->user());
         return view('app.projects.datahq.index', [
-            'project'  => $project,
-            'context'  => $context,
-            'explorer' => $explorer,
-            'view'     => $view,
-            'subview'  => $subview,
-            'instance' => $instance,
+            'project'    => $project,
+            'experiment' => $instance->experiment,
+            'context'    => $context,
+            'explorer'   => $explorer,
+            'view'       => $view,
+            'subview'    => $subview,
+            'instance'   => $instance,
         ]);
     }
 }

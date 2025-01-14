@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Casts\DataHQ\ExplorerCast;
+use App\DTO\DataHQ\Explorer;
+use App\DTO\DataHQ\View;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,14 +65,27 @@ class DatahqInstance extends Model
 
     public static function getOrCreateInstanceForProject($project, $user)
     {
-        $instance = DatahqInstance::where('project_id', $project->id)
+        $instance = DatahqInstance::with(['experiment'])
+                                  ->where('project_id', $project->id)
+                                  ->whereNotNull('current_at')
                                   ->where('owner_id', $user->id)
                                   ->first();
         if (is_null($instance)) {
+            $e = new Explorer("overview", "samples", collect([
+                new View("samples", "", "", "", collect([])),
+                new View("computations", "", "", "", collect([])),
+                new View("processes", "", "", "", collect([])),
+                new View("sampleattrs", "", "", "", collect([])),
+                new View("computationattrs", "", "", "", collect([])),
+                new View("processattrs", "", "", "", collect([])),
+            ]));
+
             $instance = DatahqInstance::create([
-                'project_id'       => $project->id,
-                'owner_id'         => $user->id,
-                'current_explorer' => 'overview'
+                'project_id'              => $project->id,
+                'owner_id'                => $user->id,
+                'current_explorer'        => 'overview',
+                'current_at'              => now(),
+                'overview_explorer_state' => $e,
             ]);
         }
 

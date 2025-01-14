@@ -18,13 +18,19 @@
                                                                  :view="$view"/>
             @elseif($explorer == "samples")
                 <span>Samples</span>
-                <livewire:datahq.data-explorer.samples-explorer :key="$key" :project="$project"/>
+                <livewire:datahq.data-explorer.samples-explorer :key="$key"
+                                                                :project="$project"
+                                                                :experiment="$experiment"/>
             @elseif($explorer == "computations")
                 <span>Computations</span>
-                <livewire:datahq.data-explorer.computations-explorer :key="$key" :project="$project"/>
+                <livewire:datahq.data-explorer.computations-explorer :key="$key"
+                                                                     :project="$project"
+                                                                     :experiment="$experiment"/>
             @elseif($explorer == "processes")
                 <span>Processes</span>
-                <livewire:datahq.data-explorer.processes-explorer :key="$key" :project="$project"/>
+                <livewire:datahq.data-explorer.processes-explorer :key="$key"
+                                                                  :project="$project"
+                                                                  :experiment="$experiment"/>
             @endif
         </x-slot:body>
     </x-card>

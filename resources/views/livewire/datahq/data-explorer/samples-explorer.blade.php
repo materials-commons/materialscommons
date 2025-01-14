@@ -1,5 +1,12 @@
 <div>
     Samples Explorer Component
+    @if(!is_null($project))
+        Project: {{$project->id}}
+    @endif
+
+    @if(!is_null($experiment))
+        Experiment: {{$experiment->id}}
+    @endif
     {{--    <ul class="nav nav-tabs">--}}
     {{--        @foreach($tabs as $tab)--}}
     {{--            <li class="nav-item">--}}
