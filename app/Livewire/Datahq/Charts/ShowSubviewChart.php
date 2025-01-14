@@ -2,8 +2,7 @@
 
 namespace App\Livewire\Datahq\Charts;
 
-use App\DTO\DataHQOld\ChartRequestDTO;
-use App\DTO\DataHQOld\SubviewState;
+use App\DTO\DataHQ\ChartRequestDTO;
 use App\Models\Project;
 use App\Traits\Charts\GetChartData;
 use App\Traits\DataDictionaryQueries;
@@ -19,7 +18,6 @@ class ShowSubviewChart extends Component
     use GetChartData;
 
     public Project $project;
-    public SubviewState $subviewState;
     public string $subview;
 
     #[On('create-chart')]

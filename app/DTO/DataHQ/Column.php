@@ -10,11 +10,16 @@ class Column implements JsonSerializable
     public string $attribute; // Column attribute name
     public string $attributeType; // Column attribute type (entity or activity attribute)
 
-    public function __construct(array $data)
+    public function __construct(string $name, string $attribute, string $attributeType)
     {
-        $this->name = $data['name'];
-        $this->attribute = $data['attribute'];
-        $this->attributeType = $data['attributeType'];
+        $this->name = $name;
+        $this->attribute = $attribute;
+        $this->attributeType = $attributeType;
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self($data['name'], $data['attribute'], $data['attributeType']);
     }
 
     public function jsonSerialize(): array

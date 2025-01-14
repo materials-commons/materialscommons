@@ -15,16 +15,24 @@ class Chart implements JsonSerializable
     public string $yAxisAttribute; // The chart's y axis attribute
     public string $yAxisAttributeType; // The chart's y axis attribute type (entity or activity attribute)
 
-    public function __construct(array $data)
+    public function __construct(string $name, string $description, string $xAxisTitle, string $yAxisTitle,
+                                string $xAxisAttribute, string $xAxisAttributeType, string $yAxisAttribute,
+                                string $yAxisAttributeType)
     {
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->xAxisTitle = $data['xAxisTitle'];
-        $this->yAxisTitle = $data['yAxisTitle'];
-        $this->xAxisAttribute = $data['xAxisAttribute'];
-        $this->xAxisAttributeType = $data['xAxisAttributeType'];
-        $this->yAxisAttribute = $data['yAxisAttribute'];
-        $this->yAxisAttributeType = $data['yAxisAttributeType'];
+        $this->name = $name;
+        $this->description = $description;
+        $this->xAxisTitle = $xAxisTitle;
+        $this->yAxisTitle = $yAxisTitle;
+        $this->xAxisAttribute = $xAxisAttribute;
+        $this->xAxisAttributeType = $xAxisAttributeType;
+        $this->yAxisAttribute = $yAxisAttribute;
+        $this->yAxisAttributeType = $yAxisAttributeType;
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self($data['name'], $data['description'], $data['xAxisTitle'], $data['yAxisTitle'],
+            $data['xAxisAttribute'], $data['xAxisAttributeType'], $data['yAxisAttribute'], $data['yAxisAttributeType']);
     }
 
     public function jsonSerialize(): array

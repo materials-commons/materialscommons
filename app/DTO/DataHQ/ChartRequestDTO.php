@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\DataHQOld;
+namespace App\DTO\DataHQ;
 
 use Livewire\Wireable;
 use function blank;

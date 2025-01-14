@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use App\Casts\ExplorerStateCast;
-use App\Casts\OverviewStateCast;
-use App\DTO\DataHQOld\OverviewState;
+use App\Casts\DataHQ\ExplorerCast;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use function collect;
 
 /**
  * @property integer $id
@@ -38,10 +35,10 @@ class DatahqInstance extends Model
         'project_id'                  => 'integer',
         'experiment_id'               => 'integer',
         'dataset_id'                  => 'integer',
-        'overview_state'              => OverviewStateCast::class,
-        'samples_explorer_state'      => ExplorerStateCast::class,
-        'computations_explorer_state' => ExplorerStateCast::class,
-        'processes_explorer_state'    => ExplorerStateCast::class,
+        'overview_explorer_state'     => ExplorerCast::class,
+        'samples_explorer_state'      => ExplorerCast::class,
+        'computations_explorer_state' => ExplorerCast::class,
+        'processes_explorer_state'    => ExplorerCast::class,
     ];
 
     public function owner()
@@ -108,23 +105,5 @@ class DatahqInstance extends Model
         }
 
         return $instance;
-    }
-
-    private static function createDefaultOverviewState(?Experiment $experiment = null,
-                                                       ?Dataset    $dataset = null): OverviewState
-    {
-        if (is_null($experiment)) {
-            $experimentsContext = collect();
-        } else {
-            $experimentsContext = collect(["e-{$experiment->id}" => 'samples']);
-        }
-
-        if (is_null($dataset)) {
-            $datasetsContext = collect();
-        } else {
-            $datasetsContext = collect(["d-{$dataset->id}" => 'samples']);
-        }
-
-        return new OverviewState("samples", $experimentsContext, $datasetsContext);
     }
 }

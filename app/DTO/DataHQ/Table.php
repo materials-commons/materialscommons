@@ -17,7 +17,7 @@ class Table implements JsonSerializable
         $this->description = $data['description'];
         $this->columns = collect();
         foreach ($data['columns'] as $column) {
-            $this->columns->push(new Column($column));
+            $this->columns->push(Column::fromArray($column));
         }
         $this->columns = collect($data['columns']);
     }

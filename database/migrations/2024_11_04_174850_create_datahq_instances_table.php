@@ -13,13 +13,12 @@ return new class extends Migration {
         Schema::create('datahq_instances', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('current_view')->nullable();
-            $table->string('current_context')->nullable();
+            $table->string('current_explorer')->nullable();
 
-            $table->json('overview_view')->nullable();
-            $table->json('samples_view')->nullable();
-            $table->json('processes_view')->nullable();
-            $table->json('computations_view')->nullable();
+            $table->json('overview_explorer_state')->nullable();
+            $table->json('samples_explorer_state')->nullable();
+            $table->json('processes_explorer_state')->nullable();
+            $table->json('computations_explorer_state')->nullable();
 
             $table->foreignId('owner_id')
                   ->constrained('users')
@@ -39,6 +38,8 @@ return new class extends Migration {
                   ->nullable()
                   ->constrained('datasets')
                   ->onDelete('cascade');
+
+            $table->datetime('current_at')->nullable();
 
             $table->timestamps();
         });

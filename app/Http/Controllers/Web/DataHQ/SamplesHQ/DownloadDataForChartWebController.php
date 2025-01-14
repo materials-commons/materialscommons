@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Web\DataHQ\SamplesHQ;
 
-use App\DTO\DataHQOld\ChartRequestDTO;
+use App\DTO\DataHQ\ChartRequestDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DataHQ\ChartDataRequest;
 use App\Models\Project;

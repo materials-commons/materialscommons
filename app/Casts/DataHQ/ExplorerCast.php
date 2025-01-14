@@ -31,7 +31,7 @@ class ExplorerCast implements CastsAttributes
                 $chart = null;
                 $table = null;
                 if (!is_null($subview['chart'])) {
-                    $chart = new Chart($subview['chart']);
+                    $chart = Chart::fromArray($subview['chart']);
                 }
 
                 if (!is_null($subview['table'])) {

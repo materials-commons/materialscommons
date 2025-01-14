@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Datahq\Explorer;
 
-use App\DTO\DataHQOld\SubviewState;
 use App\Models\Project;
 use App\Traits\Entities\EntityAndAttributeQueries;
 use Closure;
@@ -14,13 +13,11 @@ class ShowSubviewChart extends Component
     use EntityAndAttributeQueries;
 
     public Project $project;
-    public SubviewState $subviewState;
     public string $subview;
 
-    public function __construct(Project $project, string $subview, SubviewState $subviewState)
+    public function __construct(Project $project, string $subview)
     {
         $this->project = $project;
-        $this->subviewState = $subviewState;
         $this->subview = $subview;
     }
 
