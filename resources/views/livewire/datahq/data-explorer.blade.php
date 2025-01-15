@@ -13,14 +13,17 @@
                 <livewire:datahq.data-explorer.overview-explorer :key="$key"
                                                                  :project="$project"
                                                                  :experiment="$experiment"
-                                                                 :instance="$instance"
                                                                  :context="$context"
                                                                  :view="$view"/>
             @elseif($explorer == "samples")
                 <span>Samples</span>
                 <livewire:datahq.data-explorer.samples-explorer :key="$key"
                                                                 :project="$project"
-                                                                :experiment="$experiment"/>
+                                                                :experiment="$experiment"
+                                                                :context="$context"
+                                                                :view="$view"
+                                                                :subview="$subview"
+                                                                :instance="$instance"/>
             @elseif($explorer == "computations")
                 <span>Computations</span>
                 <livewire:datahq.data-explorer.computations-explorer :key="$key"

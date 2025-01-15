@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Casts\DataHQ\ExplorerCast;
 use App\DTO\DataHQ\Explorer;
+use App\DTO\DataHQ\Subview;
 use App\DTO\DataHQ\View;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function collect;
 
 /**
  * @property integer $id
@@ -71,14 +73,7 @@ class DatahqInstance extends Model
                                   ->where('owner_id', $user->id)
                                   ->first();
         if (is_null($instance)) {
-            $e = new Explorer("overview", "samples", collect([
-                new View("samples", "", "", "", collect([])),
-                new View("computations", "", "", "", collect([])),
-                new View("processes", "", "", "", collect([])),
-                new View("sampleattrs", "", "", "", collect([])),
-                new View("computationattrs", "", "", "", collect([])),
-                new View("processattrs", "", "", "", collect([])),
-            ]));
+            $e = new Explorer("overview", "samples", collect());
 
             $instance = DatahqInstance::create([
                 'project_id'              => $project->id,
@@ -90,6 +85,23 @@ class DatahqInstance extends Model
         }
 
         return $instance;
+    }
+
+    public static function addDefaultSamplesExplorerState(DatahqInstance $instance)
+    {
+        $instance->update([
+            'samples_explorer_state' => self::createDefaultSamplesExplorerState(),
+            'current_explorer'       => 'samples',
+        ]);
+    }
+
+    public static function createDefaultSamplesExplorerState(): Explorer
+    {
+        return new Explorer("samples", "All Samples", collect([
+            new View("All Samples", "", "", "Samples", collect([
+                new Subview("Samples", "", null, null),
+            ])),
+        ]));
     }
 
     public static function getOrCreateInstanceForDataset($dataset, $user)

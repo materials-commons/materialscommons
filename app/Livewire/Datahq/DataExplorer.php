@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class DataExplorer extends Component
 {
-    public DatahqInstance $instance;
+    public ?DatahqInstance $instance;
     public ?Project $project;
     public ?Experiment $experiment = null;
 
@@ -32,6 +32,33 @@ class DataExplorer extends Component
     public function handleSelectedExplorer($selectedExplorer): void
     {
         $this->explorer = $selectedExplorer;
+        switch ($selectedExplorer) {
+            case 'samples':
+                if (is_null($this->instance->samples_explorer_state)) {
+                    $this->instance->update([
+                        'samples_explorer_state' => DatahqInstance::createDefaultSamplesExplorerState(),
+                        'current_explorer'       => 'samples',
+                    ]);
+                } else {
+                    $this->instance->update([
+                        'current_explorer' => 'samples',
+                    ]);
+                }
+                $this->view = $this->instance->samples_explorer_state->currentView;
+                break;
+            case 'overview':
+                $this->view = $this->instance->overview_explorer_state->currentView;
+                $this->instance->update([
+                    'current_explorer' => 'overview',
+                ]);
+                if (!blank($this->subview)) {
+                    $this->subview = '';
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 
     #[On('selected-data')]
@@ -46,8 +73,10 @@ class DataExplorer extends Component
     public function render()
     {
         if (Str::startsWith($this->context, 'e-')) {
-            $experimentId = Str::after($this->context, 'e-');
-            $this->experiment = Experiment::find($experimentId);
+            if (is_null($this->experiment) || $this->experiment->id !== Str::after($this->context, 'e-')) {
+                $experimentId = Str::after($this->context, 'e-');
+                $this->experiment = Experiment::find($experimentId);
+            }
         }
 
         $idPartOfKey = "";

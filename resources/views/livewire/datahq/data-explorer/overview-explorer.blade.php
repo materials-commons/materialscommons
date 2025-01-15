@@ -47,7 +47,8 @@
         @if($view == 'samples')
             <livewire:projects.entities.entities-table :key="$context"
                                                        :project="$project"
-                                                       :experiment="$experiment"/>
+                                                       :experiment="$experiment"
+                                                       :category="'experimental'"/>
         @elseif($view == 'computations')
             <livewire:projects.entities.entities-table :key="$context"
                                                        :project="$project"
