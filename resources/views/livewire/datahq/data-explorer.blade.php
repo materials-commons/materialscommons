@@ -16,7 +16,6 @@
                                                                  :context="$context"
                                                                  :view="$view"/>
             @elseif($explorer == "samples")
-                <span>Samples</span>
                 <livewire:datahq.data-explorer.samples-explorer :key="$key"
                                                                 :project="$project"
                                                                 :experiment="$experiment"

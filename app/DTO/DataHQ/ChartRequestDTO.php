@@ -17,6 +17,17 @@ class ChartRequestDTO implements Wireable
 
     public string $filters;
 
+    public function __construct(string $xattr, string $xattrType, string $yattr, string $yattrType,
+                                string $chartType = 'scatter', string $filters = '')
+    {
+        $this->xattr = $xattr;
+        $this->xattrType = $xattrType;
+        $this->yattr = $yattr;
+        $this->yattrType = $yattrType;
+        $this->chartType = $chartType;
+        $this->filters = $filters;
+    }
+
     public static function fromArray(array $data): self
     {
         $dto = new self();
@@ -65,13 +76,6 @@ class ChartRequestDTO implements Wireable
         $yattr = $value['yattr'];
         $yattrType = $value['yattrType'];
 
-        $x = new static();
-        $x->xattr = $xattr;
-        $x->xattrType = $xattrType;
-        $x->yattr = $yattr;
-        $x->yattrType = $yattrType;
-        $x->chartType = 'scatter';
-        $x->filters = '';
-        return $x;
+        return new static($xattr, $xattrType, $yattr, $yattrType);
     }
 }

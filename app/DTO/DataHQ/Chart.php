@@ -15,9 +15,11 @@ class Chart implements JsonSerializable
     public string $yAxisAttribute; // The chart's y axis attribute
     public string $yAxisAttributeType; // The chart's y axis attribute type (entity or activity attribute)
 
-    public function __construct(string $name, string $description, string $xAxisTitle, string $yAxisTitle,
-                                string $xAxisAttribute, string $xAxisAttributeType, string $yAxisAttribute,
-                                string $yAxisAttributeType)
+    public function __construct(string $name, string $description = "", string $xAxisTitle = "",
+                                string $yAxisTitle = "",
+                                string $xAxisAttribute = "", string $xAxisAttributeType = "",
+                                string $yAxisAttribute = "",
+                                string $yAxisAttributeType = "")
     {
         $this->name = $name;
         $this->description = $description;

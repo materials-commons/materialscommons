@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Datahq\DataExplorer;
 
+use App\DTO\DataHQ\Chart;
 use App\DTO\DataHQ\Subview;
 use App\DTO\DataHQ\View;
 use App\Models\DatahqInstance;
@@ -36,6 +37,18 @@ class SamplesExplorer extends Component
         ]);
     }
 
+    public function addChart()
+    {
+        $currentView = $this->getCurrentView();
+        $subviewCount = $currentView->subviews->count();
+        $chartName = "Chart {$subviewCount}";
+        $currentView->currentSubview = $chartName;
+        $currentView->subviews->push(new Subview($chartName, "", new Chart("Chart"), null));
+        $this->instance->update([
+            'samples_explorer_state' => $this->instance->samples_explorer_state,
+        ]);
+    }
+
     public function setView($view)
     {
         $this->view = $view;
@@ -45,17 +58,25 @@ class SamplesExplorer extends Component
         ]);
     }
 
+    public function setSubview($subviewName)
+    {
+        // Find the current view, then set that views current subview to the given subview name
+        foreach ($this->instance->samples_explorer_state->views as $view) {
+            if ($view->name === $this->instance->samples_explorer_state->currentView) {
+                $view->currentSubview = $subviewName;
+            }
+        }
+        $this->instance->update([
+            'samples_explorer_state' => $this->instance->samples_explorer_state,
+        ]);
+    }
+
     public function render()
     {
-        $this->setFromInstance();
+        $this->view = $this->instance->samples_explorer_state->currentView;
 
-        $currentView = $this->instance->samples_explorer_state->views->first(function ($value) {
-            return $this->instance->samples_explorer_state->currentView === $value->name;
-        });
-
-        $currentSubview = $currentView->subviews->first(function ($value) use ($currentView) {
-            return $currentView->currentSubview === $value->name;
-        });
+        $currentView = $this->getCurrentView();
+        $currentSubview = $this->getCurrentSubviewForView($currentView);
 
         return view('livewire.datahq.data-explorer.samples-explorer', [
             'currentView'    => $currentView,
@@ -63,8 +84,24 @@ class SamplesExplorer extends Component
         ]);
     }
 
-    private function setFromInstance()
+    function getCurrentView(): View
     {
-        $this->view = $this->instance->samples_explorer_state->currentView;
+        return $this->instance->samples_explorer_state->views->first(function ($value) {
+            return $this->instance->samples_explorer_state->currentView === $value->name;
+        });
+    }
+
+    function getCurrentSubviewForView(View $currentView): Subview
+    {
+        return $currentView->subviews->first(function ($value) use ($currentView) {
+            return $currentView->currentSubview === $value->name;
+        });
+    }
+
+    function getSubviewForView(View $currentView, string $subviewName): Subview
+    {
+        return $currentView->subviews->first(function ($value) use ($subviewName) {
+            return $subviewName === $value->name;
+        });
     }
 }
