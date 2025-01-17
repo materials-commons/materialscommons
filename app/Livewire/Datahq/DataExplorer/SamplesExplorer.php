@@ -3,14 +3,17 @@
 namespace App\Livewire\Datahq\DataExplorer;
 
 use App\DTO\DataHQ\Chart;
+use App\DTO\DataHQ\ChartRequestDTO;
 use App\DTO\DataHQ\Subview;
 use App\DTO\DataHQ\View;
 use App\Models\DatahqInstance;
 use App\Models\Experiment;
 use App\Models\Project;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use function collect;
+use function uuid;
 
 class SamplesExplorer extends Component
 {
@@ -49,6 +52,22 @@ class SamplesExplorer extends Component
         ]);
     }
 
+    #[On('set-chart-data')]
+    public function handleSetChartData($data)
+    {
+        $chartRequestDTO = ChartRequestDTO::fromArray($data);
+        // Persist the chart data for the current subview
+        $currentView = $this->getCurrentView();
+        $currentSubview = $this->getCurrentSubviewForView($currentView);
+        $currentSubview->chart->xAxisAttribute = $chartRequestDTO->xattr;
+        $currentSubview->chart->xAxisAttributeType = $chartRequestDTO->xattrType;
+        $currentSubview->chart->yAxisAttribute = $chartRequestDTO->yattr;
+        $currentSubview->chart->yAxisAttributeType = $chartRequestDTO->yattrType;
+        $this->instance->update([
+            'samples_explorer_state' => $this->instance->samples_explorer_state,
+        ]);
+    }
+
     public function setView($view)
     {
         $this->view = $view;
@@ -81,6 +100,7 @@ class SamplesExplorer extends Component
         return view('livewire.datahq.data-explorer.samples-explorer', [
             'currentView'    => $currentView,
             'currentSubview' => $currentSubview,
+            'dataKey' => uuid(),
         ]);
     }
 

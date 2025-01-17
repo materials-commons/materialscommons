@@ -3,8 +3,9 @@
 namespace App\DTO\DataHQ;
 
 use JsonSerializable;
+use Livewire\Wireable;
 
-class Chart implements JsonSerializable
+class Chart implements JsonSerializable, Wireable
 {
     public string $name; // Name of the chart
     public string $description; // Description of the chart
@@ -49,5 +50,15 @@ class Chart implements JsonSerializable
             'yAxisAttribute'     => $this->yAxisAttribute,
             'yAxisAttributeType' => $this->yAxisAttributeType,
         ];
+    }
+
+    public function toLivewire()
+    {
+        return $this->jsonSerialize();
+    }
+
+    public static function fromLivewire($value)
+    {
+        return Chart::fromArray($value);
     }
 }

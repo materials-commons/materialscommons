@@ -32,7 +32,9 @@
     @if($currentSubview->name == "Samples")
         Showing Samples Table
     @elseif (!is_null($currentSubview->chart))
-        <livewire:datahq.data-explorer.display-chart :project="$project"/>
+        <livewire:datahq.data-explorer.display-chart wire:key="{{$dataKey}}"
+                                                     :project="$project"
+                                                     :chart="$currentSubview->chart"/>
     @elseif(!is_null($currentSubview->table))
         Showing Table
     @else

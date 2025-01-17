@@ -17,7 +17,7 @@ class DataControls extends Component
     public function addToChart()
     {
         $chartRequest = new ChartRequestDTO($this->xAttr, $this->xAttrType, $this->yAttr, $this->yAttrType);
-        $this->dispatch('create-chart', $chartRequest);
+        $this->dispatch('set-chart-data', $chartRequest);
     }
 
     public function render()

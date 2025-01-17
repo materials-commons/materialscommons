@@ -67,11 +67,14 @@
             return {
                 chartData: [],
                 chartDataChoices: [],
-                projectId: "{{$project->id}}",
+                {{--projectId: "{{$project->id}}",--}}
+                projectId: @js($project->id),
 
                 init() {
-                    // window.showSubviewChartCallback = this.showSubviewChartCallback;
-                    this.drawChart();
+                    let data = @js($chartData);
+                    console.log("init: chartData", data);
+                    console.log("init: projectId", this.projectId);
+                    this.drawChart(data);
                 },
 
                 toggleShowChartDataControls() {
@@ -115,7 +118,33 @@
                     document.getElementById('download-data').submit();
                 },
 
-                drawChart() {
+                loadChartData(d) {
+                    console.log("d = ", d);
+                    let data = d;
+                    let x = [];
+                    let y = [];
+                    let text = [];
+                    let experimentIds = [];
+                    Object.entries(data).forEach(function ([key, item]) {
+                        x.push(item.x);
+                        y.push(item.y);
+                        text.push(item.entity);
+                        experimentIds.push(item.experiment_id);
+                    });
+                    this.chartData.push({
+                        x: x,
+                        y: y,
+                        text: text,
+                        experimentIds: experimentIds,
+                        mode: 'markers',
+                        type: 'scatter',
+                    });
+                },
+
+                drawChart(data) {
+                    if (data !== null) {
+                        this.loadChartData(data);
+                    }
                     let chartData = this.chartData;
                     setTimeout(() => {
                         // if (typeof window.addDataControlsComponent.resetControls === 'function') {
