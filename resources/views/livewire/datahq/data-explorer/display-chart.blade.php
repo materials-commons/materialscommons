@@ -42,9 +42,8 @@
         </form>
     </div>
     <div class="row" id="chart-data-controls" style="display: none">
-        <livewire:datahq.charts.add-data-controls :sample-attributes="$sampleAttributes"
-                                                  :process-attributes="$processAttributes"
-                                                  :event-name="'add-data'"/>
+        <livewire:datahq.data-explorer.data-controls :process-attributes="$processAttributes"
+                                                     :sample-attributes="$sampleAttributes"/>
     </div>
     <div class="row">
         <form class="ml-5">
@@ -71,14 +70,14 @@
                 projectId: "{{$project->id}}",
 
                 init() {
-                    window.showSubviewChartCallback = this.showSubviewChartCallback;
+                    // window.showSubviewChartCallback = this.showSubviewChartCallback;
                     this.drawChart();
                 },
 
                 toggleShowChartDataControls() {
-                    if (typeof window.addDataControlsComponent.resetControls === 'function') {
-                        window.addDataControlsComponent.resetControls();
-                    }
+                    // if (typeof window.addDataControlsComponent.resetControls === 'function') {
+                    //     window.addDataControlsComponent.resetControls();
+                    // }
                     $("#chart-data-controls").toggle();
                 },
 
@@ -119,9 +118,9 @@
                 drawChart() {
                     let chartData = this.chartData;
                     setTimeout(() => {
-                        if (typeof window.addDataControlsComponent.resetControls === 'function') {
-                            window.addDataControlsComponent.resetControls();
-                        }
+                        // if (typeof window.addDataControlsComponent.resetControls === 'function') {
+                        //     window.addDataControlsComponent.resetControls();
+                        // }
                         let e = document.getElementById('scatter-chart');
                         let chartTitle = $("#chart-title").val();
                         let xAxisTitle = $("#x-axis-title").val();

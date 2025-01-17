@@ -22,8 +22,9 @@ class DisplayChart extends Component
     public ?Chart $chart = null;
 
     #[On('create-chart')]
-    public function handleCreateChart(ChartRequestDTO $chartDataRequest)
+    public function handleCreateChart($data)
     {
+        $chartDataRequest = ChartRequestDTO::fromArray($data);
         $xattrValues = $this->getAttributeDataForProject($chartDataRequest->xattrType, $chartDataRequest->xattr,
             $this->project);
         $yattrValues = $this->getAttributeDataForProject($chartDataRequest->yattrType, $chartDataRequest->yattr,

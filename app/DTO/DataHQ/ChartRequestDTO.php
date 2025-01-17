@@ -30,7 +30,7 @@ class ChartRequestDTO implements Wireable
 
     public static function fromArray(array $data): self
     {
-        $dto = new self();
+        $dto = new self('', '', '', '');
 
         $dto->xattr = self::getDataAttr($data, 'xattr');
         $dto->xattrType = self::getDataAttr($data, 'xattr_type');
