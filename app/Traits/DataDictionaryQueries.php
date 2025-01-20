@@ -31,7 +31,7 @@ trait DataDictionaryQueries
         return DB::table('attributes')
                  ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
                      'activities.name as object_name', 'activities.id as object_id',
-                     DB::raw("'activity' as object_type"))
+                     DB::raw("$experimentId as experiment_id"), DB::raw("'activity' as object_type"))
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2activity')
@@ -71,7 +71,8 @@ trait DataDictionaryQueries
     {
         return DB::table('attributes')
                  ->select('attributes.name', 'attribute_values.unit', 'attribute_values.val', 'attributes.id',
-                     'entities.name as object_name', 'entities.id as object_id', DB::raw("'entity' as object_type"))
+                     'entities.name as object_name', 'entities.id as object_id',
+                     DB::raw("$experimentId as experiment_id"), DB::raw("'entity' as object_type"))
                  ->whereIn(
                      'attributable_id',
                      DB::table('experiment2entity')
@@ -89,7 +90,7 @@ trait DataDictionaryQueries
                  ->join('entities', 'entity_states.entity_id', '=', 'entities.id')
                  ->distinct()
                  ->get()
-                 ->groupBy('attributes.name');
+                 ->groupBy('name');
     }
 
     public function getEntityAttributeEntitiesForExperiment($experimentId, $attrName)

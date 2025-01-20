@@ -4,6 +4,7 @@ namespace App\Livewire\Datahq\DataExplorer;
 
 use App\DTO\DataHQ\Chart;
 use App\DTO\DataHQ\ChartRequestDTO;
+use App\Models\Experiment;
 use App\Models\Project;
 use App\Traits\Charts\GetChartData;
 use App\Traits\DataDictionaryQueries;
@@ -19,6 +20,7 @@ class DisplayChart extends Component
     use GetChartData;
 
     public Project $project;
+    public ?Experiment $experiment;
     public ?Chart $chart = null;
 
     #[On('create-chart')]
@@ -39,21 +41,48 @@ class DisplayChart extends Component
     {
         $xyMatches = null;
         if (!$this->isEmptyChart()) {
-            $xyMatches = $this->createChart();
+            if (is_null($this->experiment)) {
+                $xyMatches = $this->createChartForProject();
+            } else {
+                $xyMatches = $this->createChartForExperiment();
+            }
         }
+
+        if (is_null($this->experiment)) {
+            $sampleAttributes = $this->getSampleAttributes($this->project->id);
+            $processAttributes = $this->getProcessAttributes($this->project->id);
+        } else {
+            $sampleAttributes = $this->getSampleAttributesForExperiment($this->experiment);
+            $processAttributes = $this->getProcessAttributesForExperiment($this->experiment);
+        }
+
+
         return view('livewire.datahq.data-explorer.display-chart', [
-            'sampleAttributes'  => $this->getSampleAttributes($this->project->id),
-            'processAttributes' => $this->getProcessAttributes($this->project->id),
-            'chartData' => $xyMatches,
+            'sampleAttributes'  => $sampleAttributes,
+            'processAttributes' => $processAttributes,
+            'chartData'         => $xyMatches,
         ]);
     }
 
-    public function createChart()
+    public function createChartForProject()
     {
         $xattrValues = $this->getAttributeDataForProject($this->chart->xAxisAttributeType, $this->chart->xAxisAttribute,
             $this->project);
         $yattrValues = $this->getAttributeDataForProject($this->chart->yAxisAttributeType, $this->chart->yAxisAttribute,
             $this->project);
+
+        return $this->createXYMatches($xattrValues->get($this->chart->xAxisAttribute),
+            $yattrValues->get($this->chart->yAxisAttribute));
+    }
+
+    public function createChartForExperiment()
+    {
+        $xattrValues = $this->getAttributeDataForExperiment($this->chart->xAxisAttributeType,
+            $this->chart->xAxisAttribute,
+            $this->experiment);
+        $yattrValues = $this->getAttributeDataForExperiment($this->chart->yAxisAttributeType,
+            $this->chart->yAxisAttribute,
+            $this->experiment);
 
         return $this->createXYMatches($xattrValues->get($this->chart->xAxisAttribute),
             $yattrValues->get($this->chart->yAxisAttribute));

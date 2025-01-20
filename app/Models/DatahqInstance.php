@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use function collect;
+use function is_null;
+use function now;
 
 /**
  * @property integer $id
@@ -69,7 +71,7 @@ class DatahqInstance extends Model
     {
         $instance = DatahqInstance::with(['experiment'])
                                   ->where('project_id', $project->id)
-                                  ->whereNotNull('current_at')
+            ->whereNull('experiment_id')
                                   ->where('owner_id', $user->id)
                                   ->first();
         if (is_null($instance)) {
@@ -121,13 +123,21 @@ class DatahqInstance extends Model
 
     public static function getOrCreateInstanceForExperiment($experiment, $user)
     {
-        $instance = DatahqInstance::where('experiment_id', $experiment->id)
+        $instance = DatahqInstance::with(['experiment'])
+                                  ->where('project_id', $experiment->project_id)
+                                  ->where('experiment_id', $experiment->id)
                                   ->where('owner_id', $user->id)
                                   ->first();
         if (is_null($instance)) {
+            $e = new Explorer("overview", "samples", collect());
+
             $instance = DatahqInstance::create([
-                'experiment_id' => $experiment->id,
-                'owner_id'      => $user->id,
+                'project_id'              => $experiment->project->id,
+                'experiment_id'           => $experiment->id,
+                'owner_id'                => $user->id,
+                'current_explorer'        => 'overview',
+                'current_at'              => now(),
+                'overview_explorer_state' => $e,
             ]);
         }
 

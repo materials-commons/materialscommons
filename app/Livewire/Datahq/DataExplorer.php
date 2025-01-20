@@ -45,6 +45,7 @@ class DataExplorer extends Component
                     ]);
                 }
                 $this->view = $this->instance->samples_explorer_state->currentView;
+                $this->subview = '';
                 break;
             case 'overview':
                 $this->view = $this->instance->overview_explorer_state->currentView;
@@ -67,7 +68,12 @@ class DataExplorer extends Component
         $this->context = $selectedData;
         if (!Str::startsWith($this->context, 'e-')) {
             $this->experiment = null;
+        } else {
+            $experimentId = Str::after($this->context, 'e-');
+            $this->experiment = Experiment::find($experimentId);
         }
+
+        $this->getInstance();
     }
 
     public function render()
@@ -91,5 +97,17 @@ class DataExplorer extends Component
         return view('livewire.datahq.data-explorer', [
             'key' => "{$this->context}-{$this->explorer}{$idPartOfKey}",
         ]);
+    }
+
+    private function getInstance()
+    {
+        $this->instance->update(['current_at' => null]);
+        if (is_null($this->experiment)) {
+            $this->instance = DatahqInstance::getOrCreateInstanceForProject($this->project, auth()->user());
+        } else {
+            $this->instance = DatahqInstance::getOrCreateInstanceForExperiment($this->experiment, auth()->user());
+        }
+
+        $this->instance->update(['current_at' => now()]);
     }
 }

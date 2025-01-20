@@ -2,6 +2,7 @@
 
 namespace App\Traits\Charts;
 
+use App\Models\Experiment;
 use App\Models\Project;
 use function collect;
 use function is_null;
@@ -15,6 +16,19 @@ trait GetChartData
             $attrValues = $this->getActivityAttributeForProject($project->id, $attrName);
         } elseif ($attrType == 'sample') {
             $attrValues = $this->getEntityAttributeForProject($project->id, $attrName);
+        } else {
+            $attrValues = collect();
+        }
+
+        return $attrValues;
+    }
+
+    private function getAttributeDataForExperiment($attrType, $attrName, Experiment $experiment)
+    {
+        if ($attrType == 'process') {
+            $attrValues = $this->getActivityAttributeForExperiment($experiment->id, $attrName);
+        } elseif ($attrType == 'sample') {
+            $attrValues = $this->getEntityAttributeForExperiment($experiment->id, $attrName);
         } else {
             $attrValues = collect();
         }
