@@ -61,8 +61,8 @@ Route::get('/datasets/{dataset}/create-account/download/zipfile',
     CreateAccountForPublishedDatasetZipfileDownloadWebController::class)
      ->name('public.datasets.create-account.download.zipfile');
 
-//Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
-//     ->name('public.datasets.download_file');
+Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
+     ->name('public.datasets.download_file');
 
 Route::get('/datasets/{dataset}/globus', DownloadDatasetGlobusRedirectWebController::class)
      ->name('public.datasets.download_globus');
