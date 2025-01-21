@@ -15,7 +15,8 @@
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-eye mr-2"></i>View Data
             </a>
-            <a class="action-link ml-4 cursor-pointer" @click.prevent="downloadChartData()">
+            {{--            <a class="action-link ml-4 cursor-pointer" @click.prevent="downloadChartData()">--}}
+            <a class="action-link ml-4 cursor-pointer" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-download mr-2"></i>Download Chart Data
             </a>
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
@@ -24,10 +25,10 @@
             <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
                 <i class="fa fas fa-save mr-2"></i>Save Chart
             </a>
-            <a class="action-link ml-4 cursor-pointer"
-               @click.prevent="drawChart()">
-                <i class="fa fas fa-redo mr-2"></i>Redraw
-            </a>
+            {{--            <a class="action-link ml-4 cursor-pointer"--}}
+            {{--               @click.prevent="drawChart()">--}}
+            {{--                <i class="fa fas fa-redo mr-2"></i>Redraw--}}
+            {{--            </a>--}}
         </div>
     </div>
     <div style="display:none">

@@ -90,7 +90,7 @@
         <div class="row">
             <div class="form-group">
                 <a @class(["btn", "btn-success", "ml-4", "cursor-pointer", "disabled" => !$this->allAttrsSet()])
-                   wire:click.prevent="addToChart()">Add To Chart</a>
+                   wire:click.prevent="addToChart()">Draw Chart</a>
             </div>
         </div>
     </form>
