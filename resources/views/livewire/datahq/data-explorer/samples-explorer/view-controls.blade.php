@@ -20,8 +20,7 @@
             @if($showProcessesTable)
                 <div class="col-12 border rounded">
                     <br/>
-                    processes table
-                    {{--                <x-projects.processes.processes-table :project="$project"/>--}}
+                    <x-projects.processes.processes-table :project="$project"/>
                     <br/>
                 </div>
             @endif
