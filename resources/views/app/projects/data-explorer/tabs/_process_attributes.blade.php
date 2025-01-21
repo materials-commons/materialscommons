@@ -1,1 +1,0 @@
-show process attributes

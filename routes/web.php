@@ -140,7 +140,6 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/attributes_web.php');
     require base_path('routes/web_routes/teams_web.php');
     require base_path('routes/web_routes/mql_web.php');
-    require base_path('routes/web_routes/data_explorer_web.php');
     require base_path('routes/web_routes/query_web.php');
     require base_path('routes/web_routes/searchers_web.php');
     require base_path('routes/web_routes/site_web.php');
