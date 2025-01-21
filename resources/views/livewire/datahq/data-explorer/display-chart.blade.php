@@ -1,4 +1,4 @@
-<div x-data="displayChart" @add-data="onAddData">
+<div x-data="displayChart">
     <br/>
     <x-modal :id="'sv-not-implemented'" :title="'Not Implemented Yet'">
         <x-slot:body>
@@ -67,45 +67,15 @@
             return {
                 chartData: [],
                 chartDataChoices: [],
-                {{--projectId: "{{$project->id}}",--}}
                 projectId: @js($project->id),
 
                 init() {
                     let data = @js($chartData);
-                    console.log("init: chartData", data);
-                    console.log("init: projectId", this.projectId);
                     this.drawChart(data);
                 },
 
                 toggleShowChartDataControls() {
-                    // if (typeof window.addDataControlsComponent.resetControls === 'function') {
-                    //     window.addDataControlsComponent.resetControls();
-                    // }
                     $("#chart-data-controls").toggle();
-                },
-
-                onAddData(event) {
-                    let data = event.detail[0];
-                    let x = [];
-                    let y = [];
-                    let text = [];
-                    let experimentIds = [];
-                    Object.entries(data).forEach(function ([key, item]) {
-                        x.push(item.x);
-                        y.push(item.y);
-                        text.push(item.entity);
-                        experimentIds.push(item.experiment_id);
-                    });
-                    this.chartData.push({
-                        x: x,
-                        y: y,
-                        text: text,
-                        experimentIds: experimentIds,
-                        mode: 'markers',
-                        type: 'scatter',
-                    });
-
-                    this.drawChart();
                 },
 
                 downloadChartData() {
