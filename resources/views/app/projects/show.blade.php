@@ -9,6 +9,8 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.show', $project))
 
 @section('content')
+    @component('app.projects.delete-project', ['project' => $project])
+    @endcomponent
     <x-card>
         <x-slot:header>
             Project: {{$project->name}}
@@ -22,8 +24,7 @@
                    href="#project-delete-{{$project->id}}">
                     <i class="fas fa-trash-alt mr-2"></i>Delete
                 </a>
-                @component('app.projects.delete-project', ['project' => $project])
-                @endcomponent
+
             @endif
         </x-slot:header>
 
