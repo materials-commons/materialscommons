@@ -25,8 +25,7 @@
             </li>
 
             <li class="nav-item">
-                <a wire:navigate
-                   class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                    data-toggle="tooltip" title="Access your project files."
                    href="{{route('projects.folders.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-folder mr-2"></i>
@@ -131,7 +130,7 @@
             @endif
 
             <li class="nav-item">
-                <a wire:navigate class="nav-link fs-11 ml-5"
+                <a class="nav-link fs-11 ml-5"
                    data-toggle="tooltip" title="Create and publish a dataset."
                    href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
