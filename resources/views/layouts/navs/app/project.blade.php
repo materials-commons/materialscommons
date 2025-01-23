@@ -134,7 +134,16 @@
                    data-toggle="tooltip" title="Create and publish a dataset."
                    href="{{route('projects.datasets.create', [$project])}}">
                     <i class="fa-fw fas fa-file-export mr-2"></i>
-                    Publish Data
+                    Publish Dataset
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ml-5"
+                   data-toggle="tooltip" title="Create and publish a dataset."
+                   href="{{route('projects.datasets.create2', [$project])}}">
+                    <i class="fa-fw fas fa-file-export mr-2"></i>
+                    Publish Dataset2
                 </a>
             </li>
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataDatasetSamplesWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataDatasetWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataDatasetWorkflowsWebController;
+use App\Http\Controllers\Web\Datasets\CreateDataset2WebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\CreateDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\CreateDataShowCreateDirectoryWebController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Web\Datasets\CreateDataStoreCreateDirectoryWebControlle
 use App\Http\Controllers\Web\Datasets\DeleteDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DestroyDatasetWebController;
 use App\Http\Controllers\Web\Datasets\DownloadDatasetZipfileWebController;
+use App\Http\Controllers\Web\Datasets\EditDataset2WebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetFilesWebController;
 use App\Http\Controllers\Web\Datasets\EditDatasetSamplesWebController;
@@ -44,6 +46,15 @@ use App\Http\Controllers\Web\Datasets\UpdateDatasetWebController;
 use App\Http\Controllers\Web\Datasets\UpdateDatasetWorkflowFromEditWebController;
 use App\Http\Controllers\Web\Datasets\UploadFilesForDatasetWebController;
 use Illuminate\Support\Facades\Route;
+
+// New Create or Edit Routes
+Route::get('/projects/{project}/datasets/create2', CreateDataset2WebController::class)
+     ->name('projects.datasets.create2');
+
+Route::get('/projects/{project}/datasets/{dataset}/edit2', EditDataset2WebController::class)
+     ->name('projects.datasets.edit2');
+
+// Old existing routes
 
 Route::get('/projects/{project}/datasets', IndexDatasetsWebController::class)
      ->name('projects.datasets.index');
