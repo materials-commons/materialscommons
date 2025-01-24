@@ -39,6 +39,11 @@
     padding-left: 2.375rem;
 }
 
+.form-group.required .rl:after {
+    content: " *";
+    color: red;
+}
+
 .has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
