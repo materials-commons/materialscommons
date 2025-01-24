@@ -239,5 +239,11 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip({delay: {'show': 500}});
         });
+
+        document.addEventListener('livewire:navigating', () => {
+            $('[data-toggle="tooltip"]').each(function () {
+                $(this).tooltip('hide');
+            });
+        }, {once: true});
     </script>
 @endpush
