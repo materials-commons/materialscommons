@@ -40,13 +40,20 @@
         </div>
 
         <label for="license">Choose A License</label>
-        <div class="card-deck">
-            @include('livewire.projects.datasets.crud.tabs._no-license')
-            @include('livewire.projects.datasets.crud.tabs._odbl-license')
-            @include('livewire.projects.datasets.crud.tabs._odc-by-license')
-            @include('livewire.projects.datasets.crud.tabs._pddl-license')
+        <div class="form-group">
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._no-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._odbl-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._odc-by-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._pddl-license')
+            </div>
         </div>
-
         <br/>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
