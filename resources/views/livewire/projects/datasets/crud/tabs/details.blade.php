@@ -32,12 +32,16 @@
         <div class="form-group">
             <label for="communities">Communities</label>
             <select class="custom-select">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option selected>Select Community</option>
+                @foreach($communities as $community)
+                    <option wire:key="{{ $community->id }}" value="{{ $community->id }}">
+                        {{ $community->name }}
+                    </option>
+                @endforeach
             </select>
+            <a href="#" class="btn btn-primary mt-3">Add Community To Dataset</a>
         </div>
+
 
         <label for="license">Choose A License</label>
         <div class="form-group">
@@ -65,9 +69,7 @@
         let tagify;
 
         document.addEventListener('livewire:navigating', () => {
-            console.log('wire navigating');
             if (tagify) {
-                console.log('    destroying tagify');
                 tagify.destroy();
             }
         });
