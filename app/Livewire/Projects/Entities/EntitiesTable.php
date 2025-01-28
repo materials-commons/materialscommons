@@ -25,6 +25,7 @@ class EntitiesTable extends Component
     public Project $project;
     public ?Experiment $experiment = null;
     public $category = 'experimental';
+    public bool $showCheckbox = false;
 
     public function render()
     {

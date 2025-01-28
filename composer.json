@@ -30,6 +30,7 @@
     "laravel/octane": "^2.3",
     "laravel/tinker": "^2.0",
     "laravel/ui": "^4.0",
+    "laravolt/avatar": "^6.0",
     "league/flysystem-aws-s3-v3": "^3.0",
     "livewire/livewire": "^3.5",
     "maatwebsite/excel": "^3.1",
