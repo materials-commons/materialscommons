@@ -67,7 +67,7 @@
                         <td>{{$file->toHumanBytes()}}</td>
                     @endif
                     <td>
-                        <div class="form-group form-check-inline" x-data="datasetsCETabsFiles">
+                        <div class="form-group form-check-inline">
                             <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                    {{$file->selected ? 'checked' : ''}}
                                    onclick="updateSelection({{$file}}, this)">
@@ -82,6 +82,25 @@
 
 @push('scripts')
     <script>
+        let projectId = "{{$project->id}}";
+        let datasetId = "{{$dataset->id}}";
+        let directoryPath = "{{$directory->path == '/' ? '' : $directory->path}}";
+        let route = "{{route('projects.datasets.selection', [$dataset])}}";
+        let apiToken = "{{$user->api_token}}";
+
+        let filesSelectedCount = 0;
+        @if(isset($dataset->file_selection['include_files']))
+            filesSelectedCount = {{sizeof($dataset->file_selection['include_files'])}};
+        @endif
+
+        let dirsSelectedCount = 0;
+        @if(isset($dataset->file_selection['include_dirs']))
+            dirsSelectedCount = {{sizeof($dataset->file_selection['include_dirs'])}};
+        @endif
+
+
+        let totalSelectedCount = filesSelectedCount + dirsSelectedCount;
+
         $(document).ready(() => {
             $('#files').DataTable({
                 pageLength: 100,
@@ -89,117 +108,91 @@
             });
         });
 
-        mcutil.onAlpineInit("datasetsCETabsFiles", () => {
-            return {
-                projectId: "{{$project->id}}",
-                datasetId: "{{$dataset->id}}",
-                directoryPath: "{{$directory->path == '/' ? '' : $directory->path}}",
-                route: "{{route('projects.datasets.selection', [$dataset])}}",
-                apiToken: "{{$user->api_token}}",
-                filesSelectedCount: 0,
-                dirsSelectedCount: 0,
-                totalSelectedCount: 0,
+        function updateSelection(file, checkbox) {
+            if (checkbox.checked) {
+                totalSelectedCount++;
+                if (file.mime_type === 'directory') {
+                    addDirectory(file);
+                } else {
+                    addFile(file);
+                }
 
-
-                init() {
-                    @if(isset($dataset->file_selection['include_files']))
-                        this.filesSelectedCount = {{sizeof($dataset->file_selection['include_files'])}};
-                    @endif
-
-                            @if(isset($dataset->file_selection['include_dirs']))
-                        this.dirsSelectedCount = {{sizeof($dataset->file_selection['include_dirs'])}};
-                    @endif
-                        this.totalSelectedCount = this.filesSelectedCount + this.dirsSelectedCount;
-                },
-
-                updateSelection(file, checkbox) {
-                    if (checkbox.checked) {
-                        this.totalSelectedCount++;
-                        if (file.mime_type === 'directory') {
-                            this.addDirectory(file);
-                        } else {
-                            this.addFile(file);
-                        }
-
-                    } else {
-                        this.totalSelectedCount--;
-                        if (file.mime_type === 'directory') {
-                            this.removeDirectory(file);
-                        } else {
-                            this.removeFile(file);
-                        }
-                    }
-
-                    if (this.totalSelectedCount > 0) {
-                        this.setFileStatusPositive();
-                    } else {
-                        this.setFileStatusError();
-                    }
-                },
-
-                addDirectory(dir) {
-                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
-                        project_id: this.projectId,
-                        include_dir: `${dir.path}`
-                    }).then(
-                        () => null
-                    );
-                },
-
-                addFile(file) {
-                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
-                        project_id: this.projectId,
-                        include_file: `${this.directoryPath}/${file.name}`
-                    }).then(
-                        () => null
-                    );
-                },
-
-                removeDirectory(dir) {
-                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
-                        project_id: this.projectId,
-                        remove_include_dir: `${dir.path}`
-                    }).then(
-                        () => null
-                    );
-                },
-
-                removeFile(file) {
-                    axios.put(`${this.route}?api_token=${this.apiToken}`, {
-                        project_id: this.projectId,
-                        remove_include_file: `${this.directoryPath}/${file.name}`
-                    }).then(
-                        () => null
-                    );
-                },
-
-                setFileStatusPositive() {
-                    // first clear classes, then add the classes we want
-                    $('#files-step').removeClass('step-error step-success')
-                        .addClass('step-success');
-                    $('#files-circle').removeClass('fa-check fa-exclamation')
-                        .addClass('fa-check');
-                    let doneAndPublishButton = $('#done-and-publish');
-                    if (doneAndPublishButton) {
-                        doneAndPublishButton.show('fast');
-                    }
-                    $('#error-files').hide('fast');
-                },
-
-                setFileStatusError() {
-                    // first clear classes, then add the classes we want
-                    $('#files-step').removeClass('step-success step-error')
-                        .addClass('step-error');
-                    $('#files-circle').removeClass('fa-check fa-exclamation')
-                        .addClass('fa-exclamation');
-                    let doneAndPublishButton = $('#done-and-publish');
-                    if (doneAndPublishButton) {
-                        doneAndPublishButton.hide('fast');
-                    }
-                    $('#error-files').show('fast');
+            } else {
+                totalSelectedCount--;
+                if (file.mime_type === 'directory') {
+                    removeDirectory(file);
+                } else {
+                    removeFile(file);
                 }
             }
-        });
+            if (totalSelectedCount > 0) {
+                setFileStatusPositive();
+            } else {
+                setFileStatusError();
+            }
+        }
+
+        function addDirectory(dir) {
+            axios.put(`${route}?api_token=${apiToken}`, {
+                project_id: projectId,
+                include_dir: `${dir.path}`
+            }).then(
+                () => null
+            );
+        }
+
+        function addFile(file) {
+            axios.put(`${route}?api_token=${apiToken}`, {
+                project_id: projectId,
+                include_file: `${directoryPath}/${file.name}`
+            }).then(
+                () => null
+            );
+        }
+
+        function removeDirectory(dir) {
+            axios.put(`${route}?api_token=${apiToken}`, {
+                project_id: projectId,
+                remove_include_dir: `${dir.path}`
+            }).then(
+                () => null
+            );
+        }
+
+        function removeFile(file) {
+            axios.put(`${route}?api_token=${apiToken}`, {
+                project_id: projectId,
+                remove_include_file: `${directoryPath}/${file.name}`
+            }).then(
+                () => null
+            );
+        }
+
+        function setFileStatusPositive() {
+            // first clear classes, then add the classes we want
+            $('#files-step').removeClass('step-error step-success')
+                .addClass('step-success');
+            $('#files-circle').removeClass('fa-check fa-exclamation')
+                .addClass('fa-check');
+            let doneAndPublishButton = $('#done-and-publish');
+            if (doneAndPublishButton) {
+                doneAndPublishButton.show('fast');
+            }
+            $('#error-files').hide('fast');
+        }
+
+        function setFileStatusError() {
+            // first clear classes, then add the classes we want
+            $('#files-step').removeClass('step-success step-error')
+                .addClass('step-error');
+            $('#files-circle').removeClass('fa-check fa-exclamation')
+                .addClass('fa-exclamation');
+            let doneAndPublishButton = $('#done-and-publish');
+            if (doneAndPublishButton) {
+                doneAndPublishButton.hide('fast');
+            }
+            $('#error-files').show('fast');
+        }
 
     </script>
 @endpush
