@@ -57,6 +57,10 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
 
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+    {{--    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>--}}
+
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
 
     @stack('styles')
@@ -157,13 +161,14 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
-                    <p class="text-white pt-2 pb-2 pl-2 fs-14">
+                    <p class="text-white pt-2 pb-2 pl-2 fs-14" style="text-align: center">
                         {{config('app.banner')}}
                     </p>
                 </div>
             @endif
 
             <div class="mt-3">
+                <livewire:force-livewire-load/>
                 @include('flash::message')
                 @yield('breadcrumbs')
                 @yield('content')
@@ -196,9 +201,6 @@
     });
     window.mc_grids = [];
 
-    // function closeSearch() {
-    //     $('#search-project-input').val('');
-    // }
 </script>
 
 @stack('scripts')

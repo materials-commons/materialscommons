@@ -42,13 +42,14 @@
 
             <br>
             <hr>
-            <h3 class="mb-3">API Token</h3>
-            <a href="#" onclick="toggleAPIToken()" id="apitokenlink">Show API Token</a>
-            <div class="form-group" id="apitoken" style="display:none">
-                <label for="apitokeninput">API Token</label>
-                <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
+            <div x-data="apiToken">
+                <h3 class="mb-3">API Token</h3>
+                <a href="#" @click.prevent="toggleAPIToken()" id="apitokenlink">Show API Token</a>
+                <div class="form-group" id="apitoken" style="display:none">
+                    <label for="apitokeninput">API Token</label>
+                    <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
+                </div>
             </div>
-
             <br>
             <hr>
             <h3 class="mb-3">Globus Account</h3>
@@ -140,13 +141,16 @@
 
     @push('scripts')
         <script>
-            let showingAPIToken = false;
-
-            function toggleAPIToken() {
-                document.getElementById('apitoken').style.display = showingAPIToken ? "none" : "block";
-                document.getElementById('apitokenlink').innerHTML = showingAPIToken ? "Show API Token" : "Hide API Token";
-                showingAPIToken = !showingAPIToken;
-            }
+            mcutil.onAlpineInit("apiToken", () => {
+                return {
+                    showingAPIToken: false,
+                    toggleAPIToken() {
+                        document.getElementById('apitoken').style.display = this.showingAPIToken ? "none" : "block";
+                        document.getElementById('apitokenlink').innerHTML = this.showingAPIToken ? "Show API Token" : "Hide API Token";
+                        this.showingAPIToken = !this.showingAPIToken;
+                    }
+                }
+            });
         </script>
     @endpush
 @stop

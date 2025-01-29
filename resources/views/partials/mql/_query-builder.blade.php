@@ -15,7 +15,7 @@
 
     @csrf
     <div class="col-sm">
-        <h4>Processes</h4>
+        <h4>In Process</h4>
         @include('partials.mql._processes-list')
     </div>
     <div class="col-sm">
@@ -30,12 +30,3 @@
     </div>
 </form>
 <hr>
-
-@push('scripts')
-    <script>
-        function fireEvent(id) {
-            let event = new Event('changed.bs.select');
-            document.querySelector(id).dispatchEvent(event);
-        }
-    </script>
-@endpush

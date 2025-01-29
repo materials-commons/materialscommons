@@ -48,7 +48,7 @@ class Script extends Model
 
         return Script::create([
             'description'    => 'Create script run',
-            'queue'          => 'globus',
+            'queue' => 'scripts',
             'container'      => 'mc/mcpyimage',
             'script_file_id' => $file->id,
         ]);
@@ -78,8 +78,6 @@ class Script extends Model
             return collect();
         }
 
-        return Script::with('scriptFile.directory')
-                     ->whereIn("script_file_id", $scriptFiles->pluck('id'))
-                     ->get();
+        return $scriptFiles;
     }
 }

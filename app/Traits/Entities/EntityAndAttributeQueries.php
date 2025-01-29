@@ -4,9 +4,9 @@ namespace App\Traits\Entities;
 
 use App\Models\Activity;
 use App\Models\EntityState;
+use App\Models\Experiment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use function collect;
 
 trait EntityAndAttributeQueries
 {
@@ -33,6 +33,7 @@ trait EntityAndAttributeQueries
                  ->groupBy("attribute_name")
                  ->get();
     }
+
     public function getSampleAttributes($projectId): Collection
     {
         return DB::table('attributes')
@@ -46,6 +47,28 @@ trait EntityAndAttributeQueries
 
                  )
                  ->where('attributable_type', EntityState::class)
+                 ->distinct()
+                 ->orderBy('name')
+                 ->get();
+    }
+
+    public function getSampleAttributesForExperiment(Experiment $experiment): Collection
+    {
+        return DB::table('attributes')
+                 ->select('name')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('entities')
+                       ->select('entity_states.id')
+                       ->where('project_id', $experiment->project->id)
+                       ->where('entities.category', 'experimental')
+                       ->whereIn('entities.id',
+                           DB::table('experiment2entity')->select('entity_id')->where('experiment_id',
+                               $experiment->id))
+                       ->join('entity_states', 'entities.id', '=', 'entity_states.entity_id')
+                 )
+                 ->where('attributable_type', EntityState::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
                  ->distinct()
                  ->orderBy('name')
                  ->get();
@@ -84,6 +107,23 @@ trait EntityAndAttributeQueries
                  ->where('attributable_type', Activity::class)
                  ->distinct()
                  ->orderBy('name')
+                 ->get();
+    }
+
+    public function getProcessAttributesForExperiment(Experiment $experiment): Collection
+    {
+        return DB::table('attributes')
+                 ->select('name')
+                 ->whereIn(
+                     'attributable_id',
+                     DB::table('experiment2activity')
+                       ->select('activity_id')
+                       ->where('experiment_id', $experiment->id)
+                 )
+                 ->where('attributable_type', Activity::class)
+                 ->join('attribute_values', 'attributes.id', '=', 'attribute_values.attribute_id')
+                 ->orderBy('name')
+                 ->distinct()
                  ->get();
     }
 

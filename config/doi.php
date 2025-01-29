@@ -6,4 +6,7 @@ return [
     'user'        => env('DOI_USER'),
     'password'    => env('DOI_PASSWORD'),
     'service_url' => env('DOI_SERVICE_URL'),
+    'crossref' => [
+        'mailto' => env('CROSSREF_MAILTO'),
+    ],
 ];

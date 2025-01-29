@@ -29,13 +29,25 @@
                     @endif
                 @else
                     @if($category == "experimental")
-                        <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
-                            {{$entity->name}}
-                        </a>
+                        @if(isset($entity->experiments) && $entity->experiments->count() > 0)
+                            <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                                {{$entity->name}}
+                            </a>
+                        @else
+                            <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
+                                {{$entity->name}}
+                            </a>
+                        @endif
                     @else
-                        <a href="{{route('projects.computations.entities.show-spread', [$project, $entity])}}">
-                            {{$entity->name}}
-                        </a>
+                        @if(isset($entity->experiments) && $entity->experiments->count() > 0)
+                            <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                                {{$entity->name}}
+                            </a>
+                        @else
+                            <a href="{{route('projects.computations.entities.show-spread', [$project, $entity])}}">
+                                {{$entity->name}}
+                            </a>
+                        @endif
                     @endif
                 @endif
             </td>
@@ -66,12 +78,9 @@
 
 @push('scripts')
     <script>
-        let hasExperiment = false;
-        @if($showExperiment)
-            hasExperiment = true;
-        @endif
-
-        let projectId = "{{$project->id}}";
+        document.addEventListener('livewire:navigating', () => {
+            $('#entities-with-used-activities').DataTable().destroy();
+        }, {once: true});
 
         $(document).ready(() => {
             $('#entities-with-used-activities').DataTable({

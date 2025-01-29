@@ -28,7 +28,6 @@
                     {
                         name: 'name',
                         render: function(data, type, row) {
-                            console.log(row[4]);
                             if (type === 'display') {
                                 let path = row[4] == '/' ? "" : row[4];
                                 let r = route('projects.files.show', [projectId, row[5]]);

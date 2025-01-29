@@ -6,6 +6,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,6 +15,9 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
 use function auth;
 use function collect;
+use function config;
+use function file_get_contents;
+use function json_decode;
 
 /**
  * @property integer $id
@@ -108,6 +112,11 @@ class Dataset extends Model implements Searchable
     public function activities()
     {
         return $this->belongsToMany(Activity::class, 'dataset2activity', 'dataset_id', 'activity_id');
+    }
+
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
     }
 
     public function usedInProjects()
@@ -314,6 +323,14 @@ class Dataset extends Model implements Searchable
         return Storage::disk('mcfs')->path($this->publishedGlobusPathPartial());
     }
 
+    public function ensurePublishedGlobusPath()
+    {
+        if (!Storage::disk('mcfs')->exists($this->publishedGlobusPathPartial())) {
+            Storage::disk('mcfs')->makeDirectory($this->publishedGlobusPathPartial());
+            chmod(Storage::disk('mcfs')->path($this->publishedGlobusPathPartial()), 0777);
+        }
+    }
+
     public function privateGlobusPath()
     {
         return Storage::disk('mcfs')->path($this->privateGlobusPathPartial());
@@ -397,6 +414,25 @@ class Dataset extends Model implements Searchable
                       ->count();
     }
 
+    public static function getPublishedNonOpenVisusDatasets(): Collection
+    {
+        return Dataset::query()
+                      ->whereDoesntHave('tags', function ($q) {
+                          $q->where('tags.id', config('visus.import_tag_id'));
+                      })
+                      ->whereNotNull('published_at')
+                      ->get();
+    }
+
+    public function getCitations()
+    {
+        if (!Storage::disk('mcfs')->exists("__published_datasets/{$this->uuid}/citations.json")) {
+            return null;
+        }
+
+        $citationsFilePath = Storage::disk('mcfs')->path("__published_datasets/{$this->uuid}/citations.json");
+        return json_decode(file_get_contents($citationsFilePath), false);
+    }
     /*
      * Laratables
      */

@@ -15,7 +15,7 @@
         <textarea class="form-control" id="description" name="description" type="text"
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
-    <div class="float-right">
+    <div class="float-right" x-data="_createProject">
         <a href="{{$cancelRoute}}" class="action-link danger mr-3">
             Cancel
         </a>
@@ -26,7 +26,7 @@
         </a>
 
         @isset($createAndNext)
-            <a class="action-link" href="#" onclick="createAndNext()">
+            <a class="action-link" href="#" @click.prevent="createAndNext()">
                 {{$createAndNext}}
             </a>
         @endisset
@@ -36,11 +36,15 @@
 @isset($createAndNext)
     @push('scripts')
         <script>
-            function createAndNext() {
-                let route = "{!! $createAndNextRoute !!}";
-                $("#project-create").attr('action', route);
-                document.getElementById('project-create').submit();
-            }
+            mcutil.onAlpineInit("_createProject", () => {
+                return {
+                    createAndNext() {
+                        let route = "{!! $createAndNextRoute !!}";
+                        $("#project-create").attr('action', route);
+                        document.getElementById('project-create').submit();
+                    }
+                }
+            })
         </script>
     @endpush
 @endisset

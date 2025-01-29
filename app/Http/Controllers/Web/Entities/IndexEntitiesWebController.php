@@ -13,9 +13,11 @@ class IndexEntitiesWebController extends Controller
 {
     use EntityAndAttributeQueries;
 
-    public function __invoke(Request $request, CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-                             Project $project)
-    {
+    public function __invoke(
+        Request $request,
+        CreateUsedActivitiesForEntitiesAction $createUsedActivities,
+        Project $project
+    ) {
         $category = $request->input("category");
 
         auth()->user()->addToRecentlyAccessedProjects($project);
@@ -30,7 +32,7 @@ class IndexEntitiesWebController extends Controller
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
         return view('app.projects.entities.index', [
-            'showExperiment'          => true,
+            'showExperiment' => true,
             'category'       => $category,
             'project'        => $project,
             'activities'     => $activities,

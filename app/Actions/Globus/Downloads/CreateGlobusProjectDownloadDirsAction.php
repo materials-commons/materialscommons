@@ -80,6 +80,14 @@ class CreateGlobusProjectDownloadDirsAction
             'status'             => GlobusStatus::Done,
             'path'               => $baseDir,
         ]);
+
+        // Because users may login using Google rather than their institutional account, and the way
+        // that this is represented in Globus is different, we are going to attempt to set 2 ACLs,
+        // the first for the given account for globus above, and a second that looks like:
+        // "{$user->globus_user}@accounts.google.com" (for example example@exampleu.edu@accounts.google.com)
+        $globusUserId2 = $this->getGlobusIdentity("{$user->globus_user}@accounts.google.com");
+        $this->setAclOnPath($globusPath, $globusUserId2);
+
         return $globusDownload->fresh();
     }
 

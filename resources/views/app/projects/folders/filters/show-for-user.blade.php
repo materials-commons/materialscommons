@@ -25,7 +25,7 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(() => {
             $('#files').DataTable({
                 pageLength: 100,
                 serverSide: true,

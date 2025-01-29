@@ -2,7 +2,6 @@
 
 namespace App\Actions\Datasets;
 
-use App\Jobs\Datasets\RefreshPublishedDatasetJob;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Paper;
@@ -100,7 +99,7 @@ class UpdateDatasetAction
             if (is_null($user)) {
                 $user = $dataset->owner;
             }
-            RefreshPublishedDatasetJob::dispatch($dataset, $user)->onQueue('globus');
+//            RefreshPublishedDatasetJob::dispatch($dataset, $user)->onQueue('globus');
         }
 
         return Dataset::with('communities')->where('id', $dataset->id)->first();

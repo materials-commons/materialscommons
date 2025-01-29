@@ -16,7 +16,7 @@ class DestroyDatasetWebController extends Controller
             return redirect(route('projects.datasets.index', [$project]));
         }
 
-        if (!is_null($dataset->doi)) {
+        if (!blank($dataset->doi)) {
             flash("Cannot delete a dataset that has a DOI assigned")->error();
             return redirect(route('projects.datasets.index', [$project]));
         }

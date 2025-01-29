@@ -12,9 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
-use function get_current_user;
 
 class RunUserPythonScriptJob implements ShouldQueue
 {
@@ -68,51 +66,29 @@ class RunUserPythonScriptJob implements ShouldQueue
         $mcapikey = $this->run->owner->api_token;
         $projectId = $this->run->project_id;
 
+        $scriptName = $this->run->script->scriptFile->name;
+        $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
+
         $dockerEnvVarsWithAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='{$mcapikey}'";
-        $dockerRunCommand = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommand = "docker run --rm --user {$user}:{$user} {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
 
         $dockerEnvVarsWithoutAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='...not shown...'";
-        $dockerRunCommandToLog = "docker run -d --user {$user}:{$user} -it {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage";
+        $dockerRunCommandToLog = "docker run --rm --user {$user}:{$user} {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
         Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommandToLog}\n");
-
+        Storage::disk('mcfs')->append($logPathPartial, "-------- script log starts --------\n\n");
+        $this->run->update([
+            'started_at' => Carbon::now(),
+        ]);
         $dockerRunProcess = Process::fromShellCommandline($dockerRunCommand);
         $dockerRunProcess->start();
         $dockerRunProcess->wait();
-        $this->containerId = Str::squish($dockerRunProcess->getOutput());
-
-        $this->run->update([
-                               'docker_container_id' => $this->containerId,
-                               'started_at'          => Carbon::now(),
-                           ]);
-
-        // Run python script
-        $scriptName = $this->run->script->scriptFile->name;
-        $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
-        $dockerExecCommand = "docker exec --user {$user}:{$user} -t {$this->containerId} python ${scriptPath} >> {$logPath} 2>&1";
-        Storage::disk('mcfs')->append($logPathPartial, "{$dockerExecCommand}\n");
-        Storage::disk('mcfs')->append($logPathPartial, "-------- script log starts --------\n\n");
-        $dockerExecProcess = Process::fromShellCommandline($dockerExecCommand);
-        $dockerExecProcess->start();
-        $dockerExecProcess->wait();
-        $exitCode = $dockerExecProcess->getExitCode();
+        $exitCode = $dockerRunProcess->getExitCode();
 
         if ($exitCode != 0) {
             $this->run->update(['failed_at' => Carbon::now()]);
         } else {
             $this->run->update(['finished_at' => Carbon::now()]);
         }
-
-        // Stop container
-        $dockerContainerStopCommand = "docker stop {$this->containerId}";
-        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start();
-        $dockerContainerStopProcess->wait();
-
-        // Delete container
-        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
-        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start();
-        $dockerContainerRmProcess->wait();
     }
 
     private function getRunDir()
@@ -142,15 +118,15 @@ class RunUserPythonScriptJob implements ShouldQueue
         $this->run->update(['failed_at' => Carbon::now()]);
 
         // Stop container
-        $dockerContainerStopCommand = "docker stop {$this->containerId}";
-        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
-        $dockerContainerStopProcess->start();
-        $dockerContainerStopProcess->wait();
+//        $dockerContainerStopCommand = "docker stop {$this->containerId}";
+//        $dockerContainerStopProcess = Process::fromShellCommandline($dockerContainerStopCommand);
+//        $dockerContainerStopProcess->start();
+//        $dockerContainerStopProcess->wait();
 
         // Delete container
-        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
-        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
-        $dockerContainerRmProcess->start();
-        $dockerContainerRmProcess->wait();
+//        $dockerContainerRmCommand = "docker container rm {$this->containerId}";
+//        $dockerContainerRmProcess = Process::fromShellCommandline($dockerContainerRmCommand);
+//        $dockerContainerRmProcess->start();
+//        $dockerContainerRmProcess->wait();
     }
 }

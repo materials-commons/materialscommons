@@ -42,8 +42,8 @@
                             title="Select Script">
                         <option value=""></option>
                         @foreach($scripts as $script)
-                            <option data-tokens="{{$script->scriptFile->id}}" value="{{$script->scriptFile->id}}">
-                                {{$script->scriptFile->fullPath()}}
+                            <option data-tokens="{{$script->id}}" value="{{$script->id}}">
+                                {{$script->fullPath()}}
                             </option>
                         @endforeach
                     </select>

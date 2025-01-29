@@ -53,8 +53,8 @@
             inline: true,
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
-            fileManagerSelectionType: "both"
-        }).use(UppyXHRUpload, {endpoint: r, formData: true});
+            fileManagerSelectionType: "both",
+        }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
 
         uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});

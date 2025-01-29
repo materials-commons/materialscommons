@@ -84,18 +84,19 @@
                     addAuthorToTable() {
                         // In case you are looking for nextId:
                         // ***** nextId is defined in view/app/projects/datasets/_create.blade.php ******
+                        let authorTable = $("#authors").DataTable();
+                        let nextId = authorTable.data().length;
                         authorTable.row.add([
                             nextId,
                             `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
                             `<div class="float-right">
-                                <a class="action-link" href="#"
-                                    x-on:click="openEditDialog(${nextId}, '${this.author.name}', '${this.author.affiliations}', '${this.author.email}')">
+                                <a class="action-link cursor-pointer"
+                                    x-on:click.prevent="openEditDialog(${nextId}, '${this.author.name}', '${this.author.affiliations}', '${this.author.email}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link" href="#" x-on:click="deleteAuthor(${nextId})"><i class="fas fa-fw fa-trash"></i></a>
+                                <a class="action-link cursor-pointer" x-on:click.prevent="deleteAuthor(${nextId})"><i class="fas fa-fw fa-trash"></i></a>
                             </div>`
                         ]).draw();
-                        nextId++;
                     },
 
                     clearAuthor() {

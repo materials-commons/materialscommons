@@ -40,8 +40,6 @@
                 let selected = '.selectpicker option:selected';
                 let selectedProjectId = $(selected).val();
                 let selectedProjectRootDirId = $(selected).attr('data-root-id')
-                console.log("selected = '" + selectedProjectId + "'");
-                console.log("dir-id = '" + selectedProjectRootDirId + "'");
                 window.location.href = route('projects.folders.show-for-copy', {
                     'leftProject': "{{$project->id}}",
                     'leftFolder': "{{$directory->id}}",

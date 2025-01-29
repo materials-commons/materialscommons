@@ -30,7 +30,6 @@
             {{$experiment->name}}
 
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
-                @include('app.projects.experiments.modals._reload-experiment-modal')
                 <a data-toggle="modal" href="#reload-experiment-modal"
                    class="action-link float-right">
                     <i class="fas fa-sync-alt mr-2"></i> Reload Experiment
@@ -77,6 +76,8 @@
 
         @endslot
     @endcomponent
+
+    @include('app.projects.experiments.modals._reload-experiment-modal')
 
     @push('scripts')
         <script>

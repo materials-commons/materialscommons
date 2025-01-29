@@ -49,6 +49,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Entities
     require base_path('routes/api_routes/entities_api.php');
 
+    // Entity State
+    require base_path('routes/api_routes/entity_states_api.php');
+
     // Files
     require base_path('routes/api_routes/files_api.php');
 

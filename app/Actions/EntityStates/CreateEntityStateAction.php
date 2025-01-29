@@ -29,6 +29,7 @@ class CreateEntityStateAction
             ]);
 
             $activity->entityStates()->syncWithoutDetaching([$this->entityState->id => ['direction' => 'out']]);
+            $activity->entities()->syncWithoutDetaching($entity);
 
             if (array_key_exists('attributes', $data)) {
                 $this->addSampleAttributes($this->entityState, $data['attributes']);

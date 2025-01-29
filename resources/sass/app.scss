@@ -17,9 +17,51 @@
     visibility: hidden !important;
 }
 
+.thead-fixed {
+    position: sticky;
+    top: 46px;
+    background: #fff;
+}
+
+// When using a fixed header this keeps the border for the header.
+// See: https://stackoverflow.com/questions/57166162/table-headers-positionsticky-and-border-issue
+// (Second answer, not the top picked answer)
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.no-padding-left {
+    padding-left: 0 !important;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.tt-none {
+    text-transform: none !important;
+}
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+[x-cloak] {
+    display: none !important;
 }
 
 .mc-md {
@@ -38,6 +80,36 @@
     border-radius: 4px;
     white-space: nowrap;
     margin: 0 .2rem;
+}
+
+.page-link {
+    color: #2B6BB1;
+    font-weight: 700;
+}
+
+.page-item:first-child .page-link {
+    margin-left: 0;
+    border-radius: 0.25rem;
+}
+
+.page-item:last-child .page-link {
+    border-radius: 0.25rem;
+}
+
+.pagination-lg .page-item:first-child .page-link {
+    border-radius: 0.3rem;
+}
+
+.pagination-lg .page-item:last-child .page-link {
+    border-radius: 0.3rem;
+}
+
+.pagination-sm .page-item:first-child .page-link {
+    border-radius: 0.2rem;
+}
+
+.pagination-sm .page-item:last-child .page-link {
+    border-radius: 0.2rem;
 }
 
 .border-grey {

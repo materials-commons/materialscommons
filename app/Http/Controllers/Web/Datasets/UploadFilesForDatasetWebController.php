@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Datasets;
 
 use App\Actions\Datasets\UpdateDatasetFileSelectionAction;
+use App\Actions\Files\CreateFileAction;
 use App\Actions\Files\CreateFilesAction;
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
@@ -15,15 +16,19 @@ use Illuminate\Http\Request;
 class UploadFilesForDatasetWebController extends Controller
 {
     public function __invoke(Request $request, CreateFilesAction $createFilesAction,
-                             UpdateDatasetFileSelectionAction $updateFileSelectionAction, Project $project,
-                             Dataset                          $dataset, $directoryId)
+        UpdateDatasetFileSelectionAction $updateFileSelectionAction, Project $project, Dataset $dataset, $directoryId)
     {
         $validated = $request->validate([
-            'files.*' => 'required|file',
+            'files.*' => 'nullable|file',
+            'file'    => 'nullable|file',
         ]);
 
         $directory = File::findOrFail($directoryId);
-        $files = $createFilesAction($project, $directory, $validated['files']);
+        if (isset($validated['files'])) {
+            $files = $createFilesAction($project, $directory, $validated['files']);
+        } else {
+            $files = $createFilesAction($project, $directory, [$validated['file']]);
+        }
 
         // If in root dir then path is blank because construction of the file path includes a '/' separator.
         $path = $directory->path === '/' ? '' : $directory->path;

@@ -63,10 +63,12 @@
                         <td>{{$author['email']}}</td>
                         <td>
                             <div class="float-right">
-                                <a class="action-link" href="#"
-                                   x-on:click="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
+                                <a class="action-link cursor-pointer"
+                                   x-on:click.prevent="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link" href="#" x-on:click="deleteAuthor({{$loop->index}})"><i class="fas fa-fw fa-trash"></i></a>
+                                <a class="action-link cursor-pointer"
+                                   x-on:click.prevent="deleteAuthor({{$loop->index}})"><i
+                                            class="fas fa-fw fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -84,7 +86,8 @@
                                 <a class="action-link" href="#"
                                    x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link" href="#" x-on:click="deleteAuthor({{$loop->index}})"><i class="fas fa-fw fa-trash"></i></a>
+                                <a class="action-link" href="#" x-on:click="deleteAuthor({{$loop->index}})"><i
+                                            class="fas fa-fw fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -97,9 +100,8 @@
 
 @push('scripts')
     <script>
-        let authorTable;
-        $(document).ready(function () {
-            authorTable = $("#authors").DataTable({
+        document.addEventListener('alpine:init', () => {
+            $("#authors").DataTable({
                 pageLength: 100,
                 rowReorder: true,
                 columnDefs: [
@@ -112,7 +114,6 @@
                     }
                 }
             });
-            nextId = authorTable.data().length;
         });
 
         function initEditAuthor() {
@@ -133,15 +134,18 @@
                 },
 
                 updateAuthor() {
+                    let authorTable = $("#authors").DataTable();
                     let row = authorTable.row($(`#row-${this.author.id}`)).data();
                     authorTable.row($(`#row-${this.author.id}`)).data([row[0], row[1], this.author.name, this.author.affiliations, this.author.email, row[5]]);
                     $('#edit-author-dialog').modal('hide');
                 },
 
                 deleteAuthor(id) {
+                    let authorTable = $("#authors").DataTable();
                     authorTable.row($(`#row-${id}`)).remove().draw();
                 },
             };
         }
+
     </script>
 @endpush

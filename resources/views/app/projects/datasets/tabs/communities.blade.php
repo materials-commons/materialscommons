@@ -22,12 +22,10 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            $(document).ready(() => {
-                $('#communities').DataTable({
-                    pageLength: 100,
-                    stateSave: true,
-                });
+        $(document).ready(() => {
+            $('#communities').DataTable({
+                pageLength: 100,
+                stateSave: true,
             });
         });
     </script>

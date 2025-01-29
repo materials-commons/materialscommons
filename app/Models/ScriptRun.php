@@ -52,6 +52,11 @@ class ScriptRun extends Model
         return $this->belongsTo(Script::class, 'script_id');
     }
 
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'script_run2file');
+    }
+
     public function logPath(): string
     {
         return Storage::disk('mcfs')->path($this->partialLogPath());

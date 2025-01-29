@@ -13,7 +13,6 @@ class UploadFileApiController extends Controller
 {
     public function __invoke(Request $request, CreateFilesAction $createFilesAction, $projectId, $directoryId)
     {
-//        ray($request->all());
         $validated = $request->validate([
             'files.*' => 'required|file',
         ]);

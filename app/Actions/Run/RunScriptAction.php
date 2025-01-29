@@ -32,18 +32,7 @@ class RunScriptAction
         $this->project = $project;
         $this->user = $user;
         $this->dir = $dir;
-        $s = Script::where('script_file_id', $file->id)->first();
-        if (is_null($s)) {
-            // Create a new script
-            $s = Script::create([
-                'description'    => 'Create script run',
-                'queue'          => 'globus',
-                'container'      => 'mc/mcpyimage',
-                'script_file_id' => $file->id,
-            ]);
-        }
-
-        $this->script = $s;
+        $this->script = Script::createScriptForFileIfNeeded($file);
 
         $this->run = ScriptRun::create([
             'script_id'  => $this->script->id,
@@ -66,7 +55,7 @@ class RunScriptAction
             new RunUserPythonScriptJob($this->run, $this->dir, $inputFile),
             function () {
                 $action = new ImportFilesIntoProjectAtLocationAction();
-                $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user);
+                $action->execute($this->project, 'script_runs_out', $this->run->uuid, $this->user, $this->run);
             },
             function () {
                 try {
@@ -80,7 +69,7 @@ class RunScriptAction
                 Mail::to($this->run->owner)
                     ->queue(new ScriptRunCompletedMail($this->run));
             }
-        ])->onQueue('globus')->dispatch();
+        ])->onQueue('scripts')->dispatch();
 
         return $this->run;
     }

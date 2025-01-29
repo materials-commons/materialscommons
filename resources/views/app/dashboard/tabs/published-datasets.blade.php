@@ -38,6 +38,10 @@
 
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#datasets').DataTable().destroy();
+        }, {once: true});
+
         $(document).ready(() => {
             $('#datasets').DataTable({
                 pageLength: 100,

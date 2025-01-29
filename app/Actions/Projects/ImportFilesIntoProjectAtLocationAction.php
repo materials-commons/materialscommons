@@ -27,14 +27,14 @@ class ImportFilesIntoProjectAtLocationAction
         $this->__constructFireTriggers();
     }
 
-    public function execute(Project $project, $disk, $location, User $owner)
+    public function execute(Project $project, $disk, $location, User $owner, $attachTo = null)
     {
         $this->project = $project;
         $this->disk = $disk;
         $this->location = $location;
         $this->owner = $owner;
 
-        if (!$this->importUploadedFiles()) {
+        if (!$this->importFiles($attachTo)) {
             // Did not complete importing uploaded files
             return;
         }
@@ -42,7 +42,7 @@ class ImportFilesIntoProjectAtLocationAction
         $this->cleanupAfterProcessingAllFiles($this->disk, $this->location);
     }
 
-    private function importUploadedFiles(): bool
+    private function importFiles($attachTo): bool
     {
         $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Storage::disk($this->disk)->path($this->location)),
             RecursiveIteratorIterator::SELF_FIRST);
@@ -61,7 +61,8 @@ class ImportFilesIntoProjectAtLocationAction
                     $this->location,
                     $this->project->id,
                     $this->owner->id,
-                    $finfo);
+                    $finfo,
+                    $attachTo);
                 if (is_null($file)) {
                     // processing file failed, so stop let job be processed later
                     return false;

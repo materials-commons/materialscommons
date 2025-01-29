@@ -38,7 +38,7 @@ class ImportDatasetIntoProjectAction
     {
         $rootDir = $this->createRootDirForDataset($rootDirName, $project);
         $dsFileSelection = new DatasetFileSelection($dataset->file_selection);
-        foreach ($this->getFilesCursorForProject($dataset->project_id) as $file) {
+        foreach ($this->getFilesCursorForProjectAndDataset($dataset->project_id, $dataset->id) as $file) {
             if ($this->isIncludedFile($dsFileSelection, $file)) {
                 if ($this->canImportFile($dataset, $file)) {
                     $dir = $this->getDirectoryOrCreateIfDoesNotExist($rootDir, $file->directory->path, $project);

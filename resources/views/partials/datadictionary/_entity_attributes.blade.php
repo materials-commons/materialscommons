@@ -31,6 +31,10 @@
 
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#entities-dd').DataTable().destroy();
+        }, {once: true});
+
         $(document).ready(() => {
             $('#entities-dd').DataTable({
                 pageLength: 100,

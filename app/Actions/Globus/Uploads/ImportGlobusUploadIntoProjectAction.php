@@ -79,6 +79,11 @@ class ImportGlobusUploadIntoProjectAction
 
     private function importUploadedFiles()
     {
+        // Sometimes path is blank. When this happens, just return true, so that this globus request gets cleaned up.
+        if (blank($this->globusUpload->path)) {
+            return true;
+        }
+
         $dirIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->globusUpload->path),
                                                      RecursiveIteratorIterator::SELF_FIRST);
         $fileCount = 0;

@@ -13,7 +13,7 @@
         @foreach($workflows as $workflow)
             <tr>
                 <td>
-                    <a onclick="showWorkflow(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
+                    <a onclick="showWorkflowForWorkflowsTab(`{{$workflow->workflow}}`, '{{$workflow->name}}')"
                        href="#">{{$workflow->name}}</a>
                 </td>
                 <td>{{$workflow->description}}</td>
@@ -30,7 +30,6 @@
 
 @push('scripts')
     <script>
-        let chart;
         $(document).ready(() => {
             $('#workflows').DataTable({
                 stateSave: true,
@@ -43,17 +42,21 @@
                 ]
             });
             @if(sizeof($workflows) !== 0)
-            showWorkflow(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
+            showWorkflowForWorkflowsTab(`{!!$workflows->values()->get(0)->workflow!!}`, '{{$workflows->values()->get(0)->name}}');
             @endif
         });
 
-        function showWorkflow(code, name) {
-            if (chart) {
-                chart.clean();
+        if (typeof showWorkflowForWorkflowsTab === 'undefined') {
+            let chart;
+
+            function showWorkflowForWorkflowsTab(code, name) {
+                if (chart) {
+                    chart.clean();
+                }
+                $("#workflowtitle").html(name);
+                let fl = simplefl.parseSimpleFlowchart(code);
+                chart = mcfl.drawFlowchart('workflow', fl);
             }
-            $("#workflowtitle").html(name);
-            let fl = simplefl.parseSimpleFlowchart(code);
-            chart = mcfl.drawFlowchart('workflow', fl);
         }
     </script>
 @endpush

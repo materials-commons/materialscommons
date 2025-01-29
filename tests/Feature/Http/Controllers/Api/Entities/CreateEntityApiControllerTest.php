@@ -39,6 +39,7 @@ class CreateEntityApiControllerTest extends TestCase
             'project_id'    => $project->id,
             'experiment_id' => $experiment->id,
             'activity_id'   => $activity->id,
+            'category' => 'experimental',
         ])
                        ->assertStatus(201)
                        ->assertJsonFragment(['name' => 's1'])

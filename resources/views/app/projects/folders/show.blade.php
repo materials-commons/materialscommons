@@ -174,6 +174,11 @@
 
     @push('scripts')
         <script>
+
+            document.addEventListener('livewire:navigating', () => {
+                $('#files').DataTable().destroy();
+            }, {once: true});
+
             $(document).ready(() => {
                 $('#files').DataTable({
                     pageLength: 100,

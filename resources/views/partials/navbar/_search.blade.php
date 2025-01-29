@@ -39,8 +39,10 @@
 
 @push('scripts')
     <script>
-        function closeSearch() {
-            $('#navbar-search-input').val('');
+        if (typeof closeSearch !== 'function') {
+            function closeSearch() {
+                $('#navbar-search-input').val('');
+            }
         }
     </script>
 @endpush

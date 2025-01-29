@@ -112,11 +112,12 @@ trait AttributeDetails
             $details->max = $values->max();
         }
 
-        $details->uniqueCount = $values->count();
+        $details->uniqueCount = $values->unique()->count();
         $details->values = $values;
+        $details->valuesToShow = $values;
 
         if ($details->uniqueCount > 10) {
-            $details->values = $values->take(10);
+            $details->valuesToShow = $values->take(10);
         }
 
         return $details;

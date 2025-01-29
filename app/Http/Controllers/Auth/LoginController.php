@@ -7,12 +7,11 @@ use App\Traits\GetRequestParameterId;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use function session;
 use function view;
 
 class LoginController extends Controller
 {
-    use GetRequestParameterId;
-
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -26,6 +25,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
     use GetRequestParameterId;
+    use SessionRoutes;
 
     /**
      * Create a new controller instance.
@@ -52,6 +52,18 @@ class LoginController extends Controller
             $routeToUse = route('login-for-dataset-zipfile-download', [$datasetId]);
         }
 
+        $previous = session()->exists('url.previous') ? session()->get('url.previous') : null;
+        $this->setPreviousRoutePathSession($previous);
+//        if (session()->exists('url.previous')) {
+//            $this->setPreviousRoutePathSession(session()->get('url.previous'));
+//        } else {
+//            session()->
+//            $this->setPreviousRoutePathSession();
+//            $previous = url()->previous();
+//            $previousPath = parse_url($previous, PHP_URL_PATH);
+//            session(['url.previous' => $previousPath]);
+//        }
+
         return view('auth.login', [
             'routeToUse' => $routeToUse,
         ]);
@@ -75,7 +87,17 @@ class LoginController extends Controller
             return route('public.datasets.overview.show', [$datasetId]);
         }
 
-        return route('dashboard');
+        $previous = "/";
+
+        if (session()->exists('url.previous')) {
+            $previous = session()->get('url.previous');
+        }
+
+        if ($previous === "/") {
+            return route('dashboard');
+        }
+
+        return $previous;
     }
 
     public function authenticated(Request $request, $user)

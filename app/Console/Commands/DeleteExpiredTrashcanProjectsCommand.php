@@ -57,7 +57,7 @@ class DeleteExpiredTrashcanProjectsCommand extends Command
                 });
             } elseif ($project->files_count != 1) {
                 // files haven't been deleted, so just schedule file deletion. We do this by setting the root directory
-                // for the project as deleted. Then in a later run the the deleted-expired-trashcan-directories command
+                // for the project as deleted. Then in a later run the deleted-expired-trashcan-directories command
                 // will be run by the scheduler, catch that this directory is deleted, and start cleaning out all the files
                 // and directories. Eventually this will all be deleted, the files_count will be 0 and the project will be
                 // removed from the system.

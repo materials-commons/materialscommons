@@ -16,7 +16,7 @@ class ShowScriptRunStatusWebController extends Controller
     public function __invoke(Request $request, Project $project, ScriptRun $run)
     {
         $log = $run->getLogContents();
-        $run->load('script.scriptFile.directory');
+        $run->load(['script.scriptFile.directory', 'files.directory']);
         return view('app.projects.runs.show', compact('project', 'run', 'log'));
     }
 }

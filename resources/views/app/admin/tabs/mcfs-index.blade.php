@@ -75,6 +75,10 @@
 
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#mcfs-index').DataTable().destroy();
+        }, {once: true});
+
         $(document).ready(() => {
             $('#mcfs-index').DataTable({
                 pageLength: 100,

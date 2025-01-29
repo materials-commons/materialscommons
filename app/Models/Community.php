@@ -44,6 +44,11 @@ class Community extends Model implements Searchable
         return $this->belongsToMany(Dataset::class, 'dataset2community', 'community_id', 'dataset_id');
     }
 
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
+    }
+
     public function publishedDatasets()
     {
         return $this->belongsToMany(Dataset::class, 'dataset2community', 'community_id', 'dataset_id')

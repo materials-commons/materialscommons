@@ -37,6 +37,77 @@ if (!function_exists("setActiveNavByOneOf")) {
     }
 }
 
+if (!function_exists("setActiveNavByHasParam")) {
+    function setActiveNavByHasParam($name): string
+    {
+        return Request::has($name) ? 'active' : '';
+    }
+}
+
+if (!function_exists("setActiveNavByTabParam")) {
+    function setActiveNavByTabParam($value): string
+    {
+        $tabValue = Request::input('tab', null);
+        if (is_null($tabValue)) {
+            return '';
+        }
+
+        if ($tabValue == $value) {
+            return 'active';
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists("hasTabParam")) {
+    function hasTabParam($value): bool
+    {
+        $tabValue = Request::input('tab', null);
+        if (is_null($tabValue)) {
+            return false;
+        }
+
+        if ($tabValue == $value) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists("setActiveNavByParam")) {
+    function setActiveNavByParam($param, $value): string
+    {
+        $paramValue = Request::input($param, null);
+        if (is_null($paramValue)) {
+            return '';
+        }
+
+        if ($paramValue == $value) {
+            return 'active';
+        }
+
+        return '';
+    }
+}
+
+if (!function_exists("hasParam")) {
+    function hasParam($param, $value): bool
+    {
+        $paramValue = Request::input($param, null);
+        if (is_null($paramValue)) {
+            return false;
+        }
+
+        if ($paramValue == $value) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists("getPreviousRouteName")) {
     function getPreviousRouteName()
     {

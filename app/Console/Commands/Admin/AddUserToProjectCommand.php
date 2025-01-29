@@ -35,8 +35,10 @@ class AddUserToProjectCommand extends Command
         $user = User::findOrFail($this->option('user-id'));
         if ($this->option('admin')) {
             $project->team->admins()->syncWithoutDetaching($user);
+            $project->team->members()->detach($user);
         } else {
             $project->team->members()->syncWithoutDetaching($user);
+            $project->team->admins()->detach($user);
         }
         return Command::SUCCESS;
     }

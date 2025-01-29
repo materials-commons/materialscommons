@@ -10,7 +10,7 @@
     @component('components.card')
         @slot('header')
             Project Members
-            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()))
+            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()) || auth()->user()->is_admin)
                 <a class="action-link float-right"
                    href="{{route('projects.users.edit', [$project])}}">
                     <i class="fas fa-plus mr-2"></i>Add Users
@@ -51,20 +51,22 @@
                         </td>
                         <td>
                             @if($project->owner_id != $member->id)
-                                @if($project->team->members->contains('id', $member->id))
-                                    <a href="{{route('projects.users.remove', [$project, $member])}}">
-                                        <i class="fa fas fa-trash"></i></a>
-                                    <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
-                                       class="ml-4">
-                                        <i class="fa fas fa-fw fa-edit"></i>Make Admin
-                                    </a>
-                                @else
-                                    <a href="{{route('projects.admins.remove', [$project, $member])}}">
-                                        <i class="fa fas fa-trash"></i></a>
-                                    <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
-                                       class="ml-4">
-                                        <i class="fa fas fa-fw fa-edit"></i>Make Member
-                                    </a>
+                                @if(auth()->id() == $project->owner_id || $project->team->admins->contains('id', auth()->id()))
+                                    @if($project->team->members->contains('id', $member->id))
+                                        <a href="{{route('projects.users.remove', [$project, $member])}}">
+                                            <i class="fa fas fa-trash"></i></a>
+                                        <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
+                                           class="ml-4">
+                                            <i class="fa fas fa-fw fa-edit"></i>Make Admin
+                                        </a>
+                                    @else
+                                        <a href="{{route('projects.admins.remove', [$project, $member])}}">
+                                            <i class="fa fas fa-trash"></i></a>
+                                        <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
+                                           class="ml-4">
+                                            <i class="fa fas fa-fw fa-edit"></i>Make Member
+                                        </a>
+                                    @endif
                                 @endif
                             @endif
                         </td>
@@ -78,7 +80,11 @@
 
     @push('scripts')
         <script>
-            $(document).ready(function () {
+            document.addEventListener('livewire:navigating', () => {
+                $('#users').DataTable().destroy();
+            }, {once: true});
+
+            $(document).ready(() => {
                 $('#users').DataTable({
                     pageLength: 100,
                     stateSave: true,

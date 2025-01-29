@@ -26,30 +26,32 @@
     <div id="activity-attribute-overview" class="mt-2"></div>
     @push('scripts')
         <script>
-            function setupHavingActivityAttribute() {
-                let projectId = "{{$project->id}}";
-                $('#activity-attributes').on('change', function () {
-                    let value = $(this).val();
-                    if (value !== "") {
-                        let r = route('projects.activities.attributes.show-details-by-name', [projectId, value])
-                        htmx.ajax("GET", r, '#activity-attribute-overview');
-                    } else {
-                        let r = route('projects.attributes.close-details-by-name', [projectId, 'xx'])
-                        htmx.ajax("GET", r, '#activity-attribute-overview');
-                    }
-                });
-            }
 
-            let lastId = 1;
 
-            function addWhereValueIsForActivity() {
-                let projectId = "{{$project->id}}";
-                let attrName = $('#activity-attributes').val();
-                let r = route('projects.query-builder.add-where', [projectId, attrName, 'activity', lastId]);
-                htmx.ajax('GET', r, `#activity-where-${lastId}`);
-            }
+            {{--let lastId = 1;--}}
+
+            {{--function addWhereValueIsForActivity() {--}}
+            {{--    let projectId = "{{$project->id}}";--}}
+            {{--    let attrName = $('#activity-attributes').val();--}}
+            {{--    let r = route('projects.query-builder.add-where', [projectId, attrName, 'activity', lastId]);--}}
+            {{--    htmx.ajax('GET', r, `#activity-where-${lastId}`);--}}
+            {{--}--}}
 
             $(document).ready(() => {
+                function setupHavingActivityAttribute() {
+                    let projectId = "{{$project->id}}";
+                    $('#activity-attributes').on('change', function () {
+                        let value = $(this).val();
+                        if (value !== "") {
+                            let r = route('projects.activities.attributes.show-details-by-name', [projectId, value])
+                            htmx.ajax("GET", r, '#activity-attribute-overview');
+                        } else {
+                            let r = route('projects.attributes.close-details-by-name', [projectId, 'xx'])
+                            htmx.ajax("GET", r, '#activity-attribute-overview');
+                        }
+                    });
+                }
+
                 setupHavingActivityAttribute();
             });
         </script>

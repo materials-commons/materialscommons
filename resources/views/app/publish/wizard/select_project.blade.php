@@ -6,12 +6,12 @@
     @include('layouts.navs.public')
 @stop
 @section('content')
-    @component('components.card')
-        @slot('header')
+    <x-card>
+        <x-slot:header>
             Select Project Step
-        @endslot
+        </x-slot:header>
 
-        @slot('body')
+        <x-slot:body>
             <h5>Select Project</h5>
             <form class="col-8">
                 <div class="form-group">
@@ -26,28 +26,27 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-10">
+                <div class="col-10" x-data="selectProject">
                     <div class="float-right">
                         <a class="action-link danger mr-3" href="#">Cancel</a>
-                        <a class="action-link mr-3" href="#" onclick="gotoCreateDataset()">Use Selected Project</a>
+                        <a class="action-link mr-3" href="#" @click.prevent="gotoCreateDataset()">Use Selected
+                            Project</a>
                     </div>
                 </div>
             </form>
-        @endslot
-    @endcomponent
+        </x-slot:body>
+    </x-card>
 @stop
 
 @push('scripts')
     <script>
-        let projectId = null;
-        $(document).ready(() => {
-            $('#select-project').on('changed.bs.select', function (e) {
-                projectId = e.target.value;
-            });
+        mcutil.onAlpineInit("selectProject", () => {
+            return {
+                gotoCreateDataset() {
+                    let projectId = $('#select-project').val();
+                    window.location.href = route('projects.datasets.create', {project: projectId});
+                }
+            }
         });
-
-        function gotoCreateDataset() {
-            window.location.href = route('projects.datasets.create', {project: projectId});
-        }
     </script>
 @endpush

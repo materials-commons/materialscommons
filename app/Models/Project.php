@@ -56,6 +56,11 @@ class Project extends Model implements Searchable
             'user_id');
     }
 
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'attributable');
+    }
+
     public function shares()
     {
         return $this->hasMany(Share::class, "project_id");

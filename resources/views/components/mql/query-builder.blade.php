@@ -21,8 +21,9 @@
                 <div class="modal-content"></div>
             </div>
         </div>
-        <div class="row mt-2 mb-4">
-            <a onclick="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i class="fa fas fa-list mr-2"></i>Show/Hide
+        <div class="row mt-2 mb-4" x-data="mqlQueryBuilder">
+            <a @click.prevent="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i
+                        class="fa fas fa-list mr-2"></i>Show/Hide
                 All Attributes</a>
         </div>
     @endif
@@ -89,26 +90,29 @@
     {{--    <br/>--}}
     @push('scripts')
         <script>
-            let attributesOverviewShown = false;
-
-            function toggleAttributesTable() {
-                if (attributesOverviewShown) {
-                    document.getElementById("attributes-overview-div").style.display = "none";
-                    attributesOverviewShown = false;
-                } else {
-                    document.getElementById("attributes-overview-div").style.display = "";
-                    $('#attributes-overview-table').DataTable().destroy();
-                    $('#attributes-overview-table').DataTable({
-                        pageLength: 100,
-                        scrollX: true,
-                        fixedHeader: {
-                            header: true,
-                            headerOffset: 46,
-                        },
-                    });
-                    attributesOverviewShown = true;
+            mcutil.onAlpineInit("mqlQueryBuilder", () => {
+                return {
+                    attributesOverviewShown: false,
+                    toggleAttributesTable() {
+                        if (attributesOverviewShown) {
+                            document.getElementById("attributes-overview-div").style.display = "none";
+                            this.attributesOverviewShown = false;
+                        } else {
+                            document.getElementById("attributes-overview-div").style.display = "";
+                            $('#attributes-overview-table').DataTable().destroy();
+                            $('#attributes-overview-table').DataTable({
+                                pageLength: 100,
+                                scrollX: true,
+                                fixedHeader: {
+                                    header: true,
+                                    headerOffset: 46,
+                                },
+                            });
+                            this.attributesOverviewShown = true;
+                        }
+                    }
                 }
-            }
+            });
 
             htmx.on('htmx:afterSwap', (evt) => {
                 if (evt.target.id === "attr-modal-here") {

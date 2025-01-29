@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Web\Projects\Globus\Downloads;
 
+use App\Actions\Globus\Downloads\CreateGlobusDownloadForProjectAction;
 use App\Http\Controllers\Controller;
+use App\Jobs\Globus\CreateGlobusProjectDownloadDirsJob;
 use App\Models\Project;
+use function auth;
+use function randomWords;
+use function redirect;
+use function route;
 
 class CreateProjectGlobusDownloadWebController extends Controller
 {
@@ -15,6 +21,11 @@ class CreateProjectGlobusDownloadWebController extends Controller
             return redirect(route('projects.globus.downloads.edit_account', [$project]));
         }
 
-        return view('app.projects.globus.downloads.create', compact('project', 'user'));
+        $createGlobusDownloadForProjectAction = new CreateGlobusDownloadForProjectAction();
+        $data['name'] = randomWords(3);
+        $data['description'] = '';
+        $globusDownload = $createGlobusDownloadForProjectAction($data, $project->id, auth()->user());
+        CreateGlobusProjectDownloadDirsJob::dispatch($globusDownload, auth()->user())->onQueue('globus');
+        return redirect(route('projects.globus.downloads.index', [$project]));
     }
 }

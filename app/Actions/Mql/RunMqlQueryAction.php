@@ -6,6 +6,7 @@ use App\Models\Entity;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class RunMqlQueryAction
 {
@@ -53,11 +54,12 @@ class RunMqlQueryAction
         }
 
         $processTypesQuery = $this->buildFromArrayOfSetItems($processTypes, function ($item) {
+            $isNot = Str::startsWith($item, "!");
             return [
                 "field_name" => '',
                 "field_type" => self::SAMPLE_FUNC_TYPE,
-                "value"      => $item,
-                "operation"  => 'has-process',
+                "value"     => $isNot ? substr($item, 1) : $item,
+                "operation" => $isNot ? 'not-has-process' : 'has-process',
             ];
         });
 

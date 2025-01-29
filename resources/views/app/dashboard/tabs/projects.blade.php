@@ -80,12 +80,10 @@
                            class="action-link">
                             <i class="fas fa-fw fa-archive"></i>
                         </a>
+                        @component('app.projects.delete-project', ['project' => $proj])
+                        @endcomponent
                     @endif
                 </div>
-                @if(auth()->id() == $proj->owner_id)
-                    @component('app.projects.delete-project', ['project' => $proj])
-                    @endcomponent
-                @endif
             </td>
         </tr>
     @endforeach
@@ -94,6 +92,10 @@
 
 @push('scripts')
     <script>
+        document.addEventListener('livewire:navigating', () => {
+            $('#projects').DataTable().destroy();
+        }, {once: true});
+
         let projectsCount = "{{sizeof($projects)}}";
         $(document).ready(() => {
             if (projectsCount === "0") {

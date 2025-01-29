@@ -5,12 +5,12 @@
                 <div class="form-group">
                     <label for="mql">Current Query</label>
                     <textarea class="form-control" id="mql" placeholder="Query..."
-                              rows="{{line_count($query, 2)+1}}"
-                              style="heightxx: 75px">{{$query}}</textarea>
+                              rows="{{line_count($query, 2)+1}}">{{$query}}</textarea>
                 </div>
                 <a class="float-left" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
                 <div class="float-right">
-                    <a class="btn btn-danger" href="{{route('projects.entities.index', [$project])}}">Reset</a>
+                    <a class="btn btn-danger"
+                       href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">Reset</a>
                     @if($query == "")
                         <a class="btn btn-warning disabled" href="#" disabled="true">Save</a>
                         <a class="btn btn-success disabled" href="#" disabled="true">

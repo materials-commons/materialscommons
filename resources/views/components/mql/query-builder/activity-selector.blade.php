@@ -17,51 +17,51 @@
     {{--            </div>--}}
     @push('scripts')
         <script>
-            function setupHavingProcess() {
-                let findMatchingRoute = "{{route('api.queries.find-matching-entities', [$project])}}";
-                let apiToken = "{{auth()->user()->api_token}}";
-                let api = $('#entities-with-used-activities').DataTable();
-                $('#activities').on('change', function () {
-                    let selected = $(this).val();
-                    if (selected === '') {
-                        api.search('').columns().search('').draw();
-                        return;
-                    }
-                    axios.post(`${findMatchingRoute}`, {
-                            activities: [
-                                {
-                                    name: selected,
-                                    operator: "in"
-                                }
-                            ]
-                        },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${apiToken}`
-                            }
-                        }
-                    ).then((r) => {
-                        if (r.data.entities.length !== 0) {
-                            let searchStr = "";
-                            for (let i = 0; i < r.data.entities.length; i++) {
-                                let e = r.data.entities[i];
-                                if (i === 0) {
-                                    searchStr = e;
-                                } else {
-
-                                    searchStr = searchStr + `|^${e}$`;
-                                }
-                            }
-                            // api.search('').columns().search('').draw();
-                            api.column(0).search(searchStr, true, false).draw();
-                        }
-                    }).catch((e) => {
-                        console.log("error: ", e);
-                    });
-                });
-            }
-
             $(document).ready(() => {
+                function setupHavingProcess() {
+                    let findMatchingRoute = "{{route('api.queries.find-matching-entities', [$project])}}";
+                    let apiToken = "{{auth()->user()->api_token}}";
+                    let api = $('#entities-with-used-activities').DataTable();
+                    $('#activities').on('change', function () {
+                        let selected = $(this).val();
+                        if (selected === '') {
+                            api.search('').columns().search('').draw();
+                            return;
+                        }
+                        axios.post(`${findMatchingRoute}`, {
+                                activities: [
+                                    {
+                                        name: selected,
+                                        operator: "in"
+                                    }
+                                ]
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${apiToken}`
+                                }
+                            }
+                        ).then((r) => {
+                            if (r.data.entities.length !== 0) {
+                                let searchStr = "";
+                                for (let i = 0; i < r.data.entities.length; i++) {
+                                    let e = r.data.entities[i];
+                                    if (i === 0) {
+                                        searchStr = e;
+                                    } else {
+
+                                        searchStr = searchStr + `|^${e}$`;
+                                    }
+                                }
+                                // api.search('').columns().search('').draw();
+                                api.column(0).search(searchStr, true, false).draw();
+                            }
+                        }).catch((e) => {
+                            console.log("error: ", e);
+                        });
+                    });
+                }
+
                 setupHavingProcess();
             });
 

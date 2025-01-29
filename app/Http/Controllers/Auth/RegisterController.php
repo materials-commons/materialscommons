@@ -8,15 +8,13 @@ use App\Traits\HasUniqueSlug;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use function redirect;
 use function route;
-use function slugify;
 
 class RegisterController extends Controller
 {
@@ -33,6 +31,7 @@ class RegisterController extends Controller
 
     use RegistersUsers;
     use HasUniqueSlug;
+    use SessionRoutes;
 
     /**
      * Create a new controller instance.
@@ -111,20 +110,18 @@ class RegisterController extends Controller
 
     public function redirectTo()
     {
-        if (true) {
-            if (config('app.email_verification')) {
-                return route('verification.notice');
-            }
-
-            return route('login');
+        if (config('app.email_verification')) {
+            return route('verification.notice');
         }
 
-        $routeName = Route::getCurrentRoute()->getName();
-        if ($routeName == 'register-for-upload') {
-            return route('public.publish.wizard.choose_create_or_select_project');
-        }
+        return route('login');
 
-        return route('projects.index');
+//        $routeName = Route::getCurrentRoute()->getName();
+//        if ($routeName == 'register-for-upload') {
+//            return route('public.publish.wizard.choose_create_or_select_project');
+//        }
+//
+//        return route('projects.index');
     }
 
     /**
@@ -134,6 +131,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $this->setPreviousRoutePathSession();
         return view('auth.register');
     }
 

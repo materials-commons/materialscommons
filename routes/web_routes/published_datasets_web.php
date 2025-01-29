@@ -23,6 +23,8 @@ use App\Http\Controllers\Web\Published\Datasets\Login\LoginForPublishedDatasetZi
 use App\Http\Controllers\Web\Published\Datasets\MarkDatasetForNotificationsWebController;
 use App\Http\Controllers\Web\Published\Datasets\Folders\GotoPublishedDatasetFolderByPathWebController;
 use App\Http\Controllers\Web\Published\Datasets\Folders\ShowPublishedDatasetFolderWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowCitationsForPaperInPublishedDatasetWebController;
+use App\Http\Controllers\Web\Published\Datasets\ShowCitationsForPublishedDatasetWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowImportPublishedDatasetIntoProjectWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetActivitiesWebController;
 use App\Http\Controllers\Web\Published\Datasets\ShowPublishedDatasetCommentsWebController;
@@ -59,8 +61,8 @@ Route::get('/datasets/{dataset}/create-account/download/zipfile',
     CreateAccountForPublishedDatasetZipfileDownloadWebController::class)
      ->name('public.datasets.create-account.download.zipfile');
 
-//Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
-//     ->name('public.datasets.download_file');
+Route::get('/datasets/{dataset}/files/{file}/download', DownloadDatasetFileWebController::class)
+     ->name('public.datasets.download_file');
 
 Route::get('/datasets/{dataset}/globus', DownloadDatasetGlobusRedirectWebController::class)
      ->name('public.datasets.download_globus');
@@ -151,3 +153,10 @@ Route::get('/datasets/{dataset}/folders/by_path', GotoPublishedDatasetFolderByPa
      ->name('public.datasets.folders.by-path');
 Route::get('/datasets/{dataset}/folders/{folder}/show', ShowPublishedDatasetFolderWebController::class)
      ->name('public.datasets.folders.show');
+
+// Citations
+Route::get('/datasets/{dataset}/citations/papers', ShowCitationsForPaperInPublishedDatasetWebController::class)
+     ->name('public.datasets.citations.papers');
+
+Route::get('/dataset/{dataset}/citations/dataset', ShowCitationsForPublishedDatasetWebController::class)
+     ->name('public.datasets.citations.dataset');
