@@ -32,21 +32,32 @@
         <div class="form-group">
             <label for="communities">Communities</label>
             <select class="custom-select">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option selected>Select Community</option>
+                @foreach($communities as $community)
+                    <option wire:key="{{ $community->id }}" value="{{ $community->id }}">
+                        {{ $community->name }}
+                    </option>
+                @endforeach
             </select>
+            <a href="#" class="btn btn-primary mt-3">Add Community To Dataset</a>
         </div>
+
 
         <label for="license">Choose A License</label>
-        <div class="card-deck">
-            @include('livewire.projects.datasets.crud.tabs._no-license')
-            @include('livewire.projects.datasets.crud.tabs._odbl-license')
-            @include('livewire.projects.datasets.crud.tabs._odc-by-license')
-            @include('livewire.projects.datasets.crud.tabs._pddl-license')
+        <div class="form-group">
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._no-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._odbl-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._odc-by-license')
+            </div>
+            <div class="col-12">
+                @include('livewire.projects.datasets.crud.tabs._pddl-license')
+            </div>
         </div>
-
         <br/>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
@@ -58,9 +69,7 @@
         let tagify;
 
         document.addEventListener('livewire:navigating', () => {
-            console.log('wire navigating');
             if (tagify) {
-                console.log('    destroying tagify');
                 tagify.destroy();
             }
         });

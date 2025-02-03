@@ -25,6 +25,7 @@ class EntitiesTable extends Component
     public Project $project;
     public ?Experiment $experiment = null;
     public $category = 'experimental';
+    public bool $showCheckbox = false;
 
     public function render()
     {
@@ -109,16 +110,14 @@ class EntitiesTable extends Component
         if ($this->category == 'experimental') {
             $entities = $this->experiment->experimental_entities()->with('activities')->get();
             $query = $this->experiment->experimental_entities()->with('activities');
-            $query = $this->applySearch($query);
-            $query = $this->applySort($query);
-            $paged = $query->paginate(100);
         } else {
             $entities = $this->experiment->computational_entities()->with('activities')->get();
             $query = $this->experiment->computational_entities()->with('activities');
-            $query = $this->applySearch($query);
-            $query = $this->applySort($query);
-            $paged = $query->paginate(100);
         }
+
+        $query = $this->applySearch($query);
+        $query = $this->applySort($query);
+        $paged = $query->paginate(100);
 
         $activities = $this->getExperimentActivityNamesEindexForEntities($this->experiment->id, $entities,
             $orderByColumn);

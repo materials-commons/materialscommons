@@ -10,6 +10,7 @@ use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\GlobusMockUtils;
 
@@ -17,15 +18,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function tearDown(): void
-    {
-        $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
-        exec("rm -rf {$globusUploadsPath}");
-
-        $this->cleanupCopiedFiles();
-    }
-
-    /** @test */
+    #[Test]
     public function files_and_directories_should_be_loaded_into_project()
     {
         $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
@@ -63,9 +56,10 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
 
         $dirCount = File::where('project_id', $project->id)->whereNotNull('path')->count();
         $this->assertEquals(3, $dirCount);
+        $this->cleanupTest();
     }
 
-    /** @test */
+    #[Test]
     public function existing_directories_should_not_be_recreated()
     {
         $project = ProjectFactory::create();
@@ -95,9 +89,10 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
             File::where('name', 'd1')
                 ->where('project_id', $project->id)
                 ->count());
+        $this->cleanupTest();
     }
 
-    /** @test */
+    #[Test]
     public function existing_files_should_have_new_versions()
     {
         $project = ProjectFactory::create();
@@ -124,6 +119,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
                            ->first();
         $this->assertNotNull($newRootFile);
         $this->assertTrue($newRootFile->current);
+        $this->cleanupTest();
     }
 
     ////////////// Utility functions for test //////////////////
@@ -150,6 +146,14 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
         exec($cmd);
         $globusUpload->update(['path' => Storage::disk('mcfs')->path("__globus_uploads/{$globusUpload->uuid}")]);
         return $globusUpload;
+    }
+
+    private function cleanupTest(): void
+    {
+        $globusUploadsPath = Storage::disk('mcfs')->path("__globus_uploads");
+        exec("rm -rf {$globusUploadsPath}");
+
+        $this->cleanupCopiedFiles();
     }
 
     private function cleanupCopiedFiles()
