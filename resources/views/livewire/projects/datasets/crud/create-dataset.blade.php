@@ -40,7 +40,7 @@
 
     <br/>
     @if($activeTab == "details")
-        <livewire:projects.datasets.crud.tabs.details/>
+        <livewire:projects.datasets.crud.tabs.details :dataset="$dataset"/>
     @elseif ($activeTab == "authors")
         <livewire:projects.datasets.crud.authors/>
     @elseif ($activeTab == "files")

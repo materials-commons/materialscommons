@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Projects\Datasets\Crud;
 
+use App\Models\Dataset;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class CreateDataset extends Component
 {
+    public ?Dataset $dataset;
 
     #[Url('activeTab')]
     public $activeTab = "details";

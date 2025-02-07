@@ -61,8 +61,8 @@ class DatasetRequest extends FormRequest
     {
         if (is_string($this->tags)) {
             $this->merge([
-                             'tags' => json_decode($this->tags, true),
-                         ]);
+                'tags' => json_decode($this->tags, true),
+            ]);
         }
     }
 }
