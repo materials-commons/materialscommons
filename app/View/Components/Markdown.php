@@ -34,6 +34,7 @@ class Markdown extends Component
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new DefaultAttributesExtension());
         $environment->addExtension(new MetadataExtension());
+//        $environment->addExtension(new MCFileDisplayExtension());
         $converter = new MarkdownConverter($environment);
         return $converter->convert($markdown);
     }
