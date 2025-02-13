@@ -22,12 +22,12 @@
 
         <div wire:ignore class="form-group">
             <label for="tags">Tags</label>
-            <input class="form-control" id="tags" name="tags" value="tags1,tags2,tags3">
+            <input class="form-control" id="tags" name="tags" value="{{$this->getTagsAsString()}}">
         </div>
 
         <div class="form-group">
             <label for="communities">Communities</label>
-            <select class="custom-select">
+            <select wire:model="communityId" class="custom-select">
                 <option selected>Select Community</option>
                 @foreach($communities as $community)
                     <option wire:key="{{ $community->id }}" value="{{ $community->id }}">
@@ -35,8 +35,16 @@
                     </option>
                 @endforeach
             </select>
-            <a href="#" class="btn btn-primary mt-3">Add Community To Dataset</a>
+            <a href="#" wire:click="addCommunity" class="btn btn-primary mt-3">Add Community To Dataset</a>
         </div>
+        <ul>
+            @foreach($this->form->dataset->communities as $community)
+                <li>{{$community->name}} <a href="#" wire:click="deleteCommunity({{$community->id}})"
+                                            class="action-link"><i
+                                class="fa fa-fs fa-trash" style="font-size:12px"></i></a>
+                </li>
+            @endforeach
+        </ul>
 
 
         {{--        <label for="license">Choose A License</label>--}}
@@ -57,9 +65,9 @@
         <br/>
         <button type="submit" class="btn btn-primary">
             Save
-            <div wire:loading wire:target="save" class="spinner-border spinner-border-sm" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+        </button>
+        <button type="button" class="btn btn-primary" wire:click="done">
+            Done
         </button>
     </form>
 
@@ -75,7 +83,6 @@
 @script
 <script>
     document.addEventListener('livewire:navigated', () => {
-        console.log('details navigated');
         let tagsInput = document.querySelector('#tags');
         let tagify = new Tagify(tagsInput, {
             whitelist: ['tag1', 'tag2', 'tag3'],

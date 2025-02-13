@@ -8,10 +8,20 @@ use Livewire\Component;
 
 class CreateDataset extends Component
 {
-    public ?Dataset $dataset;
+    public Dataset $dataset;
 
-    #[Url('activeTab')]
+    #[Url(keep: true)]
+    public $datasetId = '';
+
+    #[Url(keep: true)]
     public $activeTab = "details";
+
+    public function mount(Dataset $dataset)
+    {
+        $this->dataset = $dataset;
+        ray("mount: {$dataset->id}");
+        $this->datasetId = $dataset->id;
+    }
 
     public function setActiveTab($tab)
     {

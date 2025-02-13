@@ -471,7 +471,7 @@ class EntityActivityImporter
             }
         });
 
-        $entity->attachTags($tags);
+        $entity->syncTags($tags);
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
@@ -817,7 +817,7 @@ class EntityActivityImporter
             }
         });
 
-        $activity->attachTags($tags);
+        $activity->syncTags($tags);
     }
 
     private function createActivityRelationships()

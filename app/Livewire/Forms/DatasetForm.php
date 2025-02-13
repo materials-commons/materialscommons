@@ -62,8 +62,6 @@ class DatasetForm extends Form
     {
         $this->validate();
 
-        ray($this->tags);
-
         $this->dataset->name = $this->name;
         $this->dataset->description = $this->description;
         $this->dataset->summary = $this->summary;

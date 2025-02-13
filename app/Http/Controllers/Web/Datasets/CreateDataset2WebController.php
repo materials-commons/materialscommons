@@ -14,11 +14,27 @@ class CreateDataset2WebController extends Controller
      */
     public function __invoke(Request $request, Project $project)
     {
-        $dataset = Dataset::create([
-            'project_id' => $project->id,
-            'name'       => '',
-            'owner_id'   => auth()->user()->id,
-        ]);
+        $datasetId = $request->input('datasetId');
+        $dataset = null;
+
+        if (!is_null($datasetId)) {
+            $dataset = Dataset::with(['tags', 'communities'])
+                              ->where('project_id', $project->id)
+                              ->whereNull('published_at')
+                              ->where('id', $datasetId)
+                              ->first();
+        }
+
+        // Either dataset wasn't specified in the query parameter, or the
+        // dataset couldn't be found.
+        if (is_null($dataset)) {
+            $dataset = Dataset::create([
+                'project_id' => $project->id,
+                'name'       => '',
+                'owner_id'   => auth()->user()->id,
+            ]);
+        }
+
         return view('app.projects.datasets.create-dataset', [
             'project' => $project,
             'dataset' => $dataset,

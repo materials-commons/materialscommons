@@ -93,7 +93,7 @@ class CreateDatasetAction
                 $dataset->papers()->attach($paper);
             });
 
-            $dataset->attachTags($this->tags);
+            $dataset->syncTags($this->tags);
         });
 
         return $dataset->fresh();
