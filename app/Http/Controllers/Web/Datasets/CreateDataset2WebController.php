@@ -28,11 +28,21 @@ class CreateDataset2WebController extends Controller
         // Either dataset wasn't specified in the query parameter, or the
         // dataset couldn't be found.
         if (is_null($dataset)) {
+            $project->load(['team.admins', 'team.members']);
+            $authors = [];
+            foreach ($project->team->members->merge($project->team->admins) as $author) {
+                $authors[] = [
+                    "name"        => $author->name,
+                    "email"       => $author->email,
+                    "affiliation" => $author->affiliation,
+                ];
+            }
             $dataset = Dataset::create([
                 'project_id' => $project->id,
                 'name'       => '',
                 'owner_id'   => auth()->user()->id,
-                'license' => 'No License',
+                'license'    => 'No License',
+                'ds_authors' => $authors,
             ]);
         }
 

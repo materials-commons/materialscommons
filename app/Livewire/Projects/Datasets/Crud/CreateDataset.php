@@ -19,7 +19,6 @@ class CreateDataset extends Component
     public function mount(Dataset $dataset)
     {
         $this->dataset = $dataset;
-        ray("mount: {$dataset->id}");
         $this->datasetId = $dataset->id;
     }
 
@@ -30,6 +29,8 @@ class CreateDataset extends Component
 
     public function render()
     {
-        return view('livewire.projects.datasets.crud.create-dataset');
+        return view('livewire.projects.datasets.crud.create-dataset', [
+            'key' => uuid(),
+        ]);
     }
 }

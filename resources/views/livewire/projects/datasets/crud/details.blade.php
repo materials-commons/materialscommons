@@ -58,6 +58,7 @@
         </button>
     </form>
 
+    <br/>
     <div x-show="$wire.showSuccess"
          x-transition.out.opacity.duration.2000ms
          x-effect="if($wire.showSuccess) setTimeout(() => $wire.showSuccess = false, 2000)">
