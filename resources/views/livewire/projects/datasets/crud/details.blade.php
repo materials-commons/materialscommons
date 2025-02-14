@@ -69,7 +69,21 @@
 
 @script
 <script>
-    document.addEventListener('livewire:navigated', () => {
+    // Not sure if we need this..
+    //
+    // document.addEventListener('livewire:navigated', () => {
+    //     console.log('details navigated');
+    //     let tagsInput = document.querySelector('#tags');
+    //     new Tagify(tagsInput);
+    //
+    //     tagsInput.addEventListener('change', onChange);
+    //
+    //     function onChange(e) {
+    //         $wire.setTags(e.target.value);
+    //     }
+    // });
+
+    (function () {
         let tagsInput = document.querySelector('#tags');
         new Tagify(tagsInput);
 
@@ -78,7 +92,7 @@
         function onChange(e) {
             $wire.setTags(e.target.value);
         }
-    });
+    })();
 
 </script>
 @endscript
