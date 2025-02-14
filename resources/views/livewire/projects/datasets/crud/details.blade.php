@@ -46,23 +46,10 @@
             @endforeach
         </ul>
 
-
-        {{--        <label for="license">Choose A License</label>--}}
-        {{--        <div class="form-group">--}}
-        {{--            <div class="col-12">--}}
-        {{--                @include('livewire.projects.datasets.crud.tabs._no-license')--}}
-        {{--            </div>--}}
-        {{--            <div class="col-12">--}}
-        {{--                @include('livewire.projects.datasets.crud.tabs._odbl-license')--}}
-        {{--            </div>--}}
-        {{--            <div class="col-12">--}}
-        {{--                @include('livewire.projects.datasets.crud.tabs._odc-by-license')--}}
-        {{--            </div>--}}
-        {{--            <div class="col-12">--}}
-        {{--                @include('livewire.projects.datasets.crud.tabs._pddl-license')--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
         <br/>
+        <livewire:projects.datasets.crud.update-license :license="$this->form->dataset->license"/>
+        <br/>
+
         <button type="submit" class="btn btn-primary">
             Save
         </button>
@@ -84,15 +71,12 @@
 <script>
     document.addEventListener('livewire:navigated', () => {
         let tagsInput = document.querySelector('#tags');
-        let tagify = new Tagify(tagsInput, {
-            whitelist: ['tag1', 'tag2', 'tag3'],
-        });
+        new Tagify(tagsInput);
 
         tagsInput.addEventListener('change', onChange);
 
         function onChange(e) {
-            @this.
-            call('setTags', e.target.value);
+            $wire.setTags(e.target.value);
         }
     });
 

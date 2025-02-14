@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Livewire\Projects\Datasets\Crud\Tabs;
+namespace App\Livewire\Projects\Datasets\Crud;
 
 use App\Livewire\Forms\DatasetForm;
 use App\Models\Community;
 use App\Models\Dataset;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Details extends Component
@@ -33,15 +34,12 @@ class Details extends Component
 
     public function save()
     {
-        ray('save');
         $this->form->update();
         $this->showSuccess = true;
     }
 
     public function done()
     {
-        ray('done');
-//        $this->save();
         $this->form->update();
         return redirect(route('projects.datasets.index', [$this->form->dataset->project_id]));
     }
@@ -55,6 +53,13 @@ class Details extends Component
         $changed = collect(json_decode($tags))->pluck('value')->toArray();
         $this->form->tags = $changed;
         $this->form->dataset->syncTags($changed);
+    }
+
+    #[On('update-license')]
+    public function updateLicense($license)
+    {
+        $this->form->dataset->update(['license' => $license]);
+        $this->showSuccess = true;
     }
 
     public function getTagsAsString()
@@ -71,7 +76,7 @@ class Details extends Component
                                 ->orderBy('name')
                                 ->get();
 
-        return view('livewire.projects.datasets.crud.tabs.details', [
+        return view('livewire.projects.datasets.crud.details', [
             'communities' => $communities,
         ]);
     }

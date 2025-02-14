@@ -32,6 +32,7 @@ class CreateDataset2WebController extends Controller
                 'project_id' => $project->id,
                 'name'       => '',
                 'owner_id'   => auth()->user()->id,
+                'license' => 'No License',
             ]);
         }
 
