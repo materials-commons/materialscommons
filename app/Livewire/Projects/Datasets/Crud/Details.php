@@ -58,7 +58,6 @@ class Details extends Component
     #[On('update-license')]
     public function updateLicense($license)
     {
-        ray($license);
         $this->form->dataset->update(['license' => $license]);
         $this->showSuccess = true;
     }

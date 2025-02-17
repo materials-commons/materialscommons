@@ -34,7 +34,7 @@ class CreateDataset2WebController extends Controller
                 $authors[] = [
                     "name"        => $author->name,
                     "email"       => $author->email,
-                    "affiliation" => $author->affiliation,
+                    "affiliation" => $author->affiliations ?? "unknown",
                 ];
             }
             $dataset = Dataset::create([
