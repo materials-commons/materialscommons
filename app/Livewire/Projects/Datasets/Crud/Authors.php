@@ -19,14 +19,7 @@ class Authors extends Component
     public function move($author, $to)
     {
         $authors = $this->dataset->ds_authors;
-        $index = -1;
-        for ($i = 0; $i < count($authors); $i++) {
-            if ($authors[$i]["email"] == $author) {
-                $index = $i;
-                break;
-            }
-        }
-
+        $index = $this->findAuthorIndex($author);
         if ($index == -1) {
             return;
         }
@@ -34,6 +27,30 @@ class Authors extends Component
         $out = array_splice($authors, $index, 1);
         array_splice($authors, $to, 0, $out);
         $this->dataset->update(["ds_authors" => $authors]);
+    }
+
+    public function remove($author)
+    {
+        $authors = $this->dataset->ds_authors;
+        $index = $this->findAuthorIndex($author);
+        if ($index == -1) {
+            return;
+        }
+        unset($authors[$index]);
+        $this->dataset->update(["ds_authors" => $authors]);
+    }
+
+    private function findAuthorIndex($author): int
+    {
+        $authors = $this->dataset->ds_authors;
+        $index = -1;
+        for ($i = 0; $i < count($authors); $i++) {
+            if ($authors[$i]["email"] == $author) {
+                $index = $i;
+                break;
+            }
+        }
+        return $index;
     }
 
     public function render()

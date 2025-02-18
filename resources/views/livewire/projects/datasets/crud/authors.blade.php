@@ -8,7 +8,12 @@
         @foreach ($dataset->ds_authors as $author)
             <div x-sort:item="'{{$author['email']}}'" class="card mb-3" wire:key="{{ $author['email'] }}">
                 <div class="card-header">
-                    <h5 class="card-title"><i class="fa fa-fw fa-grip-vertical"></i>{{$author['name']}}</h5>
+                    <h5 class="card-title">
+                        <i class="fa fa-fw fa-grip-vertical"></i>{{$author['name']}}
+                        <a href="#" wire:click="remove('{{$author['email']}}')" class="float-right" style="color: rgb(242, 242, 242)">
+                            <i class="fa fa-fw fa-trash"></i>
+                        </a>
+                    </h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">Affiliations: {{$author['affiliation']}}</p>
