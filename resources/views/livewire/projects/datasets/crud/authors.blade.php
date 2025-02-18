@@ -16,7 +16,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Affiliations: {{$author['affiliation']}}</p>
+                    <p class="card-text">Affiliations: {{$author['affiliations']}}</p>
                     <p class="card-text">Email: {{$author['email']}}</p>
                 </div>
             </div>
@@ -37,9 +37,9 @@
                 </div>
                 <div class="form-group required">
                     <label for="affiliations" class="rl">Affiliations</label>
-                    <input wire:model="form.affiliation" type="email" class="form-control" id="affiliations"
+                    <input wire:model="form.affiliations" type="email" class="form-control" id="affiliations"
                            placeholder="Affilations..">
-                    @error('form.affiliation') <span class="text-danger">{{ $message }}</span> @enderror
+                    @error('form.affiliations') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </form>
         </x-slot:body>

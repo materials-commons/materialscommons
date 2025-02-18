@@ -8,7 +8,7 @@ class AuthorForm extends Form
 {
     public $name;
     public $email;
-    public $affiliation;
+    public $affiliations;
 
     public function rules()
     {
@@ -26,7 +26,7 @@ class AuthorForm extends Form
         $authors[] = [
             'name'         => $this->name,
             'email'        => $this->email,
-            'affiliations' => $this->affiliation,
+            'affiliations' => $this->affiliations,
         ];
 
         $dataset->update(['ds_authors' => $authors]);

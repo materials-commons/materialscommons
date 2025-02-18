@@ -32,9 +32,9 @@ class CreateDataset2WebController extends Controller
             $authors = [];
             foreach ($project->team->members->merge($project->team->admins) as $author) {
                 $authors[] = [
-                    "name"        => $author->name,
-                    "email"       => $author->email,
-                    "affiliation" => $author->affiliations ?? "unknown",
+                    "name"         => $author->name,
+                    "email"        => $author->email,
+                    "affiliations" => $author->affiliations ?? "unknown",
                 ];
             }
             $dataset = Dataset::create([
