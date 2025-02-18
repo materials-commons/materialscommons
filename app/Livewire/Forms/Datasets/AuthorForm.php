@@ -24,9 +24,9 @@ class AuthorForm extends Form
         $this->validate();
         $authors = $dataset->ds_authors;
         $authors[] = [
-            'name'        => $this->name,
-            'email'       => $this->email,
-            'affiliation' => $this->affiliation,
+            'name'         => $this->name,
+            'email'        => $this->email,
+            'affiliations' => $this->affiliation,
         ];
 
         $dataset->update(['ds_authors' => $authors]);
