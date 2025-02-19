@@ -28,15 +28,17 @@
                         </a>
                     @else
                         @if(isset($entity->experiments) && $entity->experiments->count() > 0)
-                            @if($showCheckbox)
-                                <input type="checkbox" class="form-check-input entity-checkbox">
-                            @endif
-                            <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
-                                {{$entity->name}}
-                            </a>
+                            <div>
+                                @if($showCheckbox)
+                                    <input type="checkbox">
+                                @endif
+                                <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                                    {{$entity->name}}
+                                </a>
+                            </div>
                         @else
                             @if($showCheckbox)
-                                <input type="checkbox" class="form-check-input entity-checkbox">
+                                <input type="checkbox">
                             @endif
                             <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
                                 {{$entity->name}}
