@@ -17,6 +17,8 @@ class CreateDataset2WebController extends Controller
         $datasetId = $request->input('datasetId');
         $dataset = null;
 
+        $project->load(['team.admins', 'team.members', 'experiments']);
+
         if (!is_null($datasetId)) {
             $dataset = Dataset::with(['tags', 'communities'])
                               ->where('project_id', $project->id)
@@ -28,7 +30,6 @@ class CreateDataset2WebController extends Controller
         // Either dataset wasn't specified in the query parameter, or the
         // dataset couldn't be found.
         if (is_null($dataset)) {
-            $project->load(['team.admins', 'team.members']);
             $authors = [];
             foreach ($project->team->members->merge($project->team->admins) as $author) {
                 $authors[] = [

@@ -12,7 +12,8 @@
             Create Dataset
         </x-slot:header>
         <x-slot:body>
-            <livewire:projects.datasets.crud.create-dataset :dataset="$dataset" :action="'details'"/>
+            <livewire:projects.datasets.crud.create-dataset :dataset="$dataset" :project="$project"
+                                                            :action="'details'"/>
         </x-slot:body>
     </x-card>
 @stop
