@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Directories\CreateDirectoryApiController;
 use App\Http\Controllers\Api\Directories\CreateDirectoryByPathApiController;
 use App\Http\Controllers\Api\Directories\DeleteDirectoryApiController;
+use App\Http\Controllers\Api\Directories\IndexAllDirectoriesApiController;
 use App\Http\Controllers\Api\Directories\IndexDirectoryApiController;
 use App\Http\Controllers\Api\Directories\IndexDirectoryByPathApiController;
 use App\Http\Controllers\Api\Directories\MoveDirectoryApiController;
@@ -20,3 +21,4 @@ Route::post('/directories/{directory}/move', MoveDirectoryApiController::class);
 Route::post('/directories/{directory}/rename', RenameDirectoryApiController::class);
 Route::get('/projects/{project}/directories_by_path', IndexDirectoryByPathApiController::class);
 Route::get('/projects/{project}/directories/{directory}/list', IndexDirectoryApiController::class);
+Route::get('/projects/{project}/directories', IndexAllDirectoriesApiController::class);
