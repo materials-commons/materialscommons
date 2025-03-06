@@ -3,7 +3,7 @@
         @if($loop->iteration < 12)
             <li class="mt-2">
                 @if($f->mime_type == "directory")
-                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->name}} (dir)</a>
+                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
                 @else
                     <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
                 @endif
@@ -25,7 +25,7 @@
         @else
             <li class="{{$activity->uuid}} mt-2" hidden>
                 @if($f->mime_type == "directory")
-                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->name}} (dir)</a>
+                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
                 @else
                     <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
                 @endif
