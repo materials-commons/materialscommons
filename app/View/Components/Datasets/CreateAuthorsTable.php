@@ -11,7 +11,7 @@ class CreateAuthorsTable extends Component
     public Project $project;
     public ?Dataset $dataset;
 
-    public function __construct(Project $project, Dataset $dataset = null)
+    public function __construct(Project $project, ?Dataset $dataset = null)
     {
         $this->project = $project;
         $this->dataset = $dataset;
