@@ -12,7 +12,7 @@ class DatasetFileSelection
     private $selection;
     private $dataset;
 
-    public function __construct($datasetSelection, Dataset $dataset = null)
+    public function __construct($datasetSelection, ?Dataset $dataset = null)
     {
         $this->dataset = $dataset;
         $this->selection = collect();
