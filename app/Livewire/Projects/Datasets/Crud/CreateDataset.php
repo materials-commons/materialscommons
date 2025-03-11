@@ -3,11 +3,13 @@
 namespace App\Livewire\Projects\Datasets\Crud;
 
 use App\Models\Dataset;
+use App\Models\Project;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class CreateDataset extends Component
 {
+    public Project $project;
     public Dataset $dataset;
 
     #[Url(keep: true)]

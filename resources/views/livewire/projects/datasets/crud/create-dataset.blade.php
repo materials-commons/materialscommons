@@ -42,11 +42,11 @@
     @if($activeTab == "details")
         <livewire:projects.datasets.crud.details :dataset="$dataset"/>
     @elseif ($activeTab == "authors")
-        <livewire:projects.datasets.crud.authors :dataset="$dataset" wire:key=""/>
+        <livewire:projects.datasets.crud.authors :dataset="$dataset" wire:key="{{$key}}"/>
     @elseif ($activeTab == "files")
         files
     @elseif ($activeTab == "samples")
-        <livewire:projects.datasets.crud.select-samples/>
+        <livewire:projects.datasets.crud.select-samples :dataset="$dataset" :project="$project" wire:key="{{$key}}"/>
     @elseif ($activeTab == "computations")
         computations
     @else
