@@ -1,8 +1,13 @@
 <div>
-    <table id="files" class="table table-hover" style="width:100%">
+    <x-table.table-search/>
+    <table id="files" class="table table-hover mt-2" style="width:100%">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>
+                <x-table.col-sortable :column="'name'" :sort-col="$sortCol" :sort-asc="$sortAsc">
+                    Name
+                </x-table.col-sortable>
+            </th>
             <th>Type</th>
             <th>Size</th>
             <th>Selected</th>
@@ -32,7 +37,7 @@
                     <div class="form-group form-check-inline">
                         <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                {{$file->selected ? 'checked' : ''}}
-                               wire:click="toggleSelection({{$file}})">
+                               wire:click="toggleFileSelected($file)">
                     </div>
                 </td>
             </tr>
