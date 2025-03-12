@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
 use App\Traits\DataDictionaryQueries;
-use App\ViewModels\DataDictionary\ShowProjectDataDictionaryViewModel;
 use App\ViewModels\Projects\ShowProjectViewModel;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ShowProjectWebController extends Controller
 {
@@ -17,7 +14,7 @@ class ShowProjectWebController extends Controller
 
     public function __invoke($projectId)
     {
-        $project = Project::with(['owner', 'team.members', 'team.admins', 'rootDir'])
+        $project = Project::with(['owner', 'team.members', 'team.admins', 'rootDir', 'experiments'])
                           ->withCount('experiments', 'entities', 'publishedDatasets', 'unpublishedDatasets')
                           ->where('id', $projectId)
                           ->first();

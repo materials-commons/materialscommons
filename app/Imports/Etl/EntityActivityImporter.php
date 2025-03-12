@@ -577,11 +577,6 @@ class EntityActivityImporter
             return;
         }
 
-        if (($dir = $this->isDirectory($path)) !== null) {
-            $this->addDirectoryFiles($dir, $entity, $activity);
-            return;
-        }
-
         $this->addSingleFile($path, $entity, $activity);
     }
 
@@ -616,28 +611,6 @@ class EntityActivityImporter
                     }
 
                     $this->addFileToActivityAndEntity($file, $activity, $entity);
-                });
-            });
-    }
-
-    private function isDirectory($path)
-    {
-        $dir = $this->getFileByPathAction->execute($this->projectId, $path);
-        return optional($dir)->mime_type == "directory" ? $dir : null;
-    }
-
-    private function addDirectoryFiles(File $dir, ?Entity $entity, ?Activity $activity)
-    {
-        File::where('directory_id', $dir->id)
-            ->where('mime_type', '<>', 'directory')
-            ->whereNull('deleted_at')
-            ->where('current', true)
-            ->chunk(100, function ($files) use ($entity, $activity, $dir) {
-                $files->each(function (File $file) use ($entity, $activity, $dir) {
-                    if (!$this->addFileToActivityAndEntity($file, $activity, $entity)) {
-                        $dirPath = $dir->getDirPathForFormatting();
-                        $this->etlState->logError("   Unable to find file {$dirPath}/{$file->name}");
-                    }
                 });
             });
     }

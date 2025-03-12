@@ -88,7 +88,11 @@
             @break
 
         @case("markdown")
-            <x-markdown>{!!$fileContents($file)!!}</x-markdown>
+            @php
+                $contents = $fileContents($file);
+            @endphp
+            <div id="file-contents" style="display: none">{!!$contents!!}</div>
+            <x-markdown>{!!$contents!!}</x-markdown>
             @break
 
         @default

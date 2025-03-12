@@ -2,7 +2,11 @@
     @foreach($activity->files as $f)
         @if($loop->iteration < 12)
             <li class="mt-2">
-                <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
+                @if($f->mime_type == "directory")
+                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
+                @else
+                    <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
+                @endif
                 @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
@@ -20,7 +24,11 @@
             </li>
         @else
             <li class="{{$activity->uuid}} mt-2" hidden>
-                <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
+                @if($f->mime_type == "directory")
+                    <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
+                @else
+                    <a href="{{route('projects.files.show', [$project, $f])}}">{{$f->name}}</a>
+                @endif
                 @if(in_array($f->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">
                         <div class="row">
