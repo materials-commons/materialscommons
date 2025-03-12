@@ -27,7 +27,7 @@ class SelectSamples extends Component
 
     public function render()
     {
-        $this->datasetEntities = $this->getEntitiesForDataset($this->dataset);
+        $this->datasetEntities = $this->getEntitiesForDataset($this->dataset, $this->category);
         return $this->createProjectEntitiesView('livewire.projects.datasets.crud.select-samples');
     }
 

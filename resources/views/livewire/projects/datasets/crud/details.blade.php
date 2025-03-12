@@ -1,5 +1,21 @@
 <div>
+    <div x-show="$wire.showSuccess"
+         x-transition.out.opacity.duration.2000ms
+         x-effect="if($wire.showSuccess) setTimeout(() => $wire.showSuccess = false, 2000)">
+        <div class="text-green-300">
+            <i class="fas fa-fw fa-check-circle"></i>Dataset updated successfully
+        </div>
+    </div>
     <form wire:submit="save">
+        <div class="float-right">
+            <button type="submit" class="btn btn-primary">
+                Save
+            </button>
+            <button type="button" class="btn btn-primary" wire:click="done">
+                Done
+            </button>
+        </div>
+        <br/>
         <div class="form-group required">
             <label for="title" class="rl">Title</label>
             <input wire:model.blur="form.name" type="text" class="form-control" id="title" placeholder="Title...">
@@ -49,23 +65,7 @@
         <br/>
         <livewire:projects.datasets.crud.update-license :license="$this->form->dataset->license"/>
         <br/>
-
-        <button type="submit" class="btn btn-primary">
-            Save
-        </button>
-        <button type="button" class="btn btn-primary" wire:click="done">
-            Done
-        </button>
     </form>
-
-    <br/>
-    <div x-show="$wire.showSuccess"
-         x-transition.out.opacity.duration.2000ms
-         x-effect="if($wire.showSuccess) setTimeout(() => $wire.showSuccess = false, 2000)">
-        <div class="text-green-300">
-            <i class="fas fa-fw fa-check-circle"></i>Dataset updated successfully
-        </div>
-    </div>
 </div>
 
 @script
