@@ -11,6 +11,8 @@
 @section('content')
     @component('app.projects.delete-project', ['project' => $project])
     @endcomponent
+    {{--    <x-projects.tabs :experiments="$project->experiments"/>--}}
+    {{--    <br>--}}
     <x-card>
         <x-slot:header>
             Project: {{$project->name}}
