@@ -17,7 +17,7 @@ class CreateDataset2WebController extends Controller
         $datasetId = $request->input('datasetId');
         $dataset = null;
 
-        $project->load(['team.admins', 'team.members', 'experiments']);
+        $project->load(['team.admins', 'team.members', 'experiments', 'rootDir']);
 
         if (!is_null($datasetId)) {
             $dataset = Dataset::with(['tags', 'communities'])

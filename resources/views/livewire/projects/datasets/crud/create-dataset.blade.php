@@ -44,7 +44,8 @@
     @elseif ($activeTab == "authors")
         <livewire:projects.datasets.crud.authors :dataset="$dataset" wire:key="{{$key}}"/>
     @elseif ($activeTab == "files")
-        <livewire:projects.datasets.crud.select-files :dataset="$dataset" :project="$project" wire:key="{{$key}}"/>
+        <livewire:projects.datasets.crud.select-files :dataset="$dataset" :directory-id="$project->rootDir->id"
+                                                      :project="$project" wire:key="{{$key}}"/>
     @elseif ($activeTab == "samples")
         <livewire:projects.datasets.crud.select-samples :dataset="$dataset" :project="$project" category="experimental"
                                                         wire:key="{{$key}}"/>

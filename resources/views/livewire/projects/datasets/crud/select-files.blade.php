@@ -1,4 +1,5 @@
 <div>
+    <h3>Path: {{$currentDir->path}}</h3>
     <x-table.table-search/>
     <table id="files" class="table table-hover mt-2" style="width:100%">
         <thead>
@@ -18,7 +19,7 @@
             <tr>
                 <td>
                     @if ($file->mime_type === 'directory')
-                        <a href="{{route($directoryPathRouteName, [$project, $dataset, $file])}}">
+                        <a href="#" wire:click.prevent="gotoDirectory({{$file->id}})">
                             <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
                         </a>
                     @else
@@ -37,7 +38,7 @@
                     <div class="form-group form-check-inline">
                         <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                {{$file->selected ? 'checked' : ''}}
-                               wire:click="toggleFileSelected($file)">
+                               wire:click="toggleSelected('{{$file->name}}', '{{$file->mime_type}}')">
                     </div>
                 </td>
             </tr>
