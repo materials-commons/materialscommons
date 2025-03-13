@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Web\Datasets\Traits;
 
+use App\Models\Dataset;
+
 trait HasExtendedInfo
 {
-    private function getEntitiesForDataset($dataset, $category = 'experimental')
+    private function getEntitiesForDataset(Dataset $dataset, $category = 'experimental')
     {
         // unpublished dataset so get entities from template
         if (is_null($dataset->published_at)) {
