@@ -63,7 +63,7 @@
             </li>
 
             <li class="nav-item">
-                <a wire:navigate class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
+                <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.entities')}}"
                    data-toggle="tooltip" title="View the experimental processes and samples loaded into your project."
                    href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">
                     <i class="fa-fw fas fa-cubes mr-2 "></i>

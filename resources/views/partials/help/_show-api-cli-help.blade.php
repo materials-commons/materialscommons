@@ -87,8 +87,8 @@ mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
     <pre>
 import materials_commons.api as mcapi
 
-# Create Client: The token shown is your API token. You can cut and paste this code in to initialize the client.
-c = mcapi.Client("{{auth()->user()->api_token}}")
+# Create Client: To get the API token, go to your Account page (link in sidebar) and click on the "API Token" link.
+c = mcapi.Client("Goto Account Page and get API Token")
     </pre>
     @if (Request::routeIs('projects.files*'))
         @include('partials.help.api-cli._file-show-api-help')
