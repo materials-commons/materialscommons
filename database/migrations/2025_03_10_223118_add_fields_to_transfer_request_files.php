@@ -11,8 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('transfer_request_files', function (Blueprint $table) {
-            $table->bigInteger('expected_size')->nullable();
+            $table->unsignedBigInteger('expected_size')->nullable();
             $table->string('expected_checksum')->nullable();
+            $table->text('path')->nullable();
+            $table->uuid('client_uuid')->nullable();
         });
     }
 

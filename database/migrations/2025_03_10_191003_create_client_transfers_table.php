@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid()->unique();
             $table->string('state', 20)->nullable();
-            $table->uuid('source_uuid')->nullable();
+            $table->uuid('client_uuid')->nullable();
 
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')
