@@ -12,10 +12,12 @@
     @component('components.card')
         @slot('header')
             File: {{$file->name}}
-            <a class="action-link float-right"
-               href="{{route('public.datasets.download_file', [$dataset, $file])}}">
-                <i class="fas fa-download mr-2"></i>Download File
-            </a>
+            @auth
+                <a class="action-link float-right"
+                   href="{{route('public.datasets.download_file', [$dataset, $file])}}">
+                    <i class="fas fa-download mr-2"></i>Download File
+                </a>
+            @endauth
         @endslot
 
         @slot('body')
@@ -26,9 +28,18 @@
 
             <hr>
             <br>
-            @include('partials.files._display-file', [
-                'displayRoute' => route('public.datasets.files.display', [$dataset, $file])
-            ])
+            @auth
+                @include('partials.files._display-file', [
+                    'displayRoute' => route('public.datasets.files.display', [$dataset, $file])
+                ])
+            @else
+                <br>
+                <h5 class="mt-3">
+                    To view this file please
+                    <a href="{{route('login')}}">Login</a> or <a href="{{route('register')}}">Register</a>.
+                </h5>
+                <br>
+            @endauth
         @endslot
     @endcomponent
 @endsection
