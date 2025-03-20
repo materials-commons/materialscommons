@@ -11,6 +11,10 @@ class DownloadDatasetFileWebController extends Controller
 {
     public function __invoke(Dataset $dataset, File $file)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $count = DB::table('dataset2file')->where('dataset_id', $dataset->id)
                    ->where('file_id', $file->id)
                    ->count();

@@ -8,10 +8,12 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="text-center">
-                                    <a href="{{route('public.datasets.files.display', [$dataset, $file])}}">
-                                        <img src="{{route('public.datasets.files.display', [$dataset, $file])}}"
-                                             class="img-fluid">
-                                    </a>
+                                    @auth
+                                        <a href="{{route('public.datasets.files.display', [$dataset, $file])}}">
+                                            <img src="{{route('public.datasets.files.display', [$dataset, $file])}}"
+                                                 class="img-fluid">
+                                        </a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -26,10 +28,12 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="text-center">
-                                    <a href="{{route('public.datasets.files.display', [$dataset, $file])}}">
-                                        <img src="{{route('public.datasets.files.display', [$dataset, $file])}}"
-                                             class="img-fluid">
-                                    </a>
+                                    @auth
+                                        <a href="{{route('public.datasets.files.display', [$dataset, $file])}}">
+                                            <img src="{{route('public.datasets.files.display', [$dataset, $file])}}"
+                                                 class="img-fluid">
+                                        </a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
