@@ -10,6 +10,7 @@ class ColumnAttribute
     public $type;
     public $unit;
     public $important;
+    public $tags;
 
     public function __construct($name, $value, $unit, $type, $columnNumber, $important = false)
     {

@@ -491,6 +491,7 @@ class EntityActivityImporter
                 $importantDate = $attr->important ? $this->now : null;
                 $a = Attribute::create([
                     'name'                => $attr->name,
+                    'group'               => $attr->group,
                     'attributable_id'     => $state->id,
                     'eindex'              => $attributePosition,
                     'attributable_type'   => EntityState::class,

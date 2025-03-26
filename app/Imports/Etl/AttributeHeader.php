@@ -29,6 +29,7 @@ class AttributeHeader
 
     private static $entityTagKeywords = [
         "st" => true,
+        "ct" => true,
     ];
 
     private static $activityKeywords = [
@@ -145,7 +146,7 @@ class AttributeHeader
     private static function parseFileHeader($colon, $header): AttributeHeader
     {
         $firstColon = strpos($header, ":");
-        $secondColon = strrpos($header, ":");
+        $secondColon = strrpos($header, ":"); // Note: This is str r pos
         if ($firstColon == $secondColon) {
             // If we are here then firstColon == secondColon, which means the format is:
             // FILE:directory-path/to/file/in/cell/in/materials-commons, and there is no
