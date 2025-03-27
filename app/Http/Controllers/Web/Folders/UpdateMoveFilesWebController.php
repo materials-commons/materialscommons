@@ -35,6 +35,6 @@ class UpdateMoveFilesWebController extends Controller
             $moveDirectoryAction($dir->id, $moveToDirectory);
         });
 
-        return redirect(route('projects.folders.show', [$project, $folderId]));
+        return redirect(route('projects.folders.move', [$project, $folderId]));
     }
 }
