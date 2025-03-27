@@ -6,12 +6,6 @@
                placeholder="Folder...">
     </div>
 
-    <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" name="description" type="text"
-                  placeholder="Description...">{{old('description')}}</textarea>
-    </div>
-
     <input hidden id="project_id" name="project_id" value="{{$project->id}}">
     <input hidden id="directory_id" name="directory_id" value="{{$directory->id}}">
 

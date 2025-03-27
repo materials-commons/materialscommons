@@ -34,7 +34,7 @@ Route::get('/projects/{project}/goto_folder_by_path', GotoFolderByPathInParam::c
 Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
      ->name('projects.folders.index');
 
-Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
+Route::get('/projects/{project}/folders/{folder}/{destinationProject?}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
 Route::get('/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to',

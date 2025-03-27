@@ -14,6 +14,7 @@ class ShowFolderViewModel extends ViewModel
 
     protected ?File $directory;
     protected ?Project $project;
+    protected ?Project $destinationProject;
     protected $files;
     protected ?Dataset $dataset;
     protected $projects;
