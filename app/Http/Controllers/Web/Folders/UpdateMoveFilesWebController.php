@@ -12,8 +12,13 @@ use App\Models\Project;
 class UpdateMoveFilesWebController extends Controller
 {
     public function __invoke(MoveFilesRequest $request, MoveDirectoryAction $moveDirectoryAction,
-        MoveFileAction $moveFileAction, Project $project, $folderId)
+                             MoveFileAction $moveFileAction, Project $project, $folderId,
+                             ?Project       $destinationProject = null)
     {
+        if (is_null($destinationProject)) {
+            $destinationProject = $project;
+        }
+
         $validated = $request->validated();
         $ids = $validated['ids'];
         $moveToDirectory = $validated['directory'];
@@ -35,6 +40,7 @@ class UpdateMoveFilesWebController extends Controller
             $moveDirectoryAction($dir->id, $moveToDirectory);
         });
 
-        return redirect(route('projects.folders.move', [$project, $folderId]));
+        return redirect(route('projects.folders.show',
+            [$project, $folderId, $destinationProject, 'arg' => 'move-copy']));
     }
 }

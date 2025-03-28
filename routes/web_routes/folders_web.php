@@ -34,7 +34,7 @@ Route::get('/projects/{project}/goto_folder_by_path', GotoFolderByPathInParam::c
 Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
      ->name('projects.folders.index');
 
-Route::get('/projects/{project}/folders/{folder}/{destinationProject?}', ShowFolderWebController::class)
+Route::get('/projects/{project}/folders/{folder}/dest/{destinationProject?}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
 Route::get('/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to',
@@ -54,7 +54,7 @@ Route::get('/projects/{project}/folders/{directory}/upload', ShowUploadFilesWebC
 Route::get('/projects/{project}/folders/{folder}/move', MoveFilesWebController::class)
      ->name('projects.folders.move');
 
-Route::post('/projects/{project}/folders/{folder}/move', UpdateMoveFilesWebController::class)
+Route::post('/projects/{project}/folders/{folder}/move/{destinationProject?}', UpdateMoveFilesWebController::class)
      ->name('projects.folders.move.update');
 
 Route::get('/projects/{project}/getRootFolder',
@@ -67,8 +67,8 @@ Route::get('/projects/{project}/folders/{dir}/delete', DeleteFolderWebController
 Route::delete('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
      ->name('projects.folders.destroy');
 
-Route::get('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
-     ->name('projects.folders.destroy');
+Route::get('/projects/{project}/folders/{dir}/destroy', DeleteFolderWebController::class)
+     ->name('projects.folders.delete');
 
 Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController::class)
      ->name('projects.folders.rename');

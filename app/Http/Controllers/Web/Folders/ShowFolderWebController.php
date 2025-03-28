@@ -36,7 +36,7 @@ class ShowFolderWebController extends Controller
 
         $projects = $this->getUserProjects(auth()->id());
 
-        $dirsInProject = File::where('project_id', $project->id)
+        $dirsInProject = File::where('project_id', $destinationProject->id)
                              ->where('mime_type', 'directory')
                              ->whereNull('dataset_id')
                              ->whereNull('deleted_at')

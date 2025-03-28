@@ -49,11 +49,12 @@
                 @if($arg == 'move-copy')
                     <div class="form-group">
                         <label for="project">Destination Project</label>
-                        <select name="project" class="selectpicker col-lg-6"
+                        <select name="project" class="selectpicker col-lg-6" id="select-project"
                                 data-style="btn-light no-tt"
                                 title="Current project" data-live-search="true">
                             @foreach($projects as $p)
-                                <option data-token="{{$p->id}}" value="{{$p->id}}" @selected($p->id == $project->id)>
+                                <option data-token="{{$p->id}}"
+                                        value="{{$p->id}}" @selected($p->id == $destinationProject->id)>
                                     @if($p->id == $project->id)
                                         This Project ({{$p->name}})
                                     @else
@@ -76,7 +77,7 @@
                             @endforeach
                         </select>
                         <div class="float-right">
-                            <a href="{{route('projects.folders.show', [$project, $directory, $destinationProject])}}"
+                            <a href="{{route('projects.folders.show', [$project, $directory])}}"
                                class="btn btn-info mr-3">
                                 Done
                             </a>
@@ -152,7 +153,7 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="action-link" title="Delete directory"
-                                       href="{{route('projects.folders.destroy', [$project, $file])}}">
+                                       href="{{route('projects.folders.delete', [$project, $file])}}">
                                         <i class="fas fa-fw fa-trash mr-2"></i>
                                     </a>
                                 @else
@@ -179,7 +180,6 @@
 
     @push('scripts')
         <script>
-
             document.addEventListener('livewire:navigating', () => {
                 $('#files').DataTable().destroy();
             }, {once: true});
@@ -194,6 +194,16 @@
                         {orderData: [5], targets: [4]},
                         {targets: [5], visible: false},
                     ]
+                });
+
+                $('#select-project').on('change', function () {
+                    let choosenProjectId = $(this).val();
+                    window.location.href = route('projects.folders.show', {
+                        'project': {{$project->id}},
+                        'folder': {{$directory->id}},
+                        'destinationProject': choosenProjectId,
+                        'arg': 'move-copy',
+                    });
                 });
             });
         </script>
