@@ -39,7 +39,7 @@
                        data-toggle="tooltip" title="View your deleted files and empty the trashcan."
                        href="{{route('projects.trashcan.index', [$project])}}">
                         <i class="fa-fw fas fa-trash-restore mr-2"></i>
-                        Trash
+                        Trash({{number_format($nav_trash_count)}})
                     </a>
                 </li>
             @else
