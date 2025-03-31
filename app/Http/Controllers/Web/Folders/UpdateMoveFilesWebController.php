@@ -19,6 +19,8 @@ class UpdateMoveFilesWebController extends Controller
             $destinationProject = $project;
         }
 
+        $user = auth()->user();
+
         $validated = $request->validated();
         $ids = $validated['ids'];
         $moveToDirectory = $validated['directory'];
@@ -36,8 +38,8 @@ class UpdateMoveFilesWebController extends Controller
                           ->whereNull('deleted_at')
                           ->where('current', true)
                           ->get();
-        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction) {
-            $moveDirectoryAction($dir->id, $moveToDirectory);
+        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
+            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
         });
 
         return redirect(route('projects.folders.show',
