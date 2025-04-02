@@ -2,6 +2,8 @@
 
 namespace App\Jobs\Folders;
 
+use App\Actions\Directories\MoveDirectoryAction;
+use App\Actions\Files\MoveFileAction;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -14,17 +16,17 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $directoryIdsToMove;
-    public File $fileIdsToMove;
+    public $idsToMove;
+    public $destinationDirId;
     public User $user;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($directoryIdsToMove, $fileIdsToMove, User $user)
+    public function __construct($idsToMove, $destinationDirId, User $user)
     {
-        $this->directoryIdsToMove = $directoryIdsToMove;
-        $this->fileIdsToMove = $fileIdsToMove;
+        $this->idsToMove = $idsToMove;
+        $this->destinationDirId = $destinationDirId;
         $this->user = $user;
     }
 
@@ -33,6 +35,30 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $dirsToMove = File::whereIn('id', $this->idsToMove)
+                          ->whereNotNull('path')
+                          ->whereNull('dataset_id')
+                          ->whereNull('deleted_at')
+                          ->where('current', true)
+                          ->get();
+
+        $filesToMove = File::whereIn('id', $this->idsToMove)
+                           ->whereNull('path')
+                           ->get();
+
+        $moveToDirectory = File::find($this->destinationDirId);
+        if (is_null($moveToDirectory)) {
+            return;
+        }
+
+        $moveFileAction = new MoveFileAction();
+        $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction) {
+            $moveFileAction($file, $moveToDirectory);
+        });
+
+        $moveDirectoryAction = new MoveDirectoryAction();
+        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
+            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
+        });
     }
 }

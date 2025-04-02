@@ -2,6 +2,7 @@
 
 namespace App\Actions\Directories;
 
+use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Models\User;
 use App\Services\AuthService;
@@ -50,12 +51,16 @@ class MoveDirectoryAction
             // Batch update all subdirs
             \Batch::update($directory, $directoriesToUpdate, 'id');
 
-            // Update $directory
-            $directory->update([
-                'directory_id' => $toDirectory->id,
-                'path'         => "{$toDirectory->path}/{$directory->name}",
-                'project_id'   => $toDirectory->project_id,
-            ]);
+            $pathToUse = PathHelpers::normalizePath("{$toDirectory->path}/{$directory->name}");
+
+            if ($directory->directory_id !== $toDirectory->id) {
+                // Update $directory
+                $directory->update([
+                    'directory_id' => $toDirectory->id,
+                    'path'         => $pathToUse,
+                    'project_id'   => $toDirectory->project_id,
+                ]);
+            }
         });
 
         if ($originalProjectId !== $destinationProjectId) {
