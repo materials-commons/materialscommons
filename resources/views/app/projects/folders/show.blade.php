@@ -43,7 +43,7 @@
             @endif
 
             <form method="post" action="{{route('projects.folders.move.update', [$project, $directory])}}"
-                  id="move-files">
+                  id="move-copy-files">
                 @csrf
 
                 @if($arg == 'move-copy')
@@ -82,12 +82,12 @@
                                 Done
                             </a>
 
-                            <a class="btn btn-success" onclick="document.getElementById('move-files').submit()"
+                            <a class="btn btn-success" onclick="moveFiles()"
                                href="#">
                                 Move Selected
                             </a>
 
-                            <a class="btn btn-success" onclick="document.getElementById('move-files').submit()"
+                            <a class="btn btn-success" onclick="copyFiles()"
                                href="#">
                                 Copy Selected
                             </a>
@@ -183,6 +183,32 @@
             document.addEventListener('livewire:navigating', () => {
                 $('#files').DataTable().destroy();
             }, {once: true});
+
+            function moveFiles() {
+                let choosenProjectId = $('#select-project').val();
+                let moveRoute = route('projects.folders.move.update', {
+                    'project': {{$project->id}},
+                    'folder': {{$directory->id}},
+                    'destinationProject': choosenProjectId,
+                    'arg': 'move-copy',
+                });
+                let form = document.getElementById('move-copy-files');
+                form.action = moveRoute;
+                form.submit();
+            }
+
+            function copyFiles() {
+                let choosenProjectId = $('#select-project').val();
+                let copyRoute = route('projects.folders.copy-to', {
+                    'project': {{$project->id}},
+                    'folder': {{$directory->id}},
+                    'destinationProject': choosenProjectId,
+                    'arg': 'move-copy',
+                });
+                let form = document.getElementById('move-copy-files');
+                form.action = copyRoute;
+                form.submit();
+            }
 
             $(document).ready(() => {
                 $('#files').DataTable({
