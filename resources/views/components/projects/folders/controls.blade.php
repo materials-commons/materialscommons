@@ -1,4 +1,4 @@
-@props(['project', 'directory', 'scripts'])
+@props(['project', 'directory', 'scripts', 'arg'])
 <div>
     @if(isInBeta('run_scripts'))
         @if($scripts->count() != 0)
@@ -9,7 +9,7 @@
     @endif
 
     <a class="float-right action-link mr-4"
-       href="{{route('projects.folders.index-images', [$project, $directory])}}">
+       href="{{route('projects.folders.index-images', [$project, $directory, 'arg' => $arg])}}">
         <i class="fas fa-fw fa-images mr-2"></i>View Images
     </a>
 
@@ -19,12 +19,12 @@
     </a>
 
     <a class="float-right action-link mr-4"
-       href="{{route('projects.folders.create', [$project, $directory])}}">
+       href="{{route('projects.folders.create', [$project, $directory, 'arg' => $arg])}}">
         <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
     </a>
 
     <a class="float-right action-link mr-4"
-       href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
+       href="{{route('projects.folders.upload', [$project->id, $directory->id, 'arg' => $arg])}}">
         <i class="fas fa-fw fa-plus mr-2"></i>Upload
     </a>
 </div>

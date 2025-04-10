@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Script;
+use App\Traits\Folders\DestinationProject;
 use App\Traits\GetProjectFolderFiles;
 use App\Traits\Projects\UserProjects;
 use App\ViewModels\Folders\ShowFolderViewModel;
@@ -17,13 +18,11 @@ class ShowFolderWebController extends Controller
 {
     use GetProjectFolderFiles;
     use UserProjects;
+    use DestinationProject;
 
-    public function __invoke(Request $request, Project $project, $folderId, ?Project $destinationProject = null)
+    public function __invoke(Request $request, Project $project, $folderId)
     {
-        if (is_null($destinationProject)) {
-            $destinationProject = $project;
-        }
-
+        $destinationProject = $this->getDestinationProject($project);
         $arg = $request->input('arg');
         $dir = File::where('project_id', $project->id)
                    ->where('id', $folderId)

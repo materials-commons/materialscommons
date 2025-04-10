@@ -10,6 +10,12 @@
     <x-card>
         <x-slot name="header">
             {{$folder->path}}
+            <div class="float-right">
+                <a href="{{route('projects.folders.show', [$project, $folder, 'destproj' => $destinationProject->id, 'arg' => $arg])}}"
+                   class="action-link">
+                    Done
+                </a>
+            </div>
         </x-slot>
         <x-slot name="body">
             <div class="container">

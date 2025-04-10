@@ -34,10 +34,10 @@ Route::get('/projects/{project}/goto_folder_by_path', GotoFolderByPathInParam::c
 Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
      ->name('projects.folders.index');
 
-Route::get('/projects/{project}/folders/{folder}/dest/{destinationProject?}', ShowFolderWebController::class)
+Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
-Route::post('/projects/{project}/folders/{folder}/copy/{destinationProject?}',
+Route::post('/projects/{project}/folders/{folder}/copy',
     CopyToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
@@ -54,7 +54,7 @@ Route::get('/projects/{project}/folders/{directory}/upload', ShowUploadFilesWebC
 Route::get('/projects/{project}/folders/{folder}/move', MoveFilesWebController::class)
      ->name('projects.folders.move');
 
-Route::post('/projects/{project}/folders/{folder}/move/{destinationProject?}', UpdateMoveFilesWebController::class)
+Route::post('/projects/{project}/folders/{folder}/move', UpdateMoveFilesWebController::class)
      ->name('projects.folders.move.update');
 
 Route::get('/projects/{project}/getRootFolder',

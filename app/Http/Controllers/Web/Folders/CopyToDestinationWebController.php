@@ -9,20 +9,18 @@ use App\Jobs\Folders\CopyFolderJob;
 use App\Models\File;
 use App\Models\Project;
 use App\Services\AuthService;
+use App\Traits\Folders\DestinationProject;
 use function auth;
 use function flash;
-use function is_null;
 use function route;
 
 class CopyToDestinationWebController extends Controller
 {
-    public function __invoke(CopyMoveFilesRequest $request, Project $project, $folderId,
-                             ?Project             $destinationProject = null)
-    {
-        if (is_null($destinationProject)) {
-            $destinationProject = $project;
-        }
+    use DestinationProject;
 
+    public function __invoke(CopyMoveFilesRequest $request, Project $project, $folderId)
+    {
+        $destinationProject = $this->getDestinationProject($project);
         $user = auth()->user();
         $validated = $request->validated();
         $ids = $validated['ids'];

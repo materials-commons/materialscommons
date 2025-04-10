@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Web\Folders;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\Folders\DestinationProject;
+use Illuminate\Http\Request;
 
 class IndexImagesWebController extends Controller
 {
-    public function __invoke(Project $project, File $folder)
+    use DestinationProject;
+
+    public function __invoke(Request $request, Project $project, File $folder)
     {
+        $arg = $request->get('arg');
+        $destinationProject = $this->getDestinationProjectId($project);
         $images = File::with(['entities'])
                       ->where('directory_id', $folder->id)
                       ->where(function ($query) {
@@ -22,9 +28,11 @@ class IndexImagesWebController extends Controller
                       ->cursor();
 
         return view('app.projects.folders.index-images', [
-            'folder'  => $folder,
-            'project' => $project,
-            'images'  => $images,
+            'folder'             => $folder,
+            'project'            => $project,
+            'images'             => $images,
+            'destinationProject' => $destinationProject,
+            'arg'                => $arg,
         ]);
     }
 }

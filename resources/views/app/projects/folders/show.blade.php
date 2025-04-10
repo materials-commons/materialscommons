@@ -13,7 +13,8 @@
         </x-slot>
 
         <x-slot name="body">
-            <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"/>
+            <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
+                                         arg="{{$arg}}"/>
             @if ($directory->path == '/')
                 <span class="float-left action-link mr-4">
                     <i class="fa-fw fas fa-filter mr-2"></i>
@@ -34,7 +35,7 @@
             @endif
 
             @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show', [$project, $directory->directory_id, $destinationProject])}}"
+                <a href="{{route('projects.folders.show', [$project, $directory->directory_id, 'destproj' => $destinationProject->id])}}"
                    class="mb-3">
                     <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
                 </a>
@@ -118,7 +119,7 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="no-underline"
-                                       href="{{route('projects.folders.show', [$project, $file, $destinationProject])}}">
+                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destinationProject->id])}}">
                                         <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                     </a>
                                 @else
@@ -189,7 +190,7 @@
                 let moveRoute = route('projects.folders.move.update', {
                     'project': {{$project->id}},
                     'folder': {{$directory->id}},
-                    'destinationProject': choosenProjectId,
+                    'destproj': choosenProjectId,
                     'arg': 'move-copy',
                 });
                 let form = document.getElementById('move-copy-files');
@@ -202,7 +203,7 @@
                 let copyRoute = route('projects.folders.copy-to', {
                     'project': {{$project->id}},
                     'folder': {{$directory->id}},
-                    'destinationProject': choosenProjectId,
+                    'destproj': choosenProjectId,
                     'arg': 'move-copy',
                 });
                 let form = document.getElementById('move-copy-files');
@@ -227,7 +228,7 @@
                     window.location.href = route('projects.folders.show', {
                         'project': {{$project->id}},
                         'folder': {{$directory->id}},
-                        'destinationProject': choosenProjectId,
+                        'destproj': choosenProjectId,
                         'arg': 'move-copy',
                     });
                 });

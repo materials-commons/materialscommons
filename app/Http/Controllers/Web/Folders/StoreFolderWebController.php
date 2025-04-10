@@ -13,8 +13,9 @@ class StoreFolderWebController extends Controller
     public function __invoke(CreateDirectoryRequest $request, CreateDirectoryAction $createDirectoryAction,
                              Project $project, File $folder)
     {
+        $arg = $request->get('arg');
         $validated = $request->validated();
         $createDirectoryAction->execute($validated, auth()->id());
-        return redirect(route('projects.folders.show', [$project, $folder]));
+        return redirect(route('projects.folders.show', [$project, $folder, 'arg' => $arg]));
     }
 }
