@@ -119,7 +119,7 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="no-underline"
-                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destinationProject->id])}}">
+                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
                                         <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                     </a>
                                 @else
@@ -154,12 +154,12 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="action-link" title="Delete directory"
-                                       href="{{route('projects.folders.delete', [$project, $file])}}">
+                                       href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
                                         <i class="fas fa-fw fa-trash mr-2"></i>
                                     </a>
                                 @else
                                     <a class="action-link" title="Delete file"
-                                       href="{{route('projects.files.destroy', [$project, $file])}}">
+                                       href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
                                         <i class="fas fa-fw fa-trash mr-2"></i>
                                     </a>
                                 @endif

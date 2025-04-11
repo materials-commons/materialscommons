@@ -5,11 +5,22 @@ namespace App\Http\Controllers\Web\Folders;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\Folders\DestinationProject;
+use Illuminate\Http\Request;
 
 class DeleteFolderWebController extends Controller
 {
-    public function __invoke(Project $project, File $dir)
+    use DestinationProject;
+
+    public function __invoke(Request $request, Project $project, File $dir)
     {
-        return view('app.projects.folders.delete', compact('project', 'dir'));
+        $arg = $request->get('arg');
+        $destinationProject = $this->getDestinationProjectId($project);
+        return view('app.projects.folders.delete', [
+            'project'            => $project,
+            'dir'                => $dir,
+            'arg'                => $arg,
+            'destinationProject' => $destinationProject,
+        ]);
     }
 }

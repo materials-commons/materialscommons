@@ -13,7 +13,9 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('projects.folders.destroy', [$project, $dir])}}" id="delete-folder">
+            <form method="post"
+                  action="{{route('projects.folders.destroy', [$project, $dir, 'destproj' => $destinationProject, 'arg' => $arg])}}"
+                  id="delete-folder">
                 @csrf
                 @method('delete')
 
@@ -27,7 +29,8 @@
                 {{--                              name="description" readonly>{{$dir->description}}</textarea>--}}
                 {{--                </div>--}}
                 <div class="float-right">
-                    <a href="{{route('projects.folders.show', [$project, $dir])}}" class="action-link mr-3">
+                    <a href="{{route('projects.folders.show', [$project, $dir, 'destproj' => $destinationProject, 'arg' => $arg])}}"
+                       class="action-link mr-3">
                         Cancel
                     </a>
                     <a class="action-link danger" onclick="document.getElementById('delete-folder').submit()" href="#">
