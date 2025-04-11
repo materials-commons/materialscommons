@@ -41,6 +41,7 @@ class ShowFolderWebController extends Controller
                              ->whereNull('deleted_at')
                              ->where('current', true)
                              ->where('id', '<>', $folderId)
+            ->orderBy('path')
                              ->get();
 
         $scripts = Script::listForProject($project);
