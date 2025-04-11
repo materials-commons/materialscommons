@@ -68,11 +68,11 @@
 
                     <div class="form-group">
                         <label for="directories">Destination</label>
-                        <select name="directory" class="selectpicker col-lg-6"
+                        <select name="directory" class="selectpicker col-lg-6" id="select-directory"
                                 data-style="btn-light no-tt"
                                 title="Select directory" data-live-search="true">
                             @foreach($dirsInProject as $dir)
-                                <option data-token="{{$dir->id}}" value="{{$dir->id}}">
+                                <option data-token="{{$dir->id}}" value="{{$dir->id}}" @selected($dir->id == $destDir)>
                                     {{$dir->path}}
                                 </option>
                             @endforeach
@@ -187,10 +187,12 @@
 
             function moveFiles() {
                 let choosenProjectId = $('#select-project').val();
+                let destDirId = $('#select-directory').val();
                 let moveRoute = route('projects.folders.move.update', {
                     'project': {{$project->id}},
                     'folder': {{$directory->id}},
                     'destproj': choosenProjectId,
+                    'destdir': destDirId,
                     'arg': 'move-copy',
                 });
                 let form = document.getElementById('move-copy-files');
@@ -200,10 +202,12 @@
 
             function copyFiles() {
                 let choosenProjectId = $('#select-project').val();
+                let destDirId = $('#select-directory').val();
                 let copyRoute = route('projects.folders.copy-to', {
                     'project': {{$project->id}},
                     'folder': {{$directory->id}},
                     'destproj': choosenProjectId,
+                    'destdir': destDirId,
                     'arg': 'move-copy',
                 });
                 let form = document.getElementById('move-copy-files');
@@ -224,11 +228,25 @@
                 });
 
                 $('#select-project').on('change', function () {
-                    let choosenProjectId = $(this).val();
+                    let chosenProjectId = $(this).val();
+                    let destDirId = $('#select-directory').val();
                     window.location.href = route('projects.folders.show', {
                         'project': {{$project->id}},
                         'folder': {{$directory->id}},
-                        'destproj': choosenProjectId,
+                        'destproj': chosenProjectId,
+                        'destdir': destDirId,
+                        'arg': 'move-copy',
+                    });
+                });
+
+                $('#select-directory').on('change', function () {
+                    let destDirId = $(this).val();
+                    let chosenProjectId = $('#select-project').val();
+                    window.location.href = route('projects.folders.show', {
+                        'project': {{$project->id}},
+                        'folder': {{$directory->id}},
+                        'destproj': chosenProjectId,
+                        'destdir': destDirId,
                         'arg': 'move-copy',
                     });
                 });

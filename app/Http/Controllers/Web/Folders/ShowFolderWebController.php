@@ -9,7 +9,6 @@ use App\Models\Script;
 use App\Traits\Folders\DestinationProject;
 use App\Traits\GetProjectFolderFiles;
 use App\Traits\Projects\UserProjects;
-use App\ViewModels\Folders\ShowFolderViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use function auth;
@@ -23,6 +22,7 @@ class ShowFolderWebController extends Controller
     public function __invoke(Request $request, Project $project, $folderId)
     {
         $destinationProject = $this->getDestinationProject($project);
+        $destDir = $this->getDestinationDirId();
         $arg = $request->input('arg');
         $dir = File::where('project_id', $project->id)
                    ->where('id', $folderId)
@@ -45,11 +45,7 @@ class ShowFolderWebController extends Controller
                              ->get();
 
         $scripts = Script::listForProject($project);
-        $viewModel = (new ShowFolderViewModel($dir, $files))
-            ->withProject($project)
-            ->withReadme($readme)
-            ->withScripts(Script::listForProject($project))
-            ->withProjects($projects);
+
         return view('app.projects.folders.show', [
             'project'            => $project,
             'destinationProject' => $destinationProject,
@@ -59,6 +55,7 @@ class ShowFolderWebController extends Controller
             'directory'          => $dir,
             'dirsInProject'      => $dirsInProject,
             'files'              => $files,
+            'destDir' => $destDir,
             'arg'                => $arg,
         ]);
     }

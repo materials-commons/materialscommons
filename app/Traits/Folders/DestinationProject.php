@@ -2,6 +2,7 @@
 
 namespace App\Traits\Folders;
 
+use App\Models\File;
 use App\Models\Project;
 use function is_null;
 use function request;
@@ -24,5 +25,19 @@ trait DestinationProject
             return $project;
         }
         return Project::find($destProjectId);
+    }
+
+    private function getDestinationDir(): ?File
+    {
+        $destDirId = request()->get('destdir');
+        if (is_null($destDirId)) {
+            return null;
+        }
+        return File::find($destDirId);
+    }
+
+    private function getDestinationDirId(): ?int
+    {
+        return request()->get('destdir');
     }
 }
