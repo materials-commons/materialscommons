@@ -21,7 +21,7 @@ class ShowFolderWebController extends Controller
 
     public function __invoke(Request $request, Project $project, $folderId)
     {
-        $destinationProject = $this->getDestinationProject($project);
+        $destProj = $this->getDestinationProject($project);
         $destDir = $this->getDestinationDirId();
         $arg = $request->input('arg');
         $dir = File::where('project_id', $project->id)
@@ -35,28 +35,28 @@ class ShowFolderWebController extends Controller
 
         $projects = $this->getUserProjects(auth()->id());
 
-        $dirsInProject = File::where('project_id', $destinationProject->id)
+        $dirsInProject = File::where('project_id', $destProj->id)
                              ->where('mime_type', 'directory')
                              ->whereNull('dataset_id')
                              ->whereNull('deleted_at')
                              ->where('current', true)
                              ->where('id', '<>', $folderId)
-            ->orderBy('path')
+                             ->orderBy('path')
                              ->get();
 
         $scripts = Script::listForProject($project);
 
         return view('app.projects.folders.show', [
-            'project'            => $project,
-            'destinationProject' => $destinationProject,
-            'readme'             => $readme,
-            'scripts'            => $scripts,
-            'projects'           => $projects,
-            'directory'          => $dir,
-            'dirsInProject'      => $dirsInProject,
-            'files'              => $files,
-            'destDir' => $destDir,
-            'arg'                => $arg,
+            'project'       => $project,
+            'destProj'      => $destProj,
+            'readme'        => $readme,
+            'scripts'       => $scripts,
+            'projects'      => $projects,
+            'directory'     => $dir,
+            'dirsInProject' => $dirsInProject,
+            'files'         => $files,
+            'destDir'       => $destDir,
+            'arg'           => $arg,
         ]);
     }
 }

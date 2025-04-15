@@ -20,14 +20,15 @@ class CopyToDestinationWebController extends Controller
 
     public function __invoke(CopyMoveFilesRequest $request, Project $project, $folderId)
     {
-        $destinationProject = $this->getDestinationProject($project);
+        $destProj = $this->getDestinationProject($project);
+        $destDir = $this->getDestinationDirId();
         $user = auth()->user();
         $validated = $request->validated();
         $ids = $validated['ids'];
         $copyToDirectoryId = $validated['directory'];
         $copyToDirectory = File::find($copyToDirectoryId);
         $redirectRoute = route('projects.folders.show',
-            [$project, $folderId, $destinationProject, 'arg' => 'move-copy']);
+            [$project, $folderId, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => 'move-copy']);
 
         if ($copyToDirectory->project_id !== $project->id) {
             if (!AuthService::userCanAccessProjectId($user, $copyToDirectory->project_id)) {

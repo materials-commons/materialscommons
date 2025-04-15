@@ -15,7 +15,8 @@ class IndexImagesWebController extends Controller
     public function __invoke(Request $request, Project $project, File $folder)
     {
         $arg = $request->get('arg');
-        $destinationProject = $this->getDestinationProjectId($project);
+        $destProj = $this->getDestinationProjectId($project);
+        $destDir = $this->getDestinationDirId();
         $images = File::with(['entities'])
                       ->where('directory_id', $folder->id)
                       ->where(function ($query) {
@@ -28,11 +29,12 @@ class IndexImagesWebController extends Controller
                       ->cursor();
 
         return view('app.projects.folders.index-images', [
-            'folder'             => $folder,
-            'project'            => $project,
-            'images'             => $images,
-            'destinationProject' => $destinationProject,
-            'arg'                => $arg,
+            'folder'   => $folder,
+            'project'  => $project,
+            'images'   => $images,
+            'destProj' => $destProj,
+            'destDir'  => $destDir,
+            'arg'      => $arg,
         ]);
     }
 }

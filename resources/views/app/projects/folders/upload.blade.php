@@ -30,6 +30,9 @@
         let folderUrl = route('projects.folders.show', {
             project: "{{$project->id}}",
             folder: "{{$directory->id}}",
+            arg: "{{$arg}}",
+            destdir: "{{$destDir}}",
+            destproj: "{{$destProj}}",
         });
         const uppy = new Uppy({
             restrictions: {

@@ -22,7 +22,9 @@ class UpdateMoveFilesWebController extends Controller
 
     public function __invoke(CopyMoveFilesRequest $request, Project $project, $folderId)
     {
-        $destinationProject = $this->getDestinationProject($project);
+        $destProj = $this->getDestinationProject($project);
+        $destDir = $this->getDestinationDirId();
+
         $user = auth()->user();
 
         $validated = $request->validated();
@@ -31,7 +33,7 @@ class UpdateMoveFilesWebController extends Controller
         $moveToDirectory = File::find($moveToDirectoryId);
 
         $redirectRoute = route('projects.folders.show',
-            [$project, $folderId, $destinationProject, 'arg' => 'move-copy']);
+            [$project, $folderId, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => 'move-copy']);
 
         if ($moveToDirectory->project_id !== $project->id) {
             // Make sure user has access to project.

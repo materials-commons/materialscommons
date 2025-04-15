@@ -14,7 +14,7 @@
 
         <x-slot name="body">
             <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
-                                         arg="{{$arg}}"/>
+                                         arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
             @if ($directory->path == '/')
                 <span class="float-left action-link mr-4">
                     <i class="fa-fw fas fa-filter mr-2"></i>
@@ -35,7 +35,7 @@
             @endif
 
             @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show', [$project, $directory->directory_id, 'destproj' => $destinationProject->id])}}"
+                <a href="{{route('projects.folders.show', [$project, $directory->directory_id, 'destproj' => $destProj->id])}}"
                    class="mb-3">
                     <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
                 </a>
@@ -55,7 +55,7 @@
                                 title="Current project" data-live-search="true">
                             @foreach($projects as $p)
                                 <option data-token="{{$p->id}}"
-                                        value="{{$p->id}}" @selected($p->id == $destinationProject->id)>
+                                        value="{{$p->id}}" @selected($p->id == $destProj->id)>
                                     @if($p->id == $project->id)
                                         This Project ({{$p->name}})
                                     @else
@@ -119,7 +119,7 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="no-underline"
-                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
+                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                         <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                     </a>
                                 @else
@@ -154,12 +154,12 @@
                             <td>
                                 @if($file->isDir())
                                     <a class="action-link" title="Delete directory"
-                                       href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
+                                       href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                         <i class="fas fa-fw fa-trash mr-2"></i>
                                     </a>
                                 @else
                                     <a class="action-link" title="Delete file"
-                                       href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destinationProject->id, 'arg' => $arg])}}">
+                                       href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                         <i class="fas fa-fw fa-trash mr-2"></i>
                                     </a>
                                 @endif
