@@ -79,15 +79,15 @@ class UpdateMoveFilesWebController extends Controller
         }
     }
 
-    private function moveInProject($ids, $moveToDirectory, User $user)
+    private function moveInProject($ids, $moveToDirectoryId, User $user)
     {
         $moveFileAction = new MoveFileAction();
         $filesToMove = File::whereIn('id', $ids)
                            ->whereNull('path')
                            ->get();
 
-        $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction) {
-            $moveFileAction($file, $moveToDirectory);
+        $filesToMove->each(function ($file) use ($moveToDirectoryId, $moveFileAction) {
+            $moveFileAction($file, $moveToDirectoryId);
         });
 
         $dirsToMove = File::whereIn('id', $ids)
@@ -97,8 +97,8 @@ class UpdateMoveFilesWebController extends Controller
                           ->where('current', true)
                           ->get();
         $moveDirectoryAction = new MoveDirectoryAction();
-        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
-            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
+        $dirsToMove->each(function ($dir) use ($moveToDirectoryId, $moveDirectoryAction, $user) {
+            $moveDirectoryAction($dir->id, $moveToDirectoryId, $user);
         });
     }
 }

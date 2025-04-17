@@ -38,6 +38,12 @@ class AuthService
         return self::userIsProjectAdminByIds($user->id, $projectId);
     }
 
+    public static function userIdCanAccessProjectId($userId, $projectId): bool
+    {
+        $user = User::find($userId);
+        return self::userCanAccessProjectId($user, $projectId);
+    }
+
     // Check if user is a member of the project.
     public static function userIsProjectMember(User $user, Project $project): bool
     {

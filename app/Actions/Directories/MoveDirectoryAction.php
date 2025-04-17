@@ -58,6 +58,7 @@ class MoveDirectoryAction
                 $directory->update([
                     'directory_id' => $toDirectory->id,
                     'path'         => $pathToUse,
+                    'owner_id'     => $toDirectory->owner_id,
                     'project_id'   => $toDirectory->project_id,
                 ]);
             }

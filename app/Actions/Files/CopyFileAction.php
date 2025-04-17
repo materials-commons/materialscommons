@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class CopyFileAction
 {
-    // Copy a file to another directory. If that directory is a different project, then checks
+    // Copy a file to another directory. If that directory is in a different project, then checks
     // if the user has access to that project. File can be given a different name when it is copied.
-    // The copy will fail if user doesn't have permission, if a file (or directory) with the same
-    // name already exists in the directory the file is being copied to. Note that you can make
-    // a copy of the file in the same directory, you just need to give it a new name (that doesn't
-    // exist in the directory).
+    // The copy will fail if user doesn't have permission. If a file with the same name already
+    // exists in the directory the file is being copied to then that file is marked as inactive.
     public function execute(File $fileToCopy, File $toDir, User $user, $newName = null): bool
     {
         if ($fileToCopy->project_id != $toDir->project_id) {
@@ -39,35 +37,29 @@ class CopyFileAction
         // Check if name already exists in dir and fail if it does
         $nameToUse = is_null($newName) ? $fileToCopy->name : $newName;
 
-        if ($this->fileWithSameNameExistsInDir($nameToUse, $toDir)) {
-            return false;
-        }
+        $this->markFilesWithSameNameInDirAsInactive($nameToUse, $toDir);
 
-        return $fileToCopy->replicate()
-                          ->fill([
-                              'uuid'         => uuid(),
-                              'name'         => $nameToUse,
-                              'owner_id'     => $user->id,
-                              'project_id'   => $toDir->project_id,
-                              'directory_id' => $toDir->id,
-                              'uses_uuid'    => $fileToCopy->getFileUuidToUse(),
-                          ])
-                          ->save();
+        $fileToCopy->replicate()
+                   ->fill([
+                       'uuid'         => uuid(),
+                       'name'         => $nameToUse,
+                       'owner_id'     => $user->id,
+                       'project_id'   => $toDir->project_id,
+                       'directory_id' => $toDir->id,
+                       'current'      => true,
+                       'uses_uuid'    => $fileToCopy->getFileUuidToUse(),
+                   ])
+                   ->save();
+        return true;
     }
 
-    private function fileWithSameNameExistsInDir($nameToUse, File $toDir): bool
+    private function markFilesWithSameNameInDirAsInactive($nameToUse, File $toDir): void
     {
-        $count = DB::table("files")
-                   ->where("directory_id", $toDir->id)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where("name", $nameToUse)
-                   ->count();
-        if ($count == 0) {
-            // no matching file names
-            return false;
-        }
-
-        return true;
+        DB::table("files")
+          ->where("directory_id", $toDir->id)
+          ->whereNull('dataset_id')
+          ->whereNull('deleted_at')
+          ->where("name", $nameToUse)
+          ->update(['current' => false]);
     }
 }

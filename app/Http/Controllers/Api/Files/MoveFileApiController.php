@@ -13,7 +13,7 @@ class MoveFileApiController extends Controller
     public function __invoke(MoveFileRequest $request, MoveFileAction $moveFileAction, $fileId)
     {
         $toDirectoryId = $request->input('directory_id');
-        $file = $moveFileAction(File::withCommon()->findOrFail($fileId), $toDirectoryId);
+        $file = $moveFileAction(File::withCommon()->findOrFail($fileId), $toDirectoryId, auth()->user()->id);
         return new FileResource($file);
     }
 }

@@ -44,7 +44,7 @@ class CopyFileActionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fail_to_copy_a_file_when_one_with_same_name_exists()
+    public function it_should_copy_a_file_when_one_with_same_name_exists_marking_original_as_inactive()
     {
         $user = User::factory()->create();
         $project = ProjectFactory::ownedBy($user)->create();
@@ -54,7 +54,11 @@ class CopyFileActionTest extends TestCase
 
         // Attempt to copy file over itself (ie, copy to same directory file is in without
         // changing its name). This should fail.
-        $this->assertFalse($copyFileAction->execute($rootFile, $project->rootDir, $user));
+        $copyFileAction->execute($rootFile, $project->rootDir, $user);
+        $this->assertEquals(1, File::where('current', true)->where('name', 'file.txt')->count());
+        $this->assertEquals(1, File::where('current', false)->where('name', 'file.txt')->count());
+        $rootFile->refresh();
+        $this->assertFalse($rootFile->current);
     }
 
     /** @test */
