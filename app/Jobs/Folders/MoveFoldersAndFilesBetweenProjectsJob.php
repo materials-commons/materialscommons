@@ -31,7 +31,8 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Moves files and directories to the specified destination directory. Access checks
+     * for the project should have been performed before this job is called.
      */
     public function handle(): void
     {
@@ -53,12 +54,12 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
 
         $moveFileAction = new MoveFileAction();
         $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction) {
-            $moveFileAction($file, $moveToDirectory);
+            $moveFileAction($file, $moveToDirectory, $this->user);
         });
 
         $moveDirectoryAction = new MoveDirectoryAction();
-        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
-            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
+        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction) {
+            $moveDirectoryAction($dir->id, $moveToDirectory, $this->user);
         });
     }
 }

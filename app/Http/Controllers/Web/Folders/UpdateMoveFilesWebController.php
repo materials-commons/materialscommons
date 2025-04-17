@@ -36,14 +36,14 @@ class UpdateMoveFilesWebController extends Controller
             [$project, $folderId, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => 'move-copy']);
 
         if ($moveToDirectory->project_id !== $project->id) {
-            // Make sure user has access to project.
+            // Make sure the user has access to the project.
             if (!AuthService::userCanAccessProjectId($user, $moveToDirectory->project_id)) {
                 flash()->error('You do not have access to that project.');
                 return redirect($redirectRoute);
             }
             $this->moveBetweenProjects($ids, $moveToDirectory, $user);
         } else {
-            $this->moveInProject($ids, $moveToDirectoryId, $user);
+            $this->moveInProject($ids, $moveToDirectory, $user);
         }
 
         return redirect($redirectRoute);
@@ -79,15 +79,15 @@ class UpdateMoveFilesWebController extends Controller
         }
     }
 
-    private function moveInProject($ids, $moveToDirectoryId, User $user)
+    private function moveInProject($ids, $moveToDirectory, User $user)
     {
         $moveFileAction = new MoveFileAction();
         $filesToMove = File::whereIn('id', $ids)
                            ->whereNull('path')
                            ->get();
 
-        $filesToMove->each(function ($file) use ($moveToDirectoryId, $moveFileAction) {
-            $moveFileAction($file, $moveToDirectoryId);
+        $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction, $user) {
+            $moveFileAction($file, $moveToDirectory, $user);
         });
 
         $dirsToMove = File::whereIn('id', $ids)
@@ -97,8 +97,8 @@ class UpdateMoveFilesWebController extends Controller
                           ->where('current', true)
                           ->get();
         $moveDirectoryAction = new MoveDirectoryAction();
-        $dirsToMove->each(function ($dir) use ($moveToDirectoryId, $moveDirectoryAction, $user) {
-            $moveDirectoryAction($dir->id, $moveToDirectoryId, $user);
+        $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
+            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
         });
     }
 }

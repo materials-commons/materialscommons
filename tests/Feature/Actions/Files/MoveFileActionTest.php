@@ -22,7 +22,7 @@ class MoveFileActionTest extends TestCase
         $originalFile = ProjectFactory::createFakeFile($project, $project->rootDir, "file.txt");
 
         $moveFileAction = new MoveFileAction();
-        $moveFileAction($originalFile, $directory->id, $user->id);
+        $moveFileAction($originalFile, $directory, $user);
 
         $this->assertEquals(1, File::where('directory_id', $directory->id)->count());
         $movedFile = $originalFile->fresh();
@@ -45,7 +45,7 @@ class MoveFileActionTest extends TestCase
         $fileToMove = ProjectFactory::createFakeFile($project, $project->rootDir, "file.txt");
 
         $moveFileAction = new MoveFileAction();
-        $moveFileAction($fileToMove, $directory->id, $user->id);
+        $moveFileAction($fileToMove, $directory, $user);
 
         $this->assertEquals(1, File::where('current', true)->where('name', 'file.txt')->count());
         $this->assertEquals(1, File::where('current', false)->where('name', 'file.txt')->count());
@@ -54,22 +54,6 @@ class MoveFileActionTest extends TestCase
         $this->assertTrue($fileToMove->current);
         $existingFile->refresh();
         $this->assertFalse($existingFile->current);
-    }
-
-    /** @test */
-    public function it_should_fail_to_move_a_file_to_a_project_where_user_has_no_access()
-    {
-        $user = User::factory()->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $fileToMove = ProjectFactory::createFakeFile($project, $project->rootDir, "file.txt");
-
-        $user2 = User::factory()->create();
-        $otherProject = ProjectFactory::ownedBy($user2)->create();
-
-        $moveFileAction = new MoveFileAction();
-
-        // Attempt to move a file to a project where the user has no access
-        $this->assertNull($moveFileAction($fileToMove, $otherProject->rootDir->id, $user->id));
     }
 
     /** @test */
@@ -86,7 +70,7 @@ class MoveFileActionTest extends TestCase
         $moveFileAction = new MoveFileAction();
 
         // User has access, moving the file should succeed
-        $this->assertNotNull($moveFileAction($fileToMove, $otherProject->rootDir->id, $user->id));
+        $this->assertNotNull($moveFileAction($fileToMove, $otherProject->rootDir, $user));
 
         $this->assertEquals(1, File::where('directory_id', $otherProject->rootDir->id)->count());
         $movedFile = File::where('directory_id', $otherProject->rootDir->id)->first();
@@ -96,18 +80,5 @@ class MoveFileActionTest extends TestCase
         $this->assertEquals($otherProject->id, $movedFile->project_id);
         $this->assertEquals($otherProject->rootDir->id, $movedFile->directory_id);
         $this->assertEquals($user->id, $movedFile->owner_id);
-    }
-
-    /** @test */
-    public function it_should_not_allow_moving_a_file_to_an_invalid_directory()
-    {
-        $user = User::factory()->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $file = ProjectFactory::createFakeFile($project, $project->rootDir->id, "file.txt");
-
-        $moveFileAction = new MoveFileAction();
-
-        // Attempt to move the file to invalid directory
-        $this->assertNull($moveFileAction($file, 1234, $user->id));
     }
 }

@@ -73,7 +73,7 @@ class MoveDirectoryActionTest extends TestCase
         ]);
 
         $moveDirectoryAction = new MoveDirectoryAction();
-        $moveDirectoryAction($dir2->id, $dir1->id);
+        $moveDirectoryAction($dir2->id, $dir1->id, $user);
         $dir2->refresh();
         $dir21->refresh();
         $dir211->refresh();
@@ -159,7 +159,7 @@ class MoveDirectoryActionTest extends TestCase
         ]);
 
         $moveDirectoryAction = new MoveDirectoryAction();
-        $moveDirectoryAction($dir2->id, $dir1->id);
+        $moveDirectoryAction($dir2->id, $dir1->id, $user);
         $dir2->refresh();
         $dir21->refresh();
         $dir211->refresh();

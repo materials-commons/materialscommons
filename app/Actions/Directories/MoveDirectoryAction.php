@@ -5,7 +5,6 @@ namespace App\Actions\Directories;
 use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Models\User;
-use App\Services\AuthService;
 use Illuminate\Support\Facades\DB;
 
 class MoveDirectoryAction
@@ -20,24 +19,13 @@ class MoveDirectoryAction
      *
      * @return mixed
      */
-    public function __invoke($directoryId, $toDirectoryId, ?User $user = null)
+    public function __invoke($directoryId, $toDirectoryId, User $user)
     {
         $toDirectory = File::findOrFail($toDirectoryId);
         $destinationProjectId = $toDirectory->project_id;
 
         $directory = File::findOrFail($directoryId);
         $originalProjectId = $directory->project_id;
-
-        if (is_null($user)) {
-            $user = auth()->user();
-        }
-
-        if ($originalProjectId !== $destinationProjectId) {
-            // Moving to another project. Ensure that we have access to that project.
-            if (!AuthService::userCanAccessProjectId($user, $destinationProjectId)) {
-                return null;
-            }
-        }
 
         // Setup variables for substr_replace to replace the old directory with the new path.
         $replaceWith = "{$toDirectory->path}/{$directory->name}";
@@ -76,7 +64,7 @@ class MoveDirectoryAction
                 });
             }
 
-            // Finally update the original moved directory's files.
+            // Finally, update the original moved directory's files.
             DB::transaction(function () use ($directory, $destinationProjectId) {
                 File::where('directory_id', $directory->id)
                     ->where('mime_type', '<>', 'directory')

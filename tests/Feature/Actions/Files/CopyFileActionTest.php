@@ -62,23 +62,6 @@ class CopyFileActionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fail_to_copy_a_file_to_a_different_project_user_is_not_in()
-    {
-        $user = User::factory()->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $fileToCopy = ProjectFactory::createFakeFile($project, $project->rootDir, "file.txt");
-
-        $user2 = User::factory()->create();
-        $project2 = ProjectFactory::ownedBy($user2)->create();
-
-        $copyFileAction = new CopyFileAction();
-
-        // $user is not in $project2, so copying $fileToCopy, which is in $project, into
-        // the rootDir for $project2 should fail.
-        $this->assertFalse($copyFileAction->execute($fileToCopy, $project2->rootDir, $user));
-    }
-
-    /** @test */
     public function it_should_copy_a_file_to_a_different_project_user_can_access()
     {
         $user = User::factory()->create();
