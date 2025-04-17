@@ -31,7 +31,7 @@ class MoveDirectoryAction
         $replaceWith = "{$toDirectory->path}/{$directory->name}";
         $oldPathLen = strlen($directory->path);
 
-        $directoriesToUpdate = $this->getDirectoriesToUpdate($directory, $replaceWith, 0, $oldPathLen);
+        $directoriesToUpdate = $this->getDirectoriesToUpdate($directory, $replaceWith, 0, $oldPathLen, $user);
 
         // Batch update child directories and the directory that was originally moved. This needs to be in
         // a transaction as partial updates will leave us in a corrupted state.
