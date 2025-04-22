@@ -4,21 +4,21 @@ namespace App\Traits\Files;
 
 use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
+use App\Traits\CreateDirectories;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
-use function basename;
 use function blank;
 use function chmod;
 use function dirname;
 use function is_null;
 use function md5_file;
 use function mime_content_type;
-use function optional;
 use function unlink;
 
 trait ImportFiles
 {
+    use CreateDirectories;
     private function processDir($path, $disk, $location, $projectId, $ownerId): File
     {
         $pathPart = Storage::disk($disk)->path($location);
@@ -32,25 +32,26 @@ trait ImportFiles
                          ->where('path', dirname($dirPath))
                          ->where('current', true)
                          ->first();
-        $dir = File::where('project_id', $projectId)
-                   ->where('path', $dirPath)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
-                   ->first();
-        if ($dir !== null) {
-            return $dir;
-        }
-
-        return File::create([
-            'name'         => basename($dirPath),
-            'path'         => $dirPath,
-            'mime_type'    => 'directory',
-            'owner_id'     => $ownerId,
-            'project_id'   => $projectId,
-            'current'      => true,
-            'directory_id' => optional($parentDir)->id,
-        ]);
+        return $this->getDirectoryOrCreateIfDoesNotExist($parentDir, $dirPath, $projectId);
+//        $dir = File::where('project_id', $projectId)
+//                   ->where('path', $dirPath)
+//                   ->whereNull('dataset_id')
+//                   ->whereNull('deleted_at')
+//                   ->where('current', true)
+//                   ->first();
+//        if ($dir !== null) {
+//            return $dir;
+//        }
+//
+//        return File::create([
+//            'name'         => basename($dirPath),
+//            'path'         => $dirPath,
+//            'mime_type'    => 'directory',
+//            'owner_id'     => $ownerId,
+//            'project_id'   => $projectId,
+//            'current'      => true,
+//            'directory_id' => optional($parentDir)->id,
+//        ]);
     }
 
     private function processFile($path, $disk, $location, $projectId, $ownerId, \SplFileInfo $finfo, $attachTo = null)
@@ -67,7 +68,6 @@ trait ImportFiles
             'name'         => $finfo->getFilename(),
             'owner_id'     => $ownerId,
             'current'      => true,
-            'is_deleted'   => false,
             'description'  => "",
             'project_id'   => $projectId,
             'directory_id' => $currentDir->id,
