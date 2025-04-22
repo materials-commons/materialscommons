@@ -41,8 +41,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('files', function (Blueprint $table) {
-//            $table->dropIndex('files_path_unique_without_dataset');
-//            $table->dropIndex('files_path_unique_with_dataset');
         });
     }
 };
