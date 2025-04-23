@@ -21,6 +21,6 @@ class UpdateRenameFolderWebController extends Controller
         $destDir = $this->getDestinationDirId();
         $renameDirectoryAction($dir->id, $request->input('name'));
         return redirect(route('projects.folders.show',
-            [$project, $dir, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg]));
+            [$project, $dir->directory_id, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg]));
     }
 }
