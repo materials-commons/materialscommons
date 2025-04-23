@@ -98,7 +98,7 @@ class UpdateMoveFilesWebController extends Controller
                           ->get();
         $moveDirectoryAction = new MoveDirectoryAction();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
-            $moveDirectoryAction($dir->id, $moveToDirectory, $user);
+            $moveDirectoryAction($dir->id, $moveToDirectory->id, $user);
         });
     }
 }

@@ -59,7 +59,7 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
 
         $moveDirectoryAction = new MoveDirectoryAction();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction) {
-            $moveDirectoryAction($dir->id, $moveToDirectory, $this->user);
+            $moveDirectoryAction($dir->id, $moveToDirectory->id, $this->user);
         });
     }
 }
