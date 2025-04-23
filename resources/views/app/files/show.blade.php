@@ -40,10 +40,6 @@
                 <a class="action-link float-right mr-4" href="{{route('projects.files.delete', [$project, $file])}}">
                     <i class="fas fa-fw fa-trash mr-2"></i>Delete
                 </a>
-
-                <a class="action-link float-right mr-4" href="{{route('projects.files.rename', [$project, $file])}}">
-                    <i class="fas fa-fw fa-edit mr-2"></i>Rename
-                </a>
             @endisset
 
         @endslot

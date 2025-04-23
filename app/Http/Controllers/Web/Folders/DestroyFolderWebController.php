@@ -17,11 +17,12 @@ class DestroyFolderWebController extends Controller
     public function __invoke(Request $request, DeleteDirectoryAction $deleteDirectoryAction, Project $project, $dirId)
     {
         $arg = $request->get('arg');
-        $destinationProject = $this->getDestinationProjectId($project);
+        $destProj = $this->getDestinationProjectId($project);
+        $destDir = $this->getDestinationDirId();
         $dir = File::with('directory')->findOrFail($dirId);
         $parent = $dir->directory;
         $dir->update(['deleted_at' => Carbon::now()]);
         return redirect(route('projects.folders.show',
-            [$project, $parent, 'destproject' => $destinationProject, 'arg' => $arg]));
+            [$project, $parent, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg]));
     }
 }

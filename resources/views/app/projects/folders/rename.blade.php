@@ -13,7 +13,8 @@
         @endslot
 
         @slot('body')
-            <form method="post" action="{{route('projects.folders.rename.update', [$project, $dir])}}"
+            <form method="post"
+                  action="{{route('projects.folders.rename.update', [$project, $dir, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])}}"
                   id="rename-folder">
                 @csrf
                 @method('put')
@@ -24,7 +25,8 @@
                 </div>
 
                 <div class="float-right">
-                    <a href="{{route('projects.folders.show', [$project, $dir])}}" class="action-link mr-3">
+                    <a href="{{route('projects.folders.show', [$project, $dir, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])}}"
+                       class="action-link mr-3">
                         Cancel
                     </a>
                     <a class="action-link" onclick="document.getElementById('rename-folder').submit()" href="#">

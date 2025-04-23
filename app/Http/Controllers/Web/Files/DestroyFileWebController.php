@@ -16,11 +16,12 @@ class DestroyFileWebController extends Controller
     public function __invoke(Request $request, DeleteFileAction $deleteFileAction, Project $project, $fileId)
     {
         $arg = $request->get('arg');
-        $destinationProject = $this->getDestinationProjectId($arg);
+        $destProj = $this->getDestinationProjectId($project);
+        $destDir = $this->getDestinationDirId();
         $file = File::with('directory')->findOrFail($fileId);
         $dir = $file->directory;
         $deleteFileAction($file);
         return redirect(route('projects.folders.show',
-            [$project, $dir, 'destproj' => $destinationProject, 'arg' => $arg]));
+            [$project, $dir, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg]));
     }
 }

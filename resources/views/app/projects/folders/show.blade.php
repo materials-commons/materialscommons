@@ -153,14 +153,23 @@
                             @endif
                             <td>
                                 @if($file->isDir())
-                                    <a class="action-link" title="Delete directory"
+                                    <a class="action-link" data-toggle="tooltip" title="Rename directory."
+                                       href="{{route('projects.folders.rename', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    </a>
+
+                                    <a class="action-link" data-toggle="tooltip" title="Delete directory."
                                        href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
-                                        <i class="fas fa-fw fa-trash mr-2"></i>
+                                        <i class="fas fa-fw fa-trash"></i>
                                     </a>
                                 @else
-                                    <a class="action-link" title="Delete file"
+                                    <a class="action-link" data-toggle="tooltip" title="Rename file."
+                                       href="{{route('projects.files.rename', [$project, $file])}}">
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    </a>
+                                    <a class="action-link" data-toggle="tooltip" title="Delete file."
                                        href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
-                                        <i class="fas fa-fw fa-trash mr-2"></i>
+                                        <i class="fas fa-fw fa-trash"></i>
                                     </a>
                                 @endif
                             </td>

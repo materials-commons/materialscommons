@@ -15,12 +15,14 @@ class DeleteFolderWebController extends Controller
     public function __invoke(Request $request, Project $project, File $dir)
     {
         $arg = $request->get('arg');
-        $destinationProject = $this->getDestinationProjectId($project);
+        $destProj = $this->getDestinationProjectId($project);
+        $destDir = $this->getDestinationDirId();
         return view('app.projects.folders.delete', [
-            'project'            => $project,
-            'dir'                => $dir,
-            'arg'                => $arg,
-            'destinationProject' => $destinationProject,
+            'project'  => $project,
+            'dir'      => $dir,
+            'arg'      => $arg,
+            'destProj' => $destProj,
+            'destDir'  => $destDir,
         ]);
     }
 }
