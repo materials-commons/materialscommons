@@ -20,7 +20,7 @@ class CopyFileAction
         $nameToUse = is_null($newName) ? $fileToCopy->name : $newName;
         $this->markFilesWithSameNameInDirAsInactive($nameToUse, $toDir);
 
-        $fileToCopy->replicate()
+        $fileToCopy->replicate(["unique_proj_dir"])
                    ->fill([
                        'uuid'         => uuid(),
                        'name'         => $nameToUse,
