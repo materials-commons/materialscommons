@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DeletedAt;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,7 @@ class Project extends Model implements Searchable
 {
     use HasUUID;
     use HasFactory;
+    use DeletedAt;
 
     protected $guarded = ['id'];
 

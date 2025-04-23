@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DeletedAt;
 use App\Traits\FileType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,6 +41,7 @@ class File extends Model implements Searchable
     use HasUUID;
     use FileType;
     use HasFactory;
+    use DeletedAt;
 
     protected $guarded = ['id'];
 

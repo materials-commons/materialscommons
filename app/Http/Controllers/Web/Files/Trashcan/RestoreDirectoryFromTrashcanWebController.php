@@ -16,6 +16,20 @@ class RestoreDirectoryFromTrashcanWebController extends Controller
             return redirect(route('projects.trashcan.index', [$project]));
         }
 
+        // find out if there is already a directory with the same name in the project.
+        $existingDir = File::where('project_id', $project->id)
+                           ->whereNull('deleted_at')
+                           ->whereNull('dataset_id')
+                           ->where('mime_type', 'directory')
+                           ->where('current', true)
+                           ->where('directory_id', $dir->directory_id)
+                           ->where('name', $dir->name)
+                           ->first();
+        if (!is_null($existingDir)) {
+            flash("Directory {$dir->path} already exists in project: {$project->name}. Rename or delete the existing first.")->error();
+            return redirect(route('projects.trashcan.index', [$project]));
+        }
+
         $dir->update(['deleted_at' => null]);
         flash("Directory {$dir->path} restored.")->success();
         return redirect(route('projects.trashcan.index', [$project]));

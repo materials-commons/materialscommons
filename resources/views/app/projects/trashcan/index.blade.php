@@ -50,7 +50,7 @@
                                 </a>
                             </td>
                         @endif
-                        <td>{{$item->deleted_at->addDays($expiresInDays)->diffIndays($now)+1}} days</td>
+                            <td>{{$item->expiresInDays()}} days</td>
                         <td>
                             <div class="float-right">
                                 <ul class="list-unstyled">
