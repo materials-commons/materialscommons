@@ -53,7 +53,7 @@ class ConvertDatasetFilesCommand extends Command
 
     private function duplicateFile(File $file)
     {
-        $f = $file->replicate(['project_id'])->fill([
+        $f = $file->replicate(['project_id', 'unique_proj_dir'])->fill([
             'uuid'      => Uuid::uuid4()->toString(),
             'uses_uuid' => blank($file->uses_uuid) ? $file->uuid : $file->uses_uuid,
         ]);

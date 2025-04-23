@@ -43,7 +43,7 @@ class CopyFileAction
             return false;
         }
 
-        return $fileToCopy->replicate()
+        return $fileToCopy->replicate(["unique_proj_dir"])
                           ->fill([
                               'uuid'         => uuid(),
                               'name'         => $nameToUse,
