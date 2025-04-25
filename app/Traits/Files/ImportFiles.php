@@ -19,45 +19,27 @@ use function unlink;
 trait ImportFiles
 {
     use CreateDirectories;
-    private function processDir($path, $disk, $location, $projectId, $ownerId): File
+
+    private function processDir($path, $disk, $location, $project, $ownerId): File
     {
         $pathPart = Storage::disk($disk)->path($location);
         $dirPath = Str::replaceFirst($pathPart, "", $path);
         if (blank($dirPath)) {
             $dirPath = "/";
         }
-        $parentDir = File::where('project_id', $projectId)
+        $parentDir = File::where('project_id', $project->id)
                          ->whereNull('dataset_id')
                          ->whereNull('deleted_at')
                          ->where('path', dirname($dirPath))
                          ->where('current', true)
                          ->first();
-        return $this->getDirectoryOrCreateIfDoesNotExist($parentDir, $dirPath, $projectId);
-//        $dir = File::where('project_id', $projectId)
-//                   ->where('path', $dirPath)
-//                   ->whereNull('dataset_id')
-//                   ->whereNull('deleted_at')
-//                   ->where('current', true)
-//                   ->first();
-//        if ($dir !== null) {
-//            return $dir;
-//        }
-//
-//        return File::create([
-//            'name'         => basename($dirPath),
-//            'path'         => $dirPath,
-//            'mime_type'    => 'directory',
-//            'owner_id'     => $ownerId,
-//            'project_id'   => $projectId,
-//            'current'      => true,
-//            'directory_id' => optional($parentDir)->id,
-//        ]);
+        return $this->getDirectoryOrCreateIfDoesNotExist($parentDir, $dirPath, $project);
     }
 
-    private function processFile($path, $disk, $location, $projectId, $ownerId, \SplFileInfo $finfo, $attachTo = null)
+    private function processFile($path, $disk, $location, $project, $ownerId, \SplFileInfo $finfo, $attachTo = null)
     {
         // Find or create directory file is in
-        $currentDir = $this->processDir(dirname($path), $disk, $location, $projectId, $ownerId);
+        $currentDir = $this->processDir(dirname($path), $disk, $location, $project, $ownerId);
         $finfo->getSize();
         mime_content_type($path);
         $fileEntry = new File([
@@ -69,7 +51,7 @@ trait ImportFiles
             'owner_id'     => $ownerId,
             'current'      => true,
             'description'  => "",
-            'project_id'   => $projectId,
+            'project_id' => $project->id,
             'directory_id' => $currentDir->id,
         ]);
 

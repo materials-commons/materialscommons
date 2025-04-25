@@ -54,12 +54,12 @@ class ImportFilesIntoProjectAtLocationAction
             }
 
             if ($finfo->isDir()) {
-                $this->processDir($path, $this->disk, $this->location, $this->project->id, $this->owner->id);
+                $this->processDir($path, $this->disk, $this->location, $this->project, $this->owner->id);
             } else {
                 $file = $this->processFile($path,
                     $this->disk,
                     $this->location,
-                    $this->project->id,
+                    $this->project,
                     $this->owner->id,
                     $finfo,
                     $attachTo);

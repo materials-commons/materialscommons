@@ -3,14 +3,11 @@
 namespace App\Actions\Globus\Uploads;
 
 use App\Enums\GlobusStatus;
-use App\Jobs\Files\ConvertFileJob;
-use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Traits\Files\ImportFiles;
 use App\Traits\Triggers\FiresTriggers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -89,6 +86,7 @@ class ImportGlobusUploadIntoProjectAction
         $fileCount = 0;
 
         $location = "__globus_uploads/{$this->globusUpload->uuid}";
+        $this->globusUpload->load('project');
         foreach ($dirIterator as $path => $finfo) {
             if ($this->maxItemsProcessed($fileCount)) {
                 // Mark job as done so that it will be picked up again and processed. This way
@@ -103,10 +101,10 @@ class ImportGlobusUploadIntoProjectAction
             }
 
             if ($finfo->isDir()) {
-                $this->processDir($path, "mcfs", $location, $this->globusUpload->project_id,
+                $this->processDir($path, "mcfs", $location, $this->globusUpload->project,
                                   $this->globusUpload->owner_id);
             } else {
-                $file = $this->processFile($path, "mcfs", $location, $this->globusUpload->project_id,
+                $file = $this->processFile($path, "mcfs", $location, $this->globusUpload->project,
                                            $this->globusUpload->owner_id, $finfo);
                 if (is_null($file)) {
                     // processing file failed, so stop let job be processed later
