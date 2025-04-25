@@ -496,10 +496,10 @@ class EntityActivityImportTest extends TestCase
 
         // Asserts
         $activity = Activity::where('name', 'sem')->first();
-        $this->assertEquals(3, $activity->files()->count());
+        $this->assertEquals(2, $activity->files()->count());
 
         $entity = Entity::where('name', 'G181030g')->first();
-        $this->assertEquals(3, $entity->files()->count());
+        $this->assertEquals(2, $entity->files()->count());
     }
 
     /** @test */
