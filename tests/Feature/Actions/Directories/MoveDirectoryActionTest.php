@@ -187,23 +187,12 @@ class MoveDirectoryActionTest extends TestCase
         $project = ProjectFactory::ownedBy($user)->create();
         $project2 = ProjectFactory::ownedBy($user)->create();
 
-        $rootDirProject1 = File::factory()->create([
-            'project_id' => $project->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-            'current'    => true,
-        ]);
+        $project->load('rootDir');
+        $project2->load('rootDir');
 
-        $rootDirProject2 = File::factory()->create([
-            'project_id' => $project2->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-            'current'    => true,
-        ]);
+        $rootDirProject1 = $project->rootDir;
+
+        $rootDirProject2 = $project2->rootDir;
 
         $dir1Proj1 = File::factory()->create([
             'directory_id' => $rootDirProject1->id,
