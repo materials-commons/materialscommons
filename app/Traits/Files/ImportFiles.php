@@ -33,7 +33,7 @@ trait ImportFiles
                          ->where('path', dirname($dirPath))
                          ->where('current', true)
                          ->first();
-        return $this->getDirectoryOrCreateIfDoesNotExist($parentDir, $dirPath, $project);
+        return $this->getOrCreateSingleDirectoryIfDoesNotExist($parentDir, $dirPath, $project, $ownerId);
     }
 
     private function processFile($path, $disk, $location, $project, $ownerId, \SplFileInfo $finfo, $attachTo = null)
