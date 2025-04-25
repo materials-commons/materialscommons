@@ -30,7 +30,7 @@ class IsValidFileName implements Rule
     }
 
     private function isValidFileName($file) {
-        return preg_match('/^([-\.\w ]+)$/', $file) > 0;
+        return preg_match('/^([\w -]+)(\.[\w -]+)*$/', $file) > 0;
     }
 
     /**
@@ -40,6 +40,6 @@ class IsValidFileName implements Rule
      */
     public function message()
     {
-        return 'Invalid file name: :value';
+        return 'Invalid file name: :input';
     }
 }
