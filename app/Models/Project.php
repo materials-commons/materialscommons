@@ -154,6 +154,8 @@ class Project extends Model implements Searchable
     public function rootDir()
     {
         return $this->hasOne(File::class, 'project_id')
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
                     ->where('path', '/');
     }
 
