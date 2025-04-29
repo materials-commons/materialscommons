@@ -31,7 +31,7 @@
                 </span>
             </li>
             <li class="list-inline-item mt-1">
-                <span class="fs-10 grey-5">Experiments ({{$project->experiments_count}})</span>
+                <span class="fs-10 grey-5">Studies ({{$project->experiments_count}})</span>
             </li>
         </ul>
     </div>

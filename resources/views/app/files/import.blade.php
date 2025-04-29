@@ -19,7 +19,7 @@
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value=""
-                           placeholder="Experiment Name...">
+                           placeholder="Study Name...">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
