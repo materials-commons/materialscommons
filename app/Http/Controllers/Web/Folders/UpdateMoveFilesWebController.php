@@ -13,6 +13,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Services\AuthService;
 use App\Traits\Folders\DestinationProject;
+use function flash;
 use function redirect;
 use function route;
 
@@ -46,6 +47,9 @@ class UpdateMoveFilesWebController extends Controller
             $this->moveInProject($ids, $moveToDirectory, $user);
         }
 
+        $toProj = $moveToDirectory->project_id == $project->id ? "this project" : "project {$destProj->name}";
+        flash()->success("Files and directories are being moved in the background to {$moveToDirectory->path} in {$toProj}.");
+
         return redirect($redirectRoute);
     }
 
@@ -57,7 +61,7 @@ class UpdateMoveFilesWebController extends Controller
                           ->whereNull('deleted_at')
                           ->where('current', true)
                           ->get();
-        // Move the top level folders and then submit job to complete the moves. We move
+        // Move the top level folders and then submit a job to complete the moves. We move
         // the top level folders before running the background job so that the UI will
         // immediately show the move taking place. That prevents the user from getting
         // confused whether the move actually worked.

@@ -38,6 +38,10 @@ class CopyToDestinationWebController extends Controller
         }
 
         $this->copyFilesAndDirectories($ids, $copyToDirectory, $user);
+
+        $toProj = $destProj->id == $project->id ? "this project" : "project {$destProj->name}";
+        flash()->success("Files and directories are being copied in the background to {$copyToDirectory->path} in {$toProj}.");
+
         return redirect($redirectRoute);
     }
 
