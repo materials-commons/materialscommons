@@ -99,6 +99,10 @@ trait FileType
             return "text";
         }
 
+        if (Str::endsWith($file->name, ".txt")) {
+            return "text";
+        }
+
         return $type;
     }
 
