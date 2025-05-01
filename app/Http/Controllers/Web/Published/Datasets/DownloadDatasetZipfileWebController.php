@@ -11,6 +11,9 @@ class DownloadDatasetZipfileWebController extends Controller
 
     public function __invoke(Dataset $dataset)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
         $this->incrementDatasetDownloads($dataset->id);
         return response()->download($dataset->publishedZipfilePath());
     }

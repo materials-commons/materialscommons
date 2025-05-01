@@ -22,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link no-underline {{setActiveNavByName($experimentsRouteName)}}"
                href="{{$experimentsRoute}}">
-                Experiments ({{$file->experiments_count}})
+                Studies ({{$file->experiments_count}})
             </a>
         </li>
     @endisset

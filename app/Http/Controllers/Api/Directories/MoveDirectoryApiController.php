@@ -6,6 +6,9 @@ use App\Actions\Directories\MoveDirectoryAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Directories\MoveDirectoryRequest;
 use App\Http\Resources\Directories\DirectoryResource;
+use App\Models\File;
+use App\Services\AuthService;
+use function abort;
 
 class MoveDirectoryApiController extends Controller
 {
@@ -21,8 +24,15 @@ class MoveDirectoryApiController extends Controller
      */
     public function __invoke(MoveDirectoryRequest $request, MoveDirectoryAction $moveDirectoryAction, $directoryId)
     {
-        $directory = $moveDirectoryAction($directoryId, $request->input('to_directory_id'));
+        $toDirectoryId = $request->input('to_directory_id');
+        $toDir = File::findOrFail($toDirectoryId);
+        $user = auth()->user();
 
+        if (!AuthService::userCanAccessProjectId($user, $toDir->project_id)) {
+            abort(403);
+        }
+
+        $directory = $moveDirectoryAction($directoryId, $toDirectoryId, $user);
         return new DirectoryResource($directory);
     }
 }

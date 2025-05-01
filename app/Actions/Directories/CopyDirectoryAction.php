@@ -5,7 +5,6 @@ namespace App\Actions\Directories;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
-use App\Services\AuthService;
 use App\Traits\CopyFiles;
 use App\Traits\CreateDirectories;
 use Illuminate\Support\Facades\DB;
@@ -23,17 +22,6 @@ class CopyDirectoryAction
     public function execute(File $dirToCopy, File $toDir, User $user): bool
     {
         $this->project = Project::findOrFail($toDir->project_id);
-        if ($dirToCopy->project_id != $toDir->project_id) {
-            return $this->copyToDifferentProject($dirToCopy, $toDir, $user);
-        }
-        return $this->copyToDir($dirToCopy, $toDir, $user);
-    }
-
-    private function copyToDifferentProject(File $dirToCopy, File $toDir, User $user): bool
-    {
-        if (!AuthService::userCanAccessProjectId($user, $toDir->project_id)) {
-            return false;
-        }
         return $this->copyToDir($dirToCopy, $toDir, $user);
     }
 

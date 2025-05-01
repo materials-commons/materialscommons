@@ -1,7 +1,7 @@
 <table id="experiments" class="table table-hover" style="width:100%">
     <thead>
     <tr>
-        <th>Experiment</th>
+        <th>Study</th>
         <th>Summary</th>
         <th>Updated</th>
         <th>Date</th>

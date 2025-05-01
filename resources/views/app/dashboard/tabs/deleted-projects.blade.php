@@ -27,7 +27,7 @@
                 }
             @endphp
             <td><a href="{{route('projects.show', [$proj])}}">{{$name}}</a></td>
-            <td>{{$proj->deleted_at->addDays($expiresInDays)->diffIndays($now)+1}} days</td>
+            <td>{{$proj->expiresInDays()}} days</td>
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>
             <td>{{number_format($proj->file_count)}}</td>

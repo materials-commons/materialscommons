@@ -7,7 +7,6 @@ use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CopyDirectoryActionTest extends TestCase
@@ -209,23 +208,6 @@ class CopyDirectoryActionTest extends TestCase
 
         $copyDirAction = new CopyDirectoryAction();
         $this->assertFalse($copyDirAction->execute($d1, $destDir, $user));
-    }
-
-    /** @test */
-    public function it_should_fail_to_copy_dir_to_a_different_project_user_is_not_in()
-    {
-        $user = User::factory()->create();
-        $project = ProjectFactory::ownedBy($user)->create();
-        $dirToCopy = ProjectFactory::createDirectory($project, $project->rootDir, "d1");
-
-        // Create 2nd project owned by a different user
-        $user2 = User::factory()->create();
-        $project2 = ProjectFactory::ownedBy($user2)->create();
-
-        $copyDirAction = new CopyDirectoryAction();
-
-        // $user is not in $project2, so copying /d1 to $project2 rootdir should fail
-        $this->assertFalse($copyDirAction->execute($dirToCopy, $project2->rootDir, $user));
     }
 
     /** @test */

@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\Script;
+use App\Traits\Folders\DestinationProject;
 use App\Traits\GetProjectFolderFiles;
 use App\Traits\Projects\UserProjects;
-use App\ViewModels\Folders\ShowFolderViewModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use function auth;
 
@@ -16,9 +17,13 @@ class ShowFolderWebController extends Controller
 {
     use GetProjectFolderFiles;
     use UserProjects;
+    use DestinationProject;
 
-    public function __invoke(Project $project, $folderId)
+    public function __invoke(Request $request, Project $project, $folderId)
     {
+        $destProj = $this->getDestinationProject($project);
+        $destDir = $this->getDestinationDirId();
+        $arg = $request->input('arg');
         $dir = File::where('project_id', $project->id)
                    ->where('id', $folderId)
                    ->first();
@@ -29,11 +34,29 @@ class ShowFolderWebController extends Controller
         });
 
         $projects = $this->getUserProjects(auth()->id());
-        $viewModel = (new ShowFolderViewModel($dir, $files))
-            ->withProject($project)
-            ->withReadme($readme)
-            ->withScripts(Script::listForProject($project))
-            ->withProjects($projects);
-        return view('app.projects.folders.show', $viewModel);
+
+        $dirsInProject = File::where('project_id', $destProj->id)
+                             ->where('mime_type', 'directory')
+                             ->whereNull('dataset_id')
+                             ->whereNull('deleted_at')
+                             ->where('current', true)
+                             ->where('id', '<>', $folderId)
+                             ->orderBy('path')
+                             ->get();
+
+        $scripts = Script::listForProject($project);
+
+        return view('app.projects.folders.show', [
+            'project'       => $project,
+            'destProj'      => $destProj,
+            'readme'        => $readme,
+            'scripts'       => $scripts,
+            'projects'      => $projects,
+            'directory'     => $dir,
+            'dirsInProject' => $dirsInProject,
+            'files'         => $files,
+            'destDir'       => $destDir,
+            'arg'           => $arg,
+        ]);
     }
 }

@@ -18,7 +18,7 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Experiments</th>
+                <th>Studies</th>
                 <th>Summary</th>
                 <th>Selected</th>
                 <th></th>

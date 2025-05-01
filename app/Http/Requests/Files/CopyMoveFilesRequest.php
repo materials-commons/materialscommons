@@ -4,7 +4,7 @@ namespace App\Http\Requests\Files;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MoveFilesRequest extends FormRequest
+class CopyMoveFilesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

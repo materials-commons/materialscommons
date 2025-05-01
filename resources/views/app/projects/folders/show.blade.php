@@ -10,68 +10,11 @@
     <x-card>
         <x-slot name="header">
             <x-show-dir-path :project="$project" :file="$directory"/>
-
-            {{--            <a class="float-right action-link" href="#">--}}
-            {{--                <i class="fas fa-trash mr-2"></i>Delete Files--}}
-            {{--            </a>--}}
-
-            <div class="float-right" style="padding-right:60px">
-                <div class="dropdown">
-                    <a class="dropdown-toggle action-link" data-toggle="dropdown" aria-expanded="false">
-                        Actions
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" data-toggle="modal" href="#copy-choose-project-dialog">
-                            <i class="fas fa-copy mr-2"></i>Copy Files/Dirs
-                        </a>
-
-                        <a class="dropdown-item"
-                           href="{{route('projects.folders.move', [$project, $directory])}}">
-                            <i class="fas fa-angle-double-right mr-2"></i>Move Files
-                        </a>
-
-                        <a class="dropdown-item"
-                           href="{{route('projects.folders.create', [$project, $directory])}}">
-                            <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
-                        </a>
-
-                        @if($directory->name !== "/" && $files->count() === 0)
-                            <a class="dropdown-item"
-                               href="{{route('projects.folders.destroy', [$project, $directory])}}">
-                                <i class="fas fa-fw fa-trash mr-2"></i>Delete Directory
-                            </a>
-                        @endif
-
-                        @if($directory->name !== "/")
-                            <a class="dropdown-item"
-                               href="{{route('projects.folders.rename', [$project, $directory])}}">
-                                <i class="fas fa-fw fa-edit mr-2"></i>Rename Directory
-                            </a>
-                        @endif
-
-                        @if(isInBeta('run_scripts'))
-                            @if($scripts->count() != 0)
-                                <a class="dropdown-item" data-toggle="modal" href="#select-script-dialog">
-                                    <i class="fas fa-fw fa-play-circle mr-2"></i>Run Script
-                                </a>
-                            @endif
-                        @endif
-
-                        <a class="dropdown-item"
-                           href="{{route('projects.folders.index-images', [$project, $directory])}}">
-                            <i class="fas fa-fw fa-images mr-2"></i>View Images
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <a class="float-right action-link mr-4"
-               href="{{route('projects.folders.upload', [$project->id, $directory->id])}}">
-                <i class="fas fa-fw fa-plus mr-2"></i>Add Files
-            </a>
         </x-slot>
 
         <x-slot name="body">
+            <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
+                                         arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
             @if ($directory->path == '/')
                 <span class="float-left action-link mr-4">
                     <i class="fa-fw fas fa-filter mr-2"></i>
@@ -92,7 +35,7 @@
             @endif
 
             @if ($directory->path !== '/')
-                <a href="{{route('projects.folders.show', [$project, $directory->directory_id])}}"
+                <a href="{{route('projects.folders.show', [$project, $directory->directory_id, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}"
                    class="mb-3">
                     <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
                 </a>
@@ -100,69 +43,142 @@
                 <br>
             @endif
 
-            <table id="files" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Size</th>
-                    <th>Real Size</th>
-                    <th>Last Updated</th>
-                    <th>Real Updated</th>
-                    <th>Thumbnail</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($files as $file)
-                    <tr>
-                        <td>
-                            @if($file->isDir())
-                                <a class="no-underline" href="{{route('projects.folders.show', [$project, $file])}}">
-                                    <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
-                                </a>
-                            @else
-                                <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
-                                    <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
-                                </a>
-                            @endif
-                        </td>
-                        <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
-                        @if($file->isDir())
-                            <td></td>
-                        @else
-                            <td>{{$file->toHumanBytes()}}</td>
-                        @endif
-                        <td>{{$file->size}}</td>
-                        <td>{{$file->created_at->diffForHumans()}}</td>
-                        <td>{{$file->created_at}}</td>
-                        <td>
-                            @if($file->isImage())
-                                <a href="{{route('projects.files.display', [$project, $file])}}">
+            <form method="post" action="{{route('projects.folders.move.update', [$project, $directory])}}"
+                  id="move-copy-files">
+                @csrf
 
-                                    <img src="{{route('projects.files.display', [$project, $file])}}"
-                                         style="width: 12rem">
-                                </a>
-                            @endif
-                        </td>
-                        <td>
-                            @if($file->isDir())
-                                <a class="action-link" title="Delete directory"
-                                   href="{{route('projects.folders.destroy', [$project, $file])}}">
-                                    <i class="fas fa-fw fa-trash mr-2"></i>
-                                </a>
-                            @else
-                                <a class="action-link" title="Delete file"
-                                   href="{{route('projects.files.destroy', [$project, $file])}}">
-                                    <i class="fas fa-fw fa-trash mr-2"></i>
-                                </a>
-                            @endif
-                        </td>
+                @if($arg == 'move-copy')
+                    <div class="form-group">
+                        <label for="project">Destination Project</label>
+                        <select name="project" class="selectpicker col-lg-6" id="select-project"
+                                data-style="btn-light no-tt"
+                                title="Current project" data-live-search="true">
+                            @foreach($projects as $p)
+                                <option data-token="{{$p->id}}"
+                                        value="{{$p->id}}" @selected($p->id == $destProj->id)>
+                                    @if($p->id == $project->id)
+                                        This Project ({{$p->name}})
+                                    @else
+                                        {{$p->name}}
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="directories">Destination</label>
+                        <select name="directory" class="selectpicker col-lg-6" id="select-directory"
+                                data-style="btn-light no-tt"
+                                title="Select directory" data-live-search="true">
+                            @foreach($dirsInProject as $dir)
+                                <option data-token="{{$dir->id}}" value="{{$dir->id}}" @selected($dir->id == $destDir)>
+                                    {{$dir->path}}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="float-right">
+                            <a href="{{route('projects.folders.show', [$project, $directory])}}"
+                               class="btn btn-info mr-3">
+                                Done
+                            </a>
+
+                            <a class="btn btn-success" onclick="moveFiles()"
+                               href="#">
+                                Move Selected
+                            </a>
+
+                            <a class="btn btn-success" onclick="copyFiles()"
+                               href="#">
+                                Copy Selected
+                            </a>
+                        </div>
+                    </div>
+                    <br/>
+                @endif
+
+                <table id="files" class="table table-hover" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Real Size</th>
+                        <th>Last Updated</th>
+                        <th>Real Updated</th>
+                        <th>Thumbnail</th>
+                        @if($arg == 'move-copy')
+                            <th>Select</th>
+                        @endif
+                        <th></th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-                <x-display-markdown-file :file="$readme"></x-display-markdown-file>
+                    </thead>
+                    <tbody>
+                    @foreach($files as $file)
+                        <tr>
+                            <td>
+                                @if($file->isDir())
+                                    <a class="no-underline"
+                                       href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
+                                        <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                    </a>
+                                @else
+                                    <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
+                                        <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                    </a>
+                                @endif
+                            </td>
+                            <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
+                            @if($file->isDir())
+                                <td></td>
+                            @else
+                                <td>{{$file->toHumanBytes()}}</td>
+                            @endif
+                            <td>{{$file->size}}</td>
+                            <td>{{$file->created_at->diffForHumans()}}</td>
+                            <td>{{$file->created_at}}</td>
+                            <td>
+                                @if($file->isImage())
+                                    <a href="{{route('projects.files.display', [$project, $file])}}">
+
+                                        <img src="{{route('projects.files.display', [$project, $file])}}"
+                                             style="width: 12rem">
+                                    </a>
+                                @endif
+                            </td>
+                            @if($arg == 'move-copy')
+                                <td>
+                                    <input type="checkbox" name="ids[]" value="{{$file->id}}">
+                                </td>
+                            @endif
+                            <td>
+                                @if($file->isDir())
+                                    <a class="action-link" data-toggle="tooltip" title="Rename directory."
+                                       href="{{route('projects.folders.rename', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    </a>
+
+                                    <a class="action-link" data-toggle="tooltip" title="Delete directory."
+                                       href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    </a>
+                                @else
+                                    <a class="action-link" data-toggle="tooltip" title="Rename file."
+                                       href="{{route('projects.files.rename', [$project, $file])}}">
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    </a>
+                                    <a class="action-link" data-toggle="tooltip" title="Delete file."
+                                       href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    </a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </form>
+            <x-display-markdown-file :file="$readme"></x-display-markdown-file>
         </x-slot>
     </x-card>
 
@@ -174,10 +190,39 @@
 
     @push('scripts')
         <script>
-
             document.addEventListener('livewire:navigating', () => {
                 $('#files').DataTable().destroy();
             }, {once: true});
+
+            function moveFiles() {
+                let choosenProjectId = $('#select-project').val();
+                let destDirId = $('#select-directory').val();
+                let moveRoute = route('projects.folders.move.update', {
+                    'project': {{$project->id}},
+                    'folder': {{$directory->id}},
+                    'destproj': choosenProjectId,
+                    'destdir': destDirId,
+                    'arg': 'move-copy',
+                });
+                let form = document.getElementById('move-copy-files');
+                form.action = moveRoute;
+                form.submit();
+            }
+
+            function copyFiles() {
+                let choosenProjectId = $('#select-project').val();
+                let destDirId = $('#select-directory').val();
+                let copyRoute = route('projects.folders.copy-to', {
+                    'project': {{$project->id}},
+                    'folder': {{$directory->id}},
+                    'destproj': choosenProjectId,
+                    'destdir': destDirId,
+                    'arg': 'move-copy',
+                });
+                let form = document.getElementById('move-copy-files');
+                form.action = copyRoute;
+                form.submit();
+            }
 
             $(document).ready(() => {
                 $('#files').DataTable({
@@ -189,6 +234,30 @@
                         {orderData: [5], targets: [4]},
                         {targets: [5], visible: false},
                     ]
+                });
+
+                $('#select-project').on('change', function () {
+                    let chosenProjectId = $(this).val();
+                    let destDirId = $('#select-directory').val();
+                    window.location.href = route('projects.folders.show', {
+                        'project': {{$project->id}},
+                        'folder': {{$directory->id}},
+                        'destproj': chosenProjectId,
+                        'destdir': destDirId,
+                        'arg': 'move-copy',
+                    });
+                });
+
+                $('#select-directory').on('change', function () {
+                    let destDirId = $(this).val();
+                    let chosenProjectId = $('#select-project').val();
+                    window.location.href = route('projects.folders.show', {
+                        'project': {{$project->id}},
+                        'folder': {{$directory->id}},
+                        'destproj': chosenProjectId,
+                        'destdir': destDirId,
+                        'arg': 'move-copy',
+                    });
                 });
             });
         </script>

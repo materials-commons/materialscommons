@@ -6,6 +6,7 @@ use App\Actions\Directories\CopyDirectoryAction;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class CopyFilesFromDirToDir extends Command
 {
@@ -35,6 +36,6 @@ class CopyFilesFromDirToDir extends Command
         $user = User::findOrFail($toDir->owner_id);
         $copyDirAction = new CopyDirectoryAction();
         $copyDirAction->execute($fromDir, $toDir, $user);
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 }

@@ -15,6 +15,7 @@ use function route;
  * @property string $uuid
  * @property string name
  * @property string description
+ * @property string group
  * @property mixed marked_important_at
  *
  * @mixin Builder

@@ -177,7 +177,7 @@ class FileObserver
     {
         if ($file->mime_type === 'directory') {
             $project->directory_count--;
-            $project->update(['directory_count' => $project->directory_count]);
+            $project->update(['directory_count' => $project->directory_count < 1 ? 1 : $project->directory_count]);
         } else {
             $project->file_count--;
             $project->size = $project->size - $file->size;

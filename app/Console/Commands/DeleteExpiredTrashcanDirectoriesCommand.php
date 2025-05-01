@@ -50,6 +50,7 @@ class DeleteExpiredTrashcanDirectoriesCommand extends Command
         if (is_null($rootDir)) {
             return 0;
         }
+        echo "Deleting: {$rootDir->path}\n";
         $dirs = $this->recursivelyRetrieveAllSubdirs($rootDir->id);
         foreach ($dirs as $dir) {
             $this->deleteFilesAndDir($dir);

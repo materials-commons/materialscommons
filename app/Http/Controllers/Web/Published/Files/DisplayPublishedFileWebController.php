@@ -9,7 +9,9 @@ use App\Models\File;
 use App\Traits\FileType;
 use App\ViewModels\Files\ShowFileViewModel;
 use Illuminate\Support\Facades\Response;
+use function abort;
 use function abort_if;
+use function auth;
 use function is_null;
 use function view;
 
@@ -18,6 +20,9 @@ class DisplayPublishedFileWebController extends Controller
     use FileType;
     public function __invoke(GetFileContentsForDisplayAction $getFileContentsForDisplayAction, Dataset $dataset, File $file)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
 
         if ($this->fileTypeShouldReturnContents($file)) {
             $f = $getFileContentsForDisplayAction->execute($file);

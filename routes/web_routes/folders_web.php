@@ -37,7 +37,7 @@ Route::get('/projects/{project}/folders', ShowRootFolderWebController::class)
 Route::get('/projects/{project}/folders/{folder}', ShowFolderWebController::class)
      ->name('projects.folders.show');
 
-Route::get('/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to',
+Route::post('/projects/{project}/folders/{folder}/copy',
     CopyToDestinationWebController::class)
      ->name('projects.folders.copy-to');
 
@@ -67,8 +67,8 @@ Route::get('/projects/{project}/folders/{dir}/delete', DeleteFolderWebController
 Route::delete('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
      ->name('projects.folders.destroy');
 
-Route::get('/projects/{project}/folders/{dir}/destroy', DestroyFolderWebController::class)
-     ->name('projects.folders.destroy');
+Route::get('/projects/{project}/folders/{dir}/destroy', DeleteFolderWebController::class)
+     ->name('projects.folders.delete');
 
 Route::get('/projects/{project}/folders/{dir}/rename', RenameFolderWebController::class)
      ->name('projects.folders.rename');

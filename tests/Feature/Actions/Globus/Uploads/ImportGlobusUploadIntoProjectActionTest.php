@@ -5,7 +5,6 @@ namespace Tests\Feature\Actions\Globus\Uploads;
 use App\Actions\Globus\Uploads\ImportGlobusUploadIntoProjectAction;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
-use App\Models\Project;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,15 +25,7 @@ class ImportGlobusUploadIntoProjectActionTest extends TestCase
 
         $user = User::factory()->create();
 
-        $project = Project::factory()->create(['owner_id' => $user->id]);
-
-        $rootDir = File::factory()->create([
-            'project_id' => $project->id,
-            'name'       => '/',
-            'path'       => '/',
-            'mime_type'  => 'directory',
-            'owner_id'   => $user->id,
-        ]);
+        $project = ProjectFactory::ownedBy($user)->create();
 
         $globusUpload = GlobusUploadDownload::factory()->create([
             'project_id' => $project->id,

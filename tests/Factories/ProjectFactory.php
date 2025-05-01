@@ -125,6 +125,20 @@ class ProjectFactory
         ]);
     }
 
+    public function createFakeFileNotCurren($project, $dir, $name)
+    {
+        return File::factory()->create([
+            'project_id'             => $project->id,
+            'name'                   => $name,
+            'directory_id'           => $dir->directory_id,
+            'owner_id'               => $project->owner_id,
+            'mime_type'              => 'text/plain',
+            'media_type_description' => 'text',
+            'disk'                   => 'mcfs',
+            'current'                => false,
+        ]);
+    }
+
     public function createFilePointingAt($project, $file, $name)
     {
         return File::factory()->create([

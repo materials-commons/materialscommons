@@ -23,17 +23,44 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="directories">Move to directory</label>
-                    <select name="directory" class="selectpicker col-lg-8"
+                    <label for="project">Destination Project</label>
+                    <select name="project" class="selectpicker col-lg-6"
                             data-style="btn-light no-tt"
-                            title="directories" data-live-search="true">
+                            title="Current project" data-live-search="true">
+                        @foreach($projects as $project)
+                            <option data-token="{{$project->id}}" value="{{$project->id}}">
+                                {{$project->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="directories">Destination</label>
+                    <select name="directory" class="selectpicker col-lg-6"
+                            data-style="btn-light no-tt"
+                            title="Select directory" data-live-search="true">
                         @foreach($dirsInProject as $dir)
                             <option data-token="{{$dir->id}}" value="{{$dir->id}}">
                                 {{$dir->path}}
                             </option>
                         @endforeach
                     </select>
+                    <div class="float-right">
+                        <a href="{{route('projects.folders.show', [$project, $directory])}}"
+                           class="btn btn-info mr-3">
+                            Done
+                        </a>
+
+                        <a class="btn btn-success" onclick="document.getElementById('move-files').submit()" href="#">
+                            Move Selected
+                        </a>
+
+                        <a class="btn btn-success" onclick="document.getElementById('move-files').submit()" href="#">
+                            Copy Selected
+                        </a>
+                    </div>
                 </div>
+                <br/>
                 <div class="form-group">
                     <table id="files" class="table table-hover" style="width:100%">
                         <thead>
@@ -41,7 +68,7 @@
                             <th>Name</th>
                             <th>Type</th>
                             <th>Size</th>
-                            <th>Move?</th>
+                            <th>Selected?</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,7 +86,11 @@
                                     @endif
                                 </td>
                                 <td>{{$file->mime_type}}</td>
-                                <td>{{$file->toHumanBytes()}}</td>
+                                <td>
+                                    @if(!$file->isDir())
+                                        {{$file->toHumanBytes()}}
+                                    @endif
+                                </td>
                                 <td>
                                     <input type="checkbox" name="ids[]" value="{{$file->id}}">
                                 </td>
@@ -67,16 +98,6 @@
                         @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="float-right">
-                    <a href="{{route('projects.folders.show', [$project, $directory])}}"
-                       class="action-link danger mr-3">
-                        Cancel
-                    </a>
-
-                    <a class="action-link" onclick="document.getElementById('move-files').submit()" href="#">
-                        Move Files
-                    </a>
                 </div>
             </form>
 

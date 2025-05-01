@@ -18,6 +18,12 @@ class RestoreFileFromTrashcanWebController extends Controller
         }
 
         $file->update(['deleted_at' => null]);
+        // Restore all versions
+        File::where('directory_id', $file->directory_id)
+            ->where('name', $file->name)
+            ->whereNull('dataset_id')
+            ->where('current', false)
+            ->update(['deleted_at' => null]);
         flash("File {$file->getFilePath()} restored.")->success();
         return redirect(route('projects.trashcan.index', [$project]));
     }

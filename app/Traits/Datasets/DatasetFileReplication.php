@@ -19,7 +19,7 @@ trait DatasetFileReplication
             $directory = $this->replicateDirectoryTree($file->directory, $datasetId);
         }
 
-        $f = $file->replicate()->fill([
+        $f = $file->replicate(["unique_proj_dir"])->fill([
             'uuid'         => Uuid::uuid4()->toString(),
             'uses_uuid'    => blank($file->uses_uuid) ? $file->uuid : $file->uses_uuid,
             'directory_id' => $directory->id,
@@ -54,7 +54,7 @@ trait DatasetFileReplication
 
     private function createReplicatedDir(File $dir, $parentId, $datasetId): File
     {
-        $d = $dir->replicate()->fill([
+        $d = $dir->replicate(["unique_proj_dir"])->fill([
             'uuid'         => Uuid::uuid4()->toString(),
             'directory_id' => $parentId,
             'dataset_id'   => $datasetId,

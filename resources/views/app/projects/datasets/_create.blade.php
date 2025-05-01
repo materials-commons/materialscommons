@@ -89,7 +89,7 @@
 
         @if($experiments->isNotEmpty())
             <div class="form-group">
-                <label for="experiments">Experiments</label>
+                <label for="experiments">Studies</label>
                 <select name="experiments[]" class="selectpicker col-lg-8"
                         data-style="btn-light no-tt"
                         title="experiments"

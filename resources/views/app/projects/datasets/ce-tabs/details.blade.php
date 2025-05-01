@@ -107,10 +107,10 @@
         </div>
 
         <div class="form-group">
-            <label for="experiments">Experiments</label>
+            <label for="experiments">Studies</label>
             <select name="experiments[]" class="selectpicker col-lg-8" data-live-search="true" multiple
                     data-style="btn-light no-tt"
-                    title="Experiments">
+                    title="Studies">
                 @foreach($experiments as $experiment)
                     <option data-token="{{$experiment->id}}"
                             {{$datasetHasExperiment($experiment) ? 'selected' : ''}}

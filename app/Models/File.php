@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DeletedAt;
 use App\Traits\FileType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,6 +41,7 @@ class File extends Model implements Searchable
     use HasUUID;
     use FileType;
     use HasFactory;
+    use DeletedAt;
 
     protected $guarded = ['id'];
 
@@ -478,6 +480,8 @@ class File extends Model implements Searchable
     {
         return File::with('directory')
                    ->where('project_id', $projectId)
+            ->where('current', true)
+            ->whereNull('dataset_id')
                    ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->get();
     }
@@ -485,6 +489,8 @@ class File extends Model implements Searchable
     public static function getTrashCountForProject($projectId): int
     {
         return File::where('project_id', $projectId)
+            ->where('current', true)
+            ->whereNull('dataset_id')
                    ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->count();
     }

@@ -6,6 +6,7 @@ use App\Actions\Directories\CreateDirectoryAction;
 use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Models\Project;
+use Exception;
 use function basename;
 use function blank;
 use function dirname;
@@ -14,6 +15,41 @@ use function is_null;
 
 trait CreateDirectories
 {
+    private function getOrCreateSingleDirectoryIfDoesNotExist(File $baseDir, string $path, Project $project, $ownerId)
+    {
+        $dir = File::where('project_id', $project->id)
+                   ->where('path', $path)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
+                   ->where('current', true)
+                   ->first();
+        if ($dir !== null) {
+            return $dir;
+        }
+
+
+        try {
+            return File::create([
+                'name'         => basename($path),
+                'path'         => $path,
+                'mime_type'    => 'directory',
+                'owner_id'     => $ownerId,
+                'project_id'   => $project->id,
+                'current'      => true,
+                'directory_id' => optional($baseDir)->id,
+            ]);
+        } catch (Exception $e) {
+            // Exception, so maybe dir exists, so try getting it again.
+            return File::where('project_id', $project->id)
+                       ->where('path', $path)
+                       ->whereNull('dataset_id')
+                       ->whereNull('deleted_at')
+                       ->where('current', true)
+                       ->first();
+        }
+
+    }
+
     private function getDirectoryOrCreateIfDoesNotExist(File $baseDir, string $path, Project $project)
     {
         $dir = $this->getDirectory($baseDir->path, $path, $project->id);
