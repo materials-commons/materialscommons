@@ -4,6 +4,7 @@
     <table id="files" class="table table-hover mt-2" style="width:100%">
         <thead>
         <tr>
+            <th></th>
             <th>
                 <x-table.col-sortable :column="'name'" :sort-col="$sortCol" :sort-asc="$sortAsc">
                     Name
@@ -11,12 +12,18 @@
             </th>
             <th>Type</th>
             <th>Size</th>
-            <th>Selected</th>
         </tr>
         </thead>
         <tbody>
         @foreach($files as $file)
             <tr>
+                <td>
+                    <div class="form-group form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
+                               {{$file->selected ? 'checked' : ''}}
+                               wire:click="toggleSelected('{{$file->name}}', '{{$file->mime_type}}')">
+                    </div>
+                </td>
                 <td>
                     @if ($file->mime_type === 'directory')
                         <a href="#" wire:click.prevent="gotoDirectory({{$file->id}})">
@@ -34,13 +41,6 @@
                 @else
                     <td>{{$file->toHumanBytes()}}</td>
                 @endif
-                <td>
-                    <div class="form-group form-check-inline">
-                        <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
-                               {{$file->selected ? 'checked' : ''}}
-                               wire:click="toggleSelected('{{$file->name}}', '{{$file->mime_type}}')">
-                    </div>
-                </td>
             </tr>
         @endforeach
         </tbody>
