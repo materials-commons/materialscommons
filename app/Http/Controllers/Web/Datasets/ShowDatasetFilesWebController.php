@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Datasets;
 
 use App\Actions\Datasets\GetDatasetFilesAction;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Web\Datasets\Traits\HasExtendedInfo;
+use App\Http\Controllers\Web\Datasets\Traits\DatasetEntities;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\ViewModels\Datasets\ShowDatasetOverviewViewModel;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ShowDatasetFilesWebController extends Controller
 {
-    use HasExtendedInfo;
+    use DatasetEntities;
 
     public function __invoke(Request $request, Project $project, $datasetId)
     {

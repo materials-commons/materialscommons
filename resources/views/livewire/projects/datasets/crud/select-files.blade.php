@@ -1,5 +1,19 @@
 <div>
-    <h3>Path: {{$currentDir->path}}</h3>
+    <h3>
+        @if(sizeof($dirPaths) == 1)
+            <a class="no-underline"
+               wire:click.prevent="gotoDirectoryByPath('/')"
+               href="#">/</a>
+        @else
+            @foreach($dirPaths as $dirpath)
+                <a class="no-underline"
+                   wire:click.prevent="gotoDirectoryByPath('{{$dirpath['path']}}')"
+                   href="#">
+                    {{$dirpath['name']}}/
+                </a>
+            @endforeach
+        @endif
+    </h3>
     <x-table.table-search/>
     <table id="files" class="table table-hover mt-2" style="width:100%">
         <thead>
@@ -21,7 +35,7 @@
                     <div class="form-group form-check-inline">
                         <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                {{$file->selected ? 'checked' : ''}}
-                               wire:click="toggleSelected('{{$file->name}}', '{{$file->mime_type}}')">
+                               wire:click="toggleSelected('{{$file->toPath($currentDir->path)}}', '{{$file->mime_type}}', {{json_encode($file->selected)}})">
                     </div>
                 </td>
                 <td>

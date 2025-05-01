@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Datasets\Traits;
 
 use App\Models\Dataset;
 
-trait HasExtendedInfo
+trait DatasetEntities
 {
     private function getEntitiesForDataset(Dataset $dataset, $category = 'experimental')
     {
@@ -17,7 +17,7 @@ trait HasExtendedInfo
         // the dataset from iterating through the template
         $dataset->load([
             'entities' => function ($query) use ($category) {
-                $query->where('category', $category);
+                $query->with(['files.directory'])->where('category', $category);
             }
         ]);
 
