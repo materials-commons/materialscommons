@@ -39,13 +39,13 @@
                     <tr>
                         @if(blank($item->path))
                             <td>
-                                <a href="{{route('projects.files.show', [$project, $item])}}">
+                                <a class="no-underline" href="{{route('projects.files.show', [$project, $item])}}">
                                     <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
                                 </a>
                             </td>
                         @else
                             <td>
-                                <a href="{{route('projects.folders.show', [$project, $item])}}">
+                                <a class="no-underline" href="{{route('projects.folders.show', [$project, $item])}}">
                                     <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
                                 </a>
                             </td>

@@ -21,7 +21,8 @@
                         <input type="checkbox" id="{{$entity->uuid}}"
                                {{$this->entityInDataset($entity->id) ? 'checked' : ''}}
                                wire:click="toggleEntity({{$entity->id}})">
-                        <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                        <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}"
+                           class="no-underline">
                             {{$entity->name}}
                         </a>
                     </div>

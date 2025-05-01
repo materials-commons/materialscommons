@@ -26,7 +26,7 @@
                     $name = Str::replaceStart("{$proj->uuid}-", '', $proj->name);
                 }
             @endphp
-            <td><a href="{{route('projects.show', [$proj])}}">{{$name}}</a></td>
+            <td><a class="no-underline" href="{{route('projects.show', [$proj])}}">{{$name}}</a></td>
             <td>{{$proj->expiresInDays()}} days</td>
             <td>{{formatBytes($proj->size)}}</td>
             <td>{{$proj->size}}</td>
