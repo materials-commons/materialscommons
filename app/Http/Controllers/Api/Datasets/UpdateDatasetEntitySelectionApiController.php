@@ -15,7 +15,7 @@ class UpdateDatasetEntitySelectionApiController extends Controller
     {
         $validated = $request->validated();
         $entity = Entity::findOrFail($validated["entity_id"]);
-        $dataset = $updateDatasetEntitySelectionAction($entity, $dataset);
+        $dataset = $updateDatasetEntitySelectionAction->update($entity, $dataset);
         $dataset->globus_acl_id = null;
         return $dataset;
     }

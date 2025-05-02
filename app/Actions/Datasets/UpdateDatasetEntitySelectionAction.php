@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateDatasetEntitySelectionAction
 {
-    public function __invoke($entity, $dataset)
+    public function update($entity, $dataset)
     {
         $experiment = $entity->experiments()->first();
         $count = $this->getCount($dataset, $entity, $experiment);
@@ -18,6 +18,12 @@ class UpdateDatasetEntitySelectionAction
         }
 
         return $dataset;
+    }
+
+    public function datasetHasEntity($dataset, $entity)
+    {
+        $experiment = $entity->experiments()->first();
+        return $this->getCount($dataset, $entity, $experiment) > 0;
     }
 
     private function addEntityToSelection($dataset, $entity, $experiment)

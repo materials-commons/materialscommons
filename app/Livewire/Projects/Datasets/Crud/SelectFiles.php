@@ -4,6 +4,7 @@ namespace App\Livewire\Projects\Datasets\Crud;
 
 use App\Actions\Datasets\GetDatasetFilesAction;
 use App\Actions\Datasets\UpdateDatasetFileSelectionAction;
+use App\Http\Controllers\Web\Datasets\Traits\DatasetEntities;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
@@ -19,6 +20,8 @@ use function ray;
 
 class SelectFiles extends Component
 {
+    use DatasetEntities;
+
     public Project $project;
     public Dataset $dataset;
 
@@ -27,13 +30,17 @@ class SelectFiles extends Component
 
     public $currentDir;
     public $dirPaths = [];
-    public $entities;
+    public $sampleFiles;
+    public $computationFiles;
 
     use WithPagination;
     use BaseLivewireTable;
 
     public function render()
     {
+        $this->sampleFiles = $this->getEntitiesForDataset($this->dataset, 'experimental')->flatMap->files->keyBy('id');
+        $this->computationFiles = $this->getEntitiesForDataset($this->dataset,
+            'computational')->flatMap->files->keyBy('id');
         ray("directoryId: {$this->directoryId}");
         ray("this->project", $this->project);
         $this->currentDir = File::find($this->directoryId);

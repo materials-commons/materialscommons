@@ -37,6 +37,18 @@ class UpdateDatasetFileSelectionAction
                     case "remove_exclude_dir":
                         $fileSelection = $this->removeExcludeDir($fileSelection, $path);
                         break;
+                    case "include_entity_file":
+                        $fileSelection = $this->addEntityIncludeFile($fileSelection, $path);
+                        break;
+                    case "remove_entity_file":
+                        $fileSelection = $this->removeEntityIncludeFile($fileSelection, $path);
+                        break;
+                    case "include_entity_dir":
+                        $fileSelection = $this->addEntityIncludeDir($fileSelection, $path);
+                        break;
+                    case "remove_entity_dir":
+                        $fileSelection = $this->removeEntityIncludeDir($fileSelection, $path);
+                        break;
                 }
             }
 
@@ -81,6 +93,44 @@ class UpdateDatasetFileSelectionAction
     {
         $fileSelection = $this->removeItemFromSelectionKey($fileSelection, 'include_dirs', $path);
         $fileSelection = $this->addItemToSelectionKey($fileSelection, 'exclude_dirs', $path);
+        return $fileSelection;
+    }
+
+    private function addEntityIncludeFile(Collection $fileSelection, $path): Collection
+    {
+        // add include file
+        $fileSelection = $this->addItemToSelectionKey($fileSelection, 'entity_include_files', $path);
+
+        // remove from exclude files if in there
+        $fileSelection = $this->removeItemFromSelectionKey($fileSelection, 'entity_exclude_files', $path);
+
+        return $fileSelection;
+    }
+
+    private function removeEntityIncludeFile(Collection $fileSelection, $path): Collection
+    {
+        // remove from include_files
+        $fileSelection = $this->removeItemFromSelectionKey($fileSelection, 'entity_include_files', $path);
+
+        // Add to exclude files
+        $fileSelection = $this->addItemToSelectionKey($fileSelection, 'entity_exclude_files', $path);
+
+        return $fileSelection;
+    }
+
+    private function addEntityIncludeDir(Collection $fileSelection, $path): Collection
+    {
+        $fileSelection = $this->addItemToSelectionKey($fileSelection, 'entity_include_dirs', $path);
+
+        // Remove from exclude list
+        $fileSelection = $this->removeItemFromSelectionKey($fileSelection, 'entity_exclude_dirs', $path);
+        return $fileSelection;
+    }
+
+    private function removeEntityIncludeDir(Collection $fileSelection, $path): Collection
+    {
+        $fileSelection = $this->removeItemFromSelectionKey($fileSelection, 'entity_include_dirs', $path);
+        $fileSelection = $this->addItemToSelectionKey($fileSelection, 'entity_exclude_dirs', $path);
         return $fileSelection;
     }
 
