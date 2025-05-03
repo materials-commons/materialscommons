@@ -16,7 +16,7 @@
         </p>
     @endif
     <h3>
-        Experiment:
+        Study:
         <a href="{{route('projects.experiments.show', [$viewModel->project(), $viewModel->experiment()])}}">
             {{$viewModel->experiment()->name}}
         </a>

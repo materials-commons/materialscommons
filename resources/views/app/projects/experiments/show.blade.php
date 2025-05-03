@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Experiments")
+@section('pageTitle', "{$project->name} - Study")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -32,18 +32,18 @@
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
                 <a data-toggle="modal" href="#reload-experiment-modal"
                    class="action-link float-right">
-                    <i class="fas fa-sync-alt mr-2"></i> Reload Experiment
+                    <i class="fas fa-sync-alt mr-2"></i> Reload Study
                 </a>
             @else
                 <a class="action-link float-right"
                    href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
-                    <i class="fas fa-sync-alt mr-2"></i>Reload Experiment
+                    <i class="fas fa-sync-alt mr-2"></i>Reload Study
                 </a>
             @endif
             <div class="col col-lg-4 float-right">
                 <select id="switch-experiments" class="selectpicker col-lg-10 mc-select"
                         data-live-search="true" data-style="btn-light no-tt"
-                        title="Switch To Experiment">
+                        title="Switch To Study">
                     @foreach($project->experiments as $entry)
                         @if ($entry->name != $experiment->name)
                             <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>

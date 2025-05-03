@@ -3,7 +3,7 @@
     <th>Name1</th>
     <th>Name</th>
     @if(isset($showExperiment))
-        <th>Experiment</th>
+        <th>Study</th>
     @endif
     @foreach($activities as $activity)
         <th>{{$activity->name}}</th>

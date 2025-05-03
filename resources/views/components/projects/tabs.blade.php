@@ -6,7 +6,7 @@
     <select class="custom-select" id="select-view">
         <option selected>Project</option>
         @foreach($experiments as $experiment)
-            <option>Experiment: {{$experiment->name}}</option>
+            <option>Study: {{$experiment->name}}</option>
         @endforeach
     </select>
 </div>

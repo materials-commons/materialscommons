@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Edit Experiment")
+@section('pageTitle', "{$project->name} - Edit Study")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Edit Experiment: {{$experiment->name}}
+            Edit Study: {{$experiment->name}}
         @endslot
 
         @slot('body')

@@ -39,7 +39,7 @@
 
         <a wire:navigate href="{{route('projects.experiments.index', [$proj])}}"
            data-toggle="tooltip"
-           title="Goto experiments for project."
+           title="Goto studies for project."
            class="card-link"><i class="fa fas fa-flask"></i></a>
 
         @if(auth()->id() == $proj->owner_id)

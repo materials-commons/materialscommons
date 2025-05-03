@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Delete Experiment")
+@section('pageTitle', "{$project->name} - Delete Study")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Delete Experiment: {{$experiment->name}}
+            Delete Study: {{$experiment->name}}
         @endslot
 
         @slot('body')
@@ -44,8 +44,9 @@
                     <br>
                     <br>
                     <p>
-                        The following unpublished datasets share samples with this experiment. If you choose to delete
-                        the experiment then the shared samples will need to manually be added back to the datasets.
+                        The following unpublished datasets share samples/computations with this study. If you choose to
+                        delete
+                        the study then the shared samples will need to be manually added back to the datasets.
                     </p>
                     <h5>Affected Unpublished Datasets</h5>
                     <ul>
@@ -59,7 +60,7 @@
             @else
                 <br>
                 <p>
-                    This experiment cannot be delete. It contains published datasets that would be affected
+                    This study cannot be deleted. It contains published datasets that would be affected
                     by the delete.
                 </p>
                 <h5>Affected Published Datasets</h5>

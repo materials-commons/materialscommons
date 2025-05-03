@@ -9,7 +9,7 @@
         @endisset
 
         @isset($objectCounts->experimentsCount)
-            <li>Experiments ({{$objectCounts->experimentsCount}})</li>
+            <li>Studies ({{$objectCounts->experimentsCount}})</li>
         @endisset
 
         @isset($objectCounts->publishedDatasetsCount)
