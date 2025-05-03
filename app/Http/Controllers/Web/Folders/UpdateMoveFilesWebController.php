@@ -53,6 +53,9 @@ class UpdateMoveFilesWebController extends Controller
         return redirect($redirectRoute);
     }
 
+    // moveBetweenProjects doesn't need to check if a directory is being moved into itself, or a file
+    // is being copied into the same directory because by definition this is a move between projects.
+    // That means the ids will always be different.
     private function moveBetweenProjects($ids, $moveToDirectory, User $user)
     {
         $dirsToMove = File::whereIn('id', $ids)
@@ -91,6 +94,10 @@ class UpdateMoveFilesWebController extends Controller
                            ->get();
 
         $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction, $user) {
+            if ($file->directory_id == $moveToDirectory->id) {
+                // Don't let a file be copied into the same directory it's already in
+                return;
+            }
             $moveFileAction($file, $moveToDirectory, $user);
         });
 
@@ -102,6 +109,10 @@ class UpdateMoveFilesWebController extends Controller
                           ->get();
         $moveDirectoryAction = new MoveDirectoryAction();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {
+            if ($dir->id == $moveToDirectory->id) {
+                // Don't copy a directory into itself
+                return;
+            }
             $moveDirectoryAction($dir->id, $moveToDirectory->id, $user);
         });
     }
