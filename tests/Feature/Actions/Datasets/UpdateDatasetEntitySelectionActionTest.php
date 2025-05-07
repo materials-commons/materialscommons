@@ -29,7 +29,7 @@ class UpdateDatasetEntitySelectionActionTest extends TestCase
         ], $project->owner_id);
 
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
         $this->assertDatabaseHas('item2entity_selection', [
             'entity_name'   => $entity->name,
             'experiment_id' => $experiment->id,
@@ -53,7 +53,7 @@ class UpdateDatasetEntitySelectionActionTest extends TestCase
 
         // First add an entity and ensure it was properly added
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
         $this->assertDatabaseHas('item2entity_selection', [
             'entity_name'   => $entity->name,
             'experiment_id' => $experiment->id,
@@ -62,7 +62,7 @@ class UpdateDatasetEntitySelectionActionTest extends TestCase
         ]);
 
         // Now update again should remove it
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
         $this->assertDatabaseMissing('item2entity_selection', [
             'entity_name'   => $entity->name,
             'experiment_id' => $experiment->id,

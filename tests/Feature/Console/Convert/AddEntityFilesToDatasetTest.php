@@ -44,8 +44,8 @@ class AddEntityFilesToDatasetTest extends TestCase
         $entity2->files()->attach($file);
 
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
-        $updateSelection($entity2, $dataset);
+        $updateSelection->update($entity, $dataset);
+        $updateSelection->update($entity2, $dataset);
 
         // Now test the logic for console command.
         Artisan::call("mc-convert:add-entity-files-to-dataset {$dataset->id}");

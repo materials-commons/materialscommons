@@ -75,7 +75,7 @@ class DeleteExperimentActionTest extends TestCase
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         // Call the publish dataset action, then run delete and check that the dataset still has samples
 

@@ -86,7 +86,7 @@ class EntitiesFromTemplateTest extends TestCase
         $experiment->entities()->attach($e2);
 
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($e1, $dataset);
+        $updateSelection->update($e1, $dataset);
         DB::table('item2entity_selection')->insert([
             'item_type' => Dataset::class,
             'item_id'   => $dataset->id,

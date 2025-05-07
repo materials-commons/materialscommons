@@ -37,7 +37,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         $this->assertEquals(1, Entity::count());
 
@@ -71,7 +71,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         $this->assertEquals(1, Entity::count());
         $this->assertEquals(1, EntityState::count());
@@ -116,7 +116,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         // Replicate
         $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
@@ -164,7 +164,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         // Replicate
         $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();
@@ -194,7 +194,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
 
         // Add entity template to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         // Replicate
         $replicateAction = new ReplicateDatasetEntitiesAndRelationshipsForPublishingAction();

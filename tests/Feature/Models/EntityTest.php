@@ -33,8 +33,8 @@ class EntityTest extends TestCase
 
         // Add entities (as template) to dataset
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity1, $dataset);
-        $updateSelection($entity2, $dataset);
+        $updateSelection->update($entity1, $dataset);
+        $updateSelection->update($entity2, $dataset);
 
         // Now perform queries to get the activities for the entities when using template query
         $entities = $dataset->entitiesFromTemplate();
