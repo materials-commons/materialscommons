@@ -34,7 +34,7 @@
                 <td>
                     <div class="form-group form-check-inline">
                         <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
-                               {{$file->selected ? 'checked' : ''}}
+                               {{$this->isSelected($file) ? 'checked' : ''}}
                                wire:click="toggleSelected('{{$file->toPath($currentDir->path)}}', '{{$file->mime_type}}', {{json_encode($file->selected)}})">
                     </div>
                 </td>

@@ -130,7 +130,7 @@ class SelectFiles extends Component
         }
 
         // Here check if file is in a selected sample. For now return false.
-        $file->load('entities');
+//        $file->load('entities');
         return false;
     }
 
