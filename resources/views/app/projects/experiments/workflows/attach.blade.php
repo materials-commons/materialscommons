@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Attach Workflows To Experiment {{$experiment->name}}
+            Attach Workflows To Study {{$experiment->name}}
         @endslot
 
         @slot('body')

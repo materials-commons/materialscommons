@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Create Experiment From Spreadsheet')
+@section('pageTitle', 'Create Study From Spreadsheet')
 
 @section('nav')
     @include('layouts.navs.app')
@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Experiment From Spreadsheet: {{$file->name}}
+            Create Study From Spreadsheet: {{$file->name}}
         @endslot
 
         @slot('body')

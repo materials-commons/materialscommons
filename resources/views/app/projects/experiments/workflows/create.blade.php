@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Workflow in Experiment {{$experiment->name}}
+            Create Workflow in Study {{$experiment->name}}
         @endslot
 
         @slot('body')

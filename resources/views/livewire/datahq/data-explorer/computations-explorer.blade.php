@@ -5,6 +5,6 @@
     @endif
 
     @if(!is_null($experiment))
-        Experiment: {{$experiment->id}}
+        Study: {{$experiment->id}}
     @endif
 </div>

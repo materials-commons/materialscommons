@@ -82,35 +82,34 @@
 
             <div class="card bg-light" style="border-color: #b3c2d9">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Experiments</strong></h5>
+                    <h5 class="card-title"><strong>Studies</strong></h5>
                     <hr/>
                     <p class="card-text">
-                        In Materials Commons a set of related data and metadata is called an experiment. This is the
+                        In Materials Commons a set of related data and metadata is called an study. This is the
                         case
-                        whether it comes from materials or computer lab. An experiment can be
+                        whether it comes from a materials or computer lab. An study can be
                         constructed by importing a lightly annotated spreadsheet (the most common way) or
                         using the Materials Commons API.
                     </p>
                     <p>
-                        Experiments record the experimental or computational processes performed, parameters used,
+                        Studies record the experimental or computational processes performed, parameters used,
                         properties measured or results calculated, and link to the files used or created. This helps
                         all collaborators to understand what was done and to explore, query, and use project results.
                     </p>
                     <div class="card-text">
                         <ul class="list-unstyled ml-3">
                             <li><a href="{{route('projects.experiments.index', [$project])}}">View project
-                                    experiments</a>
+                                    studies</a>
                             </li>
                             <li><a href="https://materialscommons.org/docs/docs/reference/spreadsheets/#overview"
                                    target="_blank">Spreadsheet annotation documentation</a></li>
                             {{--                        <li><a href="#">Example annotated spreadsheets</a></li>--}}
-                            <li><a href="{{route('projects.experiments.create', [$project])}}">Create an experiment from
-                                    an
-                                    annotated spreadsheet</a></li>
+                            <li><a href="{{route('projects.experiments.create', [$project])}}">Create a study from
+                                    an annotated spreadsheet</a></li>
                             {{--                        <li><a href="#">CLI experiments documentation</a></li>--}}
                             <li>
                                 <a href="https://materials-commons.github.io/materials-commons-api/html/manual/experiments.html"
-                                   target="_blank">API experiments documentation</a></li>
+                                   target="_blank">API studies documentation</a></li>
                         </ul>
                     </div>
                 </div>
@@ -121,7 +120,7 @@
                     <h5 class="card-title"><strong>Datasets and Communities</strong></h5>
                     <hr/>
                     <p class="card-text">
-                        Files, data, and metadata can be selected from one or more project experiments to be
+                        Files, data, and metadata can be selected from one or more project studies to be
                         published as a dataset. Datasets are made publicly available for query and exploration.
                         They may be cited and linked to using a DOI, and dataset files may be downloaded as a zip file
                         or using Globus. Datasets may be imported into a new or existing project for re-use.

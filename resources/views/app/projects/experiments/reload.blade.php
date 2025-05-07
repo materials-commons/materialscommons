@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Reload Experiment")
+@section('pageTitle', "{$project->name} - Reload Study")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -11,7 +11,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Reload Experiment: {{$experiment->name}}
+            Reload Study: {{$experiment->name}}
         @endslot
 
         @slot('body')
@@ -39,9 +39,7 @@
                                 <br/>
                                 <p>
                                     <b>If loading from a Google Sheet, you must set the share permissions to "Anyone
-                                        with the
-                                        link"
-                                        under General Access in the share popup.</b>
+                                        with the link" under General Access in the share popup.</b>
                                 </p>
                                 <div class="container">
                                     <div class="row">
@@ -75,8 +73,8 @@
                     <br>
                     <br>
                     <p>
-                        The following unpublished datasets share samples with this experiment. If you choose to reload
-                        the experiment then the shared samples will need to manually be added back to the datasets.
+                        The following unpublished datasets share samples with this study. If you choose to reload
+                        the study then the shared samples will need to be manually added back to the datasets.
                     </p>
                     <h5>Affected Unpublished Datasets</h5>
                     <ul>
@@ -90,7 +88,7 @@
             @else
                 <br>
                 <p>
-                    This experiment cannot be reloaded. It contains published datasets that would be affected
+                    This study cannot be reloaded. It contains published datasets that would be affected
                     by the reload.
                 </p>
                 <h5>Affected Published Datasets</h5>

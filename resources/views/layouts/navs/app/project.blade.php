@@ -88,10 +88,10 @@
             <li class="nav-item">
                 <a class="nav-link fs-11 ml-5 {{setActiveNavByName('projects.experiments')}}"
                    data-toggle="tooltip"
-                   title="Track your experiments and computational studies. Create new experiments and studies by loading your spreadsheet data."
+                   title="Track your experimental and computational studies. Create new studies by loading your spreadsheet data."
                    href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                     <i class="fa-fw fas fa-flask mr-2"></i>
-                    Experiments
+                    Studies
                 </a>
             </li>
 

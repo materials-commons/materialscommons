@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Experiments")
+@section('pageTitle', "{$project->name} - Studies")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -11,10 +11,10 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Experiments for {{$project->name}}
+            Studies for {{$project->name}}
             <a class="action-link float-right"
                href="{{route('projects.experiments.create', ['project' => $project->id])}}">
-                <i class="fas fa-plus mr-2"></i>Create Experiment
+                <i class="fas fa-plus mr-2"></i>Create Study
             </a>
         @endslot
 
@@ -22,7 +22,7 @@
             <table id="experiments" class="table table-hover" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Experiment</th>
+                    <th>Study</th>
                     <th>Summary</th>
                     <th>Owner</th>
                     <th>Updated</th>

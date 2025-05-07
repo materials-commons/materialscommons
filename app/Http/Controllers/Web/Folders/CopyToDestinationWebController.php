@@ -55,6 +55,10 @@ class CopyToDestinationWebController extends Controller
                            ->get();
         $copyFileAction = new CopyFileAction();
         $filesToCopy->each(function ($file) use ($copyToDirectory, $user, $copyFileAction) {
+            if ($file->directory_id == $copyToDirectory->id) {
+                // Don't let a file be copied to the same directory it's already in
+                return;
+            }
             $copyFileAction->execute($file, $copyToDirectory, $user);
         });
 
@@ -67,6 +71,10 @@ class CopyToDestinationWebController extends Controller
                           ->where('current', true)
                           ->get();
         $dirsToCopy->each(function ($dir) use ($copyToDirectory, $user) {
+            if ($dir->id == $copyToDirectory->id) {
+                // Don't allow a directory to be copied to itself
+                return;
+            }
             CopyFolderJob::dispatch($dir, $copyToDirectory, $user)->onQueue('globus');
         });
     }

@@ -12,7 +12,7 @@
             {{--            </a>--}}
         </th>
         @if($showExperiment)
-            <th>Experiment</th>
+            <th>Study</th>
         @endif
         @foreach($activities as $activity)
             <th>{{$activity->name}}</th>

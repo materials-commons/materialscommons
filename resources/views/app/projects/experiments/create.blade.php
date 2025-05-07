@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', "{$project->name} - Create Experiment")
+@section('pageTitle', "{$project->name} - Create Study")
 
 @section('nav')
     @include('layouts.navs.app.project')
@@ -9,7 +9,7 @@
 @section('content')
     @component('components.card')
         @slot('header')
-            Create Experiment
+            Create Study
         @endslot
 
         @slot('body')
@@ -37,7 +37,7 @@
                 <hr>
                 <div class="form-group">
                     <p style="margin-top: 8px">
-                        Materials Commons can <b>optionally</b> import a spreadsheet to create your experiment. This
+                        Materials Commons can <b>optionally</b> import a spreadsheet to create your study. This
                         will set up the
                         processes, samples and files. You can have it load a spreadsheet you've uploaded to this
                         project, or you can specify a Google Sheet.
@@ -67,9 +67,7 @@
                                 <br/>
                                 <p>
                                     <b>If loading from a Google Sheet, you must set the share permissions to "Anyone
-                                        with the
-                                        link"
-                                        under General Access in the share popup.</b>
+                                        with the link" under General Access in the share popup.</b>
                                 </p>
                                 <div class="container">
                                     <div class="row">

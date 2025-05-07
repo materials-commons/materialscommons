@@ -4,7 +4,7 @@
         <option value="project" @selected($selectedData == "project")>Project</option>
         @foreach($experiments as $experiment)
             <option value="e-{{$experiment->id}}" @selected($selectedData == "e-{$experiment->id}")>
-                Experiment: {{$experiment->name}}</option>
+                Study: {{$experiment->name}}</option>
         @endforeach
     </select>
     <label class="ml-4">Show:</label>
