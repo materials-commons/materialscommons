@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects\Datasets\Crud;
 
 use App\Actions\Datasets\UpdateDatasetEntitySelectionAction;
+use App\Http\Controllers\Web\Datasets\Traits\DatasetEntities;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\Project;
@@ -17,13 +18,16 @@ class SelectSamples extends Component
     use EntitiesTableViewBuilder;
     use WithPagination;
     use BaseLivewireTable;
+    use DatasetEntities;
 
     public Project $project;
     public Dataset $dataset;
     public $category = 'experimental';
+    private $datasetEntities;
 
     public function render()
     {
+        $this->datasetEntities = $this->getEntitiesForDataset($this->dataset, $this->category);
         return $this->createProjectEntitiesView('livewire.projects.datasets.crud.select-samples');
     }
 
