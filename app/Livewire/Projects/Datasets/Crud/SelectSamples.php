@@ -21,7 +21,6 @@ class SelectSamples extends Component
     public Project $project;
     public Dataset $dataset;
     public $category = 'experimental';
-    private $entityFiles;
 
     public function render()
     {
