@@ -3,14 +3,16 @@
 namespace App\Actions\Datasets;
 
 use App\Models\Dataset;
+use App\Models\Entity;
 use Illuminate\Support\Facades\DB;
 
 class UpdateDatasetEntitySelectionAction
 {
-    public function update($entity, $dataset)
+    public function update(Entity $entity, Dataset $dataset)
     {
         $experiment = $entity->experiments()->first();
         $count = $this->getCount($dataset, $entity, $experiment);
+        $entity->load('files.directory');
         if ($count === 0) {
             $this->addEntityToSelection($dataset, $entity, $experiment);
         } else {
@@ -34,11 +36,39 @@ class UpdateDatasetEntitySelectionAction
             'entity_name'   => $entity->name,
             'experiment_id' => $experiment->id,
         ]);
+        $this->addEntityFilesToDataset($entity, $dataset);
+    }
+
+    private function addEntityFilesToDataset($entity, $dataset)
+    {
+        $updateDatasetFileSelectionAction = new UpdateDatasetFileSelectionAction();
+        $entity->files->each(function ($file) use ($updateDatasetFileSelectionAction, $dataset) {
+            if ($file->isDir()) {
+                $updateDatasetFileSelectionAction(["include_dir" => $file->path], $dataset);
+            } else {
+                $updateDatasetFileSelectionAction(["include_file" => $file->toPath($file->directory->path)],
+                    $dataset);
+            }
+        });
     }
 
     private function removeEntityFromSelection($dataset, $entity, $experiment)
     {
         $this->createQuery($dataset, $entity, $experiment)->delete();
+        $this->removeEntityFilesFromDataset($entity, $dataset);
+    }
+
+    private function removeEntityFilesFromDataset($entity, $dataset)
+    {
+        $updateDatasetFileSelectionAction = new UpdateDatasetFileSelectionAction();
+        $entity->files->each(function ($file) use ($updateDatasetFileSelectionAction, $dataset) {
+            if ($file->isDir()) {
+                $updateDatasetFileSelectionAction(["remove_include_dir" => $file->path], $dataset);
+            } else {
+                $updateDatasetFileSelectionAction(["remove_include_file" => $file->toPath($file->directory->path)],
+                    $dataset);
+            }
+        });
     }
 
     private function getCount($dataset, $entity, $experiment)

@@ -31,14 +31,9 @@ class DatasetFileSelectionTest extends TestCase
 
         $entity->files()->sync($f1);
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
-        $fs = new DatasetFileSelection([
-            'include_files' => [],
-            'include_dirs'  => [],
-            'exclude_files' => [],
-            'exclude_dirs'  => [],
-        ], $dataset);
+        $fs = new DatasetFileSelection($dataset->file_selection);
 
         $this->assertTrue($fs->isIncludedFile("/d1/f1.txt"));
     }
@@ -60,7 +55,7 @@ class DatasetFileSelectionTest extends TestCase
 
         $entity->files()->sync($f1);
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($entity, $dataset);
+        $updateSelection->update($entity, $dataset);
 
         $fs = new DatasetFileSelection([
             'include_files' => [],

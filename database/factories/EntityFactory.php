@@ -18,6 +18,7 @@ class EntityFactory extends Factory
             'description' => "Sample description",
             'summary'     => "Sample summary",
             'uuid'        => $this->faker->uuid,
+            'category' => 'experimental',
             'owner_id'    => function () {
                 return User::factory()->create()->id;
             },

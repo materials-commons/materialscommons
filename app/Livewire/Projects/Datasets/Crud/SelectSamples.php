@@ -3,7 +3,6 @@
 namespace App\Livewire\Projects\Datasets\Crud;
 
 use App\Actions\Datasets\UpdateDatasetEntitySelectionAction;
-use App\Actions\Datasets\UpdateDatasetFileSelectionAction;
 use App\Models\Dataset;
 use App\Models\Entity;
 use App\Models\Project;
@@ -34,40 +33,6 @@ class SelectSamples extends Component
         $entity = Entity::findOrFail($entityId);
         $updateDatasetEntitySelectionAction = new UpdateDatasetEntitySelectionAction();
         $updateDatasetEntitySelectionAction->update($entity, $this->dataset);
-        $entity->load('files.directory');
-        if ($updateDatasetEntitySelectionAction->datasetHasEntity($this->dataset, $entity)) {
-            // Add all the files in the entity
-            $this->addEntityFilesToDataset($entity);
-        } else {
-            // Remove all the files in the entity
-            $this->removeEntityFilesFromDataset($entity);
-        }
-    }
-
-    private function addEntityFilesToDataset($entity)
-    {
-        $updateDatasetFileSelectionAction = new UpdateDatasetFileSelectionAction();
-        $entity->files->each(function ($file) use ($updateDatasetFileSelectionAction) {
-            if ($file->isDir()) {
-                $updateDatasetFileSelectionAction(["include_dir" => $file->path], $this->dataset);
-            } else {
-                $updateDatasetFileSelectionAction(["include_file" => $file->toPath($file->directory->path)],
-                    $this->dataset);
-            }
-        });
-    }
-
-    private function removeEntityFilesFromDataset($entity)
-    {
-        $updateDatasetFileSelectionAction = new UpdateDatasetFileSelectionAction();
-        $entity->files->each(function ($file) use ($updateDatasetFileSelectionAction) {
-            if ($file->isDir()) {
-                $updateDatasetFileSelectionAction(["remove_include_dir" => $file->path], $this->dataset);
-            } else {
-                $updateDatasetFileSelectionAction(["remove_include_file" => $file->toPath($file->directory->path)],
-                    $this->dataset);
-            }
-        });
     }
 
     public function entityInDataset($entityId)

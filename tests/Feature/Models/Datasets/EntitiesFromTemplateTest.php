@@ -33,8 +33,8 @@ class EntitiesFromTemplateTest extends TestCase
         $experiment->entities()->attach($e2);
 
         $updateSelection = new UpdateDatasetEntitySelectionAction();
-        $updateSelection($e1, $dataset);
-        $updateSelection($e2, $dataset);
+        $updateSelection->update($e1, $dataset);
+        $updateSelection->update($e2, $dataset);
         $entitiesInDataset = $dataset->entitiesFromTemplate();
         $this->assertCount(2, $entitiesInDataset);
     }
@@ -47,9 +47,11 @@ class EntitiesFromTemplateTest extends TestCase
         $dataset = DatasetFactory::inProject($project)->ownedBy($project->owner)->create();
         $e1 = Entity::factory()->create([
             'project_id' => $project->id,
+            'category' => 'experimental',
         ]);
         $e2 = Entity::factory()->create([
             'project_id' => $project->id,
+            'category' => 'experimental',
         ]);
 
         DB::table('item2entity_selection')->insert([
