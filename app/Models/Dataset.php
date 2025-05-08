@@ -216,6 +216,46 @@ class Dataset extends Model implements Searchable
 
     public function entitiesFromTemplate($category = 'experimental')
     {
+        return Entity::with('files.directory')->where('category', $category)
+                     ->where(function ($query) {
+                         $query->where(function ($query) {
+                             // First part: entities from experiments
+                             $query->whereIn('id', function ($query) {
+                                 $query->select('entity_id')
+                                       ->from('experiment2entity')
+                                       ->whereIn('experiment_id', function ($query) {
+                                           $query->select('experiment_id')
+                                                 ->from('item2entity_selection')
+                                                 ->where('item_id', $this->id)
+                                                 ->where('item_type', Dataset::class);
+                                       });
+                             })
+                                   ->whereIn('name', function ($query) {
+                                       $query->select('entity_name')
+                                             ->from('item2entity_selection')
+                                             ->where('item_id', $this->id)
+                                             ->where('item_type', Dataset::class)
+                                             ->whereIn('experiment_id', function ($query) {
+                                                 $query->select('experiment_id')
+                                                       ->from('item2entity_selection')
+                                                       ->where('item_id', $this->id)
+                                                       ->where('item_type', Dataset::class);
+                                             });
+                                   });
+                         })
+                               ->orWhereIn('id', function ($query) {
+                                   // Second part: directly selected entities
+                                   $query->select('entity_id')
+                                         ->from('item2entity_selection')
+                                         ->where('item_id', $this->id)
+                                         ->where('item_type', Dataset::class);
+                               });
+                     })->get();
+    }
+
+
+    public function entitiesFromTemplateOld($category = 'experimental')
+    {
         return Entity::with('files.directory')->whereIn('id', function ($query) {
             $query->select('entity_id')
                   ->from('experiment2entity')

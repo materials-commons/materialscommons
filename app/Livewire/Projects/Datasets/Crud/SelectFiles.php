@@ -13,7 +13,6 @@ use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use function array_push;
 use function blank;
 use function explode;
 use function ray;
@@ -30,17 +29,16 @@ class SelectFiles extends Component
 
     public $currentDir;
     public $dirPaths = [];
-    public $sampleFiles;
-    public $computationFiles;
+    public $filesToSamples;
+    public $filesToComputations;
 
     use WithPagination;
     use BaseLivewireTable;
 
     public function render()
     {
-        $this->sampleFiles = $this->getEntitiesForDataset($this->dataset, 'experimental')->flatMap->files->keyBy('id');
-        $this->computationFiles = $this->getEntitiesForDataset($this->dataset,
-            'computational')->flatMap->files->keyBy('id');
+        $this->filesToSamples = $this->getDatasetFileToEntityMapping($this->dataset, 'experimental');
+        $this->filesToComputations = $this->getDatasetFileToEntityMapping($this->dataset, 'computational');
         ray("directoryId: {$this->directoryId}");
         ray("this->project", $this->project);
         $this->currentDir = File::find($this->directoryId);
@@ -55,20 +53,32 @@ class SelectFiles extends Component
         ]);
     }
 
+    // Create a list of directory paths from the current directory.
+    // The list contains the name of the entry, and the full path. eg:
+    // for /dir1/dir2 returns the following:
+    // [
+    //   ["name" => "", "path" => "/"],
+    //   ["name" => "dir1", "path" => "/dir1"],
+    //   ["name" => "dir2", "path" => "/dir1/dir2"],
+    // ]
+    //
+    // This is used to construct a list of directories that are links in the
+    // view that a user can click on to go to that directory path.
+    //
     private function loadDirPaths(): void
     {
         $this->dirPaths = [];
         if ($this->currentDir->path === "/") {
-            array_push($this->dirPaths, ['name' => '', 'path' => '/']);
+            $this->dirPaths[] = ['name' => '', 'path' => '/'];
         } else {
             $pieces = explode('/', $this->currentDir->path);
             $currentPath = "";
             foreach ($pieces as $piece) {
                 if ($piece === "") {
-                    array_push($this->dirPaths, ['name' => '', 'path' => "/"]);
+                    $this->dirPaths[] = ['name' => '', 'path' => "/"];
                 } else {
                     $currentPath = "{$currentPath}/${piece}";
-                    array_push($this->dirPaths, ['name' => $piece, 'path' => $currentPath]);
+                    $this->dirPaths[] = ['name' => $piece, 'path' => $currentPath];
                 }
             }
         }

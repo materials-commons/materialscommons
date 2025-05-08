@@ -48,6 +48,9 @@
                             <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
                         </a>
                     @endif
+                        <x-projects.datasets.crud.show-file-entities :file="$file"
+                                                                     :file-samples="$filesToSamples->get($file->id)"
+                                                                     :file-computations="$filesToComputations->get($file->id)"/>
                 </td>
                 <td>{{$file->mime_type}}</td>
                 @if ($file->mime_type === 'directory')
