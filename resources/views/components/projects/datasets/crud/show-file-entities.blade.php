@@ -15,7 +15,7 @@
                     <div class="card card-body">
                         <h5>Samples</h5>
                         @foreach($fileSamples as $sample)
-                            <a class="ml-2"
+                            <a class="no-underline ml-2"
                                href="{{route('projects.entities.show-spread', [$file->project_id, $sample['entity_id']])}}">
                                 {{$sample['entity_name']}}
                             </a>
@@ -30,7 +30,7 @@
                     <div class="card card-body">
                         <h5>Computations</h5>
                         @foreach($fileComputations as $computation)
-                            <a class="ml-2"
+                            <a class="no-underline ml-2"
                                href="{{route('projects.computations.entities.show-spread', [$file->project_id, $computation['entity_id']])}}">
                                 {{$computation['entity_name']}}
                             </a>
