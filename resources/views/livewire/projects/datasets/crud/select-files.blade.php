@@ -30,27 +30,27 @@
         </thead>
         <tbody>
         @foreach($files as $file)
-            <tr>
+            <tr wire:key="{{$file->id}}">
                 <td>
                     <div class="form-group form-check-inline">
                         <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
-                               {{$this->isSelected($file) ? 'checked' : ''}}
+                               {{$file->selected ? 'checked' : ''}}
                                wire:click="toggleSelected('{{$file->toPath($currentDir->path)}}', '{{$file->mime_type}}', {{json_encode($file->selected)}})">
                     </div>
                 </td>
                 <td>
                     @if ($file->mime_type === 'directory')
-                        <a href="#" wire:click.prevent="gotoDirectory({{$file->id}})">
+                        <a class="no-underline" href="#" wire:click.prevent="gotoDirectory({{$file->id}})">
                             <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
                         </a>
                     @else
-                        <a href="{{route('projects.files.show', [$project, $file])}}">
+                        <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
                             <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
                         </a>
                     @endif
-                        <x-projects.datasets.crud.show-file-entities :file="$file"
-                                                                     :file-samples="$filesToSamples->get($file->id)"
-                                                                     :file-computations="$filesToComputations->get($file->id)"/>
+                    <x-projects.datasets.crud.show-file-entities :file="$file"
+                                                                 :file-samples="$filesToSamples->get($file->id)"
+                                                                 :file-computations="$filesToComputations->get($file->id)"/>
                 </td>
                 <td>{{$file->mime_type}}</td>
                 @if ($file->mime_type === 'directory')
@@ -62,4 +62,7 @@
         @endforeach
         </tbody>
     </table>
+    <div>
+        {{$files->links()}}
+    </div>
 </div>

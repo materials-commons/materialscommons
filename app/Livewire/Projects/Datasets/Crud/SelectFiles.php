@@ -2,20 +2,18 @@
 
 namespace App\Livewire\Projects\Datasets\Crud;
 
-use App\Actions\Datasets\GetDatasetFilesAction;
+use App\Actions\Datasets\DatasetFileSelection;
 use App\Actions\Datasets\UpdateDatasetFileSelectionAction;
 use App\Http\Controllers\Web\Datasets\Traits\DatasetEntities;
 use App\Models\Dataset;
 use App\Models\File;
 use App\Models\Project;
 use App\Traits\Table\BaseLivewireTable;
-use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function blank;
 use function explode;
-use function ray;
 
 class SelectFiles extends Component
 {
@@ -39,17 +37,17 @@ class SelectFiles extends Component
     {
         $this->filesToSamples = $this->getDatasetFileToEntityMapping($this->dataset, 'experimental');
         $this->filesToComputations = $this->getDatasetFileToEntityMapping($this->dataset, 'computational');
-        ray("directoryId: {$this->directoryId}");
-        ray("this->project", $this->project);
         $this->currentDir = File::find($this->directoryId);
-        ray("this->currentDir", $this->currentDir);
         $this->loadDirPaths();
-        $getDatasetFilesAction = new GetDatasetFilesAction($this->dataset->file_selection);
-        $filesAndDir = $getDatasetFilesAction($this->project->id, $this->currentDir->id);
+        $query = $this->getFolderFilesQuery($this->project->id, $this->currentDir->id);
+        $query = $this->applySearch($query);
+        $query = $this->applySort($query);
+        $dir = $this->getDirectory($this->project->id, $this->currentDir->id);
+        $files = $this->setSelectedOnFiles($query->paginate(100), $dir);
 
         return view('livewire.projects.datasets.crud.select-files', [
-            'files' => $filesAndDir['files'],
-            'dir'   => $filesAndDir['directory'],
+            'files' => $files,
+            'dir'   => $dir,
         ]);
     }
 
@@ -84,11 +82,8 @@ class SelectFiles extends Component
         }
     }
 
-    #[Renderless]
     public function toggleSelected($filePath, $fileType, $selected): void
     {
-        $selectedDisplay = var_export($selected, true);
-        ray("toggleFileSelected({$filePath}, {$fileType}, {$selectedDisplay})");
         if ($fileType == 'directory') {
             $this->handleToggleDirectory($filePath, $selected);
         } else {
@@ -118,30 +113,17 @@ class SelectFiles extends Component
 
     public function gotoDirectory($dirId): void
     {
-        ray("gotoDirectory({$dirId})");
         $this->directoryId = $dirId;
     }
 
     public function gotoDirectoryByPath($path): void
     {
-        ray("gotoDirectoryByPath({$path})");
         $dir = File::where('path', $path)
                    ->where('project_id', $this->project->id)
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->first();
         $this->directoryId = $dir->id;
-    }
-
-    public function isSelected(File $file): bool
-    {
-        if ($file->selected) {
-            return true;
-        }
-
-        // Here check if file is in a selected sample. For now return false.
-//        $file->load('entities');
-        return false;
     }
 
     private function applySearch($query)
@@ -159,5 +141,43 @@ class SelectFiles extends Component
         }
 
         return $query->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc');
+    }
+
+    public function setSelectedOnFiles($files, $directory)
+    {
+        $datasetFileSelection = new DatasetFileSelection($this->dataset->file_selection);
+        $files->each(function ($file) use ($directory, $datasetFileSelection) {
+            if ($file->mime_type === 'directory') {
+                $file->selected = $datasetFileSelection->isIncludedDir($file->path);
+            } else {
+                $filePath = "{$directory->path}/{$file->name}";
+                $file->selected = $datasetFileSelection->isIncludedFile($filePath);
+            }
+        });
+        return $files;
+    }
+
+    private function getDirectory($projectId, $dir)
+    {
+        // $dir is either an id, or slash '/' meaning get
+        // the root
+        if ($dir === '/') {
+            return File::where('project_id', $projectId)
+                       ->where('current', true)
+                       ->whereNull('dataset_id')
+                       ->whereNull('deleted_at')
+                       ->where('name', '/')->first();
+        }
+
+        // $dir is an id
+        return File::where('project_id', $projectId)->where('id', $dir)->first();
+    }
+
+    private function getFolderFilesQuery($projectId, $folderId)
+    {
+        return File::with('entities')
+                   ->where('project_id', $projectId)
+                   ->where('directory_id', $folderId)
+                   ->where('current', true);
     }
 }
