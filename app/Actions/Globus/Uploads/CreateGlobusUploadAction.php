@@ -7,12 +7,16 @@ use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\GlobusUrl;
 use App\Enums\GlobusStatus;
 use App\Enums\GlobusType;
+use App\Models\File;
 use App\Models\GlobusUploadDownload;
 use App\Models\User;
+use App\Traits\Folders\CreateFolder;
 use Illuminate\Support\Facades\Storage;
 
 class CreateGlobusUploadAction
 {
+    use CreateFolder;
+
     private $globusApi;
     private $endpointId;
 
@@ -20,6 +24,7 @@ class CreateGlobusUploadAction
     {
         $this->globusApi = $globusApi;
         $this->endpointId = config('globus.endpoint');
+        $this->knownDirectories = [];
     }
 
     public function __invoke($data, $projectId, User $user)
@@ -38,6 +43,17 @@ class CreateGlobusUploadAction
             $old = umask(0);
             mkdir($path, 0777, true);
             umask($old);
+        }
+
+        $allDirs = File::where('project_id', $projectId)
+                       ->where('mime_type', 'directory')
+                       ->where('current', true)
+                       ->whereNull('deleted_at')
+                       ->whereNull('dataset_id')
+                       ->orderBy('path')
+                       ->cursor();
+        foreach ($allDirs as $dir) {
+            $this->createDirOnDiskIfNotExists("__globus_downloads/{$globusUpload->uuid}{$dir->path}");
         }
 
         $globusUserId = $this->getGlobusIdentity($user->globus_user);

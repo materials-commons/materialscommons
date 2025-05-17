@@ -214,6 +214,19 @@ class Dataset extends Model implements Searchable
         return $this->morphedByMany(Paper::class, 'item', 'item2dataset');
     }
 
+    public function selectedEntities($category = 'experimental')
+    {
+        return Entity::with('files.directory')
+                     ->where('category', $category)
+                     ->whereIn('id', function ($query) {
+                         $query->select('entity_id')
+                               ->from('item2entity_selection')
+                               ->where('item_id', $this->id)
+                               ->where('item_type', Dataset::class);
+                     })
+                     ->get();
+    }
+
     public function entitiesFromTemplate($category = 'experimental')
     {
         return Entity::with('files.directory')->where('category', $category)

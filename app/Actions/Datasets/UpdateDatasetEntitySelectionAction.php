@@ -12,6 +12,7 @@ class UpdateDatasetEntitySelectionAction
     {
         $experiment = $entity->experiments()->first();
         $count = $this->getCount($dataset, $entity, $experiment);
+        echo("UpdateDatasetEntitySelectionAction: $count\n");
         $entity->load('files.directory');
         if ($count === 0) {
             $this->addEntityToSelection($dataset, $entity, $experiment);
@@ -30,12 +31,13 @@ class UpdateDatasetEntitySelectionAction
 
     private function addEntityToSelection($dataset, $entity, $experiment)
     {
-        DB::table('item2entity_selection')->insert([
+        $added = DB::table('item2entity_selection')->insert([
             'item_type'     => Dataset::class,
             'item_id'       => $dataset->id,
             'entity_name'   => $entity->name,
             'experiment_id' => $experiment->id,
         ]);
+        echo "Added: $added\n";
         $this->addEntityFilesToDataset($entity, $dataset);
     }
 

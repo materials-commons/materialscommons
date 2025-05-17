@@ -8,6 +8,7 @@ use App\Actions\Globus\GlobusUrl;
 use App\Enums\GlobusStatus;
 use App\Models\File;
 use App\Models\GlobusUploadDownload;
+use App\Traits\Folders\CreateFolder;
 use App\Traits\PathForFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -15,10 +16,10 @@ use Illuminate\Support\Facades\Storage;
 class CreateGlobusProjectDownloadDirsAction
 {
     use PathForFile;
+    use CreateFolder;
 
     private $globusApi;
     private $endpointId;
-    private $knownDirectories;
 
     public function __construct(GlobusApi $globusApi)
     {
@@ -46,7 +47,7 @@ class CreateGlobusProjectDownloadDirsAction
 //        $this->createDirs($dirsToCreate, $baseDir);
 
         foreach ($allDirs as $dir) {
-            $this->createDirIfNotExists("__globus_downloads/{$globusDownload->uuid}{$dir->path}");
+            $this->createDirOnDiskIfNotExists("__globus_downloads/{$globusDownload->uuid}{$dir->path}");
             $files = File::where('directory_id', $dir->id)
                          ->whereNull('deleted_at')
                          ->where('current', true)
@@ -57,7 +58,7 @@ class CreateGlobusProjectDownloadDirsAction
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
                 try {
                     $dirPathForFilePartial = "__globus_downloads/{$globusDownload->uuid}{$dir->path}";
-                    $this->createDirIfNotExists($dirPathForFilePartial);
+                    $this->createDirOnDiskIfNotExists($dirPathForFilePartial);
                     if (!link($uuidPath, $filePath)) {
                         echo "Unable to link {$uuidPath} to {$filePath}\n";
                         Log::error("Unable to link {$uuidPath} to {$filePath}");
@@ -89,24 +90,6 @@ class CreateGlobusProjectDownloadDirsAction
         $this->setAclOnPath($globusPath, $globusUserId2);
 
         return $globusDownload->fresh();
-    }
-
-    private function createDirIfNotExists($dirPath)
-    {
-        if (array_key_exists($dirPath, $this->knownDirectories)) {
-            return;
-        }
-
-        $fullPath = Storage::disk('mcfs')->path($dirPath);
-        if (Storage::disk('mcfs')->exists($dirPath)) {
-            $this->knownDirectories[$dirPath] = true;
-            return;
-        }
-
-        Storage::disk('mcfs')->makeDirectory($dirPath);
-        $p = Storage::disk('mcfs')->path($dirPath);
-        chmod($p, 0777);
-        $this->knownDirectories[$dirPath] = true;
     }
 
     private function setAclOnPath($globusPath, $globusUserId)

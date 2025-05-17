@@ -26,7 +26,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingAction
     private function replicateEntitiesAndRelatedItems(Dataset $dataset)
     {
         $dataset->entitiesFromTemplate()->each(function (Entity $entity) use ($dataset) {
-//            echo "replicating entity {$entity->id}\n";
+            echo "replicating entity {$entity->id}\n";
             $entity->load('entityStates.attributes.values', 'activities.attributes.values', 'files');
             $e = $entity->replicate()->fill([
                 'uuid'       => $this->uuid(),
