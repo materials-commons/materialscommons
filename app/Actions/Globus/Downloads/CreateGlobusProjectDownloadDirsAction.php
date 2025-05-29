@@ -31,11 +31,8 @@ class CreateGlobusProjectDownloadDirsAction
     {
         umask(0);
         $globusDownload->update(['status' => GlobusStatus::Loading]);
-        $allDirs = File::where('project_id', $globusDownload->project_id)
+        $allDirs = File::currentProjectFiles($globusDownload->project_id)
                        ->where('mime_type', 'directory')
-                       ->where('current', true)
-                       ->whereNull('deleted_at')
-                       ->whereNull('dataset_id')
                        ->orderBy('path')
                        ->cursor();
 
@@ -47,11 +44,16 @@ class CreateGlobusProjectDownloadDirsAction
 
         foreach ($allDirs as $dir) {
             $this->createDirIfNotExists("__globus_downloads/{$globusDownload->uuid}{$dir->path}");
-            $files = File::where('directory_id', $dir->id)
-                         ->whereNull('deleted_at')
-                         ->where('current', true)
+            $files = File::currentProjectFiles($globusDownload->project_id)
+                         ->where('directory_id', $dir->id)
                          ->whereNull('path')
                          ->cursor();
+//            $files = File::where('directory_id', $dir->id)
+//                         ->whereNull('deleted_at')
+//                         ->whereNull('dataset_id')
+//                         ->where('current', true)
+//                         ->whereNull('path')
+//                         ->cursor();
             foreach ($files as $file) {
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
                 $filePath = "{$baseDir}{$dir->path}/{$file->name}";
