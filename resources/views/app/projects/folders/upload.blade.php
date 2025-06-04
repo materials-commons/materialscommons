@@ -39,7 +39,7 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                if (currentFile.data.webkitRelativePath === "") {
+                if (currentFile.data.relativePath === "") {
                     return currentFile;
                 }
 
@@ -47,7 +47,7 @@
                     ...currentFile,
                 };
 
-                modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+                modifiedFile.meta.name = currentFile.data.relativePath;
 
                 return modifiedFile;
             }
@@ -61,11 +61,20 @@
 
         uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});
-            if (f.data.webkitRelativePath === "") {
-                uppy.setFileMeta(f.id, {"relativePath": ""});
-            } else {
-                uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+            console.log(f);
+            let relativePath = "";
+            if ('relativePath' in f.data) {
+                console.log("relativePath exists");
+                relativePath = f.data.relativePath;
             }
+
+            console.log("relativePath: " + relativePath + "");
+            uppy.setFileMeta(f.id, {"relativePath": relativePath});
+            // if (f.data.webkitRelativePath === "") {
+            //     uppy.setFileMeta(f.id, {"relativePath": ""});
+            // } else {
+            //     uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+            // }
         });
 
         uppy.on('complete', () => {
