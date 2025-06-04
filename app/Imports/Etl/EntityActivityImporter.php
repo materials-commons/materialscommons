@@ -22,6 +22,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use function array_push;
+use function strpos;
 
 class EntityActivityImporter
 {
@@ -215,12 +216,22 @@ class EntityActivityImporter
     private function worksheetContainsKeyFrom(Worksheet $worksheet, $keys): bool
     {
         $worksheetTitleLower = Str::lower($worksheet->getTitle());
-        $dash = strpos($worksheetTitleLower, '-');
 
-        // If there was a dash then the user might have set the sheet to be ignored. Check if the word
+        // If there is a dash, then the user might have set the sheet to be ignored. Check if the word
         // before the dash is one of the keywords we use that tells us to ignore the sheet.
+        $dash = strpos($worksheetTitleLower, '-');
         if ($dash !== false) {
             $prefix = substr($worksheetTitleLower, 0, $dash);
+            if (array_key_exists($prefix, $keys)) {
+                return true;
+            }
+        }
+
+        // If there is a colon, then the user might have set the sheet to be ignored. Check if the word
+        // before the colon is one of the keywords we use that tells us to ignore the sheet.
+        $colon = strpos($worksheetTitleLower, ':');
+        if ($colon !== false) {
+            $prefix = substr($worksheetTitleLower, 0, $colon);
             if (array_key_exists($prefix, $keys)) {
                 return true;
             }
