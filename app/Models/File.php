@@ -58,7 +58,7 @@ class File extends Model implements Searchable
         'entities_count'      => 'integer',
         'activities_count'    => 'integer',
         'entity_states_count' => 'integer',
-        'deleted_at' => 'datetime',
+        'deleted_at'          => 'datetime',
     ];
 
     private $selected;
@@ -96,6 +96,14 @@ class File extends Model implements Searchable
                     ->whereNull('dataset_id')
                     ->whereNull('deleted_at')
                     ->orderBy('created_at');
+    }
+
+    public function scopeCurrentProjectFiles($query, $projectId)
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at')
+                     ->where('current', true);
     }
 
     public function currentVersion()
@@ -480,8 +488,8 @@ class File extends Model implements Searchable
     {
         return File::with('directory')
                    ->where('project_id', $projectId)
-            ->where('current', true)
-            ->whereNull('dataset_id')
+                   ->where('current', true)
+                   ->whereNull('dataset_id')
                    ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->get();
     }
@@ -489,8 +497,8 @@ class File extends Model implements Searchable
     public static function getTrashCountForProject($projectId): int
     {
         return File::where('project_id', $projectId)
-            ->where('current', true)
-            ->whereNull('dataset_id')
+                   ->where('current', true)
+                   ->whereNull('dataset_id')
                    ->where('deleted_at', '>', Carbon::now()->subDays(config('trash.expires_in_days')))
                    ->count();
     }
