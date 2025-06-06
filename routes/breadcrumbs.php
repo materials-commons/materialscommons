@@ -70,12 +70,12 @@ Breadcrumbs::for('projects.activities.computations.show', function ($trail, $pro
 
 Breadcrumbs::for('projects.entities.index', function ($trail, $project) {
     $trail->parent('projects.show', $project);
-    $trail->push('Samples', route('projects.entities.index', [$project]));
+    $trail->push('Samples', route('projects.entities.index', [$project, 'category' => 'experimental']));
 });
 
 Breadcrumbs::for('projects.computations.entities.index', function ($trail, $project) {
     $trail->parent('projects.show', $project);
-    $trail->push('Computations', route('projects.entities.index', [$project]));
+    $trail->push('Computations', route('projects.entities.index', [$project, 'category' => 'computational']));
 });
 
 Breadcrumbs::for('projects.entities.show', function ($trail, $project, $entity) {
