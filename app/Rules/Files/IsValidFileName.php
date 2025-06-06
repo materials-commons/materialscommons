@@ -30,7 +30,7 @@ class IsValidFileName implements Rule
     }
 
     private function isValidFileName($file) {
-        return preg_match('/^([\w -]+)(\.[\w -]+)*$/', $file) > 0;
+        return preg_match('/^\.?([\w() -]+)(\.[\w() -]+)*$/', $file) > 0;
     }
 
     /**
