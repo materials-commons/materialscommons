@@ -94,8 +94,8 @@
             // }
         });
 
-        // uppy.on('complete', () => {
-        //     setTimeout(() => window.location.replace(folderUrl), 1000);
-        // });
+        uppy.on('complete', () => {
+            setTimeout(() => window.location.replace(folderUrl), 1000);
+        });
     </script>
 @endpush
