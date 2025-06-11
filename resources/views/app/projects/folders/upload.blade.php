@@ -39,7 +39,7 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                console.log('onBeforeFileAdded');
+                console.log('onBeforeFileAdded', currentFile);
                 // if (currentFile.data.relativePath === "") {
                 //     console.log('I am returning the currentFile');
                 //     return currentFile;
@@ -49,14 +49,19 @@
                     ...currentFile,
                 };
 
-                if (currentFile.data.relativePath === null) {
-                    modifiedFile.meta.name = currentFile.data.name;
-                    modifiedFile.meta.relativePath = "";
+                if (currentFile.data.relativePath == null) {
+                    if (currentFile.data.webkitRelativePath != null && currentFile.data.webkitRelativePath !== "") {
+                        modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+                        modifiedFile.meta.relativePath = currentFile.data.webkitRelativePath;
+                    } else {
+                        modifiedFile.meta.name = currentFile.data.name;
+                        modifiedFile.meta.relativePath = "";
+                    }
                 } else {
                     modifiedFile.meta.name = currentFile.data.relativePath;
                 }
 
-                console.log('I am returning the modifiedFile', modifiedFile);
+                console.log('modifiedFile', modifiedFile);
                 return modifiedFile;
             }
         }).use(UppyDashboard, {
