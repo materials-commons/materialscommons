@@ -39,16 +39,24 @@
                 maxFileSize: 250 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                if (currentFile.data.relativePath === "") {
-                    return currentFile;
-                }
+                console.log('onBeforeFileAdded');
+                // if (currentFile.data.relativePath === "") {
+                //     console.log('I am returning the currentFile');
+                //     return currentFile;
+                // }
 
                 const modifiedFile = {
                     ...currentFile,
                 };
 
-                modifiedFile.meta.name = currentFile.data.relativePath;
+                if (currentFile.data.relativePath === null) {
+                    modifiedFile.meta.name = currentFile.data.name;
+                    modifiedFile.meta.relativePath = "";
+                } else {
+                    modifiedFile.meta.name = currentFile.data.relativePath;
+                }
 
+                console.log('I am returning the modifiedFile', modifiedFile);
                 return modifiedFile;
             }
         }).use(UppyDashboard, {
@@ -64,12 +72,21 @@
             console.log(f);
             let relativePath = "";
             if ('relativePath' in f.data) {
-                console.log("relativePath exists");
+                console.log("relativePath exists:", f.data.relativePath);
                 relativePath = f.data.relativePath;
+                if (relativePath === null) {
+                    relativePath = "";
+                }
+            } else if (f.data.webkitRelativePath === "") {
+                uppy.setFileMeta(f.id, {"relativePath": ""});
+            } else {
+                console.log("setting relativePath to webkitRelativePath");
+                uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
             }
 
             console.log("relativePath: " + relativePath + "");
             uppy.setFileMeta(f.id, {"relativePath": relativePath});
+            console.log('past setFileMeta');
             // if (f.data.webkitRelativePath === "") {
             //     uppy.setFileMeta(f.id, {"relativePath": ""});
             // } else {
@@ -77,8 +94,8 @@
             // }
         });
 
-        uppy.on('complete', () => {
-            setTimeout(() => window.location.replace(folderUrl), 1000);
-        });
+        // uppy.on('complete', () => {
+        //     setTimeout(() => window.location.replace(folderUrl), 1000);
+        // });
     </script>
 @endpush
