@@ -105,6 +105,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(GlobusUploadDownload::class, 'owner_id');
     }
 
+    /**
+     * Get the tour states for the user.
+     */
+    public function tourStates()
+    {
+        return $this->hasMany(TourState::class);
+    }
+
     public function hasCommunities()
     {
         return $this->communities->count() > 0;

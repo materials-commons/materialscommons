@@ -18,6 +18,10 @@ window.datagrid = require('canvas-datagrid');
 window.htmx = require('htmx.org');
 window.App = {};
 
+// Import tour service
+import tourService from './tours';
+window.tourService = tourService;
+
 
 import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
@@ -32,4 +36,3 @@ import '@uppy/dashboard/dist/style.min.css';
 
 
 window.Tagify = require('@yaireo/tagify');
-

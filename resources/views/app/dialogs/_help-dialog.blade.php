@@ -18,9 +18,39 @@
             <div class="modal-footer">
                 <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#welcome-dialog">Welcome
                     Dialog!</a>
+                <button type="button" class="btn btn-success" id="start-tour" data-dismiss="modal">Start Tour</button>
                 <a class="btn btn-secondary" href="{{helpGettingStarted()}}" target="_blank">Goto Docs</a>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
+
+            @push('scripts')
+                <script>
+                    $(document).ready(function () {
+                        if ('showDirectoryPicker' in window) {
+                            console.log('showDirectoryPicker is supported');
+                        } else {
+                            console.log('showDirectoryPicker is not supported');
+                        }
+
+                        $('#start-tour').on('click', function () {
+                            window.tourService.initState("{{auth()->user()->api_token}}");
+
+                            // Get current route
+                            const currentPath = window.location.pathname;
+
+                            // Get appropriate tour for current route
+                            const tourName = window.tourService.getTourForRoute(currentPath);
+
+                            if (tourName) {
+                                // Start the tour
+                                window.tourService.startTour(tourName);
+                            } else {
+                                console.error('No tour available for this page');
+                            }
+                        });
+                    });
+                </script>
+            @endpush
         </div>
     </div>
 </div>
