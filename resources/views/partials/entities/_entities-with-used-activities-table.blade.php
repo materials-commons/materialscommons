@@ -5,7 +5,7 @@
     <thead>
     <th>Name1</th>
     <th>Name</th>
-    @if(isset($showExperiment))
+    @if(isset($showExperiment) && $showExperiment)
         <th>Study</th>
     @endif
     @foreach($activities as $activity)
@@ -51,7 +51,7 @@
                     @endif
                 @endif
             </td>
-            @if(isset($showExperiment))
+            @if(isset($showExperiment) && $showExperiment)
                 <td>
                     @if(isset($entity->experiments))
                         @if($entity->experiments->count() > 0)
