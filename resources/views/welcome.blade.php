@@ -96,7 +96,7 @@
                 <div class="flex my-10">
 
 
-                    <a href="{{makeHelpUrl("getting-started")}}"
+                    <a href="/mcdocs2"
                        title="Materials Commons getting started"
                        class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
                         Getting Started
