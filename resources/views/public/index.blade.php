@@ -39,6 +39,14 @@
 
     @push('scripts')
         <script>
+            @php
+                $isTest = request()->input('test');
+                if (is_null($isTest)) {
+                    $r = route('get_all_published_datasets');
+                } else {
+                    $r = route('get_all_published_test_datasets');
+                }
+            @endphp
             $(document).ready(() => {
                 $('#datasets').DataTable({
                     pageLength: 100,
@@ -46,7 +54,7 @@
                     processing: true,
                     response: true,
                     stateSave: true,
-                    ajax: "{{route('get_all_published_datasets')}}",
+                    ajax: "{{$r}}",
                     order: [[4, "desc"]],
                     columns: [
                         {

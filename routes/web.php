@@ -100,6 +100,9 @@ Route::get('/public', [PublicDataController::class, 'index'])->name('public.inde
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
 
+Route::get('/getAllPublishedTestDatasets',
+    [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
+
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
     Route::get('/new', [PublicDataNewController::class, 'index'])->name('public.new.index');
