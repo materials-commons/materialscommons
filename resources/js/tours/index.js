@@ -14,9 +14,26 @@ const TOURS = {
       {
         id: 'dashboard-welcome',
         title: 'Welcome to the Dashboard',
-        text: 'This is your dashboard where you can see all your projects and datasets.',
+        text: 'The dashboard search bar allows you to search across for projects, and across projects for samples, computations, datasets, and files.',
         attachTo: {
-          element: '.card-header',
+          element: '#navbar-search-input',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            text: 'Next',
+            action: function() {
+              return this.next();
+            }
+          }
+        ]
+      },
+      {
+        id: 'dashboard-projects',
+        title: 'Projects',
+        text: 'The projects tab shows all of the projects you have access to.',
+        attachTo: {
+          element: '#dashboard-projects-tab',
           on: 'bottom'
         },
         buttons: [
@@ -193,7 +210,7 @@ class TourService {
           enabled: true
         },
         classes: 'shepherd-theme-default',
-        scrollTo: true
+        scrollTo: false
       }
     });
 

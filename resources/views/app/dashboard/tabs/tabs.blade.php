@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-    <li class="nav-item">
+    <li class="nav-item" id="dashboard-projects-tab">
         <a wire:navigate class="nav-link no-underline {{setActiveNavByName('dashboard.projects.show')}}"
            href="{{route('dashboard.projects.show')}}">
             Projects ({{$projectsCount}})
