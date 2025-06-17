@@ -6,7 +6,7 @@
 @endif
 <br>
 <br>
-<h4>Active Projects</h4>
+<h4><span id="dashboard-active-projects">Active Projects</span></h4>
 <div class="row ml-4">
     @if(auth()->user()->hasActiveProjects())
         @foreach($activeProjects as $proj)
@@ -23,7 +23,7 @@
     @endif
 </div>
 <br/>
-<h4>Recently Accessed Projects</h4>
+<h4><span id="dashboard-recent-projects">Recently Accessed Projects</span></h4>
 <div class="row ml-4">
     @if(auth()->user()->hasRecentlyAccessedProjectsThatAreNotActive())
         @foreach($recentlyAccessedProjects as $proj)

@@ -554,3 +554,24 @@ textarea.form-control[readonly] {
 .mc-select .btn {
     padding: 1px 0.75rem;
 }
+
+// Shepherdjs
+.shepherd-header {
+    background: #2b6bb1 !important; /* or your preferred blue color */
+}
+
+.shepherd-title {
+    color: white !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.shepherd-cancel-icon {
+    color: white !important;
+}
+
+.shepherd-cancel-icon:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+

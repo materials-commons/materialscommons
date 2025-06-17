@@ -44,6 +44,74 @@ const TOURS = {
             }
           }
         ]
+      },
+      {
+        id: 'dashboard-published-datasets',
+        title: 'Published Datasets',
+        text: 'The published datasets tab shows all of the datasets you have published. This is a convenient way to find a dataset, even if you don\'t remember which projects it is in.',
+        attachTo: {
+          element: '#dashboard-published-datasets-tab',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            text: 'Next',
+            action: function() {
+              return this.next();
+            }
+          }
+        ]
+      },
+      {
+        id: 'dashboard-archived-projects',
+        title: 'Archived Projects',
+        text: 'The archived projects tab shows all of the projects you have marked as longer active. Moving a project to archived keeps it accessible, but it is no longer shown in the projects tab.',
+        attachTo: {
+          element: '#dashboard-archived-projects-tab',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            text: 'Next',
+            action: function() {
+              return this.next();
+            }
+          }
+        ]
+      },
+      {
+        id: 'dashboard-projects-trash',
+        title: 'Deleted Projects',
+        text: 'Deleted projects are moved to the trash tab. You can restore a project from the trash tab. Deleted projects are kept around for 7 days before being permanently deleted.',
+        attachTo: {
+          element: '#dashboard-projects-trash-tab',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            text: 'Next',
+            action: function() {
+              return this.next();
+            }
+          }
+        ]
+      },
+      {
+        id: 'dashboard-active-projects',
+        title: 'Active Projects',
+        text: 'Active projects are projects you\'d like convenient access to. You mark a project as active by clicking the checkmark next to the project name.',
+        attachTo: {
+          element: '#dashboard-active-projects',
+          on: 'bottom'
+        },
+        buttons: [
+          {
+            text: 'Next',
+            action: function() {
+              return this.next();
+            }
+          }
+        ]
       }
     ]
   },
