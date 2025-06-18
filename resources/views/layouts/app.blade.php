@@ -91,9 +91,8 @@
         <ul class="navbar-nav">
             {{--            Kept here for formatting purposes--}}
             <li class="nav-item">
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
-                   href="#jupyter-dialog">
-                    Jupyter
+                <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
+                    <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
                 </a>
             </li>
             @auth
@@ -198,6 +197,23 @@
     // $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     $(document).ready(() => {
         mcutil.autosizeTextareas();
+
+        $('#app-start-tour').on('click', function () {
+            window.tourService.initState("{{auth()->user()->api_token}}");
+
+            // Get current route
+            const currentPath = window.location.pathname;
+
+            // Get appropriate tour for current route
+            const tourName = window.tourService.getTourForRoute(currentPath);
+
+            if (tourName) {
+                // Start the tour
+                window.tourService.startTour(tourName);
+            } else {
+                console.error('No tour available for this page');
+            }
+        });
     });
     window.mc_grids = [];
 
