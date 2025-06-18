@@ -8,330 +8,398 @@ import axios from 'axios';
 
 // Available tours
 const TOURS = {
-  dashboard: {
-    name: 'dashboard',
-    steps: [
-      {
-        id: 'dashboard-welcome',
-        title: 'Welcome to the Dashboard',
-        text: 'The dashboard search bar allows you to search across for projects, and across projects for samples, computations, datasets, and files.',
-        attachTo: {
-          element: '#navbar-search-input',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
+    dashboard: {
+        name: 'dashboard',
+        steps: [
+            {
+                id: 'dashboard-intro',
+                title: 'Welcome to the Dashboard',
+                text: 'The dashboard is the main entry point to Materials Commons. It shows you all of the projects you have access to, and all your published datasets. The dashboard is your entry point to all of your projects, and is where you will find all of the information you need to get started.',
+                attachTo: {
+                    element: '#dashboard-intro',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-welcome',
+                title: 'The Search Bar',
+                text: 'The dashboard search bar allows you to search across for projects, and across projects for samples, computations, datasets, and files.',
+                attachTo: {
+                    element: '#navbar-search-input',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-projects',
+                title: 'Projects',
+                text: 'The projects tab shows all of the projects you have access to.',
+                attachTo: {
+                    element: '#dashboard-projects-tab',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-published-datasets',
+                title: 'Published Datasets',
+                text: 'The published datasets tab shows all of the datasets you have published. This is a convenient way to find a dataset, even if you don\'t remember which projects it is in.',
+                attachTo: {
+                    element: '#dashboard-published-datasets-tab',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-archived-projects',
+                title: 'Archived Projects',
+                text: 'The archived projects tab shows all of the projects you have marked as longer active. Moving a project to archived keeps it accessible, but it is no longer shown in the projects tab.',
+                attachTo: {
+                    element: '#dashboard-archived-projects-tab',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-projects-trash',
+                title: 'Deleted Projects',
+                text: 'Deleted projects are moved to the trash tab. You can restore a project from the trash tab. Deleted projects are kept around for 7 days before being permanently deleted.',
+                attachTo: {
+                    element: '#dashboard-projects-trash-tab',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-active-projects',
+                title: 'Active Projects',
+                text: 'Active projects are projects you\'d like convenient access to. You mark a project as active by clicking the checkmark next to the project name.',
+                attachTo: {
+                    element: '#dashboard-active-projects',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-recent-projects',
+                title: 'Recently Accessed Projects',
+                text: 'Recently accessed projects are projects you\'ve accessed in the last 2 weeks, and that are not marked as Active Projects.',
+                attachTo: {
+                    element: '#dashboard-recent-projects',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-all-projects',
+                title: 'All Projects',
+                text: 'This table contains all projects you have access to that have not been archived. You can click on a project name to view the project.',
+                attachTo: {
+                    element: '#projects',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
+            },
+            {
+                id: 'dashboard-sidebar',
+                title: 'Sidebar Navigation',
+                text: 'The sidebar navigation is a convenient way to navigate between pages. You can click on the sidebar navigation to navigate to a page. The sidebar navigation is always visible, and is always on the left side of the screen.',
+                attachTo: {
+                    element: '#dashboard-sidebar',
+                    on: 'right'
+                },
+                buttons: [
+                    {
+                        text: 'Done',
+                        action: function () {
+                            return this.next();
+                        }
+                    }
+                ]
             }
-          }
         ]
-      },
-      {
-        id: 'dashboard-projects',
-        title: 'Projects',
-        text: 'The projects tab shows all of the projects you have access to.',
-        attachTo: {
-          element: '#dashboard-projects-tab',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
-            }
-          }
-        ]
-      },
-      {
-        id: 'dashboard-published-datasets',
-        title: 'Published Datasets',
-        text: 'The published datasets tab shows all of the datasets you have published. This is a convenient way to find a dataset, even if you don\'t remember which projects it is in.',
-        attachTo: {
-          element: '#dashboard-published-datasets-tab',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
-            }
-          }
-        ]
-      },
-      {
-        id: 'dashboard-archived-projects',
-        title: 'Archived Projects',
-        text: 'The archived projects tab shows all of the projects you have marked as longer active. Moving a project to archived keeps it accessible, but it is no longer shown in the projects tab.',
-        attachTo: {
-          element: '#dashboard-archived-projects-tab',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
-            }
-          }
-        ]
-      },
-      {
-        id: 'dashboard-projects-trash',
-        title: 'Deleted Projects',
-        text: 'Deleted projects are moved to the trash tab. You can restore a project from the trash tab. Deleted projects are kept around for 7 days before being permanently deleted.',
-        attachTo: {
-          element: '#dashboard-projects-trash-tab',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
-            }
-          }
-        ]
-      },
-      {
-        id: 'dashboard-active-projects',
-        title: 'Active Projects',
-        text: 'Active projects are projects you\'d like convenient access to. You mark a project as active by clicking the checkmark next to the project name.',
-        attachTo: {
-          element: '#dashboard-active-projects',
-          on: 'bottom'
-        },
-        buttons: [
-          {
-            text: 'Next',
-            action: function() {
-              return this.next();
-            }
-          }
-        ]
-      }
-    ]
-  },
-  project: {
-    name: 'project',
-    steps: []
-  },
-  publishing: {
-    name: 'publishing',
-    steps: []
-  },
-  etl: {
-    name: 'etl',
-    steps: []
-  }
+    },
+    project: {
+        name: 'project',
+        steps: []
+    },
+    publishing: {
+        name: 'publishing',
+        steps: []
+    },
+    etl: {
+        name: 'etl',
+        steps: []
+    }
 };
 
 // Tour service
 class TourService {
-  constructor() {
-    this.shepherd = null;
-    this.currentTour = null;
-    this.apiToken = null;
-    this.state = {
-      completedSteps: {},
-      completedTours: {}
-    };
+    constructor() {
+        this.shepherd = null;
+        this.currentTour = null;
+        this.apiToken = null;
+        this.state = {
+            completedSteps: {},
+            completedTours: {}
+        };
 
-    // Initialize state asynchronously
-    // this.initState();
-  }
-
-  // Initialize state from database
-  async initState(apiToken) {
-    this.apiToken = apiToken;
-    this.state = await this.loadState();
-  }
-
-  // Load tour state from database
-  async loadState() {
-    try {
-      const response = await axios.get(`/api/tour-states?api_token=${this.apiToken}`);
-      return {
-        completedSteps: response.data.completedSteps || {},
-        completedTours: response.data.completedTours || {}
-      };
-    } catch (error) {
-      console.error('Error loading tour state:', error);
-      return {
-        completedSteps: {},
-        completedTours: {}
-      };
-    }
-  }
-
-  // Save tour state to database
-  async saveState() {
-    try {
-      // This is a placeholder as we'll use specific API endpoints for each action
-      console.log('Tour state saved via API');
-    } catch (error) {
-      console.error('Error saving tour state:', error);
-    }
-  }
-
-  // Mark a step as completed
-  async completeStep(tourName, stepId) {
-    try {
-      // Update local state first for immediate feedback
-      if (!this.state.completedSteps[tourName]) {
-        this.state.completedSteps[tourName] = [];
-      }
-
-      if (!this.state.completedSteps[tourName].includes(stepId)) {
-        this.state.completedSteps[tourName].push(stepId);
-      }
-
-      // Save to database
-      await axios.post(`/api/tour-states/complete-step?api_token=${this.apiToken}`, {
-        tourName: tourName,
-        stepId: stepId
-      });
-    } catch (error) {
-      console.error('Error completing step:', error);
-    }
-  }
-
-  // Check if a step is completed
-  isStepCompleted(tourName, stepId) {
-    return this.state.completedSteps[tourName] && 
-           this.state.completedSteps[tourName].includes(stepId);
-  }
-
-  // Mark a tour as completed
-  async completeTour(tourName) {
-    try {
-      // Update local state first for immediate feedback
-      this.state.completedTours[tourName] = true;
-
-      // Save to database
-      await axios.post(`/api/tour-states/complete-tour?api_token=${this.apiToken}`, {
-        tourName: tourName
-      });
-    } catch (error) {
-      console.error('Error completing tour:', error);
-    }
-  }
-
-  // Check if a tour is completed
-  isTourCompleted(tourName) {
-    return !!this.state.completedTours[tourName];
-  }
-
-  // Reset a specific tour
-  async resetTour(tourName) {
-    try {
-      // Update local state first for immediate feedback
-      if (this.state.completedSteps[tourName]) {
-        delete this.state.completedSteps[tourName];
-      }
-
-      if (this.state.completedTours[tourName]) {
-        delete this.state.completedTours[tourName];
-      }
-
-      // Save to database
-      await axios.post(`/api/tour-states/reset?api_token=${this.apiToken}`, {
-        tourName: tourName
-      });
-    } catch (error) {
-      console.error('Error resetting tour:', error);
-    }
-  }
-
-  // Reset all tours
-  async resetAllTours() {
-    try {
-      // Update local state first for immediate feedback
-      this.state = {
-        completedSteps: {},
-        completedTours: {}
-      };
-
-      // Save to database
-      await axios.post(`/api/tour-states/reset-all?api_token=${this.apiToken}`);
-    } catch (error) {
-      console.error('Error resetting all tours:', error);
-    }
-  }
-
-  // Start a tour
-  startTour(tourName) {
-    if (!TOURS[tourName]) {
-      console.error(`Tour "${tourName}" not found`);
-      return;
+        // Initialize state asynchronously
+        // this.initState();
     }
 
-    this.currentTour = tourName;
+    // Initialize state from database
+    async initState(apiToken) {
+        this.apiToken = apiToken;
+        this.state = await this.loadState();
+    }
 
-    // Initialize Shepherd
-    this.shepherd = new Shepherd.Tour({
-      defaultStepOptions: {
-        cancelIcon: {
-          enabled: true
-        },
-        classes: 'shepherd-theme-default',
-        scrollTo: false
-      }
-    });
-
-    // Add steps to the tour
-    const tour = TOURS[tourName];
-    tour.steps.forEach(step => {
-      this.shepherd.addStep({
-        id: step.id,
-        title: step.title,
-        text: step.text,
-        attachTo: step.attachTo,
-        buttons: step.buttons,
-        beforeShowPromise: () => {
-          return new Promise(async (resolve) => {
-            try {
-              // Mark step as completed when shown
-              await this.completeStep(tourName, step.id);
-              resolve();
-            } catch (error) {
-              console.error('Error in beforeShowPromise:', error);
-              resolve(); // Resolve anyway to show the step
-            }
-          });
+    // Load tour state from database
+    async loadState() {
+        try {
+            const response = await axios.get(`/api/tour-states?api_token=${this.apiToken}`);
+            return {
+                completedSteps: response.data.completedSteps || {},
+                completedTours: response.data.completedTours || {}
+            };
+        } catch (error) {
+            console.error('Error loading tour state:', error);
+            return {
+                completedSteps: {},
+                completedTours: {}
+            };
         }
-      });
-    });
-
-    // Start the tour
-    this.shepherd.start();
-
-    // When tour is complete
-    this.shepherd.on('complete', async () => {
-      try {
-        await this.completeTour(tourName);
-      } catch (error) {
-        console.error('Error completing tour:', error);
-      }
-    });
-  }
-
-  // Get the appropriate tour for the current route
-  getTourForRoute(route) {
-    if (route.includes('dashboard')) {
-      return 'dashboard';
-    } else if (route.includes('projects.show')) {
-      return 'project';
-    } else if (route.includes('publishing')) {
-      return 'publishing';
-    } else if (route.includes('etl')) {
-      return 'etl';
     }
-    return null;
-  }
+
+    // Save tour state to database
+    async saveState() {
+        try {
+            // This is a placeholder as we'll use specific API endpoints for each action
+            console.log('Tour state saved via API');
+        } catch (error) {
+            console.error('Error saving tour state:', error);
+        }
+    }
+
+    // Mark a step as completed
+    async completeStep(tourName, stepId) {
+        try {
+            // Update local state first for immediate feedback
+            if (!this.state.completedSteps[tourName]) {
+                this.state.completedSteps[tourName] = [];
+            }
+
+            if (!this.state.completedSteps[tourName].includes(stepId)) {
+                this.state.completedSteps[tourName].push(stepId);
+            }
+
+            // Save to database
+            await axios.post(`/api/tour-states/complete-step?api_token=${this.apiToken}`, {
+                tourName: tourName,
+                stepId: stepId
+            });
+        } catch (error) {
+            console.error('Error completing step:', error);
+        }
+    }
+
+    // Check if a step is completed
+    isStepCompleted(tourName, stepId) {
+        return this.state.completedSteps[tourName] &&
+            this.state.completedSteps[tourName].includes(stepId);
+    }
+
+    // Mark a tour as completed
+    async completeTour(tourName) {
+        try {
+            // Update local state first for immediate feedback
+            this.state.completedTours[tourName] = true;
+
+            // Save to database
+            await axios.post(`/api/tour-states/complete-tour?api_token=${this.apiToken}`, {
+                tourName: tourName
+            });
+        } catch (error) {
+            console.error('Error completing tour:', error);
+        }
+    }
+
+    // Check if a tour is completed
+    isTourCompleted(tourName) {
+        return !!this.state.completedTours[tourName];
+    }
+
+    // Reset a specific tour
+    async resetTour(tourName) {
+        try {
+            // Update local state first for immediate feedback
+            if (this.state.completedSteps[tourName]) {
+                delete this.state.completedSteps[tourName];
+            }
+
+            if (this.state.completedTours[tourName]) {
+                delete this.state.completedTours[tourName];
+            }
+
+            // Save to database
+            await axios.post(`/api/tour-states/reset?api_token=${this.apiToken}`, {
+                tourName: tourName
+            });
+        } catch (error) {
+            console.error('Error resetting tour:', error);
+        }
+    }
+
+    // Reset all tours
+    async resetAllTours() {
+        try {
+            // Update local state first for immediate feedback
+            this.state = {
+                completedSteps: {},
+                completedTours: {}
+            };
+
+            // Save to database
+            await axios.post(`/api/tour-states/reset-all?api_token=${this.apiToken}`);
+        } catch (error) {
+            console.error('Error resetting all tours:', error);
+        }
+    }
+
+    // Start a tour
+    startTour(tourName) {
+        if (!TOURS[tourName]) {
+            console.error(`Tour "${tourName}" not found`);
+            return;
+        }
+
+        this.currentTour = tourName;
+
+        // Initialize Shepherd
+        this.shepherd = new Shepherd.Tour({
+            defaultStepOptions: {
+                cancelIcon: {
+                    enabled: true
+                },
+                classes: 'shepherd-theme-default',
+                scrollTo: false
+            }
+        });
+
+        // Add steps to the tour
+        const tour = TOURS[tourName];
+        tour.steps.forEach(step => {
+            this.shepherd.addStep({
+                id: step.id,
+                title: step.title,
+                text: step.text,
+                attachTo: step.attachTo,
+                buttons: step.buttons,
+                beforeShowPromise: () => {
+                    return new Promise(async (resolve) => {
+                        try {
+                            // Mark step as completed when shown
+                            await this.completeStep(tourName, step.id);
+                            resolve();
+                        } catch (error) {
+                            console.error('Error in beforeShowPromise:', error);
+                            resolve(); // Resolve anyway to show the step
+                        }
+                    });
+                }
+            });
+        });
+
+        // Start the tour
+        this.shepherd.start();
+
+        // When tour is complete
+        this.shepherd.on('complete', async () => {
+            try {
+                await this.completeTour(tourName);
+            } catch (error) {
+                console.error('Error completing tour:', error);
+            }
+        });
+    }
+
+    // Get the appropriate tour for the current route
+    getTourForRoute(route) {
+        if (route.includes('dashboard')) {
+            return 'dashboard';
+        } else if (route.includes('projects.show')) {
+            return 'project';
+        } else if (route.includes('publishing')) {
+            return 'publishing';
+        } else if (route.includes('etl')) {
+            return 'etl';
+        }
+        return null;
+    }
 }
 
 // Create and export the tour service instance

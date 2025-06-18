@@ -17,7 +17,7 @@
 @section('content')
     <x-card>
         <x-slot name="header">
-            Dashboard
+            <span id="dashboard-intro">Dashboard</span>
         </x-slot>
         <x-slot name="body">
             @include('app.dashboard.tabs.tabs')
