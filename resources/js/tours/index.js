@@ -5,188 +5,13 @@
 import Shepherd from 'shepherd.js';
 import 'shepherd.js/dist/css/shepherd.css';
 import axios from 'axios';
+import dashboardTour from './dashboard-tour';
+import projectTour from './project-tour';
 
 // Available tours
 const TOURS = {
-    dashboard: {
-        name: 'dashboard',
-        steps: [
-            {
-                id: 'dashboard-intro',
-                title: 'Welcome to the Dashboard',
-                text: 'The dashboard is the main entry point to Materials Commons. It shows you all of the projects you have access to, and all your published datasets. The dashboard is your entry point to all of your projects, and is where you will find all of the information you need to get started.',
-                attachTo: {
-                    element: '#dashboard-intro',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-welcome',
-                title: 'The Search Bar',
-                text: 'The dashboard search bar allows you to search across for projects, and across projects for samples, computations, datasets, and files.',
-                attachTo: {
-                    element: '#navbar-search-input',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-projects',
-                title: 'Projects',
-                text: 'The projects tab shows all of the projects you have access to.',
-                attachTo: {
-                    element: '#dashboard-projects-tab',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-published-datasets',
-                title: 'Published Datasets',
-                text: 'The published datasets tab shows all of the datasets you have published. This is a convenient way to find a dataset, even if you don\'t remember which projects it is in.',
-                attachTo: {
-                    element: '#dashboard-published-datasets-tab',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-archived-projects',
-                title: 'Archived Projects',
-                text: 'The archived projects tab shows all of the projects you have marked as longer active. Moving a project to archived keeps it accessible, but it is no longer shown in the projects tab.',
-                attachTo: {
-                    element: '#dashboard-archived-projects-tab',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-projects-trash',
-                title: 'Deleted Projects',
-                text: 'Deleted projects are moved to the trash tab. You can restore a project from the trash tab. Deleted projects are kept around for 7 days before being permanently deleted.',
-                attachTo: {
-                    element: '#dashboard-projects-trash-tab',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-active-projects',
-                title: 'Active Projects',
-                text: 'Active projects are projects you\'d like convenient access to. You mark a project as active by clicking the checkmark next to the project name.',
-                attachTo: {
-                    element: '#dashboard-active-projects',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-recent-projects',
-                title: 'Recently Accessed Projects',
-                text: 'Recently accessed projects are projects you\'ve accessed in the last 2 weeks, and that are not marked as Active Projects.',
-                attachTo: {
-                    element: '#dashboard-recent-projects',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-all-projects',
-                title: 'All Projects',
-                text: 'This table contains all projects you have access to that have not been archived. You can click on a project name to view the project.',
-                attachTo: {
-                    element: '#projects',
-                    on: 'bottom'
-                },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'dashboard-sidebar',
-                title: 'Sidebar Navigation',
-                text: 'The sidebar navigation is a convenient way to navigate between pages. You can click on the sidebar navigation to navigate to a page. The sidebar navigation is always visible, and is always on the left side of the screen.',
-                attachTo: {
-                    element: '#dashboard-sidebar',
-                    on: 'right'
-                },
-                buttons: [
-                    {
-                        text: 'Done',
-                        action: function () {
-                            return this.next();
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    project: {
-        name: 'project',
-        steps: []
-    },
+    dashboard: dashboardTour,
+    project: projectTour,
     publishing: {
         name: 'publishing',
         steps: []
@@ -389,9 +214,14 @@ class TourService {
 
     // Get the appropriate tour for the current route
     getTourForRoute(route) {
+        console.log('getTourForRoute', route);
+        // The order of the checks is important. The word projects may appear in some route names
+        // that are associated with other tours. For example, the dashboard tour has a
+        // dashboard.projects route. If the first check were for projects, then the dashboard
+        // tour would never be available.
         if (route.includes('dashboard')) {
             return 'dashboard';
-        } else if (route.includes('projects.show')) {
+        } else if (route.includes('projects')) {
             return 'project';
         } else if (route.includes('publishing')) {
             return 'publishing';

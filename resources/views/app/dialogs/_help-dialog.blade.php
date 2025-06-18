@@ -37,10 +37,10 @@
                             window.tourService.initState("{{auth()->user()->api_token}}");
 
                             // Get current route
-                            const currentPath = window.location.pathname;
+                            const currentRoute = "{{Route::currentRouteName()}}";
 
-                            // Get appropriate tour for current route
-                            const tourName = window.tourService.getTourForRoute(currentPath);
+                            // Get the appropriate tour for the current route
+                            const tourName = window.tourService.getTourForRoute(currentRoute);
 
                             if (tourName) {
                                 // Start the tour

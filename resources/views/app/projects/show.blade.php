@@ -15,7 +15,7 @@
     {{--    <br>--}}
     <x-card>
         <x-slot:header>
-            Project: {{$project->name}}
+            <span id="project-intro">Project: {{$project->name}}</span>
             <a class="float-right action-link"
                href="{{route('projects.edit', $project->id)}}">
                 <i class="fas fa-edit mr-2"></i>Edit
