@@ -574,4 +574,40 @@ textarea.form-control[readonly] {
     color: rgba(255, 255, 255, 0.8) !important;
 }
 
+// Tour icon
+
+/* Basic color styling */
+.tour-icon {
+    color: $yellow-7;
+    font-size: 1.2rem;
+}
+
+/* Gradient effect */
+.tour-icon-gradient {
+    background: linear-gradient(45deg, #2196F3, #4CAF50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+}
+
+/* Modern outlined effect */
+.tour-icon-outline {
+    color: white;
+    text-shadow: -1px -1px 0 #007bff,
+    1px -1px 0 #007bff,
+    -1px 1px 0 #007bff,
+    1px 1px 0 #007bff;
+}
+
+/* Hover effects */
+.tour-icon-hover {
+    color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.tour-icon-hover:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
 
