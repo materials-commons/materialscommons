@@ -21,7 +21,8 @@
             </li>
 
             <li class="nav-item">
-                <span class="ml-5">Data</span>
+                <span class="ml-5">Data</span><span class="ml-4"
+                                                    id="project-sidenav-data">{{-- Offset for tour --}}</span>
             </li>
 
             <li class="nav-item">
@@ -82,7 +83,8 @@
             </li>
 
             <li class="nav-item mt-2">
-                <span class="ml-5">Organization</span>
+                <span class="ml-5">Organization</span><span class="ml-4"
+                                                            id="project-sidenav-organization">{{-- Offset for tour --}}</span>
             </li>
 
             <li class="nav-item">
@@ -114,7 +116,8 @@
             @endif
 
             <li class="nav-item mt-2">
-                <span class="ml-5">Actions</span>
+                <span class="ml-5">Actions</span><span class="ml-4"
+                                                       id="project-sidenav-actions">{{-- Offset for tour --}}</span>
             </li>
 
             @if(isInBeta('datahq'))

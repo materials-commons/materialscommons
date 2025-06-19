@@ -308,8 +308,7 @@ const projectTour = {
 <!--            <span>Pro tip: Use <kbd>Alt</kbd> + <kbd>←</kbd> to return to previous page</span>-->
 <!--        </div>-->
     </div>
-</div>         
-            `,
+</div>`,
             attachTo: {
                 element: '#project-sidebar',
                 on: 'right'
@@ -317,6 +316,149 @@ const projectTour = {
             buttons: [
                 {
                     text: 'Next',
+                    action: function () {
+                        return this.next();
+                    }
+                }
+            ]
+        },
+        {
+            id: 'project-sidenav-data',
+            title: 'Data',
+            text: `
+<div class="tour-step-content">
+    <h3><i class="fas fa-chart-pie"></i> Data</h3>
+    <div class="tour-description">
+        <p>Access your projects data 📊</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-file"></i>
+                <span class="stat-label">Files</span>
+                <span class="stat-detail">Upload/download/view/organize</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-flask"></i>
+                <span class="stat-label">Sheets</span>
+                <span class="stat-detail">Excel and Google Sheets</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calculator"></i>
+                <span class="stat-label">Samples</span>
+                <span class="stat-detail">Samples and Processing Steps</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-bar"></i>
+                <span class="stat-label">Computations</span>
+                <span class="stat-detail">Computational and Simulation Metadata</span>
+            </div>
+        </div>
+
+<!--        <div class="tour-tip">-->
+<!--            <i class="fas fa-lightbulb"></i>-->
+<!--            <span>Perfect for progress tracking and project health monitoring!</span>-->
+<!--        </div>-->
+    </div>
+</div>`,
+            attachTo: {
+                element: '#project-sidenav-data',
+                on: 'right'
+            },
+            buttons: [
+                {
+                    text: 'Next',
+                    action: function () {
+                        return this.next();
+                    }
+                }
+            ]
+        },
+        {
+            id: 'project-sidenav-organization',
+            title: 'Organization',
+            text: `
+<div class="tour-step-content">
+    <h3><i class="fas fa-sitemap"></i>Organization</h3>
+    <div class="tour-description">
+        <p>Your project's studies and datasets</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-flask"></i>
+                <span class="stat-label">Studies</span>
+                <span class="stat-detail">Create research studies/load associated spreadsheet</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <span class="stat-label">Datasets</span>
+                <span class="stat-detail">Create/Modify/Publish your research datasets</span>
+            </div>
+        </div>
+
+<!--        <div class="tour-tip">-->
+<!--            <i class="fas fa-lightbulb"></i>-->
+<!--            <span>Perfect for progress tracking and project health monitoring!</span>-->
+<!--        </div>-->
+    </div>
+</div>`,
+            attachTo: {
+                element: '#project-sidenav-organization',
+                on: 'right'
+            },
+            buttons: [
+                {
+                    text: 'Next',
+                    action: function () {
+                        return this.next();
+                    }
+                }
+            ]
+        },
+        {
+            id: 'project-sidenav-actions',
+            title: 'Actions',
+            text: `
+<div class="tour-step-content">
+    <h3><i class="fas fa-terminal"></i>Actions</h3>
+    <div class="tour-description">
+        <p>Operations you can perform on your project</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-file-export"></i>
+                <span class="stat-label">Publish Data</span>
+                <span class="stat-detail">Publish your research data. Shortcut to clicking on datasets, then creating a dataset.</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users-cog"></i>
+                <span class="stat-label">Project Members</span>
+                <span class="stat-detail">Add/Modify/Remove/View Project Members</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span class="stat-label">Globus Upload</span>
+                <span class="stat-detail">Upload Files Using Globus</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-cloud-download-alt"></i>
+                <span class="stat-label">Globus Download</span>
+                <span class="stat-detail">Download Project Files Using Globus</span>
+            </div>
+        </div>
+
+<!--        <div class="tour-tip">-->
+<!--            <i class="fas fa-lightbulb"></i>-->
+<!--            <span>Perfect for progress tracking and project health monitoring!</span>-->
+<!--        </div>-->
+    </div>
+</div>`,
+            attachTo: {
+                element: '#project-sidenav-actions',
+                on: 'right'
+            },
+            buttons: [
+                {
+                    text: 'Done',
                     action: function () {
                         return this.next();
                     }

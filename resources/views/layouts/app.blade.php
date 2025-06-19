@@ -182,6 +182,7 @@
 @endauth
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')
+@include('app.dialogs._no-tour-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -211,6 +212,7 @@
                 // Start the tour
                 window.tourService.startTour(tourName);
             } else {
+                $('#no-tour-dialog').modal('show');
                 console.error('No tour available for this page');
             }
         });

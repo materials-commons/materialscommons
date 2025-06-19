@@ -19,7 +19,7 @@
                 <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#welcome-dialog">
                     Welcome Dialog!
                 </a>
-                <button type="button" class="btn btn-success" id="start-tour" data-dismiss="modal">Start Tour</button>
+{{--                <button type="button" class="btn btn-success" id="start-tour" data-dismiss="modal">Start Tour</button>--}}
                 <a class="btn btn-secondary" href="/mcdocs2" target="_blank">Goto Docs</a>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>
@@ -46,6 +46,7 @@
                                 // Start the tour
                                 window.tourService.startTour(tourName);
                             } else {
+                                $('#no-tour-dialog').modal('show');
                                 console.error('No tour available for this page');
                             }
                         });

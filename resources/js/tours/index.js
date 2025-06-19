@@ -221,13 +221,14 @@ class TourService {
         // tour would never be available.
         if (route.includes('dashboard')) {
             return 'dashboard';
-        } else if (route.includes('projects')) {
+        } else if (route === 'projects.show') {
             return 'project';
-        } else if (route.includes('publishing')) {
-            return 'publishing';
-        } else if (route.includes('etl')) {
-            return 'etl';
         }
+        // else if (route.includes('publishing')) {
+        //     return 'publishing';
+        // } else if (route.includes('etl')) {
+        //     return 'etl';
+        // }
         return null;
     }
 }
