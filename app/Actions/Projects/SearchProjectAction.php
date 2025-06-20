@@ -9,59 +9,85 @@ use App\Models\Entity;
 use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Workflow;
-use Spatie\Searchable\ModelSearchAspect;
-use Spatie\Searchable\Search;
+use Illuminate\Support\Collection;
+use Spatie\Searchable\SearchResult;
+use Spatie\Searchable\SearchResultCollection;
 
 class SearchProjectAction
 {
     public function __invoke($search, $projectId)
     {
-        return (new Search())
-            ->registerModel(File::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('path')
-                                  ->addSearchableAttribute('mime_type')
-                                  ->addSearchableAttribute('media_type_description')
-                                  ->with(['directory'])
-                                  ->whereNull('dataset_id')
-                                  ->whereNull('deleted_at')
-                                  ->where('current', true)
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Experiment::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Entity::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Activity::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Workflow::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('workflow')
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Dataset::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('authors')
-                                  ->where('project_id', $projectId);
-            })
-            ->registerModel(Community::class, function (ModelSearchAspect $modelSearchAspect) use ($projectId) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('public', true);
-            })
-            ->limitAspectResults(10)
-            ->search($search);
+        // Search each model type with Laravel Scout
+        $fileResults = File::search($search)
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
+            ->where('current', true)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $experimentResults = Experiment::search($search)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $entityResults = Entity::search($search)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $activityResults = Activity::search($search)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $workflowResults = Workflow::search($search)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $datasetResults = Dataset::search($search)
+            ->where('project_id', $projectId)
+            ->take(10)
+            ->get();
+
+        $communityResults = Community::search($search)
+            ->where('public', true)
+            ->take(10)
+            ->get();
+
+        // Convert to SearchResult objects for compatibility with the view
+        $searchResults = new Collection();
+
+        foreach ($fileResults as $file) {
+            $searchResults->push(new SearchResult($file, $file->name, $file->getScoutUrl()));
+        }
+
+        foreach ($experimentResults as $experiment) {
+            $searchResults->push(new SearchResult($experiment, $experiment->name, $experiment->getScoutUrl()));
+        }
+
+        foreach ($entityResults as $entity) {
+            $searchResults->push(new SearchResult($entity, $entity->name, $entity->getScoutUrl()));
+        }
+
+        foreach ($activityResults as $activity) {
+            $searchResults->push(new SearchResult($activity, $activity->name, $activity->getScoutUrl()));
+        }
+
+        foreach ($workflowResults as $workflow) {
+            $searchResults->push(new SearchResult($workflow, $workflow->name, $workflow->getScoutUrl()));
+        }
+
+        foreach ($datasetResults as $dataset) {
+            $searchResults->push(new SearchResult($dataset, $dataset->name, $dataset->getScoutUrl()));
+        }
+
+        foreach ($communityResults as $community) {
+            $searchResults->push(new SearchResult($community, $community->name, $community->getScoutUrl()));
+        }
+
+        // Return a SearchResultCollection for compatibility with the view
+        return new SearchResultCollection($searchResults);
     }
 }

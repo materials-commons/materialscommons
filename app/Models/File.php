@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Spatie\Searchable\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Searchable\SearchResult;
 use function intdiv;
 
@@ -36,12 +36,13 @@ use function intdiv;
  *
  * Also see App\Observers\FileObserver
  */
-class File extends Model implements Searchable
+class File extends Model
 {
     use HasUUID;
     use FileType;
     use HasFactory;
     use DeletedAt;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -234,6 +235,51 @@ class File extends Model implements Searchable
         }
 
         return "file";
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'path' => $array['path'] ?? '',
+            'mime_type' => $array['mime_type'] ?? '',
+            'media_type_description' => $array['media_type_description'] ?? '',
+            'project_id' => $array['project_id'],
+            'summary' => $array['description'] ?? '',
+            'type' => $this->getTypeAttribute(),
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        if (is_null($this->dataset_id)) {
+            if ($this->mime_type == 'directory') {
+                return route('projects.folders.show', [$this->project_id, $this]);
+            } else {
+                return route('projects.files.show', [$this->project_id, $this]);
+            }
+        } else {
+            if ($this->mime_type == 'directory') {
+                return route('public.datasets.folders.show', [$this->dataset_id, $this]);
+            } else {
+                return route('public.datasets.files.show', [$this->dataset_id, $this]);
+            }
+        }
     }
 
     public function getSearchResult(): SearchResult

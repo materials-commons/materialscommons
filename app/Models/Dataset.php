@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Spatie\Searchable\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
 use function auth;
@@ -57,11 +57,12 @@ use function json_decode;
  *
  * @mixin Builder
  */
-class Dataset extends Model implements Searchable
+class Dataset extends Model
 {
     use HasUUID;
     use HasTags;
     use HasFactory;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -274,6 +275,41 @@ class Dataset extends Model implements Searchable
     public function canEdit()
     {
         return $this->owner_id == auth()->user()->id || auth()->user()->is_admin;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'authors' => $array['authors'] ?? '',
+            'project_id' => $array['project_id'],
+            'summary' => $array['summary'] ?? '',
+            'type' => 'dataset',
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        if (Request::routeIs('public.*')) {
+            return route('public.datasets.show', [$this]);
+        }
+
+        return route('projects.datasets.show', [$this->project_id, $this]);
     }
 
     public function getSearchResult(): SearchResult

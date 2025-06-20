@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Spatie\Searchable\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Tags\HasTags;
 
@@ -24,11 +24,12 @@ use Spatie\Tags\HasTags;
  *
  * @mixin Builder
  */
-class Entity extends Model implements Searchable
+class Entity extends Model
 {
     use HasUUID;
     use HasFactory;
     use HasTags;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -104,6 +105,40 @@ class Entity extends Model implements Searchable
     public function getTypeAttribute()
     {
         return "sample";
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'project_id' => $array['project_id'],
+            'summary' => $array['description'] ?? '',
+            'type' => $this->getTypeAttribute(),
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        if (is_null($this->dataset_id)) {
+            return route('projects.entities.show', [$this->project_id, $this]);
+        } else {
+            return route('public.datasets.entities.show-spread', [$this->dataset_id, $this]);
+        }
     }
 
     public function getSearchResult(): SearchResult

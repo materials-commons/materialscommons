@@ -6,8 +6,8 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Repat\LaravelJobs\Job;
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
@@ -30,10 +30,11 @@ use Spatie\Searchable\SearchResult;
  *
  * @mixin Builder
  */
-class Experiment extends Model implements Searchable
+class Experiment extends Model
 {
     use HasUUID;
     use HasFactory;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -122,6 +123,36 @@ class Experiment extends Model implements Searchable
     public function getTypeAttribute()
     {
         return "experiment";
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'project_id' => $array['project_id'],
+            'summary' => $array['summary'] ?? '',
+            'type' => $this->getTypeAttribute(),
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        return route('projects.experiments.show', [$this->project_id, $this]);
     }
 
     public function getSearchResult(): SearchResult

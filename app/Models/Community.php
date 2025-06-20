@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
-use Spatie\Searchable\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
@@ -22,10 +22,11 @@ use Spatie\Searchable\SearchResult;
  *
  * @mixin Builder
  */
-class Community extends Model implements Searchable
+class Community extends Model
 {
     use HasUUID;
     use HasFactory;
+    use Searchable;
 
     protected $guarded = ['id', 'uuid'];
 
@@ -73,6 +74,40 @@ class Community extends Model implements Searchable
     public function getTypeAttribute()
     {
         return "community";
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'summary' => $array['description'] ?? '',
+            'type' => $this->getTypeAttribute(),
+            'public' => $array['public'],
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        if (Request::routeIs('public.*')) {
+            return route('public.communities.datasets.index', [$this]);
+        }
+
+        return route('communities.show', [$this]);
     }
 
     public function getSearchResult(): SearchResult

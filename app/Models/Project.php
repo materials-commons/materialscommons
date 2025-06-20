@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Spatie\Searchable\Searchable;
+use Laravel\Scout\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
@@ -28,11 +28,12 @@ use Spatie\Searchable\SearchResult;
  *
  * @mixin Builder
  */
-class Project extends Model implements Searchable
+class Project extends Model
 {
     use HasUUID;
     use HasFactory;
     use DeletedAt;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -169,6 +170,35 @@ class Project extends Model implements Searchable
     public function getTotalFilesSizeAttribute()
     {
         return $this->files()->select('size')->sum('size');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+            'description' => $array['description'] ?? '',
+            'summary' => $array['description'] ?? '',
+            'type' => $this->getTypeAttribute(),
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        return route('projects.show', [$this->id]);
     }
 
     //

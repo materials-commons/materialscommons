@@ -23,11 +23,13 @@
     "freshbitsweb/laratables": "^4.0",
     "graham-campbell/markdown": "^15.0",
     "guzzlehttp/guzzle": "^7.0.1",
+    "http-interop/http-factory-guzzle": "^1.2",
     "icehouse-ventures/laravel-chartjs": "^4.0",
     "josiasmontag/laravel-recaptchav3": "^1.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "^11.0",
     "laravel/octane": "^2.3",
+    "laravel/scout": "^10.15",
     "laravel/tinker": "^2.0",
     "laravel/ui": "^4.0",
     "league/flysystem-aws-s3-v3": "^3.0",
@@ -35,6 +37,7 @@
     "maatwebsite/excel": "^3.1",
     "mauricius/laravel-htmx": "^0.7.0",
     "mavinoo/laravel-batch": "^2.0",
+    "meilisearch/meilisearch-php": "^1.15",
     "rianfuro/commonmark-metadata": "^0.1.2",
     "spatie/laravel-backup": "^8.0",
     "spatie/laravel-health": "^1.23",
@@ -64,7 +67,10 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   },
   "extra": {
     "laravel": {
