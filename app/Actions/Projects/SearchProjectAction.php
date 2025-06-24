@@ -35,11 +35,17 @@ class SearchProjectAction
             ->get();
 
         $entityResults = Entity::search($search)
+            ->query(function ($query) {
+                return $query->with('experiments');
+            })
             ->where('project_id', $projectId)
             ->take(10)
             ->get();
 
         $activityResults = Activity::search($search)
+            ->query(function ($query) {
+                return $query->with('experiments');
+            })
             ->where('project_id', $projectId)
             ->take(10)
             ->get();
