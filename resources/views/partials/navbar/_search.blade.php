@@ -44,5 +44,19 @@
                 $('#navbar-search-input').val('');
             }
         }
+
+        // A handler for escape that checks if there are search results. If there
+        // are search results, then have javascript simulate a user click on the
+        // search results close to make the search results go away.
+        document.addEventListener('keyup', function(event) {
+            if (event.key === 'Escape') {
+                const searchResults = document.getElementById('search-results');
+                // Only close if search results exist and have content
+                if (searchResults && searchResults.innerHTML.trim() !== '') {
+                    document.getElementById('search-close').click();
+                }
+            }
+        });
+
     </script>
 @endpush
