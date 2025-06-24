@@ -166,7 +166,7 @@ return [
                 'sortableAttributes' => ['name', 'project_id'],
             ],
             Project::class    => [
-                'filterableAttributes' => ['name'],
+                'filterableAttributes' => ['name', 'id'],
                 'sortableAttributes' => ['name'],
             ],
         ],

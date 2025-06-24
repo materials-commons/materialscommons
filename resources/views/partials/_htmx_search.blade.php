@@ -9,7 +9,7 @@
         </li>
         @foreach($searchResults as $sr)
             <li class="search-item-result">
-                <a href="{{$sr->getScoutUrl()}}" class="list-group-item list-group-item-action search-item-result">
+                <a href="{{$sr->getScoutUrl()}}" class="list-group-item list-group-item-action search-item-result no-underline">
                     @if($sr->getTypeAttribute() === "file" || $sr->getTypeAttribute() == "directory")
                         <div class="d-flex w-100 justify-content-between">
                             @if($sr->directory->path === "/")
@@ -28,7 +28,13 @@
                         </div>
                     @endif
                     <p class="mb-1">{{$sr->summary}}</p>
-                    <small class="text-muted">{{$sr->getTypeAttribute()}}</small>
+                    <small class="text-muted">Type: {{$sr->getTypeAttribute()}}</small>
+                    @if(isset($sr->project))
+                        <small class="text-muted ml-4">Project: {{$sr->project->name}}</small>
+                    @endif
+                    @if(isset($sr->experiments) && $sr->experiments->count() > 0)
+                        <small class="text-muted ml-4">Experiments: {{$sr->experiments->map(fn($e) => $e->name)->implode(',')}}</small>
+                    @endif
                 </a>
             </li>
         @endforeach
