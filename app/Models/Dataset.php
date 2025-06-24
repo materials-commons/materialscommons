@@ -288,13 +288,15 @@ class Dataset extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
-            'description' => $array['description'] ?? '',
-            'authors' => $array['authors'] ?? '',
-            'project_id' => $array['project_id'],
-            'summary' => $array['summary'] ?? '',
-            'type' => 'dataset',
+            'id'           => $array['id'],
+            'name'         => $array['name'],
+            'description'  => $array['description'] ?? '',
+            'funding'      => $array['funding'] ?? '',
+            'ds_authors'   => $array['ds_authors'] ?? '',
+            'project_id'   => $array['project_id'],
+            'published_at' => $array['published_at'] ?? null,
+            'summary'      => $array['summary'] ?? '',
+            'type'         => 'dataset',
         ];
     }
 

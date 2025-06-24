@@ -1,5 +1,13 @@
 <?php
 
+use App\Models\Activity;
+use App\Models\Community;
+use App\Models\Dataset;
+use App\Models\Entity;
+use App\Models\Experiment;
+use App\Models\File;
+use App\Models\Project;
+
 return [
 
     /*
@@ -68,7 +76,7 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
+        'searchable'   => 500,
         'unsearchable' => 500,
     ],
 
@@ -112,7 +120,7 @@ return [
     */
 
     'algolia' => [
-        'id' => env('ALGOLIA_APP_ID', ''),
+        'id'     => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 
@@ -130,15 +138,37 @@ return [
     */
 
     'meilisearch' => [
-        'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
-        'key' => env('MEILISEARCH_KEY', null),
+        'host'           => env('MEILISEARCH_HOST', 'http://localhost:7700'),
+        'key'            => env('MEILISEARCH_KEY', null),
         'index-settings' => [
-            // Model class => index settings
-            // For example:
-            // \App\Models\User::class => [
-            //     'filterableAttributes' => ['id', 'name', 'email'],
-            //     'sortableAttributes' => ['created_at'],
-            // ],
+            File::class       => [
+                'filterableAttributes' => ['name', 'description', 'path', 'dataset_id', 'deleted_at', 'current', 'project_id'],
+                'sortableAttributes' => ['name', 'path', 'project_id'],
+            ],
+            Experiment::class => [
+                'filterableAttributes' => ['project_id'],
+                'sortableAttributes' => ['name', 'project_id'],
+            ],
+            Entity::class     => [
+                'filterableAttributes' => ['project_id'],
+                'sortableAttributes' => ['name', 'project_id'],
+            ],
+            Activity::class   => [
+                'filterableAttributes' => ['project_id'],
+                'sortableAttributes' => ['name', 'project_id'],
+            ],
+            Dataset::class    => [
+                'filterableAttributes' => ['project_id', 'published_at'],
+                'sortableAttributes' => ['name', 'project_id'],
+            ],
+            Community::class  => [
+                'filterableAttributes' => ['project_id', 'public'],
+                'sortableAttributes' => ['name', 'project_id'],
+            ],
+            Project::class    => [
+                'filterableAttributes' => ['name'],
+                'sortableAttributes' => ['name'],
+            ],
         ],
     ],
 

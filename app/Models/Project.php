@@ -155,8 +155,8 @@ class Project extends Model
     public function rootDir()
     {
         return $this->hasOne(File::class, 'project_id')
-            ->whereNull('dataset_id')
-            ->whereNull('deleted_at')
+                    ->whereNull('dataset_id')
+                    ->whereNull('deleted_at')
                     ->where('path', '/');
     }
 
@@ -183,11 +183,13 @@ class Project extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
+            'id'          => $array['id'],
+            'name'        => $array['name'],
             'description' => $array['description'] ?? '',
-            'summary' => $array['description'] ?? '',
-            'type' => $this->getTypeAttribute(),
+            'summary'     => $array['description'] ?? '',
+            'deleted_at'  => $array['deleted_at'] ?? null,
+            'archived_at' => $array['archived_at'] ?? null,
+            'type'        => $this->getTypeAttribute(),
         ];
     }
 

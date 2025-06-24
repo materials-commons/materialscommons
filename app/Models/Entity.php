@@ -104,7 +104,10 @@ class Entity extends Model
 
     public function getTypeAttribute()
     {
-        return "sample";
+        if ($this->category === 'experimental') {
+            return "sample";
+        }
+        return "computation";
     }
 
     /**
@@ -118,12 +121,14 @@ class Entity extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
+            'id'          => $array['id'],
+            'name'        => $array['name'],
             'description' => $array['description'] ?? '',
-            'project_id' => $array['project_id'],
-            'summary' => $array['description'] ?? '',
-            'type' => $this->getTypeAttribute(),
+            'project_id'  => $array['project_id'],
+            'dataset_id'  => $array['dataset_id'] ?? null,
+            'summary'     => $array['description'] ?? '',
+            'category'    => $array['category'],
+            'type'        => $array['category'] === 'experimental' ? 'sample' : 'computation',
         ];
     }
 

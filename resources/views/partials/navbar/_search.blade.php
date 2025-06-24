@@ -23,7 +23,7 @@
     @endphp
 @endif
 
-<div style="width:100%">
+<div style="width:100%; position:relative;">
     <input type="text"
            id="navbar-search-input"
            class="form-control form-rounded border border-right-0"
@@ -34,7 +34,7 @@
            hx-target="#search-results"
            hx-indicator=".htmx-indicator"
            hx-trigger="keyup changed delay:500ms">
-    <div id="search-results" style="position:absolute; z-index:999; overflow-y: auto; height: 70vh;"></div>
+    <div id="search-results" style="position:absolute; z-index:999; overflow-y: auto; height: 70vh;width:100%;left:0;top:100%;"></div>
 </div>
 
 @push('scripts')

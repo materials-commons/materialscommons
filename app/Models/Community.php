@@ -87,12 +87,12 @@ class Community extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
+            'id'          => $array['id'],
+            'name'        => $array['name'],
             'description' => $array['description'] ?? '',
-            'summary' => $array['description'] ?? '',
-            'type' => $this->getTypeAttribute(),
-            'public' => $array['public'],
+            'summary'     => $array['description'] ?? '',
+            'type'        => $this->getTypeAttribute(),
+            'public'      => $array['public'],
         ];
     }
 

@@ -248,15 +248,19 @@ class File extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
-            'description' => $array['description'] ?? '',
-            'path' => $array['path'] ?? '',
-            'mime_type' => $array['mime_type'] ?? '',
+            'id'                     => $array['id'],
+            'name'                   => $array['name'],
+            'description'            => $array['description'] ?? '',
+            'current'                => $array['current'],
+            'deleted_at'             => $array['deleted_at'] ?? null,
+            'dataset_id'             => $array['dataset_id'] ?? null,
+            'directory_id'           => $array['directory_id'] ?? null,
+            'path'                   => $array['path'] ?? '',
+            'mime_type'              => $array['mime_type'] ?? '',
             'media_type_description' => $array['media_type_description'] ?? '',
-            'project_id' => $array['project_id'],
-            'summary' => $array['description'] ?? '',
-            'type' => $this->getTypeAttribute(),
+            'project_id'             => $array['project_id'],
+            'summary'                => $array['summary'] ?? '',
+            'type'                   => $array['mime_type'] === 'directory' ? 'directory' : 'file',
         ];
     }
 

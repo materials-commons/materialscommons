@@ -111,12 +111,13 @@ class Activity extends Model
 
         // Customize the data array to include only the fields you want to search
         return [
-            'id' => $array['id'],
-            'name' => $array['name'],
+            'id'          => $array['id'],
+            'name'        => $array['name'],
             'description' => $array['description'] ?? '',
-            'project_id' => $array['project_id'],
-            'summary' => $array['summary'] ?? '',
-            'type' => $this->getTypeAttribute(),
+            'project_id'  => $array['project_id'],
+            'summary'     => $array['summary'] ?? '',
+            'category'    => $array['category'] ?? '',
+            'type'        => $this->getTypeAttribute(),
         ];
     }
 
