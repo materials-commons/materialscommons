@@ -1,7 +1,7 @@
-<div class="mt-2xxx" style="width:100%">
+<div class="scroll-container border" style="width:100%">
     <ul class="list-group" style="z-index:999">
         <li class="list-group-item">
-            <a hx-get="{{$searchRoute}}" style="cursor:pointer;" id="search-close"
+            <a hx-getx="{{$searchRoute}}" style="cursor:pointer;" id="search-close"
                onclick="closeSearch()"
                hx-target="#search-results"
                class="float-right">
