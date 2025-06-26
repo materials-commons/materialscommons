@@ -19,6 +19,7 @@ class ShowEntityByNameSpreadWebController extends Controller
         $entity = Entity::with(['activities', 'tags'])
                         ->where('name', urldecode($name))
                         ->where('project_id', $project->id)
+                        ->whereNull('dataset_id')
                         ->whereHas('experiments', function ($q) use ($experiment) {
                             $q->where("experiment2entity.experiment_id", $experiment->id);
                         })
