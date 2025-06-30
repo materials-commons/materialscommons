@@ -134,6 +134,17 @@ Breadcrumbs::for('projects.workflows.show', function ($trail, $project, $workflo
     $trail->push($workflow->name, route('projects.workflows.show', [$project, $workflow]));
 });
 
+// Project Folders breadcrumbs
+Breadcrumbs::for('projects.folders.show', function ($trail, $project, $folder) {
+    $trail->parent('projects.show', $project);
+    $trail->push($folder->name, route('projects.folders.show', [$project, $folder]));
+});
+
+Breadcrumbs::for('projects.folders.create-zip', function ($trail, $project, $folder) {
+    $trail->parent('projects.folders.show', $project, $folder);
+    $trail->push('Create Zip', route('projects.folders.create-zip', [$project, $folder]));
+});
+
 // Create Dataset breadcrumbs
 Breadcrumbs::for('projects.datasets.create', function ($trail, $project) {
     $trail->parent('projects.datasets.index', $project);

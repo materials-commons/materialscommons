@@ -141,6 +141,11 @@ class File extends Model implements Searchable
         return $this->morphedByMany(EtlRun::class, 'item', 'item2file');
     }
 
+    public function currentFiles()
+    {
+        return $this->hasMany(File::class, 'directory_id')->where('current', true);
+    }
+
     // Scopes
 
     public function scopeWithCommon($query)

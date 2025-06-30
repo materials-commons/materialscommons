@@ -3,10 +3,12 @@
 use App\Http\Controllers\Web\Folders\ChooseProjectForCopyDestinationWebController;
 use App\Http\Controllers\Web\Folders\CopyToDestinationWebController;
 use App\Http\Controllers\Web\Folders\CreateFolderWebController;
+use App\Http\Controllers\Web\Folders\CreateFolderZipWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\Datatables\GetRootFolderDatatableWebController;
 use App\Http\Controllers\Web\Folders\DeleteFolderWebController;
 use App\Http\Controllers\Web\Folders\DestroyFolderWebController;
+use App\Http\Controllers\Web\Folders\DownloadFolderZipWebController;
 use App\Http\Controllers\Web\Folders\Filter\DTGetFilesForUserFilterWebController;
 use App\Http\Controllers\Web\Folders\Filter\ShowFilesFilteredForUserWebController;
 use App\Http\Controllers\Web\Folders\Filter\ShowFilterFilesByUserWebController;
@@ -78,6 +80,12 @@ Route::put('/projects/{project}/folders/{dir}/rename', UpdateRenameFolderWebCont
 Route::get('/projects/{project}/folders/{folder}/index-images', IndexImagesWebController::class)
      ->name('projects.folders.index-images');
 
+# Zip Files
+Route::get('/projects/{project}/folders/{folder}/create-zip', CreateFolderZipWebController::class)
+     ->name('projects.folders.create-zip');
+Route::get('/projects/folders/download-zip/{zipId}', DownloadFolderZipWebController::class)
+     ->name('projects.folders.download-zip');
+
 # Filters
 Route::get('/projects/{project}/filter/folders/by-user', ShowFilterFilesByUserWebController::class)
      ->name('projects.folders.filter.by-user');
@@ -85,6 +93,3 @@ Route::get('/projects/{project}/filter/folders/show-for-user/{user}', ShowFilesF
      ->name('projects.folders.filter.show-for-user');
 Route::get('/projects/{project}/filter/folders/dt-show-for-user/{user}', DTGetFilesForUserFilterWebController::class)
      ->name('projects.folders.filter.dt_get_files_for_user_filter');
-
-
-

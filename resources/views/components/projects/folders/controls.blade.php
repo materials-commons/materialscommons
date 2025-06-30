@@ -9,6 +9,11 @@
     @endif
 
     <a class="float-right action-link mr-4"
+       href="{{route('projects.folders.create-zip', [$project, $directory])}}">
+        <i class="fas fa-fw fa-file-archive mr-2"></i>Download as Zip
+    </a>
+
+    <a class="float-right action-link mr-4"
        href="{{route('projects.folders.index-images', [$project, $directory, 'destdir' => $destdir, 'destproj' => $destproj, 'arg' => $arg])}}">
         <i class="fas fa-fw fa-images mr-2"></i>View Images
     </a>
