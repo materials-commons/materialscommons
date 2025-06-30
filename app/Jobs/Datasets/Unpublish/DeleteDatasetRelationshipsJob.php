@@ -2,7 +2,9 @@
 
 namespace App\Jobs\Datasets\Unpublish;
 
+use App\Models\Activity;
 use App\Models\Dataset;
+use App\Models\Entity;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,7 +25,9 @@ class DeleteDatasetRelationshipsJob implements ShouldQueue
 
     public function handle()
     {
-        $this->dataset->entities()->detach();
-        $this->dataset->activities()->detach();
+        Activity::where('dataset_id', $this->dataset->id)->delete();
+        Entity::where('dataset_id', $this->dataset->id)->delete();
+//        $this->dataset->entities()->delete();
+//        $this->dataset->activities()->delete();
     }
 }
