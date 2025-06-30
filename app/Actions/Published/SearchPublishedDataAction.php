@@ -4,31 +4,29 @@ namespace App\Actions\Published;
 
 use App\Models\Community;
 use App\Models\Dataset;
-use Spatie\Searchable\ModelSearchAspect;
-use Spatie\Searchable\Search;
+use Illuminate\Support\Collection;
 
 class SearchPublishedDataAction
 {
     public function __invoke($search)
     {
-        $datasets = Dataset::whereNotNull('published_at')->get();
-        $datasetIds = $datasets->map(function (Dataset $dataset) {
-            return $dataset->id;
-        })->toArray();
+        // Search published datasets using Laravel Scout
+        $datasetResults = Dataset::search($search)
+            ->whereNotNull('published_at')
+            ->take(10)
+            ->get();
 
-        return (new Search())
-            ->registerModel(Dataset::class, function (ModelSearchAspect $modelSearchAspect) use ($datasetIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('authors')
-                                  ->whereIn('id', $datasetIds);
-            })
-            ->registerModel(Community::class, function (ModelSearchAspect $modelSearchAspect) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('public', true);
-            })
-            ->limitAspectResults(10)
-            ->search($search);
+        // Search public communities using Laravel Scout
+        $communityResults = Community::search($search)
+            ->where('public', true)
+            ->take(10)
+            ->get();
+
+        // Combine results into a single collection
+        $searchResults = new Collection([
+            $datasetResults, $communityResults
+        ]);
+
+        return $searchResults->collapse();
     }
 }
