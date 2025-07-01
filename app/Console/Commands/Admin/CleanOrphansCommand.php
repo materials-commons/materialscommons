@@ -5,7 +5,6 @@ namespace App\Console\Commands\Admin;
 use App\Models\Activity;
 use App\Models\Attribute;
 use App\Models\Entity;
-use App\Models\EntityState;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -36,43 +35,46 @@ class CleanOrphansCommand extends Command
         $this->cleanOrphanedEntities();
 
         // Clean out all Attributes that aren't associated with an existing Activity or EntityState
-        $this->cleanOrphanedAttributes('activities', Activity::class);
-        $this->cleanOrphanedAttributes('entity_states', EntityState::class);
+//        $this->cleanOrphanedAttributes('activities', Activity::class);
+//        $this->cleanOrphanedAttributes('entity_states', EntityState::class);
     }
 
-    private function cleanOrphanedAttributes($table, $modelClass)
+    private function cleanOrphanedAttributes($table, $modelClass): void
     {
-//        DB::transaction(function () use ($table, $modelClass) {
-            $baseModelName = class_basename($modelClass);
+        $baseModelName = class_basename($modelClass);
 
-            $this->info("Calling count for {$baseModelName} attributes");
-            $count = Attribute::where('attributable_type', $modelClass)
-                              ->whereNotExists(function ($query) use ($table) {
-                                  $query->select('*')
-                                        ->from($table)
-                                        ->whereColumn("${table}.id", 'attributes.attributable_id');
-                              })
-                              ->count();
+        $this->info("Calling count for {$baseModelName} attributes");
+        $count = Attribute::where('attributable_type', $modelClass)
+                          ->whereNotExists(function ($query) use ($table) {
+                              $query->select('*')
+                                    ->from($table)
+                                    ->whereColumn("${table}.id", 'attributes.attributable_id');
+                          })
+                          ->count();
 
-            $this->info("Found {$count} orphaned {$baseModelName} attributes to delete");
+        $this->info("Found {$count} orphaned {$baseModelName} attributes to delete");
 
-//            $deleted = Attribute::where('attributable_type', $modelClass)
-//                                ->whereNotExists(function ($query) use ($table) {
-//                                    $query->select('*')
-//                                          ->from($table)
-//                                          ->whereColumn("${table}.id", 'attributes.attributable_id');
-//                                })
-//                                ->chunkById(10000, function ($attributes) {
-//                                    DB::table('attributes')->whereIn('id', $attributes->pluck('id'))->delete();
-//                                });
+        $deleted = Attribute::where('attributable_type', $modelClass)
+                            ->whereNotExists(function ($query) use ($table) {
+                                $query->select('*')
+                                      ->from($table)
+                                      ->whereColumn("${table}.id", 'attributes.attributable_id');
+                            })
+                            ->chunkById(10000, function ($attributes) {
+                                DB::table('attributes')->whereIn('id', $attributes->pluck('id'))->delete();
+                            });
 
-//            $this->info("Deleted {$deleted} orphaned {$baseModelName} attributes");
-//        });
+        $this->info("Deleted {$deleted} orphaned {$baseModelName} attributes");
     }
 
-    private function cleanOrphanedActivities()
+    private function cleanOrphanedActivities(): void
     {
-        // Clean orphaned dataset activities
+        $this->cleanOrphanedDatasetActivities();
+//        $this->cleanOrphanedExperimentActivities();
+    }
+
+    private function cleanOrphanedDatasetActivities(): void
+    {
         $count = Activity::whereNotNull("dataset_id")
                          ->whereDoesntHave("datasets")
                          ->count();
@@ -81,8 +83,10 @@ class CleanOrphansCommand extends Command
                            ->whereDoesntHave("datasets")
                            ->delete();
         $this->info("Deleted {$deleted} orphaned dataset activities");
+    }
 
-        // Clean orphaned experiment activities
+    private function cleanOrphanedExperimentActivities(): void
+    {
         $count = Activity::whereDoesntHave("experiments")
                          ->count();
         $this->info("Found {$count} orphaned experiment activities to delete");
@@ -91,7 +95,13 @@ class CleanOrphansCommand extends Command
         $this->info("Deleted {$deleted} orphaned experiment activities");
     }
 
-    private function cleanOrphanedEntities()
+    private function cleanOrphanedEntities(): void
+    {
+        $this->cleanOrphanedDatasetEntities();
+//        $this->cleanOrphanedExperimentEntities();
+    }
+
+    private function cleanOrphanedDatasetEntities(): void
     {
         $count = Entity::whereNotNull("dataset_id")
                        ->whereDoesntHave("datasets")
@@ -102,7 +112,10 @@ class CleanOrphansCommand extends Command
                          ->delete();
         $this->info("Deleted {$deleted} orphaned dataset entities");
 
-        // Clean orphaned experiment entities
+    }
+
+    private function cleanOrphanedExperimentEntities(): void
+    {
         $count = Entity::whereDoesntHave("experiments")
                        ->count();
         $this->info("Found {$count} orphaned experiment entities to delete");
