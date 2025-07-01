@@ -89,6 +89,7 @@ class Community extends Model
         return [
             'id'          => $array['id'],
             'name'        => $array['name'],
+            'owner_id'    => $array['owner_id'],
             'description' => $array['description'] ?? '',
             'summary'     => $array['description'] ?? '',
             'type'        => $this->getTypeAttribute(),
