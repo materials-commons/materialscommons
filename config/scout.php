@@ -162,8 +162,8 @@ return [
                 'sortableAttributes' => ['name', 'project_id'],
             ],
             Community::class  => [
-                'filterableAttributes' => ['project_id', 'public'],
-                'sortableAttributes' => ['name', 'project_id'],
+                'filterableAttributes' => ['public', 'owner_id'],
+                'sortableAttributes' => ['project_id', 'owner_id'],
             ],
             Project::class    => [
                 'filterableAttributes' => ['name', 'id'],
