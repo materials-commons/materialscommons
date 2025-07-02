@@ -122,6 +122,10 @@
                                        href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                         <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
                                     </a>
+                                @elseif($file->mime_type == 'url')
+                                    <a class="no-underline" href="{{$file->url}}" target="_blank">
+                                        <i class="fa-fw fas fa-link mr-2"></i> {{$file->name}}
+                                    </a>
                                 @else
                                     <a class="no-underline" href="{{route('projects.files.show', [$project, $file])}}">
                                         <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}

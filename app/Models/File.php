@@ -21,6 +21,7 @@ use function intdiv;
  * @property string uuid
  * @property string uses_uuid
  * @property string path
+ * @property string url
  * @property string $name
  * @property string $description
  * @property string $mime_type
