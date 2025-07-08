@@ -199,6 +199,7 @@
     $(document).ready(() => {
         mcutil.autosizeTextareas();
 
+        @auth
         $('#app-start-tour').on('click', function () {
             window.tourService.initState("{{auth()->user()->api_token}}");
 
@@ -216,6 +217,7 @@
                 console.error('No tour available for this page');
             }
         });
+        @endauth
     });
     window.mc_grids = [];
 
