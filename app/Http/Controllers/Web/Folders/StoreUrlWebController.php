@@ -21,7 +21,6 @@ class StoreUrlWebController extends Controller
         $file = new File([
             'uuid' => Str::uuid(),
             'name' => $request->input('name'),
-            'path' => $folder->path == '/' ? '/'.$request->input('name') : $folder->path.'/'.$request->input('name'),
             'mime_type' => 'url',
             'media_type_description' => 'URL',
             'url' => $request->input('url'),

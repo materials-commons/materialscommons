@@ -203,10 +203,31 @@ trait FileType
         return "Unknown";
     }
 
+    function extensionToDescription($extension)
+    {
+        if (blank($extension)) {
+            return "Unknown";
+        }
+
+        if ($extension == "pdf") {
+            return "PDF";
+        }
+
+        if ($extension == "py") {
+            return "Python";
+        }
+
+        return $extension;
+    }
+
     function mimeTypeToDescriptionForDisplay(File $file): string
     {
         if ($file->mime_type == "directory") {
             return "Directory";
+        }
+
+        if ($file->mime_type == "url") {
+            return "URL";
         }
 
         $type = $this->mimeTypeToDescription($file->mime_type);
@@ -214,13 +235,9 @@ trait FileType
             return $type;
         }
 
-        // If the type is Unknown then show the extension for the file.
+        // If the type is Unknown then attempt to determine the type from the extension.
         $ext = pathinfo($file->name, PATHINFO_EXTENSION);
-        if (blank($ext)) {
-            return "Unknown";
-        }
-
-        return $ext;
+        return $this->extensionToDescription($ext);
     }
 
     protected function inTable($type, $lookupTable)
