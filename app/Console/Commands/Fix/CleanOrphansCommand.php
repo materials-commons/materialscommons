@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Admin;
+namespace App\Console\Commands\Fix;
 
 use App\Models\Activity;
 use App\Models\Attribute;
@@ -15,7 +15,7 @@ class CleanOrphansCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-admin:clean-orphans';
+    protected $signature = 'mc-fix:clean-orphans';
 
     /**
      * The console command description.
@@ -29,6 +29,10 @@ class CleanOrphansCommand extends Command
      */
     public function handle()
     {
+        echo "This is broken.... doing nothing for now...\n";
+        if (true) {
+            return;
+        }
         // Clean out all orphaned activities and entities that aren't associated with a dataset
         // or an experiment.
         $this->cleanOrphanedActivities();
