@@ -10,7 +10,13 @@ class DeleteFileApiController extends Controller
 {
     public function __invoke(DeleteFileAction $deleteFileAction, $projectId, $fileId)
     {
-        $file = File::withCount(['entityStates', 'activities', 'entities'])->findOrFail($fileId);
+        $file = File::withCount(['entityStates', 'activities', 'entities'])
+                    ->where('project_id', $projectId)
+                    ->whereNull('deleted_at')
+                    ->whereNull('dataset_id')
+                    ->where('current', true)
+                    ->where('id', $fileId)
+                    ->first();
         $force = request()->input('force', false);
 
         // If no force flag then check if there are related objects and abort if true

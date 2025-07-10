@@ -16,8 +16,8 @@ class ProjectFileChangesQueryBuilder extends FilesQueryBuilder
                      ->where('created_at', '>', $since)
                      ->where('project_id', $projectId)
                      ->whereNull('deleted_at')
-                     ->where('current', true)
                      ->whereNull('dataset_id')
+                     ->where('current', true)
                      ->where('mime_type', '<>', 'directory')
                      ->orderBy('created_at');
         parent::__construct($query, $request);

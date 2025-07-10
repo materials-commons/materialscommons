@@ -42,6 +42,7 @@ class CreateProjectFilesAtLocationAction
             $this->createDirIfNotExists("{$location}{$dir->path}");
             $files = File::where('directory_id', $dir->id)
                          ->whereNull('deleted_at')
+                         ->whereNull('dataset_id')
                          ->where('current', true)
                          ->whereNull('path')
                          ->cursor();

@@ -48,7 +48,7 @@ class Script extends Model
 
         return Script::create([
             'description'    => 'Create script run',
-            'queue' => 'scripts',
+            'queue'          => 'scripts',
             'container'      => 'mc/mcpyimage',
             'script_file_id' => $file->id,
         ]);
@@ -60,6 +60,7 @@ class Script extends Model
                    ->where('project_id', $project->id)
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
+                   ->where('current', true)
                    ->first();
 
         if (is_null($dir)) {
