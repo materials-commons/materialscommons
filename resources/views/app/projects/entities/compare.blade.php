@@ -18,6 +18,22 @@
             </x-slot>
 
             <x-slot name='body'>
+                <button class="btn btn-primary mb-4" @click="compareActivities">Compare Activities</button>
+{{--                <form action="{{route('projects.activities.compare', [$project])}}" method="POST" class="mb-4">--}}
+{{--                    @csrf--}}
+{{--                    <div class="row mb-3">--}}
+{{--                        <div class="col-5">--}}
+{{--                            <h5>Select an activity from {{$entity1->name}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-5">--}}
+{{--                            <h5>Select an activity from {{$entity2->name}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-2">--}}
+{{--                            <button type="submit" class="btn btn-primary">Compare Activities</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+
                 <div style="display: none" x-show="showFilter">
                     <h4>Select/Deselect processes to show <a href="#" class="ml-1"
                                                              @click="showFilter = false">(Hide)</a></h4>
@@ -68,6 +84,11 @@
                                     @foreach($entity1Activities as $e1activity)
                                         <div class="col-12 tile mt-2"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <input type="radio" name="activity1_id" value="{{$e1activity->id}}"
+                                                       class="mr-2">
+                                                <label class="mb-0">Select for comparison</label>
+                                            </div>
                                             @include('partials.activities.activity-card', ['activity' => $e1activity])
                                         </div>
                                     @endforeach
@@ -86,6 +107,11 @@
                                     @foreach($entity2Activities as $e2activity)
                                         <div class="col-12 tile mt-2"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <input type="radio" name="activity2_id" value="{{$e2activity->id}}"
+                                                       class="mr-2">
+                                                <label class="mb-0">Select for comparison</label>
+                                            </div>
                                             @include('partials.activities.activity-card', ['activity' => $e2activity])
                                         </div>
                                     @endforeach
@@ -108,6 +134,10 @@
                 sample1Processes: {},
 
                 sample2Processes: {},
+
+                compareActivities() {
+                    console.log('compare clicked');
+                },
 
                 toggleSample1Process(element) {
                     this.sample1Processes[element.target.value] = !this.sample1Processes[element.target.value];
