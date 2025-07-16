@@ -13,38 +13,45 @@
     @endforeach
     </thead>
     <tbody>
+    @php
+        if (isset($showExperiment) && $showExperiment) {
+            $fromExperiment = 'true';
+        } else {
+            $fromExperiment = 'false';
+        }
+    @endphp
     @foreach($entities as $entity)
         <tr>
             <td>{{$entity->name}}</td>
             <td>
                 @if(isset($experiment))
                     @if($category == "experimental")
-                        <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
+                        <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name), 'fromExperiment' => $fromExperiment])}}">
                             {{$entity->name}}
                         </a>
                     @else
-                        <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name)])}}">
+                        <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name), 'fromExperiment' => $fromExperiment])}}">
                             {{$entity->name}}
                         </a>
                     @endif
                 @else
                     @if($category == "experimental")
                         @if(isset($entity->experiments) && $entity->experiments->count() > 0)
-                            <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                            <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name), 'fromExperiment' => $fromExperiment])}}">
                                 {{$entity->name}}
                             </a>
                         @else
-                            <a href="{{route('projects.entities.show-spread', [$project, $entity])}}">
+                            <a href="{{route('projects.entities.show-spread', [$project, $entity, 'fromExperiment' => $fromExperiment])}}">
                                 {{$entity->name}}
                             </a>
                         @endif
                     @else
                         @if(isset($entity->experiments) && $entity->experiments->count() > 0)
-                            <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name)])}}">
+                            <a href="{{route('projects.experiments.computations.entities.by-name.spread', [$project, $entity->experiments[0], "name" => urlencode($entity->name), 'fromExperiment' => $fromExperiment])}}">
                                 {{$entity->name}}
                             </a>
                         @else
-                            <a href="{{route('projects.computations.entities.show-spread', [$project, $entity])}}">
+                            <a href="{{route('projects.computations.entities.show-spread', [$project, $entity, 'fromExperiment' => $fromExperiment])}}">
                                 {{$entity->name}}
                             </a>
                         @endif

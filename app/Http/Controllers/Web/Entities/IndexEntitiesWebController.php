@@ -14,10 +14,11 @@ class IndexEntitiesWebController extends Controller
     use EntityAndAttributeQueries;
 
     public function __invoke(
-        Request $request,
+        Request                               $request,
         CreateUsedActivitiesForEntitiesAction $createUsedActivities,
-        Project $project
-    ) {
+        Project                               $project
+    )
+    {
         $category = $request->input("category");
 
         auth()->user()->addToRecentlyAccessedProjects($project);
@@ -25,6 +26,7 @@ class IndexEntitiesWebController extends Controller
         $entities = Entity::has('experiments')
                           ->with(['activities', 'experiments'])
                           ->where('category', $category)
+                          ->whereNull('dataset_id')
                           ->where('project_id', $project->id)
                           ->get();
 
