@@ -11,8 +11,8 @@ class CompareActivitiesWebController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        $activity1Id = $request->input('activity1_id');
-        $activity2Id = $request->input('activity2_id');
+        $activity1Id = $request->input('activity1');
+        $activity2Id = $request->input('activity2');
 
         if (!$activity1Id || !$activity2Id) {
             return redirect()->back()->with('error', 'Please select two activities to compare.');

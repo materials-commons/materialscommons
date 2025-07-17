@@ -28,7 +28,7 @@ Route::get('/projects/{project}/datatables/entities', GetProjectEntitiesDatatabl
 Route::get('/projects/{project}/entities/{entity1}/compare/{entity2}', CompareEntitiesWebController::class)
      ->name('projects.entities.compare');
 
-Route::post('/projects/{project}/activities/compare', CompareActivitiesWebController::class)
+Route::get('/projects/{project}/activities/compare', CompareActivitiesWebController::class)
      ->name('projects.activities.compare');
 
 Route::get('/projects/{project}/entitites/create', CreateProjectEntityWebController::class)

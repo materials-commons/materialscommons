@@ -85,7 +85,9 @@
                                         <div class="col-12 tile mt-2"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
                                             <div class="d-flex align-items-center mb-2">
-                                                <input type="radio" name="activity1_id" value="{{$e1activity->id}}"
+                                                <input type="radio" name="activity1_id"
+                                                       value="{{$e1activity->id}}"
+                                                       x-model="activity1Id"
                                                        class="mr-2">
                                                 <label class="mb-0">Select for comparison</label>
                                             </div>
@@ -108,7 +110,9 @@
                                         <div class="col-12 tile mt-2"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
                                             <div class="d-flex align-items-center mb-2">
-                                                <input type="radio" name="activity2_id" value="{{$e2activity->id}}"
+                                                <input type="radio" name="activity2_id"
+                                                       x-model="activity2Id"
+                                                       value="{{$e2activity->id}}"
                                                        class="mr-2">
                                                 <label class="mb-0">Select for comparison</label>
                                             </div>
@@ -132,11 +136,20 @@
             let xdata = {
                 showFilter: false,
                 sample1Processes: {},
-
+                projectId: '{{$project->id}}',
+                activity1Id: '',
+                activity2Id: '',
                 sample2Processes: {},
 
                 compareActivities() {
-                    console.log('compare clicked');
+                    if (this.activity1Id === '' || this.activity2Id === '') {
+                        return;
+                    }
+                    window.location.href = route('projects.activities.compare', {
+                        project: this.projectId,
+                        activity1: this.activity1Id,
+                        activity2: this.activity2Id,
+                    });
                 },
 
                 toggleSample1Process(element) {

@@ -24,7 +24,7 @@
                         <h5>Highlighting Legend:</h5>
                         <ul class="mb-0">
                             <li><span class="badge bg-primary text-white">Blue</span> - Attributes that appear only on one side</li>
-                            <li><span class="badge bg-warning">Yellow</span> - Attributes with the same name but different values (highlighted on the right side)</li>
+                            <li><span class="badge bg-warning">Yellow</span> - Attributes with the same name but different values</li>
                         </ul>
                     </div>
                 </div>

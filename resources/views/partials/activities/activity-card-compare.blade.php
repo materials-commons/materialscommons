@@ -12,7 +12,7 @@
     
     <h6>Attributes</h6>
     <dl class="row ml-2">
-        @foreach($activity->attributes as $attribute)
+        @foreach($activity->attributes->sortBy('name') as $attribute)
             @php
                 $isUnique = false;
                 $isDifferent = false;
@@ -24,11 +24,15 @@
                 if (isset($side) && $side === 'right' && isset($activity2OnlyAttributes) && $activity2OnlyAttributes->contains($attribute->name)) {
                     $isUnique = true;
                 }
+
+                if (isset($side) && $side === 'left' && isset($differentValueAttributes) && $differentValueAttributes->contains($attribute->name)) {
+                    $isDifferent = true;
+                }
                 
                 if (isset($side) && $side === 'right' && isset($differentValueAttributes) && $differentValueAttributes->contains($attribute->name)) {
                     $isDifferent = true;
                 }
-                
+
                 $highlightClass = '';
                 if ($isUnique) {
                     $highlightClass = 'bg-primary text-white';
