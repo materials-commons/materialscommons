@@ -37,6 +37,7 @@ class GetFileByPathAction
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('path', '/')
+                   ->where('mime_type', 'directory')
                    ->first();
     }
 
@@ -46,6 +47,7 @@ class GetFileByPathAction
         $dirName = dirname($path);
         $dir = File::where('project_id', $projectId)
                    ->where('path', $dirName)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)

@@ -60,6 +60,7 @@ class UpdateMoveFilesWebController extends Controller
     {
         $dirsToMove = File::whereIn('id', $ids)
                           ->whereNotNull('path')
+                          ->where('mime_type', 'directory')
                           ->whereNull('dataset_id')
                           ->whereNull('deleted_at')
                           ->where('current', true)
@@ -90,7 +91,7 @@ class UpdateMoveFilesWebController extends Controller
     {
         $moveFileAction = new MoveFileAction();
         $filesToMove = File::whereIn('id', $ids)
-                           ->whereNull('path')
+                           ->where('mime_type', '<>', 'directory')
                            ->get();
 
         $filesToMove->each(function ($file) use ($moveToDirectory, $moveFileAction, $user) {
@@ -103,6 +104,7 @@ class UpdateMoveFilesWebController extends Controller
 
         $dirsToMove = File::whereIn('id', $ids)
                           ->whereNotNull('path')
+                          ->where('mime_type', 'directory')
                           ->whereNull('dataset_id')
                           ->whereNull('deleted_at')
                           ->where('current', true)

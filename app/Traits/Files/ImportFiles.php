@@ -31,6 +31,7 @@ trait ImportFiles
                          ->whereNull('dataset_id')
                          ->whereNull('deleted_at')
                          ->where('path', dirname($dirPath))
+                         ->where('mime_type', 'directory')
                          ->where('current', true)
                          ->first();
         return $this->getOrCreateSingleDirectoryIfDoesNotExist($parentDir, $dirPath, $project, $ownerId);

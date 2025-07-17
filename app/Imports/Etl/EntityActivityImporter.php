@@ -603,6 +603,7 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
+                   ->where('mime_type', 'directory')
                    ->where('current', true)
                    ->whereNull('deleted_at')
                    ->whereNull('dataset_id')

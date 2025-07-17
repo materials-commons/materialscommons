@@ -46,7 +46,7 @@ class CreateGlobusProjectDownloadDirsAction
             $this->createDirIfNotExists("__globus_downloads/{$globusDownload->uuid}{$dir->path}");
             $files = File::currentProjectFiles($globusDownload->project_id)
                          ->where('directory_id', $dir->id)
-                         ->whereNull('path')
+                         ->where('mime_type', '<>', 'directory')
                          ->cursor();
 //            $files = File::where('directory_id', $dir->id)
 //                         ->whereNull('deleted_at')
