@@ -144,8 +144,7 @@
                             <td>
                                 @if($file->isImage())
                                     <a href="{{route('projects.files.display', [$project, $file])}}">
-
-                                        <img src="{{route('projects.files.display', [$project, $file])}}"
+                                        <img src="{{route('projects.files.display.thumbnail', [$project, $file])}}"
                                              style="width: 12rem">
                                     </a>
                                 @endif

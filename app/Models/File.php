@@ -359,6 +359,17 @@ class File extends Model implements Searchable
 
         return $this->pathDirPartial()."/.conversion/{$fileName}";
     }
+    
+    public function thumbnailPathPartial()
+    {
+        $fileName = $this->getFileUuidToUse().".thumb.jpg";
+        return $this->pathDirPartial()."/.thumbnails/{$fileName}";
+    }
+
+    public function thumbnailExists()
+    {
+        return Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
+    }
 
     public function isConvertible()
     {
@@ -386,6 +397,15 @@ class File extends Model implements Searchable
         }
 
         return !Storage::disk('mcfs')->exists($this->convertedPathPartial());
+    }
+    
+    public function shouldGenerateThumbnail()
+    {
+        if (!$this->isImage()) {
+            return false;
+        }
+
+        return !Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
     }
 
     public function isConvertibleImage()

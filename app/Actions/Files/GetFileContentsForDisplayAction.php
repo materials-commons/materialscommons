@@ -40,9 +40,9 @@ class GetFileContentsForDisplayAction
         ];
     }
 
-    public function execute(File $file)
+    public function execute(File $file, $useThumbnail = false)
     {
-        $filePathPartial = $this->fileContentsPathPartial($file);
+        $filePathPartial = $this->fileContentsPathPartial($file, $useThumbnail);
         if (!Storage::disk('mcfs')->exists($filePathPartial)) {
             return null;
         }
@@ -71,7 +71,7 @@ class GetFileContentsForDisplayAction
         return $file->mime_type;
     }
 
-    private function fileContentsPathPartial(File $file)
+    private function fileContentsPathPartial(File $file, $useThumbnail = false)
     {
         $uuid = $file->uuid;
         if (!blank($file->uses_uuid)) {
@@ -83,6 +83,12 @@ class GetFileContentsForDisplayAction
 
         $dirPath = "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
         $fileName = $uuid;
+
+        if ($useThumbnail && $file->isImage()) {
+            $dirPath = $dirPath."/.thumbnails";
+            $fileName = $fileName.".thumb.jpg";
+            return "{$dirPath}/{$fileName}";
+        }
 
         if (array_key_exists($file->mime_type, $this->convertibleImageTypes)) {
             $dirPath = $dirPath."/.conversion";
