@@ -38,13 +38,14 @@ class MoveFoldersAndFilesBetweenProjectsJob implements ShouldQueue
     {
         $dirsToMove = File::whereIn('id', $this->idsToMove)
                           ->whereNotNull('path')
+                          ->where('mime_type', 'directory')
                           ->whereNull('dataset_id')
                           ->whereNull('deleted_at')
                           ->where('current', true)
                           ->get();
 
         $filesToMove = File::whereIn('id', $this->idsToMove)
-                           ->whereNull('path')
+                           ->where('mime_type', '<>', 'directory')
                            ->get();
 
         $moveToDirectory = File::find($this->destinationDirId);

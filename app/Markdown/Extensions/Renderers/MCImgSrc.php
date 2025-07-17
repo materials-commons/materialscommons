@@ -64,6 +64,7 @@ trait MCImgSrc
 
         $q = File::where($column, $id)
                  ->where('path', $dirPath)
+                 ->where('mime_type', 'directory')
                  ->whereNull('deleted_at')
                  ->where('current', true);
         if ($modelType === 'project') {

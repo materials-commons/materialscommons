@@ -57,6 +57,7 @@ class Script extends Model
     public static function listForProject(Project $project): Collection
     {
         $dir = File::where('path', "/scripts")
+                   ->where('mime_type', 'directory')
                    ->where('project_id', $project->id)
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')

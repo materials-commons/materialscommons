@@ -62,6 +62,7 @@ trait ChildDirs
 
         $query = File::where('directory_id', $directoryId)
                      ->where('current', true)
+                     ->where('mime_type', 'directory')
                      ->whereNotNull('path')
                      ->whereNull('deleted_at');
         if (is_null($datasetId)) {
@@ -91,6 +92,7 @@ trait ChildDirs
             $query = File::whereIn('directory_id', $dirIds)
                          ->where('current', true)
                          ->whereNull('deleted_at')
+                         ->where('mime_type', 'directory')
                          ->whereNotNull('path');
 
             if (is_null($datasetId)) {

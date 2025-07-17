@@ -469,6 +469,7 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)
@@ -479,6 +480,7 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)

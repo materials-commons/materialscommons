@@ -29,6 +29,7 @@ class ShowPublishedDatasetFolderWebController extends Controller
         if ($folderId == -1) {
             $dir = File::where('dataset_id', $dataset->id)
                        ->where('path', '/')
+                       ->where('mime_type', 'directory')
                        ->first();
         } else {
             $dir = File::where('dataset_id', $dataset->id)

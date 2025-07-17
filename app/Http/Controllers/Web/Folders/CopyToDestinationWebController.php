@@ -51,7 +51,7 @@ class CopyToDestinationWebController extends Controller
         // We assume that file copies are cheap and just copy in place rather than
         // running them as background jobs.
         $filesToCopy = File::whereIn('id', $ids)
-                           ->whereNull('path')
+                           ->where('mime_type', '<>', 'directory')
                            ->get();
         $copyFileAction = new CopyFileAction();
         $filesToCopy->each(function ($file) use ($copyToDirectory, $user, $copyFileAction) {
@@ -66,6 +66,7 @@ class CopyToDestinationWebController extends Controller
         // so these run as background jobs.
         $dirsToCopy = File::whereIn('id', $ids)
                           ->whereNotNull('path')
+                          ->where('mime_type', 'directory')
                           ->whereNull('dataset_id')
                           ->whereNull('deleted_at')
                           ->where('current', true)
