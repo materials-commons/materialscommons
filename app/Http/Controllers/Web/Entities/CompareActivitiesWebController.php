@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Web\Entities;
 
+use App\DTO\Activities\AttributesComparerState;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use function collect;
 
 class CompareActivitiesWebController extends Controller
 {
@@ -18,46 +21,70 @@ class CompareActivitiesWebController extends Controller
             return redirect()->back()->with('error', 'Please select two activities to compare.');
         }
 
-        $activity1 = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
-                            ->findOrFail($activity1Id);
-        $activity2 = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
-                            ->findOrFail($activity2Id);
+        $activity1 = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files', 'entities'])
+                             ->findOrFail($activity1Id);
+        $activity2 = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files', 'entities'])
+                             ->findOrFail($activity2Id);
+
+        $activityAttributesState = $this->buildAttributesCompareState($activity1->attributes, $activity2->attributes);
+
+        $activity1EntityStateOutAttributes = $this->collectOutAttributesForEntityStates($activity1->entityStates);
+        $activity2EntityStateOutAttributes = $this->collectOutAttributesForEntityStates($activity2->entityStates);
+        $entityAttributesState = $this->buildAttributesCompareState($activity1EntityStateOutAttributes,
+            $activity2EntityStateOutAttributes);
+
+        return view('app.projects.activities.compare', [
+            'project'                           => $project,
+            'activity1'                         => $activity1,
+            'activity2'                         => $activity2,
+            'activityAttributesState'           => $activityAttributesState,
+            'entityAttributesState'             => $entityAttributesState,
+            'activity1EntityStateOutAttributes' => $activity1EntityStateOutAttributes,
+            'activity2EntityStateOutAttributes' => $activity2EntityStateOutAttributes,
+        ]);
+    }
+
+    private function collectOutAttributesForEntityStates($entityStates): Collection
+    {
+        return $entityStates
+            ->filter(function ($entityState) {
+                return $entityState->pivot->direction === "out";
+            })
+            ->flatMap(function ($entityState) {
+                return $entityState->attributes;
+            });
+    }
+
+    private function buildAttributesCompareState($attributes1, $attributes2): AttributesComparerState
+    {
+        $state = new AttributesComparerState();
 
         // Compare attributes
-        $activity1Attributes = collect($activity1->attributes)->keyBy('name');
-        $activity2Attributes = collect($activity2->attributes)->keyBy('name');
+        $attributes1ByName = collect($attributes1)->keyBy('name');
+        $attributes2ByName = collect($attributes2)->keyBy('name');
 
         // Attributes in both activities
-        $commonAttributes = $activity1Attributes->keys()->intersect($activity2Attributes->keys());
-        
+        $commonAttributes = $attributes1ByName->keys()->intersect($attributes2ByName->keys());
+
         // Attributes only in activity1
-        $activity1OnlyAttributes = $activity1Attributes->keys()->diff($activity2Attributes->keys());
-        
+        $state->activity1OnlyAttributes = $attributes1ByName->keys()->diff($attributes2ByName->keys());
+
         // Attributes only in activity2
-        $activity2OnlyAttributes = $activity2Attributes->keys()->diff($activity1Attributes->keys());
-        
+        $state->activity2OnlyAttributes = $attributes2ByName->keys()->diff($attributes1ByName->keys());
+
         // Attributes with different values
-        $differentValueAttributes = collect();
         foreach ($commonAttributes as $attributeName) {
-            $attr1 = $activity1Attributes[$attributeName];
-            $attr2 = $activity2Attributes[$attributeName];
-            
+            $attr1 = $attributes1ByName[$attributeName];
+            $attr2 = $attributes2ByName[$attributeName];
+
             $value1 = $attr1->values[0]->val["value"] ?? null;
             $value2 = $attr2->values[0]->val["value"] ?? null;
-            
+
             if ($value1 != $value2) {
-                $differentValueAttributes->push($attributeName);
+                $state->differentValueAttributes->push($attributeName);
             }
         }
 
-        return view('app.projects.activities.compare', [
-            'project' => $project,
-            'activity1' => $activity1,
-            'activity2' => $activity2,
-            'commonAttributes' => $commonAttributes,
-            'activity1OnlyAttributes' => $activity1OnlyAttributes,
-            'activity2OnlyAttributes' => $activity2OnlyAttributes,
-            'differentValueAttributes' => $differentValueAttributes,
-        ]);
+        return $state;
     }
 }

@@ -1,7 +1,7 @@
-@props(['attributes', 'side', 'comparerState'])
+@props(['attrs', 'side', 'comparerState'])
 
 <dl class="row ml-2">
-    @foreach($attributes->sortBy('name') as $attribute)
+    @foreach($attrs->sortBy('name') as $attribute)
         @php
             $isUnique = false;
             $isDifferent = false;

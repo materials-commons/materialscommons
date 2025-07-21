@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Activities\Compare;
+namespace App\DTO\Activities;
 
 use Illuminate\Support\Collection;
 
