@@ -9,6 +9,7 @@ use App\Models\Experiment;
 use App\Models\Project;
 use App\Traits\Entities\PrevNextEntity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use function view;
 
 class ShowEntityByNameSpreadWebController extends Controller
@@ -18,7 +19,7 @@ class ShowEntityByNameSpreadWebController extends Controller
     public function __invoke(Request $request, Project $project, Experiment $experiment)
     {
         $name = $request->input("name");
-        $fromExperiment = $request->input("fromExperiment");
+        $fromExperiment = $this->isFromExperiment($request);
         $project = $project->load('entities');
         $entity = Entity::with(['activities', 'tags'])
                         ->where('name', urldecode($name))
@@ -43,7 +44,7 @@ class ShowEntityByNameSpreadWebController extends Controller
         // Compute previous and next entities by first creating the query to get the ordered.
         // The computePrevNext will set $this->prevEntity and $this->nextEntity.
         $category = $entity->category;
-        if ($fromExperiment == 'true') {
+        if ($fromExperiment) {
             if ($category == 'experimental') {
                 $allEntities = $experiment->experimental_entities()
                                           ->with(['activities', 'experiments'])

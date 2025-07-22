@@ -2,6 +2,8 @@
 
 namespace App\Traits\Entities;
 
+use Illuminate\Support\Str;
+
 trait PrevNextEntity
 {
     public $prevEntity;
@@ -27,5 +29,15 @@ trait PrevNextEntity
                 $this->prevEntity = $allEntities[$currentIndex - 1];
             }
         }
+    }
+
+    private function isFromExperiment($request)
+    {
+        $routeName = $request->route()->getName();
+        if (Str::contains($routeName,'experiments')) {
+            return true;
+        }
+
+        return $request->input("fromExperiment") == "true";
     }
 }
