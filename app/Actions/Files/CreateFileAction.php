@@ -3,6 +3,7 @@
 namespace App\Actions\Files;
 
 use App\Jobs\Files\ConvertFileJob;
+use App\Jobs\Files\GenerateThumbnailJob;
 use App\Models\File;
 use App\Models\Script;
 use Illuminate\Support\Collection;
@@ -50,6 +51,10 @@ class CreateFileAction
 
             if ($existingFile->shouldBeConverted()) {
                 ConvertFileJob::dispatch($existingFile)->onQueue('globus');
+            }
+
+            if ($existingFile->isImage()) {
+                GenerateThumbnailJob::dispatch($existingFile)->onQueue('globus');
             }
 
             if ($existingFile->isRunnable()) {
@@ -113,6 +118,10 @@ class CreateFileAction
 
         if ($fileEntry->shouldBeConverted()) {
             ConvertFileJob::dispatch($fileEntry)->onQueue('globus');
+        }
+
+        if ($fileEntry->isImage()) {
+            GenerateThumbnailJob::dispatch($fileEntry)->onQueue('globus');
         }
 
         if ($fileEntry->isRunnable()) {

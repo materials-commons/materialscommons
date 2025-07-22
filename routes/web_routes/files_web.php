@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Files\CreateProjectFileWebController;
 use App\Http\Controllers\Web\Files\DeleteFileWebController;
 use App\Http\Controllers\Web\Files\DestroyFileWebController;
 use App\Http\Controllers\Web\Files\DisplayFileWebController;
+use App\Http\Controllers\Web\Files\DisplayFileThumbnailWebController;
 use App\Http\Controllers\Web\Files\DownloadFileWebController;
 use App\Http\Controllers\Web\Files\EditProjectFileWebController;
 use App\Http\Controllers\Web\Files\RenameFileWebController;
@@ -77,6 +78,9 @@ Route::get('/projects/{project}/files/{file1}/{file2}/compare', CompareFilesWebC
 
 Route::get('/projects/{project}/files/{file}/display', DisplayFileWebController::class)
      ->name('projects.files.display');
+
+Route::get('/projects/{project}/files/{file}/display/thumbnail', DisplayFileThumbnailWebController::class)
+     ->name('projects.files.display.thumbnail');
 
 Route::get('/projects/{project}/files/{file}/download', DownloadFileWebController::class)
      ->name('projects.files.download');
