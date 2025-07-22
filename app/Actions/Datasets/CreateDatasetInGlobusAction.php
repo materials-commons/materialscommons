@@ -34,6 +34,10 @@ class CreateDatasetInGlobusAction
                 mkdir($dirPath, 0777, true);
             }
 
+            if ($file->mime_type === 'url') {
+                // This file represents a URL. There is nothing to copy over into the directory.
+                continue;
+            }
             $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));
             $filePath = "{$datasetDir}{$file->directory->path}/{$file->name}";
             try {

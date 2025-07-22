@@ -29,16 +29,47 @@
                 Sample: {{$entity->name}}
             @endif
 
-            <a class="float-right action-link" href="#"
-               onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
-                <i class="fas fa-object-group mr-2"></i>Group By Process Type
-            </a>
+            <div class="float-right">
+
+                @if(isset($prevEntity))
+                    @if($entity->category == "computational")
+                        <a class="action-link mr-3"
+                           href="{{route('projects.computations.entities.show-spread', [$project, $prevEntity])}}">
+                            <i class="fas fa-chevron-left mr-1"></i>Previous
+                        </a>
+                    @else
+                        <a class="action-link mr-3"
+                           href="{{route('projects.entities.show-spread', [$project, $prevEntity])}}">
+                            <i class="fas fa-chevron-left mr-1"></i>Previous
+                        </a>
+                    @endif
+                @endif
+
+                @if(isset($nextEntity))
+                    @if($entity->category == "computational")
+                        <a class="action-link mr-3"
+                           href="{{route('projects.computations.entities.show-spread', [$project, $nextEntity])}}">
+                            Next<i class="fas fa-chevron-right ml-1"></i>
+                        </a>
+                    @else
+                        <a class="action-link mr-5"
+                           href="{{route('projects.entities.show-spread', [$project, $nextEntity])}}">
+                            Next<i class="fas fa-chevron-right ml-1"></i>
+                        </a>
+                    @endif
+                @endif
+
+                <a class="action-link" href="#"
+                   onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
+                    <i class="fas fa-object-group mr-2"></i>Group By Process Type
+                </a>
+            </div>
 
             <div class="col col-lg-4 float-right">
                 <select class="selectpicker col-lg-10 mc-select"
                         data-style="btn-light no-tt"
                         data-live-search="true" title="{{$title}}">
-                    @foreach($project->entities as $entry)
+                    @foreach($allEntities as $entry)
                         @if ($entry->name != $entity->name)
                             <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
                         @endif

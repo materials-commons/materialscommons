@@ -29,6 +29,11 @@
     </a>
 
     <a class="float-right action-link mr-4"
+       href="{{route('projects.folders.add-url', [$project, $directory, 'destdir' => $destdir, 'destproj' => $destproj, 'arg' => $arg])}}">
+        <i class="fas fa-fw fa-link mr-2"></i>Add URL
+    </a>
+
+    <a class="float-right action-link mr-4"
        href="{{route('projects.folders.upload', [$project->id, $directory->id, 'destdir' => $destdir, 'destproj' => $destproj, 'arg' => $arg])}}">
         <i class="fas fa-fw fa-plus mr-2"></i>Upload
     </a>

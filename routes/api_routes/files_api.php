@@ -15,8 +15,10 @@ use App\Http\Controllers\Api\Files\ShowFileVersionsApiController;
 use App\Http\Controllers\Api\Files\UpdateFileApiController;
 use App\Http\Controllers\Api\Files\UploadFileApiController;
 use App\Http\Controllers\Api\Files\UploadFileNamedApiController;
+use App\Http\Controllers\Api\Files\UploadFileToPathApiController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/projects/{project}/files/upload-to-path', UploadFileToPathApiController::class);
 Route::post('/files', CreateFileApiController::class);
 Route::post("/projects/files/matching", IndexAllProjectsForFilesMatchingApiController::class);
 Route::post("/projects/{project}/files/matching", IndexProjectForFilesMatchingApiController::class);

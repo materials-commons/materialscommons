@@ -33,23 +33,23 @@
                             console.log('showDirectoryPicker is not supported');
                         }
 
-                        $('#start-tour').on('click', function () {
-                            window.tourService.initState("{{auth()->user()->api_token}}");
+                        {{--$('#start-tour').on('click', function () {--}}
+                        {{--    window.tourService.initState("{{auth()->user()->api_token}}");--}}
 
-                            // Get current route
-                            const currentRoute = "{{Route::currentRouteName()}}";
+                        {{--    // Get current route--}}
+                        {{--    const currentRoute = "{{Route::currentRouteName()}}";--}}
 
-                            // Get the appropriate tour for the current route
-                            const tourName = window.tourService.getTourForRoute(currentRoute);
+                        {{--    // Get the appropriate tour for the current route--}}
+                        {{--    const tourName = window.tourService.getTourForRoute(currentRoute);--}}
 
-                            if (tourName) {
-                                // Start the tour
-                                window.tourService.startTour(tourName);
-                            } else {
-                                $('#no-tour-dialog').modal('show');
-                                console.error('No tour available for this page');
-                            }
-                        });
+                        {{--    if (tourName) {--}}
+                        {{--        // Start the tour--}}
+                        {{--        window.tourService.startTour(tourName);--}}
+                        {{--    } else {--}}
+                        {{--        $('#no-tour-dialog').modal('show');--}}
+                        {{--        console.error('No tour available for this page');--}}
+                        {{--    }--}}
+                        {{--});--}}
                     });
                 </script>
             @endpush

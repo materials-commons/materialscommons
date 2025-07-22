@@ -21,6 +21,7 @@ use function intdiv;
  * @property string uuid
  * @property string uses_uuid
  * @property string path
+ * @property string url
  * @property string $name
  * @property string $description
  * @property string $mime_type
@@ -363,6 +364,17 @@ class File extends Model implements Searchable
 
         return $this->pathDirPartial()."/.conversion/{$fileName}";
     }
+    
+    public function thumbnailPathPartial()
+    {
+        $fileName = $this->getFileUuidToUse().".thumb.jpg";
+        return $this->pathDirPartial()."/.thumbnails/{$fileName}";
+    }
+
+    public function thumbnailExists()
+    {
+        return Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
+    }
 
     public function isConvertible()
     {
@@ -390,6 +402,15 @@ class File extends Model implements Searchable
         }
 
         return !Storage::disk('mcfs')->exists($this->convertedPathPartial());
+    }
+    
+    public function shouldGenerateThumbnail()
+    {
+        if (!$this->isImage()) {
+            return false;
+        }
+
+        return !Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
     }
 
     public function isConvertibleImage()
@@ -473,6 +494,7 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)
@@ -483,6 +505,7 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)
