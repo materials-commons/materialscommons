@@ -107,6 +107,30 @@ class File extends Model implements Searchable
                      ->where('current', true);
     }
 
+    /**
+     * Scope to get project directories
+     */
+    public function scopeProjectDirectory(Builder $query, int $projectId): Builder
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereNull('deleted_at')
+                     ->whereNull('dataset_id')
+                     ->where('mime_type', 'directory');
+    }
+
+    /**
+     * Scope to get project files
+     */
+    public function scopeProjectFile(Builder $query, int $projectId): Builder
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereNull('deleted_at')
+                     ->whereNull('dataset_id')
+                     ->where('current', true)
+                     ->where('mime_type', '<>', 'directory');
+    }
+
+
     public function currentVersion()
     {
         return File::where('directory_id', $this->directory_id)
