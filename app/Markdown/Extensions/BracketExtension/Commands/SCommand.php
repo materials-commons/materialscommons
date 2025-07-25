@@ -24,4 +24,9 @@ class SCommand implements CommandInterface
     {
         return "<div>s:{$value}</div>";
     }
+
+    public function render2(string $command, string $value): string
+    {
+        return $this->render($value);
+    }
 }
