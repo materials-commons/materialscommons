@@ -34,6 +34,7 @@ class CreateDirectoryAction
     private function getExistingDirIfExists($path, $projectId)
     {
         return File::where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->where('current', true)
                    ->where('project_id', $projectId)
                    ->whereNull('deleted_at')

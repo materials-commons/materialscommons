@@ -157,6 +157,7 @@ class Project extends Model
         return $this->hasOne(File::class, 'project_id')
                     ->whereNull('dataset_id')
                     ->whereNull('deleted_at')
+                    ->where('mime_type', 'directory')
                     ->where('path', '/');
     }
 

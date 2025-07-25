@@ -26,6 +26,7 @@ class RenameFileRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:80', new IsValidFileName()],
+            'url'  => 'nullable|url|max:2048',
             'project_id' => 'required|integer',
         ];
     }

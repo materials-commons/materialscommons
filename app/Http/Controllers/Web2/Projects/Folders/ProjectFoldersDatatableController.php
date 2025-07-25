@@ -18,7 +18,11 @@ class ProjectFoldersDatatableController extends Controller
     {
         $rootId = File::where('project_id', $id)->where('name', '/')->first()->id;
         return Laratables::recordsOf(File::class, function ($query) use ($id, $rootId) {
-            return $query->where('project_id', $id)->where('directory_id', $rootId)->where('current', true);
+            return $query->where('project_id', $id)
+                         ->where('directory_id', $rootId)
+                         ->whereNull('deleted_at')
+                         ->whereNull('dataset_id')
+                         ->where('current', true);
         });
     }
 
@@ -30,7 +34,11 @@ class ProjectFoldersDatatableController extends Controller
     public function getFolder($projectId, $folderId)
     {
         return Laratables::recordsOf(File::class, function ($query) use ($projectId, $folderId) {
-            return $query->where('project_id', $projectId)->where('directory_id', $folderId)->where('current', true);
+            return $query->where('project_id', $projectId)
+                         ->where('directory_id', $folderId)
+                         ->whereNull('deleted_at')
+                         ->whereNull('dataset_id')
+                         ->where('current', true);
         });
     }
 }

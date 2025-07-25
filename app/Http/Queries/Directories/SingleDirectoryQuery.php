@@ -21,6 +21,7 @@ class SingleDirectoryQuery extends DirectoriesQueryBuilder
         $query = File::with(['owner', 'directory'])
                      ->where('id', $directoryId)
                      ->whereNull('deleted_at')
+                     ->whereNull('dataset_id')
                      ->where('mime_type', 'directory');
         parent::__construct($query, $request);
     }

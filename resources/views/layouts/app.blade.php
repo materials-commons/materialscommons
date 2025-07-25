@@ -90,12 +90,12 @@
     <div class="navbar-collapse collapse" id="navbar5">
         <ul class="navbar-nav">
             {{--            Kept here for formatting purposes--}}
-            <li class="nav-item">
-                <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
-                    <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
-                </a>
-            </li>
             @auth
+                <li class="nav-item">
+                    <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
+                        <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
                        href="#code-dialog">
@@ -199,6 +199,7 @@
     $(document).ready(() => {
         mcutil.autosizeTextareas();
 
+        @auth
         $('#app-start-tour').on('click', function () {
             window.tourService.initState("{{auth()->user()->api_token}}");
 
@@ -216,6 +217,7 @@
                 console.error('No tour available for this page');
             }
         });
+        @endauth
     });
     window.mc_grids = [];
 

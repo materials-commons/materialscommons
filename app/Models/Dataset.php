@@ -133,6 +133,7 @@ class Dataset extends Model
     public function rootDir()
     {
         return $this->hasOne(File::class, 'dataset_id')
+                    ->where('mime_type', 'directory')
                     ->where('path', '/');
     }
 

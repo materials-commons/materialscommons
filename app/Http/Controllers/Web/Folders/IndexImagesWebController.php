@@ -19,6 +19,9 @@ class IndexImagesWebController extends Controller
         $destDir = $this->getDestinationDirId();
         $images = File::with(['entities'])
                       ->where('directory_id', $folder->id)
+                      ->where('current', true)
+                      ->whereNull('deleted_at')
+                      ->whereNull('dataset_id')
                       ->where(function ($query) {
                           $query->orWhere('mime_type', 'image/jpeg')
                                 ->orWhere('mime_type', 'image/png')
