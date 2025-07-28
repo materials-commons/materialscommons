@@ -1,0 +1,412 @@
+/* Sidebar Base Styles */
+.sidebar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.sidebar-sticky {
+    position: sticky;
+    top: 1rem;
+    height: calc(100vh - 2rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Group Styling */
+.sidebar-group {
+    background-color: #E4EAF5;
+    border-radius: 8px;
+    margin: 8px 8px;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+}
+
+.sidebar-group:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Group Header Styling */
+.sidebar-group-header {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2b6bb1;
+    //margin-bottom: 10px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Navigation Items */
+.sidebar-group .nav-link {
+    padding: 0.4rem 0.8rem;
+    margin: 2px 0;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.sidebar-group .nav-link:hover {
+    background-color: rgba(173, 194, 225, 0.3);
+    color: #2b6bb1;
+}
+
+.sidebar-group .nav-link.active {
+    background-color: #ADC2E1;
+    color: #1a365d;
+    font-weight: 500;
+}
+
+/* Icons in navigation */
+.sidebar-group .nav-link i {
+    width: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.sidebar-group .nav-link:hover i,
+.sidebar-group .nav-link.active i {
+    color: #2b6bb1;
+}
+
+/* Scrollbar Styling */
+.sidebar-sticky::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb {
+    background: #DAE3F3;
+    border-radius: 3px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb:hover {
+    background: #ADC2E1;
+}
+
+/* Bottom Navigation */
+.sidebar .nav-link {
+    color: #495057;
+    transition: color 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    color: #2b6bb1;
+}
+
+/* Tooltips enhancement */
+.tooltip {
+    font-size: 0.8rem;
+}
+
+/* Globus-specific styling */
+.sidebar-group .nav-link.globus-link {
+    border-left: 3px solid #2b6bb1;
+    background-color: rgba(173, 194, 225, 0.1);
+    transition: all 0.2s ease;
+
+    i {
+        color: #2b6bb1;
+    }
+}
+
+.sidebar-group .nav-link.globus-link:hover {
+    background-color: rgba(173, 194, 225, 0.4);
+    color: #2b6bb1;
+    font-weight: 500;
+}
+
+/* Beta features indicator */
+.sidebar-group .nav-link.beta-feature {
+    position: relative;
+
+    &::after {
+        content: 'BETA';
+        font-size: 0.6rem;
+        background-color: #2b6bb1;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 3px;
+        margin-left: 8px;
+        vertical-align: middle;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    &:hover::after {
+        opacity: 1;
+    }
+}
+
+/* Separator for Globus section */
+.globus-section {
+    position: relative;
+    padding-top: 8px;
+    margin-top: 8px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 8px;
+        right: 8px;
+        height: 1px;
+        background-color: rgba(43, 107, 177, 0.2);
+    }
+}
+
+.global-nav {
+    margin-bottom: 1.25rem;
+
+    .nav-link {
+        color: #4a5568;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+
+        i {
+            color: #2b6bb1;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        &:hover {
+            background-color: rgba(43, 107, 177, 0.04);
+            color: #2b6bb1;
+
+            i {
+                opacity: 1;
+            }
+        }
+
+        &.active {
+            background-color: rgba(43, 107, 177, 0.07);
+            color: #2b6bb1;
+        }
+    }
+}
+
+/* Global Navigation (Dashboard) */
+.sidebar-group.global-nav {
+    background-color: #edf2f7 !important;
+    border-left: 3px solid #4299e1 !important;
+    margin-bottom: 16px !important;
+    padding: 8px !important;
+}
+
+.sidebar-group.global-nav .nav-link {
+    color: #4299e1 !important;
+    font-size: 0.85rem !important;
+}
+
+.sidebar-group.global-nav .nav-link:hover {
+    background-color: #4299e1 !important;
+    color: white !important;
+}
+
+.sidebar-group.global-nav .nav-link:hover i {
+    color: white !important;
+}
+
+/* Footer Navigation */
+.sidebar-group.footer-nav {
+    background-color: #f0f5fa !important;
+    border-left: 3px solid #718096 !important;
+    margin-top: 16px !important;
+    padding: 8px !important;
+}
+
+.sidebar-group.footer-nav .nav-link {
+    color: #718096 !important;
+    font-size: 0.85rem !important;
+}
+
+.sidebar-group.footer-nav .nav-link:hover {
+    background-color: #718096 !important;
+    color: white !important;
+}
+
+.sidebar-group.footer-nav .nav-link:hover i {
+    color: white !important;
+}
+
+
+.nav-link.project-name {
+    font-weight: bold !important;
+    color: #319795 !important;
+    padding: 0.4rem 0.8rem !important;
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+}
+
+.nav-link.project-name:hover {
+    //color: #2c7a7b !important;
+    color: #ffffff !important;
+    padding: 0.4rem 0.8rem !important;
+    width: 100% !important;
+    background-color: #319795 !important;
+}
+
+.nav-link.project-name:hover i {
+    color: #ffffff !important;
+    background-color: #319795 !important;
+}
+
+/* Project Sections */
+.project-sections {
+    padding-left: 0.75rem; // Reduced left padding
+
+    .sidebar-group {
+        position: relative;
+        margin-bottom: 0.25rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: -0.75rem; // Adjusted to match new padding
+            top: 0;
+            bottom: 0;
+            width: 1px; // Thinner line
+            background-color: rgba(43, 107, 177, 0.15);
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            padding: 0.15rem 0.375rem; // Reduced vertical padding
+            line-height: 1.2; // Tighter line height
+
+            &:not(:last-child) {
+                margin-bottom: 1px; // Minimal space between links
+            }
+        }
+
+        // Adjust list spacing
+        .nav.flex-column {
+            margin: 0.1rem 0; // Minimal margin around the list itself
+        }
+
+
+        .sidebar-group-header {
+            color: #2b6bb1;
+            font-weight: 600;
+            padding: 0.25rem 0;
+            font-size: 0.95rem; // Slightly smaller
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.85rem; // Smaller icons
+                margin-right: 0.5rem; // Reduced margin
+            }
+        }
+    }
+
+    .sidebar-subgroup {
+        padding-left: 0.375rem; // Reduced indent
+        position: relative;
+        //padding-top: 0.375rem;
+        //margin-top: 0.375rem;
+
+        &:not(:first-child)::before {
+            height: 1px;
+            background-color: rgba(43, 107, 177, 0.08); // Lighter separator
+        }
+
+        .sidebar-subgroup-header {
+            color: #2b6bb1;
+            font-weight: 600;
+            font-size: 0.85rem; // Smaller font
+            padding: 0.15rem 0;
+            //margin-bottom: 0.15rem;
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.75rem; // Even smaller icons
+                margin-right: 0.375rem; // Reduced margin
+                opacity: 0.9; // Slightly dimmed icons
+            }
+        }
+
+        .nav-item {
+            margin: 0.1rem 0; // Tighter spacing
+        }
+
+        .nav-link {
+            border-radius: 2px; // Smaller radius
+            padding: 0.2rem 0.375rem;
+            font-size: 0.8rem; // Smaller font for links
+            color: #4a5568; // Slightly muted color
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.75rem; // Consistent small icons
+                margin-right: 0.375rem;
+                opacity: 0.8;
+            }
+
+            &:hover {
+                background-color: rgba(43, 107, 177, 0.04);
+                color: #2b6bb1;
+
+                i {
+                    opacity: 1;
+                }
+            }
+
+            &.active {
+                background-color: rgba(43, 107, 177, 0.07);
+                color: #2b6bb1;
+                font-weight: 500;
+
+                i {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+// Add this to ensure proper alignment of all icons
+.fa-fw {
+    width: 1.25em; // Slightly narrower than default
+    text-align: center;
+}
+
+/* Footer Navigation */
+.footer-nav {
+    margin-top: auto;
+
+    .nav-link {
+        color: #718096;
+
+        &:hover {
+            background-color: rgba(113, 128, 150, 0.1);
+        }
+
+        &.active {
+            background-color: rgba(113, 128, 150, 0.2);
+        }
+    }
+}
+
+
+/* Make sidebar sticky container flex */
+//.sidebar-sticky {
+//    display: flex;
+//    flex-direction: column;
+//}

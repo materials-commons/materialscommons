@@ -10,6 +10,8 @@
 @import '~bootstrap-select/sass/bootstrap-select';
 @import '~@yaireo/tagify/dist/tagify';
 
+@import 'sidebar';
+
 @import 'bootstrap-steps';
 
 // Hide repatcha badge
@@ -205,7 +207,8 @@ body {
 //}
 
 .sidebar .nav-link.active {
-    background-color: $grey-8;
+    //background-color: $grey-8;
+    background-color: #adc2e1;
     font-weight: bold;
     margin-right: 5px;
     border-top-right-radius: 2px;
