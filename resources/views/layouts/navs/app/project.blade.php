@@ -11,22 +11,21 @@
                        title="Go to the dashboard listing all your projects and published datasets."
                        href="{{route('dashboard')}}">
                         <i class="fa-fw fas fa-tachometer-alt mr-2"></i>Dashboard
-                        {{--                        Dashboard--}}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
-                        <i class="fa-fw fas fa-city mr-2"></i>Communities
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-11" href="{{route('public.index')}}">
-                        <i class="fa-fw fas fa-globe mr-2"></i>Public Data
+                        <i class="fa-fw fas fa-city mr-2"></i>My Communities
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fs-11 {{setActiveNavByName('accounts.show')}}" href="{{route('accounts.show')}}">
                         <i class="fa-fw fas fa-user mr-2"></i>Account
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-11" href="{{route('public.index')}}">
+                        <i class="fa-fw fas fa-globe mr-2"></i>Public Data
                     </a>
                 </li>
             </ul>
