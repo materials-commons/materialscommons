@@ -36,11 +36,17 @@
             <i class="fas fa-exchange-alt fa-sm mr-2"></i>File Transfer
         </div>
         <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="{{route('projects.upload-files', [$project])}}"
+                   class="nav-link fs-11">
+                    <i class="fas fa-upload mr-2"></i> Start Web Upload
+                </a>
+            </li>
             <x-projects.show-old-globus-side-nav :project="$project" :user="auth()->user()"/>
 
-{{--            @if(isInBeta("globusng"))--}}
-{{--                <x-projects.show-globus-side-nav :project="$project"/>--}}
-{{--            @endif--}}
+            {{--            @if(isInBeta("globusng"))--}}
+            {{--                <x-projects.show-globus-side-nav :project="$project"/>--}}
+            {{--            @endif--}}
 
             @if(isInBeta("globusng2"))
                 <x-projects.show-globus2-side-nav :project="$project"/>
@@ -64,7 +70,6 @@
         </ul>
     </div>
 
-    {{-- Automation --}}
     @if(isInBeta('run_scripts'))
         <div class="sidebar-subgroup">
             <div class="sidebar-subgroup-header">
@@ -79,13 +84,13 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link fs-11 {{setActiveNavByName('projects.triggers')}}"
-                       data-toggle="tooltip" title="View and create triggers that run scripts for specified events"
-                       href="{{route('projects.triggers.index', [$project])}}">
-                        <i class="fa-fw fas fa-bolt mr-2"></i>Triggers
-                    </a>
-                </li>
+                {{--                    <li class="nav-item">--}}
+                {{--                        <a class="nav-link fs-11 {{setActiveNavByName('projects.triggers')}}"--}}
+                {{--                           data-toggle="tooltip" title="View and create triggers that run scripts for specified events"--}}
+                {{--                           href="{{route('projects.triggers.index', [$project])}}">--}}
+                {{--                            <i class="fa-fw fas fa-bolt mr-2"></i>Triggers--}}
+                {{--                        </a>--}}
+                {{--                    </li>--}}
             </ul>
         </div>
     @endif

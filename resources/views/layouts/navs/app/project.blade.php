@@ -14,7 +14,6 @@
                        data-toggle="tooltip"
                        title="View details about your project."
                        href="{{route('projects.show', ['project' => $project->id])}}">
-                        <i class="fa-fw fas fa-vector-square mr-2" style="color:#319795"></i>
                         {{$project->name}}
                     </a>
                 </li>
