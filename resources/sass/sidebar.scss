@@ -161,85 +161,6 @@
     }
 }
 
-.global-nav {
-    margin-bottom: 1.25rem;
-
-    .nav-link {
-        color: #4a5568;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        padding: 0.25rem 0.5rem;
-        border-radius: 3px;
-
-        i {
-            color: #2b6bb1;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        &:hover {
-            background-color: rgba(43, 107, 177, 0.04);
-            color: #2b6bb1;
-
-            i {
-                opacity: 1;
-            }
-        }
-
-        &.active {
-            background-color: rgba(43, 107, 177, 0.07);
-            color: #2b6bb1;
-        }
-    }
-}
-
-/* Global Navigation (Dashboard) */
-.sidebar-group.global-nav {
-    background-color: #edf2f7 !important;
-    border-left: 3px solid #4299e1 !important;
-    margin-bottom: 16px !important;
-    padding: 8px !important;
-}
-
-.sidebar-group.global-nav .nav-link {
-    color: #4299e1 !important;
-    font-size: 0.85rem !important;
-}
-
-.sidebar-group.global-nav .nav-link:hover {
-    background-color: #4299e1 !important;
-    color: white !important;
-}
-
-.sidebar-group.global-nav .nav-link:hover i {
-    color: white !important;
-}
-
-/* Footer Navigation */
-.sidebar-group.footer-nav {
-    background-color: #f0f5fa !important;
-    border-left: 3px solid #718096 !important;
-    margin-top: 16px !important;
-    padding: 8px !important;
-}
-
-.sidebar-group.footer-nav .nav-link {
-    color: #718096 !important;
-    font-size: 0.85rem !important;
-}
-
-.sidebar-group.footer-nav .nav-link:hover {
-    background-color: #718096 !important;
-    color: white !important;
-}
-
-.sidebar-group.footer-nav .nav-link:hover i {
-    color: white !important;
-}
-
-
 .nav-link.project-name {
     font-weight: bold !important;
     color: #319795 !important;
@@ -250,7 +171,6 @@
 }
 
 .nav-link.project-name:hover {
-    //color: #2c7a7b !important;
     color: #ffffff !important;
     padding: 0.4rem 0.8rem !important;
     width: 100% !important;
@@ -273,11 +193,11 @@
         &::before {
             content: '';
             position: absolute;
-            left: -0.75rem; // Adjusted to match new padding
+            left: -0.75rem;
             top: 0;
             bottom: 0;
-            width: 1px; // Thinner line
-            background-color: rgba(43, 107, 177, 0.15);
+            width: 2px;
+            background-color: rgba(49, 151, 149, 0.30); // Using the #319795 teal color
         }
 
         .nav-item {
