@@ -536,6 +536,12 @@ a.action-link.danger:hover {
     }
 }
 
+.card-body.inner-card {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+
+}
+
 .community-card {
     border: 4px solid $blue-2;
 }
@@ -1113,6 +1119,8 @@ kbd {
 .tour-interaction i {
     margin-right: 0.5rem;
 }
+
+
 
 
 
