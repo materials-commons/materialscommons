@@ -1,4 +1,4 @@
-<div class="sidebar-group">
+<div class="sidebar-group compact-nav">
     <div class="sidebar-group-header">
         <i class="fas fa-compass fa-sm mr-2"></i>Navigation
     </div>
@@ -28,3 +28,4 @@
         </li>
     </ul>
 </div>
+

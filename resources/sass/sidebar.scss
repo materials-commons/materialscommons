@@ -1,7 +1,7 @@
 /* Sidebar Base Styles */
 .sidebar {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
 .sidebar-sticky {
@@ -16,8 +16,8 @@
 .sidebar-group {
     background-color: #E4EAF5;
     border-radius: 8px;
-    margin: 8px 8px;
-    padding: 8px;
+    margin: 4px 6px;
+    padding: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: box-shadow 0.2s ease;
 }
@@ -28,11 +28,11 @@
 
 /* Group Header Styling */
 .sidebar-group-header {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #2b6bb1;
     //margin-bottom: 10px;
-    padding: 0 8px;
+    padding: 0 6px;
     display: flex;
     align-items: center;
     text-transform: uppercase;
@@ -41,12 +41,12 @@
 
 /* Navigation Items */
 .sidebar-group .nav-link {
-    padding: 0.4rem 0.8rem;
-    margin: 2px 0;
+    padding: 0.25rem 0.5rem;
+    margin: 1px 0;
     border-radius: 4px;
     transition: all 0.2s ease;
     color: #495057;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .sidebar-group .nav-link:hover {
@@ -128,11 +128,11 @@
 
 /* Project Sections */
 .project-sections {
-    padding-left: 0.75rem; // Reduced left padding
+    padding-left: 0.5rem; // Reduced left padding
 
     .sidebar-group {
         position: relative;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.2rem;
 
         &::before {
             content: '';
@@ -149,8 +149,8 @@
         }
 
         .nav-link {
-            padding: 0.15rem 0.375rem; // Reduced vertical padding
-            line-height: 1.2; // Tighter line height
+            padding: 0.1rem 0.25rem; // Reduced vertical padding
+            line-height: 1.1; // Tighter line height
 
             &:not(:last-child) {
                 margin-bottom: 1px; // Minimal space between links
@@ -159,27 +159,28 @@
 
         // Adjust list spacing
         .nav.flex-column {
-            margin: 0.1rem 0; // Minimal margin around the list itself
+            margin: 0; // Minimal margin around the list itself
+            padding: 0;
         }
 
 
         .sidebar-group-header {
             color: #2b6bb1;
             font-weight: 600;
-            padding: 0.25rem 0;
-            font-size: 0.95rem; // Slightly smaller
+            padding: 0.2rem 0;
+            font-size: 0.85rem; // Slightly smaller
             display: flex;
             align-items: center;
 
             i {
-                font-size: 0.85rem; // Smaller icons
-                margin-right: 0.5rem; // Reduced margin
+                font-size: 0.75rem; // Smaller icons
+                margin-right: 0.35rem; // Reduced margin
             }
         }
     }
 
     .sidebar-subgroup {
-        padding-left: 0.375rem; // Reduced indent
+        padding-left: 0.25rem; // Reduced indent
         position: relative;
         //padding-top: 0.375rem;
         //margin-top: 0.375rem;
@@ -192,34 +193,34 @@
         .sidebar-subgroup-header {
             color: #2b6bb1;
             font-weight: 600;
-            font-size: 0.85rem; // Smaller font
-            padding: 0.15rem 0;
+            font-size: 0.75rem; // Smaller font
+            padding: 0.1rem 0;
             //margin-bottom: 0.15rem;
             display: flex;
             align-items: center;
 
             i {
-                font-size: 0.75rem; // Even smaller icons
-                margin-right: 0.375rem; // Reduced margin
+                font-size: 0.7rem; // Even smaller icons
+                margin-right: 0.25rem; // Reduced margin
                 opacity: 0.9; // Slightly dimmed icons
             }
         }
 
         .nav-item {
-            margin: 0.1rem 0; // Tighter spacing
+            margin: 0; // Tighter spacing
         }
 
         .nav-link {
             border-radius: 2px; // Smaller radius
-            padding: 0.2rem 0.375rem;
-            font-size: 0.8rem; // Smaller font for links
+            padding: 0.15rem 0.25rem;
+            font-size: 0.75rem; // Smaller font for links
             color: #4a5568; // Slightly muted color
             display: flex;
             align-items: center;
 
             i {
-                font-size: 0.75rem; // Consistent small icons
-                margin-right: 0.375rem;
+                font-size: 0.7rem; // Consistent small icons
+                margin-right: 0.25rem;
                 opacity: 0.8;
             }
 
@@ -247,6 +248,49 @@
 
 // Add this to ensure proper alignment of all icons
 .fa-fw {
-    width: 1.25em; // Slightly narrower than default
+    width: 1.1em; // Slightly narrower than default
     text-align: center;
+}
+
+
+/* Compact Navigation Styles */
+.compact-nav {
+    /* Container adjustments */
+    padding: 4px;
+    margin: 4px 6px;
+
+    /* Header styling */
+    .sidebar-group-header {
+        font-size: 0.75rem;
+        padding: 0.15rem 0.35rem;
+        margin-bottom: 0.15rem;
+
+        i.fa-sm.mr-2 {
+            margin-right: 0.35rem !important;
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Navigation list adjustments */
+    .nav.flex-column {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navigation items */
+    .nav-item {
+        margin: 0;
+    }
+
+    /* Navigation links */
+    .nav-link.fs-11 {
+        padding: 0.15rem 0.35rem;
+        font-size: 1.1em !important;
+        line-height: 1.2;
+
+        i.mr-2 {
+            margin-right: 0.35rem !important;
+            font-size: 0.7rem;
+        }
+    }
 }
