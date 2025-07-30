@@ -227,7 +227,7 @@ class GoogleSheetsService
             return null;
         }
 
-        $user->update(['google_spreadsheet_id' => $spreadsheetId]);
+//        $user->update(['google_spreadsheet_id' => $spreadsheetId]);
 
         return $user;
     }

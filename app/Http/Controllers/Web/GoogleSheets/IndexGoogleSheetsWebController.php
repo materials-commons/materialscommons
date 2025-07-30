@@ -19,7 +19,7 @@ class IndexGoogleSheetsWebController extends Controller
     {
         $user = $request->user();
         $isConnected = $user->hasGoogleToken();
-        $spreadsheetId = $user->google_spreadsheet_id;
+        $spreadsheetId =  "1quk-doIsfW8NjapsOGE0TXVZ6l530Uui1QXjx-KYOgI";//$user->google_spreadsheet_id;
 
         return view('app.google-sheets.index', [
             'isConnected' => $isConnected,
