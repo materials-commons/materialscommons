@@ -1,3 +1,21 @@
+$sidebar-blue: #2b6bb1;
+$sidebar-bg: #E4EAF5;
+$sidebar-hover-bg: rgba(173, 194, 225, 0.3);
+$sidebar-active-bg: #ADC2E1;
+$sidebar-text: #495057;
+$sidebar-icon-color: #6c757d;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin nav-icon {
+    font-size: 0.7rem;
+    margin-right: 0.35rem;
+    opacity: 0.8;
+}
+
 /* Sidebar Base Styles */
 .sidebar {
     padding-top: 0.75rem;
@@ -10,66 +28,6 @@
     height: calc(100vh - 2rem);
     overflow-y: auto;
     scrollbar-width: thin;
-}
-
-/* Group Styling */
-.sidebar-group {
-    background-color: #E4EAF5;
-    border-radius: 8px;
-    margin: 4px 6px;
-    padding: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.2s ease;
-}
-
-.sidebar-group:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Group Header Styling */
-.sidebar-group-header {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #2b6bb1;
-    //margin-bottom: 10px;
-    padding: 0 6px;
-    display: flex;
-    align-items: center;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Navigation Items */
-.sidebar-group .nav-link {
-    padding: 0.25rem 0.5rem;
-    margin: 1px 0;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-    color: #495057;
-    font-size: 0.8rem;
-}
-
-.sidebar-group .nav-link:hover {
-    background-color: rgba(173, 194, 225, 0.3);
-    color: #2b6bb1;
-}
-
-.sidebar-group .nav-link.active {
-    background-color: #ADC2E1;
-    color: #1a365d;
-    font-weight: 500;
-}
-
-/* Icons in navigation */
-.sidebar-group .nav-link i {
-    width: 20px;
-    text-align: center;
-    color: #6c757d;
-}
-
-.sidebar-group .nav-link:hover i,
-.sidebar-group .nav-link.active i {
-    color: #2b6bb1;
 }
 
 /* Scrollbar Styling */
@@ -89,6 +47,70 @@
 .sidebar-sticky::-webkit-scrollbar-thumb:hover {
     background: #ADC2E1;
 }
+
+/* Group Styling */
+.sidebar-group {
+    background-color: $sidebar-bg;
+    border-radius: 8px;
+    margin: 4px 6px;
+    padding: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link {
+        padding: 0.15rem 0.35rem;
+        margin: 1px 0;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        color: $sidebar-text;
+        font-size: 0.8rem;
+        @include flex-center;
+
+        i {
+            @include nav-icon;
+        }
+
+        &:hover {
+            background-color: $sidebar-hover-bg;
+            color: $sidebar-blue;
+
+            i {
+                opacity: 1;
+            }
+        }
+
+        &.active {
+            background-color: $sidebar-active-bg;
+            color: darken($sidebar-blue, 10%);
+            font-weight: 500;
+
+            i {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+/* Group Header Styling */
+.sidebar-group-header {
+    @include flex-center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $sidebar-blue;
+    padding: 0.15rem 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    i {
+        @include nav-icon;
+    }
+}
+
+
 
 /* Bottom Navigation */
 .sidebar .nav-link {
@@ -193,14 +215,14 @@
         .sidebar-subgroup-header {
             color: #2b6bb1;
             font-weight: 600;
-            font-size: 0.75rem; // Smaller font
+            font-size: 0.85rem; // Smaller font
             padding: 0.1rem 0;
             //margin-bottom: 0.15rem;
             display: flex;
             align-items: center;
 
             i {
-                font-size: 0.7rem; // Even smaller icons
+                font-size: 0.72rem; // Even smaller icons
                 margin-right: 0.25rem; // Reduced margin
                 opacity: 0.9; // Slightly dimmed icons
             }
@@ -255,42 +277,23 @@
 
 /* Compact Navigation Styles */
 .compact-nav {
-    /* Container adjustments */
-    padding: 4px;
-    margin: 4px 6px;
-
-    /* Header styling */
-    .sidebar-group-header {
-        font-size: 0.75rem;
-        padding: 0.15rem 0.35rem;
-        margin-bottom: 0.15rem;
-
-        i.fa-sm.mr-2 {
-            margin-right: 0.35rem !important;
-            font-size: 0.7rem;
-        }
-    }
-
-    /* Navigation list adjustments */
     .nav.flex-column {
         margin: 0;
         padding: 0;
     }
 
-    /* Navigation items */
     .nav-item {
         margin: 0;
     }
 
-    /* Navigation links */
     .nav-link.fs-11 {
         padding: 0.15rem 0.35rem;
         font-size: 1.1em !important;
         line-height: 1.2;
 
         i.mr-2 {
-            margin-right: 0.35rem !important;
-            font-size: 0.7rem;
+            @include nav-icon;
         }
     }
 }
+
