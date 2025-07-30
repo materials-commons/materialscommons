@@ -2,8 +2,8 @@
     $recentlyAccessedOn = auth()->user()->projectRecentlyAccessedOn($proj);
 @endphp
 
-<div class="card bg-light col-lg-4 col-md-6 col-sm-8">
-    <div class="card-body">
+<div class="card col-lg-3 col-md-5 col-sm-8 mb-2 mr-2">
+    <div class="card-body" style="background-color: #ffffff">
         <h5 class="card-title">
             <a wire:navigate href="{{route('projects.show', [$proj])}}">{{$proj->name}}</a>
             @if (auth()->user()->isActiveProject($proj))
