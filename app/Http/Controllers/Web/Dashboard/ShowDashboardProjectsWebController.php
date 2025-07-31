@@ -25,6 +25,8 @@ class ShowDashboardProjectsWebController extends Controller
         return view('app.dashboard.index', [
             'activeProjects'           => $activeProjects,
             'recentlyAccessedProjects' => $recentlyAccessedProjects,
+            'otherProjectsCount'       => $this->getUserOtherProjectsCount(auth()->user(), $projects),
+            'userProjectsCount'        => $this->getUserProjectsCount(auth()->user(), $projects),
             'projects'                 => $projects,
             'projectsCount'            => $projects->count(),
             'deletedCount'             => Project::getDeletedTrashCountForUser(auth()->id()),
@@ -33,6 +35,20 @@ class ShowDashboardProjectsWebController extends Controller
                                                  ->where('owner_id', auth()->id())
                                                  ->count(),
         ]);
+    }
+
+    private function getUserProjectsCount(User $user, $projects)
+    {
+        return $projects->filter(function($proj) use ($user) {
+            return $proj->owner_id == $user->id;
+        })->count();
+    }
+
+    private function getUserOtherProjectsCount(User $user, $projects)
+    {
+        return $projects->filter(function($proj) use ($user) {
+            return $proj->owner_id != $user->id;
+        })->count();
     }
 
     private function getActiveProjects(User $user, $projects)
