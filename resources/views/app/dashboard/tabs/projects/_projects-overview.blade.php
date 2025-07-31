@@ -2,6 +2,12 @@
     <div class="card-body inner-card">
         <h5 class="card-title">Projects Overview</h5>
         <hr/>
+        <div class="mt-2 mb-4 text-center">
+            <a class="text-primary" href="/mcdocs2/getting_started/first_project.html" target="_blank">
+                Getting Started Guide <i class="fas fa-external-link-alt ml-1"></i>
+            </a>
+        </div>
+
         <div class="row">
             <div class="col-6">
                 <div class="stats-container">
