@@ -6,15 +6,10 @@
         <thead>
         <tr>
             <th>Project</th>
-            <th>Size</th>
-            <th>Hidden Size</th>
             <th>Files</th>
-            <th>Samples</th>
-            <th>Computations</th>
             <th>Published Datasets</th>
             <th>Owner</th>
             <th>Updated</th>
-            <th>Date</th>
             <th></th>
         </tr>
         </thead>
@@ -24,14 +19,9 @@
                 <td>
                     <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
                 </td>
-                <td>{{formatBytes($proj->size)}}</td>
-                <td>{{$proj->size}}</td>
                 <td>{{number_format($proj->file_count)}}</td>
-                <td>{{number_format($proj->samples_count)}}</td>
-                <td>{{number_format($proj->computations_count)}}</td>
                 <td>{{number_format($proj->published_datasets_count)}}</td>
                 <td>{{$proj->owner->name}}</td>
-                <td>{{$proj->updated_at->format('M j, Y')}}</td>
                 <td>{{$proj->updated_at->format('M j, Y')}}</td>
                 <td>
                     <div class="float-right">
@@ -56,3 +46,22 @@
         </tbody>
     </table>
 </div>
+
+@push('scripts')
+    <script>
+        // document.addEventListener('livewire:navigating', () => {
+        //     $('#projects').DataTable().destroy();
+        // }, {once: true});
+
+        let projectsCount = "{{sizeof($projects)}}";
+        $(document).ready(() => {
+            if (projectsCount === "0") {
+                $('#welcome-dialog').modal();
+            }
+            $('#projects').DataTable({
+                stateSave: true,
+                pageLength: 100,
+            });
+        });
+    </script>
+@endpush
