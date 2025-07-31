@@ -9,7 +9,7 @@
     <li class="nav-item" id="project-overview-tab">
         <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
            href="{{route('projects.overview', [$project])}}">
-            Overview
+            Details
         </a>
     </li>
 
