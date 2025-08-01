@@ -15,3 +15,4 @@
     <h6>Files</h6>
     @include('partials.activities._activity-files', ['activity' => $activity])
 </div>
+

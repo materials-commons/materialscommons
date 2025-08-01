@@ -74,7 +74,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <x-card>
+                        <x-card-white>
                             <x-slot name="header">
                                 <h5>{{$entity1->name}}</h5>
                             </x-slot>
@@ -82,7 +82,7 @@
                                 <x-show-standard-details :item="$entity1"/>
                                 <div class="row">
                                     @foreach($entity1Activities as $e1activity)
-                                        <div class="col-12 tile mt-2"
+                                        <div class="col-12 tile mt-2 background-white"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
                                             <div class="d-flex align-items-center mb-2">
                                                 <input type="radio" name="activity1_id"
@@ -96,10 +96,10 @@
                                     @endforeach
                                 </div>
                             </x-slot>
-                        </x-card>
+                        </x-card-white>
                     </div>
                     <div class="col-6">
-                        <x-card>
+                        <x-card-white>
                             <x-slot name="header">
                                 <h5>{{$entity2->name}}</h5>
                             </x-slot>
@@ -107,7 +107,7 @@
                                 <x-show-standard-details :item="$entity2"/>
                                 <div class="row">
                                     @foreach($entity2Activities as $e2activity)
-                                        <div class="col-12 tile mt-2"
+                                        <div class="col-12 tile mt-2 background-white"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
                                             <div class="d-flex align-items-center mb-2">
                                                 <input type="radio" name="activity2_id"
@@ -121,7 +121,7 @@
                                     @endforeach
                                 </div>
                             </x-slot>
-                        </x-card>
+                        </x-card-white>
                     </div>
                 </div>
             </x-slot>
