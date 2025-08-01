@@ -46,7 +46,7 @@
 
                     {{-- Right Column --}}
                     <div class="col-lg-8 col-sm-12 col-md-6">
-                        <x-card>
+                        <x-card card-body-classes="darker-card">
                             <x-slot:header>
                                 Spreadsheet Import Options
                             </x-slot:header>
@@ -58,29 +58,28 @@
                                     </a>
                                 </p>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <x-inner-card>
-                                            <x-slot:title>
-                                                <i class="fas fa-file-excel me-2"></i> Excel File
-                                            </x-slot:title>
-                                            <x-slot:body>
-                                                <label for="file_id">Select spreadsheet</label>
-                                                <select name="file_id" class="selectpicker w-100"
-                                                        data-live-search="true"
-                                                        data-style="btn-light no-tt"
-                                                        title="Select Spreadsheet">
-                                                    <option value=""></option>
-                                                    @foreach($excelFiles as $f)
-                                                        <option data-tokens="{{$f->id}}"
-                                                                value="{{$f->id}}">
-                                                            {{$f->directory->path === "/" ? "" : $f->directory->path}}
-                                                            /{{$f->name}}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </x-slot:body>
-                                        </x-inner-card>
+                                <div class="row mr-2 ml-1">
+                                    <div class="col-md-12 white-box">
+                                        <h5 class="text-centerx mt-3 mr-2 font-weight-bold">
+                                            <i class="fas fa-file-excel me-2"></i> Excel File
+                                        </h5>
+                                        <hr/>
+                                        <div class="mb-3">
+                                            <label for="file_id">Select spreadsheet</label>
+                                            <select name="file_id" class="selectpicker w-100"
+                                                    data-live-search="true"
+                                                    data-style="btn-light no-tt"
+                                                    title="Select Spreadsheet">
+                                                <option value=""></option>
+                                                @foreach($excelFiles as $f)
+                                                    <option data-tokens="{{$f->id}}"
+                                                            value="{{$f->id}}">
+                                                        {{$f->directory->path === "/" ? "" : $f->directory->path}}
+                                                        /{{$f->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -88,66 +87,62 @@
                                     <span class="px-3 text-muted">OR</span>
                                 </div>
 
-                                <div class="row">
+                                <div class="row mr-2 ml-1">
                                     {{-- Google Sheets Option --}}
-                                    <div class="col-12">
-                                        <x-inner-card>
-                                            <x-slot:title>
-                                                <i class="fab fa-google me-2"></i> Google Sheets
-                                            </x-slot:title>
-                                            <x-slot:body>
+                                    <div class="col-12 white-box">
+                                        <h5 class="text-centerx mt-3 mr-2 font-weight-bold">
+                                            <i class="fab fa-google me-2"></i> Google Sheets
+                                        </h5>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="url-id">New Sheet URL</label>
+                                            <div class="input-group">
+                                                <input class="form-control"
+                                                       hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"
+                                                       hx-target="#google-sheet-title"
+                                                       hx-indicator=".htmx-indicator"
+                                                       hx-trigger="keyup changed delay:500ms"
+                                                       name="sheet_url" type="url"
+                                                       placeholder="Paste URL here..."
+                                                       id="url-id">
+                                                <span class="htmx-indicator input-group-text"><i
+                                                        class="fas fa-spinner fa-spin"></i></span>
+                                            </div>
+                                            <div id="google-sheet-title" class="small mt-1"></div>
+                                        </div>
 
-                                                <div class="mb-3">
-                                                    <label for="url-id">New Sheet URL</label>
-                                                    <div class="input-group">
-                                                        <input class="form-control"
-                                                               hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"
-                                                               hx-target="#google-sheet-title"
-                                                               hx-indicator=".htmx-indicator"
-                                                               hx-trigger="keyup changed delay:500ms"
-                                                               name="sheet_url" type="url"
-                                                               placeholder="Paste URL here..."
-                                                               id="url-id">
-                                                        <span class="htmx-indicator input-group-text"><i
-                                                                class="fas fa-spinner fa-spin"></i></span>
-                                                    </div>
-                                                    <div id="google-sheet-title" class="small mt-1"></div>
+                                        @if($sheets->count() !== 0)
+                                            <div class="mt-3">
+                                                <label for="sheet_id">Or use existing sheet</label>
+                                                <select name="sheet_id" class="selectpicker w-100"
+                                                        data-live-search="true"
+                                                        data-style="btn-light no-tt"
+                                                        title="Select Google Sheet">
+                                                    <option value=""></option>
+                                                    @foreach($sheets as $s)
+                                                        <option data-tokens="{{$s->id}}"
+                                                                value="{{$s->id}}">{{$s->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
+                                        <div class="alert alert-info mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p>
+                                                        <i class="fas fa-info-circle fa-lg me-3"></i>
+                                                        <strong>Important:</strong>
+                                                        Set sharing permissions to "Anyone with the link"
+                                                        under General Access for the Google Sheet to be accessible.
+                                                    </p>
+                                                    <img src="{{asset('images/google-sheets-share.png')}}"
+                                                         class="img-fluid mt-2 rounded shadow-sm"
+                                                         style="max-width: 300px"
+                                                         alt="Google Sheets sharing settings">
                                                 </div>
 
-                                                @if($sheets->count() !== 0)
-                                                    <div class="mt-3">
-                                                        <label for="sheet_id">Or use existing sheet</label>
-                                                        <select name="sheet_id" class="selectpicker w-100"
-                                                                data-live-search="true"
-                                                                data-style="btn-light no-tt"
-                                                                title="Select Google Sheet">
-                                                            <option value=""></option>
-                                                            @foreach($sheets as $s)
-                                                                <option data-tokens="{{$s->id}}"
-                                                                        value="{{$s->id}}">{{$s->title}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                @endif
-                                                <div class="alert alert-info mt-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div>
-                                                            <p>
-                                                                <i class="fas fa-info-circle fa-lg me-3"></i>
-                                                                <strong>Important:</strong>
-                                                                Set sharing permissions to "Anyone with the link"
-                                                                under General Access for the Google Sheet to be accessible.
-                                                            </p>
-                                                            <img src="{{asset('images/google-sheets-share.png')}}"
-                                                                 class="img-fluid mt-2 rounded shadow-sm"
-                                                                 style="max-width: 300px"
-                                                                 alt="Google Sheets sharing settings">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </x-slot:body>
-                                        </x-inner-card>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </x-slot:body>
@@ -168,68 +163,8 @@
                     </a>
                 </div>
             </form>
-            {{--            </x-card-container>--}}
         </x-slot:body>
     </x-card>
 
     @include('common.errors')
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(() => {
-            $('.selectpicker').selectpicker({
-                // container: 'body',
-                dropupAuto: false
-            });
-        });
-    </script>
-@endpush
-
-@push('styles')
-    <style>
-
-         .bootstrap-select .dropdown-menu {
-            z-index: 9999 !important;
-            min-width: 100% !important;
-            width: auto !important;
-            position: relative !important;
-             max-height: 50vh !important;
-        }
-
-        /*.bootstrap-select .dropdown-menu {*/
-        /*    z-index: 9999 !important;*/
-        /*    min-width: 100% !important;*/
-        /*    width: auto !important;*/
-        /*    position: fixed !important;*/
-        /*    max-height: 60vh !important; !* Limit height to 60% of viewport height *!*/
-        /*    overflow-y: auto !important; !* Add scrolling for overflow content *!*/
-        /*    margin: 0 !important;*/
-        /*    !* Ensure it doesn't go off-screen at the bottom *!*/
-        /*    bottom: auto !important;*/
-        /*    !* Prevent horizontal overflow *!*/
-        /*    max-width: calc(100vw - 2rem) !important;*/
-        /*}*/
-
-        /*!* Ensure the dropdown opens upward if there's not enough space below *!*/
-        /*.bootstrap-select.dropup .dropdown-menu {*/
-        /*    bottom: auto !important;*/
-        /*    top: auto !important;*/
-        /*}*/
-
-
-    </style>
-@endpush
-
-
-
-
-{{--@push('scripts')--}}
-{{--    <script>--}}
-{{--        function createAndAddFiles() {--}}
-{{--            let actionRoute = "{!!route('projects.experiments.store', [$project, 'files-next' => true, 'show-overview' => request()->input('show-overview', false)])!!}";--}}
-{{--            $("#experiment-create").attr('action', actionRoute);--}}
-{{--            document.getElementById('experiment-create').submit();--}}
-{{--        }--}}
-{{--    </script>--}}
-{{--@endpush--}}
