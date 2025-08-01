@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills">
     <li class="nav-item" id="dashboard-projects-tab">
         <a class="nav-link no-underline {{setActiveNavByName('dashboard.projects.show')}}"
            href="{{route('dashboard.projects.show')}}">

@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs mb-2">
+<ul class="nav nav-pills mb-2">
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('projects.experiments.show')}}"
            href="{{route('projects.experiments.show', [$project, $experiment])}}">
