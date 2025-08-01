@@ -186,91 +186,37 @@
     </script>
 @endpush
 
-{{--@push('styles')--}}
-{{--    <style>--}}
-{{--        .bs-select-2 .dropdown-menu {--}}
-{{--            transform: none !important;--}}
-{{--            position: fixed !important;--}}
-{{--            z-index: 1060 !important;--}}
-{{--            min-width: 100% !important;--}}
-{{--            width: auto !important;--}}
-{{--        }--}}
-
-{{--        .bootstrap-select.show .dropdown-menu {--}}
-{{--            display: block !important;--}}
-{{--        }--}}
-
-{{--        /* Keep the border radius intact */--}}
-{{--        .card {--}}
-{{--            overflow: hidden;--}}
-{{--        }--}}
-{{--        .inner-card {--}}
-{{--            overflow: hidden;--}}
-{{--        }--}}
-{{--    </style>--}}
-{{--@endpush--}}
-
-
-{{--@push('styles')--}}
-{{--    <style>--}}
-{{--        .bs-select-2 .dropdown-menu {--}}
-{{--            z-index: 1060 !important;--}}
-{{--        }--}}
-{{--    </style>--}}
-{{--@endpush--}}
-
-{{--@push('styles')--}}
-{{--    <style>--}}
-{{--        .inner-card {--}}
-{{--            overflow: visible !important;--}}
-{{--        }--}}
-{{--        .card-body {--}}
-{{--            overflow: visible !important;--}}
-{{--        }--}}
-{{--        /*.bootstrap-select .dropdown-menu {*/--}}
-{{--        /*    z-index: 1060 !important;*/--}}
-{{--        /*    min-width: 100% !important;*/--}}
-{{--        /*    width: auto !important;*/--}}
-{{--        /*}*/--}}
-{{--    </style>--}}
-{{--@endpush--}}
-
-
-
 @push('styles')
     <style>
-        .card {
-            overflow: visible;
-            /*clip-path: inset(0 round 0.375rem);*/
 
-        }
-        /*.card-body {*/
-        /*    overflow: visible;*/
-        /*}*/
-
-        /* Target only the immediate card-body children that contain selects */
-        /*.card-body .bootstrap-select {*/
-        /*    overflow: visible;*/
-        /*}*/
-
-        /*.card {*/
-        /*    overflow: visible;*/
-        /*}*/
-
-        /*.card .bs-select-2 {*/
-        /*    overflow: visible;*/
-        /*}*/
-
-        .bs-select-2 .dropdown-menu {
-            z-index: 1060 !important;
+         .bootstrap-select .dropdown-menu {
+            z-index: 9999 !important;
             min-width: 100% !important;
             width: auto !important;
+            position: relative !important;
+             max-height: 50vh !important;
         }
 
-        /* Or target specific containers that need overflow */
-        /*.selectpicker-container {*/
-        /*    overflow: visible;*/
+        /*.bootstrap-select .dropdown-menu {*/
+        /*    z-index: 9999 !important;*/
+        /*    min-width: 100% !important;*/
+        /*    width: auto !important;*/
+        /*    position: fixed !important;*/
+        /*    max-height: 60vh !important; !* Limit height to 60% of viewport height *!*/
+        /*    overflow-y: auto !important; !* Add scrolling for overflow content *!*/
+        /*    margin: 0 !important;*/
+        /*    !* Ensure it doesn't go off-screen at the bottom *!*/
+        /*    bottom: auto !important;*/
+        /*    !* Prevent horizontal overflow *!*/
+        /*    max-width: calc(100vw - 2rem) !important;*/
         /*}*/
+
+        /*!* Ensure the dropdown opens upward if there's not enough space below *!*/
+        /*.bootstrap-select.dropup .dropdown-menu {*/
+        /*    bottom: auto !important;*/
+        /*    top: auto !important;*/
+        /*}*/
+
 
     </style>
 @endpush
