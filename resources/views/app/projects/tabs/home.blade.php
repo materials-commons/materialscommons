@@ -22,6 +22,8 @@
 {{--        </x-show-standard-details>--}}
 {{--    <br/>--}}
 {{--</div>--}}
+
+
 <div class="row">
     <div class="col">
         <div class="card-deck">
