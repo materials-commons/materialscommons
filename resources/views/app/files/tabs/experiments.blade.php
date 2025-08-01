@@ -1,25 +1,27 @@
-<table id="experiments" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Study</th>
-        <th>Summary</th>
-        <th>Updated</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($file->experiments as $experiment)
+<x-table-container>
+    <table id="experiments" class="table table-hover" style="width:100%">
+        <thead>
         <tr>
-            <td>
-                <a href="{{route('projects.experiments.show', [$project, $experiment])}}">{{$experiment->name}}</a>
-            </td>
-            <td>{{$experiment->summary}}</td>
-            <td>{{$experiment->updated_at->diffForHumans()}}</td>
-            <td>{{$experiment->updated_at}}</td>
+            <th>Study</th>
+            <th>Summary</th>
+            <th>Updated</th>
+            <th>Date</th>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach($file->experiments as $experiment)
+            <tr>
+                <td>
+                    <a href="{{route('projects.experiments.show', [$project, $experiment])}}">{{$experiment->name}}</a>
+                </td>
+                <td>{{$experiment->summary}}</td>
+                <td>{{$experiment->updated_at->diffForHumans()}}</td>
+                <td>{{$experiment->updated_at}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</x-table-container>
 
 @push('scripts')
     <script>

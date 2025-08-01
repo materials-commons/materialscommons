@@ -443,7 +443,7 @@ a.action-link.danger:hover {
 
 .card {
     border: none;  // Remove the border
-    transition: transform 0.2s ease;  // Add smooth transition for any hover effects
+    //transition: transform 0.2s ease;  // Add smooth transition for any hover effects
 
     // Add a subtle shadow to help with depth perception
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -484,7 +484,7 @@ a.action-link.danger:hover {
 
 .card {
     border: none;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
     overflow: hidden;
     border-radius: 8px;
 }
@@ -493,7 +493,7 @@ a.action-link.danger:hover {
     background-color: #3d7ab8;
     padding: 0.5rem 1.25rem;
     position: relative;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
 
     // We're not modifying h5 font properties here, only adding positioning
     h5 {
@@ -511,7 +511,7 @@ a.action-link.danger:hover {
 
     // This is navbar boxes background
     background-color: #e4eaf5;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
 }
 
 .card {
@@ -829,7 +829,7 @@ kbd {
     padding: 12px;
     border-radius: 6px;
     text-align: center;
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .feature-card:hover {
@@ -870,7 +870,7 @@ kbd {
     align-items: center;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .stat-card:hover {
