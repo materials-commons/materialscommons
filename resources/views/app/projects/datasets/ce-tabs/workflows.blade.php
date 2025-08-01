@@ -4,7 +4,7 @@
     Workflows will be added or removed automatically as you select them.
 </h5>
 <br>
-@component('components.card')
+@component('components.card-white')
     @slot('header')
         Workflows
         <a class="float-right action-link mr-4"
