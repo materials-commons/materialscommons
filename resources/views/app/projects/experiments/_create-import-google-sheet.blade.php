@@ -27,6 +27,7 @@
                 <label for="sheet_id">Or use existing sheet</label>
                 <select name="sheet_id" class="selectpicker w-100"
                         data-live-search="true"
+                        data-width="100%"
                         data-style="btn-light no-tt"
                         title="Select Google Sheet">
                     <option value=""></option>
