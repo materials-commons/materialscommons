@@ -19,12 +19,12 @@
                 @csrf
                 <div class="row">
                     {{-- Left Column --}}
-                    <div class="col-lg-4 col-sm-12 col-md-6">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
                         @include('app.projects.experiments._create-details')
                     </div>
 
                     {{-- Right Column --}}
-                    <div class="col-lg-8 col-sm-12 col-md-6">
+                    <div class="col-lg-6 col-sm-12 col-md-6">
                         <x-card card-body-classes="darker-card">
                             <x-slot:header>
                                 Spreadsheet Import Options
@@ -68,3 +68,13 @@
 
     @include('common.errors')
 @endsection
+
+@push('styles')
+    <style>
+        .bootstrap-select.show .dropdown-menu {
+            max-width: 100%;
+            width: 100%;
+        }
+
+    </style>
+@endpush
