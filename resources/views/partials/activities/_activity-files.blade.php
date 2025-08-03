@@ -1,4 +1,4 @@
-<ul class="list-unstyled mb-2">
+<ul class="list-unstyled mb-4">
     @foreach($activity->files as $f)
         @if($loop->iteration < 12)
             <li class="mt-2 ml-3">
