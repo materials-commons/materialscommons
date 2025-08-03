@@ -83,7 +83,7 @@
 
             <div class="row ml-1">
                 @foreach($activities as $activity)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 tile background-white">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 white-box">
                         @include('partials.activities.activity-card', ['activity' => $activity])
                     </div>
                 @endforeach
@@ -91,6 +91,12 @@
         @endslot
     @endcomponent
 @endsection
+
+@push('styles')
+    <style>
+
+    </style>
+@endpush
 
 @push('scripts')
     <script>
