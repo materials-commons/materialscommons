@@ -29,6 +29,6 @@
         @endif
     @endforeach
     @if($attributesCount == 0)
-        <span class="ml-1">No Measurements</span>
+        <span class="ml-1">No Attributes</span>
     @endif
 </div>
