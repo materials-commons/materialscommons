@@ -1,5 +1,5 @@
 <div>
-    <li class="nav-item">
+    <li class="nav-item ml-3">
         <a class="nav-link fs-11 {{setActiveNavByName('projects.globus.uploads.index')}}"
            data-toggle="tooltip" title="Upload data to your project using Globus."
            href="{{route('projects.globus.uploads.index', [$project])}}">
@@ -33,7 +33,7 @@
     {{--    @endif--}}
 
 
-    <li class="nav-item">
+    <li class="nav-item ml-3">
         <a class="nav-link fs-11 {{setActiveNavByName('projects.globus.downloads.index')}}"
            data-toggle="tooltip" title="Download your projects files using Globus."
            href="{{route('projects.globus.downloads.index', [$project])}}">

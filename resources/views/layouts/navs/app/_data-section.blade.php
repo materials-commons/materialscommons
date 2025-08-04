@@ -1,10 +1,10 @@
 {{-- Data Section --}}
 <div class="sidebar-group">
     <div class="sidebar-group-header" id="project-sidenav-data">
-        <i class="fas fa-database fa-sm mr-2 mb-1"></i>Data
+        <i class="fas fa-database fa-sm mr-2 mb-1 ml-1"></i>Data
     </div>
     <ul class="nav flex-column">
-        <li class="nav-item">
+        <li class="nav-item ml-2">
             <a class="nav-link fs-11 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                data-toggle="tooltip" title="Access your project files."
                href="{{route('projects.folders.show', [$project, $project->rootDir])}}">
@@ -13,7 +13,7 @@
         </li>
 
         @if($nav_trash_count > 0)
-            <li class="nav-item">
+            <li class="nav-item ml-4">
                 <a class="nav-link fs-11 {{setActiveNavByName('projects.trashcan')}}"
                    data-toggle="tooltip" title="View your deleted files and empty the trashcan."
                    href="{{route('projects.trashcan.index', [$project])}}">
@@ -23,7 +23,7 @@
             </li>
         @endif
 
-        <li class="nav-item">
+        <li class="nav-item ml-2">
             <a class="nav-link fs-11 {{setActiveNavByName('projects.sheets.index')}}"
                data-toggle="tooltip" title="View you Excel spreadsheets, CSV files and Google sheets."
                href="{{route('projects.sheets.index', [$project])}}">
@@ -31,7 +31,7 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item ml-2">
             <a class="nav-link fs-11 {{setActiveNavByName('projects.entities')}}"
                data-toggle="tooltip"
                title="View the experimental processes and samples loaded into your project."
@@ -40,7 +40,7 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item ml-2">
             <a class="nav-link fs-11 {{setActiveNavByName('projects.computations.entities.index')}}"
                data-toggle="tooltip"
                title="View the computational activities and entities loaded into your project."
