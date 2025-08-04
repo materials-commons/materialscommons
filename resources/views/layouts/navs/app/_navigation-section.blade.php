@@ -26,6 +26,11 @@
                 <i class="fa-fw fas fa-globe mr-2 mb-1"></i>Public Data
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link fs-11" data-toggle="modal" href="#help-dialog">
+                <i class="fa-fw fas fa-question-circle help-icon mr-2 mb-1"></i>Get Help
+            </a>
+        </li>
     </ul>
 </div>
 
