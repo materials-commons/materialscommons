@@ -1,8 +1,8 @@
 <div class="sidebar-group">
     <div class="sidebar-group-header" id="project-sidenav-data">
-        <i class="fas fa-lightbulb fa-sm mr-2 mb-1"></i>Help
+        <i class="fas fa-lightbulb fa-sm mr-2 mb-1 ml-1"></i>Help
     </div>
-    <ul class="nav flex-column">
+    <ul class="nav flex-column ml-3">
         <li>
             <a class="nav-link" href="https://materialscommons.org/mcdocs2/documentation/uploading_files.html" target="_blank">Uploading Files</a>
         </li>

@@ -1,8 +1,8 @@
 <div class="sidebar-group">
     <div class="sidebar-group-header" id="project-sidenav-data">
-        <i class="fas fa-user-graduate fa-sm mr-2 mb-1"></i>Getting Started
+        <i class="fas fa-user-graduate fa-sm mr-2 mb-1 ml-1"></i>Getting Started
     </div>
-    <ul class="nav flex-column ml-2">
+    <ul class="nav flex-column ml-3">
         <li class="nav-item">
             <a class="nav-link" href="https://materialscommons.org/mcdocs2/getting_started/overview.html" target="_blank">Overview</a>
         </li>
