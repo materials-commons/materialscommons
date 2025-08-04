@@ -21,14 +21,14 @@
         <li class="nav-item ml-3">
             <a class="nav-link fs-11 ml-3 {{setActiveNavByName('projects.globus2.start')}}"
                href="{{route('projects.globus2.start', [$project])}}">
-                <i class="fa-fw fas fa-play mr-2"></i>
+                <i class="fa-fw fas fa-play mr-2 mb-1"></i>
                 Start
             </a>
         </li>
 
         <li class="nav-item ml-3">
             <a class="nav-link fs-11 ml-3 nav-disabled" href="#">
-                <i class="fa-fw fas fa-check mr-2"></i>
+                <i class="fa-fw fas fa-check mr-2 mb-1"></i>
                 Done
             </a>
         </li>

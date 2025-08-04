@@ -19,20 +19,20 @@
 
             <x-slot name='body'>
                 <button class="btn btn-primary mb-4" @click="compareActivities">Compare Activities</button>
-{{--                <form action="{{route('projects.activities.compare', [$project])}}" method="POST" class="mb-4">--}}
-{{--                    @csrf--}}
-{{--                    <div class="row mb-3">--}}
-{{--                        <div class="col-5">--}}
-{{--                            <h5>Select an activity from {{$entity1->name}}</h5>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-5">--}}
-{{--                            <h5>Select an activity from {{$entity2->name}}</h5>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-2">--}}
-{{--                            <button type="submit" class="btn btn-primary">Compare Activities</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
+                {{--                <form action="{{route('projects.activities.compare', [$project])}}" method="POST" class="mb-4">--}}
+                {{--                    @csrf--}}
+                {{--                    <div class="row mb-3">--}}
+                {{--                        <div class="col-5">--}}
+                {{--                            <h5>Select an activity from {{$entity1->name}}</h5>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="col-5">--}}
+                {{--                            <h5>Select an activity from {{$entity2->name}}</h5>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="col-2">--}}
+                {{--                            <button type="submit" class="btn btn-primary">Compare Activities</button>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </form>--}}
 
                 <div style="display: none" x-show="showFilter">
                     <h4>Select/Deselect processes to show <a href="#" class="ml-1"
@@ -82,16 +82,20 @@
                                 <x-show-standard-details :item="$entity1"/>
                                 <div class="row">
                                     @foreach($entity1Activities as $e1activity)
-                                        <div class="col-12 tile mt-2"
+                                        <div class="col-12 mt-2 ml-2 white-box"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <input type="radio" name="activity1_id"
-                                                       value="{{$e1activity->id}}"
-                                                       x-model="activity1Id"
-                                                       class="mr-2">
-                                                <label class="mb-0">Select for comparison</label>
-                                            </div>
-                                            @include('partials.activities.activity-card', ['activity' => $e1activity])
+
+                                            <x-activities.activities-card :activity="$e1activity" :project="$project">
+                                                <x-slot:header>
+                                                    <div class="d-flex float-right">
+                                                        <input type="radio" name="activity1_id"
+                                                               value="{{$e1activity->id}}"
+                                                               x-model="activity1Id"
+                                                               class="mr-2">
+                                                        <label class="mb-0">Select for comparison</label>
+                                                    </div>
+                                                </x-slot:header>
+                                            </x-activities.activities-card>
                                         </div>
                                     @endforeach
                                 </div>
@@ -105,18 +109,21 @@
                             </x-slot>
                             <x-slot name="body">
                                 <x-show-standard-details :item="$entity2"/>
-                                <div class="row">
+                                <div class="row mb-2">
                                     @foreach($entity2Activities as $e2activity)
-                                        <div class="col-12 tile mt-2"
+                                        <div class="col-12 mt-2 ml-2 white-box"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <input type="radio" name="activity2_id"
-                                                       x-model="activity2Id"
-                                                       value="{{$e2activity->id}}"
-                                                       class="mr-2">
-                                                <label class="mb-0">Select for comparison</label>
-                                            </div>
-                                            @include('partials.activities.activity-card', ['activity' => $e2activity])
+                                            <x-activities.activities-card :activity="$e2activity" :project="$project">
+                                                <x-slot:header>
+                                                    <div class="d-flex float-right">
+                                                        <input type="radio" name="activity2_id"
+                                                               x-model="activity2Id"
+                                                               value="{{$e2activity->id}}"
+                                                               class="mr-2">
+                                                        <label class="mb-0">Select for comparison</label>
+                                                    </div>
+                                                </x-slot:header>
+                                            </x-activities.activities-card>
                                         </div>
                                     @endforeach
                                 </div>
@@ -189,7 +196,7 @@
                 xdata.sample1Processes["{{$e1activity->uuid}}"] = true;
             @endforeach
 
-                    @foreach($entity2Activities as $e2activity)
+                @foreach($entity2Activities as $e2activity)
                 xdata.sample2Processes["{{$e2activity->uuid}}"] = true;
             @endforeach
 

@@ -17,7 +17,7 @@
         @endslot
 
         @slot('body')
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-pills">
                 <li class="nav-item">
                     <a class="nav-link no-underline {{$show == 'open' ? 'active' : ''}}"
                        href="{{route('tasks.index', ['show' => 'open'])}}">Open</a>

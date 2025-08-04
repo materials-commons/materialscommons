@@ -4,7 +4,7 @@
     Files will be added or removed automatically as you select them.
 </h5>
 <br>
-@component('components.card')
+@component('components.card-white')
     @slot('header')
         @if(sizeof($dirPaths) == 1)
             {{$directory->name}}

@@ -1,20 +1,20 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills">
     <li class="nav-item" id="project-home-tab">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
            href="{{route('projects.show', [$project])}}">
             Home
         </a>
     </li>
 
     <li class="nav-item" id="project-overview-tab">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
            href="{{route('projects.overview', [$project])}}">
-            Overview
+            Details
         </a>
     </li>
 
     <li class="nav-item" id="project-sample-attributes-tab">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
+        <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
            href="{{route('projects.data-dictionary.entities', [$project])}}">
             Sample Attributes ({{$entityAttributesCount}})
         </a>

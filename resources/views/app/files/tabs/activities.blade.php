@@ -1,27 +1,29 @@
-<table id="activities" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Process</th>
-        <th>Summary</th>
-        <th>Updated</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($file->activities as $activity)
+<x-table-container>
+    <table id="activities" class="table table-hover" style="width:100%">
+        <thead>
         <tr>
-            <td>
-                @isset($project)
-                    <a href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
-                @endisset
-            </td>
-            <td>{{$activity->summary}}</td>
-            <td>{{$activity->updated_at->diffForHumans()}}</td>
-            <td>{{$activity->updated_at}}</td>
+            <th>Process</th>
+            <th>Summary</th>
+            <th>Updated</th>
+            <th>Date</th>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach($file->activities as $activity)
+            <tr>
+                <td>
+                    @isset($project)
+                        <a href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
+                    @endisset
+                </td>
+                <td>{{$activity->summary}}</td>
+                <td>{{$activity->updated_at->diffForHumans()}}</td>
+                <td>{{$activity->updated_at}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</x-table-container>
 
 @push('scripts')
     <script>

@@ -36,7 +36,7 @@
 
             <div class="row">
                 <div class="col-6">
-                    <x-card>
+                    <x-card-white>
                         <x-slot name="header">
                             <h5>{{$activity1->entities->first()->name}}</h5>
                         </x-slot>
@@ -49,10 +49,10 @@
                                                                   :entity-state-attributes="$activity1EntityStateOutAttributes"
                                                                   :entity-state-comparer-state="$entityAttributesState"/>
                         </x-slot>
-                    </x-card>
+                    </x-card-white>
                 </div>
                 <div class="col-6">
-                    <x-card>
+                    <x-card-white>
                         <x-slot name="header">
                             <h5>{{$activity2->entities->first()->name}}</h5>
                         </x-slot>
@@ -65,7 +65,7 @@
                                                                   :entity-state-attributes="$activity2EntityStateOutAttributes"
                                                                   :entity-state-comparer-state="$entityAttributesState"/>
                         </x-slot>
-                    </x-card>
+                    </x-card-white>
                 </div>
             </div>
         </x-slot>

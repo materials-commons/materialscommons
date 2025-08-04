@@ -1,0 +1,87 @@
+.darker-card {
+    background-color: #d5deed !important;
+}
+
+.white-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.projects-list {
+    .active-project-item {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid $grey-8;
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        .project-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .project-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-title {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+
+            a {
+                color: $blue-2;
+
+                &:hover {
+                    color: $blue-4;
+                }
+            }
+        }
+
+        .project-meta {
+            font-size: 0.85rem;
+            color: $grey-6;
+
+            i {
+                font-size: 0.9rem;
+            }
+        }
+
+        .project-actions {
+            .btn {
+                padding: 0.25rem 0.5rem;
+                margin-left: 0.25rem;
+
+                &:hover {
+                    background-color: $grey-9;
+                }
+
+                i {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}
+
+.card-body.inner-card {
+    .card-title {
+        color: $grey-1;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    hr {
+        margin: 1rem 0;
+        border-color: $grey-8;
+    }
+}

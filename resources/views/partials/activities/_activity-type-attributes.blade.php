@@ -1,19 +1,30 @@
-<dl class="row ml-2">
+@php
+    $attributesCount = 0;
+@endphp
+<div class="row ml-2">
     @foreach($attributes as $attribute)
-        <dt class="col-7">{{$attribute->attr_name}}:</dt>
-        <dd class="col-4">
-            @if(is_array($attribute->val["value"]))
-                @json($attribute->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-            @else
-                @if(blank($attribute->val["value"]))
-                    No value
+        @php
+            $attributesCount++;
+        @endphp
+        <div class="attribute-row row col-11 ml-1">
+            <div class="col-7">{{$attribute->attr_name}}:</div>
+            <div class="col-4">
+                @if(is_array($attribute->val["value"]))
+                    @json($attribute->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
                 @else
-                    {{$attribute->val["value"]}}
+                    @if(blank($attribute->val["value"]))
+                        No value
+                    @else
+                        {{$attribute->val["value"]}}
+                    @endif
                 @endif
-            @endif
-            @if ($attribute->unit != "")
-                {{$attribute->unit}}
-            @endif
-        </dd>
+                @if ($attribute->unit != "")
+                    {{$attribute->unit}}
+                @endif
+            </div>
+        </div>
     @endforeach
-</dl>
+        @if($attributesCount == 0)
+            <span class="ml-1">No Attributes</span>
+        @endif
+</div>

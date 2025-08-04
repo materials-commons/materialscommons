@@ -11,19 +11,39 @@
 @import '~@yaireo/tagify/dist/tagify';
 
 @import 'sidebar';
+@import 'containers';
+@import 'cards';
 @import 'datatables';
 
 @import 'bootstrap-steps';
+
+// Attributes in the samples card
+.attribute-row {
+    background: #f9fafb;
+    margin-right: 0;
+    //margin-bottom: 1px;
+    //border-radius: 4px;
+    padding: 4px;
+    border: 1px solid #eff1f5;
+}
+
+.attribute-row:hover {
+    background: #edf2f7;
+}
 
 // Hide repatcha badge
 .grecaptcha-badge {
     visibility: hidden !important;
 }
 
+.background-white {
+    background-color: #ffffff !important;
+}
+
 .thead-fixed {
     position: sticky;
     top: 46px;
-    background: #e4eaf5;
+    background: #ffffff;
 }
 
 // When using a fixed header this keeps the border for the header.
@@ -221,8 +241,10 @@ body {
 
 .nav-tabs .nav-link.active {
     //background-color: #dae3f3;
-    background-color: #c4d1ea;
-    border-color: hsl(210, 16%, 82%) hsl(210, 16%, 82%) #c4d1ea;
+    //background-color: #c4d1ea;
+    background-color: #ffffff;
+    //border-color: hsl(210, 16%, 82%) hsl(210, 16%, 82%) #c4d1ea;
+    border-color: hsl(210, 16%, 82%) hsl(210, 16%, 82%) #ffffff;
 }
 
 .sidebar .nav-link.active {
@@ -439,7 +461,7 @@ a.action-link.danger:hover {
 
 .card {
     border: none;  // Remove the border
-    transition: transform 0.2s ease;  // Add smooth transition for any hover effects
+    //transition: transform 0.2s ease;  // Add smooth transition for any hover effects
 
     // Add a subtle shadow to help with depth perception
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -480,7 +502,7 @@ a.action-link.danger:hover {
 
 .card {
     border: none;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
     overflow: hidden;
     border-radius: 8px;
 }
@@ -489,7 +511,7 @@ a.action-link.danger:hover {
     background-color: #3d7ab8;
     padding: 0.5rem 1.25rem;
     position: relative;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
 
     // We're not modifying h5 font properties here, only adding positioning
     h5 {
@@ -507,7 +529,7 @@ a.action-link.danger:hover {
 
     // This is navbar boxes background
     background-color: #e4eaf5;
-    transition: all 0.3s ease;
+    //transition: all 0.3s ease;
 }
 
 .card {
@@ -673,6 +695,12 @@ textarea.form-control[readonly] {
     color: rgba(255, 255, 255, 0.8) !important;
 }
 
+// Help icon
+.help-icon {
+    color: $blue-2;
+    font-size: 1.2rem;
+}
+
 // Tour icon
 
 /* Basic color styling */
@@ -825,7 +853,7 @@ kbd {
     padding: 12px;
     border-radius: 6px;
     text-align: center;
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .feature-card:hover {
@@ -866,7 +894,7 @@ kbd {
     align-items: center;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .stat-card:hover {

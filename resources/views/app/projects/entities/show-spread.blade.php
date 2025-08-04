@@ -83,14 +83,20 @@
 
             <div class="row ml-1">
                 @foreach($activities as $activity)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 tile">
-                        @include('partials.activities.activity-card', ['activity' => $activity])
+                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 mb-2 white-box">
+                        <x-activities.activities-card :activity="$activity" :project="$project"/>
                     </div>
                 @endforeach
             </div>
         @endslot
     @endcomponent
 @endsection
+
+@push('styles')
+    <style>
+
+    </style>
+@endpush
 
 @push('scripts')
     <script>
