@@ -50,6 +50,9 @@ class RowTracker
 
         foreach ($cellIterator as $cell) {
             $value = $this->getCellValue($cell);
+            $cell->getColumn();
+            $cell->getRow();
+            $cell->getWorksheet()->getTitle();
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
@@ -69,7 +72,7 @@ class RowTracker
                     continue;
                 }
 
-                $this->handleAttributeValue($header, $value, $index);
+                $this->handleAttributeValue($header, $value, $index, $cell->getCoordinate());
             } else {
                 $header = $headerTracker->getHeaderByIndex($index - 1);
 
@@ -103,7 +106,7 @@ class RowTracker
         $this->activityAttributesHash = hash_final($ctx);
     }
 
-    private function handleAttributeValue($header, $value, $index)
+    private function handleAttributeValue($header, $value, $index, $cellRow = null, $cellColumn = null)
     {
         if ($header->attrType === "ignore" || $header->attrType === "unknown" || Str::lower($header->name) == "parent") {
             return false;
@@ -111,6 +114,7 @@ class RowTracker
 
         $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
             $header->important);
+        $colAttr->setCellRowAndColumn($cellRow, $cellColumn);
         switch ($header->attrType) {
             case "entity":
                 $this->entityAttributes->push($colAttr);
