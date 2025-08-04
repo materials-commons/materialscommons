@@ -33,7 +33,7 @@
     {{-- File Transfer --}}
     <div class="sidebar-subgroup">
         <div class="sidebar-subgroup-header">
-            <i class="fas fa-exchange-alt fa-sm mr-2 mb-1 ml-1"></i>File Transfer
+            <i class="fas fa-exchange-alt fa-sm mr-2 mb-1 ml-2"></i>File Transfer
         </div>
         <ul class="nav flex-column">
             <li class="nav-item ml-3">
@@ -57,7 +57,7 @@
     {{-- Project Management --}}
     <div class="sidebar-subgroup">
         <div class="sidebar-subgroup-header">
-            <i class="fas fa-cogs fa-sm mr-2 mb-1 ml-1"></i>Project Management
+            <i class="fas fa-cogs fa-sm mr-2 mb-1 ml-2"></i>Project Management
         </div>
         <ul class="nav flex-column">
             <li class="nav-item ml-3">
@@ -73,7 +73,7 @@
     @if(isInBeta('run_scripts'))
         <div class="sidebar-subgroup">
             <div class="sidebar-subgroup-header">
-                <i class="fas fa-robot fa-sm mr-2 mb-1 ml-1"></i>Automation
+                <i class="fas fa-robot fa-sm mr-2 mb-1 ml-2"></i>Automation
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item ml-3">
