@@ -53,7 +53,7 @@
                         <a href="{{route('public.index')}}" class="text-primary mr-3">
                             Browse Published Datasets <i class="fas fa-arrow-right ml-1"></i>
                         </a>
-                        <a href="https://materialscommons.org/docs/docs/publishing-data/create-dataset-website/"
+                        <a href="https://materialscommons.org/mcdocs2/documentation/publishing.html"
                            target="_blank" class="text-primary">
                             Publishing Guide <i class="fas fa-external-link-alt ml-1"></i>
                         </a>

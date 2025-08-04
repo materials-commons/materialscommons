@@ -54,7 +54,7 @@
                         <a href="{{route('projects.experiments.create', [$project])}}" class="text-primary mr-3">
                             Import Spreadsheet <i class="fas fa-arrow-right ml-1"></i>
                         </a>
-                        <a href="https://materialscommons.org/docs/docs/reference/spreadsheets/#overview"
+                        <a href="https://materialscommons.org/mcdocs2/guides/spreadsheets.html#basic-requirements"
                            target="_blank" class="text-primary">
                             Annotation Guide <i class="fas fa-external-link-alt ml-1"></i>
                         </a>
