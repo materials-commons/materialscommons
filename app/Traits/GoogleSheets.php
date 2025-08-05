@@ -46,4 +46,13 @@ trait GoogleSheets
 
         return $pathParts[3];
     }
+
+    private function getGoogleSheetsUrlFromId($id): ?string
+    {
+        if (blank($id)) {
+            return null;
+        }
+
+        return "https://docs.google.com/spreadsheets/d/{$id}/edit?usp=sharing";
+    }
 }

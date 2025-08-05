@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/google-sheets/reload-experiment', \App\Http\Controllers\Api\Experiments\ReloadExperimentFromGoogleSheetUnauthenticatedApiController::class);
+
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
     Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);
