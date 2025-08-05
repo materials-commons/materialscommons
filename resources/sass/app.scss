@@ -13,23 +13,12 @@
 @import 'sidebar';
 @import 'containers';
 @import 'cards';
+@import 'attributes';
 @import 'datatables';
 
 @import 'bootstrap-steps';
 
-// Attributes in the samples card
-.attribute-row {
-    background: #f9fafb;
-    margin-right: 0;
-    //margin-bottom: 1px;
-    //border-radius: 4px;
-    padding: 4px;
-    border: 1px solid #eff1f5;
-}
 
-.attribute-row:hover {
-    background: #edf2f7;
-}
 
 // Hide repatcha badge
 .grecaptcha-badge {

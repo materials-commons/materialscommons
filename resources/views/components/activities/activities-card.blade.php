@@ -1,4 +1,4 @@
-@props(['activity', 'project', 'header' => null])
+@props(['activity', 'project', 'user', 'experiment' => null, 'header' => null])
 <div class="mt-2">
     <h5 class="mt-3 mr-2 font-weight-bold">
         <a class="no-underline"

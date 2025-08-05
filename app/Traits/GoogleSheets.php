@@ -30,4 +30,20 @@ trait GoogleSheets
         // when constructing the url.
         return "https://{$host}{$path}";
     }
+
+    private function getGoogleSheetsId($url): ?string
+    {
+        if (blank($url)) {
+            return null;
+        }
+
+        $path = parse_url($url, PHP_URL_PATH);
+        $pathParts = explode("/", $path);
+
+        if (count($pathParts) < 4) {
+            return null;
+        }
+
+        return $pathParts[3];
+    }
 }

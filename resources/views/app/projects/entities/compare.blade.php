@@ -85,7 +85,10 @@
                                         <div class="col-12 mt-2 ml-2 white-box"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
 
-                                            <x-activities.activities-card :activity="$e1activity" :project="$project">
+                                            <x-activities.activities-card :activity="$e1activity"
+                                                                          :user="$user"
+                                                                          :experiment="$entity1->experiments->first()"
+                                                                          :project="$project">
                                                 <x-slot:header>
                                                     <div class="d-flex float-right">
                                                         <input type="radio" name="activity1_id"
@@ -113,7 +116,10 @@
                                     @foreach($entity2Activities as $e2activity)
                                         <div class="col-12 mt-2 ml-2 white-box"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
-                                            <x-activities.activities-card :activity="$e2activity" :project="$project">
+                                            <x-activities.activities-card :activity="$e2activity"
+                                                                          :user="$user"
+                                                                          :experiment="$entity2->experiments->first()"
+                                                                          :project="$project">
                                                 <x-slot:header>
                                                     <div class="d-flex float-right">
                                                         <input type="radio" name="activity2_id"

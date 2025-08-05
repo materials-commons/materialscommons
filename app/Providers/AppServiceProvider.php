@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Observers\FileObserver;
 use App\Observers\UserObserver;
+use App\Services\GoogleSheetsService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
@@ -53,5 +54,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(GoogleSheetsService::class, function ($app) {
+            return new GoogleSheetsService();
+        });
     }
 }

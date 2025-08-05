@@ -192,7 +192,6 @@ class GoogleSheetsService
             ];
 
             $service->spreadsheets_values->update($spreadsheetId, $range, $body, $params);
-
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to update values in Google Sheet: ' . $e->getMessage());
@@ -230,5 +229,45 @@ class GoogleSheetsService
 //        $user->update(['google_spreadsheet_id' => $spreadsheetId]);
 
         return $user;
+    }
+
+
+    public function getCellInfo($user, $spreadsheetId, $range)
+    {
+        if (!$this->setAccessToken($user)) {
+            return null;
+        }
+
+        try {
+            $service = new Sheets($this->client);
+
+            // Get the raw formula/value using FORMULA render option
+            $response = $service->spreadsheets_values->get(
+                $spreadsheetId,
+                $range,
+                [
+                    'valueRenderOption' => 'FORMULA' // This returns formulas as entered by user
+                ]
+            );
+
+            $values = $response->getValues();
+            if (!empty($values) && !empty($values[0])) {
+                $cellValue = $values[0][0];
+
+                return [
+                    'isFormula' => is_string($cellValue) && str_starts_with($cellValue, '='),
+                    'value' => $cellValue
+                ];
+            }
+
+            return [
+                'isFormula' => false,
+                'value' => null
+            ];
+
+        } catch (\Exception $e) {
+            \Log::error('Error getting cell info: ' . $e->getMessage());
+            return null;
+        }
     }
 }
