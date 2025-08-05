@@ -11,9 +11,7 @@ use App\Observers\UserObserver;
 use App\Services\GoogleSheetsService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,14 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Sanitizer::extend('normalizePath', DirectoryPathSanitizer::class);
-
-        Blade::if('public', function (Project $project) {
-            if (Features::accessible('public-projects')) {
-                return $project->is_public;
-            }
-
-            return false;
-        });
 
         File::observe(FileObserver::class);
         User::observe(UserObserver::class);
