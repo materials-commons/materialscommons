@@ -15,7 +15,7 @@
             </div>
         </form>
     @endisset
-    <h6><u>Settings</u></h6>
+    <h6><u>Attributes</u></h6>
     @include('partials.activities._activity-attributes', ['activity' => $activity])
     <h6 class="mt-3"><u>Measurements</u></h6>
     @include('partials.activities._activity-measurements', ['activity' => $activity])

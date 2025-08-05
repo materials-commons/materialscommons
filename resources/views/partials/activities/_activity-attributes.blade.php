@@ -1,5 +1,11 @@
+@php
+    $attributesCount = 0;
+@endphp
 <div class="row ml-2">
     @foreach($activity->attributes as $attribute)
+        @php
+            $attributesCount++;
+        @endphp
         <div class="attribute-row row col-11 ml-1">
             <div class="col-7">{{$attribute->name}}:</div>
             <div class="col-5">
@@ -18,4 +24,7 @@
             </div>
         </div>
     @endforeach
+    @if($attributesCount == 0)
+        <span class="ml-1">No Attributes</span>
+    @endif
 </div>
