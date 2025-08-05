@@ -32,12 +32,12 @@ class CallbackGoogleSheetsWebController extends Controller
             // Exchange the authorization code for an access token and store it
             $this->googleSheetsService->handleCallback($code, $request->user());
 
-            return redirect()->route('google-sheets.index')
+            return redirect()->route('accounts.show')
                 ->with('success', 'Successfully connected to Google Sheets!');
         } catch (\Exception $e) {
             Log::error('Google OAuth callback error: ' . $e->getMessage());
 
-            return redirect()->route('google-sheets.index')
+            return redirect()->route('accounts.show')
                 ->with('error', 'Failed to connect to Google Sheets: ' . $e->getMessage());
         }
     }
