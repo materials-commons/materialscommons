@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use App\Markdown\Extensions\BracketExtension\BracketExtension;
+use App\Markdown\Extensions\MqlExtension\MqlExtension;
 use App\Markdown\Extensions\Renderers\Block\MCHtmlBlockRenderer;
 use App\Markdown\Extensions\Renderers\Inline\MCHtmlInlineRenderer;
 use App\Markdown\Extensions\Renderers\Inline\MCImageRenderer;
@@ -44,6 +45,7 @@ class Markdown extends Component
         $environment->addExtension(new DefaultAttributesExtension());
         $environment->addExtension(new MetadataExtension());
         $environment->addExtension(new BracketExtension());
+        $environment->addExtension(new MqlExtension());
         $environment->addRenderer(Image::class, new MCImageRenderer(), 100);
         $environment->addRenderer(HtmlInline::class, new MCHtmlInlineRenderer(), 100);
         $environment->addRenderer(HtmlBlock::class, new MCHtmlBlockRenderer(), 100);
