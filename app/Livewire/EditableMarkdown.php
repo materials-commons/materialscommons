@@ -14,6 +14,7 @@ class EditableMarkdown extends Component
      */
     public string $content = '';
 
+
     /**
      * The original content before editing.
      *
@@ -41,6 +42,7 @@ class EditableMarkdown extends Component
      * @var bool
      */
     public bool $showPreview = true;
+
 
     /**
      * Event that will be emitted when content is saved.
@@ -71,7 +73,6 @@ class EditableMarkdown extends Component
      */
     public function toggleEdit()
     {
-        ray('toggleEdit called');
         $this->isEditing = !$this->isEditing;
 
         if ($this->isEditing) {
@@ -104,6 +105,7 @@ class EditableMarkdown extends Component
         // Emit an event so parent components can react to the save
         $this->dispatch($this->saveEvent, content: $this->content);
     }
+
 
     /**
      * Cancel editing and revert to the original content.

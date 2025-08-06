@@ -1,13 +1,16 @@
 <div class="w-100">
     <!-- Display Mode -->
-    editing {{$isEditing ? 'true' : 'false'}}
     @if (!$isEditing)
         <div class="position-relativex">
-            <a wire:click.prevent="toggleEdit" class="text-secondary btn btn-link" title="Edit">
-                <i class="fas fa-edit"></i>
-            </a>
+            <div class="d-flex justify-content-end mb-2">
+                <a wire:click.prevent="toggleEdit" class="btn btn-sm btn-outline-primary me-2" title="Edit">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a wire:click.prevent="save" class="btn btn-sm btn-outline-success" title="Save">
+                    <i class="fas fa-save"></i> Save
+                </a>
+            </div>
             <x-markdown class="w-100">{!! $content !!}</x-markdown>
-
         </div>
     @else
         <!-- Edit Mode -->
@@ -57,4 +60,5 @@
             </div>
         </div>
     @endif
+
 </div>
