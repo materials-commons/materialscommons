@@ -66,27 +66,31 @@
                         <label for="apitokeninput">API Token</label>
                         <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
                     </div>
+                    <a href="{{route('accounts.api-token.regenerate')}}" class="ml-5 btn btn-sm btn-outline-danger ml-2">Regenerate API Token</a>
+                    <span class="text-muted">(This will invalidate any existing clients using the old token)</span>
                 </div>
-                <br>
-                <hr>
-                <br/>
-                <h3 class="mb-3">Globus Account</h3>
 
-                <form method="post" id="globus" action="{{route('accounts.update.globus')}}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="globus-user">Globus User Account</label>
-                        <input class="form-control" id="globus-user" name="globus_user" type="text"
-                               value="{{$user->globus_user}}" placeholder="Globus User Account...">
-                    </div>
-                    <div class="float-right">
-                        <a class="action-link" href="#"
-                           onclick="document.getElementById('globus').submit()">
-                            Save
-                        </a>
-                    </div>
-                </form>
+                @if(isInBeta('google-sheets'))
+                    <br>
+                    <hr>
+                    <br/>
+                    <h3 class="mb-3">Globus Account</h3>
 
+                    <form method="post" id="globus" action="{{route('accounts.update.globus')}}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="globus-user">Globus User Account</label>
+                            <input class="form-control" id="globus-user" name="globus_user" type="text"
+                                   value="{{$user->globus_user}}" placeholder="Globus User Account...">
+                        </div>
+                        <div class="float-right">
+                            <a class="action-link" href="#"
+                               onclick="document.getElementById('globus').submit()">
+                                Save
+                            </a>
+                        </div>
+                    </form>
+                @endif
                 <br>
                 <hr>
                 <br/>
