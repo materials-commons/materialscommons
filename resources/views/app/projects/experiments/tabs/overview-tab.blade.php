@@ -15,8 +15,5 @@
             class="no-underline">{{$experiment->loaded_file_path}}</a></span>
         </div>
     @endif
-    <div class="form-group">
-        <span class="fs-10 grey-5">Token: {{$experiment->uuid}}
-    </div>
     @include('partials.overview._overview')
 </x-card-container>
