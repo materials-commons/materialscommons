@@ -6,7 +6,7 @@
                 <a wire:click.prevent="toggleEdit" class="btn btn-sm btn-outline-primary me-2" title="Edit">
                     <i class="fas fa-edit"></i> Edit
                 </a>
-                <a wire:click.prevent="save" class="btn btn-sm btn-outline-success" title="Save">
+                <a wire:click.prevent="save" class="btn btn-sm btn-outline-success ml-2" title="Save">
                     <i class="fas fa-save"></i> Save
                 </a>
             </div>
@@ -31,7 +31,7 @@
                     <textarea
                         wire:model.live="editContent"
                         class="form-control"
-                        style="height: 250px;"
+                        style="height: 550px;"
                         placeholder="Enter markdown content here..."
                     ></textarea>
                 </div>
@@ -39,7 +39,7 @@
                 <!-- Preview Panel -->
                 @if ($showPreview)
                     <div class="col-md-6">
-                        <div class="border rounded p-4 overflow-auto bg-light" style="height: 250px;">
+                        <div class="border rounded p-4 overflow-auto bg-light" style="height: 550px;">
                             <h4 class="fs-6 fw-medium text-secondary mb-2">Preview</h4>
                             <div class="w-100">
                                 <x-markdown>{!! $editContent !!}</x-markdown>
@@ -54,7 +54,7 @@
                 <a wire:click.prevent="cancel" class="btn btn-outline-secondary me-2">
                     Cancel
                 </a>
-                <a wire:click.prevent="save" class="btn btn-primary">
+                <a wire:click.prevent="save" class="btn btn-primary ml-2">
                     Save
                 </a>
             </div>
