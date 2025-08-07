@@ -1,0 +1,17 @@
+.welcome-bg {
+    //background: linear-gradient(135deg, #2b6bb1 0%, #1a4c8c 100%);
+    background: radial-gradient(
+            circle at 30% -50%,
+            #3584db 0%,
+            #2b6bb1 30%,
+            #194578 70%,
+            #123456 100%
+    );
+
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.font-serif {
+    font-family:"roca","Georgia Roca Fallback","Iowan Old Style","Palatino Linotype","URW Palladio L",P052,serif
+}

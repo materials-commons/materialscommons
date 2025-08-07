@@ -35,7 +35,7 @@ use App\Models\File;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
-
+Route::view('/welcome2', 'welcome.welcome2')->name('welcome2');
 Route::get('/', WelcomeWebController::class)->name('welcome');
 Route::get('/about', AboutWebController::class)->name('about');
 
