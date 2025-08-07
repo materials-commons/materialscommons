@@ -31,6 +31,8 @@ window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;
 window.UppyXHRUpload = XHR;
 
+import './text-selection';
+
 import '@uppy/core/dist/style.min.css';
 import '@uppy/dashboard/dist/style.min.css';
 

@@ -174,6 +174,7 @@
                 @include('flash::message')
                 @yield('breadcrumbs')
                 @yield('content')
+                <x-chatgpt.text-selection-popup/>
             </div>
         </main>
     </div>
