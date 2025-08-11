@@ -17,7 +17,7 @@ class GetDatasetFilesAction
     {
         $directory = $this->getDirectory($projectId, $dir);
         $files = $this->getFolderFiles($projectId, $directory->id);
-        $files->each(function($file) use ($directory) {
+        $files->each(function ($file) use ($directory) {
             if ($file->mime_type === 'directory') {
                 $file->selected = $this->datasetFileSelection->isIncludedDir($file->path);
             } else {
@@ -33,7 +33,10 @@ class GetDatasetFilesAction
         // $dir is either an id, or slash '/' meaning get
         // the root
         if ($dir === '/') {
-            return File::where('project_id', $projectId)->where('name', '/')->first();
+            return File::where('project_id', $projectId)
+                       ->whereNull('dataset_id')
+                       ->where('name', '/')
+                       ->first();
         }
 
         // $dir is an id
@@ -44,6 +47,8 @@ class GetDatasetFilesAction
     {
         return File::where('project_id', $projectId)
                    ->where('directory_id', $folderId)
+                   ->whereNull('deleted_at')
+                   ->whereNull('dataset_id')
                    ->where('current', true)
                    ->get();
     }

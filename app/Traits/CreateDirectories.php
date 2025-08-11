@@ -19,6 +19,7 @@ trait CreateDirectories
     {
         $dir = File::where('project_id', $project->id)
                    ->where('path', $path)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)
@@ -42,6 +43,7 @@ trait CreateDirectories
             // Exception, so maybe dir exists, so try getting it again.
             return File::where('project_id', $project->id)
                        ->where('path', $path)
+                       ->where('mime_type', 'directory')
                        ->whereNull('dataset_id')
                        ->whereNull('deleted_at')
                        ->where('current', true)

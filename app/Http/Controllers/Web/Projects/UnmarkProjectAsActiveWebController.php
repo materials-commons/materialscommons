@@ -18,7 +18,7 @@ class UnmarkProjectAsActiveWebController extends Controller
         $route = route('projects.mark-as-active', [$project, 'target' => $target]);
         return <<<RESP
         <a hx-get="{$route}" hx-target="#{$target}"
-               class="btn btn-success float-right cursor-pointer">Mark As Active Project</a>
+               class="action-link float-right mr-4 cursor-pointer"><i class="fas fa-star mr-2"></i>Active Project</a>
         RESP;
     }
 }

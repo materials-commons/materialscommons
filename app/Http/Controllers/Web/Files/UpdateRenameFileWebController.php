@@ -22,7 +22,8 @@ class UpdateRenameFileWebController extends Controller
         $file->load('directory');
 
         $name = $request->input('name');
-        $file = $renameFileAction($file, $name);
+        $url = $request->input('url');
+        $file = $renameFileAction($file, $name, $url);
         return redirect(route('projects.folders.show',
             [$project, $file->directory, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg]));
     }

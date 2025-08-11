@@ -1,26 +1,26 @@
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
+<ul class="nav nav-pills">
+    <li class="nav-item" id="project-home-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.show')}}"
            href="{{route('projects.show', [$project])}}">
             Home
         </a>
     </li>
 
-    <li class="nav-item">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
+    <li class="nav-item" id="project-overview-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
            href="{{route('projects.overview', [$project])}}">
-            Overview
+            Details
         </a>
     </li>
 
-    <li class="nav-item">
-        <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
+    <li class="nav-item" id="project-sample-attributes-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
            href="{{route('projects.data-dictionary.entities', [$project])}}">
             Sample Attributes ({{$entityAttributesCount}})
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item" id="project-process-attributes-tab">
         <a wire:navigate class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.activities')}}"
            href="{{route('projects.data-dictionary.activities', [$project])}}">
             Process Attributes ({{$activityAttributesCount}})

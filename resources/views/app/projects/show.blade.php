@@ -15,7 +15,7 @@
     {{--    <br>--}}
     <x-card>
         <x-slot:header>
-            Project: {{$project->name}}
+            <span id="project-intro">Project: {{$project->name}}</span>
             <a class="float-right action-link"
                href="{{route('projects.edit', $project->id)}}">
                 <i class="fas fa-edit mr-2"></i>Edit
@@ -28,6 +28,22 @@
                 </a>
 
             @endif
+
+            <span id="mark-project">
+            @if(auth()->user()->isActiveProject($project))
+                <a hx-get="{{route('projects.unmark-as-active', [$project, 'target' => 'mark-project'])}}"
+                   hx-target="#mark-project"
+                   class="action-link float-right mr-4 cursor-pointer">
+                    <i class="fas fa-star text-warning mr-2"></i> Active Project
+                </a>
+            @else
+                <a hx-get="{{route('projects.mark-as-active', [$project, 'target' => 'mark-project'])}}"
+                   hx-target="#mark-project"
+                   class="action-link float-right mr-4 cursor-pointer">
+                    <i class="fas fa-star mr-2"></i> Active Project
+                </a>
+            @endif
+            </span>
         </x-slot:header>
 
         <x-slot:body>

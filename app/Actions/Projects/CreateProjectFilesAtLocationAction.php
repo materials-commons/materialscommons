@@ -42,8 +42,9 @@ class CreateProjectFilesAtLocationAction
             $this->createDirIfNotExists("{$location}{$dir->path}");
             $files = File::where('directory_id', $dir->id)
                          ->whereNull('deleted_at')
+                         ->whereNull('dataset_id')
                          ->where('current', true)
-                         ->whereNull('path')
+                         ->where('mime_type', '<>', 'directory')
                          ->cursor();
             foreach ($files as $file) {
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));

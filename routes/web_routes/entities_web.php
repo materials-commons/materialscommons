@@ -2,6 +2,7 @@
 
 use App\Exports\EntitiesExport;
 use App\Http\Controllers\Web\Entities\CompareEntitiesWebController;
+use App\Http\Controllers\Web\Entities\CompareActivitiesWebController;
 use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;
 use App\Http\Controllers\Web\Entities\Datatables\GetProjectEntitiesDatatableWebController;
 use App\Http\Controllers\Web\Entities\IndexEntitiesWebController;
@@ -26,6 +27,9 @@ Route::get('/projects/{project}/datatables/entities', GetProjectEntitiesDatatabl
 
 Route::get('/projects/{project}/entities/{entity1}/compare/{entity2}', CompareEntitiesWebController::class)
      ->name('projects.entities.compare');
+
+Route::get('/projects/{project}/activities/compare', CompareActivitiesWebController::class)
+     ->name('projects.activities.compare');
 
 Route::get('/projects/{project}/entitites/create', CreateProjectEntityWebController::class)
      ->name('projects.entities.create');

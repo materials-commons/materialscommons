@@ -34,21 +34,23 @@
     @slot('body')
         @include('partials.communities.show-tabs.tabs')
         <br>
-        @if(Request::routeIs($showRouteName))
-            @include('partials.communities.show-tabs.overview')
-        @elseif (Request::routeIs($datasetsRouteName))
-            @include('partials.communities.show-tabs.datasets')
-        @elseif (Request::routeIs($filesRouteName))
-            @include('partials.communities.show-tabs.files')
-        @elseif (Request::routeIs($linksRouteName))
-            @include('partials.communities.show-tabs.links')
-        @elseif(Request::routeIs('communities.waiting-approval.index'))
-            @include('partials.communities.show-tabs.datasets-waiting-approval')
-        @endif
+        <x-card-container>
+            @if(Request::routeIs($showRouteName))
+                @include('partials.communities.show-tabs.overview')
+            @elseif (Request::routeIs($datasetsRouteName))
+                @include('partials.communities.show-tabs.datasets')
+            @elseif (Request::routeIs($filesRouteName))
+                @include('partials.communities.show-tabs.files')
+            @elseif (Request::routeIs($linksRouteName))
+                @include('partials.communities.show-tabs.links')
+            @elseif(Request::routeIs('communities.waiting-approval.index'))
+                @include('partials.communities.show-tabs.datasets-waiting-approval')
+            @endif
 
-        <br>
-        <div class="float-right">
-            <a class="btn btn-success" href="{{$doneRoute}}">Done</a>
-        </div>
+            <br>
+            <div class="float-right">
+                <a class="btn btn-success" href="{{$doneRoute}}">Done</a>
+            </div>
+        </x-card-container>
     @endslot
 @endcomponent

@@ -1,6 +1,6 @@
 @include('public.datasets.tabs._short-overview')
 
-<x-card>
+<x-card-white>
     <x-slot name="header">
         <x-show-dataset-dir-path :dataset="$dataset" :file="$directory"/>
     </x-slot>
@@ -64,7 +64,7 @@
     </x-slot>
 
     <x-display-markdown-file :file="$readme"></x-display-markdown-file>
-</x-card>
+</x-card-white>
 
 @push('scripts')
     <script>

@@ -1,19 +1,21 @@
-<dl class="row ml-2">
+<div class="row ml-2">
     @foreach($activity->attributes as $attribute)
-        <dt class="col-7">{{$attribute->name}}:</dt>
-        <dd class="col-4">
-            @if(is_array($attribute->values[0]->val["value"]))
-                @json($attribute->values[0]->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-            @else
-                @if(blank($attribute->values[0]->val["value"]))
-                    No value
+        <div class="attribute-row row col-11 ml-1">
+            <div class="col-7">{{$attribute->name}}:</div>
+            <div class="col-5">
+                @if(is_array($attribute->values[0]->val["value"]))
+                    @json($attribute->values[0]->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
                 @else
-                    {{$attribute->values[0]->val["value"]}}
+                    @if(blank($attribute->values[0]->val["value"]))
+                        No value
+                    @else
+                        {{$attribute->values[0]->val["value"]}}
+                    @endif
                 @endif
-            @endif
-            @if($attribute->values[0]->unit != "")
-                {{$attribute->values[0]->unit}}
-            @endif
-        </dd>
+                @if($attribute->values[0]->unit != "")
+                    {{$attribute->values[0]->unit}}
+                @endif
+            </div>
+        </div>
     @endforeach
-</dl>
+</div>

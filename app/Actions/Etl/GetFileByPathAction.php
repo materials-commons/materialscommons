@@ -32,7 +32,13 @@ class GetFileByPathAction
 
     private function getRootDir($projectId)
     {
-        return File::where('project_id', $projectId)->where('path', '/')->first();
+        return File::where('project_id', $projectId)
+                   ->where('current', true)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
+                   ->where('path', '/')
+                   ->where('mime_type', 'directory')
+                   ->first();
     }
 
     private function getFileOrDirAtPath($path, $projectId)
@@ -41,6 +47,7 @@ class GetFileByPathAction
         $dirName = dirname($path);
         $dir = File::where('project_id', $projectId)
                    ->where('path', $dirName)
+                   ->where('mime_type', 'directory')
                    ->whereNull('dataset_id')
                    ->whereNull('deleted_at')
                    ->where('current', true)

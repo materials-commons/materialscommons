@@ -17,7 +17,7 @@
 @section('content')
     <x-card>
         <x-slot name="header">
-            Dashboard
+            <span id="dashboard-intro">Dashboard</span>
         </x-slot>
         <x-slot name="body">
             @include('app.dashboard.tabs.tabs')
@@ -25,11 +25,17 @@
             @if (Request::routeIs('dashboard.projects.show'))
                 @include('app.dashboard.tabs.projects')
             @elseif (Request::routeIs('dashboard.published-datasets.show'))
-                @include('app.dashboard.tabs.published-datasets')
+                <x-table-container>
+                    @include('app.dashboard.tabs.published-datasets')
+                </x-table-container>
             @elseif (Request::routeIs('dashboard.projects.archived.index'))
-                @include('app.dashboard.tabs.archived-projects')
+                <x-table-container>
+                    @include('app.dashboard.tabs.archived-projects')
+                </x-table-container>
             @elseif (Request::routeIs('dashboard.projects.trash.index'))
-                @include('app.dashboard.tabs.deleted-projects')
+                <x-table-container>
+                    @include('app.dashboard.tabs.deleted-projects')
+                </x-table-container>
             @elseif(Request::routeIs('dashboard.admin.mcfs.index'))
                 @include('app.admin.tabs.mcfs-index')
             @endif

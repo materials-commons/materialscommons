@@ -22,7 +22,7 @@ class EditDatasetFilesWebController extends Controller
         $dataset = Dataset::with(['communities', 'experiments', 'tags'])->findOrFail($datasetId);
         $communities = Community::where('public', true)->get();
         $experiments = $project->experiments()->get();
-        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection, $dataset);
+        $getDatasetFilesAction = new GetDatasetFilesAction($dataset->file_selection);
         $filesAndDir = $getDatasetFilesAction($project->id, $folder);
         $directory = $filesAndDir["directory"];
         $files = $filesAndDir["files"];

@@ -78,6 +78,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // MQL Queries
     require base_path('routes/api_routes/query_api.php');
+
+    // Tour States
+    require base_path('routes/api_routes/tour_states_api.php');
 });
 
 Route::post('/get_apitoken', GetApiTokenApiController::class);

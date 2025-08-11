@@ -13,32 +13,34 @@
         @endslot
 
         @slot('body')
-            <table id="datasets" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Views</th>
-                    <th>Downloads</th>
-                    <th>Published</th>
-                    <th>Summary</th>
-                    <th>Authors</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($datasets as $dataset)
+            <x-table-container>
+                <table id="datasets" class="table table-hover" style="width:100%">
+                    <thead>
                     <tr>
-                        <td>
-                            <a href="{{route('public.datasets.show', [$dataset])}}">{{$dataset->name}}</a>
-                        </td>
-                        <td>{{$dataset->views_count}}</td>
-                        <td>{{$dataset->downloads_count}}</td>
-                        <td>{{$dataset->published_at->toDateString()}}</td>
-                        <td>{{$dataset->summary}}</td>
-                        <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
+                        <th>Name</th>
+                        <th>Views</th>
+                        <th>Downloads</th>
+                        <th>Published</th>
+                        <th>Summary</th>
+                        <th>Authors</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($datasets as $dataset)
+                        <tr>
+                            <td>
+                                <a href="{{route('public.datasets.show', [$dataset])}}">{{$dataset->name}}</a>
+                            </td>
+                            <td>{{$dataset->views_count}}</td>
+                            <td>{{$dataset->downloads_count}}</td>
+                            <td>{{$dataset->published_at->toDateString()}}</td>
+                            <td>{{$dataset->summary}}</td>
+                            <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </x-table-container>
         @endslot
     @endcomponent
 @endsection

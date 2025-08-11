@@ -90,13 +90,12 @@
     <div class="navbar-collapse collapse" id="navbar5">
         <ul class="navbar-nav">
             {{--            Kept here for formatting purposes--}}
-            <li class="nav-item">
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
-                   href="#jupyter-dialog">
-                    Jupyter
-                </a>
-            </li>
             @auth
+                <li class="nav-item">
+                    <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
+                        <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
                        href="#code-dialog">
@@ -140,6 +139,9 @@
                                onclick="document.getElementById('signout').submit()">
                                 Sign out</a>
                         </form>
+                        <a class="dropdown-item td-none" href="{{route('accounts.show')}}">
+                            <i class="fa-fw fas fa-user mr-2 mb-1"></i>Account
+                        </a>
                         {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>
                 </li>
@@ -183,6 +185,7 @@
 @endauth
 @include('app.dialogs._help-dialog')
 @include('app.dialogs._welcome-dialog')
+@include('app.dialogs._no-tour-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -198,6 +201,26 @@
     // $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     $(document).ready(() => {
         mcutil.autosizeTextareas();
+
+        @auth
+        $('#app-start-tour').on('click', function () {
+            window.tourService.initState("{{auth()->user()->api_token}}");
+
+            // Get current route
+            const currentRoute = "{{Route::currentRouteName()}}";
+
+            // Get the appropriate tour for the current route
+            const tourName = window.tourService.getTourForRoute(currentRoute);
+
+            if (tourName) {
+                // Start the tour
+                window.tourService.startTour(tourName);
+            } else {
+                $('#no-tour-dialog').modal('show');
+                console.error('No tour available for this page');
+            }
+        });
+        @endauth
     });
     window.mc_grids = [];
 

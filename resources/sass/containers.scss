@@ -1,0 +1,45 @@
+.table-container {
+    .table-card {
+        background: #fff;
+        border: 1px solid $grey-8;
+        border-radius: 0.5rem;
+
+        .card-header {
+            background: #fff;
+            border-bottom: 1px solid $grey-8;
+            padding: 1rem 1.5rem;
+
+            h5 {
+                color: $grey-1;
+                margin: 0;
+                font-weight: 600;
+            }
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .table {
+            margin-bottom: 0;
+
+            thead th {
+                border-top: none;
+                border-bottom: 2px solid $grey-8;
+                color: $grey-1;
+                font-weight: 600;
+            }
+
+            tbody {
+                tr:hover {
+                    background-color: $grey-10;
+                }
+
+                td {
+                    border-color: $grey-8;
+                }
+            }
+        }
+    }
+}
+

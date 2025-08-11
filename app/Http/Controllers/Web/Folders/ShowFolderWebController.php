@@ -25,6 +25,9 @@ class ShowFolderWebController extends Controller
         $destDir = $this->getDestinationDirId();
         $arg = $request->input('arg');
         $dir = File::where('project_id', $project->id)
+                   ->where('current', true)
+                   ->whereNull('dataset_id')
+                   ->whereNull('deleted_at')
                    ->where('id', $folderId)
                    ->first();
         $files = $this->getProjectFolderFiles($project->id, $folderId);
