@@ -30,8 +30,6 @@ class PublicDataController extends Controller
     {
         return Laratables::recordsOf(Dataset::class, function ($query) {
             return $query->withCount('views', 'downloads')
-                         ->where('doi', 'not like', '%'.config('doi.test_namespace').'%')
-                         ->orWhereNull('doi')
                          ->whereDoesntHave('tags', function ($q) {
                              $q->where('tags.id', config('visus.import_tag_id'));
                          })
@@ -43,11 +41,10 @@ class PublicDataController extends Controller
     {
         return Laratables::recordsOf(Dataset::class, function ($query) {
             return $query->withCount('views', 'downloads')
-                         ->whereLike('doi', '%'.config('doi.test_namespace').'%')
                          ->whereDoesntHave('tags', function ($q) {
                              $q->where('tags.id', config('visus.import_tag_id'));
                          })
-                         ->whereNotNull('published_at');
+                         ->whereNotNull('test_published_at');
         });
     }
 }
