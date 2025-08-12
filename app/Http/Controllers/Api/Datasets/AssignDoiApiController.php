@@ -13,7 +13,7 @@ class AssignDoiApiController extends Controller
     public function __invoke(AssignDoiToDatasetAction $assignDoiToDatasetAction, Project $project, Dataset $dataset)
     {
         $user = auth()->user();
-        $dataset = $assignDoiToDatasetAction($dataset, $user);
+        $dataset = $assignDoiToDatasetAction($dataset, $user, request()->has('test'));
         return new DatasetResource($dataset);
     }
 }

@@ -32,11 +32,13 @@ class DOIHelpers
         return str_replace("doi:", "", $matches[0]);
     }
 
-    public static function mintDOI($title, $author, $datasetId)
+    public static function mintDOI($title, $author, $datasetId, $publishAsTestDataset = false)
     {
-        $doiServiceUrl = config('doi.service_url');
-        $DSURL = config('doi.dataset_url');
-        $response = Http::withBasicAuth(config('doi.user'), config('doi.password'))
+        $doiServiceUrl = self::getDOIConfigEntry('service_url', $publishAsTestDataset);
+        $DSURL = self::getDOIConfigEntry('dataset_url', $publishAsTestDataset);
+        $doiUser = self::getDOIConfigEntry('user', $publishAsTestDataset);
+        $doiPassword = self::getDOIConfigEntry('password', $publishAsTestDataset);
+        $response = Http::withBasicAuth($doiUser, $doiPassword)
                         ->contentType('application/vnd.api+json')
                         ->post($doiServiceUrl, [
                             'data' => [
@@ -65,6 +67,12 @@ class DOIHelpers
         }
 
         return $response->json()['data']['id'];
+    }
+
+    private static function getDOIConfigEntry($name, $publishAsTestDataset)
+    {
+        $configEntryName = $publishAsTestDataset ? "doi.test.{$name}" : "doi.{$name}";;
+        return config($configEntryName);
     }
 }
 
