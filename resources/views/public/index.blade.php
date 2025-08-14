@@ -42,11 +42,10 @@
     @push('scripts')
         <script>
             @php
-                $isTest = request()->input('test');
-                if (is_null($isTest)) {
-                    $r = route('get_all_published_datasets');
-                } else {
+                if ($isTest) {
                     $r = route('get_all_published_test_datasets');
+                } else {
+                    $r = route('get_all_published_datasets');
                 }
             @endphp
             $(document).ready(() => {
@@ -75,7 +74,11 @@
                         {name: 'views_count', searchable: false},
                         {name: 'downloads_count', searchable: false},
                         {
+                            @if($isTest)
+                            name: 'test_published_at',
+                            @else
                             name: 'published_at',
+                            @endif
                             render: function (data, type, row) {
                                 let space = data.indexOf(' ');
                                 return data.slice(0, space);

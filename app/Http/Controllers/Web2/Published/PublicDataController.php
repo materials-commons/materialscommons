@@ -15,11 +15,17 @@ class PublicDataController extends Controller
      */
     public function index()
     {
+        // Check if the ?test query parameter is set. This means we only want to show
+        // datasets that have been published for testing purposes.
+        $isTest = request()->has('test');
         $communities = Community::with('owner')->withCount('datasets')
                                 ->where('public', true)
                                 ->orderBy('name')
                                 ->get();
-        return view('public.index', compact('communities'));
+        return view('public.index', [
+            'communities' => $communities,
+            'isTest'    => $isTest,
+        ]);
     }
 
     /**
