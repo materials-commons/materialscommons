@@ -22,7 +22,9 @@
         @endslot
 
         @slot('body')
-            @include('partials.globus_downloads', ['showProject' => false])
+            <x-card-container>
+                @include('partials.globus_downloads', ['showProject' => false])
+            </x-card-container>
         @endslot
     @endcomponent
 @stop
