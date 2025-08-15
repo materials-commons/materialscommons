@@ -3,27 +3,24 @@
 namespace App\Http\Controllers\Web\Welcome;
 
 use App\Http\Controllers\Controller;
+use App\Traits\Projects\UserProjects;
 use Illuminate\Http\Request;
 use function view;
 
 class WelcomeWebController extends Controller
 {
+    use UserProjects;
     public function __invoke(Request $request)
     {
+        if ($request->get('deviceType') == 'phone') {
+            $projects = collect();
+            if (auth()->check()) {
+                $projects = $this->getUserProjects(auth()->id());
+            }
+            return view('welcome-phone', [
+                'projects' => $projects,
+            ]);
+        }
         return view('welcome');
-
-//        $datasetsCount = Dataset::whereNotNull('published_at')
-//                                ->whereDoesntHave('tags', function ($q) {
-//                                    $q->where('tags.id', config('visus.import_tag_id'));
-//                                })
-//                                ->count();
-//        $specialCollectionsDatasetsCount = Dataset::withAnyTags(['OpenVisus'])
-//                                                  ->whereNotNull('published_at')
-//
-//
-//     return view('welcome', [
-//            'datasets'                   => $datasetsCount,
-//            'specialCollectionsDatasets' => $specialCollectionsDatasetsCount,
-//        ]);                                              ->count();;
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Middleware\AddProjectNavigationBarCounts;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\DatasetInProject;
+use App\Http\Middleware\DetectDeviceType;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\EntityInProject;
 use App\Http\Middleware\EntityStateInProject;
@@ -75,6 +76,7 @@ class Kernel extends HttpKernel
             DatasetInProject::class,
             ExperimentInProject::class,
             PublicRouteDatasetIsPublished::class,
+            DetectDeviceType::class
         ],
 
         'api' => [

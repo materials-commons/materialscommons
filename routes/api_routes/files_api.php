@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Camera\UploadCameraPhotoApiController;
 use App\Http\Controllers\Api\Files\CreateFileApiController;
 use App\Http\Controllers\Api\Files\DeleteFileApiController;
 use App\Http\Controllers\Api\Files\DownloadFileApiController;
@@ -36,4 +37,5 @@ Route::post('/projects/{project}/files/{file}/upload', UploadFileApiController::
      ->name('api.projects.files.upload');
 Route::post('/projects/{project}/files/{file}/upload/{name}', UploadFileNamedApiController::class)
      ->name('api.projects.files.upload.named');
+Route::post('/upload-camera-image', UploadCameraPhotoApiController::class);
 

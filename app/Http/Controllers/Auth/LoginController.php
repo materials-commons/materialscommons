@@ -72,6 +72,9 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
+        if (request()->get('deviceType') == 'phone') {
+            return route('welcome');
+        }
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'login-for-upload') {
             return route('public.publish.wizard.choose_create_or_select_project');
