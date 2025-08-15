@@ -158,8 +158,10 @@
         formData.append('file', file);
         formData.append('project_id', projectId);
 
+        let r = route('api.upload-camera-image', {api_token: apiToken});
+
         try {
-            const response = await fetch(`/api/upload-camera-image?api_token=${apiToken}`, {
+            const response = await fetch(r, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -172,6 +174,7 @@
             } else {
                 const data = await response.text();
                 alert(`Upload successful, ${data}`);
+                alert(`route used ${r}`);
                 console.log(response.json());
             }
         } catch (error) {

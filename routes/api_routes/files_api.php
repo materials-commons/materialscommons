@@ -37,5 +37,5 @@ Route::post('/projects/{project}/files/{file}/upload', UploadFileApiController::
      ->name('api.projects.files.upload');
 Route::post('/projects/{project}/files/{file}/upload/{name}', UploadFileNamedApiController::class)
      ->name('api.projects.files.upload.named');
-Route::post('/upload-camera-image', UploadCameraPhotoApiController::class);
+Route::post('/upload-camera-image', UploadCameraPhotoApiController::class)->name('api.upload-camera-image');
 
