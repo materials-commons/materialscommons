@@ -30,6 +30,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
+
+    @stack('styles')
 
     <style>
         .navbar-brand {
