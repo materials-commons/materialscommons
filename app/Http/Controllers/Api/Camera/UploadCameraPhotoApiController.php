@@ -26,7 +26,16 @@ class UploadCameraPhotoApiController extends Controller
         $user = auth()->user();
 
         $dir = $this->getOrCreateSingleDirectoryIfDoesNotExist($project->rootDir, "/CameraPhotos", $project, $user->id);
-        $file = $createFileAction($project, $dir, '', $validated['file']);
+        $f = $validated['file'];
+        // Get original filename and extension
+        $originalName = pathinfo($f->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $f->getClientOriginalExtension();
+
+        // Append timestamp to filename
+        $timestamp = now()->format('Y-m-d_H-i-s');
+        $uniqueName = $originalName . '_' . $timestamp . '.' . $extension;
+
+        $file = $createFileAction($project, $dir, '', $validated['file'], $uniqueName);
         return new FileResource($file);
     }
 }

@@ -196,7 +196,8 @@
             if (!response.ok) {
                 alert('Upload failed');
             } else {
-                alert(`Upload successful`);
+                let data = response.text();
+                alert(`Upload successful ${r}, ${data}`);
             }
         } catch (error) {
             alert('Upload error');
