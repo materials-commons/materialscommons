@@ -80,6 +80,12 @@
                                 <i class="fas fa-globe mr-2"></i>Goto Published Datasets
                             </a>
                         </div>
+
+                        <div class="mb-3 w-100">
+                            <a class="btn btn-danger w-100 text-center" href="{{route('logout-get')}}">
+                                <i class="fas fa-globe mr-2"></i>Logout
+                            </a>
+                        </div>
                     </div>
                 @else
                     <div class="d-flex flex-column align-items-center">
@@ -143,7 +149,11 @@
 
     async function uploadPhoto(file) {
         let projectId = $('#select-project').val();
+        @auth
         let apiToken = "{{auth()->user()->api_token}}";
+        @else
+        let apiToken = "";
+        @endauth
         const formData = new FormData();
         formData.append('file', file);
         formData.append('project_id', projectId);
