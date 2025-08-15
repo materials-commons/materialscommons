@@ -169,6 +169,10 @@
 
             if (!response.ok) {
                 alert('Upload failed');
+            } else {
+                const data = await response.text();
+                alert(`Upload successful, ${data}`);
+                console.log(response.json());
             }
         } catch (error) {
             alert('Upload error');
