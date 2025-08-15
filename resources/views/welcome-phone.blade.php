@@ -37,6 +37,29 @@
 
     @stack('styles')
 
+    <!-- Your existing head content -->
+    <style>
+        body, html {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .container-fluid {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        /* Prevent select picker from causing layout issues */
+        .bootstrap-select .dropdown-menu {
+            max-width: 100vw;
+        }
+
+        .bootstrap-select {
+            width: 100% !important;
+        }
+    </style>
+
     {{--    @stack('')--}}
 
     <!-- Custom styles for this template -->
@@ -63,7 +86,8 @@
                             </a>
                         </div>
                         <div class="mb-3 w-100">
-                            <select class="selectpicker w-100" id="select-project" data-live-search="true" data-style="btn-light no-tt"
+                            <select class="selectpicker w-100" id="select-project" data-live-search="true"
+                                    data-style="btn-light no-tt"
                                     title="Select Project For Pictures">
                                 @foreach($projects as $project)
                                     <option value="{{$project->id}}">{{$project->name}}</option>
@@ -118,7 +142,7 @@
             'pointer-events': 'none'
         });
 
-        $('#select-project').on('change', function() {
+        $('#select-project').on('change', function () {
             let selected = $(this).val();
             if (selected && selected !== '') {
                 // Enable camera button
@@ -172,10 +196,7 @@
             if (!response.ok) {
                 alert('Upload failed');
             } else {
-                const data = await response.text();
-                alert(`Upload successful, ${data}`);
-                alert(`route used ${r}`);
-                console.log(response.json());
+                alert(`Upload successful`);
             }
         } catch (error) {
             alert('Upload error');
