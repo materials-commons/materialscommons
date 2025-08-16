@@ -71,7 +71,7 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
             <div class="mt-3">
-                <h4 class="text-center">Welcome to Materials Commons</h4>
+                <h4 class="text-center">Materials Commons</h4>
                 @auth
                     <div class="d-flex flex-column align-items-center">
                         <div class="mb-3 w-100">
