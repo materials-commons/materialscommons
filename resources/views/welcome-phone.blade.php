@@ -71,7 +71,9 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
             <div class="mt-3">
-                <h4 class="text-center">Materials Commons</h4>
+                <div class="pt-2 pb-1 mb-4" style="background-color: #3b7ad8; border-radiusx: 8px">
+                    <h4 class="text-center" style="color: #ffffff">Materials Commons</h4>
+                </div>
                 @auth
                     <div class="d-flex flex-column align-items-center">
                         <div class="mb-3 w-100">
@@ -108,8 +110,9 @@
                             </a>
                         </div>
 
+                        <hr style="width: 100%; border-color: #dee2e6;"/>
 
-                        <div class="mb-3 w-100">
+                        <div class="mb-3 w-100" style="margin-top: 20px">
                             <a class="btn btn-success w-100 text-center" href="/mcdocs2/">
                                 <i class="fas fa-book mr-2"></i>Goto Documentation
                             </a>
@@ -132,7 +135,8 @@
                                     </div>
                                     <h5 class="card-title text-muted mb-3">Photo Upload Features</h5>
                                     <p class="card-text text-muted mb-3">
-                                        Take photos with your camera or choose multiple images from your gallery to upload to your projects.
+                                        Take photos with your camera or choose multiple images from your gallery to
+                                        upload to your projects.
                                     </p>
                                     <div class="alert alert-info mb-0" role="alert">
                                         <i class="fas fa-info-circle mr-2"></i>
