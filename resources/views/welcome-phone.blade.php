@@ -71,7 +71,7 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-top: 10px">
 
             <div class="mt-3">
-                <h4 class="text-center">Materials Commons</h4>
+                <h4 class="text-center mb-3">Materials Commons</h4>
                 @auth
                     <div class="d-flex flex-column align-items-center">
                         <div class="mb-3 w-100">
@@ -141,9 +141,9 @@
                                         Take photos or choose multiple images from your gallery to
                                         upload to your projects.
                                     </p>
-                                    <div class="alert alert-info mb-0" role="alert">
+                                    <div class="alert alert-info mb-0" role="alert" style="padding: 0.75rem 0.75rem;">
                                         <i class="fas fa-info-circle mr-2"></i>
-                                        <strong>Login required</strong> to access photo upload features
+                                        Login required to access photo upload features
                                     </div>
                                 </div>
                             </div>
