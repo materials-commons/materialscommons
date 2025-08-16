@@ -190,11 +190,14 @@
                 body: formData,
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin'
             });
 
             if (!response.ok) {
-                alert('Upload failed');
+                const errorText = await response.text();
+                alert(`Upload failed: ${response.status} - ${errorText}`);
             } else {
                 let data = await response.json();
                 alert(`Upload successful`);
