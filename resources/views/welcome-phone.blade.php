@@ -68,12 +68,10 @@
 <body style="background-color: #ffffff">
 <div class="container-fluid">
     <div class="row">
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-top: 10px">
 
             <div class="mt-3">
-                <div class="pt-2 pb-1 mb-4" style="background-color: #3b7ad8; border-radiusx: 8px">
-                    <h4 class="text-center" style="color: #ffffff">Materials Commons</h4>
-                </div>
+                <h4 class="text-center">Materials Commons</h4>
                 @auth
                     <div class="d-flex flex-column align-items-center">
                         <div class="mb-3 w-100">
@@ -110,19 +108,24 @@
                             </a>
                         </div>
 
-                        <hr style="width: 100%; border-color: #dee2e6;"/>
-
-                        <div class="mb-3 w-100" style="margin-top: 20px">
-                            <a class="btn btn-success w-100 text-center" href="/mcdocs2/">
-                                <i class="fas fa-book mr-2"></i>Goto Documentation
-                            </a>
-                        </div>
-
                         <div class="mb-3 w-100">
-                            <a class="btn btn-danger w-100 text-center" href="{{route('logout-get')}}">
-                                <i class="fas fa-globe mr-2"></i>Logout
-                            </a>
+                            <hr class="my-2">
+                            <div class="text-center">
+                                <small class="text-muted d-block mb-2">Questions? Check out our documentation</small>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="/mcdocs2/" class="btn btn-link btn-sm text-info p-0 mr-3">
+                                        <i class="fas fa-book-open mr-1"></i>
+                                        Documentation
+                                    </a>
+                                    <span class="text-muted">•</span>
+                                    <a href="{{route('logout-get')}}" class="btn btn-link btn-sm text-muted p-0 ml-3">
+                                        <i class="fas fa-sign-out-alt mr-1"></i>
+                                        Sign out
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 @else
                     <div class="d-flex flex-column align-items-center">
@@ -130,12 +133,12 @@
                             <div class="card border-light" style="background-color: #f8f9fa;">
                                 <div class="card-body text-center py-4">
                                     <div class="mb-3">
-                                        <i class="fas fa-camera text-muted" style="font-size: 3rem;"></i>
-                                        <i class="fas fa-images text-muted ml-2" style="font-size: 3rem;"></i>
+                                        <i class="fas fa-camera text-muted" style="font-size: 2rem;"></i>
+                                        <i class="fas fa-images text-muted ml-2" style="font-size: 2rem;"></i>
                                     </div>
-                                    <h5 class="card-title text-muted mb-3">Photo Upload Features</h5>
+                                    <h6 class="card-title text-muted mb-3">Photo Upload Features</h6>
                                     <p class="card-text text-muted mb-3">
-                                        Take photos with your camera or choose multiple images from your gallery to
+                                        Take photos or choose multiple images from your gallery to
                                         upload to your projects.
                                     </p>
                                     <div class="alert alert-info mb-0" role="alert">
@@ -153,10 +156,16 @@
                         </div>
 
                         <div class="mb-3 w-100">
-                            <a class="btn btn-success w-100 text-center" href="/mcdocs2/">
-                                <i class="fas fa-book mr-2"></i>Goto Documentation
-                            </a>
+                            <hr class="my-2">
+                            <div class="text-center">
+                                <small class="text-muted d-block mb-2">Questions? Check out our documentation</small>
+                                <a href="/mcdocs2/" class="btn btn-link btn-sm text-info p-0">
+                                    <i class="fas fa-book-open mr-1"></i>
+                                    Documentation
+                                </a>
+                            </div>
                         </div>
+
                     </div>
                 @endauth
             </div>
@@ -199,7 +208,7 @@
     }
 
     $(document).ready(() => {
-        // Initially disable the camera button and refresh the select dropdown.
+        // Initially disable the camera and gallery buttons and refresh the select dropdown.
 
         $('#select-project').val('').selectpicker('refresh');
         disableCameraButton();
