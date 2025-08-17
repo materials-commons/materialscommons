@@ -25,7 +25,7 @@ class UploadCameraPhotoApiController extends Controller
         $project = Project::with('rootDir')->findOrFail($validated['project_id']);
         $user = auth()->user();
 
-        $dir = $this->getOrCreateSingleDirectoryIfDoesNotExist($project->rootDir, "/CameraPhotos", $project, $user->id);
+        $dir = $this->getOrCreateSingleDirectoryIfDoesNotExist($project->rootDir, "/CameraUploads", $project, $user->id);
         $f = $validated['file'];
         // Get original filename and extension
         $originalName = pathinfo($f->getClientOriginalName(), PATHINFO_FILENAME);
