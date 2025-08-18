@@ -58,6 +58,7 @@
         .bootstrap-select {
             width: 100% !important;
         }
+
     </style>
 
     {{--    @stack('')--}}
@@ -106,6 +107,27 @@
                                onclick="document.getElementById('photoGallery').click();">
                                 <i class="fas fa-images mr-2"></i>Choose from Gallery
                             </a>
+                        </div>
+
+                        <div class="mb-3 w-100" id="upload-progress-container" style="display: none;">
+                            <div class="card border-info">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small class="text-muted" id="upload-status">Preparing upload...</small>
+                                        <small class="text-muted" id="upload-counter">0/0</small>
+                                    </div>
+                                    <div class="progress mb-2" style="height: 8px;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                             role="progressbar" id="upload-progress-bar"
+                                             style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <small class="text-success" id="upload-success">0 successful</small>
+                                        <small class="text-danger" id="upload-failed">0 failed</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3 w-100">
@@ -207,6 +229,53 @@
         });
     }
 
+    function showProgressBar() {
+        $('#upload-progress-container').show();
+    }
+
+    function hideProgressBar() {
+        $('#upload-progress-container').hide();
+        // Reset progress bar
+        $('#upload-progress-bar').css('width', '0%').attr('aria-valuenow', 0);
+        $('#upload-status').text('Preparing upload...');
+        $('#upload-counter').text('0/0');
+        $('#upload-success').text('0 successful');
+        $('#upload-failed').text('0 failed');
+    }
+
+    function updateProgressBar(current, total, successCount, failCount, statusMessage) {
+        const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
+
+        // Update progress bar
+        $('#upload-progress-bar').css('width', percentage + '%').attr('aria-valuenow', percentage);
+
+        // Update status text
+        $('#upload-status').text(statusMessage);
+        $('#upload-counter').text(`${current}/${total}`);
+        $('#upload-success').text(`${successCount} successful`);
+        $('#upload-failed').text(`${failCount} failed`);
+
+        // Change progress bar color based on status
+        const progressBar = $('#upload-progress-bar');
+        progressBar.removeClass('bg-info bg-success bg-danger');
+
+        if (current === total) {
+            // Completed
+            if (failCount === 0) {
+                progressBar.addClass('bg-success');
+            } else if (successCount === 0) {
+                progressBar.addClass('bg-danger');
+            } else {
+                progressBar.addClass('bg-warning');
+            }
+            progressBar.removeClass('progress-bar-animated');
+        } else {
+            // In progress
+            progressBar.addClass('bg-info progress-bar-animated');
+        }
+    }
+
+
     $(document).ready(() => {
         // Initially disable the camera and gallery buttons and refresh the select dropdown.
 
@@ -229,12 +298,12 @@
 
     document.querySelectorAll('input[type="file"]').forEach(input => {
         input.addEventListener('change', function (e) {
-            if (input.id == 'photoGallery' && e.target.files.length > 1) {
+            if (input.id === 'photoGallery' && e.target.files.length > 1) {
                 uploadMultiplePhotos(e.target.files);
             } else {
                 const file = e.target.files[0];
                 if (file) {
-                    uploadPhoto(file, false);
+                    uploadSinglePhoto(file);
                 }
             }
         });
@@ -245,35 +314,61 @@
         let successCount = 0;
         let failCount = 0;
 
-        // Show initial progress
-        alert(`Starting upload of ${totalFiles} photos...`);
+        // Show and initialize progress bar
+        showProgressBar();
+        updateProgressBar(0, totalFiles, successCount, failCount, 'Starting upload...');
 
         // Upload files one by one
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
+            const currentFileNum = i + 1; // Show the file being uploaded started from 1, rather than 0 based counting.
+
+            updateProgressBar(currentFileNum, totalFiles, successCount, failCount, `Uploading ${file.name}...`);
+
             try {
                 let success = await uploadPhoto(file);
                 if (success) {
                     successCount++;
+                    updateProgressBar(currentFileNum, totalFiles, successCount, failCount, `Uploaded ${file.name}`);
                 } else {
                     failCount++;
+                    updateProgressBar(currentFileNum, totalFiles, successCount, failCount, `Failed to upload ${file.name}`);
                 }
             } catch (error) {
                 failCount++;
                 console.error(`Failed to upload ${file.name}:`, error);
+                updateProgressBar(currentFileNum, totalFiles, successCount, failCount, `Error uploading ${file.name}`);
+
             }
+
+            // Add a small delay to show progress in the bar.
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
 
-        // Show final results
-        if (failCount === 0) {
-            alert(`All ${totalFiles} photos uploaded successfully!`);
-        } else {
-            alert(`Upload complete: ${successCount} successful, ${failCount} failed out of ${totalFiles} photos.`);
-        }
+        // We've completed the upload, so show a final status message and leave the bar up
+        // for a few seconds before hiding it.
+        const finalMessage = failCount === 0 ? 'All photos uploaded successfully!' : 'Upload complete with some errors';
+        updateProgressBar(totalFiles, totalFiles, successCount, failCount, finalMessage);
 
+        setTimeout(() => hideProgressBar(), 2000);
     }
 
-    async function uploadPhoto(file, uploadingMultiple) {
+    async function uploadSinglePhoto(file) {
+        showProgressBar();
+        updateProgressBar(0, 1, 0, 0, `Uploading ${file.name}...`);
+        let success = await uploadPhoto(file);
+        if (success) {
+            updateProgressBar(1, 1, 1, 0, 'Upload successful!');
+        } else {
+            updateProgressBar(1, 1, 0, 1, 'Upload failed');
+        }
+
+        setTimeout(() => hideProgressBar(), 2000);
+    }
+
+    // uploadPhoto is a function that takes a file and a boolean indicating whether it's being uploaded multiple times.
+    // It shows a simpler progress if uploadingMultiple is false.
+    async function uploadPhoto(file) {
         let projectId = $('#select-project').val();
         @auth
         let apiToken = "{{auth()->user()->api_token}}";
@@ -298,22 +393,13 @@
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                if (!uploadingMultiple) {
-                    alert(`Upload failed: ${response.status} - ${errorText}`);
-                }
+                await response.text();
                 return false;
             } else {
-                let data = await response.json();
-                if (!uploadingMultiple) {
-                    alert(`Upload successful`);
-                }
+                await response.text();
                 return true;
             }
         } catch (error) {
-            if (!uploadingMultiple) {
-                alert(`Upload failed`);
-            }
             return false;
         }
     }
