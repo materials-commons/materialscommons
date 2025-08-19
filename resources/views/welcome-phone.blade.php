@@ -27,9 +27,6 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-    {{--    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">--}}
-    {{--    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">--}}
-
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -60,10 +57,6 @@
         }
 
     </style>
-
-    {{--    @stack('')--}}
-
-    <!-- Custom styles for this template -->
 </head>
 
 <body style="background-color: #ffffff">
