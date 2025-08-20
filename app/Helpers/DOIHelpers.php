@@ -38,6 +38,7 @@ class DOIHelpers
         $DSURL = self::getDOIConfigEntry('dataset_url', $publishAsTestDataset);
         $doiUser = self::getDOIConfigEntry('user', $publishAsTestDataset);
         $doiPassword = self::getDOIConfigEntry('password', $publishAsTestDataset);
+        $doiNamespace = self::getDOIConfigEntry('namespace', $publishAsTestDataset);
         $response = Http::withBasicAuth($doiUser, $doiPassword)
                         ->contentType('application/vnd.api+json')
                         ->post($doiServiceUrl, [
@@ -45,7 +46,7 @@ class DOIHelpers
                                 'type'       => 'dois',
                                 'attributes' => [
                                     'event'           => 'publish',
-                                    'prefix'          => config('doi.namespace'),
+                                    'prefix'          => $doiNamespace,
                                     'creators'        => [
                                         ['name' => $author],
                                     ],
@@ -63,6 +64,7 @@ class DOIHelpers
                         ]);
 
         if (!$response->successful()) {
+            ray("Error minting DOI: {$response->body()}");
             return null;
         }
 
