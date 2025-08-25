@@ -34,8 +34,10 @@ function setUserProperty(key, value) {
 function onOpen() {
     SpreadsheetApp.getUi()
         .createMenu('MaterialsCommons')
-        .addItem('Configure Settings', 'showConfigDialog')
         .addItem('Send to MaterialsCommons', 'sendToMaterialsCommons')
+        .addSeparator()
+        .addItem('Configure Settings', 'showConfigDialog')
+        .addItem('Select Project & Experiment', 'showProjectExperimentSelector')
         .addSeparator()
         .addItem('Clear My Token', 'clearUserToken')
         .addToUi();
@@ -64,6 +66,8 @@ function sendToMaterialsCommons() {
     const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     const googleSheetID = spreadsheet.getId();
 
+    const apiUrl = apiEndpoint + "/google-sheets/reload-experiment";
+
     try {
         const options = {
             'method': 'post',
@@ -78,7 +82,7 @@ function sendToMaterialsCommons() {
             })
         };
 
-        const response = UrlFetchApp.fetch(apiEndpoint, options);
+        const response = UrlFetchApp.fetch(apiUrl, options);
         const result = JSON.parse(response.getContentText());
 
         if (result.success) {
@@ -91,13 +95,96 @@ function sendToMaterialsCommons() {
     }
 }
 
+function getUserProjects() {
+    const userProperties = PropertiesService.getUserProperties();
+    const scriptProperties = PropertiesService.getScriptProperties();
+    const apiToken = userProperties.getProperty('MC_API_TOKEN');
+    const apiEndpoint = scriptProperties.getProperty('MC_API_ENDPOINT');
+    if (!apiToken) {
+        SpreadsheetApp.getUi().alert(
+            'Configuration Required',
+            'Please configure your MaterialsCommons API token.',
+            SpreadsheetApp.getUi().ButtonSet.OK
+        );
+        return;
+    }
+
+    try {
+        const apiUrl = apiEndpoint + "/projects";
+        const options = {
+            'method': 'get',
+            'contentType': 'application/json',
+            'headers': {
+                'Authorization': 'Bearer ' + apiToken
+            }
+        };
+
+        const response = UrlFetchApp.fetch(apiUrl, options);
+        const result = JSON.parse(response.getContentText());
+        return result.data;
+    } catch (error) {
+        console.error('Error fetching user projects:', error);
+        return [];
+    }
+}
+
+function getStudiesForProject(projectId) {
+    const userProperties = PropertiesService.getUserProperties();
+    const scriptProperties = PropertiesService.getScriptProperties();
+    const apiToken = userProperties.getProperty('MC_API_TOKEN');
+    const apiEndpoint = scriptProperties.getProperty('MC_API_ENDPOINT');
+    if (!apiToken) {
+        SpreadsheetApp.getUi().alert(
+            'Configuration Required',
+            'Please configure your MaterialsCommons API token.',
+            SpreadsheetApp.getUi().ButtonSet.OK
+        );
+        return;
+    }
+    try {
+        const apiUrl = apiEndpoint + `/projects/${projectId}/experiments`;
+        const options = {
+            'method': 'get',
+            'contentType': 'application/json',
+            'headers': {
+                'Authorization': 'Bearer ' + apiToken
+            }
+        };
+
+        const response = UrlFetchApp.fetch(apiUrl, options);
+        const result = JSON.parse(response.getContentText());
+        return result.data;
+    } catch (error) {
+        console.error('Error fetching user projects:', error);
+        return [];
+    }
+
+}
+
 // Configuration dialog HTML
 function showConfigDialog() {
-    const html = HtmlService.createHtmlOutputFromFile('ConfigDialog')
-        .setWidth(400)
-        .setHeight(300);
-    SpreadsheetApp.getUi().showModalDialog(html, 'MaterialsCommons Configuration');
+    const config = getConfig();
+    const html = HtmlService.createTemplateFromFile('set-api-key');
+    html.config = config;
+    const htmlOutput = html.evaluate().setWidth(600).setHeight(500);
+    // const html = HtmlService.createHtmlOutputFromFile('ConfigDialog')
+    //     .setWidth(600)
+    //     .setHeight(500);
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, 'MaterialsCommons Configuration');
 }
+
+function showProjectExperimentSelector() {
+    const config = getConfig();
+    const projects = getUserProjects();
+
+    const html = HtmlService.createTemplateFromFile('project-experiment-selector');
+    html.projects = projects;
+    html.selectedProjectId = config.MC_PROJECT_ID || '';
+
+    const htmlOutput = html.evaluate().setWidth(500).setHeight(400);
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, 'Select Project and Experiment');
+}
+
 
 // Save configuration with user-specific tokens
 function saveConfig(config) {
@@ -136,6 +223,18 @@ function saveConfig(config) {
     return true;
 }
 
+function saveProjectStudySelection(project, experiment) {
+    const scriptProperties = PropertiesService.getScriptProperties();
+
+    scriptProperties.setProperties({
+        'MC_PROJECT_ID': project.id,
+        'MC_PROJECT_NAME': project.name,
+        'MC_EXPERIMENT_ID': experiment.id,
+        'MC_EXPERIMENT_NAME': experiment.name
+    });
+
+    return true;
+}
 
 // Get current configuration (mixed from user and script properties)
 function getConfig() {
