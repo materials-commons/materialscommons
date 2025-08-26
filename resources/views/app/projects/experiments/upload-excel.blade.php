@@ -8,7 +8,7 @@
 
 @section('content')
     <p class="col-10">
-        Maximum file size is 250M. If you need to upload larger files please use
+        Maximum file size is 750M. If you need to upload larger files please use
         <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>.
     </p>
     <p>
@@ -33,7 +33,6 @@
 
 @push('scripts')
     <script>
-        // $(document).ready(() => {
         let csrf = "{{csrf_token()}}";
         let project = "{{$project->id}}";
         let uppy = null;
@@ -50,7 +49,7 @@
             uppy = new Uppy({
                 restrictions: {
                     allowedFileTypes: ['.xlsx'],
-                    maxFileSize: 250 * 1024 * 1024
+                    maxFileSize: 750 * 1024 * 1024
                 },
                 onBeforeFileAdded: (currentFile, files) => {
                     if (currentFile.data.webkitRelativePath === "") {
@@ -85,6 +84,5 @@
                 setTimeout(() => window.location.replace("{{route('projects.experiments.create', [$project])}}"), 1000);
             });
         });
-        // });
     </script>
 @endpush

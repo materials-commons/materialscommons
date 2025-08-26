@@ -8,10 +8,13 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <p class="col-10">
-            Maximum file size is 250M. If you need to upload larger files please use
+        <h3 class="col-10">
+            Maximum file size is 750M. If you need to upload larger files please use
             <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>.
-        </p>
+        </h3>
+    </div>
+    <br/>
+    <div class="row justify-content-center">
         <div class="col-10">
             <h4>Adding files to directory {{$directory->path}}</h4>
         </div>
@@ -36,10 +39,10 @@
         });
         const uppy = new Uppy({
             restrictions: {
-                maxFileSize: 250 * 1024 * 1024
+                maxFileSize: 750 * 1024 * 1024
             },
             onBeforeFileAdded: (currentFile, files) => {
-                console.log('onBeforeFileAdded', currentFile);
+                // console.log('onBeforeFileAdded', currentFile);
                 // if (currentFile.data.relativePath === "") {
                 //     console.log('I am returning the currentFile');
                 //     return currentFile;

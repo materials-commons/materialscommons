@@ -27,7 +27,7 @@ class PublicRouteDatasetIsPublished
         $routeUri = $request->route()->uri;
         if (Str::startsWith($routeUri, "public")) {
             $dataset = Dataset::findOrFail($datasetId);
-            abort_if(is_null($dataset->published_at), 404, 'No such dataset');
+            abort_if(is_null($dataset->published_at) && is_null($dataset->test_published_at), 404, 'No such dataset');
         }
 
         return $next($request);

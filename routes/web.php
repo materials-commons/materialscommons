@@ -42,6 +42,7 @@ Route::get('/about', AboutWebController::class)->name('about');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout-get');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reload-captcha');
@@ -99,6 +100,9 @@ Route::get('/preview-spreadsheet-email', function () {
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
+
+Route::get('/getAllPublishedTestDatasets',
+    [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
 
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');

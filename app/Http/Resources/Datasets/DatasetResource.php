@@ -16,7 +16,7 @@ class DatasetResource extends JsonResource
 
     protected $fields = [
         'id', 'uuid', 'name', 'license', 'license_link', 'summary', 'description',
-        'doi', 'published_at', 'authors', 'file_selection', 'globus_endpoint_id',
+        'doi', 'test_doi', 'published_at', 'test_published_at', 'authors', 'file_selection', 'globus_endpoint_id',
         'globus_path', 'owner_id', 'created_at', 'updated_at', 'files_count',
         'activities_count', 'entities_count', 'experiments_count', 'comments_count',
         'workflows_count', 'zipfile_size', 'tags',

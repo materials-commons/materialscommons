@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Community;
 use App\Models\Dataset;
 use Freshbitsweb\Laratables\Laratables;
+use function config;
 
 class PublicDataController extends Controller
 {
@@ -14,11 +15,17 @@ class PublicDataController extends Controller
      */
     public function index()
     {
+        // Check if the ?test query parameter is set. This means we only want to show
+        // datasets that have been published for testing purposes.
+        $isTest = request()->has('test');
         $communities = Community::with('owner')->withCount('datasets')
                                 ->where('public', true)
                                 ->orderBy('name')
                                 ->get();
-        return view('public.index', compact('communities'));
+        return view('public.index', [
+            'communities' => $communities,
+            'isTest'    => $isTest,
+        ]);
     }
 
     /**
@@ -33,6 +40,17 @@ class PublicDataController extends Controller
                              $q->where('tags.id', config('visus.import_tag_id'));
                          })
                          ->whereNotNull('published_at');
+        });
+    }
+
+    public function getAllPublishedTestDatasets()
+    {
+        return Laratables::recordsOf(Dataset::class, function ($query) {
+            return $query->withCount('views', 'downloads')
+                         ->whereDoesntHave('tags', function ($q) {
+                             $q->where('tags.id', config('visus.import_tag_id'));
+                         })
+                         ->whereNotNull('test_published_at');
         });
     }
 }

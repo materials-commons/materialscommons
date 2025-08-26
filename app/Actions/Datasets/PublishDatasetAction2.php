@@ -17,21 +17,24 @@ use Symfony\Component\Process\Process;
 class PublishDatasetAction2
 {
     use DatasetInfo;
-    public function execute(Dataset $dataset, User $user, $publishAsPrivate = false)
+
+    // $publishAs can be 'public', 'private', or 'test'. This used to be a boolean field,
+    // but it was not used anywhere in the code. Now that we support publishing as test
+    // datasets, we need to be able to set the publish_as field to 'test' when publishing.
+    // The old field was renamed, and now we can support 3 different ways of publishing a
+    // dataset. These ways control the visibility. For the moment only 'public' and 'test'
+    // are supported in the app.
+    public function execute(Dataset $dataset, User $user, $publishAs = 'public')
     {
-        $now = Carbon::now();
-        $publishedAtField = $publishAsPrivate ? 'privately_published_at' : 'published_at';
+
         $dataset->update([
-            $publishedAtField    => $now,
-            'publish_started_at' => $now,
+            'publish_started_at' => Carbon::now(),
         ]);
-//        $datasetFileSize = 0;
         Bus::chain([
             function () use ($dataset, &$datasetFileSize) {
                 ini_set("memory_limit", "4096M");
                 $createDatasetFilesTableAction = new CreateDatasetFilesTableAction();
                 $createDatasetFilesTableAction->execute($dataset);
-//                $datasetFileSize = $this->getDatasetTotalFilesSize($dataset->id);
             },
             function () use ($dataset) {
                 ini_set("memory_limit", "4096M");
@@ -57,8 +60,12 @@ class PublishDatasetAction2
                     'DB_DATABASE' => config('database.connections.mysql.database'),
                 ]);
             },
-            function () use ($dataset, $user) {
-                $dataset->update(['publish_started_at' => null]);
+            function () use ($dataset, $user, $publishAs) {
+                $publishedAtField = $this->getPublishedAtField($publishAs);
+                $dataset->update([
+                    'publish_started_at' => null,
+                    $publishedAtField    => Carbon::now(),
+                ]);
                 $mail = new PublishedDatasetReadyMail($dataset, $user);
                 Mail::to($user)->send($mail);
             },
@@ -69,5 +76,20 @@ class PublishDatasetAction2
                 });
             },
         ])->onQueue('globus')->dispatch();
+    }
+
+    // getPublishedAtField determines which field in the Datasets model to set. To preserve
+    // backwards compatibility, we default to 'published_at' if the publishAs parameter doesn't
+    // match 'private' or 'test'.
+    private function getPublishedAtField($publishAs): string
+    {
+        switch ($publishAs) {
+            case 'private':
+                return 'privately_published_at';
+            case 'test':
+                return 'test_published_at';
+            default:
+                return 'published_at';
+        }
     }
 }

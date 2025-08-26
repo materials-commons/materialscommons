@@ -6,11 +6,11 @@ use Illuminate\View\Component;
 
 class ShowPublishedDate extends Component
 {
-    public $published;
+    public $dataset;
 
-    public function __construct($published)
+    public function __construct($dataset)
     {
-        $this->published = $published;
+        $this->dataset = $dataset;
     }
 
     public function render()
@@ -20,7 +20,12 @@ class ShowPublishedDate extends Component
 
     public function publishedDate()
     {
-        $publishedDate = $this->published ? $this->published->diffForHumans() : "Not Published";
-        return $this->published ? "Published: {$publishedDate}" : "Not Published";
+        $publishedDate = null;
+        if ($this->dataset->published_at) {
+            $publishedDate = $this->dataset->published_at->diffForHumans();
+        } elseif($this->dataset->test_published_at) {
+            $publishedDate = $this->dataset->test_published_at->diffForHumans();
+        }
+        return $publishedDate ? "Published: {$publishedDate}" : "Not Published";
     }
 }

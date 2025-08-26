@@ -29,7 +29,13 @@ class BibtexCitation extends Component
         $namePieces = explode(" ", preg_replace("/[[:^print:]]/", "", $this->dataset->owner->name));
         // Get last array entry and treat as last name
         $lastName = Str::of(array_pop($namePieces))->trim()->limit(8);
-        $id = "mc{$this->dataset->id}{$lastName}{$this->dataset->published_at->year}";
+        if (!blank($this->dataset->published_at)) {
+            $id = "mc{$this->dataset->id}{$lastName}{$this->dataset->published_at->year}";
+        } elseif (!blank($this->dataset->test_published_at)) {
+            $id = "mc{$this->dataset->id}{$lastName}{$this->dataset->test_published_at->year}";
+        } else {
+            $id = "mc{$this->dataset->id}{$lastName}";
+        }
         return view('components.datasets.bibtex-citation', ['id' => $id]);
     }
 }
