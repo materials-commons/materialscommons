@@ -49,7 +49,7 @@ class RowTracker
         $cellIterator->setIterateOnlyExistingCells(false);
 
         foreach ($cellIterator as $cell) {
-            $value = $this->getCellValue($cell);
+            $value = Str::trim($this->getCellValue($cell));
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
