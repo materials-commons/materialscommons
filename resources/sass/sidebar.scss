@@ -171,7 +171,8 @@ $sidebar-icon-color: #6c757d;
         }
 
         .nav-link {
-            padding: 0.1rem 0.25rem; // Reduced vertical padding
+            // Reduced vertical padding
+            padding: 0.2rem 0.25rem 0.1rem;
             line-height: 1.1; // Tighter line height
 
             &:not(:last-child) {
@@ -234,7 +235,7 @@ $sidebar-icon-color: #6c757d;
 
         .nav-link {
             border-radius: 2px; // Smaller radius
-            padding: 0.15rem 0.25rem;
+            padding: 0.2rem 0.25rem 0.15rem;
             font-size: 0.75rem; // Smaller font for links
             color: #4a5568; // Slightly muted color
             display: flex;
