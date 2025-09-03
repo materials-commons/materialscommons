@@ -19,9 +19,7 @@ class ListNotebooks extends Component
     {
         $notebooks = File::with(['directory', 'owner'])
                          ->where('project_id', $this->project->id)
-                         ->where('current', true)
-                         ->whereNull('dataset_id')
-                         ->whereNull('deleted_at')
+                         ->active()
                          ->where(function ($query) {
                              $query->where('name', 'like', '%.ipynb')
                                    ->orWhere('name', 'like', '%.xlsx');

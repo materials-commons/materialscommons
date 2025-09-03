@@ -60,10 +60,8 @@ class UpdateMoveFilesWebController extends Controller
     {
         $dirsToMove = File::whereIn('id', $ids)
                           ->whereNotNull('path')
-                          ->where('mime_type', 'directory')
-                          ->whereNull('dataset_id')
-                          ->whereNull('deleted_at')
-                          ->where('current', true)
+                          ->active()
+                          ->directories()
                           ->get();
         // Move the top level folders and then submit a job to complete the moves. We move
         // the top level folders before running the background job so that the UI will
@@ -104,10 +102,8 @@ class UpdateMoveFilesWebController extends Controller
 
         $dirsToMove = File::whereIn('id', $ids)
                           ->whereNotNull('path')
-                          ->where('mime_type', 'directory')
-                          ->whereNull('dataset_id')
-                          ->whereNull('deleted_at')
-                          ->where('current', true)
+                          ->active()
+                          ->directories()
                           ->get();
         $moveDirectoryAction = new MoveDirectoryAction();
         $dirsToMove->each(function ($dir) use ($moveToDirectory, $moveDirectoryAction, $user) {

@@ -24,9 +24,7 @@ class ShowProjectOverviewWebController extends Controller
         $readme = File::where('name', "readme.md")
                       ->where("project_id", $projectId)
                       ->where("directory_id", $project->rootDir->id)
-                      ->where('current', true)
-                      ->whereNull('dataset_id')
-                      ->whereNull('deleted_at')
+                      ->active()
                       ->first();
         $showProjectViewModel = (new ShowProjectViewModel($project))
             ->withActivityAttributesCount($this->getUniqueActivityAttributesForProject($projectId)->count())

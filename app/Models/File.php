@@ -92,34 +92,6 @@ class File extends Model implements Searchable
         return $this->belongsToMany(Entity::class, 'entity2file');
     }
 
-    public function previousVersions()
-    {
-        return $this->hasMany(File::class, 'directory_id', 'directory_id')
-                    ->where('name', $this->name)
-                    ->where('id', '<>', $this->id)
-                    ->whereNull('dataset_id')
-                    ->whereNull('deleted_at')
-                    ->orderBy('created_at');
-    }
-
-    public function scopeCurrentProjectFiles($query, $projectId)
-    {
-        return $query->where('project_id', $projectId)
-                     ->whereNull('dataset_id')
-                     ->whereNull('deleted_at')
-                     ->where('current', true);
-    }
-
-    public function currentVersion()
-    {
-        return File::where('directory_id', $this->directory_id)
-                   ->where('name', $this->name)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
-                   ->first();
-    }
-
     public function datasets()
     {
         return $this->belongsToMany(Dataset::class, 'dataset2file', 'file_id', 'dataset_id');
@@ -145,12 +117,69 @@ class File extends Model implements Searchable
         return $this->morphedByMany(EtlRun::class, 'item', 'item2file');
     }
 
+    public function previousVersions()
+    {
+        return $this->hasMany(File::class, 'directory_id', 'directory_id')
+                    ->where('name', $this->name)
+                    ->where('id', '<>', $this->id)
+                    ->whereNull('dataset_id')
+                    ->whereNull('deleted_at')
+                    ->orderBy('created_at');
+    }
+
     // Scopes
 
     public function scopeWithCommon($query)
     {
         return $query->with('directory')
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
+    }
+
+    public function scopeCurrentProjectFiles($query, $projectId)
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at')
+                     ->where('current', true);
+    }
+
+    public function scopeActiveFiles($query)
+    {
+        return $query->where('current', true)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('current', true)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at');
+    }
+
+    public function scopeDirectories($query)
+    {
+        return $query->where('mime_type', 'directory');
+    }
+
+    public function scopeActiveProjectDirectories($query, $projectId)
+    {
+        return $query->activeFiles()
+                     ->where('project_id', $projectId)
+                     ->directories();
+    }
+
+    public function scopeFiles($query)
+    {
+        return $query->where('mime_type', '<>', 'directory');
+    }
+
+    public function currentVersion()
+    {
+        return File::where('directory_id', $this->directory_id)
+                   ->where('name', $this->name)
+                   ->active()
+                   ->first();
     }
 
     /* FilePathService */
@@ -303,13 +332,10 @@ class File extends Model implements Searchable
         return '';
     }
 
-
-
     public function mcfsReplicate()
     {
         app(FileReplicationService::class)->replicate($this);
     }
-
 
 
     public function realFileExists()
@@ -319,8 +345,6 @@ class File extends Model implements Searchable
         return $storage->exists('mcfs', $pathService->getRealPathPartial($this));
     }
 
-
-
     public function getFileUsesIdToUse()
     {
         if (!is_null($this->uses_id)) {
@@ -329,12 +353,6 @@ class File extends Model implements Searchable
 
         return $this->id;
     }
-
-
-
-
-
-
 
     public function thumbnailExists()
     {
@@ -360,7 +378,6 @@ class File extends Model implements Searchable
     {
         return $this->fileType($this) === "image";
     }
-
 
     public function shouldBeConverted()
     {
@@ -406,10 +423,6 @@ class File extends Model implements Searchable
         return false;
     }
 
-
-
-
-
     public function setAsActiveFile()
     {
         app(FileVersioningService::class)->setActive($this);
@@ -419,10 +432,8 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->first();
     }
 
@@ -430,10 +441,8 @@ class File extends Model implements Searchable
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->get();
     }
 

@@ -13,9 +13,7 @@ class GetFolderDatatableWebController extends Controller
         return Laratables::recordsOf(File::class, function ($query) use ($projectId, $folderId) {
             return $query->where('project_id', $projectId)
                          ->where('directory_id', $folderId)
-                         ->whereNull('dataset_id')
-                         ->whereNull('deleted_at')
-                         ->where('current', true);
+                         ->active();
         });
     }
 }
