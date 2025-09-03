@@ -8,6 +8,14 @@ use App\Models\Project;
 use App\Models\User;
 use App\Observers\FileObserver;
 use App\Observers\UserObserver;
+use App\Services\FileServices\FileConversionService;
+use App\Services\FileServices\FileMoveService;
+use App\Services\FileServices\FilePathService;
+use App\Services\FileServices\FileRenameService;
+use App\Services\FileServices\FileReplicationService;
+use App\Services\FileServices\FileStorageService;
+use App\Services\FileServices\FileThumbnailService;
+use App\Services\FileServices\FileVersioningService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
@@ -53,5 +61,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(FilePathService::class);
+        $this->app->singleton(FileStorageService::class);
+        $this->app->singleton(FileReplicationService::class);
+        $this->app->singleton(FileConversionService::class);
+        $this->app->singleton(FileThumbnailService::class);
+        $this->app->singleton(FileVersioningService::class);
+        $this->app->singleton(FileMoveService::class);
+        $this->app->singleton(FileRenameService::class);
     }
 }
