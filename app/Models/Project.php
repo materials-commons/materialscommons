@@ -160,6 +160,27 @@ class Project extends Model implements Searchable
                     ->where('path', '/');
     }
 
+    public function notes()
+    {
+        return $this->hasMany(ProjectNote::class, 'project_id');
+    }
+
+    public function pinnedNotes()
+    {
+        return $this->hasMany(ProjectNote::class, 'project_id')
+                    ->whereNotNull('pinned_at')
+                    ->rootNotes()
+                    ->orderBy('created_at', 'desc');
+    }
+
+    public function unpinnedNotes()
+    {
+        return $this->hasMany(ProjectNote::class, 'project_id')
+                    ->whereNull('pinned_at')
+                    ->rootNotes()
+                    ->orderBy('created_at', 'desc');
+    }
+
     // Attributes
 
     public function getTypeAttribute()

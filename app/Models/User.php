@@ -113,6 +113,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(TourState::class);
     }
 
+    public function projectNotes()
+    {
+        return $this->hasMany(ProjectNote::class, 'author_id');
+    }
+
     public function hasCommunities()
     {
         return $this->communities->count() > 0;
