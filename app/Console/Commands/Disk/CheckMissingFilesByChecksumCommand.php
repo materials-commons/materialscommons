@@ -12,7 +12,7 @@ class CheckMissingFilesByChecksumCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mc-disk:check-missing-files-by-checksum-command {missing_files_file : file with missing files}';
+    protected $signature = 'mc-disk:check-missing-files-by-checksum {missing_files_file : file with missing files}';
 
     /**
      * The console command description.
