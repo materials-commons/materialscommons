@@ -7,6 +7,7 @@ use App\Jobs\Files\GenerateThumbnailJob;
 use App\Models\File;
 use App\Models\Script;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
 
 class CreateFileAction
@@ -67,6 +68,10 @@ class CreateFileAction
             }
 
 //            $this->fireTriggers($existingFile);
+
+            if (!$existingFile->realFileExists()) {
+                Log::error("File {$existingFile->name}/{$existingFile->id} does not exist after save");
+            }
 
             return $existingFile;
         }
@@ -140,6 +145,9 @@ class CreateFileAction
 
 //        $this->fireTriggers($fileEntry);
 
+        if (!$fileEntry->realFileExists()) {
+            Log::error("File {$fileEntry->name}/{$fileEntry->id} does not exist after save");
+        }
         return $fileEntry;
     }
 
