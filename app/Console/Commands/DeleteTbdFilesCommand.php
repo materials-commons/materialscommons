@@ -55,12 +55,18 @@ class DeleteTbdFilesCommand extends Command
             // the file on disk.
             $tbdFile->delete();
 
-            // Check if anything references this uuid: If it does then we can't delete the
+            // Check if anything references this uuid: If it does, then we can't delete the
             // on disk file.
             $count = File::where('uses_uuid', $uuid)->count();
             if ($count > 0) {
-                // If the count is greater than zero, then something points at the file so
+                // If the count is greater than zero, then something points at the file, so
                 // don't delete it.
+                continue;
+            }
+
+            // Double-check that this UUID isn't being used anywhere else.
+            $count = File::where('uuid', $uuid)->count();
+            if ($count > 0) {
                 continue;
             }
 
