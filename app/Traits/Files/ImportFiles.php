@@ -5,6 +5,7 @@ namespace App\Traits\Files;
 use App\Jobs\Files\ConvertFileJob;
 use App\Models\File;
 use App\Traits\CreateDirectories;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
@@ -74,14 +75,19 @@ trait ImportFiles
             // Matching file found, so point at it and remove the uploaded file on disk. If the uploaded
             // file isn't removed then it could be processed a second time if the first run doesn't complete
             // processing of all files.
-            $fileEntry->uses_uuid = $matchingFileChecksum->uuid;
-            $fileEntry->uses_id = $matchingFileChecksum->id;
+            $fileEntry->uses_uuid = $matchingFileChecksum->getFileUuidToUse();
+//            $fileEntry->uses_id = $matchingFileChecksum->id;
             if (!$matchingFileChecksum->realFileExists()) {
                 if (!$this->moveFileIntoProject($path, $matchingFileChecksum)) {
                     return null;
                 }
             }
             try {
+                // If we are here, then the matching file should exist, and we can remove the uploaded file
+                if (!$matchingFileChecksum->realFileExists()) {
+                    Log::log('error', "File not found for matchingFile in globus: {$matchingFileChecksum->realPathPartial()}");
+                    return null;
+                }
                 if (!unlink($path)) {
                     return null;
                 }
@@ -94,6 +100,11 @@ trait ImportFiles
 
         $fileEntry->save();
         $fileEntry->refresh();
+
+        // One last sanity check on file existing
+        if (!$fileEntry->realFileExists()) {
+            Log::log('error', "File not found after save in globus: {$fileEntry->realPathPartial()}");
+        }
 
         if (!is_null($attachTo)) {
             $attachTo->files()->attach($fileEntry);
@@ -127,6 +138,10 @@ trait ImportFiles
                     return false;
                 }
 
+                if (!$file->realFileExists()) {
+                    Log::log('error', "File not found after copy in globus: {$file->realPathPartial()}");
+                    return false;
+                }
                 \File::delete($from);
             }
 
@@ -137,6 +152,11 @@ trait ImportFiles
             return false;
         }
 
+        // If we are here, then the file should have been moved successfully
+        if (!$file->realFileExists()) {
+            Log::log('error', "File not found after move in globus: {$file->realPathPartial()}");
+            return false;
+        }
         return true;
     }
 
