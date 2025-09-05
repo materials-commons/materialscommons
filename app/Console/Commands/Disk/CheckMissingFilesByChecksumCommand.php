@@ -47,7 +47,7 @@ class CheckMissingFilesByChecksumCommand extends Command
            }
            $files = File::where('checksum', $f->checksum)->get();
            $foundUsingChecksum = false;
-           echo "  Found using checksum: " . count($files) . "\n";
+           echo "  Found this many matches on checksum: " . count($files) . "\n";
            foreach ($files as $file) {
                if ($file->realFileExists()) {
                    $foundUsingChecksum = true;
@@ -56,7 +56,7 @@ class CheckMissingFilesByChecksumCommand extends Command
            }
            if (!$foundUsingChecksum) {
                echo "Missing permanently: {$f->directory->path}/{$f->name}:{$f->id}:{$f->project_id}\n";
-               fwrite($handle2, "{$line}\n");
+               fwrite($handle2, "{$line}:{$f->checksum}\n");
            } else {
                echo "  Found using checksum\n";
            }
