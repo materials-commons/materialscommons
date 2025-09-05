@@ -49,7 +49,7 @@ class CreateFileAction
 
             $existingFile->update(['current' => true]);
 
-            if (!$existing[0]->realFileExists()) {
+            if (!$existingFile->realFileExists()) {
                 $useUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
                 $this->saveFile($file, $useUuid);
             }
@@ -88,11 +88,6 @@ class CreateFileAction
             'disk'         => 'mcfs',
         ]);
 
-        $existing = File::where('directory_id', $dir->id)
-                        ->whereNull('dataset_id')
-                        ->whereNull('deleted_at')
-                        ->where('name', $fileEntry->name)
-                        ->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
                                     ->whereNull('deleted_at')
                                     ->whereNull('dataset_id')
@@ -116,11 +111,20 @@ class CreateFileAction
         }
 
         $fileEntry->save();
+        $fileEntry->refresh();
 
-        if ($existing->isNotEmpty()) {
-            // Existing files to mark as not current
-            File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
-        }
+        // Mark all files matching this file as not current
+        File::where('directory_id', $dir->id)
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
+            ->where('id', '<>', $fileEntry->id)
+            ->where('name', $fileEntry->name)
+            ->update(['current' => false]);
+
+//        if ($existing->isNotEmpty()) {
+//            // Existing files to mark as not current
+//            File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
+//        }
 
         if ($fileEntry->shouldBeConverted()) {
             ConvertFileJob::dispatch($fileEntry)->onQueue('globus');

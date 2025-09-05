@@ -52,18 +52,17 @@ trait ImportFiles
             'owner_id'     => $ownerId,
             'current'      => true,
             'description'  => "",
-            'project_id' => $project->id,
+            'project_id'   => $project->id,
             'directory_id' => $currentDir->id,
         ]);
 
-        $existing = File::where('directory_id', $currentDir->id)
-                        ->where('name', $fileEntry->name)
-                        ->get();
+//        $existing = File::where('directory_id', $currentDir->id)
+//                        ->where('name', $fileEntry->name)
+//                        ->get();
 
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
                                     ->whereNull('deleted_at')
                                     ->whereNull('dataset_id')
-                                    ->whereNull('uses_uuid')
                                     ->first();
 
         if (is_null($matchingFileChecksum)) {
@@ -82,27 +81,31 @@ trait ImportFiles
                     return null;
                 }
             }
-//            try {
-////                if (!unlink($path)) {
-////                    return null;
-////                }
-//            } catch (\Exception $e) {
-//                // unlink threw an exception
-//                $msg = $e->getMessage();
-//                return null;
-//            }
+            try {
+                if (!unlink($path)) {
+                    return null;
+                }
+            } catch (\Exception $e) {
+                // unlink threw an exception
+                $msg = $e->getMessage();
+                return null;
+            }
         }
 
         $fileEntry->save();
+        $fileEntry->refresh();
 
         if (!is_null($attachTo)) {
             $attachTo->files()->attach($fileEntry);
         }
 
-        if ($existing->isNotEmpty()) {
-            // Existing files to mark as not current
-            File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
-        }
+        // Mark all files matching this file as not current
+        File::where('directory_id', $currentDir->id)
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
+            ->where('id', '<>', $fileEntry->id)
+            ->where('name', $fileEntry->name)
+            ->update(['current' => false]);
 
         if ($fileEntry->shouldBeConverted()) {
             ConvertFileJob::dispatch($fileEntry)->onQueue('globus');
