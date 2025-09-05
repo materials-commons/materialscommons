@@ -114,7 +114,6 @@ trait ImportFiles
     private function moveFileIntoProject($from, $file): bool
     {
         try {
-            $uuid = $file->getFileUuidToUse();
             $to = Storage::disk('mcfs')->path($file->realPathPartial());
 
             $dirpath = dirname($to);
@@ -132,7 +131,7 @@ trait ImportFiles
 
         } catch (\Exception $e) {
             $msg = $e->getMessage();
-            return true;
+            return false;
         }
 
         return true;
