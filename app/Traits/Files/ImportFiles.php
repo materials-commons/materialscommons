@@ -82,15 +82,15 @@ trait ImportFiles
                     return null;
                 }
             }
-            try {
-                if (!unlink($path)) {
-                    return null;
-                }
-            } catch (\Exception $e) {
-                // unlink threw an exception
-                $msg = $e->getMessage();
-                return null;
-            }
+//            try {
+////                if (!unlink($path)) {
+////                    return null;
+////                }
+//            } catch (\Exception $e) {
+//                // unlink threw an exception
+//                $msg = $e->getMessage();
+//                return null;
+//            }
         }
 
         $fileEntry->save();
