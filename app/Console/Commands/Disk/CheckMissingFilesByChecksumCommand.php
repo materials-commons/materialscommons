@@ -40,6 +40,11 @@ class CheckMissingFilesByChecksumCommand extends Command
                echo "  Skipping url file\n";
                continue;
            }
+           if (blank($f->checksum)) {
+               echo "  Skipping file with no checksum its gone...\n";
+               fwrite($handle2, "{$line}\n");
+               continue;
+           }
            $files = File::where('checksum', $f->checksum)->get();
            $foundUsingChecksum = false;
            echo "  Found using checksum: " . count($files) . "\n";
