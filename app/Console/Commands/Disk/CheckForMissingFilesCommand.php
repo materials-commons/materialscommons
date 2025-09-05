@@ -41,6 +41,9 @@ class CheckForMissingFilesCommand extends Command
         $handle = fopen($outPath, "w");
 
         foreach ($query->cursor() as $file) {
+            if ($file->mime_type === 'url') {
+                continue;
+            }
             if (!$file->realFileExists()) {
                 $missing++;
                 if (!array_key_exists($file->project_id, $projectsWithMissingFiles)) {
