@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
@@ -96,6 +97,10 @@ Route::get('/preview-spreadsheet-email', function () {
     return new SpreadsheetLoadFinishedMail(File::findOrFail(2), Project::findOrFail(1), Experiment::findOrFail(2),
         EtlRun::findOrFail(1));
 });
+
+Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
+    ->where('doi', '.*')
+    ->name('datasets.show-by-doi');
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
