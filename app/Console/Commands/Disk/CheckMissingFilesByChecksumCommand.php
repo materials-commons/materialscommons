@@ -42,6 +42,7 @@ class CheckMissingFilesByChecksumCommand extends Command
            }
            $files = File::where('checksum', $f->checksum)->get();
            $foundUsingChecksum = false;
+           echo "  Found using checksum: " . count($files) . "\n";
            foreach ($files as $file) {
                if ($file->realFileExists()) {
                    $foundUsingChecksum = true;
