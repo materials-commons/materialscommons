@@ -51,6 +51,8 @@ class CheckMissingFilesByChecksumCommand extends Command
            if (!$foundUsingChecksum) {
                echo "Missing permanently: {$f->directory->path}/{$f->name}:{$f->id}:{$f->project_id}\n";
                fwrite($handle2, "{$line}\n");
+           } else {
+               echo "  Found using checksum\n";
            }
         }
         fclose($handle);
