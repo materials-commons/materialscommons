@@ -49,6 +49,11 @@ class CreateFileAction
 
             $existingFile->update(['current' => true]);
 
+            if (!$existing->realFileExists()) {
+                $usesUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
+                $this->saveFile($file, $usesUuid);
+            }
+
             if ($existingFile->shouldBeConverted()) {
                 ConvertFileJob::dispatch($existingFile)->onQueue('globus');
             }
@@ -61,7 +66,7 @@ class CreateFileAction
                 Script::createScriptForFileIfNeeded($existingFile);
             }
 
-            $this->fireTriggers($existingFile);
+//            $this->fireTriggers($existingFile);
 
             return $existingFile;
         }
@@ -128,7 +133,7 @@ class CreateFileAction
             Script::createScriptForFileIfNeeded($fileEntry);
         }
 
-        $this->fireTriggers($fileEntry);
+//        $this->fireTriggers($fileEntry);
 
         return $fileEntry;
     }
