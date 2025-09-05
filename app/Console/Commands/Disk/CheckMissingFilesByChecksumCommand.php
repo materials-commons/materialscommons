@@ -35,6 +35,11 @@ class CheckMissingFilesByChecksumCommand extends Command
            $parts = explode(":", $line);
            $fileId = $parts[1];
            $f = File::with('directory')->findOrFail($fileId);
+           echo "Checking {$line}\n";
+           if ($f->mime_type === 'url') {
+               echo "  Skipping url file\n";
+               continue;
+           }
            $files = File::where('checksum', $f->checksum)->get();
            $foundUsingChecksum = false;
            foreach ($files as $file) {
