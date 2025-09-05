@@ -49,9 +49,9 @@ class CreateFileAction
 
             $existingFile->update(['current' => true]);
 
-            if (!$existing->realFileExists()) {
-                $usesUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
-                $this->saveFile($file, $usesUuid);
+            if (!$existing[0]->realFileExists()) {
+                $useUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
+                $this->saveFile($file, $useUuid);
             }
 
             if ($existingFile->shouldBeConverted()) {
@@ -83,7 +83,7 @@ class CreateFileAction
             'owner_id'     => auth()->id(),
             'current'      => true,
             'description'  => $description,
-            'project_id' => $project->id,
+            'project_id'   => $project->id,
             'directory_id' => $dir->id,
             'disk'         => 'mcfs',
         ]);
@@ -95,6 +95,7 @@ class CreateFileAction
                         ->get();
         $matchingFileChecksum = File::where('checksum', $fileEntry->checksum)
                                     ->whereNull('deleted_at')
+                                    ->whereNull('dataset_id')
                                     ->first();
 
         if (!$matchingFileChecksum) {
