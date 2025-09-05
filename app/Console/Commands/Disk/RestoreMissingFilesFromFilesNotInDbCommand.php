@@ -80,7 +80,7 @@ class RestoreMissingFilesFromFilesNotInDbCommand extends Command
                 $files = $filesBySize->get($file->size);
                 foreach($files as $fuuid) {
                     $p = Storage::disk('mcfs')->path($this->getUuidPathPartial($fuuid));
-                    echo "Checking {$p}\n";
+//                    echo "Checking {$p}\n";
                     $checksum = md5_file($p);
                     if ($checksum == $file->checksum) {
                         echo "Could restore {$file->name}/{$file->id} with size {$file->size} from {$p}\n";
