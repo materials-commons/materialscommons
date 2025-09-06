@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use JsonSerializable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use function intdiv;
@@ -37,7 +38,7 @@ use function intdiv;
  *
  * Also see App\Observers\FileObserver
  */
-class File extends Model implements Searchable
+class File extends Model implements Searchable, JsonSerializable
 {
     use HasUUID;
     use FileType;
@@ -150,6 +151,81 @@ class File extends Model implements Searchable
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
+    public function jsonSerialize(): array
+    {
+        return [
+            'id'           => $this->id,
+            'uuid'         => $this->uuid,
+            'name'         => $this->name,
+            'description'  => $this->description,
+            'mime_type'    => $this->mime_type,
+            'size'         => $this->size,
+            'current'      => $this->current,
+            'path'         => $this->path,
+            'project_id'   => $this->project_id,
+            'directory_id' => $this->directory_id,
+            'owner_id'     => $this->owner_id,
+            'checksum'     => $this->checksum,
+            'created_at'   => $this->created_at?->toISOString(),
+            'updated_at'   => $this->updated_at?->toISOString(),
+            'deleted_at'   => $this->deleted_at?->toISOString(),
+            'dataset_id'   => $this->dataset_id,
+            'type'         => $this->getTypeAttribute(),
+        ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $file = new self();
+
+        // Fill the basic attributes
+        $file->fill([
+            'uuid'         => $data['uuid'] ?? null,
+            'name'         => $data['name'] ?? null,
+            'description'  => $data['description'] ?? null,
+            'mime_type'    => $data['mime_type'] ?? null,
+            'size'         => $data['size'] ?? null,
+            'current'      => $data['current'] ?? null,
+            'path'         => $data['path'] ?? null,
+            'project_id'   => $data['project_id'] ?? null,
+            'directory_id' => $data['directory_id'] ?? null,
+            'dataset_id'   => $data['dataset_id'] ?? null,
+            'owner_id'     => $data['owner_id'] ?? null,
+            'checksum'     => $data['checksum'] ?? null,
+        ]);
+
+        // Handle timestamps if they exist
+        if (isset($data['created_at'])) {
+            $file->created_at = Carbon::parse($data['created_at']);
+        }
+        if (isset($data['updated_at'])) {
+            $file->updated_at = Carbon::parse($data['updated_at']);
+        }
+        if (isset($data['deleted_at'])) {
+            $file->deleted_at = Carbon::parse($data['deleted_at']);
+        }
+
+        // Set the ID if it exists (for existing records)
+        if (isset($data['id'])) {
+            $file->id = $data['id'];
+            $file->exists = true; // Mark as existing record
+        }
+
+        return $file;
+    }
+
+//    public static function fromJson(string $value): self
+//    {
+//        $data = json_decode($value, true);
+//
+//        if (json_last_error() !== JSON_ERROR_NONE) {
+//            throw new \InvalidArgumentException('Invalid JSON: '.json_last_error_msg());
+//        }
+//
+//        return self::fromArray($data);
+//    }
+
+
     public function fullPath(): ?string
     {
         if (is_null($this->directory)) {
@@ -198,7 +274,15 @@ class File extends Model implements Searchable
 
     public function isFile()
     {
-        return !$this->isDir();
+        if ($this->isDir()) {
+            return false;
+        }
+
+        if ($this->mime_type == 'url') {
+            return false;
+        }
+
+        return true;
     }
 
     public function isRunnable(): bool
@@ -359,7 +443,7 @@ class File extends Model implements Searchable
 
         return $this->pathDirPartial()."/.conversion/{$fileName}";
     }
-    
+
     public function thumbnailPathPartial()
     {
         $fileName = $this->getFileUuidToUse().".thumb.jpg";
@@ -398,7 +482,7 @@ class File extends Model implements Searchable
 
         return !Storage::disk('mcfs')->exists($this->convertedPathPartial());
     }
-    
+
     public function shouldGenerateThumbnail()
     {
         if (!$this->isImage()) {

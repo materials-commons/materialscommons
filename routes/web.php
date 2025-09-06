@@ -134,6 +134,7 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/projects_web.php');
+    require base_path('routes/web_routes/health_reports_web.php');
     require base_path('routes/web_routes/experiments_web.php');
     require base_path('routes/web_routes/entities_web.php');
     require base_path('routes/web_routes/activities_web.php');
