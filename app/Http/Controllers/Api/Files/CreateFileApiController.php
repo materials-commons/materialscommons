@@ -26,7 +26,7 @@ class CreateFileApiController extends Controller
         $triggers = ScriptTrigger::getProjectTriggers($project);
         $createFileAction = new CreateFileAction($triggers);
 
-        $file = $createFileAction($project, $dir, $description, $validated["file"]);
+        $file = $createFileAction($project, $dir, $description, $validated["file"], 'api');
 
         return new FileResource($file);
     }

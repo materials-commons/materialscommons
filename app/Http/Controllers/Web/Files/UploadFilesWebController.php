@@ -32,7 +32,7 @@ class UploadFilesWebController extends Controller
 
         if (isset($validated['files'])) {
             $files = $validated['files'];
-            $createFilesAction($project, $dir, $files);
+            $createFilesAction($project, $dir, $files, 'web');
         } else {
             $triggers = ScriptTrigger::getProjectTriggers($project);
             $createFileAction = new CreateFileAction($triggers);
@@ -46,7 +46,7 @@ class UploadFilesWebController extends Controller
                 $nameToUse = basename($nameToUse);
                 $dirToUse = $this->getDirectoryOrCreateIfDoesNotExist($dir, $dirPath, $project);
             }
-            $createFileAction($project, $dirToUse, '', $file, $nameToUse);
+            $createFileAction($project, $dirToUse, '', $file, 'web', $nameToUse);
         }
     }
 }
