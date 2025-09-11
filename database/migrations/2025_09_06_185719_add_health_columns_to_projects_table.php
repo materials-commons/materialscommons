@@ -15,7 +15,8 @@ return new class extends Migration
             $table->string('health_status')->default('unknown');
             $table->datetime('health_report_last_run_at')->nullable();
             $table->datetime('upload_check_needed_at')->nullable();
-            $table->datetime('user_requested_health_check_at')->nullable();
+            $table->datetime('health_report_started_at')->nullable();
+            $table->datetime('last_accessed_at')->nullable();
         });
     }
 
