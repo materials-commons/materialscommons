@@ -15,7 +15,7 @@ use function is_null;
 
 trait CreateDirectories
 {
-    private function getOrCreateSingleDirectoryIfDoesNotExist(File $baseDir, string $path, Project $project, $ownerId)
+    private function getOrCreateSingleDirectoryIfDoesNotExist(?File $baseDir, string $path, Project $project, $ownerId)
     {
         $dir = File::where('project_id', $project->id)
                    ->where('path', $path)

@@ -2,7 +2,10 @@
 
 namespace App\Actions\Files;
 
+use App\Jobs\Files\ConvertFileJob;
+use App\Jobs\Files\GenerateThumbnailJob;
 use App\Models\File;
+use App\Models\Script;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use function chmod;

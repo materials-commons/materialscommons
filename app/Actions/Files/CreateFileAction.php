@@ -2,10 +2,8 @@
 
 namespace App\Actions\Files;
 
-use App\Jobs\Files\ConvertFileJob;
-use App\Jobs\Files\GenerateThumbnailJob;
 use App\Models\File;
-use App\Models\Script;
+use App\Traits\Files\ConvertFile;
 use App\Traits\Files\FileHealth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +13,7 @@ class CreateFileAction
 {
     use SaveFile;
     use FileHealth;
+    use ConvertFile;
 
     private Collection $triggers;
 
@@ -59,26 +58,6 @@ class CreateFileAction
     // saving it.
     public function handleUploadOfExistingFile($dir, File $existingFile, $source, $file): object
     {
-        // Check if there are any other files with the same name in the same directory so we
-        // can mark them as not current
-        $existing = File::where('directory_id', $dir->id)
-                        ->where('name', $existingFile->name)
-                        ->whereNull('dataset_id')
-                        ->whereNull('deleted_at')
-                        ->get();
-
-        if ($existing->count() != 1) {
-            File::whereIn('id', $existing->pluck('id'))->update(['current' => false]);
-
-            // We need to refresh the state of $existingFile because it may be different from when it was first
-            // retrieved. If current was true when first retrieved, and it's been set to false above, then the
-            // update below will do nothing as laravel will skip doing the update.
-            $existingFile->refresh();
-        }
-
-        // Mark the existing file as current
-        $existingFile->update(['current' => true]);
-
         // There are two cases here we need to account for:
         // 1. The existingFile file is not on disk. In this case we need to mark it as fixed and save it.
         // 2. The existingFile is on disk, in that case we don't need to save anything to disk.
@@ -86,7 +65,7 @@ class CreateFileAction
         // Check if the current file exists on disk, and if it doesn't,
         // then mark it as fixed and save it. This is case (1) above.
         if (!$existingFile->realFileExists()) {
-            $this->setFileHealthFixed($existingFile, $source);
+            $this->setFileHealthFixed($existingFile, 'create-file-action:existence-check', $source);
 
             // Identify which uuid to save the file to.
             $useUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
@@ -105,6 +84,18 @@ class CreateFileAction
         if (!$existingFile->realFileExists()) {
             $this->setFileHealthMissing($existingFile, 'create-file-action:existence-check', $source);
             Log::error("File {$existingFile->name}/{$existingFile->id} does not exist after save");
+        } else {
+            // Check if there are any other files with the same name in the same directory so we
+            // can mark them as not current
+            File::where('directory_id', $dir->id)
+                ->where('id', '<>', $existingFile->id)
+                ->where('name', $existingFile->name)
+                ->whereNull('dataset_id')
+                ->whereNull('deleted_at')
+                ->update(['current' => false]);;
+
+            // Mark the existing file as current
+            $existingFile->update(['current' => true]);
         }
 
         return $existingFile;
@@ -215,33 +206,4 @@ class CreateFileAction
 
         return $fileEntry;
     }
-
-
-
-    private function runTriggersAndBackgroundJobs($file): void
-    {
-        if ($file->shouldBeConverted()) {
-            ConvertFileJob::dispatch($file)->onQueue('globus');
-        }
-
-        if ($file->isImage()) {
-            GenerateThumbnailJob::dispatch($file)->onQueue('globus');
-        }
-
-        if ($file->isRunnable()) {
-            Script::createScriptForFileIfNeeded($file);
-        }
-
-//        $this->fireTriggers($fileEntry);
-    }
-
-    private function fireTriggers(File $file)
-    {
-        foreach ($this->triggers as $trigger) {
-            if ($trigger->fileWillActivateTrigger($file)) {
-                $trigger->execute();
-            }
-        }
-    }
-
 }
