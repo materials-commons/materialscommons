@@ -27,6 +27,13 @@
         </a>
     </li>
 
+    <li class="nav-item" id="project-health-reports-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.health-reports.index')}}"
+           href="{{route('projects.health-reports.index', [$project])}}">
+            Health Reports
+        </a>
+    </li>
+
     {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show')}}"--}}
     {{--           href="{{route('projects.documents.show', [$project])}}">--}}

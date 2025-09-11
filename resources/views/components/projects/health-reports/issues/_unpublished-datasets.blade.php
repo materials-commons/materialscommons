@@ -4,6 +4,7 @@
         <i class="fas fa-database"></i>
         Unpublished Datasets with DOIs ({{ $healthReport->unpublishedDatasetsWithDOIs->count() }})
     </h6>
+    <p><i class="fas fa-exclamation-circle text-warning"></i> These datasets have a DOI assigned to them but haven't been published</p>
     <div class="table-responsive">
         <table class="table table-sm table-striped">
             <thead>

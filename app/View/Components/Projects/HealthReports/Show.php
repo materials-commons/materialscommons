@@ -35,10 +35,10 @@ class Show extends Component
 
         if ($totalIssues === 0) {
             return 'healthy';
-        } elseif ($totalIssues <= 5) {
-            return 'warning';
-        } else {
+        } elseif ($this->healthReport->missingFiles->count() !== 0) {
             return 'critical';
+        } else {
+            return 'warning';
         }
     }
 

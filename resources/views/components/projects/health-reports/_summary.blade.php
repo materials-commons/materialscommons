@@ -4,7 +4,7 @@
         @php
             $hasIssues = $healthReport->missingFiles->count() > 0;
             $cardClass = $hasIssues ? 'health-card-danger' : 'health-card-success';
-            $textClass = $hasIssues ? 'text-danger' : 'text-white';
+            $textClass = $hasIssues ? 'text-danger' : 'text-black';
         @endphp
         <div class="card {{ $cardClass }} border-3">
             <div class="card-body text-center {{ $textClass }}">
@@ -13,7 +13,7 @@
                         <i class="fas fa-exclamation-triangle fa-lg"></i>
 {{--                        <input type="checkbox" class="form-check-input" style="transform: scale(1.2);">--}}
                     @else
-                        <i class="fas fa-check-circle fa-lg"></i>
+                        <i class="fas fa-check-circle fa-lg text-success"></i>
                         <span></span>
                     @endif
                 </div>
@@ -28,16 +28,15 @@
         @php
             $hasIssues = $healthReport->oldGlobusDownloads->count() > 0;
             $cardClass = $hasIssues ? 'health-card-warning' : 'health-card-success border-success';
-            $textClass = $hasIssues ? 'text-warning' : 'text-white';
+            $textClass = $hasIssues ? 'text-warning' : 'text-green';
         @endphp
         <div class="card {{ $cardClass }} border-3">
             <div class="card-body text-center {{ $textClass }}">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     @if($hasIssues)
                         <i class="fas fa-exclamation-triangle fa-lg"></i>
-                        <input type="checkbox" class="form-check-input" style="transform: scale(1.2);">
                     @else
-                        <i class="fas fa-check-circle fa-lg"></i>
+                        <i class="fas fa-check-circle fa-lg text-green"></i>
                         <span></span>
                     @endif
                 </div>
@@ -52,16 +51,15 @@
         @php
             $hasIssues = $healthReport->unpublishedDatasetsWithDOIs->count() > 0;
             $cardClass = $hasIssues ? 'health-card-warning' : 'health-card-success';
-            $textClass = $hasIssues ? 'text-warning' : 'text-white';
+            $textClass = $hasIssues ? 'text-warning' : 'text-green';
         @endphp
         <div class="card {{ $cardClass }} border-3">
             <div class="card-body text-center {{ $textClass }}">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     @if($hasIssues)
                         <i class="fas fa-exclamation-triangle fa-lg"></i>
-                        <input type="checkbox" class="form-check-input" style="transform: scale(1.2);">
                     @else
-                        <i class="fas fa-check-circle fa-lg"></i>
+                        <i class="fas fa-check-circle fa-lg text-green"></i>
                         <span></span>
                     @endif
                 </div>
@@ -76,16 +74,15 @@
         @php
             $hasIssues = $healthReport->unprocessedGlobusUploads->count() > 0;
             $cardClass = $hasIssues ? 'health-card-info' : 'health-card-success';
-            $textClass = $hasIssues ? 'text-info' : 'text-white';
+            $textClass = $hasIssues ? 'text-info' : 'text-green';
         @endphp
         <div class="card {{ $cardClass }} border-3">
             <div class="card-body text-center {{ $textClass }}">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     @if($hasIssues)
                         <i class="fas fa-exclamation-triangle fa-lg"></i>
-                        <input type="checkbox" class="form-check-input" style="transform: scale(1.2);">
                     @else
-                        <i class="fas fa-check-circle fa-lg"></i>
+                        <i class="fas fa-check-circle fa-lg text-green"></i>
                         <span></span>
                     @endif
                 </div>
@@ -104,6 +101,11 @@
             background-color: #d4edda !important;
             border: 3px solid #28a745 !important;
         }
+
+        .text-green {
+            color: #28a745 !important;
+        }
+
         .health-card-danger {
             background-color: #f8d7da !important;
             border: 3px solid #dc3545 !important;

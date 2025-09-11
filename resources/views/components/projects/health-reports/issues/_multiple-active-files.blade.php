@@ -1,7 +1,7 @@
 @php use Carbon\Carbon; @endphp
 @props(['files'])
 <div class="issue-section mb-3">
-    <p><i class="fas fa-exclamation-triangle text-danger"></i> These files appear in the database, but the actual files are missing from disk.</p>
+    <p><i class="fas fa-exclamation-triangle text-danger"></i> These files appear more than once in a directory.</p>
     <div class="table-responsive">
         <table class="table table-sm table-striped">
             <thead>

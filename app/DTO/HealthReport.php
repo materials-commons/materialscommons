@@ -8,8 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use JsonSerializable;
+use Livewire\Wireable;
 
-class HealthReport implements JsonSerializable
+class HealthReport implements JsonSerializable, Wireable
 {
     public Project $project;
     public Collection $missingFiles;
@@ -49,7 +50,7 @@ class HealthReport implements JsonSerializable
         $project = Project::find($data['project_id']);
 
         $healthReport = new self($project);
-        $healthReport->missingFiles = File::whereIn('id', $data['missing_files'] ?? [])->get();
+        $healthReport->missingFiles = File::with('directory')->whereIn('id', $data['missing_files'] ?? [])->get();
         $healthReport->multipleCurrentFiles = File::whereIn('id', $data['multiple_current_files'] ?? [])->get();
         $healthReport->oldGlobusDownloads = collect($data['old_globus_downloads'] ?? []);
         $healthReport->unpublishedDatasetsWithDOIs = collect($data['unpublished_datasets_with_dois'] ?? []);
@@ -88,4 +89,13 @@ class HealthReport implements JsonSerializable
         return "__health-reports/{$project->id}/";
     }
 
+    public function toLivewire()
+    {
+        return $this->jsonSerialize();
+    }
+
+    public static function fromLivewire($value)
+    {
+       return self::fromArray($value);
+    }
 }

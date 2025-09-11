@@ -8,13 +8,8 @@
                 <small class="text-muted">Project ID: {{ $healthReport->project->id }}</small>
             </div>
 
-            <x-projects.health-reports._summary :health-report="$healthReport"/>
+            <livewire:projects.health-reports.health-report-tabs :health-report="$healthReport"/>
 
-            @if($getTotalIssues() > 0)
-                <x-projects.health-reports._show-issues :health-report="$healthReport"/>
-            @else
-                <x-projects.health-reports._no-issues/>
-            @endif
         </div>
 
         <x-projects.health-reports._footer/>
