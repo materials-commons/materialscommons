@@ -19,19 +19,26 @@ use function is_array;
 use function is_null;
 
 /**
- * @property integer $id
+ * @property integer id
  * @property string uuid
- * @property string $name
- * @property string $description
- * @property string $affiliations
- * @property string $globus_user
- * @property string $password
- * @property mixed projects
- * @property string $api_token
- * @property boolean is_admin
+ * @property string name
+ * @property string description
+ * @property string affiliations
  * @property string email
+ * @property mixed email_verified_at
+ * @property string password
+ * @property string globus_user
+ * @property string api_token
+ * @property boolean is_admin
+ * @property string remember_token
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property string slug
+ * @property array settings
+ * @property mixed last_login_at
+ *
+ * @property mixed projects
  * @property mixed communities
- * @property mixed settings
  *
  * @mixin Builder
  */
@@ -62,7 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
-        'settings' => 'array',
+        'settings'      => 'array',
+        'last_login_at' => 'datetime',
     ];
 
     public function projects()

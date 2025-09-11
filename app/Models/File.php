@@ -18,21 +18,42 @@ use Spatie\Searchable\SearchResult;
 use function intdiv;
 
 /**
- * @property integer $id
+ * @property integer id
  * @property string uuid
- * @property string uses_uuid
+ * @property string name
  * @property string path
  * @property string url
- * @property string $name
- * @property string $description
- * @property string $mime_type
- * @property integer $project_id
- * @property integer $directory_id;
- * @property integer owner_id
+ * @property string description
+ * @property string summary
  * @property integer size
- * @property boolean current
  * @property string checksum
- * @property string $disk
+ * @property boolean current
+ * @property string mime_type
+ * @property string media_type_description
+ * @property string disk
+ * @property integer owner_id
+ * @property integer project_id
+ * @property boolean is_shortcut
+ * @property integer directory_id;
+ * @property string uses_uuid
+ * @property integer uses_id
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property mixed deleted_at
+ * @property integer dataset_id
+ * @property mixed replicated_at
+ * @property integer unique_proj_dir
+ * @property string upload_source
+ * @property mixed file_missing_at
+ * @property string file_missing_determined_by
+ * @property string health
+ * @property mixed last_health_check_at
+ * @property mixed health_fixed_at
+ * @property string health_fixed_by
+ * @property mixed thumbnail_created_at
+ * @property string thumbnail_status
+ * @property mixed conversion_created_at
+ * @property string conversion_status
  *
  * @mixin Builder
  *
@@ -50,17 +71,23 @@ class File extends Model implements Searchable, JsonSerializable
     protected $appends = ['selected'];
 
     protected $casts = [
-        'size'                => 'integer',
-        'current'             => 'boolean',
-        'owner_id'            => 'integer',
-        'project_id'          => 'integer',
-        'is_shortcut'         => 'boolean',
-        'directory_id'        => 'integer',
-        'experiments_count'   => 'integer',
-        'entities_count'      => 'integer',
-        'activities_count'    => 'integer',
-        'entity_states_count' => 'integer',
-        'deleted_at'          => 'datetime',
+        'size'                  => 'integer',
+        'current'               => 'boolean',
+        'owner_id'              => 'integer',
+        'project_id'            => 'integer',
+        'dataset_id'            => 'integer',
+        'is_shortcut'           => 'boolean',
+        'directory_id'          => 'integer',
+        'experiments_count'     => 'integer',
+        'entities_count'        => 'integer',
+        'activities_count'      => 'integer',
+        'entity_states_count'   => 'integer',
+        'deleted_at'            => 'datetime',
+        'replicated_at'         => 'datetime',
+        'file_missing_at'       => 'datetime',
+        'last_health_check_at'  => 'datetime',
+        'thumbnail_created_at'  => 'datetime',
+        'conversion_created_at' => 'datetime',
     ];
 
     private $selected;
