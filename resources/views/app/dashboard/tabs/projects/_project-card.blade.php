@@ -5,21 +5,15 @@
     <div class="project-main">
         <div class="project-info">
             <div class="project-title">
-                <a href="{{route('projects.show', [$proj])}}" class="text-decoration-none">{{$proj->name}}</a>
+                <a href="{{route('projects.show', [$proj])}}" class="text-decoration-none">
+                    <x-projects.health-status-badge-small :project="$proj"/>
+                    {{$proj->name}}
+                </a>
             </div>
             <div class="project-meta">
-                                    <span class="text-muted">
-                                        <i class="far fa-clock"></i>
-                                        {{Carbon\Carbon::parse($recentlyAccessedOn)->diffForHumans()}}
-                                    </span>
-                <span class="text-muted">
-                                        <i class="fas fa-file ml-3"></i>
-                                        {{number_format($proj->file_count)}}
-                                    </span>
-                <span class="text-muted">
-                                        <i class="fas fa-hdd ml-3"></i>
-                                        {{formatBytes($proj->size)}}
-                                    </span>
+                <span class="text-muted"><i class="far fa-clock"></i>{{Carbon\Carbon::parse($recentlyAccessedOn)->diffForHumans()}}</span>
+                <span class="text-muted"><i class="fas fa-file ml-3"></i>{{number_format($proj->file_count)}}</span>
+                <span class="text-muted"><i class="fas fa-hdd ml-3"></i>{{formatBytes($proj->size)}}</span>
             </div>
         </div>
         <div class="project-actions">

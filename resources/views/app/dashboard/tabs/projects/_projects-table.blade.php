@@ -17,7 +17,10 @@
         @foreach($projects as $proj)
             <tr>
                 <td>
-                    <a href="{{route('projects.show', [$proj->id])}}" class="">{{$proj->name}}</a>
+                    <a href="{{route('projects.show', [$proj->id])}}" class="no-underline">
+                        <x-projects.health-status-badge-small :project="$proj"/>
+                        {{$proj->name}}
+                    </a>
                 </td>
                 <td>{{number_format($proj->file_count)}}</td>
                 <td>{{number_format($proj->published_datasets_count)}}</td>

@@ -1,6 +1,13 @@
 <div class="card mb-4">
     <div class="card-body inner-card">
-        <h5 class="card-title">Projects Overview</h5>
+        <h5 class="card-title">Projects Overview
+            @if($projectsWithErrorStateCount > 0)
+                <span class="badge badge-danger ml-2"><i class="fas fa-exclamation-triangle"></i></span>
+            @endif
+            @if($projectsWithWarningStateCount > 0)
+                <span class="badge badge-warning ml-2 text-white"><i class="fas fa-exclamation-circle"></i></span>
+            @endif
+        </h5>
         <hr/>
         {{--        <div class="mt-2 mb-4 text-center">--}}
         {{--            <a class="text-primary" href="/mcdocs2/getting_started/first_project.html" target="_blank">--}}
