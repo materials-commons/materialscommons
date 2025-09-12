@@ -20,6 +20,8 @@ class HealthReport implements JsonSerializable, Wireable
 
     public Collection $multipleCurrentFiles;
 
+    public $createdAt;
+
     public function __construct(Project $project)
     {
         $this->project = $project;
@@ -28,6 +30,7 @@ class HealthReport implements JsonSerializable, Wireable
         $this->unpublishedDatasetsWithDOIs = collect();
         $this->unprocessedGlobusUploads = collect();
         $this->multipleCurrentFiles = collect();
+        $this->createdAt = Carbon::now();
     }
 
     public function jsonSerialize(): array
@@ -41,6 +44,7 @@ class HealthReport implements JsonSerializable, Wireable
             'old_globus_downloads' => $this->oldGlobusDownloads->pluck('id')->toArray(),
             'unpublished_datasets_with_dois' => $this->unpublishedDatasetsWithDOIs->pluck('id')->toArray(),
             'unprocessed_globus_uploads' => $this->unprocessedGlobusUploads->pluck('id')->toArray(),
+            'created_at' => $this->createdAt->toISOString(),
         ];
     }
 
@@ -55,6 +59,7 @@ class HealthReport implements JsonSerializable, Wireable
         $healthReport->oldGlobusDownloads = collect($data['old_globus_downloads'] ?? []);
         $healthReport->unpublishedDatasetsWithDOIs = collect($data['unpublished_datasets_with_dois'] ?? []);
         $healthReport->unprocessedGlobusUploads = collect($data['unprocessed_globus_uploads'] ?? []);
+        $healthReport->createdAt = Carbon::parse($data['created_at']);
 
         return $healthReport;
     }

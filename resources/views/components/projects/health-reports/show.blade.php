@@ -12,6 +12,6 @@
 
         </div>
 
-        <x-projects.health-reports._footer/>
+        <x-projects.health-reports._footer :created-at="$healthReport->createdAt"/>
     </div>
 </div>
