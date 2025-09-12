@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('upload_source')->nullable();
             $table->datetime('file_missing_at')->nullable();
             $table->string('file_missing_determined_by')->nullable();
-            $table->string('health')->default('unknown');
+            $table->string('health')->nullable();
             $table->datetime('last_health_check_at')->nullable();
             $table->datetime('health_fixed_at')->nullable();
             $table->string('health_fixed_by')->nullable();

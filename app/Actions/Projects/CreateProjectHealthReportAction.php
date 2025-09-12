@@ -5,11 +5,14 @@ namespace App\Actions\Projects;
 use App\DTO\HealthReport;
 use App\Models\File;
 use App\Models\Project;
+use App\Traits\Files\FileHealth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class CreateProjectHealthReportAction
 {
+    use FileHealth;
+
     private HealthReport $healthReport;
 
     public function __construct(Project $project)
@@ -26,6 +29,7 @@ class CreateProjectHealthReportAction
         $this->checkPublishedDatasetsHealth();
         $this->checkExperimentsHealth();
         $this->createReport();
+        $this->setProjectHealthStatus();
     }
 
     private function checkProjectFilesHealth(): void
@@ -45,6 +49,7 @@ class CreateProjectHealthReportAction
             }
 
             if (!$file->realFileExists()) {
+                $this->setFileHealthMissing($file, 'create-project-health-report:existence-check');
                 $this->healthReport->missingFiles->push($file);
             }
         }
@@ -101,6 +106,20 @@ class CreateProjectHealthReportAction
     private function createReport(): void
     {
         $this->healthReport->saveToStorage();
+
+    }
+
+    private function setProjectHealthStatus()
+    {
+        $projectHealthStatus = "healthy";
+        if ($this->healthReport->missingFiles->count() > 0) {
+            $projectHealthStatus = "critical";
+        } elseif ($this->healthReport->multipleCurrentFiles->count() > 0) {
+            $projectHealthStatus = "warning";
+        } elseif ($this->healthReport->unpublishedDatasetsWithDOIs->count() > 0) {
+            $projectHealthStatus = "warning";
+        }
+        $this->healthReport->project->update(['health' => $projectHealthStatus]);
     }
 
 }

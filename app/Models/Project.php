@@ -26,6 +26,7 @@ use Spatie\Searchable\SearchResult;
  * @property array file_types
  * @property mixed deleted_at
  * @property mixed archived_at
+ * @property string health_status
  * @property mixed health_report_last_run_at
  * @property mixed upload_check_needed_at
  * @property mixed health_report_started_at

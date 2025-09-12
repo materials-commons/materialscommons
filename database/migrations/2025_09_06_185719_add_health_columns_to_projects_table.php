@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('health_status')->default('unknown');
+            $table->string('health')->nullable();
             $table->datetime('health_report_last_run_at')->nullable();
             $table->datetime('upload_check_needed_at')->nullable();
             $table->datetime('health_report_started_at')->nullable();

@@ -8,8 +8,9 @@ trait FileHealth
 {
     // setFileHealthMissing updates the health of a file to missing and sets the file_missing_at and file_missing_determined_by
     // fields. It also looks for any files that are pointed at and updates their health status as well.
-    private function setFileHealthMissing(File $file, $determinedBy, $source): void
+    private function setFileHealthMissing(File $file, $determinedBy, $source = null): void
     {
+        $source = blank($source) ? $file->upload_source : $source;
         $file->update([
             'health'                     => 'missing',
             'file_missing_at'            => now(),
@@ -31,8 +32,9 @@ trait FileHealth
 
     // setFileHealthFixed updates the health of a file to fixed and sets the health_fixed_at and health_fixed_by fields.
     // It also looks for any files that are pointed at and updates their health status to fixed as well.
-    private function setFileHealthFixed($file, $fixedBy, $source): void
+    private function setFileHealthFixed($file, $fixedBy, $source = null): void
     {
+        $source = blank($source) ? $file->upload_source : $source;
         $file->update([
             'health_fixed_at'            => now(),
             'health_fixed_by'            => $fixedBy,

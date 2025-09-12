@@ -131,7 +131,7 @@ class CreateFileAction
             'directory_id'  => $dir->id,
             'disk'          => 'mcfs',
             'upload_source' => $source,
-            'health'        => 'good',
+            'health'        => 'healthy',
         ]);
 
         // A review of the logic for this part of the code. There are 3 cases:
