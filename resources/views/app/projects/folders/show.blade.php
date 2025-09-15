@@ -14,6 +14,7 @@
 
         <x-slot name="body">
             <x-table-container>
+                here i am
                 <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                              arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
                 @if ($directory->path == '/')
@@ -122,7 +123,7 @@
                                     @if($file->isDir())
                                         <a class="no-underline"
                                            href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-folder mr-2"></i>{{$file->name}}
                                         </a>
                                     @elseif($file->mime_type == 'url')
                                         <a class="no-underline" href="{{$file->url}}" target="_blank">
@@ -131,7 +132,7 @@
                                     @else
                                         <a class="no-underline"
                                            href="{{route('projects.files.show', [$project, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-file mr-2"></i> <x-health.files.health-status-badge-small :file="$file"/> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>
