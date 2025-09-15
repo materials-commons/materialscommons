@@ -15,7 +15,7 @@
                        title="View details about your project."
                        href="{{route('projects.show', ['project' => $project->id])}}">
                         {{$project->name}}
-                        <x-projects.health-status-badge :project="$project"/>
+                        <x-health.projects.health-status-badge :project="$project"/>
 {{--                        <span class="ml-2 badge badge-danger"><i class="fas fa-exclamation-triangle"></i> Critical</span>--}}
                     </a>
                 </li>

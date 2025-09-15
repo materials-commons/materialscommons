@@ -18,7 +18,7 @@
             <tr>
                 <td>
                     <a href="{{route('projects.show', [$proj->id])}}" class="no-underline">
-                        <x-projects.health-status-badge-small :project="$proj"/>
+                        <x-health.projects.health-status-badge-small :project="$proj"/>
                         {{$proj->name}}
                     </a>
                 </td>

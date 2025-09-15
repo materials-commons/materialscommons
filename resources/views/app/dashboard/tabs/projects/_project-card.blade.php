@@ -6,7 +6,7 @@
         <div class="project-info">
             <div class="project-title">
                 <a href="{{route('projects.show', [$proj])}}" class="text-decoration-none">
-                    <x-projects.health-status-badge-small :project="$proj"/>
+                    <x-health.projects.health-status-badge-small :project="$proj"/>
                     {{$proj->name}}
                 </a>
             </div>
