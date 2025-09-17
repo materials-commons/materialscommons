@@ -101,11 +101,15 @@
 @else
     @if(!$file->realFileExists())
         <h1 class="ml-3"><i class="fa fas fa-exclamation-triangle fa-2x mr-2 text-danger"></i>
-            File is missing. Please <a href="{{route('projects.folders.upload', [$file->project_id, $file->directory_id])}}">upload</a> again if you are able to.
+            File is missing. Please <a
+                href="{{route('projects.folders.upload', [$file->project_id, $file->directory_id])}}">upload</a> again
+            if you are able to.
         </h1>
     @elseif($file->isConvertibleImage())
-        <span class="ml-3">Unable to display image. {{$file->mime_type}} not viewable on web, and a JPEG for viewing hasn't been created yet.</span>
+        <span class="ml-3">Unable to display image, {{$file->mime_type}} type not viewable in a browser, and a JPEG for viewing hasn't been created yet.</span>
+    @elseif($file->isConvertible())
+        <span class="ml-3">Unable to display file, {{$file->mime_type}} type not viewable in a browser, and a conversion for viewing hasn't been created yet.</span>
     @else
-        <span class="ml-3">Unable to display file. {{$file->mime_type}} not viewable on web.</span>
+        <span class="ml-3">Unable to display file, {{$file->mime_type}} not viewable in a browser.</span>
     @endif
 @endif
