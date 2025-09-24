@@ -151,9 +151,9 @@ class CreateFileAction
             // This is case (1) above.
             $this->saveFile($file, $fileEntry->uuid);
         } else {
-            // There was a matching file found, so we want to point at it setting this file's uses_uuid to point
-            // at the matching file. At this point the match is either the original file that everything points
-            // at or it's a file containing the pointer to the original file (the pointer is uses_uuid).
+            // There was a matching file found, so we want to set this file's uses_uuid to point at the matching
+            // file. At this point the match is either the original file that everything points at or it's a file
+            // containing the pointer to the original file (the pointer is uses_uuid).
 
             // We need to determine which case and set fileEntry uses_uuid and uses_id to the appropriate value.
             $usesUuid = blank($matchingFileByChecksum->uses_uuid) ? $matchingFileByChecksum->uuid : $matchingFileByChecksum->uses_uuid;
