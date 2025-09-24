@@ -24,7 +24,11 @@ class PublishDatasetApiController extends Controller
         }
 
         $publishDatasetAction = new PublishDatasetAction2();
-        $publishDatasetAction->execute($dataset, auth()->user());
+        $publishAs = 'public';
+        if (request()->has('test')) {
+            $publishAs = 'test';
+        }
+        $publishDatasetAction->execute($dataset, auth()->user(), $publishAs);
 
         return new DatasetResource($dataset->refresh());
     }

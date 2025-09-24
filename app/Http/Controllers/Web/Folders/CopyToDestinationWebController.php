@@ -66,10 +66,8 @@ class CopyToDestinationWebController extends Controller
         // so these run as background jobs.
         $dirsToCopy = File::whereIn('id', $ids)
                           ->whereNotNull('path')
-                          ->where('mime_type', 'directory')
-                          ->whereNull('dataset_id')
-                          ->whereNull('deleted_at')
-                          ->where('current', true)
+                          ->active()
+                          ->directories()
                           ->get();
         $dirsToCopy->each(function ($dir) use ($copyToDirectory, $user) {
             if ($dir->id == $copyToDirectory->id) {

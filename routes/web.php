@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
@@ -42,6 +43,7 @@ Route::get('/about', AboutWebController::class)->name('about');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout-get');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reload-captcha');
@@ -96,9 +98,16 @@ Route::get('/preview-spreadsheet-email', function () {
         EtlRun::findOrFail(1));
 });
 
+Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
+    ->where('doi', '.*')
+    ->name('datasets.show-by-doi');
+
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
+
+Route::get('/getAllPublishedTestDatasets',
+    [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
 
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
@@ -125,6 +134,7 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/projects_web.php');
+    require base_path('routes/web_routes/health_reports_web.php');
     require base_path('routes/web_routes/experiments_web.php');
     require base_path('routes/web_routes/entities_web.php');
     require base_path('routes/web_routes/activities_web.php');

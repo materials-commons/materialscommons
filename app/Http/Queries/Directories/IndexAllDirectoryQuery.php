@@ -10,11 +10,7 @@ class IndexAllDirectoryQuery extends DirectoriesQueryBuilder
     public function __construct(?Request $request = null, $projectId)
     {
         $builder = File::with(['owner', 'directory'])
-                       ->where('project_id', $projectId)
-                       ->where('mime_type', 'directory')
-                       ->whereNull('deleted_at')
-                       ->whereNull('dataset_id')
-                       ->where('current', true);
+                       ->activeProjectDirectories($projectId);
         parent::__construct($builder, $request);
     }
 }

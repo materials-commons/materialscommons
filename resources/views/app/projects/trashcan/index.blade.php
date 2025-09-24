@@ -15,76 +15,78 @@
         @endslot
 
         @slot('body')
-            <div class="float-right">
-                @if($nav_trash_count > 0)
-                    <a data-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
-                @else
-                    <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
-                @endif
-            </div>
-            @include('app.projects.trashcan._empty-trash-modal')
-            <br>
-            <br>
-            <br>
-            <table id="trash" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>File/Directory</th>
-                    <th>Will be deleted in</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($trash as $item)
+            <x-card-container>
+                <div class="float-right">
+                    @if($nav_trash_count > 0)
+                        <a data-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
+                    @else
+                        <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
+                    @endif
+                </div>
+                @include('app.projects.trashcan._empty-trash-modal')
+                <br>
+                <br>
+                <br>
+                <table id="trash" class="table table-hover" style="width:100%">
+                    <thead>
                     <tr>
-                        @if(blank($item->path))
-                            <td>
-                                <a href="{{route('projects.files.show', [$project, $item])}}">
-                                    <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
-                                </a>
-                            </td>
-                        @else
-                            <td>
-                                <a href="{{route('projects.folders.show', [$project, $item])}}">
-                                    <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
-                                </a>
-                            </td>
-                        @endif
-                            <td>{{$item->expiresInDays()}} days</td>
-                        <td>
-                            <div class="float-right">
-                                <ul class="list-unstyled">
-                                    @if(false)
-                                        <li>
-                                            <a href="#" class="action-link">
-                                                <i class="fas fa-fw fa-trash"></i>
-                                                delete
-                                            </a>
-                                        </li>
-                                    @endif
-
-                                    <li>
-                                        @if(blank($item->path))
-                                            <a href="{{route('projects.trashcan.file.restore', [$project, $item])}}"
-                                               class="action-link">
-                                                <i class="fas fa-fw fa-trash-restore"></i>
-                                                restore
-                                            </a>
-                                        @else
-                                            <a href="{{route('projects.trashcan.dir.restore', [$project, $item])}}"
-                                               class="action-link">
-                                                <i class="fas fa-fw fa-trash-restore"></i>
-                                                restore
-                                            </a>
-                                        @endif
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
+                        <th>File/Directory</th>
+                        <th>Will be deleted in</th>
+                        <th></th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($trash as $item)
+                        <tr>
+                            @if(blank($item->path))
+                                <td>
+                                    <a href="{{route('projects.files.show', [$project, $item])}}">
+                                        <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
+                                    </a>
+                                </td>
+                            @else
+                                <td>
+                                    <a href="{{route('projects.folders.show', [$project, $item])}}">
+                                        <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
+                                    </a>
+                                </td>
+                            @endif
+                            <td>{{$item->expiresInDays()}} days</td>
+                            <td>
+                                <div class="float-right">
+                                    <ul class="list-unstyled">
+                                        @if(false)
+                                            <li>
+                                                <a href="#" class="action-link">
+                                                    <i class="fas fa-fw fa-trash"></i>
+                                                    delete
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        <li>
+                                            @if(blank($item->path))
+                                                <a href="{{route('projects.trashcan.file.restore', [$project, $item])}}"
+                                                   class="action-link">
+                                                    <i class="fas fa-fw fa-trash-restore"></i>
+                                                    restore
+                                                </a>
+                                            @else
+                                                <a href="{{route('projects.trashcan.dir.restore', [$project, $item])}}"
+                                                   class="action-link">
+                                                    <i class="fas fa-fw fa-trash-restore"></i>
+                                                    restore
+                                                </a>
+                                            @endif
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </x-card-container>
         @endslot
     @endcomponent
 

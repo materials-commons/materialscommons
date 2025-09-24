@@ -54,6 +54,8 @@ use function json_decode;
  * @property integer file4_id
  * @property integer file5_id
  * @property string app_url
+ * @property string test_doi
+ * @property mixed test_published_at
  *
  * @mixin Builder
  */
@@ -87,6 +89,7 @@ class Dataset extends Model implements Searchable
         'privately_published_at' => 'datetime',
         'cleanup_started_at'     => 'datetime',
         'publish_started_at'     => 'datetime',
+        'test_published_at'      => 'datetime',
     ];
 
     public function owner()

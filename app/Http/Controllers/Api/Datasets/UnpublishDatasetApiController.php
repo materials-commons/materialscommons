@@ -15,7 +15,7 @@ class UnpublishDatasetApiController extends Controller
             return response()->json(['error' => "Dataset is still being published"], 403);
         }
 
-        if (is_null($dataset->published_at)) {
+        if (is_null($dataset->published_at) && is_null($dataset->test_published_at)) {
             return response()->json(['error' => 'Dataset was not published'], 403);
         }
 

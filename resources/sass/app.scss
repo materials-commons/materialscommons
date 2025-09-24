@@ -18,6 +18,23 @@
 
 @import 'bootstrap-steps';
 
+.text-green {
+    color: #28a745;
+}
+
+.text-warning-2 {
+    color: #F7C94A;
+}
+
+// Attributes in the samples card
+.attribute-row {
+    background: #f9fafb;
+    margin-right: 0;
+    //margin-bottom: 1px;
+    //border-radius: 4px;
+    padding: 4px;
+    border: 1px solid #eff1f5;
+}
 
 
 // Hide repatcha badge
@@ -152,7 +169,7 @@ body {
     //font-size: .825rem;
     font-weight: bold;
     //font-family: sans-serif;
-    background-color: #fff;
+    background-color: $body-bg;
 }
 
 .cursor-move {
@@ -360,6 +377,14 @@ a.nav-link.action {
 
 .fs-14 {
     font-size: 1.4em !important;
+}
+
+.fs-12 {
+    font-size: 1.2em !important;
+}
+
+.fs-13 {
+    font-size: 1.3em !important;
 }
 
 .fs-11 {

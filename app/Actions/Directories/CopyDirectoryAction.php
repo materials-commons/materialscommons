@@ -58,10 +58,8 @@ class CopyDirectoryAction
     {
         $cursor = File::query()
                       ->where('directory_id', $fromDir->id)
-                      ->where('mime_type', '<>', 'directory')
-                      ->where('current', true)
-                      ->whereNull('deleted_at')
-                      ->whereNull('dataset_id')
+                      ->active()
+                      ->files()
                       ->cursor();
         foreach ($cursor as $file) {
             $this->importFileIntoDir($toDir, $file);

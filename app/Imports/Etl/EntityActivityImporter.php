@@ -603,12 +603,10 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
-            ->where('mime_type', 'directory')
-            ->where('current', true)
-            ->whereNull('deleted_at')
-            ->whereNull('dataset_id')
-            ->where('project_id', $this->projectId)
-            ->first();
+                   ->directories()
+                   ->active()
+                   ->where('project_id', $this->projectId)
+                   ->first();
 
         if (is_null($dir)) {
             $this->etlState->logError("   Unable to find directory {$dirPath}");
@@ -616,10 +614,8 @@ class EntityActivityImporter
         }
 
         File::where('directory_id', $dir->id)
-            ->where('mime_type', '<>', 'directory')
-            ->whereNull('deleted_at')
-            ->whereNull('dataset_id')
-            ->where('current', true)
+            ->active()
+            ->files()
             ->chunk(100, function ($files) use ($entity, $activity, $expression) {
                 $files->each(function (File $file) use ($entity, $activity, $expression) {
                     if (!fnmatch($expression, $file->name)) {
@@ -826,8 +822,8 @@ class EntityActivityImporter
                 $entityActivities = $entity->activities()->where('name', $row->relatedActivityName)->get();
                 $entityActivities->each(function ($ea) use ($entity, $activity) {
                     $entityState = $ea->entityStates()->where('entity_id', $entity->id)
-                        ->where('direction', 'out')
-                        ->first();
+                                      ->where('direction', 'out')
+                                      ->first();
                     $activity->entityStates()->attach($entityState, ['direction' => 'in']);
                 });
             });
