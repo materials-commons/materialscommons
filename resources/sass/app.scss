@@ -17,6 +17,14 @@
 
 @import 'bootstrap-steps';
 
+.text-green {
+    color: #28a745;
+}
+
+.text-warning-2 {
+    color: #F7C94A;
+}
+
 // Attributes in the samples card
 .attribute-row {
     background: #f9fafb;
@@ -163,7 +171,7 @@ body {
     //font-size: .825rem;
     font-weight: bold;
     //font-family: sans-serif;
-    background-color: #fff;
+    background-color: $body-bg;
 }
 
 .cursor-move {

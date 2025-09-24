@@ -27,6 +27,21 @@
         </a>
     </li>
 
+    <li class="nav-item" id="project-health-reports-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.health-reports.index')}}"
+           href="{{route('projects.health-reports.index', [$project])}}">
+            @if($project->health == 'critical')
+                <span class="text-danger"><i class="fa fa-exclamation-triangle mr-2"></i>Health Reports</span>
+            @elseif($project->health == 'warning')
+                <span class="text-warning"><i class="fa fa-exclamation-circle mr-2"></i>Health Reports</span>
+            @elseif(is_null($project->health))
+                Health Reports
+            @else
+                <span><i class="fas fa-check-circle mr-2"></i>Health Reports</span>
+            @endif
+        </a>
+    </li>
+
     {{--    <li class="nav-item">--}}
     {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.documents.show')}}"--}}
     {{--           href="{{route('projects.documents.show', [$project])}}">--}}
