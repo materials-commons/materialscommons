@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
@@ -97,6 +98,10 @@ Route::get('/preview-spreadsheet-email', function () {
         EtlRun::findOrFail(1));
 });
 
+Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
+    ->where('doi', '.*')
+    ->name('datasets.show-by-doi');
+
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
@@ -129,6 +134,7 @@ Route::prefix('public')->group(function () {
 
 Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/projects_web.php');
+    require base_path('routes/web_routes/health_reports_web.php');
     require base_path('routes/web_routes/experiments_web.php');
     require base_path('routes/web_routes/entities_web.php');
     require base_path('routes/web_routes/activities_web.php');
