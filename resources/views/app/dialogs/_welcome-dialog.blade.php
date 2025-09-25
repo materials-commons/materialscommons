@@ -33,7 +33,7 @@
                         <a class="btn btn-primary" href="{{route('projects.create', ['show-overview' => true])}}">
                             Create project
                         </a>
-                        <a class="btn btn-info" href="{{helpGettingStarted()}}" target="_blank">
+                        <a class="btn btn-info" href="https://materialscommons.org/mcdocs2/getting_started/overview.html" target="_blank">
                             Read the getting started guide
                         </a>
                     </div>

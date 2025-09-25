@@ -4,37 +4,39 @@
     Samples will be added or removed automatically as you select them.
 </h5>
 <br>
-<div class="row">
-    <a href="#" class="ml-4 mb-2" onclick="checkAllEntities()">Select All Samples</a>
-    <a href="#" class="ml-4 mb-2" onclick="uncheckAllEntities()">Unselect All Samples</a>
-</div>
-<br>
-<table id="entities" class="table table-hover" style="width:100%">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Studies</th>
-        <th>Selected</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($project->entities as $entity)
+<x-card-container>
+    <div class="row">
+        <a href="#" class="ml-4 mb-2" onclick="checkAllEntities()">Select All Samples</a>
+        <a href="#" class="ml-4 mb-2" onclick="uncheckAllEntities()">Unselect All Samples</a>
+    </div>
+    <br>
+    <table id="entities" class="table table-hover" style="width:100%">
+        <thead>
         <tr>
-            <td>
-                <a href="#">{{$entity->name}}</a>
-            </td>
-            <td>{{$entityExperiments($entity)}}</td>
-            <td>
-                <div class="form-group form-check-inline">
-                    <input type="checkbox" class="form-check-input entity-checkbox" id="{{$entity->uuid}}"
-                           {{$entityInDataset($entity) ? 'checked' : ''}}
-                           onclick="updateEntitySelection({{$entity}}, this)">
-                </div>
-            </td>
+            <th>Name</th>
+            <th>Studies</th>
+            <th>Selected</th>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach($project->entities as $entity)
+            <tr>
+                <td>
+                    <a href="#">{{$entity->name}}</a>
+                </td>
+                <td>{{$entityExperiments($entity)}}</td>
+                <td>
+                    <div class="form-group form-check-inline">
+                        <input type="checkbox" class="form-check-input entity-checkbox" id="{{$entity->uuid}}"
+                               {{$entityInDataset($entity) ? 'checked' : ''}}
+                               onclick="updateEntitySelection({{$entity}}, this)">
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</x-card-container>
 
 @push('scripts')
     <script>

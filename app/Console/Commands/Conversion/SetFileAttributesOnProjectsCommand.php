@@ -103,10 +103,9 @@ class SetFileAttributesOnProjectsCommand extends Command
     private function getFilesCursorForProject($project)
     {
         return File::where('project_id', $project->id)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('mime_type', '<>', 'directory')
-                   ->where('current', true)->cursor();
+                   ->active()
+                   ->files()
+                   ->cursor();
     }
 
     private function incrementFileType($fileTypes, File $file)

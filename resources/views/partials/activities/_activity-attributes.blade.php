@@ -1,19 +1,19 @@
-<dl class="row ml-2">
+@php
+    $attributesCount = 0;
+//    $isEditing = true;
+@endphp
+<div class="row ml-2">
     @foreach($activity->attributes as $attribute)
-        <dt class="col-7">{{$attribute->name}}:</dt>
-        <dd class="col-4">
-            @if(is_array($attribute->values[0]->val["value"]))
-                @json($attribute->values[0]->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-            @else
-                @if(blank($attribute->values[0]->val["value"]))
-                    No value
-                @else
-                    {{$attribute->values[0]->val["value"]}}
-                @endif
-            @endif
-            @if($attribute->values[0]->unit != "")
-                {{$attribute->values[0]->unit}}
-            @endif
-        </dd>
+        @php
+            $attributesCount++;
+        @endphp
+        <livewire:attributes.editable-attribute-value :attribute="$attribute"
+                                                      :activity="$activity"
+                                                      :experiment="$experiment"
+                                                      :user="$user"
+                                                      :key="$attribute->id"/>
     @endforeach
-</dl>
+    @if($attributesCount == 0)
+        <span class="ml-1">No Attributes</span>
+    @endif
+</div>

@@ -14,7 +14,9 @@
             @include('app.admin.tabs.tabs')
             <br/>
             @if (Request::routeIs('admin.dashboard.mcfs.index'))
-                @include('app.admin.tabs.mcfs-index')
+                <x-card-container>
+                    @include('app.admin.tabs.mcfs-index')
+                </x-card-container>
             @endif
         </x-slot:body>
     </x-card>

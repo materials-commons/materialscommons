@@ -14,9 +14,7 @@ trait GetProjectFolderFiles
                           ->first()->id;
             return File::where('project_id', $projectId)
                        ->where('directory_id', $rootId)
-                       ->whereNull('deleted_at')
-                       ->whereNull('dataset_id')
-                       ->where('current', true)
+                       ->active()
                        ->get();
         }
 
@@ -31,10 +29,8 @@ trait GetProjectFolderFiles
     public function getProjectFolders($projectId)
     {
         return File::where('project_id', $projectId)
-                   ->where('mime_type', 'directory')
-                   ->where('current', true)
-                   ->whereNull('deleted_at')
-                   ->whereNull('dataset_id')
+                   ->directories()
+                   ->active()
                    ->get();
     }
 }

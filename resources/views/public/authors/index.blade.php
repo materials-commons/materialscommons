@@ -13,24 +13,26 @@
         @endslot
 
         @slot('body')
-            <table id="authors" class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Author</th>
-                    <th># Datasets</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($authors as $author => $count)
+            <x-table-container>
+                <table id="authors" class="table table-hover">
+                    <thead>
                     <tr>
-                        <td>
-                            <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
-                        </td>
-                        <td>{{$count}}</td>
+                        <th>Author</th>
+                        <th># Datasets</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($authors as $author => $count)
+                        <tr>
+                            <td>
+                                <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
+                            </td>
+                            <td>{{$count}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </x-table-container>
         @endslot
     @endcomponent
 

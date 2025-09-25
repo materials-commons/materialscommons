@@ -5,6 +5,7 @@
 /public/css
 /public/js
 /public/sitemap.xml
+/public/mix-manifest.json
 public/js/app.js
 public/css/app.css
 /public/packages

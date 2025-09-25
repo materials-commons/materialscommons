@@ -50,7 +50,9 @@
                 </li>
             </ul>
             <br>
-            @include('app.projects.datasets._create')
+            <x-card-container>
+                @include('app.projects.datasets._create')
+            </x-card-container>
         @endslot
     @endcomponent
 @stop

@@ -1,0 +1,27 @@
+.editable-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.editable-item:hover .edit-icon {
+    opacity: 1 !important;
+}
+
+.attribute-value {
+    cursor: pointer;
+}
+
+// Attributes in the samples card
+.attribute-row {
+    background: #f9fafb;
+    margin-right: 0;
+    //margin-bottom: 1px;
+    //border-radius: 4px;
+    padding: 4px;
+    border: 1px solid #eff1f5;
+}
+
+.attribute-row:hover {
+    background: #edf2f7;
+}

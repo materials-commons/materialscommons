@@ -57,11 +57,9 @@ class Script extends Model
     public static function listForProject(Project $project): Collection
     {
         $dir = File::where('path', "/scripts")
-                   ->where('mime_type', 'directory')
+                   ->directories()
+                   ->active()
                    ->where('project_id', $project->id)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
                    ->first();
 
         if (is_null($dir)) {
@@ -70,9 +68,7 @@ class Script extends Model
 
         $scriptFiles = File::with('directory')
                            ->where('directory_id', $dir->id)
-                           ->whereNull('dataset_id')
-                           ->whereNull('deleted_at')
-                           ->where('current', true)
+                           ->active()
                            ->where('name', 'like', '%.py')
                            ->get();
 

@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-link no-underline {{setActiveNavByName('teams.show')}}"
            href="{{route('teams.show', [$team])}}">

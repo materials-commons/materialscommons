@@ -1,5 +1,5 @@
 <div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-pills">
         <li class="nav-item">
             <a wire:navigate @class(["nav-link", "no-underline", "active" => $view == 'samples'])
             href="{{route('projects.datahq.index', [$project, 'explorer' => 'overview', 'view' => 'samples', 'context' => $context])}}">

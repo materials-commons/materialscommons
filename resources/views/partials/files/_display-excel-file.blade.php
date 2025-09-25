@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs" id="{{$file->uuid}}sheet-tabs">
+<ul class="nav nav-pills" id="{{$file->uuid}}sheet-tabs">
 </ul>
 <div id="{{$file->uuid}}grid"></div>
 @push('scripts')

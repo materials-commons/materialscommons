@@ -2,6 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\FileServices\FileConversionService;
+use App\Services\FileServices\FilePathService;
+use App\Services\FileServices\FileReplicationService;
+use App\Services\FileServices\FileStorageService;
+use App\Services\FileServices\FileThumbnailService;
+use App\Services\FileServices\FileVersioningService;
 use App\Traits\DeletedAt;
 use App\Traits\FileType;
 use App\Traits\HasUUID;
@@ -9,35 +15,54 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use JsonSerializable;
 use Spatie\Searchable\SearchResult;
-use function intdiv;
 
 /**
- * @property integer $id
+ * @property integer id
  * @property string uuid
- * @property string uses_uuid
+ * @property string name
  * @property string path
  * @property string url
- * @property string $name
- * @property string $description
- * @property string $mime_type
- * @property integer $project_id
- * @property integer $directory_id;
- * @property integer owner_id
+ * @property string description
+ * @property string summary
  * @property integer size
- * @property boolean current
  * @property string checksum
- * @property string $disk
+ * @property boolean current
+ * @property string mime_type
+ * @property string media_type_description
+ * @property string disk
+ * @property integer owner_id
+ * @property integer project_id
+ * @property boolean is_shortcut
+ * @property integer directory_id;
+ * @property string uses_uuid
+ * @property integer uses_id
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property mixed deleted_at
+ * @property integer dataset_id
+ * @property mixed replicated_at
+ * @property integer unique_proj_dir
+ * @property string upload_source
+ * @property mixed file_missing_at
+ * @property string file_missing_determined_by
+ * @property string health
+ * @property mixed last_health_check_at
+ * @property mixed health_fixed_at
+ * @property string health_fixed_by
+ * @property mixed thumbnail_created_at
+ * @property string thumbnail_status
+ * @property mixed conversion_created_at
+ * @property string conversion_status
  *
  * @mixin Builder
  *
  * Also see App\Observers\FileObserver
  */
-class File extends Model
+class File extends Model implements JsonSerializable
 {
     use HasUUID;
     use FileType;
@@ -50,17 +75,23 @@ class File extends Model
     protected $appends = ['selected'];
 
     protected $casts = [
-        'size'                => 'integer',
-        'current'             => 'boolean',
-        'owner_id'            => 'integer',
-        'project_id'          => 'integer',
-        'is_shortcut'         => 'boolean',
-        'directory_id'        => 'integer',
-        'experiments_count'   => 'integer',
-        'entities_count'      => 'integer',
-        'activities_count'    => 'integer',
-        'entity_states_count' => 'integer',
-        'deleted_at'          => 'datetime',
+        'size'                  => 'integer',
+        'current'               => 'boolean',
+        'owner_id'              => 'integer',
+        'project_id'            => 'integer',
+        'dataset_id'            => 'integer',
+        'is_shortcut'           => 'boolean',
+        'directory_id'          => 'integer',
+        'experiments_count'     => 'integer',
+        'entities_count'        => 'integer',
+        'activities_count'      => 'integer',
+        'entity_states_count'   => 'integer',
+        'deleted_at'            => 'datetime',
+        'replicated_at'         => 'datetime',
+        'file_missing_at'       => 'datetime',
+        'last_health_check_at'  => 'datetime',
+        'thumbnail_created_at'  => 'datetime',
+        'conversion_created_at' => 'datetime',
     ];
 
     private $selected;
@@ -90,34 +121,6 @@ class File extends Model
         return $this->belongsToMany(Entity::class, 'entity2file');
     }
 
-    public function previousVersions()
-    {
-        return $this->hasMany(File::class, 'directory_id', 'directory_id')
-                    ->where('name', $this->name)
-                    ->where('id', '<>', $this->id)
-                    ->whereNull('dataset_id')
-                    ->whereNull('deleted_at')
-                    ->orderBy('created_at');
-    }
-
-    public function scopeCurrentProjectFiles($query, $projectId)
-    {
-        return $query->where('project_id', $projectId)
-                     ->whereNull('dataset_id')
-                     ->whereNull('deleted_at')
-                     ->where('current', true);
-    }
-
-    public function currentVersion()
-    {
-        return File::where('directory_id', $this->directory_id)
-                   ->where('name', $this->name)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
-                   ->first();
-    }
-
     public function datasets()
     {
         return $this->belongsToMany(Dataset::class, 'dataset2file', 'file_id', 'dataset_id');
@@ -143,6 +146,16 @@ class File extends Model
         return $this->morphedByMany(EtlRun::class, 'item', 'item2file');
     }
 
+    public function previousVersions()
+    {
+        return $this->hasMany(File::class, 'directory_id', 'directory_id')
+                    ->where('name', $this->name)
+                    ->where('id', '<>', $this->id)
+                    ->whereNull('dataset_id')
+                    ->whereNull('deleted_at')
+                    ->orderBy('created_at');
+    }
+
     // Scopes
 
     public function scopeWithCommon($query)
@@ -151,35 +164,198 @@ class File extends Model
                      ->withCount(['entityStates', 'activities', 'entities', 'experiments', 'previousVersions']);
     }
 
+
+    public function scopeCurrentProjectFiles($query, $projectId)
+    {
+        return $query->where('project_id', $projectId)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at')
+                     ->where('current', true);
+    }
+
+    public function scopeActiveFiles($query)
+    {
+        return $query->where('current', true)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('current', true)
+                     ->whereNull('dataset_id')
+                     ->whereNull('deleted_at');
+    }
+
+    public function scopeDirectories($query)
+    {
+        return $query->where('mime_type', 'directory');
+    }
+
+    public function scopeActiveProjectDirectories($query, $projectId)
+    {
+        return $query->activeFiles()
+                     ->where('project_id', $projectId)
+                     ->directories();
+    }
+
+    public function scopeFiles($query)
+    {
+        return $query->where('mime_type', '<>', 'directory');
+    }
+
+    public function currentVersion()
+    {
+        return File::where('directory_id', $this->directory_id)
+                   ->where('name', $this->name)
+                   ->active()
+                   ->first();
+    }
+
+    /* FilePathService */
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id'           => $this->id,
+            'uuid'         => $this->uuid,
+            'name'         => $this->name,
+            'description'  => $this->description,
+            'mime_type'    => $this->mime_type,
+            'size'         => $this->size,
+            'current'      => $this->current,
+            'path'         => $this->path,
+            'project_id'   => $this->project_id,
+            'directory_id' => $this->directory_id,
+            'owner_id'     => $this->owner_id,
+            'checksum'     => $this->checksum,
+            'created_at'   => $this->created_at?->toISOString(),
+            'updated_at'   => $this->updated_at?->toISOString(),
+            'deleted_at'   => $this->deleted_at?->toISOString(),
+            'dataset_id'   => $this->dataset_id,
+            'type'         => $this->getTypeAttribute(),
+        ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $file = new self();
+
+        // Fill the basic attributes
+        $file->fill([
+            'uuid'         => $data['uuid'] ?? null,
+            'name'         => $data['name'] ?? null,
+            'description'  => $data['description'] ?? null,
+            'mime_type'    => $data['mime_type'] ?? null,
+            'size'         => $data['size'] ?? null,
+            'current'      => $data['current'] ?? null,
+            'path'         => $data['path'] ?? null,
+            'project_id'   => $data['project_id'] ?? null,
+            'directory_id' => $data['directory_id'] ?? null,
+            'dataset_id'   => $data['dataset_id'] ?? null,
+            'owner_id'     => $data['owner_id'] ?? null,
+            'checksum'     => $data['checksum'] ?? null,
+        ]);
+
+        // Handle timestamps if they exist
+        if (isset($data['created_at'])) {
+            $file->created_at = Carbon::parse($data['created_at']);
+        }
+        if (isset($data['updated_at'])) {
+            $file->updated_at = Carbon::parse($data['updated_at']);
+        }
+        if (isset($data['deleted_at'])) {
+            $file->deleted_at = Carbon::parse($data['deleted_at']);
+        }
+
+        // Set the ID if it exists (for existing records)
+        if (isset($data['id'])) {
+            $file->id = $data['id'];
+            $file->exists = true; // Mark as existing record
+        }
+
+        return $file;
+    }
+
+//    public static function fromJson(string $value): self
+//    {
+//        $data = json_decode($value, true);
+//
+//        if (json_last_error() !== JSON_ERROR_NONE) {
+//            throw new \InvalidArgumentException('Invalid JSON: '.json_last_error_msg());
+//        }
+//
+//        return self::fromArray($data);
+//    }
+
     public function fullPath(): ?string
     {
-        if (is_null($this->directory)) {
-            $this->load('directory');
-        }
-
-        if ($this->isDir()) {
-            return $this->path;
-        }
-
-        if (!isset($this->directory)) {
-            return "/".$this->name;
-        }
-
-        if ($this->directory->path == "/") {
-            return "/".$this->name;
-        }
-
-        return $this->directory->path."/".$this->name;
+        return app(FilePathService::class)->getFullPath($this);
     }
 
     public function dirPath(): ?string
     {
-        if ($this->isDir()) {
-            return $this->path;
-        }
-
-        return $this->directory->path;
+        return app(FilePathService::class)->getDirPath($this);
     }
+
+    public function getFilePath(): string
+    {
+        return app(FilePathService::class)->getFilePath($this);
+    }
+
+    public function mcfsPath()
+    {
+        return app(FilePathService::class)->getMcfsPath($this);
+    }
+
+    public function mcfsReplicaPath()
+    {
+        return app(FilePathService::class)->getMcfsReplicaPath($this);
+    }
+
+    public function realPathPartial()
+    {
+        return app(FilePathService::class)->getRealPathPartial($this);
+    }
+
+    public function pathDirPartial()
+    {
+        return app(FilePathService::class)->getPathDirPartial($this);
+    }
+
+    public function convertedPathPartial()
+    {
+        return app(FilePathService::class)->getConvertedPathPartial($this);
+    }
+
+    public function thumbnailPathPartial()
+    {
+        return app(FilePathService::class)->getThumbnailPathPartial($this);
+    }
+
+    public function projectPathDirPartial(): string
+    {
+        return app(FilePathService::class)->getProjectPathDirPartial($this);
+    }
+
+    public function partialReplicaPath()
+    {
+        return app(FilePathService::class)->getPartialReplicaPath($this);
+    }
+
+    public function getDirPathForFormatting(): string
+    {
+        return app(FilePathService::class)->getDirPathForFormatting($this);
+    }
+
+    public function getFileUuidToUse()
+    {
+        return app(FilePathService::class)->getFileUuidToUse($this);
+    }
+
+    /* FilePathService */
+
+    /* fhere */
 
     // Utility methods
 
@@ -199,7 +375,15 @@ class File extends Model
 
     public function isFile()
     {
-        return !$this->isDir();
+        if ($this->isDir()) {
+            return false;
+        }
+
+        if ($this->mime_type == 'url') {
+            return false;
+        }
+
+        return true;
     }
 
     public function isRunnable(): bool
@@ -310,68 +494,17 @@ class File extends Model
         return '';
     }
 
-    public function mcfsPath()
-    {
-        return Storage::disk('mcfs')->path($this->realPathPartial());
-    }
-
-    public function projectPathDirPartial(): string
-    {
-        $dirGroup = intdiv($this->id, 10);
-        return "projects/{$dirGroup}/{$this->project_id}";
-    }
-
-    public function mcfsReplicaPath()
-    {
-        return Storage::disk('mcfs_replica')->path($this->realPathPartial());
-    }
-
-    public function partialReplicaPath()
-    {
-        $realPartial = $this->realPathPartial();
-        return "replica/{$realPartial}";
-    }
-
     public function mcfsReplicate()
     {
-        $mcfsPathPartial = $this->realPathPartial();
-        if (!Storage::disk('mcfs')->exists($mcfsPathPartial)) {
-            // The file we are copying should exist, if it doesn't just skip. This case
-            // should not happen, but we should check for it.
-            return;
-        }
-
-        if (!Storage::disk('mcfs')->exists($this->partialReplicaPath())) {
-            @Storage::disk('mcfs')->copy($mcfsPathPartial, $this->partialReplicaPath());
-            $replicaPath = Storage::disk('mcfs')->path($this->partialReplicaPath());
-            @chmod($replicaPath, 0777);
-        }
-
-        // If we are here then either the copy was successful, or the copy had already been done. In either case
-        // we set replicated_at to denote that the file has been replicated.
-        $this->update(['replicated_at' => Carbon::now()]);
+        app(FileReplicationService::class)->replicate($this);
     }
 
-    public function realPathPartial()
-    {
-        $uuid = $this->getFileUuidToUse();
-        $dirPath = $this->pathDirPartial();
-        return "{$dirPath}/{$uuid}";
-    }
 
     public function realFileExists()
     {
-        return Storage::disk('mcfs')->exists($this->realPathPartial());
-    }
-
-    public function getFileUuidToUse()
-    {
-        $uuid = $this->uuid;
-        if (!blank($this->uses_uuid)) {
-            $uuid = $this->uses_uuid;
-        }
-
-        return $uuid;
+        $pathService = app(FilePathService::class);
+        $storage = app(FileStorageService::class);
+        return $storage->exists('mcfs', $pathService->getRealPathPartial($this));
     }
 
     public function getFileUsesIdToUse()
@@ -383,42 +516,11 @@ class File extends Model
         return $this->id;
     }
 
-    public function pathDirPartial()
-    {
-        $uuid = $this->getFileUuidToUse();
-        $entries = explode('-', $uuid);
-        $entry1 = $entries[1];
-
-        return "{$entry1[0]}{$entry1[1]}/{$entry1[2]}{$entry1[3]}";
-    }
-
-    public function convertedPathPartial()
-    {
-        $fileName = $this->getFileUuidToUse();
-        if ($this->isConvertibleImage()) {
-            $fileName = $fileName.".jpg";
-        }
-
-        if ($this->isConvertibleOfficeDocument()) {
-            $fileName = $fileName.".pdf";
-        }
-
-        if ($this->isJupyterNotebook()) {
-            $fileName = $fileName.".html";
-        }
-
-        return $this->pathDirPartial()."/.conversion/{$fileName}";
-    }
-    
-    public function thumbnailPathPartial()
-    {
-        $fileName = $this->getFileUuidToUse().".thumb.jpg";
-        return $this->pathDirPartial()."/.thumbnails/{$fileName}";
-    }
-
     public function thumbnailExists()
     {
-        return Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
+        $pathService = app(FilePathService::class);
+        $storage = app(FileStorageService::class);
+        return $storage->exists('mcfs', $pathService->getThumbnailPathPartial($this));
     }
 
     public function isConvertible()
@@ -439,23 +541,14 @@ class File extends Model
         return $this->fileType($this) === "image";
     }
 
-
     public function shouldBeConverted()
     {
-        if (!$this->isConvertible()) {
-            return false;
-        }
-
-        return !Storage::disk('mcfs')->exists($this->convertedPathPartial());
+        return app(FileConversionService::class)->shouldConvert($this);
     }
-    
+
     public function shouldGenerateThumbnail()
     {
-        if (!$this->isImage()) {
-            return false;
-        }
-
-        return !Storage::disk('mcfs')->exists($this->thumbnailPathPartial());
+        return app(FileThumbnailService::class)->shouldGenerate($this);
     }
 
     public function isConvertibleImage()
@@ -492,57 +585,17 @@ class File extends Model
         return false;
     }
 
-    public function getDirPathForFormatting(): string
-    {
-        if (is_null($this->path)) {
-            return "";
-        }
-
-        if ($this->path === "/") {
-            return "";
-        }
-
-        return $this->path;
-    }
-
-    public function getFilePath(): string
-    {
-        if (!isset($this->directory)) {
-            return $this->name;
-        }
-
-        if ($this->directory->path == "/") {
-            return $this->directory->path.$this->name;
-        }
-
-        return $this->directory->path."/".$this->name;
-    }
-
     public function setAsActiveFile()
     {
-        $file = $this;
-
-        DB::transaction(function () use ($file) {
-            // First mark all files matching name in the directory as not active
-            File::where('directory_id', $file->directory_id)
-                ->where('name', $file->name)
-                ->whereNull('dataset_id')
-                ->whereNull('deleted_at')
-                ->update(['current' => false]);
-
-            // Then mark the file passed in as active
-            $file->update(['current' => true]);
-        });
+        app(FileVersioningService::class)->setActive($this);
     }
 
     public static function getDirectoryByPath($projectId, $path)
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->first();
     }
 
@@ -550,10 +603,8 @@ class File extends Model
     {
         return File::where('project_id', $projectId)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->get();
     }
 

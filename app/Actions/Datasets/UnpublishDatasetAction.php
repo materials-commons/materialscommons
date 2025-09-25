@@ -18,6 +18,7 @@ class UnpublishDatasetAction
     {
         $dataset->update([
             'published_at'       => null,
+            'test_published_at'  => null,
             'zipfile_size'       => 0,
             'globus_path_exists' => false,
             'cleanup_started_at' => Carbon::now(),

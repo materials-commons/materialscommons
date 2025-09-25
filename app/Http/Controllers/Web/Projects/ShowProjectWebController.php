@@ -25,9 +25,7 @@ class ShowProjectWebController extends Controller
         $readme = File::where('name', "readme.md")
                       ->where("project_id", $projectId)
                       ->where("directory_id", $project->rootDir->id)
-                      ->where('current', true)
-                      ->whereNull('dataset_id')
-                      ->whereNull('deleted_at')
+                      ->active()
                       ->first();
         $viewModel = (new ShowProjectViewModel($project))
             ->withReadme($readme)

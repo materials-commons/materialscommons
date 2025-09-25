@@ -9,6 +9,7 @@
 ## CSS and JavaScript
 - Use Bootstrap CSS for styling.
 - Use ES6+ features for JavaScript.
+- Use fontawesome for fonts, don't create custom svg
 
 ## Accessibility
 - Use semantic HTML elements.

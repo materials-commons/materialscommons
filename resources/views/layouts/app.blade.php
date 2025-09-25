@@ -139,6 +139,9 @@
                                onclick="document.getElementById('signout').submit()">
                                 Sign out</a>
                         </form>
+                        <a class="dropdown-item td-none" href="{{route('accounts.show')}}">
+                            <i class="fa-fw fas fa-user mr-2 mb-1"></i>Account
+                        </a>
                         {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>
                 </li>
@@ -170,6 +173,16 @@
                 <livewire:force-livewire-load/>
                 @include('flash::message')
                 @yield('breadcrumbs')
+{{--                <div class="row">--}}
+{{--                    <div class="col-10">--}}
+{{--                    @yield('breadcrumbs')--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-2" style="padding-top: 12px">--}}
+{{--                        <div class="float-right">--}}
+{{--                            Real time stuff here--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 @yield('content')
             </div>
         </main>

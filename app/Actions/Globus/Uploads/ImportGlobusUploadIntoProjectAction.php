@@ -42,7 +42,10 @@ class ImportGlobusUploadIntoProjectAction
             return;
         }
 
-        $this->cleanupAfterProcessingAllFiles();
+        $isEmpty = empty(Storage::disk('mcfs')->allFiles("__globus_uploads/{$this->globusUpload->uuid}"));
+        if ($isEmpty) {
+            $this->cleanupAfterProcessingAllFiles();
+        }
     }
 
     // ACL Handling

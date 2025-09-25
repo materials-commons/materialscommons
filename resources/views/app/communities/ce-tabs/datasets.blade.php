@@ -1,4 +1,4 @@
-@component('components.card')
+@component('components.card-white')
     @slot('header')
         Datasets In Community
         <a class="float-right action-link mr-2" href="{{route('communities.datasets.update', [$community])}}">
