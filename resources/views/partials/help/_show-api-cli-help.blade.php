@@ -40,7 +40,7 @@
     @endif
     <pre>
 # Setup CLI if you haven't already done so.
-mc remote --add {{auth()->user()->email}} https://materialscommons.org/api
+mc remote --add {{auth()->user()->email}}
 
 # Many of the examples for the CLI assume your current working directory is the root of the cloned project
 # For example if you did an 'mc clone' while in ~/myprojects for a project named MyProj, then the examples

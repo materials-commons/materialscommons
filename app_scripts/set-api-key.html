@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 90%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-group">
+    <label for="api_token">MC API Token:</label>
+    <input type="text"
+           id="api_token"
+           name="api_token"
+           value="<?= config.MC_API_TOKEN || '' ?>">
+</div>
+
+<div class="form-group">
+    <label for="api_endpoint">MC API Endpoint:</label>
+    <input type="text"
+           id="api_endpoint"
+           name="api_endpoint"
+           value="<?= config.MC_API_ENDPOINT || '' ?>">
+</div>
+<button onclick="saveSettings()">Save</button>
+
+<script>
+    function saveSettings() {
+        const config = {
+            MC_API_ENDPOINT: document.getElementById('api_endpoint').value,
+            MC_API_TOKEN: document.getElementById('api_token').value
+        };
+
+        google.script.run
+            .withSuccessHandler(onSaveSuccess)
+            .withFailureHandler(onSaveError)
+            .saveConfig(config);
+    }
+
+    function onSaveSuccess() {
+        google.script.host.close();
+    }
+
+    function onSaveError(error) {
+        alert('Failed to save settings: ' + error.toString());
+    }
+</script>
+</body>
+</html>

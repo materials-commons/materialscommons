@@ -31,9 +31,7 @@ class IndexAllProjectsForFilesMatchingApiController extends Controller
                            $query->orWhere('name', 'like', $matches[$i]);
                        }
                    })
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->active()
                    ->jsonPaginate();
 
     }

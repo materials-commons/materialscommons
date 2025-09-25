@@ -173,6 +173,16 @@
                 <livewire:force-livewire-load/>
                 @include('flash::message')
                 @yield('breadcrumbs')
+{{--                <div class="row">--}}
+{{--                    <div class="col-10">--}}
+{{--                    @yield('breadcrumbs')--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-2" style="padding-top: 12px">--}}
+{{--                        <div class="float-right">--}}
+{{--                            Real time stuff here--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 @yield('content')
                 <x-chatgpt.text-selection-popup/>
             </div>

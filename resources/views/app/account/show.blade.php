@@ -41,8 +41,24 @@
                     </div>
                 </form>
 
+                <br/>
+                <hr/>
+                <br/>
+                <h4>Google Sheets Connection Status</h4>
+                <p>
+                    @if ($user->hasGoogleToken())
+                        <span class="text-success">✓ Connected to Google Sheets</span>
+                        <a href="{{ route('google-sheets.authorize') }}" class="btn btn-sm btn-outline-primary ml-2">Reconnect</a>
+                    @else
+                        <span class="text-danger">✗ Not connected to Google Sheets</span>
+                        <a href="{{ route('google-sheets.authorize') }}" class="btn btn-primary ml-2">Connect to Google
+                            Sheets</a>
+                    @endif
+                </p>
+
                 <br>
                 <hr>
+                <br/>
                 <div x-data="apiToken">
                     <h3 class="mb-3">API Token</h3>
                     <a href="#" @click.prevent="toggleAPIToken()" id="apitokenlink">Show API Token</a>
@@ -50,28 +66,34 @@
                         <label for="apitokeninput">API Token</label>
                         <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
                     </div>
+                    <a href="{{route('accounts.api-token.regenerate')}}" class="ml-5 btn btn-sm btn-outline-danger ml-2">Regenerate API Token</a>
+                    <span class="text-muted">(This will invalidate any existing clients using the old token)</span>
                 </div>
+
+                @if(isInBeta('google-sheets'))
+                    <br>
+                    <hr>
+                    <br/>
+                    <h3 class="mb-3">Globus Account</h3>
+
+                    <form method="post" id="globus" action="{{route('accounts.update.globus')}}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="globus-user">Globus User Account</label>
+                            <input class="form-control" id="globus-user" name="globus_user" type="text"
+                                   value="{{$user->globus_user}}" placeholder="Globus User Account...">
+                        </div>
+                        <div class="float-right">
+                            <a class="action-link" href="#"
+                               onclick="document.getElementById('globus').submit()">
+                                Save
+                            </a>
+                        </div>
+                    </form>
+                @endif
                 <br>
                 <hr>
-                <h3 class="mb-3">Globus Account</h3>
-
-                <form method="post" id="globus" action="{{route('accounts.update.globus')}}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="globus-user">Globus User Account</label>
-                        <input class="form-control" id="globus-user" name="globus_user" type="text"
-                               value="{{$user->globus_user}}" placeholder="Globus User Account...">
-                    </div>
-                    <div class="float-right">
-                        <a class="action-link" href="#"
-                           onclick="document.getElementById('globus').submit()">
-                            Save
-                        </a>
-                    </div>
-                </form>
-
-                <br>
-                <hr>
+                <br/>
                 <h3 class="mb-3">Change Password</h3>
 
                 <form method="post" id="change-password" action="{{route('accounts.update.password')}}">
@@ -101,6 +123,7 @@
 
                 <br>
                 <hr>
+                <br/>
                 <h3 class="mb-3">Change Email Address</h3>
                 <form method="post" id="change-email" action="{{route('accounts.update.email')}}">
                     @csrf

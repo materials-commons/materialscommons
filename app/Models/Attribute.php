@@ -17,6 +17,7 @@ use function route;
  * @property string description
  * @property string group
  * @property mixed marked_important_at
+ * @property string cell_coordinates
  *
  * @mixin Builder
  */

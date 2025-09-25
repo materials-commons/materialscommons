@@ -75,10 +75,10 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping();
 
         // File replication
-        $schedule->command("mc-disk:replicate-mcfs-files")
-                 ->everyFiveMinutes()
-                 ->runInBackground()
-                 ->withoutOverlapping();
+//        $schedule->command("mc-disk:replicate-mcfs-files")
+//                 ->everyFiveMinutes()
+//                 ->runInBackground()
+//                 ->withoutOverlapping();
 
         $schedule->command("mc-logs:purge-old-log-files")
                  ->everyFifteenMinutes()

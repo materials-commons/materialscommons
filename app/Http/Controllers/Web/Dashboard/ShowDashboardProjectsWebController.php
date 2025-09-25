@@ -23,30 +23,46 @@ class ShowDashboardProjectsWebController extends Controller
         $activeProjects = $this->getActiveProjects(auth()->user(), $projects);
         $recentlyAccessedProjects = $this->getRecentlyAccessedProjects(auth()->user(), $projects);
         return view('app.dashboard.index', [
-            'activeProjects'           => $activeProjects,
-            'recentlyAccessedProjects' => $recentlyAccessedProjects,
-            'otherProjectsCount'       => $this->getUserOtherProjectsCount(auth()->user(), $projects),
-            'userProjectsCount'        => $this->getUserProjectsCount(auth()->user(), $projects),
-            'projects'                 => $projects,
-            'projectsCount'            => $projects->count(),
-            'deletedCount'             => Project::getDeletedTrashCountForUser(auth()->id()),
-            'archivedCount'            => $this->getUserArchivedProjectsCount(auth()->id()),
-            'publishedDatasetsCount'   => Dataset::whereNotNull('published_at')
-                                                 ->where('owner_id', auth()->id())
-                                                 ->count(),
+            'activeProjects'                => $activeProjects,
+            'recentlyAccessedProjects'      => $recentlyAccessedProjects,
+            'otherProjectsCount'            => $this->getUserOtherProjectsCount(auth()->user(), $projects),
+            'userProjectsCount'             => $this->getUserProjectsCount(auth()->user(), $projects),
+            'projectsWithWarningStateCount' => $this->countOfProjectsWithWarningStateForHealth($projects),
+            'projectsWithErrorStateCount'   => $this->countOfProjectsWithErrorStateForHealth($projects),
+            'projects'                      => $projects,
+            'projectsCount'                 => $projects->count(),
+            'deletedCount'                  => Project::getDeletedTrashCountForUser(auth()->id()),
+            'archivedCount'                 => $this->getUserArchivedProjectsCount(auth()->id()),
+            'publishedDatasetsCount'        => Dataset::whereNotNull('published_at')
+                                                      ->where('owner_id', auth()->id())
+                                                      ->count(),
         ]);
+    }
+
+    private function countOfProjectsWithWarningStateForHealth($projects)
+    {
+        return $projects->filter(function ($proj) {
+            return $proj->health == 'warning';
+        })->count();
+    }
+
+    private function countOfProjectsWithErrorStateForHealth($projects)
+    {
+        return $projects->filter(function ($proj) {
+            return $proj->health == 'critical';
+        })->count();
     }
 
     private function getUserProjectsCount(User $user, $projects)
     {
-        return $projects->filter(function($proj) use ($user) {
+        return $projects->filter(function ($proj) use ($user) {
             return $proj->owner_id == $user->id;
         })->count();
     }
 
     private function getUserOtherProjectsCount(User $user, $projects)
     {
-        return $projects->filter(function($proj) use ($user) {
+        return $projects->filter(function ($proj) use ($user) {
             return $proj->owner_id != $user->id;
         })->count();
     }

@@ -12,8 +12,9 @@ class ColumnAttribute
     public $important;
     public $tags;
     public $group;
+    public $cellCoordinates;
 
-    public function __construct($name, $value, $unit, $type, $columnNumber, $important = false)
+    public function __construct($name, $value, $unit, $type, $columnNumber, $cellCoordinates = null, $important = false)
     {
         $this->name = $name;
         $this->value = $value;
@@ -23,6 +24,7 @@ class ColumnAttribute
         $this->important = $important;
         $this->tags = [];
         $this->group = null;
+        $this->cellCoordinates = $cellCoordinates;
     }
 
     public function addTags($tags): ColumnAttribute

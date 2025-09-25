@@ -1,5 +1,11 @@
+@php
+    $filesCount = 0;
+@endphp
 <ul class="list-unstyled mb-4">
     @foreach($activity->files as $f)
+        @php
+            $filesCount++;
+        @endphp
         @if($loop->iteration < 12)
             <li class="mt-2 ml-3">
                 @if($f->mime_type == "directory")
@@ -46,6 +52,9 @@
             </li>
         @endif
     @endforeach
+        @if($filesCount == 0)
+            <span class="ml-3 font-weight-bold">No Files</span>
+        @endif
     @include('common.show-more-control', [
            'items' => $activity->files,
            'attrName' => $activity->uuid,

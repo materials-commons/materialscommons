@@ -41,6 +41,13 @@
 
     @push('scripts')
         <script>
+            @php
+                if ($isTest) {
+                    $r = route('get_all_published_test_datasets');
+                } else {
+                    $r = route('get_all_published_datasets');
+                }
+            @endphp
             $(document).ready(() => {
                 $('#datasets').DataTable({
                     pageLength: 100,
@@ -48,7 +55,7 @@
                     processing: true,
                     response: true,
                     stateSave: true,
-                    ajax: "{{route('get_all_published_datasets')}}",
+                    ajax: "{{$r}}",
                     order: [[4, "desc"]],
                     columns: [
                         {
@@ -67,7 +74,11 @@
                         {name: 'views_count', searchable: false},
                         {name: 'downloads_count', searchable: false},
                         {
+                            @if($isTest)
+                            name: 'test_published_at',
+                            @else
                             name: 'published_at',
+                            @endif
                             render: function (data, type, row) {
                                 let space = data.indexOf(' ');
                                 return data.slice(0, space);

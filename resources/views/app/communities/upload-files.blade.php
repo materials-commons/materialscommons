@@ -24,7 +24,7 @@
 
         const uppy = new Uppy({
             restrictions: {
-                maxFileSize: 250 * 1024 * 1024,
+                maxFileSize: 750 * 1024 * 1024,
             },
             onBeforeFileAdded: (currentFile, files) => {
                 if (currentFile.data.webkitRelativePath === "") {

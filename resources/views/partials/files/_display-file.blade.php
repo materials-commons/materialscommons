@@ -22,7 +22,7 @@
 
         @case("text")
             <div class="ml-3 mt-2">
-                @if($file->size > 2000000)
+                @if($file->size > 20000000)
                     <span class="ml-3">File too large to display</span>
                 @else
                     <pre id="file-contents">{{$fileContents($file)}}</pre>
@@ -53,7 +53,7 @@
             @break
 
         @case("excel")
-            @if($file->size > 2000000)
+            @if($file->size > 10000000)
                 <span class="ml-3">Excel file too large to display</span>
             @else
                 @include('partials.files._display-excel-file')
@@ -79,7 +79,7 @@
 
         @case("html")
             <div class="ml-3">
-                @if($file->size > 2000000)
+                @if($file->size > 20000000)
                     <span class="ml-3">File too large to display</span>
                 @else
                     <pre>{!!$fileContents($file)!!}</pre>
@@ -99,5 +99,17 @@
             <span class="ml-3">Unable to display files of type {{$fileType($file)}}</span>
     @endswitch
 @else
-    <span class="ml-3">Unable to display file, it may not exist or have been converted yet</span>
+    @if(!$file->realFileExists())
+        <h1 class="ml-3"><i class="fa fas fa-exclamation-triangle fa-2x mr-2 text-danger"></i>
+            File is missing. Please <a
+                href="{{route('projects.folders.upload', [$file->project_id, $file->directory_id])}}">upload</a> again
+            if you are able to.
+        </h1>
+    @elseif($file->isConvertibleImage())
+        <span class="ml-3">Unable to display image, {{$file->mime_type}} type not viewable in a browser, and a JPEG for viewing hasn't been created yet.</span>
+    @elseif($file->isConvertible())
+        <span class="ml-3">Unable to display file, {{$file->mime_type}} type not viewable in a browser, and a conversion for viewing hasn't been created yet.</span>
+    @else
+        <span class="ml-3">Unable to display file, {{$file->mime_type}} not viewable in a browser.</span>
+    @endif
 @endif

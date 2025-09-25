@@ -10,7 +10,7 @@
         </form>
     @endisset
     @if(sizeof($attributes) != 0)
-        <h6>Process Settings</h6>
+        <h6>Attributes</h6>
         @include('partials.activities._activity-type-attributes', ['attributes' => $attributes])
     @endif
     @if (sizeof($measurements) != 0)
