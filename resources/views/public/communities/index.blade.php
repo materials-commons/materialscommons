@@ -13,7 +13,9 @@
         @endslot
 
         @slot('body')
-            @include('public.communities._communities_table')
+            <x-table-container>
+                @include('public.communities._communities_table')
+            </x-table-container>
         @endslot
     @endcomponent
 @stop

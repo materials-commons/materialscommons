@@ -19,19 +19,26 @@ use function is_array;
 use function is_null;
 
 /**
- * @property integer $id
+ * @property integer id
  * @property string uuid
- * @property string $name
- * @property string $description
- * @property string $affiliations
- * @property string $globus_user
- * @property string $password
- * @property mixed projects
- * @property string $api_token
- * @property boolean is_admin
+ * @property string name
+ * @property string description
+ * @property string affiliations
  * @property string email
+ * @property mixed email_verified_at
+ * @property string password
+ * @property string globus_user
+ * @property string api_token
+ * @property boolean is_admin
+ * @property string remember_token
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property string slug
+ * @property array settings
+ * @property mixed last_login_at
+ *
+ * @property mixed projects
  * @property mixed communities
- * @property mixed settings
  *
  * @mixin Builder
  */
@@ -49,7 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'email', 'password', 'globus_user', 'description',
         'api_token', 'affiliations', 'uuid', 'is_admin', 'slug',
-        'settings',
+        'settings', 'google_access_token', 'google_refresh_token',
+        'google_token_type', 'google_expires_at', 'google_spreadsheet_id',
+        'last_login_at',
     ];
 
     /**
@@ -62,7 +71,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
-        'settings' => 'array',
+        'settings'          => 'array',
+        'google_expires_at' => 'datetime',
+        'last_login_at'     => 'datetime',
     ];
 
     public function projects()
@@ -126,6 +137,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function datasets()
     {
         return $this->morphToMany(Dataset::class, 'item', 'item2dataset');
+    }
+
+    /**
+     * Check if the Google token is expired.
+     *
+     * @return bool
+     */
+    public function isGoogleTokenExpired()
+    {
+        if (!$this->google_expires_at) {
+            return true;
+        }
+
+        return $this->google_expires_at->isPast();
+    }
+
+    /**
+     * Check if the user has a Google token.
+     *
+     * @return bool
+     */
+    public function hasGoogleToken()
+    {
+        return !empty($this->google_access_token);
     }
 
     public function sendEmailVerificationNotification()

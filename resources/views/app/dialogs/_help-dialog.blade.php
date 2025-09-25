@@ -13,13 +13,12 @@
                         <a href="mailto:materials-commons-help@umich.edu">email</a> us!
                     </p>
                 </div>
-{{--                <iframe src="{{helpUrl()}}" width="100%" height="95%"></iframe>--}}
+                @include('layouts.navs._app-documentation')
             </div>
             <div class="modal-footer">
                 <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#welcome-dialog">
                     Welcome Dialog!
                 </a>
-{{--                <button type="button" class="btn btn-success" id="start-tour" data-dismiss="modal">Start Tour</button>--}}
                 <a class="btn btn-secondary" href="/mcdocs2" target="_blank">Goto Docs</a>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
             </div>

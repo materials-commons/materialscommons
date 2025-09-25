@@ -15,14 +15,12 @@ use function is_null;
 
 trait CreateDirectories
 {
-    private function getOrCreateSingleDirectoryIfDoesNotExist(File $baseDir, string $path, Project $project, $ownerId)
+    private function getOrCreateSingleDirectoryIfDoesNotExist(?File $baseDir, string $path, Project $project, $ownerId)
     {
         $dir = File::where('project_id', $project->id)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->first();
         if ($dir !== null) {
             return $dir;
@@ -69,10 +67,8 @@ trait CreateDirectories
         $pathToUse = PathHelpers::normalizePath("/{$rootDirPath}/{$path}");
         return File::where('project_id', $projectId)
                    ->where('path', $pathToUse)
-                   ->where('mime_type', 'directory')
-                   ->whereNull('deleted_at')
-                   ->whereNull('dataset_id')
-                   ->where('current', true)
+                   ->directories()
+                   ->active()
                    ->first();
     }
 

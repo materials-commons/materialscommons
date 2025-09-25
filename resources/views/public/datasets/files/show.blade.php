@@ -21,25 +21,27 @@
         @endslot
 
         @slot('body')
-            <x-show-standard-details :item="$file">
-                <span class="ml-3 fs-10 grey-5">Mediatype: {{$file->mime_type}}</span>
-                <span class="ml-3 fs-10 grey-5">Size: {{$file->toHumanBytes()}}</span>
-            </x-show-standard-details>
+            <x-card-container>
+                <x-show-standard-details :item="$file">
+                    <span class="ml-3 fs-10 grey-5">Mediatype: {{$file->mime_type}}</span>
+                    <span class="ml-3 fs-10 grey-5">Size: {{$file->toHumanBytes()}}</span>
+                </x-show-standard-details>
 
-            <hr>
-            <br>
-            @auth
-                @include('partials.files._display-file', [
-                    'displayRoute' => route('public.datasets.files.display', [$dataset, $file])
-                ])
-            @else
+                <hr>
                 <br>
-                <h5 class="mt-3">
-                    To view this file please
-                    <a href="{{route('login')}}">Login</a> or <a href="{{route('register')}}">Register</a>.
-                </h5>
-                <br>
-            @endauth
+                @auth
+                    @include('partials.files._display-file', [
+                        'displayRoute' => route('public.datasets.files.display', [$dataset, $file])
+                    ])
+                @else
+                    <br>
+                    <h5 class="mt-3">
+                        To view this file please
+                        <a href="{{route('login')}}">Login</a> or <a href="{{route('register')}}">Register</a>.
+                    </h5>
+                    <br>
+                @endauth
+            </x-card-container>
         @endslot
     @endcomponent
 @endsection

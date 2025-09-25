@@ -486,8 +486,7 @@ class EntityActivityImporter
     }
 
     private function addAttributesToEntity(Collection $entityAttributes, Entity $entity, EntityState $state,
-                                           RowTracker $rowTracker
-    )
+        RowTracker $rowTracker)
     {
         $seenAttributes = collect();
         $attributePosition = 1;
@@ -508,6 +507,7 @@ class EntityActivityImporter
                     'eindex'              => $attributePosition,
                     'attributable_type'   => EntityState::class,
                     'marked_important_at' => $importantDate,
+                    'cell_coordinates'    => $attr->cellCoordinates,
                 ]);
                 AttributeValue::create([
                     'attribute_id' => $a->id,
@@ -603,10 +603,8 @@ class EntityActivityImporter
         $dirPath = dirname($path);
         $expression = basename($path);
         $dir = File::where('path', $dirPath)
-                   ->where('mime_type', 'directory')
-                   ->where('current', true)
-                   ->whereNull('deleted_at')
-                   ->whereNull('dataset_id')
+                   ->directories()
+                   ->active()
                    ->where('project_id', $this->projectId)
                    ->first();
 
@@ -616,10 +614,8 @@ class EntityActivityImporter
         }
 
         File::where('directory_id', $dir->id)
-            ->where('mime_type', '<>', 'directory')
-            ->whereNull('deleted_at')
-            ->whereNull('dataset_id')
-            ->where('current', true)
+            ->active()
+            ->files()
             ->chunk(100, function ($files) use ($entity, $activity, $expression) {
                 $files->each(function (File $file) use ($entity, $activity, $expression) {
                     if (!fnmatch($expression, $file->name)) {
@@ -718,6 +714,7 @@ class EntityActivityImporter
                 'value'               => $attr->value,
                 'unit'                => $attr->unit,
                 'eindex'              => $attributePosition++,
+                'cell_coordinates'    => $attr->cellCoordinates,
                 'marked_important_at' => $attr->important ? $this->now : null,
             ];
         })->toArray();
@@ -761,6 +758,7 @@ class EntityActivityImporter
                 'value'               => $attr->value,
                 'unit'                => $attr->unit,
                 'eindex'              => $attributePosition++,
+                'cell_coordinates'    => $attr->cellCoordinates,
                 'marked_important_at' => $attr->important ? $this->now : null,
             ];
         })->toArray();

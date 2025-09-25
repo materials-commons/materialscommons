@@ -27,12 +27,14 @@
         ])
         <br>
 
-        @if(Request::routeIs($showRouteName))
-            @include('partials.activities.tabs._attributes')
-        @elseif(Request::routeIs($entitiesRouteName))
-            @include('partials.activities.tabs._entities')
-        @elseif(Request::routeIs($filesRouteName))
-            @include('partials.activities.tabs._files')
-        @endif
+        <x-card-container>
+            @if(Request::routeIs($showRouteName))
+                @include('partials.activities.tabs._attributes')
+            @elseif(Request::routeIs($entitiesRouteName))
+                @include('partials.activities.tabs._entities')
+            @elseif(Request::routeIs($filesRouteName))
+                @include('partials.activities.tabs._files')
+            @endif
+        </x-card-container>
     @endslot
 @endcomponent

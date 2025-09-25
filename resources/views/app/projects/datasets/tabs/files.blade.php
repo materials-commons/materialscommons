@@ -1,5 +1,5 @@
 <br>
-@component('components.card')
+@component('components.card-white')
     @slot('header')
         {{$directory->path}}
     @endslot

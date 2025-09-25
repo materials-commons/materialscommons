@@ -105,9 +105,7 @@ class ScriptTrigger extends Model
 
         $latestFile = File::where('directory_id', $this->script->scriptFile->directory_id)
                           ->where('name', $this->script->scriptFile->name)
-                          ->whereNull('deleted_at')
-                          ->whereNull('dataset_id')
-                          ->where('current', true)
+                          ->active()
                           ->first();
 
         if (is_null($latestFile)) {

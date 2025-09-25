@@ -1,7 +1,8 @@
 <div class="mt-2">
-    <h5>
-        <a href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
+    <h5 class="mt-3 mr-2 font-weight-bold">
+        <a class="no-underline" href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
     </h5>
+    <hr/>
     @if(!blank($activity->description))
         <form>
             <div class="form-group">
@@ -9,9 +10,11 @@
             </div>
         </form>
     @endisset
+    <h6><u>Attributes</u></h6>
     @include('partials.activities._activity-attributes', ['activity' => $activity])
-    <h6>Measurements</h6>
+    <h6 class="mt-3"><u>Measurements</u></h6>
     @include('partials.activities._activity-measurements', ['activity' => $activity])
-    <h6>Files</h6>
+    <h6 class="mt-3"><u>Files</u><h6>
     @include('partials.activities._activity-files', ['activity' => $activity])
 </div>
+

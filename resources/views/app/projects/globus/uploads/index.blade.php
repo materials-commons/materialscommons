@@ -18,7 +18,9 @@
         @endslot
 
         @slot('body')
-            @include('partials.globus_uploads', ['showProject' => false])
+            <x-card-container>
+                @include('partials.globus_uploads', ['showProject' => false])
+            </x-card-container>
         @endslot
     @endcomponent
 @stop

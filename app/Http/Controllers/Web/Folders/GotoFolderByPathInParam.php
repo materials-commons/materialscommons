@@ -13,10 +13,8 @@ class GotoFolderByPathInParam extends Controller
         $path = request()->input("path");
         $dir = File::where('project_id', $project->id)
                    ->where('path', $path)
-                   ->where('mime_type', 'directory')
-                   ->where('current', true)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
+                   ->directories()
+                   ->active()
                    ->first();
         return redirect(route('projects.folders.show', [$project, $dir]));
     }

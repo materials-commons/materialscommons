@@ -7,11 +7,18 @@ use App\Models\Dataset;
 
 class AssignDoiToDatasetAction
 {
-    public function __invoke(Dataset $dataset, $user)
+    public function __invoke(Dataset $dataset, $user, $publishAsTestDataset = false)
     {
-        if (empty($dataset->doi)) {
-            $doi = DOIHelpers::mintDOI($dataset->name, $user->name, $dataset->id);
-            return tap($dataset)->update(['doi' => $doi])->fresh();
+        if ($publishAsTestDataset) {
+            if (blank($dataset->test_doi)) {
+                $doi = DOIHelpers::mintDOI($dataset->name, $user->name, $dataset->id, $publishAsTestDataset);
+                return tap($dataset)->update(['test_doi' => $doi])->fresh();
+            }
+        } else {
+            if (blank($dataset->doi)) {
+                $doi = DOIHelpers::mintDOI($dataset->name, $user->name, $dataset->id, $publishAsTestDataset);
+                return tap($dataset)->update(['doi' => $doi])->fresh();
+            }
         }
 
         return $dataset;

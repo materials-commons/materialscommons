@@ -20,6 +20,6 @@ class UploadFileApiController extends Controller
         $dir = File::findOrFail($directoryId);
         $project = Project::findOrFail($projectId);
 
-        return FileResource::collection(collect($createFilesAction($project, $dir, $validated['files'])));
+        return FileResource::collection(collect($createFilesAction($project, $dir, $validated['files'], 'api')));
     }
 }

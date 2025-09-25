@@ -11,14 +11,14 @@ class CompareEntitiesWebController extends Controller
 {
     public function __invoke(Project $project, $entityId1, $entityId2)
     {
-        $entity1 = Entity::with(['activities'])->findOrFail($entityId1);
+        $entity1 = Entity::with(['activities', 'experiments.sheet'])->findOrFail($entityId1);
         $activityIds = $entity1->activities->pluck('id')->toArray();
         $entity1Activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                                      ->whereIn('id', $activityIds)
                                      ->orderBy('name')
                                      ->get();
 
-        $entity2 = Entity::with(['activities'])->findOrFail($entityId2);
+        $entity2 = Entity::with(['activities', 'experiments.sheet'])->findOrFail($entityId2);
         $activityIds = $entity2->activities->pluck('id')->toArray();
         $entity2Activities = Activity::with(['attributes.values', 'entityStates.attributes.values', 'files'])
                                      ->whereIn('id', $activityIds)
@@ -26,6 +26,7 @@ class CompareEntitiesWebController extends Controller
                                      ->get();
 
         return view('app.projects.entities.compare', [
+            'user'              => auth()->user(),
             'project'           => $project,
             'entity1'           => $entity1,
             'entity1Activities' => $entity1Activities,

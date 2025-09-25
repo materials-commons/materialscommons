@@ -1,0 +1,300 @@
+$sidebar-blue: #2b6bb1;
+$sidebar-bg: #ffffff;
+$sidebar-hover-bg: rgba(173, 194, 225, 0.3);
+$sidebar-active-bg: #ADC2E1;
+$sidebar-text: #495057;
+$sidebar-icon-color: #6c757d;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin nav-icon {
+    font-size: 0.7rem;
+    margin-right: 0.35rem;
+    opacity: 0.8;
+}
+
+/* Sidebar Base Styles */
+.sidebar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.sidebar-sticky {
+    position: sticky;
+    top: 1rem;
+    height: calc(100vh - 2rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Scrollbar Styling */
+.sidebar-sticky::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb {
+    background: #DAE3F3;
+    border-radius: 3px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb:hover {
+    background: #ADC2E1;
+}
+
+/* Group Styling */
+.sidebar-group {
+    background-color: $sidebar-bg;
+    border-radius: 8px;
+    margin: 4px 6px;
+    padding: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    //transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link {
+        padding: 0.15rem 0.35rem;
+        margin: 1px 0;
+        border-radius: 4px;
+        //transition: all 0.2s ease;
+        color: $sidebar-text;
+        font-size: 0.8rem;
+        @include flex-center;
+
+        i {
+            @include nav-icon;
+        }
+
+        &:hover {
+            background-color: $sidebar-hover-bg;
+            color: $sidebar-blue;
+
+            i {
+                opacity: 1;
+            }
+        }
+
+        &.active {
+            background-color: $sidebar-active-bg;
+            color: darken($sidebar-blue, 10%);
+            font-weight: 500;
+
+            i {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+/* Group Header Styling */
+.sidebar-group-header {
+    @include flex-center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $sidebar-blue;
+    padding: 0.15rem 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    i {
+        @include nav-icon;
+    }
+}
+
+
+
+/* Bottom Navigation */
+.sidebar .nav-link {
+    color: #495057;
+    //transition: color 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    color: #2b6bb1;
+}
+
+/* Tooltips enhancement */
+.tooltip {
+    font-size: 0.8rem;
+}
+
+.nav-link.project-name {
+    font-weight: bold !important;
+    color: #319795 !important;
+    padding: 0.4rem 0.8rem !important;
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+}
+
+.nav-link.project-name:hover {
+    color: #ffffff !important;
+    padding: 0.4rem 0.8rem !important;
+    width: 100% !important;
+    background-color: #319795 !important;
+}
+
+.nav-link.project-name:hover i {
+    color: #ffffff !important;
+    background-color: #319795 !important;
+}
+
+/* Project Sections */
+.project-sections {
+    padding-left: 0.9rem; // Reduced left padding
+
+    .sidebar-group {
+        position: relative;
+        margin-bottom: 0.2rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: -0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: rgba(49, 151, 149, 0.30); // Using the #319795 teal color
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            // Reduced vertical padding
+            padding: 0.2rem 0.25rem 0.1rem;
+            line-height: 1.1; // Tighter line height
+
+            &:not(:last-child) {
+                margin-bottom: 1px; // Minimal space between links
+            }
+        }
+
+        // Adjust list spacing
+        .nav.flex-column {
+            margin: 0; // Minimal margin around the list itself
+            padding: 0;
+        }
+
+
+        .sidebar-group-header {
+            color: #2b6bb1;
+            font-weight: 600;
+            padding: 0.2rem 0;
+            font-size: 0.85rem; // Slightly smaller
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.75rem; // Smaller icons
+                margin-right: 0.35rem; // Reduced margin
+            }
+        }
+    }
+
+    .sidebar-subgroup {
+        padding-left: 0.25rem; // Reduced indent
+        position: relative;
+        //padding-top: 0.375rem;
+        //margin-top: 0.375rem;
+
+        &:not(:first-child)::before {
+            height: 1px;
+            background-color: rgba(43, 107, 177, 0.08); // Lighter separator
+        }
+
+        .sidebar-subgroup-header {
+            color: #2b6bb1;
+            font-weight: 600;
+            font-size: 1.0rem; // Smaller font
+            padding: 0.1rem 0;
+            //margin-bottom: 0.15rem;
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.72rem; // Even smaller icons
+                margin-right: 0.25rem; // Reduced margin
+                opacity: 0.9; // Slightly dimmed icons
+            }
+        }
+
+        .nav-item {
+            margin: 0; // Tighter spacing
+        }
+
+        .nav-link {
+            border-radius: 2px; // Smaller radius
+            padding: 0.2rem 0.25rem 0.15rem;
+            font-size: 0.75rem; // Smaller font for links
+            color: #4a5568; // Slightly muted color
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 0.7rem; // Consistent small icons
+                margin-right: 0.25rem;
+                opacity: 0.8;
+            }
+
+            &:hover {
+                //background-color: rgba(43, 107, 177, 0.04);
+                //color: #2b6bb1;
+
+                i {
+                    opacity: 1;
+                }
+            }
+
+            &.active {
+                //background-color: rgba(43, 107, 177, 0.07);
+                //color: #2b6bb1;
+                //font-weight: bold;
+
+                i {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+// Add this to ensure proper alignment of all icons
+.fa-fw {
+    width: 1.1em; // Slightly narrower than default
+    text-align: center;
+}
+
+
+/* Compact Navigation Styles */
+.compact-nav {
+    .nav.flex-column {
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-item {
+        margin: 0;
+    }
+
+    .nav-link.fs-11 {
+        padding: 0.15rem 0.35rem;
+        font-size: 1.1em !important;
+        line-height: 1.2;
+
+        i.mr-2 {
+            @include nav-icon;
+        }
+    }
+}
+

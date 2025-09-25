@@ -72,6 +72,9 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
+        if (request()->get('deviceType') == 'phone') {
+            return route('welcome');
+        }
         $routeName = Route::getCurrentRoute()->getName();
         if ($routeName == 'login-for-upload') {
             return route('public.publish.wizard.choose_create_or_select_project');
@@ -109,6 +112,7 @@ class LoginController extends Controller
                 'You need to confirm your account. We have sent you an activation code, please check your email.');
         }
 
+        $rv = $user->update(['last_login_at' => now()]);
         $user->clearOlderRecentlyAccessedProjects();
 
         return redirect()->intended($this->redirectPath());

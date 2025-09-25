@@ -30,10 +30,8 @@ class CreateProjectFilesAtLocationAction
         }
 
         $allDirs = File::where('project_id', $project->id)
-                       ->where('mime_type', 'directory')
-                       ->where('current', true)
-                       ->whereNull('deleted_at')
-                       ->whereNull('dataset_id')
+                       ->directories()
+                       ->active()
                        ->orderBy('path')
                        ->cursor();
         $baseLocationDir = PathHelpers::normalizePath(Storage::disk($disk)->path($location));
@@ -41,10 +39,8 @@ class CreateProjectFilesAtLocationAction
         foreach ($allDirs as $dir) {
             $this->createDirIfNotExists("{$location}{$dir->path}");
             $files = File::where('directory_id', $dir->id)
-                         ->whereNull('deleted_at')
-                         ->whereNull('dataset_id')
-                         ->where('current', true)
-                         ->where('mime_type', '<>', 'directory')
+                         ->active()
+                         ->files()
                          ->cursor();
             foreach ($files as $file) {
                 $uuidPath = Storage::disk('mcfs')->path($this->getFilePathForFile($file));

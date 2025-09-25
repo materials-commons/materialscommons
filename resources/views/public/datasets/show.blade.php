@@ -15,15 +15,15 @@
             <div class="dropdown float-right mr-4">
                 @if(!blank($dataset->doi))
                     <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
-                                class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
+                            class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
                 @endif
-            @auth
-                {{--                @if($dataset->canEdit())--}}
-                {{--                    <a class="action-link float-right mr-4"--}}
-                {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
-                {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
-                {{--                    </a>--}}
-                {{--                @endif--}}
+                @auth
+                    {{--                @if($dataset->canEdit())--}}
+                    {{--                    <a class="action-link float-right mr-4"--}}
+                    {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
+                    {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
+                    {{--                    </a>--}}
+                    {{--                @endif--}}
 
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -62,45 +62,48 @@
                             <i class="fas fa-fw fa-bell-slash"></i>
                         </a>
                     @endif
-                {{--                @if(auth()->user()->hasCommunities())--}}
-                {{--                    <div class="dropdown float-right mr-4">--}}
-                {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
-                {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
-                {{--                        </a>--}}
-                {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
-                {{--                            @foreach(auth()->user()->communities as $community)--}}
-                {{--                                @if(!$dataset->isInCommunity($community->id))--}}
-                {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
-                {{--                                @endif--}}
-                {{--                            @endforeach--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                @endif--}}
-            @endauth
+                    {{--                @if(auth()->user()->hasCommunities())--}}
+                    {{--                    <div class="dropdown float-right mr-4">--}}
+                    {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
+                    {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                    {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
+                    {{--                        </a>--}}
+                    {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
+                    {{--                            @foreach(auth()->user()->communities as $community)--}}
+                    {{--                                @if(!$dataset->isInCommunity($community->id))--}}
+                    {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
+                    {{--                                @endif--}}
+                    {{--                            @endforeach--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
+                    {{--                @endif--}}
+                @endauth
             </div>
         @endslot
 
         @slot('body')
             @include('public.datasets.tabs.tabs')
 
-            @if (Request::routeIs('public.datasets.overview*'))
-                @include('public.datasets.tabs.overview-tab')
-            @elseif (Request::routeIs('public.datasets.workflows*'))
-                @include('public.datasets.tabs.workflows-tab')
-            @elseif (Request::routeIs('public.datasets.entities*'))
-                @include('public.datasets.tabs.entities-tab')
-                {{--            @elseif (Request::routeIs('public.datasets.activities*'))--}}
-                {{--                @include('public.datasets.tabs.activities-tab')--}}
-            @elseif (Request::routeIs('public.datasets.files*'))
-                @include('public.datasets.tabs.files-tab')
-            @elseif(Request::routeIs('public.datasets.folders*'))
-                @include('public.datasets.tabs.folders-tab')
-            @elseif(Request::routeIs('public.datasets.communities.*'))
-                @include('public.datasets.tabs.communities')
-            @elseif (Request::routeIs('public.datasets.comments*'))
-                @include('public.datasets.tabs.comments-tab')
-            @endif
+            <br/>
+            <x-card-container>
+                @if (Request::routeIs('public.datasets.overview*'))
+                    @include('public.datasets.tabs.overview-tab')
+                @elseif (Request::routeIs('public.datasets.workflows*'))
+                    @include('public.datasets.tabs.workflows-tab')
+                @elseif (Request::routeIs('public.datasets.entities*'))
+                    @include('public.datasets.tabs.entities-tab')
+                    {{--            @elseif (Request::routeIs('public.datasets.activities*'))--}}
+                    {{--                @include('public.datasets.tabs.activities-tab')--}}
+                @elseif (Request::routeIs('public.datasets.files*'))
+                    @include('public.datasets.tabs.files-tab')
+                @elseif(Request::routeIs('public.datasets.folders*'))
+                    @include('public.datasets.tabs.folders-tab')
+                @elseif(Request::routeIs('public.datasets.communities.*'))
+                    @include('public.datasets.tabs.communities')
+                @elseif (Request::routeIs('public.datasets.comments*'))
+                    @include('public.datasets.tabs.comments-tab')
+                @endif
+            </x-card-container>
 
         @endslot
     @endcomponent

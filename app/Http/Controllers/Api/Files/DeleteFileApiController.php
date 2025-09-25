@@ -12,9 +12,7 @@ class DeleteFileApiController extends Controller
     {
         $file = File::withCount(['entityStates', 'activities', 'entities'])
                     ->where('project_id', $projectId)
-                    ->whereNull('deleted_at')
-                    ->whereNull('dataset_id')
-                    ->where('current', true)
+                    ->active()
                     ->where('id', $fileId)
                     ->first();
         $force = request()->input('force', false);

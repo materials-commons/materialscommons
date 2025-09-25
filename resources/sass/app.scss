@@ -10,17 +10,46 @@
 @import '~bootstrap-select/sass/bootstrap-select';
 @import '~@yaireo/tagify/dist/tagify';
 
+@import 'sidebar';
+@import 'containers';
+@import 'cards';
+@import 'attributes';
+@import 'datatables';
+
 @import 'bootstrap-steps';
+
+.text-green {
+    color: #28a745;
+}
+
+.text-warning-2 {
+    color: #F7C94A;
+}
+
+// Attributes in the samples card
+.attribute-row {
+    background: #f9fafb;
+    margin-right: 0;
+    //margin-bottom: 1px;
+    //border-radius: 4px;
+    padding: 4px;
+    border: 1px solid #eff1f5;
+}
+
 
 // Hide repatcha badge
 .grecaptcha-badge {
     visibility: hidden !important;
 }
 
+.background-white {
+    background-color: #ffffff !important;
+}
+
 .thead-fixed {
     position: sticky;
     top: 46px;
-    background: #fff;
+    background: #ffffff;
 }
 
 // When using a fixed header this keeps the border for the header.
@@ -140,7 +169,7 @@ body {
     //font-size: .825rem;
     font-weight: bold;
     //font-family: sans-serif;
-    background-color: #fff;
+    background-color: $body-bg;
 }
 
 .cursor-move {
@@ -204,8 +233,29 @@ body {
 //  color: #999;
 //}
 
+.form-rounded-search {
+    border-radius: 8px !important;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    //border: 1px solid #c4d1ea;
+    //border-bottom: none;
+    //color: $grey-10;
+}
+
+.nav-tabs .nav-link.active {
+    //background-color: #dae3f3;
+    //background-color: #c4d1ea;
+    background-color: #ffffff;
+    //border-color: hsl(210, 16%, 82%) hsl(210, 16%, 82%) #c4d1ea;
+    border-color: hsl(210, 16%, 82%) hsl(210, 16%, 82%) #ffffff;
+}
+
 .sidebar .nav-link.active {
-    background-color: $grey-8;
+    //background-color: $grey-8;
+    background-color: #adc2e1;
     font-weight: bold;
     margin-right: 5px;
     border-top-right-radius: 2px;
@@ -289,6 +339,7 @@ a.navbar-brand:hover {
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
+    border-radius: 8px;
 }
 
 .no-tt {
@@ -326,6 +377,14 @@ a.nav-link.action {
 
 .fs-14 {
     font-size: 1.4em !important;
+}
+
+.fs-12 {
+    font-size: 1.2em !important;
+}
+
+.fs-13 {
+    font-size: 1.3em !important;
 }
 
 .fs-11 {
@@ -414,6 +473,18 @@ a.action-link.danger:hover {
     font-weight: 600;
 }
 
+.card {
+    border: none;  // Remove the border
+    //transition: transform 0.2s ease;  // Add smooth transition for any hover effects
+
+    // Add a subtle shadow to help with depth perception
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+//.card-body {
+//    background-color: #edf2f7;
+//}
+
 .card-header {
     padding: 0.5rem 1.25rem;
 }
@@ -441,6 +512,70 @@ a.action-link.danger:hover {
     color: #ffffff;
     font-weight: bold;
     text-decoration: none;
+}
+
+.card {
+    border: none;
+    //transition: all 0.3s ease;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.card-header {
+    background-color: #3d7ab8;
+    padding: 0.5rem 1.25rem;
+    position: relative;
+    //transition: all 0.3s ease;
+
+    // We're not modifying h5 font properties here, only adding positioning
+    h5 {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.card-body {
+    //background-color: #edf2f7;
+    //background-color: #e2e8f0;
+
+    // This is navbar background
+    //background-color: #dae3f3;
+
+    // This is navbar boxes background
+    background-color: #e4eaf5;
+    //transition: all 0.3s ease;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+        .card-header::after {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    animation: cardFadeIn 0.3s ease-in-out;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-body.inner-card {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+
 }
 
 .community-card {
@@ -572,6 +707,12 @@ textarea.form-control[readonly] {
 
 .shepherd-cancel-icon:hover {
     color: rgba(255, 255, 255, 0.8) !important;
+}
+
+// Help icon
+.help-icon {
+    color: $blue-2;
+    font-size: 1.2rem;
 }
 
 // Tour icon
@@ -726,7 +867,7 @@ kbd {
     padding: 12px;
     border-radius: 6px;
     text-align: center;
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .feature-card:hover {
@@ -767,7 +908,7 @@ kbd {
     align-items: center;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
+    //transition: transform 0.2s ease;
 }
 
 .stat-card:hover {
@@ -1020,6 +1161,8 @@ kbd {
 .tour-interaction i {
     margin-right: 0.5rem;
 }
+
+
 
 
 

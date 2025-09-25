@@ -27,6 +27,6 @@ class UploadFileNamedApiController extends Controller
         $triggers = ScriptTrigger::getProjectTriggers($project);
         $createFileAction = new CreateFileAction($triggers);
 
-        return FileResource::collection(collect([$createFileAction($project, $dir, '', $files[0], $name)]));
+        return FileResource::collection(collect([$createFileAction($project, $dir, '', $files[0], 'api', $name)]));
     }
 }
