@@ -20,11 +20,9 @@ class SingleFileQuery extends FilesQueryBuilder
         $fileId = $this->getParameterId('file');
         $query = File::withCommon()
                      ->with(['owner'])
-                     ->whereNull('deleted_at')
-                     ->whereNull('dataset_id')
-                     ->where('current', true)
-                     ->where('id', $fileId)
-                     ->where('mime_type', '<>', 'directory');
+                     ->active()
+                     ->files()
+                     ->where('id', $fileId);
         parent::__construct($query, $request);
     }
 }

@@ -35,7 +35,7 @@ class UploadCameraPhotoApiController extends Controller
         $timestamp = now()->format('Y-m-d_H-i-s');
         $uniqueName = $originalName . '_' . $timestamp . '.' . $extension;
 
-        $file = $createFileAction($project, $dir, '', $validated['file'], $uniqueName);
+        $file = $createFileAction($project, $dir, '', $validated['file'], 'web', $uniqueName);
         return new FileResource($file);
     }
 }

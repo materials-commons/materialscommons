@@ -112,6 +112,7 @@ class LoginController extends Controller
                 'You need to confirm your account. We have sent you an activation code, please check your email.');
         }
 
+        $rv = $user->update(['last_login_at' => now()]);
         $user->clearOlderRecentlyAccessedProjects();
 
         return redirect()->intended($this->redirectPath());

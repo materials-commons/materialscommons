@@ -21,7 +21,7 @@
         </form>
     @endif
 
-    <h6><u>Settings</u></h6>
+    <h6><u>Attributes</u></h6>
     <x-activities.compare.attributes-highlighter :attrs="$activityAttributes"
                                                  :comparer-state="$activityComparerState"
                                                  :side="$side"/>

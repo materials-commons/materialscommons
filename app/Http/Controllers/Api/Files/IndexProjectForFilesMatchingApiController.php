@@ -17,9 +17,7 @@ class IndexProjectForFilesMatchingApiController extends Controller
         $matches = $validated['match'];
         return File::with(['directory', 'owner'])
                    ->where('project_id', $project->id)
-                   ->whereNull('dataset_id')
-                   ->whereNull('deleted_at')
-                   ->where('current', true)
+                   ->active()
                    ->where(function ($query) use ($matches) {
                        for ($i = 0; $i < count($matches); $i++) {
                            $query->orWhere('name', 'like', $matches[$i]);

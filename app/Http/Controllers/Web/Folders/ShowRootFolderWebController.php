@@ -34,10 +34,8 @@ class ShowRootFolderWebController extends Controller
         });
         $projects = $this->getUserProjects(auth()->id());
         $dirsInProject = File::where('project_id', $destProj->id)
-                             ->where('mime_type', 'directory')
-                             ->whereNull('dataset_id')
-                             ->whereNull('deleted_at')
-                             ->where('current', true)
+                             ->active()
+                             ->directories()
                              ->where('id', '<>', $dir->id)
                              ->orderBy('path')
                              ->get();

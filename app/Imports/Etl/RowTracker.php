@@ -49,7 +49,7 @@ class RowTracker
         $cellIterator->setIterateOnlyExistingCells(false);
 
         foreach ($cellIterator as $cell) {
-            $value = $this->getCellValue($cell);
+            $value = Str::trim($this->getCellValue($cell));
             if ($this->isBlankCell($value)) {
                 $index++;
                 continue;
@@ -69,7 +69,7 @@ class RowTracker
                     continue;
                 }
 
-                $this->handleAttributeValue($header, $value, $index);
+                $this->handleAttributeValue($header, $value, $index, $cell->getCoordinate());
             } else {
                 $header = $headerTracker->getHeaderByIndex($index - 1);
 
@@ -79,7 +79,7 @@ class RowTracker
                     break;
                 }
 
-                if (!$this->handleAttributeValue($header, $value, $index)) {
+                if (!$this->handleAttributeValue($header, $value, $index, $cell->getCoordinate())) {
                     $index++;
                     continue;
                 }
@@ -103,13 +103,13 @@ class RowTracker
         $this->activityAttributesHash = hash_final($ctx);
     }
 
-    private function handleAttributeValue($header, $value, $index)
+    private function handleAttributeValue($header, $value, $index, $cellCoordinates)
     {
         if ($header->attrType === "ignore" || $header->attrType === "unknown" || Str::lower($header->name) == "parent") {
             return false;
         }
 
-        $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index,
+        $colAttr = new ColumnAttribute($header->name, $value, $header->unit, $header->attrType, $index, $cellCoordinates,
             $header->important);
         switch ($header->attrType) {
             case "entity":

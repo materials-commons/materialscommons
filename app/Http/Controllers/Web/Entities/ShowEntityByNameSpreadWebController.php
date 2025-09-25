@@ -21,6 +21,7 @@ class ShowEntityByNameSpreadWebController extends Controller
         $name = $request->input("name");
         $fromExperiment = $this->isFromExperiment($request);
         $project = $project->load('entities');
+        $experiment->load('sheet');
         $entity = Entity::with(['activities', 'tags'])
                         ->where('name', urldecode($name))
                         ->where('project_id', $project->id)
@@ -69,6 +70,7 @@ class ShowEntityByNameSpreadWebController extends Controller
         $this->computePrevNext($allEntities, $entity->id);;
 
         return view('app.projects.entities.show-spread', [
+            'user'        => auth()->user(),
             'experiment'  => $experiment,
             'project'     => $project,
             'entity'      => $entity,

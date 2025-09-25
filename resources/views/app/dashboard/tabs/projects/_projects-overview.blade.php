@@ -1,16 +1,27 @@
 <div class="card mb-4">
     <div class="card-body inner-card">
-        <h5 class="card-title">Projects Overview</h5>
+        <h5 class="card-title">Projects Overview
+            @if($projectsWithErrorStateCount > 0)
+                <span class="badge badge-danger ml-2"><i class="fas fa-exclamation-triangle"></i></span>
+            @endif
+            @if($projectsWithWarningStateCount > 0)
+                <span class="badge badge-warning ml-2 text-white"><i class="fas fa-exclamation-circle"></i></span>
+            @endif
+        </h5>
         <hr/>
-        <div class="mt-2 mb-4 text-center">
-            <a class="text-primary" href="/mcdocs2/getting_started/first_project.html" target="_blank">
-                Getting Started Guide <i class="fas fa-external-link-alt ml-1"></i>
-            </a>
-        </div>
+        {{--        <div class="mt-2 mb-4 text-center">--}}
+        {{--            <a class="text-primary" href="/mcdocs2/getting_started/first_project.html" target="_blank">--}}
+        {{--                Getting Started Guide <i class="fas fa-external-link-alt ml-1"></i>--}}
+        {{--            </a>--}}
+        {{--        </div>--}}
 
         <div class="row">
             <div class="col-6">
                 <div class="stats-container">
+                    <div class="stat-item mb-3">
+                        <i class="fas fa-exclamation-triangle text-danger mr-2"></i>
+                        <span @class(["text-danger" => $projectsWithErrorStateCount > 0])> Problem Projects: {{$projectsWithErrorStateCount}}</span>
+                    </div>
                     <div class="stat-item mb-3">
                         <i class="fas fa-project-diagram text-primary mr-2"></i>
                         Total Projects: {{count($projects)}}
@@ -23,6 +34,10 @@
             </div>
             <div class="col-6">
                 <div class="stats-container">
+                    <div class="stat-item mb-3">
+                        <i class="fas fa-exclamation-circle text-warning mr-2"></i>
+                        <span @class(["text-warning" => $projectsWithWarningStateCount > 0])> Flagged Projects: {{$projectsWithWarningStateCount}}</span>
+                    </div>
                     <div class="stat-item mb-3">
                         <i class="fas fa-user-circle text-primary mr-2"></i>
                         Your Projects: {{$userProjectsCount}}

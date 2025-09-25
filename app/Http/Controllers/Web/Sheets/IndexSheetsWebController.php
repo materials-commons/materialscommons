@@ -24,9 +24,7 @@ class IndexSheetsWebController extends Controller
         $files = File::with('directory')
                      ->where("project_id", $project->id)
                      ->whereIn("mime_type", $types)
-                     ->where('current', true)
-                     ->whereNull('dataset_id')
-                     ->whereNull('deleted_at')
+                     ->active()
                      ->get();
 
         $sheets = Sheet::where("project_id", $project->id)

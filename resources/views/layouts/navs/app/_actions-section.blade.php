@@ -12,19 +12,19 @@
         <ul class="nav flex-column">
             @if(isInBeta('datahq'))
                 <li class="nav-item ml-3">
-                    <a class="nav-link fs-11 {{setActiveNavByName('projects.datahq')}}"
+                    <a class="nav-link fs-12 {{setActiveNavByName('projects.datahq')}}"
                        data-toggle="tooltip" title="Explore, chart and query your data."
                        href="{{route('projects.datahq.index', [$project, 'explorer' => 'overview', 'view' => 'samples', 'context' => 'project'])}}">
-                        <i class="fa-fw fas fa-binoculars mr-2 mb-1"></i>Explore Data
+                        <i class="fa-fw fas fa-binoculars mr-2 mb-1 fs-11"></i>Explore Data
                     </a>
                 </li>
             @endif
 
             <li class="nav-item ml-3">
-                <a class="nav-link fs-11"
+                <a class="nav-link fs-12"
                    data-toggle="tooltip" title="Create and publish a dataset."
                    href="{{route('projects.datasets.create', [$project])}}">
-                    <i class="fa-fw fas fa-file-export mr-2 mb-1"></i>Publish Data
+                    <i class="fa-fw fas fa-file-export mr-2 mb-1 fs-11"></i>Publish Data
                 </a>
             </li>
         </ul>
@@ -38,8 +38,8 @@
         <ul class="nav flex-column">
             <li class="nav-item ml-3">
                 <a href="{{route('projects.upload-files', [$project])}}"
-                   class="nav-link fs-11">
-                    <i class="fas fa-upload mr-2 mb-1"></i> Start Web Upload
+                   class="nav-link fs-12">
+                    <i class="fas fa-upload mr-2 mb-1 fs-11"></i> Start Web Upload
                 </a>
             </li>
             <x-projects.show-old-globus-side-nav :project="$project" :user="auth()->user()"/>
@@ -61,10 +61,10 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item ml-3">
-                <a class="nav-link fs-11 {{setActiveNavByName('projects.users')}}"
+                <a class="nav-link fs-12 {{setActiveNavByName('projects.users')}}"
                    data-toggle="tooltip" title="Control who has access to your project."
                    href="{{route('projects.users.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-users-cog mr-2 mb-1"></i>Project Members
+                    <i class="fa-fw fas fa-users-cog mr-2 mb-1 fs-11"></i>Project Members
                 </a>
             </li>
         </ul>
@@ -77,10 +77,10 @@
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item ml-3">
-                    <a class="nav-link fs-11 {{setActiveNavByName('projects.runs')}}"
+                    <a class="nav-link fs-12 {{setActiveNavByName('projects.runs')}}"
                        data-toggle="tooltip" title="View job run status and results"
                        href="{{route('projects.runs.index', [$project])}}">
-                        <i class="fa-fw fas fa-terminal mr-2 mb-1"></i>Run Results
+                        <i class="fa-fw fas fa-terminal mr-2 mb-1 fs-11"></i>Run Results
                     </a>
                 </li>
 

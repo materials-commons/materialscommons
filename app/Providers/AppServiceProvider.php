@@ -8,11 +8,18 @@ use App\Models\Project;
 use App\Models\User;
 use App\Observers\FileObserver;
 use App\Observers\UserObserver;
+use App\Services\GoogleSheetsService;
+use App\Services\FileServices\FileConversionService;
+use App\Services\FileServices\FileMoveService;
+use App\Services\FileServices\FilePathService;
+use App\Services\FileServices\FileRenameService;
+use App\Services\FileServices\FileReplicationService;
+use App\Services\FileServices\FileStorageService;
+use App\Services\FileServices\FileThumbnailService;
+use App\Services\FileServices\FileVersioningService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,14 +31,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Sanitizer::extend('normalizePath', DirectoryPathSanitizer::class);
-
-        Blade::if('public', function (Project $project) {
-            if (Features::accessible('public-projects')) {
-                return $project->is_public;
-            }
-
-            return false;
-        });
 
         File::observe(FileObserver::class);
         User::observe(UserObserver::class);
@@ -53,5 +52,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(GoogleSheetsService::class, function ($app) {
+            return new GoogleSheetsService();
+        });
+        $this->app->singleton(FilePathService::class);
+        $this->app->singleton(FileStorageService::class);
+        $this->app->singleton(FileReplicationService::class);
+        $this->app->singleton(FileConversionService::class);
+        $this->app->singleton(FileThumbnailService::class);
+        $this->app->singleton(FileVersioningService::class);
+        $this->app->singleton(FileMoveService::class);
+        $this->app->singleton(FileRenameService::class);
     }
 }

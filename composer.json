@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.0",
+    "php": "^8.3",
     "ext-dom": "*",
     "ext-fileinfo": "*",
     "ext-json": "*",
@@ -21,6 +21,7 @@
     "doctrine/dbal": "^4.0",
     "elegantweb/sanitizer": "^2.0",
     "freshbitsweb/laratables": "^4.0",
+    "google/apiclient": "^2.18",
     "graham-campbell/markdown": "^15.0",
     "guzzlehttp/guzzle": "^7.0.1",
     "http-interop/http-factory-guzzle": "^1.2",

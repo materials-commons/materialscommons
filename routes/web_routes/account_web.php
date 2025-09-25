@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Accounts\GenerateNewApiTokenWebController;
 use App\Http\Controllers\Web\Accounts\ShowAccountWebController;
 use App\Http\Controllers\Web\Accounts\UpdateAccountEmailWebController;
 use App\Http\Controllers\Web\Accounts\UpdateAccountGlobusUserWebController;
@@ -21,3 +22,6 @@ Route::post('/accounts/update/password', UpdateAccountPasswordWebController::cla
 
 Route::post('/accounts/update/email', UpdateAccountEmailWebController::class)
      ->name('accounts.update.email');
+
+Route::get('/accounts/api-token/regenerate', GenerateNewApiTokenWebController::class)
+    ->name('accounts.api-token.regenerate');

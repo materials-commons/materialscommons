@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Markdown\Extensions\BracketExtension\BracketExtension;
+use App\Markdown\Extensions\QueryExtension\QueryExtension;
 use App\Markdown\Extensions\Renderers\Block\MCHtmlBlockRenderer;
 use App\Markdown\Extensions\Renderers\Inline\MCHtmlInlineRenderer;
 use App\Markdown\Extensions\Renderers\Inline\MCImageRenderer;
@@ -23,13 +23,12 @@ use League\CommonMark\MarkdownConverter;
 
 class Markdown extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+//   private $model;
+//
+//    public function __construct($model)
+//    {
+//        $this->model = $model;
+//    }
 
     public function toHtml(string $markdown): string
     {
@@ -43,7 +42,7 @@ class Markdown extends Component
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
         $environment->addExtension(new DefaultAttributesExtension());
         $environment->addExtension(new MetadataExtension());
-        $environment->addExtension(new BracketExtension());
+        $environment->addExtension(new QueryExtension());
         $environment->addRenderer(Image::class, new MCImageRenderer(), 100);
         $environment->addRenderer(HtmlInline::class, new MCHtmlInlineRenderer(), 100);
         $environment->addRenderer(HtmlBlock::class, new MCHtmlBlockRenderer(), 100);
