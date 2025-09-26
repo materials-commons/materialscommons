@@ -28,6 +28,7 @@
     "dependencies": {
         "@uppy/core": "^5.0.2",
         "@uppy/dashboard": "^5.0.2",
+        "@uppy/tus": "^5.0.1",
         "@uppy/xhr-upload": "^5.0.1",
         "@yaireo/tagify": "^3.22.3",
         "bootstrap-steps": "^1.0.3",

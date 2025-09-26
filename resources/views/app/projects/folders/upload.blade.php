@@ -38,9 +38,9 @@
             destproj: "{{$destProj}}",
         });
         const uppy = new Uppy({
-            restrictions: {
-                maxFileSize: 750 * 1024 * 1024
-            },
+            // restrictions: {
+            //     maxFileSize: 750 * 1024 * 1024
+            // },
             onBeforeFileAdded: (currentFile, files) => {
                 // console.log('onBeforeFileAdded', currentFile);
                 // if (currentFile.data.relativePath === "") {
@@ -73,7 +73,15 @@
             showProgressDetails: true,
             proudlyDisplayPoweredByUppy: false,
             fileManagerSelectionType: "both",
-        }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
+        }).use(
+            UppyTus, {endpoint: 'http://localhost:8558/files'}
+        );
+        //     .use(UppyXHRUpload, {
+        //     endpoint: r,
+        //     formData: true,
+        //     limit: 1,
+        //     getResponseData: (response) => {return {url: 'https://materialscommons.org'}; },
+        // });
 
         uppy.on('file-added', (f) => {
             uppy.setMeta({_token: csrf});

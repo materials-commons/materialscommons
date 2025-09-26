@@ -26,13 +26,15 @@ window.tourService = tourService;
 import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
 import XHR from '@uppy/xhr-upload';
+import Tus from '@uppy/tus';
 
 window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;
 window.UppyXHRUpload = XHR;
+window.UppyTus = Tus;
 
-import '@uppy/core/dist/style.min.css';
-import '@uppy/dashboard/dist/style.min.css';
+import '@uppy/core/css/style.min.css';
+import '@uppy/dashboard/css/style.min.css';
 
 
 window.Tagify = require('@yaireo/tagify');
