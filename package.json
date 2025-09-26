@@ -26,9 +26,9 @@
         "webpack": "^5.23.0"
     },
     "dependencies": {
-        "@uppy/core": "^3.12.0",
-        "@uppy/dashboard": "^3.8.3",
-        "@uppy/xhr-upload": "^3.6.7",
+        "@uppy/core": "^5.0.2",
+        "@uppy/dashboard": "^5.0.2",
+        "@uppy/xhr-upload": "^5.0.1",
         "@yaireo/tagify": "^3.22.3",
         "bootstrap-steps": "^1.0.3",
         "canvas-datagrid": "^0.22.17",
