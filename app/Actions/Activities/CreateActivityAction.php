@@ -26,10 +26,9 @@ class CreateActivityAction
                     'name'                => $attribute['name'],
                     'attributable_type'   => Activity::class,
                     'attributable_id'     => $activity->id,
-                    'eindex'              => array_key_exists('eindex', $attribute) ? $attribute['eindex'] : null,
-                    'marked_important_at' =>
-                        array_key_exists('marked_important_at',
-                            $attribute) ? $attribute['marked_important_at'] : null,
+                    'cell_coordinates'    => $this->getKeyOrNull('cell_coordinates', $attribute),
+                    'eindex'              => $this->getKeyOrNull('eindex', $attribute),
+                    'marked_important_at' => $this->getKeyOrNull('marked_important_at', $attribute),
                 ]);
                 $unit = '';
                 if (array_key_exists('unit', $attribute)) {
@@ -44,5 +43,13 @@ class CreateActivityAction
         }
 
         return $activity;
+    }
+
+    private function getKeyOrNull($key, $data)
+    {
+        if (array_key_exists($key, $data)) {
+            return $data[$key];
+        }
+        return null;
     }
 }

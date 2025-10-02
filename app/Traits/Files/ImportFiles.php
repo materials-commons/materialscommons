@@ -30,11 +30,9 @@ trait ImportFiles
             $dirPath = "/";
         }
         $parentDir = File::where('project_id', $project->id)
-                         ->whereNull('dataset_id')
-                         ->whereNull('deleted_at')
+                         ->active()
+                         ->directories()
                          ->where('path', dirname($dirPath))
-                         ->where('mime_type', 'directory')
-                         ->where('current', true)
                          ->first();
         return $this->getOrCreateSingleDirectoryIfDoesNotExist($parentDir, $dirPath, $project, $ownerId);
     }
@@ -83,6 +81,8 @@ trait ImportFiles
             } else {
                 $this->setFileHealthFixed($file, 'globus-import-files:move-file-into-project', 'globus');
             }
+        } elseif ($file->health == "missing") {
+            $this->setFileHealthFixed($file, 'globus-import-files:move-file-into-project', 'globus');
         }
 
         // If we are here, the file should exist, and we can set current flags
@@ -133,17 +133,20 @@ trait ImportFiles
             if (!$matchingFileByChecksum->realFileExists()) {
                 if (!$this->moveFileIntoProject($path, $matchingFileByChecksum)) {
                     Log::error("Move failed for matchingFile in globus: {$matchingFileByChecksum->realPathPartial()}");
-                    $this->setFileHealthMissing($matchingFileByChecksum, 'globus-import-files:move-file-into-project', 'globus');
+                    $this->setFileHealthMissing($matchingFileByChecksum, 'globus-import-files:move-file-into-project',
+                        'globus');
                     return null;
                 } else {
-                    $this->setFileHealthFixed($matchingFileByChecksum, 'globus-import-files:move-file-into-project', 'globus');
+                    $this->setFileHealthFixed($matchingFileByChecksum, 'globus-import-files:move-file-into-project',
+                        'globus');
                 }
             }
             try {
                 // If we are here, then the matching file should exist, and we can remove the uploaded file
                 if (!$matchingFileByChecksum->realFileExists()) {
                     Log::error("File not found for matchingFile after move in globus: {$matchingFileByChecksum->realPathPartial()}");
-                    $this->setFileHealthMissing($matchingFileByChecksum, 'globus-import-files:move-file-into-project', 'globus');
+                    $this->setFileHealthMissing($matchingFileByChecksum, 'globus-import-files:move-file-into-project',
+                        'globus');
                     return null;
                 }
                 if (!unlink($path)) {

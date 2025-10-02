@@ -13,6 +13,7 @@
 @import 'sidebar';
 @import 'containers';
 @import 'cards';
+@import 'attributes';
 @import 'datatables';
 
 @import 'bootstrap-steps';
@@ -35,9 +36,6 @@
     border: 1px solid #eff1f5;
 }
 
-.attribute-row:hover {
-    background: #edf2f7;
-}
 
 // Hide repatcha badge
 .grecaptcha-badge {

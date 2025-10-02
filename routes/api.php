@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
     Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);

@@ -56,7 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'email', 'password', 'globus_user', 'description',
         'api_token', 'affiliations', 'uuid', 'is_admin', 'slug',
-        'settings', 'last_login_at',
+        'settings', 'google_access_token', 'google_refresh_token',
+        'google_token_type', 'google_expires_at', 'google_spreadsheet_id',
+        'last_login_at',
     ];
 
     /**
@@ -69,8 +71,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
-        'settings'      => 'array',
-        'last_login_at' => 'datetime',
+        'settings'          => 'array',
+        'google_expires_at' => 'datetime',
+        'last_login_at'     => 'datetime',
     ];
 
     public function projects()
@@ -134,6 +137,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function datasets()
     {
         return $this->morphToMany(Dataset::class, 'item', 'item2dataset');
+    }
+
+    /**
+     * Check if the Google token is expired.
+     *
+     * @return bool
+     */
+    public function isGoogleTokenExpired()
+    {
+        if (!$this->google_expires_at) {
+            return true;
+        }
+
+        return $this->google_expires_at->isPast();
+    }
+
+    /**
+     * Check if the user has a Google token.
+     *
+     * @return bool
+     */
+    public function hasGoogleToken()
+    {
+        return !empty($this->google_access_token);
     }
 
     public function sendEmailVerificationNotification()

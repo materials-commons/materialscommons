@@ -15,10 +15,8 @@ class GetRecentlyUploadedFilesWebController extends Controller
         return Laratables::recordsOf(File::class, function ($query) use ($projectId) {
             return $query->with(['directory', 'owner'])
                          ->where('project_id', $projectId)
-                         ->where('current', true)
-                         ->whereNull('dataset_id')
-                         ->whereNull('deleted_at')
-                         ->where('mime_type', '<>', 'directory')
+                         ->active()
+                         ->files()
                          ->where('created_at', '>', now()->subDays(7)->endOfDay());
         });
     }

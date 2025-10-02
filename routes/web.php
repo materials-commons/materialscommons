@@ -158,6 +158,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/admin_web.php');
     require base_path('routes/web_routes/datahq_web.php');
     require base_path('routes/web_routes/charts_web.php');
+    require base_path('routes/web_routes/google_sheets_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 

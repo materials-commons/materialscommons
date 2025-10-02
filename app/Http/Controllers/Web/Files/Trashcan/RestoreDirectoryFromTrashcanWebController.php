@@ -18,10 +18,8 @@ class RestoreDirectoryFromTrashcanWebController extends Controller
 
         // find out if there is already a directory with the same name in the project.
         $existingDir = File::where('project_id', $project->id)
-                           ->whereNull('deleted_at')
-                           ->whereNull('dataset_id')
-                           ->where('mime_type', 'directory')
-                           ->where('current', true)
+                           ->active()
+                           ->directories()
                            ->where('directory_id', $dir->directory_id)
                            ->where('name', $dir->name)
                            ->first();

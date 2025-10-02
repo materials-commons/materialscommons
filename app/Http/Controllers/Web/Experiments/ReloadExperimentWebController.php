@@ -65,8 +65,7 @@ class ReloadExperimentWebController extends Controller
             if (!is_null($file)) {
                 $fileId = $file->id;
                 $experiment->update([
-                    'loaded_file_path' => PathHelpers::joinPaths($file->directory->path,
-                        $file->name),
+                    'loaded_file_path' => PathHelpers::joinPaths($file->directory->path, $file->name),
                     'sheet_id'         => null,
                 ]);
             }

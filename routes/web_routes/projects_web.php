@@ -228,3 +228,7 @@ Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWeb
 // For now Visus datasets here
 Route::get('/projects/{project}/files/{file}/visus', ShowVisusDatasetWebController::class)
      ->name('projects.files.show-visus');
+
+// Markdown Editor
+Route::get('/projects/{project}/markdown-editor', 'App\Http\Controllers\Web\Projects\ShowMarkdownEditorWebController')
+     ->name('projects.markdown-editor');

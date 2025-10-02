@@ -47,9 +47,7 @@ class GetDatasetFilesAction
     {
         return File::where('project_id', $projectId)
                    ->where('directory_id', $folderId)
-                   ->whereNull('deleted_at')
-                   ->whereNull('dataset_id')
-                   ->where('current', true)
+                   ->active()
                    ->get();
     }
 }

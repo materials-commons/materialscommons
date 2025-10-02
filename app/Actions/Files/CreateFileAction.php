@@ -71,7 +71,11 @@ class CreateFileAction
             $useUuid = blank($existingFile->uses_uuid) ? $existingFile->uuid : $existingFile->uses_uuid;
 
             $this->saveFile($file, $useUuid);
+        } elseif ($existingFile->health == "missing") {
+            // If the file exists but is marked as missing, then we need to mark it as fixed.
+            $this->setFileHealthFixed($existingFile, 'create-file-action:existence-check', $source);
         }
+
         // else $existingFile->realFileExists() is true, so we don't need to do anything. This is case (2) above.
 
         // Run any triggers and background jobs that may be associated with the file. These may
@@ -84,19 +88,19 @@ class CreateFileAction
         if (!$existingFile->realFileExists()) {
             $this->setFileHealthMissing($existingFile, 'create-file-action:existence-check', $source);
             Log::error("File {$existingFile->name}/{$existingFile->id} does not exist after save");
-        } else {
-            // Check if there are any other files with the same name in the same directory so we
-            // can mark them as not current
-            File::where('directory_id', $dir->id)
-                ->where('id', '<>', $existingFile->id)
-                ->where('name', $existingFile->name)
-                ->whereNull('dataset_id')
-                ->whereNull('deleted_at')
-                ->update(['current' => false]);;
-
-            // Mark the existing file as current
-            $existingFile->update(['current' => true]);
         }
+
+        // Check if there are any other files with the same name in the same directory so we
+        // can mark them as not current
+        File::where('directory_id', $dir->id)
+            ->where('id', '<>', $existingFile->id)
+            ->where('name', $existingFile->name)
+            ->whereNull('dataset_id')
+            ->whereNull('deleted_at')
+            ->update(['current' => false]);;
+
+        // Mark the existing file as current
+        $existingFile->update(['current' => true]);
 
         return $existingFile;
     }
@@ -151,9 +155,9 @@ class CreateFileAction
             // This is case (1) above.
             $this->saveFile($file, $fileEntry->uuid);
         } else {
-            // There was a matching file found, so we want to point at it setting this file's uses_uuid to point
-            // at the matching file. At this point the match is either the original file that everything points
-            // at or it's a file containing the pointer to the original file (the pointer is uses_uuid).
+            // There was a matching file found, so we want to set this file's uses_uuid to point at the matching
+            // file. At this point the match is either the original file that everything points at or it's a file
+            // containing the pointer to the original file (the pointer is uses_uuid).
 
             // We need to determine which case and set fileEntry uses_uuid and uses_id to the appropriate value.
             $usesUuid = blank($matchingFileByChecksum->uses_uuid) ? $matchingFileByChecksum->uuid : $matchingFileByChecksum->uses_uuid;
