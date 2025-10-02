@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\File;
 use App\Models\TbdFile;
 use App\Traits\PathForFile;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,7 +49,9 @@ class DeleteTbdFilesCommand extends Command
             $limit = 100;
         }
 
-        foreach (TbdFile::limit($limit)->cursor() as $tbdFile) {
+        $twentyFourHoursAgo = Carbon::now()->subHours(24);
+
+        foreach (TbdFile::where('created_at', '<', $twentyFourHoursAgo)->limit($limit)->cursor() as $tbdFile) {
             $uuid = $tbdFile->uuid;
 
             // Always delete the entry in the table, then determine whether to delete
