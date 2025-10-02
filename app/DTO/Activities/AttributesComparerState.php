@@ -9,6 +9,8 @@ class AttributesComparerState
     public Collection $activity1OnlyAttributes ;
     public Collection $activity2OnlyAttributes ;
     public Collection $differentValueAttributes;
+    public Collection $changedAttributeValues;
+    public Collection $sameAttributes;
     public bool $hideSame;
     public bool $hideDifferent;
     public bool $hideUniqueOnLeft;
@@ -19,6 +21,8 @@ class AttributesComparerState
         $this->activity1OnlyAttributes = collect();
         $this->activity2OnlyAttributes = collect();
         $this->differentValueAttributes = collect();
+        $this->changedAttributeValues = collect();
+        $this->sameAttributes = collect();
         $this->hideSame = false;
         $this->hideDifferent = false;
         $this->hideUniqueOnLeft = false;
