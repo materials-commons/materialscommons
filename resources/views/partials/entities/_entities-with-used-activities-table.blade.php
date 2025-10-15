@@ -1,14 +1,15 @@
-<link rel="stylesheet" href="{{ asset('css/components/vertical-flow-view.css') }}">
-
 <x-table-container>
 
-            @if(Request::routeIs('projects.entities.*'))
+    @if(Request::routeIs('projects.entities.*'))
         <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
     @endif
 
-    {{-- Vertical Flow View Components --}}
-    <x-entities.vertical-flow-controls/>
-    <x-entities.vertical-flow-view/>
+    {{-- Livewire Vertical Flow View Component --}}
+    @livewire('entities.vertical-flow-view', [
+        'activities' => $activities,
+        'usedActivities' => $usedActivities,
+        'entities' => $entities
+    ])
 
     <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
         <thead>
@@ -100,7 +101,6 @@
 </x-table-container>
 
 @push('scripts')
-    <script src="{{ asset('js/components/vertical-flow-view.js') }}"></script>
     <script>
         document.addEventListener('livewire:navigating', () => {
             $('#entities-with-used-activities').DataTable().destroy();
@@ -115,14 +115,9 @@
                     headerOffset: 46,
                 },
                 columnDefs: [
-                    {targets: [1, 2], visible: false},
+                    {targets: [1, 1], visible: false},
                 ],
             });
-
-            // Initialize Vertical Flow View
-            const activitiesMap = @json($activities);
-            const usedActivitiesData = @json($usedActivities);
-            const verticalFlowView = new VerticalFlowView(activitiesMap, usedActivitiesData);
 
             // setupHavingProcess();
             // setupHavingActivityAttribute();
