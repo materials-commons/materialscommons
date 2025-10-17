@@ -23,6 +23,17 @@
     --bs-breadcrumb-padding-y: 1rem;
 }
 
+.table {
+    --bs-table-bg: white;
+    --bs-table-striped-bg: white;
+    --bs-table-hover-bg: #f8f9fa; // optional: light gray on hover
+}
+
+// For table headers
+.table thead th {
+    background-color: white;
+}
+
 .text-green {
     color: #28a745;
 }
