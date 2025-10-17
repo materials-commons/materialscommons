@@ -58,11 +58,11 @@
 
                     <div class="float-end">
                         <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
-                           class="action-link danger mr-3">
+                           class="action-link danger me-3">
                             Cancel
                         </a>
 
-                        <a class="action-link mr-3" href="#"
+                        <a class="action-link me-3" href="#"
                            onclick="document.getElementById('experiment-reload').submit()">
                             Reload
                         </a>

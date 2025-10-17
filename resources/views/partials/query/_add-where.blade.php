@@ -1,9 +1,9 @@
-<div class="row mt-2 ml-1">
+<div class="row mt-2 ms-1">
     <a href="#"
        hx-get="{{route('projects.activities.attributes.show-details-by-name', [$project, $attrName])}}"
        hx-target="#activity-attribute-overview">{{$attrName}}</a>
 </div>
-<div class="row ml-1">
+<div class="row ms-1">
     <select class="col-6" name="xx" value="">
         <option>Select</option>
         <option>=</option>

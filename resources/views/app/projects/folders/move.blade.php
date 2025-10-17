@@ -47,7 +47,7 @@
                     </select>
                     <div class="float-end">
                         <a href="{{route('projects.folders.show', [$project, $directory])}}"
-                           class="btn btn-info mr-3">
+                           class="btn btn-info me-3">
                             Done
                         </a>
 
@@ -77,11 +77,11 @@
                                 <td>
                                     @if($file->isDir())
                                         <a href="{{route('projects.folders.show', [$project, $file])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a href="{{route('projects.files.show', [$project, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>

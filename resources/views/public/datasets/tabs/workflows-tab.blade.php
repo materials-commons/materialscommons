@@ -1,5 +1,5 @@
 @include('public.datasets.tabs._short-overview')
-<div class="ml-2">
+<div class="ms-2">
     <table id="workflows" class="table table-hover">
         <thead>
         <tr>

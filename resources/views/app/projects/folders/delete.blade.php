@@ -30,7 +30,7 @@
                 {{--                </div>--}}
                 <div class="float-end">
                     <a href="{{route('projects.folders.show', [$project, $dir, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg])}}"
-                       class="action-link mr-3">
+                       class="action-link me-3">
                         Cancel
                     </a>
                     <a class="action-link danger" onclick="document.getElementById('delete-folder').submit()" href="#">

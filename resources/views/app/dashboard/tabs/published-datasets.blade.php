@@ -1,6 +1,6 @@
 <a href="{{route('public.publish.wizard.choose_create_or_select_project')}}"
    title="Publish data" class="btn btn-success float-endx">
-    <i class="fas fa-plus mr-2"></i> Create Dataset
+    <i class="fas fa-plus me-2"></i> Create Dataset
 </a>
 <br>
 <br>

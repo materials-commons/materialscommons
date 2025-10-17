@@ -17,17 +17,17 @@
                 <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                              arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
                 @if ($directory->path == '/')
-                    <span class="float-start action-link mr-4">
-                    <i class="fa-fw fas fa-filter mr-2"></i>
+                    <span class="float-start action-link me-4">
+                    <i class="fa-fw fas fa-filter me-2"></i>
                     Filter:
                 </span>
-                    {{--                <a class="float-start action-link mr-4" href="#">--}}
-                    {{--                    <i class="fa-fw fas fa-calendar mr-2"></i>--}}
+                    {{--                <a class="float-start action-link me-4" href="#">--}}
+                    {{--                    <i class="fa-fw fas fa-calendar me-2"></i>--}}
                     {{--                    By Date--}}
                     {{--                </a>--}}
 
                     <a class="float-start action-link" href="{{route('projects.folders.filter.by-user', [$project])}}">
-                        <i class="fa-fw fas fa-user-friends mr-2"></i>
+                        <i class="fa-fw fas fa-user-friends me-2"></i>
                         By User
                     </a>
 
@@ -38,7 +38,7 @@
                 @if ($directory->path !== '/')
                     <a href="{{route('projects.folders.show', [$project, $directory->directory_id, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}"
                        class="mb-3">
-                        <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                        <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
                     </a>
                     <br>
                     <br>
@@ -81,7 +81,7 @@
                             </select>
                             <div class="float-end">
                                 <a href="{{route('projects.folders.show', [$project, $directory])}}"
-                                   class="btn btn-info mr-3">
+                                   class="btn btn-info me-3">
                                     Done
                                 </a>
 
@@ -122,16 +122,16 @@
                                     @if($file->isDir())
                                         <a class="no-underline"
                                            href="{{route('projects.folders.show', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i>{{$file->name}}
+                                            <i class="fa-fw fas fa-folder me-2"></i>{{$file->name}}
                                         </a>
                                     @elseif($file->mime_type == 'url')
                                         <a class="no-underline" href="{{$file->url}}" target="_blank">
-                                            <i class="fa-fw fas fa-link mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-link me-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a class="no-underline"
                                            href="{{route('projects.files.show', [$project, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> <x-health.files.health-status-badge-small :file="$file"/> {{$file->name}}
+                                            <i class="fa-fw fas fa-file me-2"></i> <x-health.files.health-status-badge-small :file="$file"/> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>

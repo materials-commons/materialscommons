@@ -1,5 +1,5 @@
 <div class="mt-2">
-    <h5 class="mt-3 mr-2 font-weight-bold">
+    <h5 class="mt-3 me-2 font-weight-bold">
         {{$activityType->name}} ({{$activityType->count}})
     </h5>
     <hr/>

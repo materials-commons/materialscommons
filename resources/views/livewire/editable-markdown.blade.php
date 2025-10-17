@@ -6,7 +6,7 @@
                 <a wire:click.prevent="toggleEdit" class="btn btn-sm btn-outline-primary me-2" title="Edit">
                     <i class="fas fa-edit"></i> Edit
                 </a>
-                <a wire:click.prevent="save" class="btn btn-sm btn-outline-success ml-2" title="Save">
+                <a wire:click.prevent="save" class="btn btn-sm btn-outline-success ms-2" title="Save">
                     <i class="fas fa-save"></i> Save
                 </a>
             </div>
@@ -54,7 +54,7 @@
                 <a wire:click.prevent="cancel" class="btn btn-outline-secondary me-2">
                     Cancel
                 </a>
-                <a wire:click.prevent="save" class="btn btn-primary ml-2">
+                <a wire:click.prevent="save" class="btn btn-primary ms-2">
                     Save
                 </a>
             </div>

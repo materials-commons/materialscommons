@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="float-end">
-                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger mr-3">
+                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" href="#"

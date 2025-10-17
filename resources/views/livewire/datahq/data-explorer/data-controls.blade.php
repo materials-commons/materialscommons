@@ -1,4 +1,4 @@
-<div class="mt-2 ml-4 col-12">
+<div class="mt-2 ms-4 col-12">
     <form id="chart-controls-form">
         {{--        <div class="row" style="display: none">--}}
         {{--            <div class="form-group">--}}
@@ -24,7 +24,7 @@
 
             @if($xAttrType == "sample")
                 <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">X:</label>
+                    <label class="ms-4">X:</label>
                     <select wire:model.live="xAttr" class="custom-select col-4 font-weight-bold"
                             title="x attribute">
                         <option value="" disabled selected>Select X Attribute</option>
@@ -37,7 +37,7 @@
 
             @if($xAttrType == "process")
                 <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">X:</label>
+                    <label class="ms-4">X:</label>
                     <select wire:model.live="xAttr" class="custom-select col-4 font-weight-bold"
                             title="x attribute">
                         <option value="" disabled selected>Select X Attribute</option>
@@ -62,7 +62,7 @@
 
             @if($yAttrType == "sample")
                 <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">Y:</label>
+                    <label class="ms-4">Y:</label>
                     <select wire:model.live="yAttr" class="custom-select col-4 font-weight-bold"
                             title="y attribute">
                         <option value="" disabled selected>Select Y Attribute</option>
@@ -75,7 +75,7 @@
 
             @if($yAttrType == "process")
                 <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">Y:</label>
+                    <label class="ms-4">Y:</label>
                     <select wire:model.live="yAttr" class="custom-select col-4 font-weight-bold"
                             title="y attribute">
                         <option value="" disabled selected>Select Y Attribute</option>
@@ -89,7 +89,7 @@
 
         <div class="row">
             <div class="form-group">
-                <a @class(["btn", "btn-success", "ml-4", "cursor-pointer", "disabled" => !$this->allAttrsSet()])
+                <a @class(["btn", "btn-success", "ms-4", "cursor-pointer", "disabled" => !$this->allAttrsSet()])
                    wire:click.prevent="addToChart()">Draw Chart</a>
             </div>
         </div>

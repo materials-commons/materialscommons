@@ -12,7 +12,7 @@
             Tasks
             <a class="action-link float-end"
                href="{{route('tasks.create')}}">
-                <i class="fas fa-plus mr-2"></i>Create Task
+                <i class="fas fa-plus me-2"></i>Create Task
             </a>
         @endslot
 
@@ -66,7 +66,7 @@
                     </tbody>
                 </table>
             @else
-                <div class="mt-3 ml-3">No Tasks</div>
+                <div class="mt-3 ms-3">No Tasks</div>
             @endif
         @endslot
     @endcomponent

@@ -44,7 +44,7 @@
             <br/>
                 <h4>Log</h4>
                 <div class="row border">
-                    <pre class="ml-3 mt-2" style="white-space: pre-wrap">{{$log}}</pre>
+                    <pre class="ms-3 mt-2" style="white-space: pre-wrap">{{$log}}</pre>
             </div>
 
         </x-slot:body>

@@ -26,10 +26,10 @@
                     <p>
                         @if ($isConnected)
                             <span class="text-success">✓ Connected to Google Sheets</span>
-                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-sm btn-outline-primary ml-2">Reconnect</a>
+                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-sm btn-outline-primary ms-2">Reconnect</a>
                         @else
                             <span class="text-danger">✗ Not connected to Google Sheets</span>
-                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-primary ml-2">Connect to Google Sheets</a>
+                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-primary ms-2">Connect to Google Sheets</a>
                         @endif
                     </p>
 

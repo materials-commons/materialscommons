@@ -3,9 +3,9 @@
     <x-card>
         <x-slot name="header">
             @if(!is_null($setLogLevelRoute))
-                <a class="action-link float-end ml-4"
+                <a class="action-link float-end ms-4"
                    data-toggle="modal" href="#set-log-level-modal">
-                    <i class="fas fa-fw fa-edit mr-2"></i>Set Log Level
+                    <i class="fas fa-fw fa-edit me-2"></i>Set Log Level
                 </a>
             @endif
 
@@ -14,7 +14,7 @@
                onclick="clearLogSearchInputOnReload()"
                hx-target="#etl-log"
                hx-swap="innerHTML scroll:bottom">
-                <i class="fas fa-fw fa-sync-alt mr-2"></i>Refresh Log
+                <i class="fas fa-fw fa-sync-alt me-2"></i>Refresh Log
             </a>
         </x-slot>
         <x-slot name="body">

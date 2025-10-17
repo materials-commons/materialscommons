@@ -28,7 +28,7 @@
                               placeholder="Description..." readonly>{{$community->description}}</textarea>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('communities.index')}}" class="action-link danger mr-3">
+                    <a href="{{route('communities.index')}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" href="#"
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="form-group form-check-inline">
-                    <label class="form-check-label mr-2" for="public">Public?</label>
+                    <label class="form-check-label me-2" for="public">Public?</label>
                     <input type="checkbox" class="form-check-input" id="public"
                            value="1" {{$community->public ? 'checked' : ''}} readonly>
                 </div>

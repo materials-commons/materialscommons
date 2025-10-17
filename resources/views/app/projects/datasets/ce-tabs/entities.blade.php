@@ -6,8 +6,8 @@
 <br>
 <x-card-container>
     <div class="row">
-        <a href="#" class="ml-4 mb-2" onclick="checkAllEntities()">Select All Samples</a>
-        <a href="#" class="ml-4 mb-2" onclick="uncheckAllEntities()">Unselect All Samples</a>
+        <a href="#" class="ms-4 mb-2" onclick="checkAllEntities()">Select All Samples</a>
+        <a href="#" class="ms-4 mb-2" onclick="uncheckAllEntities()">Unselect All Samples</a>
     </div>
     <br>
     <table id="entities" class="table table-hover" style="width:100%">

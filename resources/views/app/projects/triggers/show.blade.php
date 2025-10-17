@@ -10,9 +10,9 @@
     <x-card>
         <x-slot:header>
             Trigger: {{$trigger->name}}
-            <a class="float-end action-link mr-4"
+            <a class="float-end action-link me-4"
                href="{{route('projects.triggers.edit', [$project, $trigger])}}">
-                <i class="fas fa-fw fa-edit mr-2"></i>Edit Trigger
+                <i class="fas fa-fw fa-edit me-2"></i>Edit Trigger
             </a>
         </x-slot:header>
         <x-slot:body>
@@ -36,7 +36,7 @@
                     {{$trigger->script->scriptFile->fullPath()}}
                 </a>
             </h4>
-            <div class="row border ml-1">
+            <div class="row border ms-1">
                 <x-display-file :file="$trigger->script->scriptFile"
                                 :display-route="route('projects.files.display', [$project, $trigger->script->scriptFile])"/>
             </div>

@@ -1,6 +1,6 @@
-<div class="row mr-2 ml-1">
+<div class="row me-2 ms-1">
     <div class="col-md-12 white-box">
-        <h5 class="mt-3 mr-2 font-weight-bold">
+        <h5 class="mt-3 me-2 font-weight-bold">
             <i class="fas fa-file-excel me-2"></i> Excel File
         </h5>
         <hr/>

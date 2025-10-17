@@ -11,7 +11,7 @@
     @endif
     
     <h6>Attributes</h6>
-    <dl class="row ml-2">
+    <dl class="row ms-2">
         @foreach($activity->attributes->sortBy('name') as $attribute)
             @php
                 $isUnique = false;

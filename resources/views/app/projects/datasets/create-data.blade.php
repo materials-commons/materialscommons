@@ -32,7 +32,7 @@
                     <input class="form-control" value="{{$dataset->summary}}" id="summary" type="text" readonly>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link mr-3">
+                    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link me-3">
                         Edit Details
                     </a>
                     <a href="{{route('projects.datasets.show', [$project, $dataset])}}" class="action-link">

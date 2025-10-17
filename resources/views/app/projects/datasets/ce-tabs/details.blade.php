@@ -2,11 +2,11 @@
 <div x-data="datasetCETabsDetails">
     <div class="float-end">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-           class="btn btn-danger mr-3">
+           class="btn btn-danger me-3">
             Cancel
         </a>
 
-        <a class="btn btn-info mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+        <a class="btn btn-info me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
             Update
         </a>
 
@@ -66,7 +66,7 @@
                 @if (empty($dataset->doi))
                     <span class="col-6">
                 (None)
-                <a href="#" @click.prevent="changeActionAndSubmit()" class="ml-6 ps-6">
+                <a href="#" @click.prevent="changeActionAndSubmit()" class="ms-6 ps-6">
                     Assign DOI
                 </a>
             </span>
@@ -143,15 +143,15 @@
 
             <div class="float-end">
                 <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-                   class="action-link danger mr-3">
+                   class="action-link danger me-3">
                     Cancel
                 </a>
 
-                <a class="action-link mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+                <a class="action-link me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
                     Update
                 </a>
 
-                <a class="action-link mr-3" href="#" id="done-button" @click.prevent="setActionAndSubmit('done')">
+                <a class="action-link me-3" href="#" id="done-button" @click.prevent="setActionAndSubmit('done')">
                     Done
                 </a>
             </div>

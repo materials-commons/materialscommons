@@ -57,7 +57,7 @@
                 @foreach($dataset->ds_authors as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
                         <td>{{$author['name']}}</td>
                         <td>{{$author['affiliations']}}</td>
                         <td>{{$author['email']}}</td>
@@ -77,7 +77,7 @@
                 @foreach($project->team->members->merge($project->team->admins) as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
                         <td>{{$author->name}}</td>
                         <td>{{$author->affiliations}}</td>
                         <td>{{$author->email}}</td>

@@ -21,7 +21,7 @@
                onclick="clearSearchInputOnReload()"
                hx-target="#etl-log"
                hx-swap="innerHTML scroll:bottom">
-                <i class="fas fa-sync-alt mr-2"></i>Refresh Log
+                <i class="fas fa-sync-alt me-2"></i>Refresh Log
             </a>
         </x-slot>
         <x-slot name="body">

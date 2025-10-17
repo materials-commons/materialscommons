@@ -15,7 +15,7 @@
         @endslot
 
         @slot('body')
-            <div class="float-end mr-2">
+            <div class="float-end me-2">
                 <a href="{{route('projects.workflows.create', [$project])}}" class="action-link">
                     <i class="fas fa-fw fa-plus"></i> New Workflow
                 </a>

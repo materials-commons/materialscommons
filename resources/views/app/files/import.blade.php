@@ -27,7 +27,7 @@
                               placeholder="Description..."></textarea>
                 </div>
                 <div class="float-end">
-                    <a href="{{URL::previous()}}" class="action-link danger mr-3">
+                    <a href="{{URL::previous()}}" class="action-link danger me-3">
                         Cancel
                     </a>
 

@@ -12,22 +12,22 @@
     @component('components.card')
         @slot('header')
             Dataset: {{$dataset->name}}
-            <div class="dropdown float-end mr-4">
+            <div class="dropdown float-end me-4">
                 @if(!blank($dataset->doi))
-                    <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
-                            class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
+                    <a class="action-link me-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
+                            class="fas fa-quote-left me-1"></i>Cite Dataset</a>
                 @endif
                 @auth
                     {{--                @if($dataset->canEdit())--}}
-                    {{--                    <a class="action-link float-end mr-4"--}}
+                    {{--                    <a class="action-link float-end me-4"--}}
                     {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
-                    {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
+                    {{--                        <i class="fas fa-edit me-2"></i>Edit--}}
                     {{--                    </a>--}}
                     {{--                @endif--}}
 
                     <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-file-import mr-2"></i>Import Into Project
+                        <i class="fas fa-file-import me-2"></i>Import Into Project
                     </a>
                     <div class="dropdown-menu" aria-labelledby="projectsDropdown">
                         @foreach($userProjects as $project)
@@ -40,7 +40,7 @@
                         @endforeach
                     </div>
                     @if($hasNotificationsForDataset)
-                        <a class="action-link ml-3"
+                        <a class="action-link ms-3"
                            href="#"
                            id="notification"
                            data-toggle="tooltip"
@@ -51,7 +51,7 @@
                             <i class='fa-fw fas fa-bell yellow-4'></i>
                         </a>
                     @else
-                        <a class="action-link ml-3"
+                        <a class="action-link ms-3"
                            href="#"
                            id="notification"
                            data-toggle="tooltip"
@@ -63,10 +63,10 @@
                         </a>
                     @endif
                     {{--                @if(auth()->user()->hasCommunities())--}}
-                    {{--                    <div class="dropdown float-end mr-4">--}}
+                    {{--                    <div class="dropdown float-end me-4">--}}
                     {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
                     {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                    {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}
+                    {{--                            <i class="fas fa-plus me-2"></i>Add To Community--}}
                     {{--                        </a>--}}
                     {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
                     {{--                            @foreach(auth()->user()->communities as $community)--}}

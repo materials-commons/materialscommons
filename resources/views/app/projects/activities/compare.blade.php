@@ -12,17 +12,17 @@
             <div class="d-flex justify-content-between align-items-center">
                 <span>Activity Comparison</span>
                 <div>
-                    <button type="button" class="btn btn-sm btn-primary mr-1 view-btn active" data-view="unified">
+                    <button type="button" class="btn btn-sm btn-primary me-1 view-btn active" data-view="unified">
                         <i class="fas fa-align-left"></i> Unified
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary mr-1 view-btn" data-view="github">
+                    <button type="button" class="btn btn-sm btn-secondary me-1 view-btn" data-view="github">
                         <i class="fab fa-github"></i> Split
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary mr-2 view-btn" data-view="original">
+                    <button type="button" class="btn btn-sm btn-secondary me-2 view-btn" data-view="original">
                         <i class="fas fa-columns"></i> Original
                     </button>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left mr-2"></i>Back
+                        <i class="fas fa-arrow-left me-2"></i>Back
                     </a>
                 </div>
             </div>

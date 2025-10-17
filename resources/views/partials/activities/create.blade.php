@@ -11,7 +11,7 @@
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
     <div class="float-end">
-        <a href="{{$cancelRoute}}" class="action-link danger mr-3">
+        <a href="{{$cancelRoute}}" class="action-link danger me-3">
             Cancel
         </a>
 

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="float-end">
-                    <a href="{{route('communities.links.edit', [$community])}}" class="action-link danger mr-3">
+                    <a href="{{route('communities.links.edit', [$community])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" href="#" onclick="document.getElementById('delete-link').submit()">

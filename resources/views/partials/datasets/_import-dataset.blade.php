@@ -16,7 +16,7 @@
                value="{{old('directory', $dataset->importDirectory())}}">
     </div>
     <div class="float-end">
-        <a href="{{$cancelImportRoute}}" class="action-link danger mr-3">
+        <a href="{{$cancelImportRoute}}" class="action-link danger me-3">
             Cancel
         </a>
 

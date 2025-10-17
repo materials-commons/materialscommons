@@ -12,7 +12,7 @@
             Teams
             <a class="action-link float-end"
                href="{{route('teams.create')}}">
-                <i class="fas fa-plus mr-2"></i>Create Team
+                <i class="fas fa-plus me-2"></i>Create Team
             </a>
         @endslot
 

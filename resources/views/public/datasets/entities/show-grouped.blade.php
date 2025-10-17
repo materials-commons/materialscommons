@@ -14,16 +14,16 @@
             Sample: {{$entity->name}}
             <a class="float-end action-link" href="#"
                onclick="window.location.replace('{{route('public.datasets.entities.show-spread', [$dataset, $entity])}}')">
-                <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
+                <i class="fas fa-object-ungroup me-2"></i>Ungroup Processes
             </a>
         @endslot
 
         @slot('body')
             <x-show-standard-details :item="$entity"/>
 
-            <div class="row ml-1">
+            <div class="row ms-1">
                 @foreach($activityTypes as $activityType)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 mb-2 white-box">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">
                         @include('public.datasets.entities.activity-type-card', [
                             'activityType' => $activityType,
                             'files' => $filesByActivityType->get($activityType->name, []),

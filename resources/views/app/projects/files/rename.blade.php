@@ -32,11 +32,11 @@
 
                 <div class="float-end">
                     @if($file->mime_type == "url")
-                        <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link mr-3">
+                        <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link me-3">
                             Cancel
                         </a>
                     @else
-                        <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link mr-3">
+                        <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link me-3">
                             Cancel
                         </a>
                     @endif

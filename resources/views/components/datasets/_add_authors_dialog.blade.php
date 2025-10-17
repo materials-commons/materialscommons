@@ -88,7 +88,7 @@
                         let nextId = authorTable.data().length;
                         authorTable.row.add([
                             nextId,
-                            `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
+                            `<i class="fas fa-fw fa-grip-vertical me-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
                             `<div class="float-end">
                                 <a class="action-link cursor-pointer"

@@ -79,13 +79,13 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
-        <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
-            <img class="h-8 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+        <a class="navbar-brand col-sm-3 me-0" href="{{route('welcome')}}">
+            <img class="h-8 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
     @else
-        <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
-            <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+        <a class="navbar-brand col-sm-3 me-0" href="{{route('welcome')}}">
+            <img class="h-8 md:h-10 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
     @endif
@@ -99,7 +99,7 @@
             @auth
                 <li class="nav-item">
                     <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
-                        <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
+                        <i class="fa fas fa-lightbulb tour-icon me-1"></i> Start Tour
                     </a>
                 </li>
                 <li class="nav-item">
@@ -146,7 +146,7 @@
                                 Sign out</a>
                         </form>
                         <a class="dropdown-item td-none" href="{{route('accounts.show')}}">
-                            <i class="fa-fw fas fa-user mr-2 mb-1"></i>Account
+                            <i class="fa-fw fas fa-user me-2 mb-1"></i>Account
                         </a>
                         {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>

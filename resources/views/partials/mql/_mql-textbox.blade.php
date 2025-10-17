@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="ml-4">
+            <form class="ms-4">
                 <div class="form-group">
                     <label for="mql">Current Query</label>
                     <textarea class="form-control" id="mql" placeholder="Query..."

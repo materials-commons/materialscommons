@@ -1,15 +1,15 @@
 <div x-data="datasets_create">
     <div class="float-end">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-           class="btn btn-danger mr-3">
+           class="btn btn-danger me-3">
             Cancel
         </a>
 
-        <a class="btn btn-info mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+        <a class="btn btn-info me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
             Save
         </a>
 
-        <a class="btn btn-success mr-3" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
+        <a class="btn btn-success me-3" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
             Save And Add Data
         </a>
     </div>
@@ -127,15 +127,15 @@
 
         <div class="float-end">
             <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-               class="action-link danger mr-3">
+               class="action-link danger me-3">
                 Cancel
             </a>
 
-            <a class="action-link mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+            <a class="action-link me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
                 Save
             </a>
 
-            <a class="action-link mr-3" href="#" id="add-assets-button"
+            <a class="action-link me-3" href="#" id="add-assets-button"
                @click.prevent="setActionAndSubmit('assets')">
                 Save And Add Data
             </a>

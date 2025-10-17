@@ -29,11 +29,11 @@
                               placeholder="Comment..." readonly>{{$comment->body}}</textarea>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger mr-3">
+                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}"
-                       class="action-link mr-3">
+                       class="action-link me-3">
                         Edit
                     </a>
                     <a class="action-link" href="#"

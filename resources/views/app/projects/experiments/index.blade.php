@@ -15,7 +15,7 @@
             Studies for {{$project->name}}
             <a class="action-link float-end"
                href="{{route('projects.experiments.create', ['project' => $project->id])}}">
-                <i class="fas fa-plus mr-2"></i>Create Study
+                <i class="fas fa-plus me-2"></i>Create Study
             </a>
         @endslot
         @slot('body')

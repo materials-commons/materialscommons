@@ -20,7 +20,7 @@
                     </div>
                     <div class="float-end">
                         <a href="{{route('projects.files.show', [$project, $file])}}"
-                           class="action-link danger mr-3">Cancel</a>
+                           class="action-link danger me-3">Cancel</a>
                         <a class="action-link" href="#" onclick="document.getElementById('file-edit').submit()">Save</a>
                     </div>
                 </form>

@@ -43,7 +43,7 @@
     <div class="container flex items-center max-w-8xl mx-auto px-4 lg:px-8">
         <div class="flex items-center">
             <a href="{{route('welcome')}}" title="Materials Commons home" class="inline-flex items-center">
-                <img class="h-8 md:h-10 mr-3" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+                <img class="h-8 md:h-10 me-3" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
 
                 <h1 class="text-lg md:text-2xl text-yellow-100 font-semibold hover:text-yellow-100 my-0 pr-4">
                     Materials Commons 2.0
@@ -55,20 +55,20 @@
         <div class="flex flex-1 justify-end items-center text-right md:pl-10">
             @auth
                 <a href="{{route('dashboard')}}"
-                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                   class="flex justify-center items-center text-blue-300 h-10 me-4 px-5 focus:outline-none hover:text-blue-100">
                     {{auth()->user()->email}}
                 </a>
                 <a href="{{route('dashboard')}}"
-                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                   class="flex justify-center items-center text-blue-300 h-10 me-4 px-5 focus:outline-none hover:text-blue-100">
                     Goto Dashboard
                 </a>
             @else
                 <a href="{{route('login')}}"
-                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                   class="flex justify-center items-center text-blue-300 h-10 me-4 px-5 focus:outline-none hover:text-blue-100">
                     Login
                 </a>
                 <a href="{{route('register')}}"
-                   class="flex justify-center items-center text-blue-300 h-10 mr-4 px-5 focus:outline-none hover:text-blue-100">
+                   class="flex justify-center items-center text-blue-300 h-10 me-4 px-5 focus:outline-none hover:text-blue-100">
                     Register
                 </a>
             @endauth
@@ -98,30 +98,30 @@
 
                     <a href="/mcdocs2"
                        title="Materials Commons getting started"
-                       class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                       class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded me-4 py-2 px-6">
                         Getting Started
                     </a>
 
                     @auth
                         <a href="{{route('public.publish.wizard.choose_create_or_select_project')}}"
                            title="Publish data"
-                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded me-4 py-2 px-6">
                             Upload and Publish Data
                         </a>
                     @else
                         <a href="{{route('login-for-upload')}}" title="Publish data"
-                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                           class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded me-4 py-2 px-6">
                             Upload and Publish Data
                         </a>
                     @endauth
 
                     <a href="{{route('public.index')}}" title="Browse published data"
-                       class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded mr-4 py-2 px-6">
+                       class="bg-blue-500 hover:bg-blue-600 font-normal text-white hover:text-white rounded me-4 py-2 px-6">
                         Browse Published Data
                     </a>
                 </div>
 
-                {{--                <div class="flex mt-1 ml-5">--}}
+                {{--                <div class="flex mt-1 ms-5">--}}
                 {{--                    <ul class="list-unstyled">--}}
                 {{--                        <li>Published Datasets: {{$datasets}}</li>--}}
                 {{--                        <li>Published Special Collections Datasets: {{$specialCollectionsDatasets}}</li>--}}
@@ -136,7 +136,7 @@
         <p>
             Materials Commons has as an extensive CLI and API. Learn more about:
         </p>
-        <ul class="ml-10">
+        <ul class="ms-10">
             <li>
                 <a href="https://materials-commons.github.io/materials-commons-cli/html/manual/jupyter.html"
                    target="_blank">
@@ -196,7 +196,7 @@
 
 <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
     <div class="flex flex-col md:flex-row justify-center">
-        <span class="md:ml-4">
+        <span class="md:ms-4">
             The Materials Commons is supported by the U.S. Department of Energy, Office of Basic Energy Sciences,
             Division of Materials Sciences and Engineering under Award #DE-SC0008637 as part of the
             <a href="http://www.prisms-center.org" target="_blank">

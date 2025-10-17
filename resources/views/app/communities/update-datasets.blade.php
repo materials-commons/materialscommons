@@ -26,7 +26,7 @@
                     <tr>
                         <td>
                             <a href="{{route('public.datasets.show', [$dataset])}}">
-                                <i class="fa-fw fas mr-2 fa-file"></i>{{$dataset->name}}
+                                <i class="fa-fw fas me-2 fa-file"></i>{{$dataset->name}}
                             </a>
                         </td>
                         <td>{{$dataset->summary}}</td>

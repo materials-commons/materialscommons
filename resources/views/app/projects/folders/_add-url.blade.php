@@ -16,7 +16,7 @@
     <input hidden id="directory_id" name="directory_id" value="{{$directory->id}}">
 
     <div class="float-end">
-        <a class="action-link danger mr-3"
+        <a class="action-link danger me-3"
            href="{{$cancelRoute}}">
             Cancel
         </a>

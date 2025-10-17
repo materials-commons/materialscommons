@@ -11,7 +11,7 @@
         @slot('header')
             Communities
             <a class="action-link float-end" href="{{route('communities.create')}}">
-                <i class="fas fa-plus mr-2"></i>Create Community
+                <i class="fas fa-plus me-2"></i>Create Community
             </a>
         @endslot
 

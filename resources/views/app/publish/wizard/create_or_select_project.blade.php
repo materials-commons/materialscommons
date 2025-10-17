@@ -22,7 +22,7 @@
                     </p>
                     <div>
                         <a href="{{route('public.publish.wizard.create_project')}}"
-                           class="btn btn-primary mr-3">
+                           class="btn btn-primary me-3">
                             Create Project
                         </a>
 

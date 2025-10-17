@@ -13,7 +13,7 @@
             @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()) || auth()->user()->is_admin)
                 <a class="action-link float-end"
                    href="{{route('projects.users.edit', [$project])}}">
-                    <i class="fas fa-plus mr-2"></i>Add Users
+                    <i class="fas fa-plus me-2"></i>Add Users
                 </a>
             @endif
         @endslot
@@ -56,14 +56,14 @@
                                         <a href="{{route('projects.users.remove', [$project, $member])}}">
                                             <i class="fa fas fa-trash"></i></a>
                                         <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
-                                           class="ml-4">
+                                           class="ms-4">
                                             <i class="fa fas fa-fw fa-edit"></i>Make Admin
                                         </a>
                                     @else
                                         <a href="{{route('projects.admins.remove', [$project, $member])}}">
                                             <i class="fa fas fa-trash"></i></a>
                                         <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
-                                           class="ml-4">
+                                           class="ms-4">
                                             <i class="fa fas fa-fw fa-edit"></i>Make Member
                                         </a>
                                     @endif

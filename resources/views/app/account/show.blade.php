@@ -50,10 +50,10 @@
                         @if ($user->hasGoogleToken())
                             <span class="text-success">✓ Connected to Google Sheets</span>
                             <a href="{{ route('google-sheets.authorize') }}"
-                               class="btn btn-sm btn-outline-primary ml-2">Reconnect</a>
+                               class="btn btn-sm btn-outline-primary ms-2">Reconnect</a>
                         @else
                             <span class="text-danger">✗ Not connected to Google Sheets</span>
-                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-primary ml-2">Connect to
+                            <a href="{{ route('google-sheets.authorize') }}" class="btn btn-primary ms-2">Connect to
                                 Google
                                 Sheets</a>
                         @endif
@@ -70,7 +70,7 @@
                         <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
                     </div>
                     <a href="{{route('accounts.api-token.regenerate')}}"
-                       class="ml-5 btn btn-sm btn-outline-danger ml-2">Regenerate API Token</a>
+                       class="ms-5 btn btn-sm btn-outline-danger ms-2">Regenerate API Token</a>
                     <span class="text-muted">(This will invalidate any existing clients using the old token)</span>
                 </div>
                 <br>

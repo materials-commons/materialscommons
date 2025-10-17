@@ -63,7 +63,7 @@
     <h3>Select Authors (from project and external authors)</h3>
     <ul class="list-unstyled" id="select-authors">
         <li>
-            <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
+            <span class="ms-3"><i class="fa fas fa-fw fa-user"></i></span>
             {{$project->owner->name}} (Owner)
             <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
         @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
@@ -174,7 +174,7 @@
                             <input hidden name="author_order[]" value="${email}" type="text">
                         </li>`);
             $('#select-authors').append(`<li id="ex_sel_${id}">
-                    <a class="action ml-3" href="#" onclick="removeExternalUser('${id}')">
+                    <a class="action ms-3" href="#" onclick="removeExternalUser('${id}')">
                         <i class="fa fa-fw fas fa-trash"></i>
                     </a> ${name} (External Author)`);
             $(`#${id}`).hide();

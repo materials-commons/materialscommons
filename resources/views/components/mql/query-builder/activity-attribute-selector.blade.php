@@ -1,11 +1,11 @@
 <div>
     <div class="row mb-2">
         @if ($category == "computational")
-            {{--                    <span class="mr-2 ml-3">Having Activity Attribute:</span>--}}
-            <span class="mr-2 ml-3">View Activity Attribute:</span>
+            {{--                    <span class="me-2 ms-3">Having Activity Attribute:</span>--}}
+            <span class="me-2 ms-3">View Activity Attribute:</span>
         @else
-            {{--            <span class="mr-2 ml-3">Having Process Attribute:</span>--}}
-            <span class="mr-2 ml-3">View Process Attribute:</span>
+            {{--            <span class="me-2 ms-3">Having Process Attribute:</span>--}}
+            <span class="me-2 ms-3">View Process Attribute:</span>
         @endif
     </div>
     <select id="activity-attributes">
@@ -15,13 +15,13 @@
         @endforeach
     </select>
     {{--    <div class="row mt-2">--}}
-    {{--        <a href="#" onclick="addWhereValueIsForActivity()" class="btn btn-info btn-sm ml-3"><i--}}
-    {{--                    class="fa fas fa-equals mr-2"></i>Where Value Is</a>--}}
+    {{--        <a href="#" onclick="addWhereValueIsForActivity()" class="btn btn-info btn-sm ms-3"><i--}}
+    {{--                    class="fa fas fa-equals me-2"></i>Where Value Is</a>--}}
     {{--    </div>--}}
     {{--    <div id="activity-where-1"></div>--}}
     {{--    <hr/>--}}
     {{--    <div class="row mt-2">--}}
-    {{--        <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Attribute</a>--}}
+    {{--        <a href="#" class="btn btn-success btn-sm ms-3"><i class="fa fas fa-plus me-2"></i>Add Attribute</a>--}}
     {{--    </div>--}}
     <div id="activity-attribute-overview" class="mt-2"></div>
     @push('scripts')

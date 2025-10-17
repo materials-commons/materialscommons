@@ -52,7 +52,7 @@
                     </select>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('projects.triggers.index', [$project])}}" class="action-link danger mr-3">
+                    <a href="{{route('projects.triggers.index', [$project])}}" class="action-link danger me-3">
                         Cancel
                     </a>
 

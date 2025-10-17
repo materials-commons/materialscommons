@@ -13,11 +13,11 @@
         @slot('header')
             Globus Downloads
             <a class="action-link float-end" href="{{route('projects.globus.downloads.create', [$project])}}">
-                <i class="fas fa-plus mr-2"></i> New Globus Download
+                <i class="fas fa-plus me-2"></i> New Globus Download
             </a>
 
-            <a class="action-link float-end mr-4" href="{{route('projects.globus.downloads.index', [$project])}}">
-                <i class="fas fa-sync mr-2"></i> Refresh
+            <a class="action-link float-end me-4" href="{{route('projects.globus.downloads.index', [$project])}}">
+                <i class="fas fa-sync me-2"></i> Refresh
             </a>
         @endslot
 

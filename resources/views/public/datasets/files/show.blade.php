@@ -15,7 +15,7 @@
             @auth
                 <a class="action-link float-end"
                    href="{{route('public.datasets.download_file', [$dataset, $file])}}">
-                    <i class="fas fa-download mr-2"></i>Download File
+                    <i class="fas fa-download me-2"></i>Download File
                 </a>
             @endauth
         @endslot
@@ -23,8 +23,8 @@
         @slot('body')
             <x-card-container>
                 <x-show-standard-details :item="$file">
-                    <span class="ml-3 fs-10 grey-5">Mediatype: {{$file->mime_type}}</span>
-                    <span class="ml-3 fs-10 grey-5">Size: {{$file->toHumanBytes()}}</span>
+                    <span class="ms-3 fs-10 grey-5">Mediatype: {{$file->mime_type}}</span>
+                    <span class="ms-3 fs-10 grey-5">Size: {{$file->toHumanBytes()}}</span>
                 </x-show-standard-details>
 
                 <hr>

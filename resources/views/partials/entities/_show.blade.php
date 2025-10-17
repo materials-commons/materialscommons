@@ -2,11 +2,11 @@
     @slot('header')
         Sample: {{$entity->name}}
         {{--            <a class="float-end action-link" href="#">--}}
-        {{--                <i class="fas fa-edit mr-2"></i>Edit--}}
+        {{--                <i class="fas fa-edit me-2"></i>Edit--}}
         {{--            </a>--}}
 
-        {{--            <a class="float-end action-link mr-4" href="#">--}}
-        {{--                <i class="fas fa-trash-alt mr-2"></i>Delete--}}
+        {{--            <a class="float-end action-link me-4" href="#">--}}
+        {{--                <i class="fas fa-trash-alt me-2"></i>Delete--}}
         {{--            </a>--}}
     @endslot
 

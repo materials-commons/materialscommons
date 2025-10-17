@@ -28,11 +28,11 @@
                 </div>
 
                 <div class="float-end">
-                    <a href="{{route('teams.index')}}" class="action-link danger mr-3">
+                    <a href="{{route('teams.index')}}" class="action-link danger me-3">
                         Cancel
                     </a>
 
-                    <a class="action-link mr-3" href="#" onclick="document.getElementById('team-create').submit()">
+                    <a class="action-link me-3" href="#" onclick="document.getElementById('team-create').submit()">
                         Create
                     </a>
                 </div>

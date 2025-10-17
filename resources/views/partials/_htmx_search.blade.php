@@ -5,7 +5,7 @@
                onclick="closeSearch()"
                hx-target="#search-results"
                class="float-end">
-                <i class="fa fas fa-times mr-2"></i>close</a>
+                <i class="fa fas fa-times me-2"></i>close</a>
         </li>
         @foreach($searchResults->groupByType() as $type => $modelSearchResults)
             @foreach($modelSearchResults as $searchResult)

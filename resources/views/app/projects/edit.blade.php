@@ -46,7 +46,7 @@
                     <label class="form-check-label" for="is_active">Is Active?</label>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('projects.show', [$project])}}" class="action-link danger mr-3">
+                    <a href="{{route('projects.show', [$project])}}" class="action-link danger me-3">
                         Cancel
                     </a>
 

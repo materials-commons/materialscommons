@@ -2,7 +2,7 @@
 @auth
     <a class="action-link float-end"
        href="{{route('public.datasets.comments.create', [$dataset])}}">
-        <i class="fas fa-plus mr-2"></i>Add Comment
+        <i class="fas fa-plus me-2"></i>Add Comment
     </a>
 @endauth
 @forelse($dataset->comments as $comment)
@@ -15,13 +15,13 @@
                           style="min-width:100%">{{$comment->body}}</textarea>
                 <span>
                     <small>{{$comment->owner->name}}</small>
-                    <small class="ml-2">Last Updated: {{$comment->updated_at->diffForHumans()}}</small>
+                    <small class="ms-2">Last Updated: {{$comment->updated_at->diffForHumans()}}</small>
                     @auth
                         @if ($user->id === $comment->owner->id)
-                            <small class="ml-2">
+                            <small class="ms-2">
                             <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}">edit</a>
                         </small>
-                            <small class="ml-2">
+                            <small class="ms-2">
                             <a href="{{route('public.datasets.comments.delete', [$dataset, $comment])}}">delete</a>
                         </small>
                         @endif

@@ -28,7 +28,7 @@
                               placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>
                 </div>
                 <div class="form-group">
-                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
+                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="me-3">Goto Globus</a>
                     <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
                 <div class="form-group">
@@ -39,7 +39,7 @@
                     </p>
                 </div>
                 <div class="float-end">
-                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
+                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger me-3">Cancel</a>
                     <button class="btn btn-success">Mark Done</button>
                 </div>
             </form>

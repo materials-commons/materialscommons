@@ -12,9 +12,9 @@
     <x-card>
         <x-slot:header>
             Triggers
-            <a class="float-end action-link mr-4"
+            <a class="float-end action-link me-4"
                href="{{route('projects.triggers.create', [$project])}}">
-                <i class="fas fa-fw fa-plus mr-2"></i>Add Trigger
+                <i class="fas fa-fw fa-plus me-2"></i>Add Trigger
             </a>
         </x-slot:header>
 

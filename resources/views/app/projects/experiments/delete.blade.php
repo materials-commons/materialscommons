@@ -31,7 +31,7 @@
                     </div>
                     <input hidden name="project_id" value="{{$project->id}}">
                     <div class="float-end">
-                        <a href="{{route('projects.show', ['project' => $project])}}" class="action-link danger mr-3">
+                        <a href="{{route('projects.show', ['project' => $project])}}" class="action-link danger me-3">
                             Cancel
                         </a>
                         <a class="action-link" onclick="document.getElementById('delete-experiment').submit()" href="#">

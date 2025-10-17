@@ -3,16 +3,16 @@
         <x-datahq.mql-controls :project="$project"/>
     @else
         <div class="form-group" x-datax="datahqViewControls">
-            <label class="ml-4">Show:</label>
+            <label class="ms-4">Show:</label>
             <div class="btn-group" role="group">
-                <a class="action-link ml-3 cursor-pointer" wire:click.prevent="toggleProcesses()">
-                    <i class="fa fas fa-code-branch mr-2"></i>Processes
+                <a class="action-link ms-3 cursor-pointer" wire:click.prevent="toggleProcesses()">
+                    <i class="fa fas fa-code-branch me-2"></i>Processes
                 </a>
-                <a class="action-link ml-4 cursor-pointer" wire:click.prevent="toggleSampleAttributes()">
-                    <i class="fa fas fa-cubes mr-2"></i>Sample Attributes
+                <a class="action-link ms-4 cursor-pointer" wire:click.prevent="toggleSampleAttributes()">
+                    <i class="fa fas fa-cubes me-2"></i>Sample Attributes
                 </a>
-                <a class="action-link ml-4 cursor-pointer" wire:click.prevent="toggleProcessAttributes()">
-                    <i class="fa fas fa-project-diagram mr-2"></i>Process Attributes
+                <a class="action-link ms-4 cursor-pointer" wire:click.prevent="toggleProcessAttributes()">
+                    <i class="fa fas fa-project-diagram me-2"></i>Process Attributes
                 </a>
             </div>
         </div>
@@ -47,11 +47,11 @@
         <hr/>
     @endif
 
-    {{--    <a class="action-link cursor-pointer float-end ml-4">--}}
-    {{--        <i class="fa fas fa-table mr-2"></i> New Table--}}
+    {{--    <a class="action-link cursor-pointer float-end ms-4">--}}
+    {{--        <i class="fa fas fa-table me-2"></i> New Table--}}
     {{--    </a>--}}
 
     <a class="action-link cursor-pointer float-end" wire:click.prevent="$parent.addChart()">
-        <i class="fa fas fa-chart-area mr-2"></i> New Chart
+        <i class="fa fas fa-chart-area me-2"></i> New Chart
     </a>
 </div>

@@ -1,8 +1,8 @@
 @component('components.card-white')
     @slot('header')
         Recommend Practices Links
-        <a class="float-end action-link mr-2" href="{{route('communities.links.create', [$community])}}">
-            <i class="fas fa-fw fa-plus mr-2"></i>Add Link
+        <a class="float-end action-link me-2" href="{{route('communities.links.create', [$community])}}">
+            <i class="fas fa-fw fa-plus me-2"></i>Add Link
         </a>
     @endslot
 
@@ -20,7 +20,7 @@
                 <tr>
                     <td>
                         <a href="{{$link->url}}" target="_blank">
-                            <i class="fa-fw fas mr-2 fa-external-link-alt"></i>{{$link->name}}
+                            <i class="fa-fw fas me-2 fa-external-link-alt"></i>{{$link->name}}
                         </a>
                     </td>
                     <td>{{$link->summary}}</td>

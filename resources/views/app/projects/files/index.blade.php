@@ -22,7 +22,7 @@
                 </div>
                 <div class="float-end">
                     <a href="{{route('projects.files.index', ['project' => $project])}}"
-                       class="action-link danger mr-3">
+                       class="action-link danger me-3">
                         Cancel
                     </a>
 

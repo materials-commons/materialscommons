@@ -26,7 +26,7 @@
 
                 <div class="float-end">
                     <a href="{{route('projects.folders.show', [$project, $dir, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])}}"
-                       class="action-link mr-3">
+                       class="action-link me-3">
                         Cancel
                     </a>
                     <a class="action-link" onclick="document.getElementById('rename-folder').submit()" href="#">

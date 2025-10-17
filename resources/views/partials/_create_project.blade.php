@@ -16,11 +16,11 @@
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
     <div class="float-end" x-data="_createProject">
-        <a href="{{$cancelRoute}}" class="action-link danger mr-3">
+        <a href="{{$cancelRoute}}" class="action-link danger me-3">
             Cancel
         </a>
 
-        <a class="action-link @isset($createAndNext) mr-3 @endisset"
+        <a class="action-link @isset($createAndNext) me-3 @endisset"
            href="#" onclick="document.getElementById('project-create').submit()">
             Create
         </a>

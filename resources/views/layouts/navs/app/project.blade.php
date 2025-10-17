@@ -6,7 +6,7 @@
         {{-- Project Context --}}
         <div class="sidebar-group">
             <div class="sidebar-group-header">
-                <i class="fas fa-project-diagram fa-sm mr-2"></i>Current Project
+                <i class="fas fa-project-diagram fa-sm me-2"></i>Current Project
             </div>
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -16,7 +16,7 @@
                        href="{{route('projects.show', ['project' => $project->id])}}">
                         {{$project->name}}
                         <x-health.projects.health-status-badge :project="$project"/>
-{{--                        <span class="ml-2 badge badge-danger"><i class="fas fa-exclamation-triangle"></i> Critical</span>--}}
+{{--                        <span class="ms-2 badge badge-danger"><i class="fas fa-exclamation-triangle"></i> Critical</span>--}}
                     </a>
                 </li>
             </ul>
