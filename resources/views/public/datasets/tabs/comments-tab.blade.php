@@ -9,7 +9,7 @@
 
     <div class="row col-12">
         <form class="col-10">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="comment_{{$comment->id}}">{{$comment->title}}</label>
                 <textarea class="form-control" id="comment_{{$comment->id}}" readonly
                           style="min-width:100%">{{$comment->body}}</textarea>

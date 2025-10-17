@@ -51,7 +51,7 @@
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
                                 @if(auth()->id() == $proj->owner_id)
-                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+                                    <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}"
                                        class="action-link">
                                         <i class="fas fa-fw fa-trash-alt"></i>
                                     </a>

@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <div x-text="authorAdded"></div>
-                    <div class="form-row mt-2">
+                    <div class="row mt-2">
                         <div class="col">
                             <input class="form-control" name="author_name" type="text" placeholder="Name...(Required)"
                                    x-model="author.name" id="author_name" required>

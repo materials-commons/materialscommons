@@ -2,7 +2,7 @@
     @if($showFilters)
         <x-datahq.mql-controls :project="$project"/>
     @else
-        <div class="form-group" x-datax="datahqViewControls">
+        <div class="mb-3" x-datax="datahqViewControls">
             <label class="ms-4">Show:</label>
             <div class="btn-group" role="group">
                 <a class="action-link ms-3 cursor-pointer" wire:click.prevent="toggleProcesses()">

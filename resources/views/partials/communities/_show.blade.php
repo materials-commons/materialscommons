@@ -11,7 +11,7 @@
             @if(isset($userDatasets))
                 @if($userDatasets->isNotEmpty())
                     <div class="dropdown float-end">
-                        <a class="action-link me-4 dropdown-toggle" data-toggle="dropdown"
+                        <a class="action-link me-4 dropdown-toggle" data-bs-toggle="dropdown"
                            data-offset="20" data-boundary="viewport"
                            href="#">
                             <i class="fas fa-plus me-2"></i>Add Dataset

@@ -12,7 +12,7 @@
                 <form id="create-transfer-request-form" method="post"
                       action="{{route('admin.dashboard.mcfs.transfer-requests.create')}}">
                     @csrf
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Find Project</label>
                         <input class="form-control" name="project_name" value=""
                                hx-get="{{route('htmx.searchers.find-project')}}"
@@ -23,7 +23,7 @@
                     </div>
                     <span id="project-indicator" class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
                     <div id="matching-projects"></div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Find User</label>
                         <input class="form-control" name="user_name" value=""
                                hx-get="{{route('htmx.searchers.find-user')}}"
@@ -42,12 +42,12 @@
                         <label class="form-check-label" for="is-mc-transfer">Create As MC Transfer</label>
                     </div>
                     <br/>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Project ID</label>
                         <input class="form-control" name="project_id" value=""
                                type="text" placeholder="Project ID..." required>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Email of Owner</label>
                         <input class="form-control" name="email" value="" type="email" placeholder="Email..." required>
                     </div>

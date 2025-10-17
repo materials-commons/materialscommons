@@ -18,7 +18,7 @@
             <x-card-container>
                 <div class="float-end">
                     @if($nav_trash_count > 0)
-                        <a data-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
+                        <a data-bs-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
                     @else
                         <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
                     @endif

@@ -14,7 +14,7 @@
         <x-slot:body>
             <h5>Select Project</h5>
             <form class="col-8">
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="projects">Projects</label>
                     <select name="project" class="selectpicker col-9" title="projects"
                             data-style="btn-light no-tt"

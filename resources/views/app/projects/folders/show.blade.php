@@ -49,7 +49,7 @@
                     @csrf
 
                     @if($arg == 'move-copy')
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="project">Destination Project</label>
                             <select name="project" class="selectpicker col-lg-6" id="select-project"
                                     data-style="btn-light no-tt"
@@ -67,7 +67,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="directories">Destination</label>
                             <select name="directory" class="selectpicker col-lg-6" id="select-directory"
                                     data-style="btn-light no-tt"
@@ -159,21 +159,21 @@
                                 @endif
                                 <td>
                                     @if($file->isDir())
-                                        <a class="action-link" data-toggle="tooltip" title="Rename directory."
+                                        <a class="action-link" data-bs-toggle="tooltip" title="Rename directory."
                                            href="{{route('projects.folders.rename', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                             <i class="fas fa-fw fa-edit"></i>
                                         </a>
 
-                                        <a class="action-link" data-toggle="tooltip" title="Delete directory."
+                                        <a class="action-link" data-bs-toggle="tooltip" title="Delete directory."
                                            href="{{route('projects.folders.delete', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                             <i class="fas fa-fw fa-trash"></i>
                                         </a>
                                     @else
-                                        <a class="action-link" data-toggle="tooltip" title="Rename file."
+                                        <a class="action-link" data-bs-toggle="tooltip" title="Rename file."
                                            href="{{route('projects.files.rename', [$project, $file])}}">
                                             <i class="fas fa-fw fa-edit"></i>
                                         </a>
-                                        <a class="action-link" data-toggle="tooltip" title="Delete file."
+                                        <a class="action-link" data-bs-toggle="tooltip" title="Delete file."
                                            href="{{route('projects.files.destroy', [$project, $file, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}">
                                             <i class="fas fa-fw fa-trash"></i>
                                         </a>

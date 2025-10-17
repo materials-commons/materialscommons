@@ -14,7 +14,7 @@
             Dataset: {{$dataset->name}}
             <div class="dropdown float-end me-4">
                 @if(!blank($dataset->doi))
-                    <a class="action-link me-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
+                    <a class="action-link me-3 cursor-pointer" data-bs-toggle="modal" href="#cite-dataset-modal"><i
                             class="fas fa-quote-left me-1"></i>Cite Dataset</a>
                 @endif
                 @auth
@@ -25,7 +25,7 @@
                     {{--                    </a>--}}
                     {{--                @endif--}}
 
-                    <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
+                    <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-bs-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-file-import me-2"></i>Import Into Project
                     </a>
@@ -43,7 +43,7 @@
                         <a class="action-link ms-3"
                            href="#"
                            id="notification"
-                           data-toggle="tooltip"
+                           data-bs-toggle="tooltip"
                            title="Stop notifications on dataset"
                            hx-get="{{route('public.datasets.notifications.unmark-for-notification', [$dataset])}}"
                            hx-target="#notification"
@@ -54,7 +54,7 @@
                         <a class="action-link ms-3"
                            href="#"
                            id="notification"
-                           data-toggle="tooltip"
+                           data-bs-toggle="tooltip"
                            title="Get notified when dataset is updated"
                            hx-get="{{route('public.datasets.notifications.mark-for-notification', [$dataset])}}"
                            hx-target="#notification"
@@ -65,7 +65,7 @@
                     {{--                @if(auth()->user()->hasCommunities())--}}
                     {{--                    <div class="dropdown float-end me-4">--}}
                     {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
-                    {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                    {{--                           href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
                     {{--                            <i class="fas fa-plus me-2"></i>Add To Community--}}
                     {{--                        </a>--}}
                     {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}

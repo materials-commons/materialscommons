@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb-3">
     <div class="row">
         <label for="authors">Authors</label>
         <div class="drag-and-drop col-12" x-data="{adding: false, removing: false}">
@@ -87,7 +87,7 @@
     {{--    </ul>--}}
 </div>
 
-<div class="form-group">
+<div class="mb-3">
     <label for="additional_authors">Additional Authors</label>
     <div class="">
         <a href="#" onclick="addAdditionalAuthor()"><i class="fa fas fa-fw fa-plus"></i>Add External Author</a>
@@ -124,7 +124,7 @@
 
         function addAdditionalAuthor() {
             $('#additional_authors').append(`<li id="${nextAdditionalAuthorId}">
-                <div class="form-row mt-2">
+                <div class="row mt-2">
                     <a href="#" onclick="removeAuthor('${nextAdditionalAuthorId}')"><i class="fa fas fa-fw fa-trash"></i></a>
                     <div class="col">
                         <input class="form-control" name="additional_authors['id_${nextAdditionalAuthorId}'][name]" type="text" placeholder="Name...(Required)"

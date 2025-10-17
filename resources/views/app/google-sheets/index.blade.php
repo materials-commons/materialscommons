@@ -38,7 +38,7 @@
                         <h4>Spreadsheet Settings</h4>
                         <form action="{{ route('google-sheets.store-spreadsheet') }}" method="POST" class="mb-4">
                             @csrf
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="spreadsheet_id">Spreadsheet ID</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="spreadsheet_id" name="spreadsheet_id"
@@ -59,11 +59,11 @@
                             <hr>
                             <h4>Update Cell</h4>
                             <div class="mb-4">
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label for="cell">Cell Reference</label>
                                     <input type="text" class="form-control" id="cell" placeholder="e.g., A1, B2, etc." required>
                                 </div>
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <label for="value">Value</label>
                                     <input type="text" class="form-control" id="value" placeholder="Enter cell value" required>
                                 </div>

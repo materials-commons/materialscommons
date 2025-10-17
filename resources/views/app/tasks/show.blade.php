@@ -15,7 +15,7 @@
                 <i class="fas fa-edit me-2"></i>Edit
             </a>
 
-            <a data-toggle="modal" class="float-end action-link me-4"
+            <a data-bs-toggle="modal" class="float-end action-link me-4"
                href="#item-delete-{{$task->id}}">
                 <i class="fas fa-trash-alt me-2"></i>Delete
             </a>

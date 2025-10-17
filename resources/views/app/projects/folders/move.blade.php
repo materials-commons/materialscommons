@@ -22,7 +22,7 @@
                   id="move-files">
                 @csrf
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="project">Destination Project</label>
                     <select name="project" class="selectpicker col-lg-6"
                             data-style="btn-light no-tt"
@@ -34,7 +34,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="directories">Destination</label>
                     <select name="directory" class="selectpicker col-lg-6"
                             data-style="btn-light no-tt"
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <br/>
-                <div class="form-group">
+                <div class="mb-3">
                     <table id="files" class="table table-hover" style="width:100%">
                         <thead>
                         <tr>

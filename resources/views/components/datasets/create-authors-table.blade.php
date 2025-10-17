@@ -14,7 +14,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row mt-2">
+                        <div class="row mt-2">
                             <div class="col">
                                 <input class="form-control" name="author_name" type="text"
                                        placeholder="Name...(Required)"

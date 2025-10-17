@@ -14,7 +14,7 @@
 
         @slot('body')
             <div class="col-10">
-                <form class="form-group">
+                <form class="mb-3">
                     <p>
                         Materials Commons stores all data in projects. You can choose to create a new project, or
                         use

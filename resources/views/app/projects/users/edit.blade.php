@@ -43,7 +43,7 @@
                             <div class="dropdown">
                                 <a class="nav-link fs-11 ms-5 dropdown-toggle td-none" href="#" role="button"
                                    id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa-fw fas fa-plus me-2"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

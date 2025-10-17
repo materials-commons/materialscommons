@@ -11,7 +11,7 @@
     </x-show-standard-details>
 
     <form>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="counts">Counts</label>
             <ul class="list-inline">
                 <li class="list-inline-item mt-1">

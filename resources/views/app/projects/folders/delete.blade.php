@@ -19,11 +19,11 @@
                 @csrf
                 @method('delete')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{$dir->path}}" name="name" readonly>
                 </div>
-                {{--                <div class="form-group">--}}
+                {{--                <div class="mb-3">--}}
                 {{--                    <label for="description">Description</label>--}}
                 {{--                    <textarea class="form-control" id="description"--}}
                 {{--                              name="description" readonly>{{$dir->description}}</textarea>--}}

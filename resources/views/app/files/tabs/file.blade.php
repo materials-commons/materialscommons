@@ -4,7 +4,7 @@
         'editRoute' => route('projects.files.edit', [$project, $file]),
     ])
     {{--<form>--}}
-    {{--    <div class="form-group">--}}
+    {{--    <div class="mb-3">--}}
     {{--        <label>Tags <a href="#" class="ms-3 action-linkx">edit</a></label>--}}
     {{--        <ul class="list-inline">--}}
     {{--            <li class="list-inline-item mt-1">--}}
@@ -15,7 +15,7 @@
     {{--        </ul>--}}
     {{--    </div>--}}
 
-    {{--    <div class="form-group">--}}
+    {{--    <div class="mb-3">--}}
     {{--        <label for="tags">Tags</label>--}}
     {{--        <input class="form-control" id="tags" name="tags" value="">--}}
     {{--    </div>--}}

@@ -89,7 +89,7 @@
             Materials Commons 2.0
         </a>
     @endif
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                    <a class="nav-link outline-none td-none navbar-brand help-color" data-bs-toggle="modal"
                        href="#code-dialog">
                         CLI/API
                     </a>
@@ -114,7 +114,7 @@
                 {{--                   href="{{helpUrl()}}" target="_blank">--}}
                 {{--                    Help--}}
                 {{--                </a>--}}
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-bs-toggle="modal"
                    href="#help-dialog">
                     Help
                 </a>
@@ -135,7 +135,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
                        role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{auth()->user()->name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -148,7 +148,7 @@
                         <a class="dropdown-item td-none" href="{{route('accounts.show')}}">
                             <i class="fa-fw fas fa-user me-2 mb-1"></i>Account
                         </a>
-                        {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
+                        {{--                        <a class="dropdown-item td-none" data-bs-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>
                 </li>
             </ul>
@@ -204,7 +204,7 @@
 @include('app.dialogs._no-tour-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mms-chtml.js"></script>
 <script>
     MathJax = {
         tex: {

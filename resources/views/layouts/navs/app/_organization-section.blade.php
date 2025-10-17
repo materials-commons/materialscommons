@@ -6,7 +6,7 @@
     <ul class="nav flex-column">
         <li class="nav-item ms-2">
             <a class="nav-link fs-12 {{setActiveNavByName('projects.experiments')}}"
-               data-toggle="tooltip" title="Track your experimental and computational studies."
+               data-bs-toggle="tooltip" title="Track your experimental and computational studies."
                href="{{route('projects.experiments.index', ['project' => $project->id])}}">
                 <i class="fa-fw fas fa-flask me-2 mb-1 fs-11"></i>Studies
             </a>
@@ -14,7 +14,7 @@
 
         <li class="nav-item ms-2">
             <a class="nav-link fs-12 {{setActiveNavByName('projects.datasets')}}"
-               data-toggle="tooltip" title="Track and publish your research results."
+               data-bs-toggle="tooltip" title="Track and publish your research results."
                href="{{route('projects.datasets.index', ['project' => $project->id])}}">
                 <i class="fa-fw fas fa-book me-2 mb-1 fs-11"></i>Datasets
             </a>

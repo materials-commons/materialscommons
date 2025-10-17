@@ -2,7 +2,7 @@
 <div>
     @if(isInBeta('run_scripts'))
         @if($scripts->count() != 0)
-            <a class="float-end action-link me-4" data-toggle="modal" href="#select-script-dialog">
+            <a class="float-end action-link me-4" data-bs-toggle="modal" href="#select-script-dialog">
                 <i class="fas fa-fw fa-play-circle me-2"></i>Run Script
             </a>
         @endif

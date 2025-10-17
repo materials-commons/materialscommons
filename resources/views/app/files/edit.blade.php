@@ -13,7 +13,7 @@
             <x-card-container>
                 <form method="post" action="{{route('projects.files.save-edited', [$project, $file])}}" id="file-edit">
                     @csrf
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="content">File</label>
                         <textarea class="form-control" id="content" name="content" type="text"
                                   placeholder="Content...">{{$fileContents($file)}}</textarea>

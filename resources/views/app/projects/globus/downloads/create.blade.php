@@ -16,12 +16,12 @@
             <form method="post" action="{{route('projects.globus.downloads.store', [$project])}}"
                   id="download-create">
                 @csrf
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                            placeholder="Name..." required>
                 </div>
-                {{--                    <div class="form-group">--}}
+                {{--                    <div class="mb-3">--}}
                 {{--                        <label for="description">Description</label>--}}
                 {{--                        <textarea class="form-control" id="description" name="description" type="text"--}}
                 {{--                                  placeholder="Description..."></textarea>--}}

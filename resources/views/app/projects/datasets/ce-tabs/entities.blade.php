@@ -26,7 +26,7 @@
                 </td>
                 <td>{{$entityExperiments($entity)}}</td>
                 <td>
-                    <div class="form-group form-check-inline">
+                    <div class="mb-3 form-check-inline">
                         <input type="checkbox" class="form-check-input entity-checkbox" id="{{$entity->uuid}}"
                                {{$entityInDataset($entity) ? 'checked' : ''}}
                                onclick="updateEntitySelection({{$entity}}, this)">

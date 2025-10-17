@@ -6,8 +6,8 @@
         @endphp
         <div class="col-8">
             <form>
-                <div class="form-row">
-                    <div class="form-group col-12">
+                <div class="row">
+                    <div class="mb-3 col-12">
                         <label for="mql">Filter:</label>
                         <textarea class="form-control col-12" id="mql" placeholder="Filter by..."
                                   rows="{{line_count($filters, 2)+1}}"></textarea>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
+        <div class="mb-3">
             <label class="ms-4">Show/Add Filter On:</label>
             <div class="btn-group" role="group">
                 <a class="action-link ms-3 cursor-pointer" @click.prevent="toggleProcesses()">

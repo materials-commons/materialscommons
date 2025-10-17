@@ -67,7 +67,7 @@
                         <td>{{$file->toHumanBytes()}}</td>
                     @endif
                     <td>
-                        <div class="form-group form-check-inline">
+                        <div class="mb-3 form-check-inline">
                             <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                    {{$file->selected ? 'checked' : ''}}
                                    onclick="updateSelection({{$file}}, this)">

@@ -18,13 +18,13 @@
         <x-slot:body>
             <x-show-standard-details :item="$trigger"></x-show-standard-details>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="when">When</label>
                 <input class="form-control" id="when" name="when" type="text" value="{{$trigger->when}}"
                        placeholder="When..." readonly>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="what">What</label>
                 <input class="form-control" id="what" name="what" type="text" value="{{$trigger->what}}"
                        placeholder="What..." readonly>

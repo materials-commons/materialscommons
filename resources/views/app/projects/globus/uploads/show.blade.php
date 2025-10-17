@@ -14,17 +14,17 @@
 
         @slot('body')
             <form>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{$globusUpload->name}}"
                            placeholder="Name..." readonly>
                 </div>
-                {{--                <div class="form-group">--}}
+                {{--                <div class="mb-3">--}}
                 {{--                    <label for="description">Description</label>--}}
                 {{--                    <textarea class="form-control" id="description" name="description" type="text"--}}
                 {{--                              placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>--}}
                 {{--                </div>--}}
-                <div class="form-group">
+                <div class="mb-3">
                     <a href="{{$globusUpload->globus_url}}" target="_blank">Goto Globus</a>
                 </div>
                 <div class="float-end">

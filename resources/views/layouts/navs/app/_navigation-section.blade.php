@@ -5,7 +5,7 @@
     <ul class="nav flex-column">
         <li class="nav-item">
             <a class="nav-link fs-11 {{setActiveNav('dashboard')}}"
-               data-toggle="tooltip"
+               data-bs-toggle="tooltip"
                title="Go to the dashboard listing all your projects and published datasets."
                href="{{route('dashboard')}}" style="color:#2B6BB1; font-weight: bold;">
                 <i class="fa-fw fas fa-tachometer-alt me-2 mb-1"></i>Dashboard
@@ -27,7 +27,7 @@
 {{--            </a>--}}
 {{--        </li>--}}
 {{--        <li class="nav-item">--}}
-{{--            <a class="nav-link fs-11" data-toggle="modal" href="#help-dialog">--}}
+{{--            <a class="nav-link fs-11" data-bs-toggle="modal" href="#help-dialog">--}}
 {{--                <i class="fa-fw fas fa-question-circle help-icon me-2 mb-1"></i>Get Help--}}
 {{--            </a>--}}
 {{--        </li>--}}

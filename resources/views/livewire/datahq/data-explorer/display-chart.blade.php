@@ -5,24 +5,24 @@
             <h5>Not Implemented Yet</h5>
         </x-slot:body>
     </x-modal>
-    <div class="form-group">
+    <div class="mb-3">
         <label class="ms-4">Chart Controls:</label>
         <div class="btn-group" role="group">
             <a class="action-link ms-3 cursor-pointer"
                @click.prevent="toggleShowChartDataControls()">
                 <i class="fa fas fa-plus me-2"></i>Add Data
             </a>
-            <a class="action-link ms-4" href="#sv-not-implemented" data-toggle="modal">
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
                 <i class="fa fas fa-eye me-2"></i>View Data
             </a>
             {{--            <a class="action-link ms-4 cursor-pointer" @click.prevent="downloadChartData()">--}}
-            <a class="action-link ms-4 cursor-pointer" href="#sv-not-implemented" data-toggle="modal">
+            <a class="action-link ms-4 cursor-pointer" href="#sv-not-implemented" data-bs-toggle="modal">
                 <i class="fa fas fa-download me-2"></i>Download Chart Data
             </a>
-            <a class="action-link ms-4" href="#sv-not-implemented" data-toggle="modal">
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
                 <i class="fa fas fa-trash me-2"></i>Delete Data
             </a>
-            <a class="action-link ms-4" href="#sv-not-implemented" data-toggle="modal">
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
                 <i class="fa fas fa-save me-2"></i>Save Chart
             </a>
             {{--            <a class="action-link ms-4 cursor-pointer"--}}

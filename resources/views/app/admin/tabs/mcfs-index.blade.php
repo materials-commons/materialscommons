@@ -1,6 +1,6 @@
 <div>
     <a class="btn btn-success float-end ms-3"
-       data-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
+       data-bs-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
     @include('app.admin.partials._create-transfer-request-modal')
     <a class="btn btn-success float-end" href="{{route('admin.dashboard.mcfs.show-log-viewer')}}"><i
                 class="fa fa-fw fa-file-alt me-2"></i>Log Viewer</a>

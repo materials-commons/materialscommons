@@ -12,30 +12,30 @@
         <x-slot:body>
             <form method="post" action="{{route('projects.triggers.store', [$project])}}" id="trigger-create">
                 @csrf
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                            placeholder="Name...">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description...">{{old('description')}}</textarea>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="what">What</label>
                     <input class="form-control" id="what" name="what" type="text" value="{{old('what')}}"
                            placeholder="What...">
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">When</label>
                     <input class="form-control" id="when" name="when" type="text" value="{{old('when')}}"
                            placeholder="When...">
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Select Script</label>
                     <select name="script_file_id" class="selectpicker col-lg-10" data-live-search="true"
                             data-style="btn-light no-tt"

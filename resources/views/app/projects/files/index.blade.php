@@ -16,9 +16,9 @@
             <form action="{{route('projects.files.store', ['project' => $project->id])}}" method="POST"
                   enctype="multipart/form-data" id="file-upload">
                 @csrf
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="file-upload-input">Upload File</label>
-                    <input type="file" class="form-control-file" id="file-upload-input" name="file">
+                    <input type="file" class="form-control" id="file-upload-input" name="file">
                 </div>
                 <div class="float-end">
                     <a href="{{route('projects.files.index', ['project' => $project])}}"

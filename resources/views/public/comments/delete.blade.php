@@ -17,13 +17,13 @@
                   id="comment-destroy">
                 @csrf
                 @method('delete')
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="title">Title</label>
                     <input class="form-control" id="title" value="{{$comment->title}}" type="text"
                            placeholder="Title..." readonly>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="comment">Comment</label>
                     <textarea class="form-control" id="comment" type="text"
                               placeholder="Comment..." readonly>{{$comment->body}}</textarea>

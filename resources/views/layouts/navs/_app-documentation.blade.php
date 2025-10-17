@@ -5,7 +5,7 @@
     <ul class="nav flex-column">
         <li class="nav-item">
             <a class="nav-link fs-11 project-name"
-               data-toggle="tooltip"
+               data-bs-toggle="tooltip"
                title=""
                href="/mcdocs2">
                 Features and Documentation

@@ -17,21 +17,21 @@
                   id="complete-upload">
                 @csrf
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{$globusUpload->name}}"
                            placeholder="Name..." readonly>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <a href="{{$globusUpload->globus_url}}" target="_blank" class="me-3">Goto Globus</a>
                     <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <p class="h5">
                         Before marking as complete please make sure all globus transfers are done. You can check your
                         uploads on globus

@@ -40,7 +40,7 @@
                     <i class="fas fa-fw fa-trash-restore"></i>
                     restore
                 </a>
-                <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+                <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}"
                    class="action-link ms-3 text-danger">
                     <i class="fas fa-fw fa-trash-alt"></i> Delete Immediately
                 </a>

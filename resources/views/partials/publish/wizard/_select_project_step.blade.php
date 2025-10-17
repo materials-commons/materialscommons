@@ -11,7 +11,7 @@
     <div class="col-6 col-left-border">
             <h5>Select Project</h5>
             <form class="col-12">
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="projects">Projects</label>
                     <select name="project" class="selectpicker col-lg-8" title="projects"
                             data-style="btn-light no-tt"

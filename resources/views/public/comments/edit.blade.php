@@ -18,13 +18,13 @@
                 @csrf
                 @method('put')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="title">Title</label>
                     <input class="form-control" id="title" name="title" value="{{$comment->title}}" type="text"
                            placeholder="Title..." required>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="comment">Comment</label>
                     <textarea class="form-control" id="comment" name="body" type="text"
                               placeholder="Comment..." required>{{$comment->body}}</textarea>

@@ -1,12 +1,12 @@
 <form method="post" action="{{$storeUrlRoute}}" id="url-create">
     @csrf
-    <div class="form-group">
+    <div class="mb-3">
         <label for="name">Name</label>
         <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                placeholder="Name for the URL...">
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <label for="url">URL</label>
         <input class="form-control" id="url" name="url" type="url" value="{{old('url')}}"
                placeholder="https://example.com">

@@ -11,7 +11,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link fs-11 project-name {{setActiveNavByName('projects.show')}}"
-                       data-toggle="tooltip"
+                       data-bs-toggle="tooltip"
                        title="View details about your project."
                        href="{{route('projects.show', ['project' => $project->id])}}">
                         {{$project->name}}

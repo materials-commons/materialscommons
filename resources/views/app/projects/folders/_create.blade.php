@@ -1,6 +1,6 @@
 <form method="post" action="{{$storeDirectoryRoute}}" id="folder-create">
     @csrf
-    <div class="form-group">
+    <div class="mb-3">
         <label for="name">Name</label>
         <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                placeholder="Folder...">

@@ -18,7 +18,7 @@
                 @csrf
                 @method('put')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{$file->name}}" name="name">
                 </div>

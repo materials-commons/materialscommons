@@ -22,7 +22,7 @@
             </a>
 
             @if ($project->owner_id == auth()->id())
-                <a data-toggle="modal" class="float-end action-link me-4"
+                <a data-bs-toggle="modal" class="float-end action-link me-4"
                    href="#project-delete-{{$project->id}}">
                     <i class="fas fa-trash-alt me-2"></i>Delete
                 </a>

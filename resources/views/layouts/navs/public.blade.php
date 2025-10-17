@@ -102,7 +102,7 @@
                         <i class="fa-fw fas fa-atlas me-2"></i>
                         UHCSDB
                         <i class="fa-fw fas fa-question-circle ms-2"
-                           data-toggle="tooltip"
+                           data-bs-toggle="tooltip"
                            title="A dataset explorer of hierarchical structures in Ultrahigh carbon steel"></i>
                     </a>
                 </li>

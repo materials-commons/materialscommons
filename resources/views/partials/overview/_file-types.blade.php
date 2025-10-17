@@ -1,5 +1,5 @@
 @if(isset($fileDescriptionTypes) && sizeof($fileDescriptionTypes) != 0)
-    <div class="form-group">
+    <div class="mb-3">
         <label for="file-types">File Types ({{sizeof($fileDescriptionTypes)}})</label>
         <ul class="list-inline">
             @foreach($fileDescriptionTypes as $type => $count)

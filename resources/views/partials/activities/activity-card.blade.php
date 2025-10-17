@@ -5,7 +5,7 @@
     <hr/>
     @if(!blank($activity->description))
         <form>
-            <div class="form-group">
+            <div class="mb-3">
                 <textarea class="form-control" readonly>{{$activity->description}}</textarea>
             </div>
         </form>

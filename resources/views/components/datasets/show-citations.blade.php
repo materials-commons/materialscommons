@@ -1,4 +1,4 @@
-<div class="form-group mt-2">
+<div class="mb-3 mt-2">
     <label for="citations">Citations</label>
     @if($hasCitations)
         <div class="row">

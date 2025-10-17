@@ -1,5 +1,5 @@
 @if(!blank($papers))
-    <div class="form-group">
+    <div class="mb-3">
         <label for="dataset-papers">Papers</label>
         <ul class="list-unstyled ms-3" id="dataset-papers">
             @foreach($papers as $paper)

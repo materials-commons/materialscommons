@@ -25,20 +25,20 @@
             @csrf
             @method('put')
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="required" for="name">Name</label>
                 <input class="form-control" id="name" name="name" type="text"
                        value="{{old('name', $dataset->name)}}"
                        placeholder="Name...">
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="summary">Summary</label>
                 <input class="form-control" id="summary" value="{{old('summary', $dataset->summary)}}"
                        name="summary">
             </div>
 
-            {{--    <div class="form-group">--}}
+            {{--    <div class="mb-3">--}}
             {{--        <label for="authors">Authors and Affiliations</label>--}}
             {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
             {{--               value="{{old('authors', $dataset->authors)}}"--}}
@@ -49,19 +49,19 @@
             <div id="authors_list"></div>
             <br>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" type="text"
                           placeholder="Description...">{{old('description', $dataset->description)}}</textarea>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="funding">Funding</label>
                 <textarea class="form-control" id="funding" name="funding" type="text"
                           placeholder="Funding...">{{old('funding', $dataset->funding)}}</textarea>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="doi">DOI</label>
                 @if (empty($dataset->doi))
                     <span class="col-6">
@@ -78,7 +78,7 @@
 
             <x-datasets.create-papers-list :existing="$dataset->papers"/>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="license">License</label>
                 <select name="license" class="selectpicker col-lg-8" data-live-search="true"
                         data-style="btn-light no-tt"
@@ -107,7 +107,7 @@
                 <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="experiments">Studies</label>
                 <select name="experiments[]" class="selectpicker col-lg-8" data-live-search="true" multiple
                         data-style="btn-light no-tt"
@@ -120,7 +120,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="communities">Communities</label>
                 <select name="communities[]" class="selectpicker col-lg-8" data-live-search="true" multiple
                         data-style="btn-light no-tt"
@@ -133,7 +133,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="tags">Tags</label>
                 <input class="form-control" id="tags" name="tags" value="{{old('tags', $tagsList)}}">
             </div>

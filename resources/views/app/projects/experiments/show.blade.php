@@ -30,8 +30,8 @@
             {{$experiment->name}}
 
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
-                <a data-toggle="modal" href="#reload-experiment-modal"
-                   class="action-link float-end">
+                <a data-bs-toggle="modal" href="#reload-experiment-modal"
+                   class="action-link float-right">
                     <i class="fas fa-sync-alt me-2"></i> Reload Study
                 </a>
             @else
