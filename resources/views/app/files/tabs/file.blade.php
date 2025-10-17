@@ -8,7 +8,7 @@
     {{--        <label>Tags <a href="#" class="ms-3 action-linkx">edit</a></label>--}}
     {{--        <ul class="list-inline">--}}
     {{--            <li class="list-inline-item mt-1">--}}
-    {{--                <a class="badge badge-success fs-11 td-none">--}}
+    {{--                <a class="badge text-bg-success fs-11 td-none">--}}
     {{--                    Hello--}}
     {{--                </a>--}}
     {{--            </li>--}}

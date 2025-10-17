@@ -2,10 +2,10 @@
     <div class="card-body inner-card">
         <h5 class="card-title">Projects Overview
             @if($projectsWithErrorStateCount > 0)
-                <span class="badge badge-danger ms-2"><i class="fas fa-exclamation-triangle"></i></span>
+                <span class="badge text-bg-danger ms-2"><i class="fas fa-exclamation-triangle"></i></span>
             @endif
             @if($projectsWithWarningStateCount > 0)
-                <span class="badge badge-warning ms-2 text-white"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="badge text-bg-warning ms-2 text-white"><i class="fas fa-exclamation-circle"></i></span>
             @endif
         </h5>
         <hr/>

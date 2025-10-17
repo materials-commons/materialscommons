@@ -16,7 +16,7 @@
                        href="{{route('projects.show', ['project' => $project->id])}}">
                         {{$project->name}}
                         <x-health.projects.health-status-badge :project="$project"/>
-{{--                        <span class="ms-2 badge badge-danger"><i class="fas fa-exclamation-triangle"></i> Critical</span>--}}
+{{--                        <span class="ms-2 badge text-bg-danger"><i class="fas fa-exclamation-triangle"></i> Critical</span>--}}
                     </a>
                 </li>
             </ul>

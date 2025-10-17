@@ -36,7 +36,7 @@
                             <td>{{collect($dataset->ds_authors)->implode('name', ', ')}}</td>
                             <td>
                                 @foreach($dataset->tags as $tag)
-                                    <span class="badge badge-info ms-1">{{$tag->name}}</span>
+                                    <span class="badge text-bg-info ms-1 text-white">{{$tag->name}}</span>
                                 @endforeach
                             </td>
                             @if ($dataset->published_at === null)

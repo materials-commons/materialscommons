@@ -25,7 +25,7 @@
             <ul class="list-inline">
                 @foreach($tags as $tag => $count)
                     <li class="list-inline-item mt-1">
-                        <a class="badge badge-success fs-11 td-none"
+                        <a class="badge text-bg-success fs-11 td-none text-white"
                            href="{{route('public.communities.search.tag', [$community, 'tag' => $tag])}}">
                             {{$tag}}
                         </a>

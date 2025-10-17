@@ -3,9 +3,9 @@
 <div class="card-header d-flex justify-content-between align-items-center">
     @php
         $statusClasses = [
-            'healthy' => 'badge-success',
-            'warning' => 'badge-warning',
-            'critical' => 'badge-danger'
+            'healthy' => 'text-bg-success',
+            'warning' => 'text-bg-warning',
+            'critical' => 'text-bg-danger'
         ];
         $statusIcons = [
             'healthy' => 'fa-check-circle',
