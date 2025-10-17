@@ -29,7 +29,7 @@
                 Sample: {{$entity->name}}
             @endif
 
-            <div class="float-right">
+            <div class="float-end">
 
                 @if(isset($prevEntity))
                     @if($entity->category == "computational")
@@ -65,7 +65,7 @@
                 </a>
             </div>
 
-            <div class="col col-lg-4 float-right">
+            <div class="col col-lg-4 float-end">
                 <select class="selectpicker col-lg-10 mc-select"
                         data-style="btn-light no-tt"
                         data-live-search="true" title="{{$title}}">

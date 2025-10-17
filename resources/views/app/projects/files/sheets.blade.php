@@ -11,7 +11,7 @@
         <x-slot name="header">Sheets</x-slot>
         <x-slot name="body">
             <x-table-container>
-                <div class="float-right">
+                <div class="float-end">
                     <a data-toggle="modal" href="#add-google-sheet-modal"
                        class="btn btn-success">
                         <i class="fa fas fa-plus mr-2"></i>Add Google Sheet

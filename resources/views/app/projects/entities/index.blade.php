@@ -20,11 +20,11 @@
             @else
                 Samples
             @endif
-            {{--            <a class="action-link float-right" href="{{route('projects.entities-export', [$project])}}">--}}
+            {{--            <a class="action-link float-end" href="{{route('projects.entities-export', [$project])}}">--}}
             {{--                <i class="fas fa-download mr-2"></i>Download As Excel--}}
             {{--            </a>--}}
 
-            {{--            <a class="action-link float-right" href="{{route('projects.entities.create', [$project])}}">--}}
+            {{--            <a class="action-link float-end" href="{{route('projects.entities.create', [$project])}}">--}}
             {{--                <i class="fas fa-plus mr-2"></i>Create Sample--}}
             {{--            </a>--}}
         @endslot

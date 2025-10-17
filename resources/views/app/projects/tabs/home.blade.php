@@ -12,11 +12,11 @@
 {{--                @if(auth()->user()->isActiveProject($project))--}}
 {{--                    <a hx-get="{{route('projects.unmark-as-active', [$project, 'target' => 'mark-project'])}}"--}}
 {{--                       hx-target="#mark-project"--}}
-{{--                       class="btn btn-info float-right cursor-pointer">Remove From Active Projects</a>--}}
+{{--                       class="btn btn-info float-end cursor-pointer">Remove From Active Projects</a>--}}
 {{--                @else--}}
 {{--                    <a hx-get="{{route('projects.mark-as-active', [$project, 'target' => 'mark-project'])}}"--}}
 {{--                       hx-target="#mark-project"--}}
-{{--                       class="btn btn-success float-right cursor-pointer">Mark As Active Project</a>--}}
+{{--                       class="btn btn-success float-end cursor-pointer">Mark As Active Project</a>--}}
 {{--                @endif--}}
 {{--            </span>--}}
 {{--        </x-show-standard-details>--}}

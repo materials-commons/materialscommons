@@ -18,7 +18,7 @@
                         <textarea class="form-control" id="content" name="content" type="text"
                                   placeholder="Content...">{{$fileContents($file)}}</textarea>
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a href="{{route('projects.files.show', [$project, $file])}}"
                            class="action-link danger mr-3">Cancel</a>
                         <a class="action-link" href="#" onclick="document.getElementById('file-edit').submit()">Save</a>

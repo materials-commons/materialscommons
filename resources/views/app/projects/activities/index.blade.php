@@ -12,7 +12,7 @@
     @component('components.card')
         @slot('header')
             Processes
-            {{--            <a class="action-link float-right" href="#">--}}
+            {{--            <a class="action-link float-end" href="#">--}}
             {{--                <i class="fas fa-plus mr-2"></i>Create Process--}}
             {{--            </a>--}}
         @endslot

@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <a href="{{$globusUpload->globus_url}}" target="_blank">Goto Globus</a>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.globus.uploads.index', [$project])}}" class="btn btn-success">Done</a>
                 </div>
             </form>

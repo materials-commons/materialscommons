@@ -25,7 +25,7 @@
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description...">{{old('description')}}</textarea>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
 
                 </div>
             </form>

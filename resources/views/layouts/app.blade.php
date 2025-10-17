@@ -37,25 +37,31 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css"/>
+          href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.min.css"/>
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"/>
+          href="https://cdn.datatables.net/fixedheader/4.0.4/css/fixedHeader.bootstrap5.min.css"/>
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.bootstrap4.css"/>
+          href="https://cdn.datatables.net/rowreorder/1.5.0/css/rowReorder.bootstrap5.min.css"/>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+            src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+            src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+            src="https://cdn.datatables.net/fixedheader/4.0.4/js/dataTables.fixedHeader.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
+            src="https://cdn.datatables.net/fixedheader/4.0.4/js/fixedHeader.bootstrap5.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/rowreorder/1.5.0/js/dataTables.rowReorder.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/rowreorder/1.5.0/js/rowReorder.bootstrap5.min.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
@@ -125,7 +131,7 @@
         </ul>
         @include('partials.navbar._search')
         @auth
-            <ul class="navbar-nav pl-4 pr-4">
+            <ul class="navbar-nav ps-4 pe-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
                        role="button"
@@ -147,7 +153,7 @@
                 </li>
             </ul>
         @else
-            <ul class="navbar-nav pl-4 pr-4">
+            <ul class="navbar-nav ps-4 pe-4">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link td-none" href="{{route('login')}}">Sign in/Register</a>
                 </li>
@@ -160,10 +166,10 @@
     <div class="row">
         @yield('nav')
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-4">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
-                    <p class="text-white pt-2 pb-2 pl-2 fs-14" style="text-align: center">
+                    <p class="text-white pt-2 pb-2 ps-2 fs-14" style="text-align: center">
                         {{config('app.banner')}}
                     </p>
                 </div>
@@ -178,7 +184,7 @@
 {{--                    @yield('breadcrumbs')--}}
 {{--                    </div>--}}
 {{--                    <div class="col-md-2" style="padding-top: 12px">--}}
-{{--                        <div class="float-right">--}}
+{{--                        <div class="float-end">--}}
 {{--                            Real time stuff here--}}
 {{--                        </div>--}}
 {{--                    </div>--}}

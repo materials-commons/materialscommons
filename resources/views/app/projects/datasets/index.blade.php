@@ -12,7 +12,7 @@
     @component('components.card')
         @slot('header')
             Datasets
-            <a class="action-link float-right" href="{{route('projects.datasets.create', [$project])}}">
+            <a class="action-link float-end" href="{{route('projects.datasets.create', [$project])}}">
                 <i class="fas fa-plus mr-2"></i>Create Dataset
             </a>
         @endslot
@@ -51,7 +51,7 @@
                             <td>{{$dataset->updated_at->diffForHumans()}}</td>
                             <td>{{$dataset->updated_at}}</td>
                             <td>
-                                <div class="float-right">
+                                <div class="float-end">
                                     <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}"
                                        class="action-link">
                                         <i class="fas fa-fw fa-eye"></i>

@@ -56,7 +56,7 @@
                     </div>
 
 
-                    <div class="float-right">
+                    <div class="float-end">
                         <a href="{{route('projects.experiments.show', [$project, $experiment])}}"
                            class="action-link danger mr-3">
                             Cancel

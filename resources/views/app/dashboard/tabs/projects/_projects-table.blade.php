@@ -27,7 +27,7 @@
                 <td>{{$proj->owner->name}}</td>
                 <td>{{$proj->updated_at->format('M j, Y')}}</td>
                 <td>
-                    <div class="float-right">
+                    <div class="float-end">
                         @if(auth()->id() == $proj->owner_id)
                             <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
                                class="action-link">

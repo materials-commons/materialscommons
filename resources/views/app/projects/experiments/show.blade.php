@@ -12,7 +12,7 @@
     {{--    <div class="container">--}}
     {{--        <div class="row">--}}
     {{--            <div class="col"></div>--}}
-    {{--            <div class="col col-lg-4 float-right">--}}
+    {{--            <div class="col col-lg-4 float-end">--}}
     {{--                <select id="switch-experiments" class="selectpicker col-lg-10" data-live-search="true"--}}
     {{--                        title="Switch To Experiment">--}}
     {{--                    @foreach($project->experiments as $entry)--}}
@@ -31,16 +31,16 @@
 
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
                 <a data-toggle="modal" href="#reload-experiment-modal"
-                   class="action-link float-right">
+                   class="action-link float-end">
                     <i class="fas fa-sync-alt mr-2"></i> Reload Study
                 </a>
             @else
-                <a class="action-link float-right"
+                <a class="action-link float-end"
                    href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
                     <i class="fas fa-sync-alt mr-2"></i>Reload Study
                 </a>
             @endif
-            <div class="col col-lg-4 float-right">
+            <div class="col col-lg-4 float-end">
                 <select id="switch-experiments" class="selectpicker col-lg-10 mc-select"
                         data-live-search="true" data-style="btn-light no-tt"
                         title="Switch To Study">

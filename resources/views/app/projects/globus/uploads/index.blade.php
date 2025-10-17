@@ -12,7 +12,7 @@
     @component('components.card')
         @slot('header')
             Globus Uploads
-            <a class="action-link float-right" href="{{route('projects.globus.uploads.create', [$project])}}">
+            <a class="action-link float-end" href="{{route('projects.globus.uploads.create', [$project])}}">
                 <i class="fas fa-plus mr-2"></i> New Globus Upload
             </a>
         @endslot

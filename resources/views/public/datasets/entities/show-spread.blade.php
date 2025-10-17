@@ -13,7 +13,7 @@
         @slot('header')
             Sample: {{$entity->name}}
 
-            <a class="float-right action-link" href="#"
+            <a class="float-end action-link" href="#"
                onclick="window.location.replace('{{route('public.datasets.entities.show', [$dataset, $entity])}}')">
                 <i class="fas fa-object-group mr-2"></i>Group By Process Type
             </a>

@@ -40,7 +40,7 @@
                         by clicking on the "View Globus Upload Activity" link above.
                     </p>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
                     <a href="#" class="action-link"
                        onclick="document.getElementById('delete-upload').submit()">

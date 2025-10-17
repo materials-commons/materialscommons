@@ -31,7 +31,7 @@
                     <label for="summary">Summary</label>
                     <input class="form-control" value="{{$dataset->summary}}" id="summary" type="text" readonly>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link mr-3">
                         Edit Details
                     </a>

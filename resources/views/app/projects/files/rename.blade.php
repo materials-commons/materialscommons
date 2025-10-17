@@ -30,7 +30,7 @@
 
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
 
-                <div class="float-right">
+                <div class="float-end">
                     @if($file->mime_type == "url")
                         <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link mr-3">
                             Cancel

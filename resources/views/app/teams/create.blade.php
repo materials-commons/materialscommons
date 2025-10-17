@@ -27,7 +27,7 @@
                               placeholder="Description...">{{old('description')}}</textarea>
                 </div>
 
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('teams.index')}}" class="action-link danger mr-3">
                         Cancel
                     </a>

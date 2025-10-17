@@ -7,7 +7,7 @@
 @component('components.card-white')
     @slot('header')
         Workflows
-        <a class="float-right action-link mr-4"
+        <a class="float-end action-link mr-4"
            href="{{route('projects.datasets.workflows.edit.create', [$project, $dataset])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>New Workflow
         </a>

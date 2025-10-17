@@ -28,7 +28,7 @@
                 {{--                    <textarea class="form-control" id="description"--}}
                 {{--                              name="description" readonly>{{$dir->description}}</textarea>--}}
                 {{--                </div>--}}
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.folders.show', [$project, $dir, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg])}}"
                        class="action-link mr-3">
                         Cancel

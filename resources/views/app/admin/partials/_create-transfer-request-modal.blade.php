@@ -51,7 +51,7 @@
                         <label>Email of Owner</label>
                         <input class="form-control" name="email" value="" type="email" placeholder="Email..." required>
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <a onclick="document.getElementById('create-transfer-request-form').submit()"
                            class="btn btn-primary"

@@ -23,7 +23,7 @@
                   placeholder="Workflow...">{{isset($workflowcode) ? $workflowcode : ''}}</textarea>
     </div>
 
-    <div class="float-right">
+    <div class="float-end">
         <button type="button" onclick="cancel()" class="btn btn-warning">
             {{isset($cancelButtonName) ? $cancelButtonName : "Cancel"}}
         </button>

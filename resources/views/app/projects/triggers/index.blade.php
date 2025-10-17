@@ -12,7 +12,7 @@
     <x-card>
         <x-slot:header>
             Triggers
-            <a class="float-right action-link mr-4"
+            <a class="float-end action-link mr-4"
                href="{{route('projects.triggers.create', [$project])}}">
                 <i class="fas fa-fw fa-plus mr-2"></i>Add Trigger
             </a>
@@ -44,7 +44,7 @@
                         <a href="{{route('projects.files.show', [$project, $trigger->script->scriptFile])}}">{{$trigger->script->scriptFile->fullPath()}}</a>
                     </td>
                     <td>
-                        <div class="float-right">
+                        <div class="float-end">
                             <a href="{{route('projects.triggers.edit', [$project, $trigger])}}" class="action-link">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>

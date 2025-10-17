@@ -13,7 +13,7 @@
     @component('components.card')
         @slot('header')
             Studies for {{$project->name}}
-            <a class="action-link float-right"
+            <a class="action-link float-end"
                href="{{route('projects.experiments.create', ['project' => $project->id])}}">
                 <i class="fas fa-plus mr-2"></i>Create Study
             </a>

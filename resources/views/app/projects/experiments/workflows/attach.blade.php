@@ -40,7 +40,7 @@
                 </tbody>
             </table>
             <br>
-            <div class="float-right mr-2">
+            <div class="float-end mr-2">
                 <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
             </div>
 

@@ -10,7 +10,7 @@
     <x-card>
         <x-slot:header>
             Delete Trigger: {{$trigger->name}}
-            <a class="float-right action-link mr-4"
+            <a class="float-end action-link mr-4"
                href="{{route('projects.triggers.edit', [$project, $trigger])}}">
                 <i class="fas fa-fw fa-edit mr-2"></i>Edit Trigger
             </a>
@@ -41,7 +41,7 @@
                                 :display-route="route('projects.files.display', [$project, $trigger->script->scriptFile])"/>
             </div>
             <br>
-            <div class="float-right">
+            <div class="float-end">
                 <a href="{{route('projects.triggers.index', [$project])}}" class="btn btn-primary">Cancel</a>
                 <a href="{{route('projects.triggers.destroy', [$project, $trigger])}}" class="btn btn-danger">Delete</a>
             </div>

@@ -2,7 +2,7 @@
     @slot('header')
         Community: {{$community->name}}
         @isset($editCommunityRoute)
-            <a class="action-link float-right" href="{{$editCommunityRoute}}">
+            <a class="action-link float-end" href="{{$editCommunityRoute}}">
                 <i class="fas fa-edit mr-2"></i>Edit Community
             </a>
         @endisset
@@ -10,7 +10,7 @@
         @else
             @if(isset($userDatasets))
                 @if($userDatasets->isNotEmpty())
-                    <div class="dropdown float-right">
+                    <div class="dropdown float-end">
                         <a class="action-link mr-4 dropdown-toggle" data-toggle="dropdown"
                            data-offset="20" data-boundary="viewport"
                            href="#">
@@ -48,7 +48,7 @@
             @endif
 
             <br>
-            <div class="float-right">
+            <div class="float-end">
                 <a class="btn btn-success" href="{{$doneRoute}}">Done</a>
             </div>
         </x-card-container>

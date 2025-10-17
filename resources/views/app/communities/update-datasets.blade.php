@@ -42,7 +42,7 @@
                 </tbody>
             </table>
 
-            <div class="float-right">
+            <div class="float-end">
                 <a href="{{route('communities.edit', [$community])}}" class="action-link">Done</a>
             </div>
         @endslot

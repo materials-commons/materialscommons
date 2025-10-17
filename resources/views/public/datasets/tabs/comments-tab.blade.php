@@ -1,6 +1,6 @@
 @include('public.datasets.tabs._short-overview')
 @auth
-    <a class="action-link float-right"
+    <a class="action-link float-end"
        href="{{route('public.datasets.comments.create', [$dataset])}}">
         <i class="fas fa-plus mr-2"></i>Add Comment
     </a>

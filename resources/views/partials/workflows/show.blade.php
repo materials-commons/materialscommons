@@ -16,7 +16,7 @@
             <textarea id="workflowcode" class="form-control"
                       name="workflow" readonly>{{$workflow->workflow}}</textarea>
         </div>
-        <div class="float-right">
+        <div class="float-end">
             <a href="#" class="action-link" onclick="window.history.back()">
                 Done
             </a>

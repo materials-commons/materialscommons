@@ -9,7 +9,7 @@
     <input hidden id="project_id" name="project_id" value="{{$project->id}}">
     <input hidden id="directory_id" name="directory_id" value="{{$directory->id}}">
 
-    <div class="float-right">
+    <div class="float-end">
         <a class="action-link danger mr-3"
            href="{{$cancelRoute}}">
             Cancel

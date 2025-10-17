@@ -10,12 +10,12 @@
     @component('components.card')
         @slot('header')
             Task: {{$task->name}}
-            <a class="float-right action-link"
+            <a class="float-end action-link"
                href="{{route('tasks.edit', $task->id)}}">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
-            <a data-toggle="modal" class="float-right action-link mr-4"
+            <a data-toggle="modal" class="float-end action-link mr-4"
                href="#item-delete-{{$task->id}}">
                 <i class="fas fa-trash-alt mr-2"></i>Delete
             </a>

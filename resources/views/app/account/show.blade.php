@@ -33,7 +33,7 @@
                         <textarea class="form-control" id="affiliations"
                                   name="affiliations" type="text">{{$user->affiliations}}</textarea>
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="action-link" href="#"
                            onclick="document.getElementById('user-details').submit()">
                             Save
@@ -85,7 +85,7 @@
                         <input class="form-control" id="globus-user" name="globus_user" type="text"
                                value="{{$user->globus_user}}" placeholder="Globus User Account...">
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="action-link" href="#"
                            onclick="document.getElementById('globus').submit()">
                             Save
@@ -115,7 +115,7 @@
                         <input class="form-control" id="new-password2" name="new_password2" type="password"
                                value="" placeholder="Re-enter new password...">
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="action-link" href="#"
                            onclick="document.getElementById('change-password').submit()">
                             Change Password
@@ -144,7 +144,7 @@
                         <input class="form-control" id="new-email2" name="new_email2" type="email"
                                value="" placeholder="Re-enter new Email...">
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="action-link" href="#"
                            onclick="document.getElementById('change-email').submit()">
                             Change Email
@@ -158,7 +158,7 @@
                 @include('common.errors')
 
                 <form>
-                    <div class="float-right">
+                    <div class="float-end">
                         <button class="btn btn-default" onclick="window.history.back()">back</button>
                     </div>
                 </form>

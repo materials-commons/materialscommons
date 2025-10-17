@@ -34,7 +34,7 @@
                            placeholder="Url..." required>
                 </div>
 
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('communities.show', [$community])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

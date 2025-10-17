@@ -24,7 +24,7 @@
                     <input class="form-control" id="name" value="{{$dir->name}}" name="name">
                 </div>
 
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.folders.show', [$project, $dir, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])}}"
                        class="action-link mr-3">
                         Cancel

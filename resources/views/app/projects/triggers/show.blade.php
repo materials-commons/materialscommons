@@ -10,7 +10,7 @@
     <x-card>
         <x-slot:header>
             Trigger: {{$trigger->name}}
-            <a class="float-right action-link mr-4"
+            <a class="float-end action-link mr-4"
                href="{{route('projects.triggers.edit', [$project, $trigger])}}">
                 <i class="fas fa-fw fa-edit mr-2"></i>Edit Trigger
             </a>

@@ -10,7 +10,7 @@
     @component('components.card')
         @slot('header')
             Communities
-            <a class="action-link float-right" href="{{route('communities.create')}}">
+            <a class="action-link float-end" href="{{route('communities.create')}}">
                 <i class="fas fa-plus mr-2"></i>Create Community
             </a>
         @endslot

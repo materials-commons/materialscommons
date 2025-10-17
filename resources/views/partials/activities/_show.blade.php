@@ -5,11 +5,11 @@
         @else
             Process: {{$activity->name}}
         @endif
-        {{--        <a class="float-right action-link" href="#">--}}
+        {{--        <a class="float-end action-link" href="#">--}}
         {{--            <i class="fas fa-edit mr-2"></i>Edit--}}
         {{--        </a>--}}
 
-        {{--        <a class="float-right action-link mr-4" href="#">--}}
+        {{--        <a class="float-end action-link mr-4" href="#">--}}
         {{--            <i class="fas fa-trash-alt mr-2"></i>Delete--}}
         {{--        </a>--}}
     @endslot

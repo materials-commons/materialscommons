@@ -25,12 +25,12 @@
         @slot('header')
             Sample: {{$entity->name}}
 
-            <a class="float-right action-link" href="#"
+            <a class="float-end action-link" href="#"
                onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
                 <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
             </a>
 
-            <div class="col col-lg-4 float-right">
+            <div class="col col-lg-4 float-end">
                 <select class="selectpicker col-lg-10 mc-select"
                         data-style="btn-light no-tt"
                         data-live-search="true" title="{{$title}}">

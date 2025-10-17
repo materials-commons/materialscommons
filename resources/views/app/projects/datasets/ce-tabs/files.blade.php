@@ -17,11 +17,11 @@
             @endforeach
         @endif
 
-        <a class="float-right action-link mr-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
+        <a class="float-end action-link mr-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
             <i class="fas fa-fw fa-plus mr-2"></i>Add Files
         </a>
 
-        <a class="float-right action-link mr-4"
+        <a class="float-end action-link mr-4"
            href="{{route($createDirectoryRouteName, [$project, $dataset, $directory])}}">
             <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
         </a>

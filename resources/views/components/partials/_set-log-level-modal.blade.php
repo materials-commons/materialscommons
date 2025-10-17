@@ -24,7 +24,7 @@
                         </select>
                     </div>
 
-                    <div class="float-right">
+                    <div class="float-end">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <a onclick="document.getElementById('set-logging-level-form').submit()"
                            class="btn btn-primary"

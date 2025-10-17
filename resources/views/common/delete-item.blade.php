@@ -19,7 +19,7 @@
                 <div class="form-group">
                     <p>Delete {{$item->name}}?</p>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <button type="submit" class="btn btn-danger">Delete</button>
                     <button type="button" onclick="window.history.go(-1)" class="btn btn-success">Cancel</button>
                 </div>

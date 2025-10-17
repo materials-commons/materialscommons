@@ -13,7 +13,7 @@
         @slot('header')
             File: {{$file->name}}
             @auth
-                <a class="action-link float-right"
+                <a class="action-link float-end"
                    href="{{route('public.datasets.download_file', [$dataset, $file])}}">
                     <i class="fas fa-download mr-2"></i>Download File
                 </a>

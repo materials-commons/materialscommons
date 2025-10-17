@@ -34,7 +34,7 @@
                            placeholder="Url..." readonly>
                 </div>
 
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('communities.links.edit', [$community])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

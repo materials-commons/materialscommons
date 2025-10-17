@@ -51,7 +51,7 @@
                 </div>
                 <input hidden id="project_id" name="project_id" value="{{$project->id}}">
 
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.show', ['project' => $project->id])}}"
                        class="action-link danger mr-3">
                         Cancel

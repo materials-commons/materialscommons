@@ -26,7 +26,7 @@
                 {{--                        <textarea class="form-control" id="description" name="description" type="text"--}}
                 {{--                                  placeholder="Description..."></textarea>--}}
                 {{--                    </div>--}}
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.globus.uploads.index', [$project])}}"
                        class="action-link danger mr-3">
                         Cancel

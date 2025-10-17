@@ -23,7 +23,7 @@
                     </div>
                     <span class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
                     <div id="google-sheet-title"></div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <a class="btn btn-primary" type="submit" data-dismiss="modal"
                            onclick="document.getElementById('add-sheet-form').submit()">Add Google Sheet</a>

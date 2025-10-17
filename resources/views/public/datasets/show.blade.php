@@ -12,14 +12,14 @@
     @component('components.card')
         @slot('header')
             Dataset: {{$dataset->name}}
-            <div class="dropdown float-right mr-4">
+            <div class="dropdown float-end mr-4">
                 @if(!blank($dataset->doi))
                     <a class="action-link mr-3 cursor-pointer" data-toggle="modal" href="#cite-dataset-modal"><i
                             class="fas fa-quote-left mr-1"></i>Cite Dataset</a>
                 @endif
                 @auth
                     {{--                @if($dataset->canEdit())--}}
-                    {{--                    <a class="action-link float-right mr-4"--}}
+                    {{--                    <a class="action-link float-end mr-4"--}}
                     {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
                     {{--                        <i class="fas fa-edit mr-2"></i>Edit--}}
                     {{--                    </a>--}}
@@ -63,7 +63,7 @@
                         </a>
                     @endif
                     {{--                @if(auth()->user()->hasCommunities())--}}
-                    {{--                    <div class="dropdown float-right mr-4">--}}
+                    {{--                    <div class="dropdown float-end mr-4">--}}
                     {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
                     {{--                           href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
                     {{--                            <i class="fas fa-plus mr-2"></i>Add To Community--}}

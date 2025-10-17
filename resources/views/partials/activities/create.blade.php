@@ -10,7 +10,7 @@
         <textarea class="form-control" id="description" name="description" type="text"
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
-    <div class="float-right">
+    <div class="float-end">
         <a href="{{$cancelRoute}}" class="action-link danger mr-3">
             Cancel
         </a>

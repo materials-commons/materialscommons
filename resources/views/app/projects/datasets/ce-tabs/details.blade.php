@@ -1,6 +1,6 @@
 <br>
 <div x-data="datasetCETabsDetails">
-    <div class="float-right">
+    <div class="float-end">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
            class="btn btn-danger mr-3">
             Cancel
@@ -66,7 +66,7 @@
                 @if (empty($dataset->doi))
                     <span class="col-6">
                 (None)
-                <a href="#" @click.prevent="changeActionAndSubmit()" class="ml-6 pl-6">
+                <a href="#" @click.prevent="changeActionAndSubmit()" class="ml-6 ps-6">
                     Assign DOI
                 </a>
             </span>
@@ -141,7 +141,7 @@
             <input hidden id="project_id" name="project_id" value="{{$project->id}}">
             <input type="hidden" name="action" value="" id="action"/>
 
-            <div class="float-right">
+            <div class="float-end">
                 <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
                    class="action-link danger mr-3">
                     Cancel

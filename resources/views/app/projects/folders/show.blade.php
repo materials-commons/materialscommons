@@ -17,16 +17,16 @@
                 <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                              arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
                 @if ($directory->path == '/')
-                    <span class="float-left action-link mr-4">
+                    <span class="float-start action-link mr-4">
                     <i class="fa-fw fas fa-filter mr-2"></i>
                     Filter:
                 </span>
-                    {{--                <a class="float-left action-link mr-4" href="#">--}}
+                    {{--                <a class="float-start action-link mr-4" href="#">--}}
                     {{--                    <i class="fa-fw fas fa-calendar mr-2"></i>--}}
                     {{--                    By Date--}}
                     {{--                </a>--}}
 
-                    <a class="float-left action-link" href="{{route('projects.folders.filter.by-user', [$project])}}">
+                    <a class="float-start action-link" href="{{route('projects.folders.filter.by-user', [$project])}}">
                         <i class="fa-fw fas fa-user-friends mr-2"></i>
                         By User
                     </a>
@@ -79,7 +79,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a href="{{route('projects.folders.show', [$project, $directory])}}"
                                    class="btn btn-info mr-3">
                                     Done

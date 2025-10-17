@@ -90,7 +90,7 @@
                             nextId,
                             `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
-                            `<div class="float-right">
+                            `<div class="float-end">
                                 <a class="action-link cursor-pointer"
                                     x-on:click.prevent="openEditDialog(${nextId}, '${this.author.name}', '${this.author.affiliations}', '${this.author.email}')">
                                     <i class="fas fa-fw fa-edit"></i></a>

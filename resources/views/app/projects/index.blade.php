@@ -12,7 +12,7 @@
     @component('components.card')
         @slot('header')
             Projects
-            <a class="action-link float-right"
+            <a class="action-link float-end"
                href="{{route('projects.create')}}">
                 <i class="fas fa-plus mr-2"></i>Create Project
             </a>
@@ -43,7 +43,7 @@
                         <td>{{$proj->updated_at->diffForHumans()}}</td>
                         <td>{{$proj->updated_at}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a href="{{route('projects.show', [$proj->id])}}" class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>

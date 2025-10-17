@@ -1,5 +1,5 @@
 <div>
-    <a class="action-link float-right" href="#" wire:click.prevent="addFilteredView">
+    <a class="action-link float-end" href="#" wire:click.prevent="addFilteredView">
         <i class="fa fas fa-plus mr-2"></i> Add Filtered View
     </a>
     <ul class="nav nav-pills col-12">

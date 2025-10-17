@@ -1,7 +1,7 @@
 @component('components.card-white')
     @slot('header')
         Datasets In Community
-        <a class="float-right action-link mr-2" href="{{route('communities.datasets.update', [$community])}}">
+        <a class="float-end action-link mr-2" href="{{route('communities.datasets.update', [$community])}}">
             <i class="fas fa-fw fa-edit mr-2"></i>Add/Remove Datasets
         </a>
     @endslot

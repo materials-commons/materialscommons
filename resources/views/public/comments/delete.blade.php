@@ -28,7 +28,7 @@
                     <textarea class="form-control" id="comment" type="text"
                               placeholder="Comment..." readonly>{{$comment->body}}</textarea>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

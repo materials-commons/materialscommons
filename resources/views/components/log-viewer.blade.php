@@ -3,13 +3,13 @@
     <x-card>
         <x-slot name="header">
             @if(!is_null($setLogLevelRoute))
-                <a class="action-link float-right ml-4"
+                <a class="action-link float-end ml-4"
                    data-toggle="modal" href="#set-log-level-modal">
                     <i class="fas fa-fw fa-edit mr-2"></i>Set Log Level
                 </a>
             @endif
 
-            <a class="action-link float-right" style="cursor: pointer"
+            <a class="action-link float-end" style="cursor: pointer"
                hx-get="{{$loadLogRoute}}"
                onclick="clearLogSearchInputOnReload()"
                hx-target="#etl-log"

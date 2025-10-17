@@ -20,7 +20,7 @@
                     <label for="file-upload-input">Upload File</label>
                     <input type="file" class="form-control-file" id="file-upload-input" name="file">
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.files.index', ['project' => $project])}}"
                        class="action-link danger mr-3">
                         Cancel

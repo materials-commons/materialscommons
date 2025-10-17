@@ -12,40 +12,40 @@
     @component('components.card')
         @slot('header')
             Dataset: {{$dataset->name}}
-            <a class="float-right action-link"
+            <a class="float-end action-link"
                href="{{$editRoute}}">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
             @if(is_null($dataset->published_at))
-                <a class="float-right action-link mr-4"
+                <a class="float-end action-link mr-4"
                    href="{{route('projects.datasets.delete', [$project, $dataset])}}">
                     <i class="fas fa-trash-alt mr-2"></i>Delete
                 </a>
             @endif
 
             @if (isset($dataset->published_at))
-                <a class="float-right action-link mr-4"
+                <a class="float-end action-link mr-4"
                    href="{{route('projects.datasets.refresh', [$project, $dataset])}}">
                     <i class="fas fa-sync mr-2"></i> Refresh
                 </a>
 
                 @if(is_null($dataset->publish_started_at))
-                    <a class="float-right action-link mr-4"
+                    <a class="float-end action-link mr-4"
                        href="{{route('projects.datasets.unpublish', [$project, $dataset])}}">
                         <i class="fas fa-minus-circle mr-2"></i>Unpublish
                     </a>
                 @endif
             @elseif($dataset->hasSelectedFiles())
                 @if(!isset($dataset->cleanup_started_at))
-                    <a class="float-right action-link mr-4"
+                    <a class="float-end action-link mr-4"
                        href="{{route('projects.datasets.publish', [$project, $dataset])}}" disabled=true>
                         <i class="fas fa-file-export mr-2"></i>Publish
                     </a>
                 @endif
             @endif
 
-            <div class="dropdown float-right mr-4">
+            <div class="dropdown float-end mr-4">
                 <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-file-import mr-2"></i>Import Into Project

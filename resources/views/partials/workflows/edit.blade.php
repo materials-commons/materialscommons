@@ -24,7 +24,7 @@
             <textarea id="workflowcode" class="form-control"
                       name="workflow">{{old('workflow', $workflow->workflow)}}</textarea>
         </div>
-        <div class="float-right">
+        <div class="float-end">
             <button type="button" onclick="drawWorkflow()" class="btn btn-info">Run</button>
             <button class="btn btn-success">Save</button>
             <button type="button" onclick="cancel()" class="btn btn-warning">Cancel</button>

@@ -15,7 +15,7 @@
         <textarea class="form-control" id="description" name="description" type="text"
                   placeholder="Description...">{{old('description')}}</textarea>
     </div>
-    <div class="float-right" x-data="_createProject">
+    <div class="float-end" x-data="_createProject">
         <a href="{{$cancelRoute}}" class="action-link danger mr-3">
             Cancel
         </a>

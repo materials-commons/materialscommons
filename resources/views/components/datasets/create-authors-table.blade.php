@@ -62,7 +62,7 @@
                         <td>{{$author['affiliations']}}</td>
                         <td>{{$author['email']}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a class="action-link cursor-pointer"
                                    x-on:click.prevent="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
@@ -82,7 +82,7 @@
                         <td>{{$author->affiliations}}</td>
                         <td>{{$author->email}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a class="action-link" href="#"
                                    x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>

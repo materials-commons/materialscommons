@@ -12,7 +12,7 @@
         <x-card>
             <x-slot name='header'>
                 Compare sample {{$entity1->name}} to {{$entity2->name}}
-                <a class="action-link float-right" href="#" @click="showFilter = !showFilter">
+                <a class="action-link float-end" href="#" @click="showFilter = !showFilter">
                     <i class="fas fa-filter mr-2"></i>Filter Processes
                 </a>
             </x-slot>
@@ -90,7 +90,7 @@
                                                                           :experiment="$entity1->experiments->first()"
                                                                           :project="$project">
                                                 <x-slot:header>
-                                                    <div class="d-flex float-right">
+                                                    <div class="d-flex float-end">
                                                         <input type="radio" name="activity1_id"
                                                                value="{{$e1activity->id}}"
                                                                x-model="activity1Id"
@@ -121,7 +121,7 @@
                                                                           :experiment="$entity2->experiments->first()"
                                                                           :project="$project">
                                                 <x-slot:header>
-                                                    <div class="d-flex float-right">
+                                                    <div class="d-flex float-end">
                                                         <input type="radio" name="activity2_id"
                                                                x-model="activity2Id"
                                                                value="{{$e2activity->id}}"

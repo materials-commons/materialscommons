@@ -1,4 +1,4 @@
-<div class="col-lg-10 float-right">
+<div class="col-lg-10 float-end">
     <label>Select Data For:</label>
     <select wire:model.live="selectedData" class="custom-select col-4 font-weight-bolder" title="Select Data For">
         <option value="project" @selected($selectedData == "project")>Project</option>

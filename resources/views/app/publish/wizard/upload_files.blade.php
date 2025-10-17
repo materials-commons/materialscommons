@@ -12,7 +12,7 @@
             <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>.
         </p>
         <div class="col-8">
-            <a class="btn btn-primary float-right"
+            <a class="btn btn-primary float-end"
                href="{{route('public.publish.wizard.create_workflow', [$project])}}">
                 Done Uploading Files
             </a>

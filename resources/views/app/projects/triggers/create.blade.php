@@ -48,7 +48,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('projects.triggers.index', [$project])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

@@ -1,7 +1,7 @@
 <x-table-container>
     <br>
     <div class="ml-2">
-        <div class="float-right mr-2">
+        <div class="float-end mr-2">
             <a href="{{route('projects.experiments.workflows.create', [$project, $experiment])}}" class="action-link">
                 <i class="fas fa-fw fa-plus"></i> New Workflow
             </a>

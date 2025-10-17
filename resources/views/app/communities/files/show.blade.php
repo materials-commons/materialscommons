@@ -10,17 +10,17 @@
     @component('components.card')
         @slot('header')
             File: {{$file->name}} for Community: {{$community->name}}
-            <a class="action-link float-right"
+            <a class="action-link float-end"
                href="{{route('communities.files.download', [$community, $file])}}">
                 <i class="fas fa-download mr-2"></i>Download
             </a>
 
-            <a class="action-link float-right mr-4"
+            <a class="action-link float-end mr-4"
                href="{{route('communities.files.edit-file', [$community, $file])}}">
                 <i class="fas fa-edit mr-2"></i>Edit
             </a>
 
-            <a class="action-link float-right mr-4" href="{{route('communities.files.delete', [$community, $file])}}">
+            <a class="action-link float-end mr-4" href="{{route('communities.files.delete', [$community, $file])}}">
                 <i class="fas fa-trash mr-2"></i> Delete
             </a>
         @endslot

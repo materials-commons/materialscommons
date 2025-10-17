@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <a href="#" hx-get="{{route('projects.attributes.close-details-by-name', [$project, $name])}}"
-               class="mb-2 float-right mr-2">Close</a>
+               class="mb-2 float-end mr-2">Close</a>
         </div>
     </div>
     <div class="row ml-1">

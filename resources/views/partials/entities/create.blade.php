@@ -35,7 +35,7 @@
         </div>
     @endisset
 
-    <div class="float-right">
+    <div class="float-end">
         <a href="{{$cancelRoute}}" class="action-link danger mr-3">
             Cancel
         </a>

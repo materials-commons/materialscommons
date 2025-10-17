@@ -28,7 +28,7 @@
                     <textarea class="form-control" id="description"
                               name="description" readonly>{{$file->description}}</textarea>
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger mr-3">
                         Cancel
                     </a>

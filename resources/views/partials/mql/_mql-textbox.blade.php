@@ -7,8 +7,8 @@
                     <textarea class="form-control" id="mql" placeholder="Query..."
                               rows="{{line_count($query, 2)+1}}">{{$query}}</textarea>
                 </div>
-                <a class="float-left" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
-                <div class="float-right">
+                <a class="float-start" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
+                <div class="float-end">
                     <a class="btn btn-danger"
                        href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">Reset</a>
                     @if($query == "")

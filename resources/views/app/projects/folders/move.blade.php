@@ -45,7 +45,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a href="{{route('projects.folders.show', [$project, $directory])}}"
                            class="btn btn-info mr-3">
                             Done

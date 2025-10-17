@@ -47,11 +47,11 @@
         <hr/>
     @endif
 
-    {{--    <a class="action-link cursor-pointer float-right ml-4">--}}
+    {{--    <a class="action-link cursor-pointer float-end ml-4">--}}
     {{--        <i class="fa fas fa-table mr-2"></i> New Table--}}
     {{--    </a>--}}
 
-    <a class="action-link cursor-pointer float-right" wire:click.prevent="$parent.addChart()">
+    <a class="action-link cursor-pointer float-end" wire:click.prevent="$parent.addChart()">
         <i class="fa fas fa-chart-area mr-2"></i> New Chart
     </a>
 </div>

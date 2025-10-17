@@ -27,7 +27,7 @@
                     </select>
                 </div>
                 <div class="col-10" x-data="selectProject">
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="action-link danger mr-3" href="#">Cancel</a>
                         <a class="action-link mr-3" href="#" @click.prevent="gotoCreateDataset()">Use Selected
                             Project</a>

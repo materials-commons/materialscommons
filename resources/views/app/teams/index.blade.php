@@ -10,7 +10,7 @@
     @component('components.card')
         @slot('header')
             Teams
-            <a class="action-link float-right"
+            <a class="action-link float-end"
                href="{{route('teams.create')}}">
                 <i class="fas fa-plus mr-2"></i>Create Team
             </a>
@@ -40,7 +40,7 @@
                         <td>{{$team->members->count() + $team->admins->count()}}</td>
                         <td>{{$team->projects->count()}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a href="{{route('teams.show', [$team])}}" class="action-link">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>

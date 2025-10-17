@@ -16,7 +16,7 @@
 
         @slot('body')
             <x-card-container>
-                <div class="float-right">
+                <div class="float-end">
                     @if($nav_trash_count > 0)
                         <a data-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
                     @else
@@ -53,7 +53,7 @@
                             @endif
                             <td>{{$item->expiresInDays()}} days</td>
                             <td>
-                                <div class="float-right">
+                                <div class="float-end">
                                     <ul class="list-unstyled">
                                         @if(false)
                                             <li>

@@ -24,7 +24,7 @@
                         <textarea class="form-control" name="description" type="text"
                                   placeholder="Description..." required></textarea>
                     </div>
-                    <div class="float-right">
+                    <div class="float-end">
                         <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
                         <a class="btn btn-primary" data-dismiss="modal"
                            hx-post="{{route('projects.mql.store', $project)}}" hx-include="#mql-selection">

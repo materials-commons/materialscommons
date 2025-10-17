@@ -18,26 +18,26 @@
 
 
             @isset($project)
-                {{--                <a class="float-right action-link" href="#">--}}
+                {{--                <a class="float-end action-link" href="#">--}}
                 {{--                    <i class="fas fa-edit mr-2"></i>Edit--}}
                 {{--                </a>--}}
 
-                {{--                <a class="float-right action-link mr-4" href="#">--}}
+                {{--                <a class="float-end action-link mr-4" href="#">--}}
                 {{--                    <i class="fas fa-trash-alt mr-2"></i>Delete--}}
                 {{--                </a>--}}
 
                 @if ($file->mime_type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    <a class="float-right action-link mr-4"
+                    <a class="float-end action-link mr-4"
                        href="{{route('projects.files.create-experiment', [$project, $file])}}">
                         <i class="fas fa-file-import mr-2"></i>Create Study From Spreadsheet
                     </a>
                 @endif
-                <a class="action-link float-right mr-4"
+                <a class="action-link float-end mr-4"
                    href="{{route('projects.files.download', [$project, $file])}}">
                     <i class="fas fa-download mr-2"></i>Download File
                 </a>
 
-                <a class="action-link float-right mr-4" href="{{route('projects.files.delete', [$project, $file])}}">
+                <a class="action-link float-end mr-4" href="{{route('projects.files.delete', [$project, $file])}}">
                     <i class="fas fa-fw fa-trash mr-2"></i>Delete
                 </a>
             @endisset

@@ -22,7 +22,7 @@
                     <input class="form-control" id="globus-user" name="globus_user" type="text"
                            value="{{$user->globus_user}}" placeholder="Globus User Account...">
                 </div>
-                <div class="float-right">
+                <div class="float-end">
                     <a class="action-link" href="#"
                        onclick="document.getElementById('globus').submit()">
                         Save
