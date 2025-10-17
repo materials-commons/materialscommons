@@ -18,6 +18,11 @@
 
 @import 'bootstrap-steps';
 
+.breadcrumb {
+    --bs-breadcrumb-padding-x: .75rem;
+    --bs-breadcrumb-padding-y: 1rem;
+}
+
 .text-green {
     color: #28a745;
 }
