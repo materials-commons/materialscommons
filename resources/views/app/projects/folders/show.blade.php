@@ -14,7 +14,6 @@
 
         <x-slot name="body">
             <x-table-container>
-                here i am
                 <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                              arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
                 @if ($directory->path == '/')
