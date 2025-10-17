@@ -1,6 +1,6 @@
 {{--<a class="action-link float-right"--}}
 {{--   href="{{route('projects.create')}}">--}}
-{{--    <i class="fas fa-plus mr-2"></i>Create Process--}}
+{{--    <i class="fas fa-plus me-2"></i>Create Process--}}
 {{--</a>--}}
 
 <x-table-container>

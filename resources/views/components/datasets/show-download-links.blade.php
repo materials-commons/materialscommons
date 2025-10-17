@@ -20,13 +20,13 @@
                             Zipfile
                         </a>
                     @endif
-                    <span class="ml-1">({{formatBytes($dataset->zipfile_size)}})</span>
+                    <span class="ms-1">({{formatBytes($dataset->zipfile_size)}})</span>
                 </li>
             @endif
 
             @if($dataset->globus_path_exists)
                 <li class="list-inline-item">
-                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ml-2"
+                    <a href="{{route('public.datasets.download_globus', [$dataset])}}" class="ms-2"
                        target="_blank">
                         Using Globus
                     </a>

@@ -1,4 +1,4 @@
-<h4>Query Builder <a href="#" class="ml-2 fs-7" @click="toggleShowBuilder()">close</a></h4>
+<h4>Query Builder <a href="#" class="ms-2 fs-7" @click="toggleShowBuilder()">close</a></h4>
 
 <br>
 <div class="container">

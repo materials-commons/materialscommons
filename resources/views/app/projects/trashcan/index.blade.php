@@ -18,7 +18,7 @@
             <x-card-container>
                 <div class="float-right">
                     @if($nav_trash_count > 0)
-                        <a data-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
+                        <a data-bs-toggle="modal" href="#empty-trash-modal" class="btn btn-danger">Empty Trash</a>
                     @else
                         <a href="#" class="btn btn-danger disabled" disabled>Empty Trash</a>
                     @endif
@@ -41,13 +41,13 @@
                             @if(blank($item->path))
                                 <td>
                                     <a href="{{route('projects.files.show', [$project, $item])}}">
-                                        <i class="fa-fw fas fa-file mr-2"></i> {{$item->getFilePath()}}
+                                        <i class="fa-fw fas fa-file me-2"></i> {{$item->getFilePath()}}
                                     </a>
                                 </td>
                             @else
                                 <td>
                                     <a href="{{route('projects.folders.show', [$project, $item])}}">
-                                        <i class="fa-fw fas fa-folder mr-2"></i> {{$item->path}}
+                                        <i class="fa-fw fas fa-folder me-2"></i> {{$item->path}}
                                     </a>
                                 </td>
                             @endif

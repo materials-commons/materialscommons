@@ -8,7 +8,7 @@
     <x-slot name="body">
         @if ($directory->path !== '/')
             <a href="{{route('public.datasets.folders.show', [$dataset, $directory->directory_id])}}" class="mb-3">
-                <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
             </a>
             <br>
             <br>
@@ -30,11 +30,11 @@
                     <td>
                         @if($file->isDir())
                             <a class="no-underline" href="{{route('public.datasets.folders.show', [$dataset, $file])}}">
-                                <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
                             </a>
                         @else
                             <a class="no-underline" href="{{route('public.datasets.files.show', [$dataset, $file])}}">
-                                <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
                             </a>
                         @endif
                     </td>

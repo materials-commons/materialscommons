@@ -41,10 +41,10 @@
                         <td>{{$user->email}}</td>
                         <td>
                             <div class="dropdown">
-                                <a class="nav-link fs-11 ml-5 dropdown-toggle td-none" href="#" role="button"
+                                <a class="nav-link fs-11 ms-5 dropdown-toggle td-none" href="#" role="button"
                                    id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa-fw fas fa-plus mr-2"></i>
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-fw fas fa-plus me-2"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item td-none"

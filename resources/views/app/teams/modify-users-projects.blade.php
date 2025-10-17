@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4>Projects in team</h4>
-                    <a class="action-link float-right mr-2" href="#">
+                    <a class="action-link float-right me-2" href="#">
                         <i class="fas fa-fw fa-plus"></i> Add Project
                     </a>
                     <br>

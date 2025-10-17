@@ -148,7 +148,7 @@
             margin-right: auto
         }
 
-        .ml-1 {
+        .ms-1 {
             margin-left: .25rem
         }
 
@@ -156,11 +156,11 @@
             margin-top: .5rem
         }
 
-        .mr-2 {
+        .me-2 {
             margin-right: .5rem
         }
 
-        .ml-2 {
+        .ms-2 {
             margin-left: .5rem
         }
 
@@ -168,7 +168,7 @@
             margin-top: 1rem
         }
 
-        .ml-4 {
+        .ms-4 {
             margin-left: 1rem
         }
 
@@ -176,7 +176,7 @@
             margin-top: 2rem
         }
 
-        .ml-12 {
+        .ms-12 {
             margin-left: 3rem
         }
 
@@ -431,7 +431,7 @@
                 height: 5rem
             }
 
-            .sm\:ml-0 {
+            .sm\:ms-0 {
                 margin-left: 0
             }
 
@@ -521,7 +521,7 @@
                 @yield('code')
             </div>
 
-            <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
+            <div class="ms-4 text-lg text-gray-500 uppercase tracking-wider">
                 @yield('message')
             </div>
         </div>

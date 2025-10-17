@@ -18,7 +18,7 @@
                 @csrf
                 @method('put')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{$file->name}}" name="name">
                 </div>
@@ -32,11 +32,11 @@
 
                 <div class="float-right">
                     @if($file->mime_type == "url")
-                        <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link mr-3">
+                        <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link me-3">
                             Cancel
                         </a>
                     @else
-                        <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link mr-3">
+                        <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link me-3">
                             Cancel
                         </a>
                     @endif

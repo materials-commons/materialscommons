@@ -1,8 +1,8 @@
 @component('components.card-white')
     @slot('header')
         Community Files
-        <a class="float-right action-link mr-2" href="{{route('communities.files.upload', [$community])}}">
-            <i class="fas fa-fw fa-plus mr-2"></i>Add Files
+        <a class="float-right action-link me-2" href="{{route('communities.files.upload', [$community])}}">
+            <i class="fas fa-fw fa-plus me-2"></i>Add Files
         </a>
     @endslot
 
@@ -20,7 +20,7 @@
                 <tr>
                     <td>
                         <a href="{{route('communities.files.show', [$community, $file])}}">
-                            <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
+                            <i class="fa-fw fas me-2 fa-file"></i>{{$file->name}}
                         </a>
                     </td>
                     <td>{{$file->mime_type}}</td>

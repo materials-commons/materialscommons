@@ -16,7 +16,7 @@
             <form method="post" action="{{$destroyRoute}}">
                 @csrf
                 @method('delete')
-                <div class="form-group">
+                <div class="mb-3">
                     <p>Delete {{$item->name}}?</p>
                 </div>
                 <div class="float-right">

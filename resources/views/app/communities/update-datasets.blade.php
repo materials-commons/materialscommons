@@ -26,12 +26,12 @@
                     <tr>
                         <td>
                             <a href="{{route('public.datasets.show', [$dataset])}}">
-                                <i class="fa-fw fas mr-2 fa-file"></i>{{$dataset->name}}
+                                <i class="fa-fw fas me-2 fa-file"></i>{{$dataset->name}}
                             </a>
                         </td>
                         <td>{{$dataset->summary}}</td>
                         <td>
-                            <div class="form-group form-check-inline">
+                            <div class="mb-3 form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$dataset->uuid}}"
                                        {{$dataset->communities->contains($community->id) ? 'checked' : ''}}
                                        onclick="updateSelection({{$dataset}}, this)">

@@ -3,23 +3,23 @@
         @csrf
         @method(isset($updateMethod) ? $updateMethod : 'put')
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="name">Name</label>
             <input class="form-control" id="name" name="name" type="text"
                    value="{{old('name', $workflow->name)}}"
                    placeholder="Workflow Name...">
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="summary">Summary</label>
             <input class="form-control" id="summary" value="{{old('summary', $workflow->summary)}}" name="summary">
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description"
                       placeholder="Description...">{{old('description', $workflow->description)}}</textarea>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="workflowcode">Workflow</label>
             <textarea id="workflowcode" class="form-control"
                       name="workflow">{{old('workflow', $workflow->workflow)}}</textarea>

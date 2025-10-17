@@ -62,7 +62,7 @@
 <body style="background-color: #ffffff">
 <div class="container-fluid">
     <div class="row">
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="padding-top: 10px">
+        <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4" style="padding-top: 10px">
 
             <div class="mt-3">
                 <h4 class="text-center mb-3">Materials Commons</h4>
@@ -86,7 +86,7 @@
                                style="opacity: 0.6; pointer-events: none;"
                                id="cameraButton"
                                onclick="document.getElementById('backCamera').click();">
-                                <i class="fas fa-camera mr-2"></i>Take Picture
+                                <i class="fas fa-camera me-2"></i>Take Picture
                             </a>
                         </div>
 
@@ -98,7 +98,7 @@
                                style="opacity: 0.6; pointer-events: none;"
                                id="galleryButton"
                                onclick="document.getElementById('photoGallery').click();">
-                                <i class="fas fa-images mr-2"></i>Choose from Gallery
+                                <i class="fas fa-images me-2"></i>Choose from Gallery
                             </a>
                         </div>
 
@@ -128,13 +128,13 @@
                             <div class="text-center">
                                 <small class="text-muted d-block mb-2">Questions? Check out our documentation</small>
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <a href="/mcdocs2/" class="btn btn-link btn-sm text-info p-0 mr-3">
-                                        <i class="fas fa-book-open mr-1"></i>
+                                    <a href="/mcdocs2/" class="btn btn-link btn-sm text-info p-0 me-3">
+                                        <i class="fas fa-book-open me-1"></i>
                                         Documentation
                                     </a>
                                     <span class="text-muted">•</span>
-                                    <a href="{{route('logout-get')}}" class="btn btn-link btn-sm text-muted p-0 ml-3">
-                                        <i class="fas fa-sign-out-alt mr-1"></i>
+                                    <a href="{{route('logout-get')}}" class="btn btn-link btn-sm text-muted p-0 ms-3">
+                                        <i class="fas fa-sign-out-alt me-1"></i>
                                         Sign out
                                     </a>
                                 </div>
@@ -149,7 +149,7 @@
                                 <div class="card-body text-center py-4">
                                     <div class="mb-3">
                                         <i class="fas fa-camera text-muted" style="font-size: 2rem;"></i>
-                                        <i class="fas fa-images text-muted ml-2" style="font-size: 2rem;"></i>
+                                        <i class="fas fa-images text-muted ms-2" style="font-size: 2rem;"></i>
                                     </div>
                                     <h6 class="card-title text-muted mb-3">Photo Upload Features</h6>
                                     <p class="card-text text-muted mb-3">
@@ -157,7 +157,7 @@
                                         upload to your projects.
                                     </p>
                                     <div class="alert alert-info mb-0" role="alert" style="padding: 0.75rem 0.75rem;">
-                                        <i class="fas fa-info-circle mr-2"></i>
+                                        <i class="fas fa-info-circle me-2"></i>
                                         Login required to access photo upload features
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
 
                         <div class="mb-3 w-100">
                             <a class="btn btn-success w-100 text-center" href="{{route('login')}}">
-                                <i class="fas fa-user mr-2"></i>Login To Upload Photos
+                                <i class="fas fa-user me-2"></i>Login To Upload Photos
                             </a>
                         </div>
 
@@ -175,7 +175,7 @@
                             <div class="text-center">
                                 <small class="text-muted d-block mb-2">Questions? Check out our documentation</small>
                                 <a href="/mcdocs2/" class="btn btn-link btn-sm text-info p-0">
-                                    <i class="fas fa-book-open mr-1"></i>
+                                    <i class="fas fa-book-open me-1"></i>
                                     Documentation
                                 </a>
                             </div>

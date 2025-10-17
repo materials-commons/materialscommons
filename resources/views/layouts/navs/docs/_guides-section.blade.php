@@ -1,8 +1,8 @@
 <div class="sidebar-group">
     <div class="sidebar-group-header" id="project-sidenav-data">
-        <i class="fas fa-book-open fa-sm mr-2 mb-1 ml-1"></i>Guides
+        <i class="fas fa-book-open fa-sm me-2 mb-1 ms-1"></i>Guides
     </div>
-    <ul class="nav flex-column ml-3">
+    <ul class="nav flex-column ms-3">
         <li>
             <a class="nav-link fs-11" href="https://materialscommons.org/mcdocs2/guides/best_practices.html" target="_blank">Best Practices</a>
         </li>
@@ -14,10 +14,10 @@
         <li>
             <a class="nav-link fs-11" href="https://materialscommons.org/mcdocs2/guides/spreadsheets.html" target="_blank">How To Use Spreadsheets For Data</a>
         </li>
-        <li class="ml-2">
+        <li class="ms-2">
             <a class="nav-link fs-11" href="https://materialscommons.org/mcdocs2/guides/quick_guides/sample_multiple.html" target="_blank">Example For Experimental Data</a>
         </li>
-        <li class="ml-2">
+        <li class="ms-2">
             <a class="nav-link fs-11" href="https://materialscommons.org/mcdocs2/guides/quick_guides/computation_multiple.html" target="_blank">Example For Computational Data</a>
         </li>
     </ul>

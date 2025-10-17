@@ -3,7 +3,7 @@
         Community: {{$community->name}}
         @isset($editCommunityRoute)
             <a class="action-link float-right" href="{{$editCommunityRoute}}">
-                <i class="fas fa-edit mr-2"></i>Edit Community
+                <i class="fas fa-edit me-2"></i>Edit Community
             </a>
         @endisset
         @guest
@@ -11,10 +11,10 @@
             @if(isset($userDatasets))
                 @if($userDatasets->isNotEmpty())
                     <div class="dropdown float-right">
-                        <a class="action-link mr-4 dropdown-toggle" data-toggle="dropdown"
+                        <a class="action-link me-4 dropdown-toggle" data-bs-toggle="dropdown"
                            data-offset="20" data-boundary="viewport"
                            href="#">
-                            <i class="fas fa-plus mr-2"></i>Add Dataset
+                            <i class="fas fa-plus me-2"></i>Add Dataset
                         </a>
                         <div class="dropdown-menu" data-offset="20" data-boundary="viewport">
                             @foreach($userDatasets as $userDataset)

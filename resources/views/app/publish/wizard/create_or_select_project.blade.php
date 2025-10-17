@@ -14,7 +14,7 @@
 
         @slot('body')
             <div class="col-10">
-                <form class="form-group">
+                <form class="mb-3">
                     <p>
                         Materials Commons stores all data in projects. You can choose to create a new project, or
                         use
@@ -22,7 +22,7 @@
                     </p>
                     <div>
                         <a href="{{route('public.publish.wizard.create_project')}}"
-                           class="btn btn-primary mr-3">
+                           class="btn btn-primary me-3">
                             Create Project
                         </a>
 

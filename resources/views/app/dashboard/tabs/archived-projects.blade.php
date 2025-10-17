@@ -33,12 +33,12 @@
                 <td>
                     <div class="float-right">
                         @if(auth()->id() == $proj->owner_id)
-                            <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+                            <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}"
                                class="action-link">
                                 <i class="fas fa-fw fa-trash-alt"></i>
                             </a>
                             <a href="{{route('dashboard.projects.unarchive',[$proj])}}"
-                               data-toggle="tooltip"
+                               data-bs-toggle="tooltip"
                                title="Marks project as unarchived. Project will show up in the Projects tab."
                                class="action-link">
                                 <i class="fas fa-fw fa-arrow-alt-circle-left"></i>

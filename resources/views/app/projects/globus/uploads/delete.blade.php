@@ -18,21 +18,21 @@
                 @csrf
                 @method('delete')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" name="name" type="text" value="{{$globusUpload->name}}"
                            placeholder="Name..." readonly>
                 </div>
-                {{--                <div class="form-group">--}}
+                {{--                <div class="mb-3">--}}
                 {{--                    <label for="description">Description</label>--}}
                 {{--                    <textarea class="form-control" id="description" name="description" type="text"--}}
                 {{--                              placeholder="Description..." readonly>{{$globusUpload->description}}</textarea>--}}
                 {{--                </div>--}}
-                <div class="form-group">
-                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="mr-3">Goto Globus</a>
+                <div class="mb-3">
+                    <a href="{{$globusUpload->globus_url}}" target="_blank" class="me-3">Goto Globus</a>
                     <a href="https://app.globus.org/activity" target="_blank">View Globus Upload Activity</a>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <p class="h5">
                         Deleting the upload will prevent Globus from uploading any more files for this request. Any
                         files that were uploaded will not be loaded into the project and instead will be deleted.
@@ -41,7 +41,7 @@
                     </p>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger mr-3">Cancel</a>
+                    <a href="{{route('projects.globus.uploads.index', [$project])}}" class="action-link danger me-3">Cancel</a>
                     <a href="#" class="action-link"
                        onclick="document.getElementById('delete-upload').submit()">
                         Delete

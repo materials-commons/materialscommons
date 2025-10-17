@@ -14,7 +14,7 @@
         <x-slot:body>
             <h5>Select Project</h5>
             <form class="col-8">
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="projects">Projects</label>
                     <select name="project" class="selectpicker col-9" title="projects"
                             data-style="btn-light no-tt"
@@ -28,8 +28,8 @@
                 </div>
                 <div class="col-10" x-data="selectProject">
                     <div class="float-right">
-                        <a class="action-link danger mr-3" href="#">Cancel</a>
-                        <a class="action-link mr-3" href="#" @click.prevent="gotoCreateDataset()">Use Selected
+                        <a class="action-link danger me-3" href="#">Cancel</a>
+                        <a class="action-link me-3" href="#" @click.prevent="gotoCreateDataset()">Use Selected
                             Project</a>
                     </div>
                 </div>

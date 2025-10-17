@@ -12,8 +12,8 @@
             </div>
             <div class="project-meta">
                 <span class="text-muted"><i class="far fa-clock"></i>{{Carbon\Carbon::parse($recentlyAccessedOn)->diffForHumans()}}</span>
-                <span class="text-muted"><i class="fas fa-file ml-3"></i>{{number_format($proj->file_count)}}</span>
-                <span class="text-muted"><i class="fas fa-hdd ml-3"></i>{{formatBytes($proj->size)}}</span>
+                <span class="text-muted"><i class="fas fa-file ms-3"></i>{{number_format($proj->file_count)}}</span>
+                <span class="text-muted"><i class="fas fa-hdd ms-3"></i>{{formatBytes($proj->size)}}</span>
             </div>
         </div>
         <div class="project-actions">

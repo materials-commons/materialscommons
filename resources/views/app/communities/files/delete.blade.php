@@ -19,17 +19,17 @@
                 @csrf
                 @method('delete')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{$file->name}}" name="name" readonly>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description"
                               name="description" readonly>{{$file->description}}</textarea>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger mr-3">
+                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" onclick="document.getElementById('delete-file').submit()" href="#">

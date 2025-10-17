@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <div x-text="authorAdded"></div>
-                    <div class="form-row mt-2">
+                    <div class="row mt-2">
                         <div class="col">
                             <input class="form-control" name="author_name" type="text" placeholder="Name...(Required)"
                                    x-model="author.name" id="author_name" required>
@@ -88,7 +88,7 @@
                         let nextId = authorTable.data().length;
                         authorTable.row.add([
                             nextId,
-                            `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
+                            `<i class="fas fa-fw fa-grip-vertical me-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
                             `<div class="float-right">
                                 <a class="action-link cursor-pointer"

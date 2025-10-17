@@ -1,9 +1,9 @@
 <div>
-    <a class="btn btn-success float-right ml-3"
-       data-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
+    <a class="btn btn-success float-right ms-3"
+       data-bs-toggle="modal" href="#create-transfer-request-modal">Create Transfer Request</a>
     @include('app.admin.partials._create-transfer-request-modal')
     <a class="btn btn-success float-right" href="{{route('admin.dashboard.mcfs.show-log-viewer')}}"><i
-                class="fa fa-fw fa-file-alt mr-2"></i>Log Viewer</a>
+                class="fa fa-fw fa-file-alt me-2"></i>Log Viewer</a>
 </div>
 <br/>
 <br/>
@@ -42,7 +42,7 @@
                 @else
                     <td>
                         <a href="{{$tr->globusTransfer->globus_url}}" target="_blank">
-                            <i class="fa fa-fw fa-external-link-alt ml-2"></i>Globus
+                            <i class="fa fa-fw fa-external-link-alt ms-2"></i>Globus
                         </a>
                     </td>
                 @endif

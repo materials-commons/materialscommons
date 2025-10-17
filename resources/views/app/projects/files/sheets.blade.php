@@ -12,9 +12,9 @@
         <x-slot name="body">
             <x-table-container>
                 <div class="float-right">
-                    <a data-toggle="modal" href="#add-google-sheet-modal"
+                    <a data-bs-toggle="modal" href="#add-google-sheet-modal"
                        class="btn btn-success">
-                        <i class="fa fas fa-plus mr-2"></i>Add Google Sheet
+                        <i class="fa fas fa-plus me-2"></i>Add Google Sheet
                     </a>
                 </div>
                 @include('app.projects.files._new-sheet-modal')

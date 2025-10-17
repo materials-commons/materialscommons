@@ -1,5 +1,5 @@
 @if(isset($activitiesGroup) && sizeof($activitiesGroup) != 0)
-    <div class="form-group">
+    <div class="mb-3">
         <label for="process-types">Process Types ({{sizeof($activitiesGroup)}})</label>
         <ul class="list-inline">
             @foreach($activitiesGroup as $ag)

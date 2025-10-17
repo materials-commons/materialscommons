@@ -23,16 +23,16 @@
 
         @slot('body')
             <form>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="authors">Name</label>
                     <input class="form-control" value="{{$dataset->name}}" id="authors" type="text" readonly>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="summary">Summary</label>
                     <input class="form-control" value="{{$dataset->summary}}" id="summary" type="text" readonly>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link mr-3">
+                    <a href="{{route('projects.datasets.edit', [$project, $dataset])}}" class="action-link me-3">
                         Edit Details
                     </a>
                     <a href="{{route('projects.datasets.show', [$project, $dataset])}}" class="action-link">

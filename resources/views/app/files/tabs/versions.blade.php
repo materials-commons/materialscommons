@@ -34,17 +34,17 @@
                 <td>
                     @if(!$filever->current)
                         <a class="action-link" href="{{route('projects.files.set-active', [$project, $filever])}}">
-                            <i class="fas fa-history mr-2"></i>Set as active version
+                            <i class="fas fa-history me-2"></i>Set as active version
                         </a>
                         <br>
                     @endif
                     <a class="action-link"
                        href="{{route('projects.files.download', [$project, $filever])}}">
-                        <i class="fas fa-download mr-2"></i>Download File
+                        <i class="fas fa-download me-2"></i>Download File
                     </a>
                     <br>
                     <a class="action-link" href="{{route('projects.files.compare', [$project, $file, $filever])}}">
-                        <i class="fas fa-columns mr-2"></i>Compare
+                        <i class="fas fa-columns me-2"></i>Compare
                     </a>
                 </td>
             </tr>

@@ -17,13 +17,13 @@
             @endforeach
         @endif
 
-        <a class="float-right action-link mr-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
-            <i class="fas fa-fw fa-plus mr-2"></i>Add Files
+        <a class="float-right action-link me-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
+            <i class="fas fa-fw fa-plus me-2"></i>Add Files
         </a>
 
-        <a class="float-right action-link mr-4"
+        <a class="float-right action-link me-4"
            href="{{route($createDirectoryRouteName, [$project, $dataset, $directory])}}">
-            <i class="fas fa-fw fa-folder-plus mr-2"></i>Create Directory
+            <i class="fas fa-fw fa-folder-plus me-2"></i>Create Directory
         </a>
     @endslot
 
@@ -31,7 +31,7 @@
         @if ($directory->path !== '/')
             <a href="{{route($directoryPathRouteName, [$project, $dataset, $directory->directory_id])}}"
                class="mb-3">
-                <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
             </a>
             <br>
             <br>
@@ -52,11 +52,11 @@
                     <td>
                         @if ($file->mime_type === 'directory')
                             <a href="{{route($directoryPathRouteName, [$project, $dataset, $file])}}">
-                                <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
+                                <i class="fa-fw fas me-2 fa-folder"></i> {{$file->name}}
                             </a>
                         @else
                             <a href="{{route('projects.files.show', [$project, $file])}}">
-                                <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
+                                <i class="fa-fw fas me-2 fa-file"></i>{{$file->name}}
                             </a>
                         @endif
                     </td>
@@ -67,7 +67,7 @@
                         <td>{{$file->toHumanBytes()}}</td>
                     @endif
                     <td>
-                        <div class="form-group form-check-inline">
+                        <div class="mb-3 form-check-inline">
                             <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                    {{$file->selected ? 'checked' : ''}}
                                    onclick="updateSelection({{$file}}, this)">

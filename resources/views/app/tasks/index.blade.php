@@ -12,7 +12,7 @@
             Tasks
             <a class="action-link float-right"
                href="{{route('tasks.create')}}">
-                <i class="fas fa-plus mr-2"></i>Create Task
+                <i class="fas fa-plus me-2"></i>Create Task
             </a>
         @endslot
 
@@ -55,7 +55,7 @@
                                    class="">
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
-                                <a data-toggle="modal" href="#item-delete-{{$task->id}}">
+                                <a data-bs-toggle="modal" href="#item-delete-{{$task->id}}">
                                     <i class="fas fa-fw fa-trash-alt"></i>
                                 </a>
                                 @component('components.item-delete', ['item' => $task, 'itemType' => 'Task', 'deleteRoute' => 'tasks.destroy'])
@@ -66,7 +66,7 @@
                     </tbody>
                 </table>
             @else
-                <div class="mt-3 ml-3">No Tasks</div>
+                <div class="mt-3 ms-3">No Tasks</div>
             @endif
         @endslot
     @endcomponent

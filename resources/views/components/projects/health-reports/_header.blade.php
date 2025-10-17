@@ -17,7 +17,7 @@
     <h3 class="mb-0 text-white">
         <i class="fas fa-heartbeat"></i>
         Project Health Report
-        <span class="ml-4 badge {{ $statusClasses[$healthStatus] }} badge-lg">
+        <span class="ms-4 badge {{ $statusClasses[$healthStatus] }} badge-lg">
             <i class="fas {{ $statusIcons[$healthStatus] }}"></i>
             {{ ucfirst($healthStatus) }}
         </span>

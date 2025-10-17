@@ -16,7 +16,7 @@
             @component('components.experiment-tabs', ['project' => $project, 'experiment' => $experiment])
             @endcomponent
 
-            <div class="ml-2">
+            <div class="ms-2">
                 Processes here {{$experiment->activities()->count()}}
             </div>
         @endslot

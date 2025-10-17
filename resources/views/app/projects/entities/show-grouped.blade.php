@@ -27,7 +27,7 @@
 
             <a class="float-right action-link" href="#"
                onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
-                <i class="fas fa-object-ungroup mr-2"></i>Ungroup Processes
+                <i class="fas fa-object-ungroup me-2"></i>Ungroup Processes
             </a>
 
             <div class="col col-lg-4 float-right">
@@ -46,9 +46,9 @@
         @slot('body')
             <x-show-standard-details :item="$entity"/>
 
-            <div class="row ml-1">
+            <div class="row ms-1">
                 @foreach($activityTypes as $activityType)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 tile background-white">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 tile background-white">
                         @include('partials.activities.activity-type-card', [
                             'activityType' => $activityType,
                             'files' => $filesByActivityType->get($activityType->name, []),

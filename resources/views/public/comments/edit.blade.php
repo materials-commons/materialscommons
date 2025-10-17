@@ -18,19 +18,19 @@
                 @csrf
                 @method('put')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="title">Title</label>
                     <input class="form-control" id="title" name="title" value="{{$comment->title}}" type="text"
                            placeholder="Title..." required>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="comment">Comment</label>
                     <textarea class="form-control" id="comment" name="body" type="text"
                               placeholder="Comment..." required>{{$comment->body}}</textarea>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger mr-3">
+                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" href="#"

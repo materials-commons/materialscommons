@@ -28,7 +28,7 @@
                     @if ($leftDirectory->path !== '/')
                         <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory->directory_id, $rightProject, $rightDirectory])}}"
                            class="mb-3">
-                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                            <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
                         </a>
                         <br>
                         <br>
@@ -54,14 +54,14 @@
                                            data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-dir'])}}"
                                            data-copy-type="copy-dir"
                                            href="{{route('projects.folders.show-for-copy', [$leftProject, $file, $rightProject, $rightDirectory])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a class="no-underline"
                                            data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-file'])}}"
                                            data-copy-type="copy-file"
                                            href="{{route('projects.files.show', [$leftProject, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>
@@ -86,7 +86,7 @@
                     @if ($rightDirectory->path !== '/')
                         <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $rightDirectory->directory_id])}}"
                            class="mb-3">
-                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                            <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
                         </a>
                         <br>
                         <br>
@@ -113,14 +113,14 @@
                                            data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-dir'])}}"
                                            data-copy-type="copy-dir"
                                            href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $file])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
                                         </a>
                                     @else
                                         <a class="no-underline"
                                            data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-file'])}}"
                                            data-copy-type="copy-file"
                                            href="{{route('projects.files.show', [$rightProject, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
+                                            <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>

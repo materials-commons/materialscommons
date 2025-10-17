@@ -13,7 +13,7 @@
         @slot('header')
             Processes
             {{--            <a class="action-link float-right" href="#">--}}
-            {{--                <i class="fas fa-plus mr-2"></i>Create Process--}}
+            {{--                <i class="fas fa-plus me-2"></i>Create Process--}}
             {{--            </a>--}}
         @endslot
 

@@ -13,7 +13,7 @@
         @slot('header')
             Datasets
             <a class="action-link float-right" href="{{route('projects.datasets.create', [$project])}}">
-                <i class="fas fa-plus mr-2"></i>Create Dataset
+                <i class="fas fa-plus me-2"></i>Create Dataset
             </a>
         @endslot
 
@@ -40,7 +40,7 @@
                             <td>{{$dataset->summary}}</td>
                             <td>
                                 @foreach($dataset->tags as $tag)
-                                    <span class="badge badge-info ml-1">{{$tag->name}}</span>
+                                    <span class="badge badge-info ms-1">{{$tag->name}}</span>
                                 @endforeach
                             </td>
                             @if ($dataset->published_at === null)

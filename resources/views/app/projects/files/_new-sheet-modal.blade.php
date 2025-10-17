@@ -12,7 +12,7 @@
                 <form id="add-sheet-form" method="post"
                       action="{{route('projects.files.sheets.add-google-sheet', [$project])}}">
                     @csrf
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Google Sheet URL</label>
                         <input class="form-control" name="sheet_url" value=""
                                hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"

@@ -10,16 +10,16 @@
             <div class="modal-body" style="height: 500px">
                 <h4>Save Query</h4>
                 <form id="mql-save">
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Query</label>
                         <textarea class="form-control" name="query_text" id="query-text">{{$query}}</textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Name</label>
                         <input class="form-control" name="name" value="" type="text"
                                placeholder="Name..." required>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Description</label>
                         <textarea class="form-control" name="description" type="text"
                                   placeholder="Description..." required></textarea>

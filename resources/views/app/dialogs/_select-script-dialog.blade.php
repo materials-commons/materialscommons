@@ -22,10 +22,10 @@
                                 {{$script->fullPath()}}
                             </td>
                             <td>
-                                <a class="action-link float-right mr-4"
+                                <a class="action-link float-right me-4"
                                    onclick="$('#select-script-dialog').modal('hide')"
                                    href="{{route('projects.files.run-script-with-folder-context', [$project, $directory, $script])}}">
-                                    <i class="fas fa-fw fa-play-circle mr-2"></i>Run
+                                    <i class="fas fa-fw fa-play-circle me-2"></i>Run
                                 </a>
                             </td>
                         </tr>

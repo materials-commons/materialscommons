@@ -33,35 +33,35 @@
 
                 @if(isset($prevEntity))
                     @if($entity->category == "computational")
-                        <a class="action-link mr-3"
+                        <a class="action-link me-3"
                            href="{{route('projects.computations.entities.show-spread', [$project, $prevEntity])}}">
-                            <i class="fas fa-chevron-left mr-1"></i>Previous
+                            <i class="fas fa-chevron-left me-1"></i>Previous
                         </a>
                     @else
-                        <a class="action-link mr-3"
+                        <a class="action-link me-3"
                            href="{{route('projects.entities.show-spread', [$project, $prevEntity])}}">
-                            <i class="fas fa-chevron-left mr-1"></i>Previous
+                            <i class="fas fa-chevron-left me-1"></i>Previous
                         </a>
                     @endif
                 @endif
 
                 @if(isset($nextEntity))
                     @if($entity->category == "computational")
-                        <a class="action-link mr-3"
+                        <a class="action-link me-3"
                            href="{{route('projects.computations.entities.show-spread', [$project, $nextEntity])}}">
-                            Next<i class="fas fa-chevron-right ml-1"></i>
+                            Next<i class="fas fa-chevron-right ms-1"></i>
                         </a>
                     @else
-                        <a class="action-link mr-5"
+                        <a class="action-link me-5"
                            href="{{route('projects.entities.show-spread', [$project, $nextEntity])}}">
-                            Next<i class="fas fa-chevron-right ml-1"></i>
+                            Next<i class="fas fa-chevron-right ms-1"></i>
                         </a>
                     @endif
                 @endif
 
                 <a class="action-link" href="#"
                    onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
-                    <i class="fas fa-object-group mr-2"></i>Group By Process Type
+                    <i class="fas fa-object-group me-2"></i>Group By Process Type
                 </a>
             </div>
 
@@ -81,9 +81,9 @@
         @slot('body')
             <x-show-standard-details :item="$entity"/>
 
-            <div class="row ml-1">
+            <div class="row ms-1">
                 @foreach($activities as $activity)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ml-2 mt-2 mb-2 white-box">
+                    <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">
                         <x-activities.activities-card :activity="$activity"
                                                       :project="$project"
                                                       :experiment="$experiment"

@@ -1,10 +1,10 @@
 <form>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="name">Name</label>
         <p>{{$community->name}}
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <label>Organizer</label>
         <p>
             {{$community->owner->name}}
@@ -19,7 +19,7 @@
 
     <x-show-description :description="$community->description"/>
 
-    <div class="form-group">
+    <div class="mb-3">
         <label for="tags">Tags</label>
         @if(!blank($tags))
             <ul class="list-inline">
@@ -35,7 +35,7 @@
         @endif
     </div>
 
-    <div class="form-group">
+    <div class="mb-3">
         <label>Contributors</label>
         @if(!blank($contributors))
             <ul class="list-inline">

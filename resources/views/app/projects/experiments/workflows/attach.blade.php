@@ -29,7 +29,7 @@
                             {{$workflow->name}}
                         </td>
                         <td>
-                            <div class="form-group form-check-inline">
+                            <div class="mb-3 form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
                                        {{$workflowInExperiment($workflow) ? 'checked' : ''}}
                                        onclick="updateWorkflowSelection({{$workflow}}, this)">
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
             <br>
-            <div class="float-right mr-2">
+            <div class="float-right me-2">
                 <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
             </div>
 

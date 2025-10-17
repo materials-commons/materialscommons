@@ -1,5 +1,5 @@
-{{--<ul class="list-unstyled ml-4">--}}
-<table class="table table-sm table-borderless ml-4">
+{{--<ul class="list-unstyled ms-4">--}}
+<table class="table table-sm table-borderless ms-4">
     <thead>
     <tr class="row">
         <th class="col-sm-1">Y</th>

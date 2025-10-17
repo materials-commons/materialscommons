@@ -11,7 +11,7 @@
                 <form id="set-logging-level-form" method="post"
                       action="{{$setLogLevelRoute}}">
                     @csrf
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="level">Select Logging Level</label>
                         <select name="level" class="selectpicker" title="level"
                                 data-style="btn-light no-tt">

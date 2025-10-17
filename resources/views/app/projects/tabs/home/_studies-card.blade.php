@@ -8,22 +8,22 @@
         </p>
 
         <div class="mt-4">
-            <h6 class="mb-3"><i class="fas fa-lightbulb mr-2"></i>Key Features</h6>
+            <h6 class="mb-3"><i class="fas fa-lightbulb me-2"></i>Key Features</h6>
             <ul class="list-unstyled features-list">
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Track experimental processes and computational workflows
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Record parameters, measurements, and results
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Automatic linking to related project files
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Easy data import from spreadsheets
                 </li>
             </ul>
@@ -33,12 +33,12 @@
             <h6 class="mb-3">Quick Actions</h6>
             <div class="d-flex flex-wrap gap-2">
                 <a href="{{route('projects.experiments.index', [$project])}}"
-                   class="btn btn-outline-primary btn-sm mr-2 mb-2">
-                    <i class="fas fa-flask mr-1"></i> View Studies
+                   class="btn btn-outline-primary btn-sm me-2 mb-2">
+                    <i class="fas fa-flask me-1"></i> View Studies
                 </a>
                 <a href="{{route('projects.experiments.create', [$project])}}"
-                   class="btn btn-outline-primary btn-sm mr-2 mb-2">
-                    <i class="fas fa-plus mr-1"></i> Create Study
+                   class="btn btn-outline-primary btn-sm me-2 mb-2">
+                    <i class="fas fa-plus me-1"></i> Create Study
                 </a>
             </div>
         </div>
@@ -51,12 +51,12 @@
                     <p class="small mb-2">Quickly create studies from annotated spreadsheets - recommended for most
                         users</p>
                     <div class="d-flex flex-wrap">
-                        <a href="{{route('projects.experiments.create', [$project])}}" class="text-primary mr-3">
-                            Import Spreadsheet <i class="fas fa-arrow-right ml-1"></i>
+                        <a href="{{route('projects.experiments.create', [$project])}}" class="text-primary me-3">
+                            Import Spreadsheet <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                         <a href="https://materialscommons.org/mcdocs2/guides/spreadsheets.html#basic-requirements"
                            target="_blank" class="text-primary">
-                            Annotation Guide <i class="fas fa-external-link-alt ml-1"></i>
+                            Annotation Guide <i class="fas fa-external-link-alt ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                     <p class="small mb-2">For automated study creation and management</p>
                     <a href="https://materials-commons.github.io/materials-commons-api/html/manual/experiments.html"
                        target="_blank" class="text-primary">
-                        API Documentation <i class="fas fa-external-link-alt ml-1"></i>
+                        API Documentation <i class="fas fa-external-link-alt ms-1"></i>
                     </a>
                 </div>
             </div>

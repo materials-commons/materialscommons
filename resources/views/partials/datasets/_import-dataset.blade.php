@@ -6,17 +6,17 @@
         be created by the import process and must not exist in the project.
     </p>
 
-    <div class="form-group">
+    <div class="mb-3">
         <label for="project">Project</label>
         <input class="form-control" id="name" value="{{$project->name}}" readonly>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="directory">Directory</label>
         <input class="form-control" id="directory" name="directory" placeholder="Directory..."
                value="{{old('directory', $dataset->importDirectory())}}">
     </div>
     <div class="float-right">
-        <a href="{{$cancelImportRoute}}" class="action-link danger mr-3">
+        <a href="{{$cancelImportRoute}}" class="action-link danger me-3">
             Cancel
         </a>
 

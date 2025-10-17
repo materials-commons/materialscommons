@@ -7,7 +7,7 @@
             $filesCount++;
         @endphp
         @if($loop->iteration < 12)
-            <li class="mt-2 ml-3">
+            <li class="mt-2 ms-3">
                 @if($f->mime_type == "directory")
                     <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
                 @else
@@ -29,7 +29,7 @@
                 @endif
             </li>
         @else
-            <li class="{{$activity->uuid}} mt-2 ml-3" hidden>
+            <li class="{{$activity->uuid}} mt-2 ms-3" hidden>
                 @if($f->mime_type == "directory")
                     <a href="{{route('projects.folders.show', [$project, $f])}}">{{$f->path}} (directory)</a>
                 @else
@@ -53,7 +53,7 @@
         @endif
     @endforeach
         @if($filesCount == 0)
-            <span class="ml-3 font-weight-bold">No Files</span>
+            <span class="ms-3 font-weight-bold">No Files</span>
         @endif
     @include('common.show-more-control', [
            'items' => $activity->files,

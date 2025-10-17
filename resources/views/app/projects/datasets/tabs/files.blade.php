@@ -8,7 +8,7 @@
         @if ($directory->path !== '/')
             <a href="{{route('projects.datasets.show.next', [$project, $dataset, $directory->directory_id])}}"
                class="mb-3">
-                <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
+                <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
             </a>
             <br>
             <br>
@@ -31,11 +31,11 @@
                         <td>
                             @if ($file->mime_type === 'directory')
                                 <a href="{{route('projects.datasets.show.next', [$project, $dataset, $file])}}">
-                                    <i class="fa-fw fas mr-2 fa-folder"></i> {{$file->name}}
+                                    <i class="fa-fw fas me-2 fa-folder"></i> {{$file->name}}
                                 </a>
                             @else
                                 <a href="{{route('projects.files.show', [$project, $file])}}">
-                                    <i class="fa-fw fas mr-2 fa-file"></i>{{$file->name}}
+                                    <i class="fa-fw fas me-2 fa-file"></i>{{$file->name}}
                                 </a>
                             @endif
                         </td>
@@ -47,7 +47,7 @@
                         @endif
                         <td>{{$file->size}}</td>
                         <td>
-                            <div class="form-group form-check-inline">
+                            <div class="mb-3 form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
                                        {{$file->selected ? 'checked' : ''}} readonly onclick="return false;">
                             </div>

@@ -17,8 +17,8 @@
                 <div class="col-6">
                     <h4>{{$file1->name}} uploaded on {{$file1->created_at}}</h4>
                     <x-show-standard-details :item="$file1">
-                        <span class="ml-3 fs-10 grey-5">Mediatype: {{$file1->mime_type}}</span>
-                        <span class="ml-3 fs-10 grey-5">Size: {{$file1->toHumanBytes()}}</span>
+                        <span class="ms-3 fs-10 grey-5">Mediatype: {{$file1->mime_type}}</span>
+                        <span class="ms-3 fs-10 grey-5">Size: {{$file1->toHumanBytes()}}</span>
                     </x-show-standard-details>
                     <hr>
                     <br>
@@ -28,8 +28,8 @@
                 <div class="col-6">
                     <h4>{{$file2->name}} uploaded on {{$file2->created_at}}</h4>
                     <x-show-standard-details :item="$file2">
-                        <span class="ml-3 fs-10 grey-5">Mediatype: {{$file2->mime_type}}</span>
-                        <span class="ml-3 fs-10 grey-5">Size: {{$file2->toHumanBytes()}}</span>
+                        <span class="ms-3 fs-10 grey-5">Mediatype: {{$file2->mime_type}}</span>
+                        <span class="ms-3 fs-10 grey-5">Size: {{$file2->toHumanBytes()}}</span>
                     </x-show-standard-details>
                     <hr>
                     <br>

@@ -12,7 +12,7 @@
             Teams
             <a class="action-link float-right"
                href="{{route('teams.create')}}">
-                <i class="fas fa-plus mr-2"></i>Create Team
+                <i class="fas fa-plus me-2"></i>Create Team
             </a>
         @endslot
 
@@ -48,7 +48,7 @@
                                     <i class="fas fa-fw fa-edit"></i>
                                 </a>
                                 {{--                                @if(auth()->id() == $proj->owner_id)--}}
-                                {{--                                    <a data-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">--}}
+                                {{--                                    <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}" class="action-link">--}}
                                 {{--                                        <i class="fas fa-fw fa-trash-alt"></i>--}}
                                 {{--                                    </a>--}}
                                 {{--                                @endif--}}

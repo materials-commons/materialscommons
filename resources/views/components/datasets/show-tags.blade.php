@@ -1,5 +1,5 @@
 @if(!blank($tags))
-    <div class="form-group">
+    <div class="mb-3">
         <label for="tags">Tags</label>
         <ul class="list-inline">
             @foreach($tags as $tag)

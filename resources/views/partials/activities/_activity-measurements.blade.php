@@ -1,7 +1,7 @@
 @php
     $attributesCount = 0;
 @endphp
-<div class="row ml-2">
+<div class="row ms-2">
     @foreach($activity->entityStates as $es)
         @if($es->pivot->direction == "out")
             @foreach($es->attributes as $attribute)
@@ -17,6 +17,6 @@
         @endif
     @endforeach
     @if($attributesCount == 0)
-        <span class="ml-1">No Attributes</span>
+        <span class="ms-1">No Attributes</span>
     @endif
 </div>

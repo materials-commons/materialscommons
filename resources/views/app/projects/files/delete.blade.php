@@ -19,18 +19,18 @@
                 @csrf
                 @method('delete')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{$file->name}}" name="name" readonly>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description"
                               name="description" readonly>{{$file->description}}</textarea>
                 </div>
                 <div class="float-right">
                     <a href="{{route('projects.folders.show', [$project, $dir, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg])}}"
-                       class="action-link mr-3">
+                       class="action-link me-3">
                         Cancel
                     </a>
                     <a class="action-link danger" onclick="document.getElementById('delete-file').submit()" href="#">

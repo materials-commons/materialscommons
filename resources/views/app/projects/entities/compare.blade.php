@@ -13,7 +13,7 @@
             <x-slot name='header'>
                 Compare sample {{$entity1->name}} to {{$entity2->name}}
                 <a class="action-link float-right" href="#" @click="showFilter = !showFilter">
-                    <i class="fas fa-filter mr-2"></i>Filter Processes
+                    <i class="fas fa-filter me-2"></i>Filter Processes
                 </a>
             </x-slot>
 
@@ -35,13 +35,13 @@
                 {{--                </form>--}}
 
                 <div style="display: none" x-show="showFilter">
-                    <h4>Select/Deselect processes to show <a href="#" class="ml-1"
+                    <h4>Select/Deselect processes to show <a href="#" class="ms-1"
                                                              @click="showFilter = false">(Hide)</a></h4>
                     <div class="row mb-2 mt-3">
                         <div class="col-6">
                             <div class="col-12 mb-3">
                                 <a href="#" @click="selectAllSample1()">Select All</a>
-                                <a href="#" class="ml-3" @click="deselectAllSample1()">Deselect All</a>
+                                <a href="#" class="ms-3" @click="deselectAllSample1()">Deselect All</a>
                             </div>
                             <ul class="list-unstyled">
                                 @foreach($entity1Activities as $e1activity)
@@ -57,7 +57,7 @@
                         <div class="col-6">
                             <div class="col-12 mb-3">
                                 <a href="#" @click="selectAllSample2()">Select All</a>
-                                <a href="#" class="ml-3" @click="deselectAllSample2()">Deselect All</a>
+                                <a href="#" class="ms-3" @click="deselectAllSample2()">Deselect All</a>
                             </div>
                             <ul class="list-unstyled">
                                 @foreach($entity2Activities as $e2activity)
@@ -82,7 +82,7 @@
                                 <x-show-standard-details :item="$entity1"/>
                                 <div class="row">
                                     @foreach($entity1Activities as $e1activity)
-                                        <div class="col-12 mt-2 ml-2 white-box"
+                                        <div class="col-12 mt-2 ms-2 white-box"
                                              x-show="sample1Processes['{{$e1activity->uuid}}']">
 
                                             <x-activities.activities-card :activity="$e1activity"
@@ -94,7 +94,7 @@
                                                         <input type="radio" name="activity1_id"
                                                                value="{{$e1activity->id}}"
                                                                x-model="activity1Id"
-                                                               class="mr-2">
+                                                               class="me-2">
                                                         <label class="mb-0">Select for comparison</label>
                                                     </div>
                                                 </x-slot:header>
@@ -114,7 +114,7 @@
                                 <x-show-standard-details :item="$entity2"/>
                                 <div class="row mb-2">
                                     @foreach($entity2Activities as $e2activity)
-                                        <div class="col-12 mt-2 ml-2 white-box"
+                                        <div class="col-12 mt-2 ms-2 white-box"
                                              x-show="sample2Processes['{{$e2activity->uuid}}']">
                                             <x-activities.activities-card :activity="$e2activity"
                                                                           :user="$user"
@@ -125,7 +125,7 @@
                                                         <input type="radio" name="activity2_id"
                                                                x-model="activity2Id"
                                                                value="{{$e2activity->id}}"
-                                                               class="mr-2">
+                                                               class="me-2">
                                                         <label class="mb-0">Select for comparison</label>
                                                     </div>
                                                 </x-slot:header>

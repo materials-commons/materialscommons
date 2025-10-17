@@ -17,12 +17,12 @@
                 @csrf
                 @method('put')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="summary">Summary</label>
                     <input class="form-control" id="summary" value="{{old('summary', $file->summary)}}"
                            name="summary">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description" name="description" type="text"
                               placeholder="Description..."
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="float-right">
-                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger mr-3">
+                    <a href="{{route('communities.files.show', [$community, $file])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a class="action-link" href="#"

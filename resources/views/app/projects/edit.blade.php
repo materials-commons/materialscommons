@@ -17,36 +17,36 @@
                 @csrf
                 @method('patch')
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
                     <input class="form-control" id="name" value="{{old('name', $project->name)}}"
                            name="name">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="summary">Summary</label>
                     <input class="form-control" id="summary" value="{{old('summary', $project->summary)}}"
                            name="summary">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea class="form-control" id="description"
                               name="description">{{old('description', $project->description)}}</textarea>
                 </div>
-                <div class="form-group form-check-inline">
+                <div class="mb-3 form-check-inline">
                     <input type="hidden" name="default_project" value="0">
                     <input type="checkbox" class="form-check-input" id="default_project"
                            value="1" name="default_project"
                             {{old('default_project', $project->default_project) ? 'checked' : ''}}>
                     <label class="form-check-label" for="default_project">Default Project?</label>
                 </div>
-                <div class="form-group form-check-inline">
+                <div class="mb-3 form-check-inline">
                     <input type="hidden" name="is_active" value="0"/>
                     <input type="checkbox" class="form-check-input" id="is_active"
                            value="1" name="is_active" {{$project->is_active ? 'checked' : ''}}>
                     <label class="form-check-label" for="is_active">Is Active?</label>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('projects.show', [$project])}}" class="action-link danger mr-3">
+                    <a href="{{route('projects.show', [$project])}}" class="action-link danger me-3">
                         Cancel
                     </a>
 

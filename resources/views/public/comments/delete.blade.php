@@ -17,23 +17,23 @@
                   id="comment-destroy">
                 @csrf
                 @method('delete')
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="title">Title</label>
                     <input class="form-control" id="title" value="{{$comment->title}}" type="text"
                            placeholder="Title..." readonly>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="comment">Comment</label>
                     <textarea class="form-control" id="comment" type="text"
                               placeholder="Comment..." readonly>{{$comment->body}}</textarea>
                 </div>
                 <div class="float-right">
-                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger mr-3">
+                    <a href="{{route('public.datasets.comments.index', [$dataset])}}" class="action-link danger me-3">
                         Cancel
                     </a>
                     <a href="{{route('public.datasets.comments.edit', [$dataset, $comment])}}"
-                       class="action-link mr-3">
+                       class="action-link me-3">
                         Edit
                     </a>
                     <a class="action-link" href="#"

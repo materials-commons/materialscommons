@@ -6,11 +6,11 @@
             Process: {{$activity->name}}
         @endif
         {{--        <a class="float-right action-link" href="#">--}}
-        {{--            <i class="fas fa-edit mr-2"></i>Edit--}}
+        {{--            <i class="fas fa-edit me-2"></i>Edit--}}
         {{--        </a>--}}
 
-        {{--        <a class="float-right action-link mr-4" href="#">--}}
-        {{--            <i class="fas fa-trash-alt mr-2"></i>Delete--}}
+        {{--        <a class="float-right action-link me-4" href="#">--}}
+        {{--            <i class="fas fa-trash-alt me-2"></i>Delete--}}
         {{--        </a>--}}
     @endslot
 

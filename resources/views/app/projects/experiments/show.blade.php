@@ -30,14 +30,14 @@
             {{$experiment->name}}
 
             @if(!is_null($experiment->loaded_file_path) || !is_null($experiment->sheet))
-                <a data-toggle="modal" href="#reload-experiment-modal"
+                <a data-bs-toggle="modal" href="#reload-experiment-modal"
                    class="action-link float-right">
-                    <i class="fas fa-sync-alt mr-2"></i> Reload Study
+                    <i class="fas fa-sync-alt me-2"></i> Reload Study
                 </a>
             @else
                 <a class="action-link float-right"
                    href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
-                    <i class="fas fa-sync-alt mr-2"></i>Reload Study
+                    <i class="fas fa-sync-alt me-2"></i>Reload Study
                 </a>
             @endif
             <div class="col col-lg-4 float-right">

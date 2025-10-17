@@ -1,7 +1,7 @@
-<div class="mt-2 ml-4 col-12">
+<div class="mt-2 ms-4 col-12">
     <form id="chart-controls-form">
         {{--        <div class="row" style="display: none">--}}
-        {{--            <div class="form-group">--}}
+        {{--            <div class="mb-3">--}}
         {{--                <label>Chart Type:</label>--}}
         {{--                <select wire:model.live="chartType" class="custom-select col-4 font-weight-bold"--}}
         {{--                        title="Select Chart Type">--}}
@@ -12,7 +12,7 @@
         {{--            </div>--}}
         {{--        </div>--}}
         <div class="row" id="x-attr-select">
-            <div class="form-group col-6 col-lg-5">
+            <div class="mb-3 col-6 col-lg-5">
                 <label>Select X Attribute Type:</label>
                 <select wire:model.live="xAttrType" class="custom-select col-4 font-weight-bold"
                         title="select X attribute type">
@@ -23,8 +23,8 @@
             </div>
 
             @if($xAttrType == "sample")
-                <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">X:</label>
+                <div class="mb-3 col-6 col-lg-5">
+                    <label class="ms-4">X:</label>
                     <select wire:model.live="xAttr" class="custom-select col-4 font-weight-bold"
                             title="x attribute">
                         <option value="" disabled selected>Select X Attribute</option>
@@ -36,8 +36,8 @@
             @endif
 
             @if($xAttrType == "process")
-                <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">X:</label>
+                <div class="mb-3 col-6 col-lg-5">
+                    <label class="ms-4">X:</label>
                     <select wire:model.live="xAttr" class="custom-select col-4 font-weight-bold"
                             title="x attribute">
                         <option value="" disabled selected>Select X Attribute</option>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="row" id="y-attr-select">
-            <div class="form-group col-6 col-lg-5">
+            <div class="mb-3 col-6 col-lg-5">
                 <label>Select Y Attribute Type: </label>
                 <select wire:model.live="yAttrType" class="custom-select col-4 font-weight-bold"
                         title="select Y attribute type">
@@ -61,8 +61,8 @@
             </div>
 
             @if($yAttrType == "sample")
-                <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">Y:</label>
+                <div class="mb-3 col-6 col-lg-5">
+                    <label class="ms-4">Y:</label>
                     <select wire:model.live="yAttr" class="custom-select col-4 font-weight-bold"
                             title="y attribute">
                         <option value="" disabled selected>Select Y Attribute</option>
@@ -74,8 +74,8 @@
             @endif
 
             @if($yAttrType == "process")
-                <div class="form-group col-6 col-lg-5">
-                    <label class="ml-4">Y:</label>
+                <div class="mb-3 col-6 col-lg-5">
+                    <label class="ms-4">Y:</label>
                     <select wire:model.live="yAttr" class="custom-select col-4 font-weight-bold"
                             title="y attribute">
                         <option value="" disabled selected>Select Y Attribute</option>
@@ -88,8 +88,8 @@
         </div>
 
         <div class="row">
-            <div class="form-group">
-                <a @class(["btn", "btn-success", "ml-4", "cursor-pointer", "disabled" => !$this->allAttrsSet()])
+            <div class="mb-3">
+                <a @class(["btn", "btn-success", "ms-4", "cursor-pointer", "disabled" => !$this->allAttrsSet()])
                    wire:click.prevent="addToChart()">Draw Chart</a>
             </div>
         </div>
