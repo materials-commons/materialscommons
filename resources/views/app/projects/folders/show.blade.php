@@ -99,7 +99,7 @@
                         <br/>
                     @endif
 
-                    <table id="files" class="table table-hover" style="width:100%">
+                    <table id="files" class="table table-hover hide-datatable" style="width:100%">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -240,7 +240,10 @@
                         {targets: [3], visible: false},
                         {orderData: [5], targets: [4]},
                         {targets: [5], visible: false},
-                    ]
+                    ],
+                    initComplete: function() {
+                       $('#files').show();
+                    }
                 });
 
                 $('#select-project').on('change', function () {

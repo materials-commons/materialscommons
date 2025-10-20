@@ -65,6 +65,10 @@
 
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
+
+
     {{--    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>--}}
 
     <link href="{{asset('css/fa/css/all.css')}}" rel="stylesheet">
@@ -79,12 +83,12 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
-        <a class="navbar-brand col-sm-3 me-0" href="{{route('welcome')}}">
+        <a class="navbar-brand col-sm-3 me-0 ps-3" href="{{route('welcome')}}">
             <img class="h-8 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
     @else
-        <a class="navbar-brand col-sm-3 me-0" href="{{route('welcome')}}">
+        <a class="navbar-brand col-sm-3 me-0 ps-3" href="{{route('welcome')}}">
             <img class="h-8 md:h-10 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>

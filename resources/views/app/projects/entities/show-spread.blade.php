@@ -65,16 +65,27 @@
                 </a>
             </div>
 
-            <div class="col col-lg-4 float-end">
-                <select class="selectpicker col-lg-10 mc-select"
-                        data-style="btn-light no-tt"
-                        data-live-search="true" title="{{$title}}">
+            <div class="col-lg-4 float-end me-4">
+                <select id="entity-select" placeholder="{{$title}}" class="form-select">
+                    <option value="">{{$title}}</option>
                     @foreach($allEntities as $entry)
                         @if ($entry->name != $entity->name)
-                            <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
+                            <option value="{{$entry->id}}">{{$entry->name}}</option>
                         @endif
                     @endforeach
                 </select>
+
+
+
+{{--                <select id="select-beast" placeholder="Select a person..." autocomplete="off">--}}
+{{--                    <option value="">Select a person...</option>--}}
+{{--                    <option value="4">Thomas Edison</option>--}}
+{{--                    <option value="1">Nikola</option>--}}
+{{--                    <option value="3">Nikola Tesla</option>--}}
+{{--                    <option value="5">Arnold Schwarzenegger</option>--}}
+{{--                </select>--}}
+
+
             </div>
         @endslot
 
@@ -104,14 +115,40 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('select').on('change', () => {
-                let selected = $('.selectpicker option:selected').val();
-                window.location.href = route('projects.entities.compare', {
-                    project: "{{$project->id}}",
-                    entity1: "{{$entity->id}}",
-                    entity2: selected
-                });
+            console.log('TomSelect');
+
+
+            new TomSelect("#entity-select",{
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+                onChange: function(value) {
+                    if (value) {
+                        console.log('value', value);
+                        window.location.href = route('projects.entities.compare', {
+                            project: "{{$project->id}}",
+                            entity1: "{{$entity->id}}",
+                            entity2: value
+                        });
+                    }
+                }
             });
+
+
+        {{--new TomSelect('#entity-select', {--}}
+            {{--    create: true,--}}
+            {{--    allowEmptyOption: true,--}}
+            {{--    onChange: function(value) {--}}
+            {{--        if (value) {--}}
+            {{--            window.location.href = route('projects.entities.compare', {--}}
+            {{--                project: "{{$project->id}}",--}}
+            {{--                entity1: "{{$entity->id}}",--}}
+            {{--                entity2: value--}}
+            {{--            });--}}
+            {{--        }--}}
+            {{--    }--}}
+            {{--});--}}
         });
     </script>
 @endpush

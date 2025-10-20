@@ -8,7 +8,7 @@ require('./bootstrap');
 
 require('raphael');
 require('flowchart.js');
-require('bootstrap-select');
+// require('bootstrap-select');
 window.mcfl = require('./flowchart.js');
 window.formatters = require('./formatters');
 window.simplefl = require('./simpleflowchart');

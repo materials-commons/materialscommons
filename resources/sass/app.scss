@@ -14,7 +14,7 @@
 @import 'containers';
 @import 'cards';
 @import 'attributes';
-@import 'datatables';
+//@import 'datatables';
 
 @import 'bootstrap-steps';
 
@@ -27,6 +27,10 @@
     --bs-table-bg: white;
     --bs-table-striped-bg: white;
     --bs-table-hover-bg: #f8f9fa; // optional: light gray on hover
+}
+
+table.hide-datatable {
+    display: none;
 }
 
 // For table headers
