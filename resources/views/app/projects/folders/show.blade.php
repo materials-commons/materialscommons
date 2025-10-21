@@ -232,6 +232,21 @@
             }
 
             $(document).ready(() => {
+
+                new TomSelect("#select-project", {
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    },
+                });
+
+                new TomSelect("#select-directory", {
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    },
+                });
+
                 $('#files').DataTable({
                     pageLength: 100,
                     stateSave: true,

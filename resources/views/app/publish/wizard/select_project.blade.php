@@ -16,9 +16,7 @@
             <form class="col-8">
                 <div class="mb-3">
                     <label for="projects">Projects</label>
-                    <select name="project" class="selectpicker col-9" title="projects"
-                            data-style="btn-light no-tt"
-                            data-live-search="true" id="select-project">
+                    <select id="select-project">
                         @foreach($projects as $project)
                             <option data-token="{{$project->id}}" value="{{$project->id}}">
                                 {{$project->name}}
@@ -41,6 +39,12 @@
 @push('scripts')
     <script>
         mcutil.onAlpineInit("selectProject", () => {
+            new TomSelect('#select-project', {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
             return {
                 gotoCreateDataset() {
                     let projectId = $('#select-project').val();

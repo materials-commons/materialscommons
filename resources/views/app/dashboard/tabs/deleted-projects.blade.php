@@ -37,12 +37,12 @@
             <td>{{$proj->updated_at}}</td>
             <td>
                 <a href="{{route('dashboard.projects.trash.restore', [$proj])}}" class="action-link">
-                    <i class="fas fa-fw fa-trash-restore"></i>
+                    <i class="fas fa-fw fa-trash-restore me-1"></i>
                     restore
                 </a>
                 <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}"
                    class="action-link ms-3 text-danger">
-                    <i class="fas fa-fw fa-trash-alt"></i> Delete Immediately
+                    <i class="fas fa-fw fa-trash-alt me-1"></i> Delete Immediately
                 </a>
                 @include('app.dashboard.partials._immediate-delete-project-modal', ['project' => $proj])
             </td>
