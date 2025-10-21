@@ -10,10 +10,10 @@
                     {{$proj->name}}
                 </a>
             </div>
-            <div class="project-meta">
-                <span class="text-muted"><i class="far fa-clock"></i>{{Carbon\Carbon::parse($recentlyAccessedOn)->diffForHumans()}}</span>
-                <span class="text-muted"><i class="fas fa-file ms-3"></i>{{number_format($proj->file_count)}}</span>
-                <span class="text-muted"><i class="fas fa-hdd ms-3"></i>{{formatBytes($proj->size)}}</span>
+            <div class="project-meta d-flex">
+                <span class="flex-fill text-muted"><i class="far fa-clock me-2"></i>{{Carbon\Carbon::parse($recentlyAccessedOn)->diffForHumans()}}</span>
+                <span class="flex-fill text-muted"><i class="fas fa-file me-2 ms-3"></i>{{number_format($proj->file_count)}}</span>
+                <span class="flex-fill text-muted"><i class="fas fa-hdd me-2 ms-3"></i>{{formatBytes($proj->size)}}</span>
             </div>
         </div>
         <div class="project-actions">

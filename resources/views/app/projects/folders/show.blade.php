@@ -51,9 +51,7 @@
                     @if($arg == 'move-copy')
                         <div class="mb-3">
                             <label for="project">Destination Project</label>
-                            <select name="project" class="selectpicker col-lg-6" id="select-project"
-                                    data-style="btn-light no-tt"
-                                    title="Current project" data-live-search="true">
+                            <select name="project" id="select-project" title="Current project" >
                                 @foreach($projects as $p)
                                     <option data-token="{{$p->id}}"
                                             value="{{$p->id}}" @selected($p->id == $destProj->id)>
@@ -69,9 +67,7 @@
 
                         <div class="mb-3">
                             <label for="directories">Destination</label>
-                            <select name="directory" class="selectpicker col-lg-6" id="select-directory"
-                                    data-style="btn-light no-tt"
-                                    title="Select directory" data-live-search="true">
+                            <select name="directory" id="select-directory" title="Select directory">
                                 @foreach($dirsInProject as $dir)
                                     <option data-token="{{$dir->id}}"
                                             value="{{$dir->id}}" @selected($dir->id == $destDir)>
@@ -189,7 +185,7 @@
         </x-slot>
     </x-card>
 
-    @include('app.dialogs._copy-choose-project-dialog')
+{{--    @include('app.dialogs._copy-choose-project-dialog')--}}
 
     @if($scripts->count() != 0)
         @include('app.dialogs._select-script-dialog')
@@ -197,9 +193,9 @@
 
     @push('scripts')
         <script>
-            document.addEventListener('livewire:navigating', () => {
-                $('#files').DataTable().destroy();
-            }, {once: true});
+            // document.addEventListener('livewire:navigating', () => {
+            //     $('#files').DataTable().destroy();
+            // }, {once: true});
 
             function moveFiles() {
                 let choosenProjectId = $('#select-project').val();
@@ -232,6 +228,25 @@
             }
 
             $(document).ready(() => {
+
+                if (document.getElementById('select-project')) {
+                    new TomSelect("#select-project", {
+                        sortField: {
+                            field: "text",
+                            direction: "asc"
+                        }
+                    });
+                }
+
+                if (document.getElementById('select-directory')) {
+                    new TomSelect("#select-directory", {
+                        sortField: {
+                            field: "text",
+                            direction: "asc"
+                        },
+                    });
+                }
+
                 $('#files').DataTable({
                     pageLength: 100,
                     stateSave: true,

@@ -23,6 +23,19 @@
     --bs-breadcrumb-padding-y: 1rem;
 }
 
+// Chevron to TomSelect multi select
+.ts-wrapper.multi .ts-control::after {
+    font-family: "Font Awesome 5 Free";
+    content: '\f078'; /* fa-chevron-down */
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
 .table {
     --bs-table-bg: white;
     --bs-table-striped-bg: white;

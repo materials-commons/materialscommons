@@ -78,10 +78,9 @@
 
             <x-datasets.create-papers-list :existing="$dataset->papers"/>
 
-            <div class="mb-3">
+            <div class="mb-3 col-8">
                 <label for="license">License</label>
-                <select name="license" class="selectpicker col-lg-8" data-live-search="true"
-                        data-style="btn-light no-tt"
+                <select name="license" id="ds-license" class="mb-2 form-select"
                         value="{{$dataset->license}}"
                         title="License">
                     <option data-token="No License" value="No License"
@@ -107,11 +106,9 @@
                 <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-8">
                 <label for="experiments">Studies</label>
-                <select name="experiments[]" class="selectpicker col-lg-8" data-live-search="true" multiple
-                        data-style="btn-light no-tt"
-                        title="Studies">
+                <select name="experiments[]" multiple id="ds-studies" title="Studies">
                     @foreach($experiments as $experiment)
                         <option data-token="{{$experiment->id}}"
                                 {{$datasetHasExperiment($experiment) ? 'selected' : ''}}
@@ -120,11 +117,9 @@
                 </select>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-8">
                 <label for="communities">Communities</label>
-                <select name="communities[]" class="selectpicker col-lg-8" data-live-search="true" multiple
-                        data-style="btn-light no-tt"
-                        title="Communities">
+                <select name="communities[]" multiple id="ds-communities" title="Communities">
                     @foreach($communities as $community)
                         <option data-token="{{$community->id}}"
                                 {{$datasetHasCommunity($community) ? 'selected' : ''}}
@@ -164,6 +159,30 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
+
+            new TomSelect('#ds-license', {
+                // controlInput: null,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-studies', {
+                plugins: ['dropdown_input'],
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-communities', {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
             function validate() {
                 if ($('#name').val().length > 0) {
                     setNextButtonsDisabled(false);

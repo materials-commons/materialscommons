@@ -74,18 +74,6 @@
                         @endif
                     @endforeach
                 </select>
-
-
-
-{{--                <select id="select-beast" placeholder="Select a person..." autocomplete="off">--}}
-{{--                    <option value="">Select a person...</option>--}}
-{{--                    <option value="4">Thomas Edison</option>--}}
-{{--                    <option value="1">Nikola</option>--}}
-{{--                    <option value="3">Nikola Tesla</option>--}}
-{{--                    <option value="5">Arnold Schwarzenegger</option>--}}
-{{--                </select>--}}
-
-
             </div>
         @endslot
 
@@ -115,9 +103,6 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            console.log('TomSelect');
-
-
             new TomSelect("#entity-select",{
                 sortField: {
                     field: "text",
@@ -125,7 +110,6 @@
                 },
                 onChange: function(value) {
                     if (value) {
-                        console.log('value', value);
                         window.location.href = route('projects.entities.compare', {
                             project: "{{$project->id}}",
                             entity1: "{{$entity->id}}",
@@ -134,21 +118,6 @@
                     }
                 }
             });
-
-
-        {{--new TomSelect('#entity-select', {--}}
-            {{--    create: true,--}}
-            {{--    allowEmptyOption: true,--}}
-            {{--    onChange: function(value) {--}}
-            {{--        if (value) {--}}
-            {{--            window.location.href = route('projects.entities.compare', {--}}
-            {{--                project: "{{$project->id}}",--}}
-            {{--                entity1: "{{$entity->id}}",--}}
-            {{--                entity2: value--}}
-            {{--            });--}}
-            {{--        }--}}
-            {{--    }--}}
-            {{--});--}}
         });
     </script>
 @endpush

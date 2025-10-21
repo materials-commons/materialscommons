@@ -4,10 +4,10 @@
         <div class="position-relativex">
             <div class="d-flex justify-content-end mb-2">
                 <a wire:click.prevent="toggleEdit" class="btn btn-sm btn-outline-primary me-2" title="Edit">
-                    <i class="fas fa-edit"></i> Edit
+                    <i class="fas fa-edit me-1"></i> Edit
                 </a>
                 <a wire:click.prevent="save" class="btn btn-sm btn-outline-success ms-2" title="Save">
-                    <i class="fas fa-save"></i> Save
+                    <i class="fas fa-save me-1"></i> Save
                 </a>
             </div>
             <x-markdown class="w-100">{!! $content !!}</x-markdown>
