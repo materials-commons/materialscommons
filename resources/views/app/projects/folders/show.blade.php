@@ -51,7 +51,7 @@
                     @if($arg == 'move-copy')
                         <div class="mb-3">
                             <label for="project">Destination Project</label>
-                            <select name="project" id="select-project" title="Current project" >
+                            <select name="project" id="select-project" title="Current project">
                                 @foreach($projects as $p)
                                     <option data-token="{{$p->id}}"
                                             value="{{$p->id}}" @selected($p->id == $destProj->id)>
@@ -127,7 +127,8 @@
                                     @else
                                         <a class="no-underline"
                                            href="{{route('projects.files.show', [$project, $file])}}">
-                                            <i class="fa-fw fas fa-file me-2"></i> <x-health.files.health-status-badge-small :file="$file"/> {{$file->name}}
+                                            <i class="fa-fw fas fa-file me-2"></i>
+                                            <x-health.files.health-status-badge-small :file="$file"/> {{$file->name}}
                                         </a>
                                     @endif
                                 </td>
@@ -185,7 +186,7 @@
         </x-slot>
     </x-card>
 
-{{--    @include('app.dialogs._copy-choose-project-dialog')--}}
+    {{--    @include('app.dialogs._copy-choose-project-dialog')--}}
 
     @if($scripts->count() != 0)
         @include('app.dialogs._select-script-dialog')
@@ -256,8 +257,8 @@
                         {orderData: [5], targets: [4]},
                         {targets: [5], visible: false},
                     ],
-                    initComplete: function() {
-                       $('#files').show();
+                    initComplete: function () {
+                        $('#files').show();
                     }
                 });
 
