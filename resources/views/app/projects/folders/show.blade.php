@@ -7,8 +7,9 @@
 @stop
 
 @section('content')
+    <x-show-dir-path :project="$project" :dir="$directory"/>
+
     <x-table-container>
-        <x-show-dir-path :project="$project" :file="$directory"/>
         <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                      arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
         @if ($directory->path == '/')

@@ -11,12 +11,14 @@ use function explode;
 class ShowDirPath extends Component
 {
     public $file;
+    public $dir;
     public $project;
     public $dirPaths;
 
-    public function __construct(File $file, ?Project $project)
+    public function __construct(File $dir, Project $project, $file = null)
     {
         $this->file = $file;
+        $this->dir = $dir;
         $this->project = $project;
         $this->dirPaths = [];
     }
@@ -34,12 +36,12 @@ class ShowDirPath extends Component
 
     protected function createDirectoryPaths()
     {
-        $directory = $this->file;
-        if (!$this->file->isDir()) {
+        $directory = $this->dir;
+        if (!$this->dir->isDir()) {
             if (!isset($file->directory)) {
-                $this->file->load('directory');
+                $this->dir->load('directory');
             }
-            $directory = $this->file->directory;
+            $directory = $this->dir->directory;
         }
 
         if ($directory->path === "/") {
@@ -51,7 +53,7 @@ class ShowDirPath extends Component
                 if ($piece === "") {
                     array_push($this->dirPaths, ['name' => '', 'path' => "/"]);
                 } else {
-                    $currentPath = "{$currentPath}/${piece}";
+                    $currentPath = "{$currentPath}/{$piece}";
                     array_push($this->dirPaths, ['name' => $piece, 'path' => $currentPath]);
                 }
             }
