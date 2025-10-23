@@ -15,11 +15,6 @@
 @endif
 
 @section('content')
-    <x-card>
-        <x-slot name="header">
-            <span id="dashboard-intro">Dashboard</span>
-        </x-slot>
-        <x-slot name="body">
             @include('app.dashboard.tabs.tabs')
             <br>
             @if (Request::routeIs('dashboard.projects.show'))
@@ -39,6 +34,4 @@
             @elseif(Request::routeIs('dashboard.admin.mcfs.index'))
                 @include('app.admin.tabs.mcfs-index')
             @endif
-        </x-slot>
-    </x-card>
 @endsection

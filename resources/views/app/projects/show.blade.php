@@ -11,12 +11,7 @@
 @section('content')
     @component('app.projects.delete-project', ['project' => $project])
     @endcomponent
-    {{--    <x-projects.tabs :experiments="$project->experiments"/>--}}
-    {{--    <br>--}}
-    <x-card>
-        <x-slot:header>
-            <span id="project-intro">Project: {{$project->name}}</span>
-            <a class="float-end action-link"
+            <a class="float-end action-link me-2"
                href="{{route('projects.edit', $project->id)}}">
                 <i class="fas fa-edit me-2"></i>Edit
             </a>
@@ -44,9 +39,6 @@
                 </a>
             @endif
             </span>
-        </x-slot:header>
-
-        <x-slot:body>
             @include('app.projects.tabs.tabs')
             <div class="mt-2">
                 @if(Request::routeIs('projects.show'))
@@ -59,6 +51,4 @@
                     @include('app.projects.tabs.activity-attributes')
                 @endif
             </div>
-        </x-slot:body>
-    </x-card>
 @endsection
