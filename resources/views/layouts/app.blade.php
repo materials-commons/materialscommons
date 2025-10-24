@@ -65,7 +65,8 @@
 
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
 
 
@@ -170,7 +171,7 @@
     <div class="row">
         @yield('nav')
 
-        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-5x pb-4" style="padding-right: 7rem; padding-left: 7rem">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
                     <p class="text-white pt-2 pb-2 ps-2 fs-14" style="text-align: center">
@@ -179,21 +180,25 @@
                 </div>
             @endif
 
-            <div class="mt-3">
+            <div class="mt-4">
+                {{--                <x-table-container>--}}
                 <livewire:force-livewire-load/>
                 @include('flash::message')
-                @yield('breadcrumbs')
-{{--                <div class="row">--}}
-{{--                    <div class="col-10">--}}
-{{--                    @yield('breadcrumbs')--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-2" style="padding-top: 12px">--}}
-{{--                        <div class="float-end">--}}
-{{--                            Real time stuff here--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="d-flex justify-content-center">
+                    @yield('breadcrumbs')
+                </div>
+                {{--                <div class="row">--}}
+                {{--                    <div class="col-10">--}}
+                {{--                    @yield('breadcrumbs')--}}
+                {{--                    </div>--}}
+                {{--                    <div class="col-md-2" style="padding-top: 12px">--}}
+                {{--                        <div class="float-end">--}}
+                {{--                            Real time stuff here--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
                 @yield('content')
+                {{--                </x-table-container>--}}
             </div>
         </main>
     </div>

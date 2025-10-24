@@ -3,13 +3,14 @@
 @section('pageTitle', "{$project->name} - Files")
 
 @section('nav')
-    @include('layouts.navs.app.project')
+    @include('layouts.navs.app.project2')
 @stop
 
 @section('content')
-    <x-show-dir-path :project="$project" :dir="$directory"/>
 
-    <x-table-container>
+
+{{--    <x-table-container>--}}
+        <x-show-dir-path :project="$project" :dir="$directory"/>
         <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
                                      arg="{{$arg}}" :destdir="$destDir" :destproj="$destProj->id"/>
         @if ($directory->path == '/')
@@ -178,7 +179,7 @@
             </table>
         </form>
         <x-display-markdown-file :file="$readme"></x-display-markdown-file>
-    </x-table-container>
+{{--    </x-table-container>--}}
 
     {{--    @include('app.dialogs._copy-choose-project-dialog')--}}
 

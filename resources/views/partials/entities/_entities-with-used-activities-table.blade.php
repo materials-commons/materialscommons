@@ -1,6 +1,6 @@
-<x-table-container>
+{{--<x-table-container>--}}
 
-            @if(Request::routeIs('projects.entities.*'))
+    @if(Request::routeIs('projects.entities.*'))
         <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
     @endif
     <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
@@ -84,7 +84,7 @@
         @endforeach
         </tbody>
     </table>
-</x-table-container>
+{{--</x-table-container>--}}
 @push('scripts')
     <script>
         document.addEventListener('livewire:navigating', () => {
