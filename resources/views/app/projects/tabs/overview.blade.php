@@ -38,6 +38,7 @@
         </div>
     </form>
     @include('partials.overview._overview')
-
-    <x-display-markdown-file :file="$readme"></x-display-markdown-file>
 </x-card-container>
+
+<x-display-markdown-file :file="$readme"></x-display-markdown-file>
+

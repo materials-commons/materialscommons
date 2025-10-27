@@ -21,8 +21,10 @@
 @endif
 
 @section('content')
-    @component('components.card')
-        @slot('header')
+
+    <div class="row ms-1">
+        <div class="col-10">
+
             Sample: {{$entity->name}}
 
             <a class="float-end action-link" href="#"
@@ -41,25 +43,22 @@
                     @endforeach
                 </select>
             </div>
-        @endslot
 
-        @slot('body')
             <x-show-standard-details :item="$entity"/>
-
-            <div class="row ms-1">
-                @foreach($activityTypes as $activityType)
-                    <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 tile background-white">
-                        @include('partials.activities.activity-type-card', [
-                            'activityType' => $activityType,
-                            'files' => $filesByActivityType->get($activityType->name, []),
-                            'attributes' => $attributesByActivityType->get($activityType->name, []),
-                            'measurements' => $measurementsByActivityType->get($activityType->name, []),
-                        ])
-                    </div>
-                @endforeach
+        </div>
+    </div>
+    <div class="row ms-1">
+        @foreach($activityTypes as $activityType)
+            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">
+                @include('partials.activities.activity-type-card', [
+                    'activityType' => $activityType,
+                    'files' => $filesByActivityType->get($activityType->name, []),
+                    'attributes' => $attributesByActivityType->get($activityType->name, []),
+                    'measurements' => $measurementsByActivityType->get($activityType->name, []),
+                ])
             </div>
-        @endslot
-    @endcomponent
+        @endforeach
+    </div>
 @endsection
 
 @push('scripts')
