@@ -3,7 +3,7 @@
 @section('pageTitle', 'Add Datasets To Community')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')

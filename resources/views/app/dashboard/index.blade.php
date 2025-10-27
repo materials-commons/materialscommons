@@ -3,7 +3,7 @@
 @section('pageTitle', 'Dashboard')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @if (Request::routeIs('dashboard'))
@@ -15,23 +15,23 @@
 @endif
 
 @section('content')
-            @include('app.dashboard.tabs.tabs')
-            <br>
-            @if (Request::routeIs('dashboard.projects.show'))
-                @include('app.dashboard.tabs.projects')
-            @elseif (Request::routeIs('dashboard.published-datasets.show'))
-                <x-table-container>
-                    @include('app.dashboard.tabs.published-datasets')
-                </x-table-container>
-            @elseif (Request::routeIs('dashboard.projects.archived.index'))
-                <x-table-container>
-                    @include('app.dashboard.tabs.archived-projects')
-                </x-table-container>
-            @elseif (Request::routeIs('dashboard.projects.trash.index'))
-                <x-table-container>
-                    @include('app.dashboard.tabs.deleted-projects')
-                </x-table-container>
-            @elseif(Request::routeIs('dashboard.admin.mcfs.index'))
-                @include('app.admin.tabs.mcfs-index')
-            @endif
+    @include('app.dashboard.tabs.tabs')
+    <br>
+    @if (Request::routeIs('dashboard.projects.show'))
+        @include('app.dashboard.tabs.projects')
+    @elseif (Request::routeIs('dashboard.published-datasets.show'))
+        <x-table-container>
+            @include('app.dashboard.tabs.published-datasets')
+        </x-table-container>
+    @elseif (Request::routeIs('dashboard.projects.archived.index'))
+        <x-table-container>
+            @include('app.dashboard.tabs.archived-projects')
+        </x-table-container>
+    @elseif (Request::routeIs('dashboard.projects.trash.index'))
+        <x-table-container>
+            @include('app.dashboard.tabs.deleted-projects')
+        </x-table-container>
+    @elseif(Request::routeIs('dashboard.admin.mcfs.index'))
+        @include('app.admin.tabs.mcfs-index')
+    @endif
 @endsection

@@ -3,7 +3,7 @@
 @section('pageTitle', 'Edit Community File')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')

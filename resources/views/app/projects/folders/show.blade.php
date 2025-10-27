@@ -3,7 +3,7 @@
 @section('pageTitle', "{$project->name} - Files")
 
 @section('nav')
-    @include('layouts.navs.app.project2')
+    @include('layouts.navs.app.project')
 @stop
 
 @section('content')

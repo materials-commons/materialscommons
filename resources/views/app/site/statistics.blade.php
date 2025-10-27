@@ -3,7 +3,7 @@
 @section('pageTitle', 'Dashboard')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @if (Request::routeIs('dashboard'))

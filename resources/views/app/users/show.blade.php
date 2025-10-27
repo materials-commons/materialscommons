@@ -3,7 +3,7 @@
 @section('pageTitle', 'Show Project User')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
