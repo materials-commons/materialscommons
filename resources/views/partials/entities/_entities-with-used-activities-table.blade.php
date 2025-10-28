@@ -1,19 +1,21 @@
-{{--<x-table-container>--}}
-
-    @if(Request::routeIs('projects.entities.*'))
-        <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
-    @endif
-    <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
+@if(Request::routeIs('projects.entities.*'))
+    <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
+@endif
+<div id="table-container" style="display: none">
+    <table id="entities-with-used-activities" class="table table-hover mt-4 hide-datatablex" style="width: 100%">
         <thead>
-        <th>Name1</th>
-        <th>Name</th>
-        @if(isset($showExperiment) && $showExperiment)
-            <th>Study</th>
-        @endif
-        @foreach($activities as $activity)
-            <th>{{$activity->name}}</th>
-        @endforeach
+        <tr>
+            <th>Name1</th>
+            <th>Name</th>
+            @if(isset($showExperiment) && $showExperiment)
+                <th>Study</th>
+            @endif
+            @foreach($activities as $activity)
+                <th>{{$activity->name}}</th>
+            @endforeach
+        </tr>
         </thead>
+
         <tbody>
         @php
             if (isset($showExperiment) && $showExperiment) {
@@ -84,7 +86,8 @@
         @endforeach
         </tbody>
     </table>
-{{--</x-table-container>--}}
+</div>
+
 @push('scripts')
     <script>
         document.addEventListener('livewire:navigating', () => {
@@ -99,14 +102,16 @@
                     header: true,
                     headerOffset: 46,
                 },
+                fixedColumns: {
+                    start: 1
+                },
                 columnDefs: [
                     {targets: [0], visible: false},
                 ],
+                initComplete: function () {
+                    $('#table-container').show();
+                }
             });
-
-            // setupHavingProcess();
-            // setupHavingActivityAttribute();
-            // setupHavingEntityAttribute();
         });
 
         htmx.on('htmx:after-settle', (evt) => {
