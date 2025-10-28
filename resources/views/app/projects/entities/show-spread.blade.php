@@ -22,7 +22,7 @@
 
 @section('content')
 
-    <div class="row mb-3 ms-1">
+    <div class="row mb-3">
         <div class="col-12">
             @if($entity->category == "computational")
                 <h4>Computation: {{$entity->name}}</h4>
@@ -34,8 +34,8 @@
         </div>
     </div>
 
-    <div class="row mb-3 ms-1">
-        <div class="col-lg-5">
+    <div class="row mb-3">
+        <div class="col-lg-6">
             <select id="entity-select" placeholder="{{$title}}" class="form-select">
                 <option value="">{{$title}}</option>
                 @foreach($allEntities as $entry)
@@ -45,7 +45,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-lg-5 d-flex justify-content-end align-items-center">
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
             @if(isset($prevEntity))
                 @if($entity->category == "computational")
                     <a class="action-link me-3"
@@ -74,20 +74,23 @@
                 @endif
             @endif
 
-            <a class="action-link" href="#"
+            <a class="action-link ms-4" href="#"
                onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
                 <i class="fas fa-object-group me-2"></i>Group By Process Type
             </a>
         </div>
     </div>
 
-    <div class="row ms-1">
+    <div class="row g-3">
         @foreach($activities as $activity)
-            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">
-                <x-activities.activities-card :activity="$activity"
-                                              :project="$project"
-                                              :experiment="$experiment"
-                                              :user="$user"/>
+            {{--            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">--}}
+            <div class="col-lg-6 col-md-12">
+                <div class="white-box h-100">
+                    <x-activities.activities-card :activity="$activity"
+                                                  :project="$project"
+                                                  :experiment="$experiment"
+                                                  :user="$user"/>
+                </div>
             </div>
         @endforeach
     </div>
