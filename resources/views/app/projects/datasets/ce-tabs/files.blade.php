@@ -4,81 +4,78 @@
     Files will be added or removed automatically as you select them.
 </h5>
 <br>
-@component('components.card-white')
-    @slot('header')
-        @if(sizeof($dirPaths) == 1)
-            {{$directory->name}}
-        @else
-            @foreach($dirPaths as $dirpath)
-                <a class="action-link"
-                   href="{{route($directoryPathRouteName, ['project' => $project, 'dataset' => $dataset, 'path' => $dirpath["path"]])}}">
-                    {{$dirpath['name']}}/
-                </a>
-            @endforeach
-        @endif
-
-        <a class="float-end action-link me-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
-            <i class="fas fa-fw fa-plus me-2"></i>Add Files
-        </a>
-
-        <a class="float-end action-link me-4"
-           href="{{route($createDirectoryRouteName, [$project, $dataset, $directory])}}">
-            <i class="fas fa-fw fa-folder-plus me-2"></i>Create Directory
-        </a>
-    @endslot
-
-    @slot('body')
-        @if ($directory->path !== '/')
-            <a href="{{route($directoryPathRouteName, [$project, $dataset, $directory->directory_id])}}"
-               class="mb-3">
-                <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
+<div class="mb-5">
+    @if(sizeof($dirPaths) == 1)
+        <h3>{{$directory->name}}</h3>
+    @else
+        @foreach($dirPaths as $dirpath)
+            <a class="action-link"
+               href="{{route($directoryPathRouteName, ['project' => $project, 'dataset' => $dataset, 'path' => $dirpath["path"]])}}">
+                {{$dirpath['name']}}/
             </a>
-            <br>
-            <br>
-        @endif
+        @endforeach
+    @endif
 
-        <table id="files" class="table table-hover" style="width:100%">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Size</th>
-                <th>Selected</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($files as $file)
-                <tr>
-                    <td>
-                        @if ($file->mime_type === 'directory')
-                            <a href="{{route($directoryPathRouteName, [$project, $dataset, $file])}}">
-                                <i class="fa-fw fas me-2 fa-folder"></i> {{$file->name}}
-                            </a>
-                        @else
-                            <a href="{{route('projects.files.show', [$project, $file])}}">
-                                <i class="fa-fw fas me-2 fa-file"></i>{{$file->name}}
-                            </a>
-                        @endif
-                    </td>
-                    <td>{{$file->mime_type}}</td>
-                    @if ($file->mime_type === 'directory')
-                        <td>N/A</td>
-                    @else
-                        <td>{{$file->toHumanBytes()}}</td>
-                    @endif
-                    <td>
-                        <div class="mb-3 form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
-                                   {{$file->selected ? 'checked' : ''}}
-                                   onclick="updateSelection({{$file}}, this)">
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    @endslot
-@endcomponent
+    <a class="float-end action-link me-4" href="{{route($addFilesRouteName, [$project, $dataset, $directory])}}">
+        <i class="fas fa-fw fa-plus me-2"></i>Add Files
+    </a>
+
+    <a class="float-end action-link me-4"
+       href="{{route($createDirectoryRouteName, [$project, $dataset, $directory])}}">
+        <i class="fas fa-fw fa-folder-plus me-2"></i>Create Directory
+    </a>
+
+    @if ($directory->path !== '/')
+        <br/>
+        <a href="{{route($directoryPathRouteName, [$project, $dataset, $directory->directory_id])}}"
+           class="mb-3">
+            <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
+        </a>
+        <br>
+        <br>
+    @endif
+</div>
+
+<table id="files" class="table table-hover" style="width:100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Selected</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($files as $file)
+        <tr>
+            <td>
+                @if ($file->mime_type === 'directory')
+                    <a href="{{route($directoryPathRouteName, [$project, $dataset, $file])}}">
+                        <i class="fa-fw fas me-2 fa-folder"></i> {{$file->name}}
+                    </a>
+                @else
+                    <a href="{{route('projects.files.show', [$project, $file])}}">
+                        <i class="fa-fw fas me-2 fa-file"></i>{{$file->name}}
+                    </a>
+                @endif
+            </td>
+            <td>{{$file->mime_type}}</td>
+            @if ($file->mime_type === 'directory')
+                <td>N/A</td>
+            @else
+                <td>{{$file->toHumanBytes()}}</td>
+            @endif
+            <td>
+                <div class="mb-3 form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="{{$file->uuid}}"
+                           {{$file->selected ? 'checked' : ''}}
+                           onclick="updateSelection({{$file}}, this)">
+                </div>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 
 @push('scripts')
     <script>
