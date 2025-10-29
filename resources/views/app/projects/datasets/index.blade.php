@@ -9,65 +9,67 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.datasets.index', $project))
 
 @section('content')
-    <x-table-container>
-        <a class="action-link float-end" href="{{route('projects.datasets.create', [$project])}}">
-            <i class="fas fa-plus me-2"></i>Create Dataset
-        </a>
-        <br>
-        <table id="datasets" class="table table-hover" style="width:100%">
-            <thead>
+    <a class="action-link float-end" href="{{route('projects.datasets.create', [$project])}}">
+        <i class="fas fa-plus me-2"></i>Create Dataset
+    </a>
+    <br>
+    <br/>
+    <table id="datasets" class="table table-hover" style="width:100%">
+        <thead class="table-light">
+        <tr>
+            <th>Dataset</th>
+            <th>Summary</th>
+            <th>Tags</th>
+            <th>Published</th>
+            <th>Updated</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($datasets as $dataset)
             <tr>
-                <th>Dataset</th>
-                <th>Summary</th>
-                <th>Tags</th>
-                <th>Published</th>
-                <th>Updated</th>
-                <th>Date</th>
-                <th></th>
+                <td>
+                    <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}"
+                       class="no-underline">
+                        {{$dataset->name}}
+                    </a>
+                </td>
+                <td>{{$dataset->summary}}</td>
+                <td>
+                    @foreach($dataset->tags as $tag)
+                        <span class="badge text-bg-info ms-1 text-white">{{$tag->name}}</span>
+                    @endforeach
+                </td>
+                @if ($dataset->published_at === null)
+                    <td>Not published</td>
+                @else
+                    <td>{{$dataset->published_at->diffForHumans()}}</td>
+                @endif
+                <td>{{$dataset->updated_at->diffForHumans()}}</td>
+                <td>{{$dataset->updated_at}}</td>
+                <td>
+                    <div class="float-end">
+                        <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}"
+                           class="action-link">
+                            <i class="fas fa-fw fa-eye"></i>
+                        </a>
+                        <a href="{{route('projects.datasets.edit', [$project, $dataset])}}"
+                           class="action-link">
+                            <i class="fas fa-fw fa-edit"></i>
+                        </a>
+                        @if(is_null($dataset->published_at))
+                            <a href="{{route('projects.datasets.delete', [$project, $dataset])}}"
+                               class="action-link">
+                                <i class="fas fa-fw fa-trash-alt"></i>
+                            </a>
+                        @endif
+                    </div>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            @foreach($datasets as $dataset)
-                <tr>
-                    <td>
-                        <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}">{{$dataset->name}}</a>
-                    </td>
-                    <td>{{$dataset->summary}}</td>
-                    <td>
-                        @foreach($dataset->tags as $tag)
-                            <span class="badge text-bg-info ms-1 text-white">{{$tag->name}}</span>
-                        @endforeach
-                    </td>
-                    @if ($dataset->published_at === null)
-                        <td>Not published</td>
-                    @else
-                        <td>{{$dataset->published_at->diffForHumans()}}</td>
-                    @endif
-                    <td>{{$dataset->updated_at->diffForHumans()}}</td>
-                    <td>{{$dataset->updated_at}}</td>
-                    <td>
-                        <div class="float-end">
-                            <a href="{{route('projects.datasets.show.overview', [$project, $dataset])}}"
-                               class="action-link">
-                                <i class="fas fa-fw fa-eye"></i>
-                            </a>
-                            <a href="{{route('projects.datasets.edit', [$project, $dataset])}}"
-                               class="action-link">
-                                <i class="fas fa-fw fa-edit"></i>
-                            </a>
-                            @if(is_null($dataset->published_at))
-                                <a href="{{route('projects.datasets.delete', [$project, $dataset])}}"
-                                   class="action-link">
-                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                </a>
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </x-table-container>
+        @endforeach
+        </tbody>
+    </table>
 
     @push('scripts')
         <script>

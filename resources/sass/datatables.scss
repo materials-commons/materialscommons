@@ -121,3 +121,99 @@ table.fixedHeader-floating {
     border-top-right-radius: 0.375rem !important;
     border-bottom-right-radius: 0.375rem !important;
 }
+
+.table {
+    --bs-table-bg: white;
+    --bs-table-striped-bg: white;
+    --bs-table-hover-bg: #f8f9fa;
+    --bs-table-border-color: $table-border-color;
+}
+
+// Increase table cell padding directly
+.table > :not(caption) > * > * {
+    padding: 0.75rem 0.75rem !important;
+}
+
+.table > :not(caption) > * {
+    border-color: $table-border-color !important;
+}
+
+// Or target td and th specifically
+.table td,
+.table th {
+    padding: 0.75rem 0.75rem !important;
+}
+
+.table tbody tr {
+    border-top-color: $table-border-color !important;
+    border-bottom-color: $table-border-color !important;
+}
+
+//.table-light {
+//    background-color: green;
+//}
+
+.table thead.table-light {
+    background-color: transparent;
+    border: none !important;
+    overflow: hidden;
+
+    tr {
+        border: none !important;
+        background-color: transparent;
+    }
+
+    tr:first-child {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    th {
+        border-top: 1px solid #c5c5c5;
+        border-bottom: 1px solid #c5c5c5;
+    }
+
+    th:first-child {
+        border-left: 1px solid #c5c5c5;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    th:last-child {
+        border-right: 1px solid #c5c5c5;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+}
+
+.table-light {
+    --bs-table-bg: #f5f5f5 !important;
+}
+
+
+table.hide-datatable {
+    display: none;
+}
+
+// For table headers
+//.table thead th {
+//    background-color: white;
+//}
+
+// When using a fixed header this keeps the border for the header.
+// See: https://stackoverflow.com/questions/57166162/table-headers-positionsticky-and-border-issue
+// (Second answer, not the top picked answer)
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.thead-fixed {
+    position: sticky;
+    top: 46px;
+    background: #ffffff;
+}
+
+//.table {
+//    border: none !important;
+//}

@@ -8,7 +8,6 @@
 @import 'switch';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-select/sass/bootstrap-select';
 @import '~@yaireo/tagify/dist/tagify';
 
 @import 'sidebar';
@@ -38,20 +37,6 @@
 }
 
 
-.table {
-    --bs-table-bg: white;
-    --bs-table-striped-bg: white;
-    --bs-table-hover-bg: #f8f9fa; // optional: light gray on hover
-}
-
-table.hide-datatable {
-    display: none;
-}
-
-// For table headers
-.table thead th {
-    background-color: white;
-}
 
 .text-green {
     color: #28a745;
@@ -79,20 +64,6 @@ table.hide-datatable {
 
 .background-white {
     background-color: #ffffff !important;
-}
-
-.thead-fixed {
-    position: sticky;
-    top: 46px;
-    background: #ffffff;
-}
-
-// When using a fixed header this keeps the border for the header.
-// See: https://stackoverflow.com/questions/57166162/table-headers-positionsticky-and-border-issue
-// (Second answer, not the top picked answer)
-.table {
-    border-collapse: separate;
-    border-spacing: 0;
 }
 
 .no-padding-left {
@@ -186,10 +157,6 @@ table.hide-datatable {
 
 .mc-md td {
     border: 1px solid;
-}
-
-.table {
-    border: none !important;
 }
 
 .cursor-pointer {
@@ -388,8 +355,19 @@ a.navbar-brand:hover {
     border-radius: 8px;
 }
 
-.btn-primary {
-    color: white !important;
+.btn-primary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-secondary, .btn-dark {
+    color: #ffffff !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-success:hover,
+.btn-outline-danger:hover,
+.btn-outline-warning:hover,
+.btn-outline-info:hover,
+.btn-outline-light:hover,
+.btn-outline-dark:hover {
+    color: #ffffff !important;
 }
 
 .no-tt {

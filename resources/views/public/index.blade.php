@@ -18,7 +18,7 @@
     <h2 class="text-center">Public Datasets</h2>
     <hr class="mb-5"/>
     <table id="datasets" class="table table-hover" style="width:100%">
-        <thead>
+        <thead class="table-light">
         <tr>
             <th>Name</th>
             <th>ID</th>
@@ -55,7 +55,7 @@
                             render: function (data, type, row) {
                                 let r = route('public.datasets.show', row["1"]);
                                 if (type === 'display') {
-                                    let ndata = `<a href="` + r + `">` + data + '</a>';
+                                    let ndata = `<a href="` + r + `" class="no-underline">` + data + '</a>';
                                     return ndata;
                                 }
 

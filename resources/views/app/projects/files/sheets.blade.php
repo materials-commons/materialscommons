@@ -19,7 +19,7 @@
     <br>
     <br>
     <table id="sheets" class="table table-hover" style="width:100%">
-        <thead>
+        <thead class="table-light">
         <tr>
             <th>Name</th>
             <th>Type</th>
@@ -67,6 +67,9 @@
                 $('#sheets').DataTable({
                     pageLength: 100,
                     stateSave: true,
+                    initComplete: function() {
+                        $('#sheets thead').addClass('table-light');
+                    }
                 });
             });
         </script>

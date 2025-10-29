@@ -2,8 +2,8 @@
     <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
 @endif
 <div id="table-container" style="display: none">
-    <table id="entities-with-used-activities" class="table table-hover mt-4 hide-datatablex" style="width: 100%">
-        <thead>
+    <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
+        <thead class="table-light">
         <tr>
             <th>Name1</th>
             <th>Name</th>

@@ -93,7 +93,7 @@
             @endif
 
             <table id="files" class="table table-hover hide-datatable" style="width:100%">
-                <thead>
+                <thead class="table-light">
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
