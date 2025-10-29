@@ -14,30 +14,22 @@
             <img src="https://avatars.githubusercontent.com/u/1258106?s=400&v=4" width="100px"/></a>,
         <a href="/uhcsdb">Ultrahigh Carbon Steel (UHCSDB)</a>
     </h4>
-    @component('components.card')
-        @slot('header')
-            Public Datasets
-            @include('public._add-data-and-publish')
-        @endslot
 
-        @slot('body')
-            <x-table-container>
-                <table id="datasets" class="table table-hover" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>ID</th>
-                        <th>Views</th>
-                        <th>Downloads</th>
-                        <th>Published</th>
-                        <th>Summary</th>
-                        <th>Authors</th>
-                    </tr>
-                    </thead>
-                </table>
-            </x-table-container>
-        @endslot
-    @endcomponent
+    <h2 class="text-center">Public Datasets</h2>
+    <hr class="mb-5"/>
+    <table id="datasets" class="table table-hover" style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Views</th>
+            <th>Downloads</th>
+            <th>Published</th>
+            <th>Summary</th>
+            <th>Authors</th>
+        </tr>
+        </thead>
+    </table>
 
     @push('scripts')
         <script>

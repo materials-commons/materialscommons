@@ -1,3 +1,123 @@
 table.fixedHeader-floating {
     background-color: #e4eaf5 !important;
 }
+
+.dt-layout-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+}
+
+/* DataTables length select dropdown */
+.dt-length select {
+    min-width: 75px !important;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+    background-color: #fff !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    font-size: 0.875rem !important;
+}
+
+.dt-length select:focus {
+    border-color: #86b7fe !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* DataTables search input */
+.dt-search input[type="search"] {
+    padding: 0.375rem 0.75rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    margin-left: 0.5rem !important;
+}
+
+.dt-search input[type="search"]:focus {
+    border-color: #86b7fe !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* DataTables wrapper spacing */
+.dt-length {
+    margin-bottom: 1rem !important;
+    flex: 0 0 auto !important;
+}
+
+.dt-search {
+    margin-bottom: 1rem !important;
+    flex: 0 0 auto !important;
+}
+
+/* DataTables info and pagination spacing */
+.dt-info {
+    padding-top: 0.75rem !important;
+}
+
+/* DataTables Pagination Styling */
+.dt-paging {
+    display: flex !important;
+    justify-content: flex-end !important;
+    padding-top: 0.75rem !important;
+}
+
+.dt-paging .pagination {
+    margin: 0 !important;
+}
+
+.dt-paging-button {
+    display: inline-block !important;
+    padding: 0.375rem 0.75rem !important;
+    margin-left: 0.25rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #0d6efd !important;
+    text-decoration: none !important;
+    background-color: #fff !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.375rem !important;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out !important;
+    cursor: pointer !important;
+}
+
+.dt-paging-button:hover:not(.disabled) {
+    color: #0a58ca !important;
+    background-color: #e9ecef !important;
+    border-color: #dee2e6 !important;
+}
+
+.dt-paging-button.current {
+    color: #fff !important;
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+.dt-paging-button.disabled {
+    color: #6c757d !important;
+    pointer-events: none !important;
+    background-color: #fff !important;
+    border-color: #dee2e6 !important;
+    opacity: 0.65 !important;
+    cursor: default !important;
+}
+
+.dt-paging-button:first-child {
+    border-top-left-radius: 0.375rem !important;
+    border-bottom-left-radius: 0.375rem !important;
+}
+
+.dt-paging-button:last-child {
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+}
