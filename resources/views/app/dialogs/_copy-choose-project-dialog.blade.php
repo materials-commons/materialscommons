@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Select Project To Copy To/From</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -26,7 +25,7 @@
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Dismiss</button>
             </div>
         </div>
     </div>

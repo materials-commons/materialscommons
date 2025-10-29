@@ -359,6 +359,11 @@ a.navbar-brand:hover {
     color: #ffffff !important;
 }
 
+.btn-close {
+    filter: invert(1);  // Inverts the color
+    opacity: 0.8;
+}
+
 .btn-outline-primary:hover,
 .btn-outline-secondary:hover,
 .btn-outline-success:hover,

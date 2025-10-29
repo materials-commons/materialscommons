@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create Transfer Request</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -52,10 +51,10 @@
                         <input class="form-control" name="email" value="" type="email" placeholder="Email..." required>
                     </div>
                     <div class="float-end">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <a onclick="document.getElementById('create-transfer-request-form').submit()"
                            class="btn btn-primary"
-                           type="submit" data-dismiss="modal">Create Transfer Request</a>
+                           type="submit" data-bs-dismiss="modal">Create Transfer Request</a>
                     </div>
                 </form>
             </div>

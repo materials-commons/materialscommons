@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Google Sheet</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -24,8 +23,8 @@
                     <span class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
                     <div id="google-sheet-title"></div>
                     <div class="float-end">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" type="submit" data-dismiss="modal"
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" type="submit" data-bs-dismiss="modal"
                            onclick="document.getElementById('add-sheet-form').submit()">Add Google Sheet</a>
                     </div>
                 </form>

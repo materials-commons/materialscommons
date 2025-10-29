@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Save Query</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body" style="height: 500px">
@@ -25,8 +24,8 @@
                                   placeholder="Description..." required></textarea>
                     </div>
                     <div class="float-end">
-                        <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
-                        <a class="btn btn-primary" data-dismiss="modal"
+                        <a class="btn btn-danger" href="#" data-bs-dismiss="modal">Cancel</a>
+                        <a class="btn btn-primary" data-bs-dismiss="modal"
                            hx-post="{{route('projects.mql.store', $project)}}" hx-include="#mql-selection">
                             Save
                         </a>

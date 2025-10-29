@@ -7,14 +7,6 @@
 @stop
 
 @section('content')
-{{--    <div class="alert alert-warning alert-dismissible d-none" role="alert">--}}
-{{--        <strong>Directory Copy Started</strong> Your directory copy will take place in the background. You can--}}
-{{--        refresh the page to see if its started.--}}
-{{--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--            <span aria-hidden="true">&times;</span>--}}
-{{--        </button>--}}
-{{--    </div>--}}
-
     <x-card>
         <x-slot name="header">
             Copy Files/Directories
