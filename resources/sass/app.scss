@@ -360,9 +360,16 @@ a.navbar-brand:hover {
 }
 
 .btn-close {
-    filter: invert(1);  // Inverts the color
-    opacity: 0.8;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
 }
+
+//.btn-close {
+//    filter: invert(1);  // Inverts the color
+//    opacity: 0.8;
+//}
 
 .btn-outline-primary:hover,
 .btn-outline-secondary:hover,
