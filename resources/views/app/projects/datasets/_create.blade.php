@@ -67,9 +67,7 @@
 
         <div class="mb-3">
             <label for="license">License</label>
-            <select name="license" class="selectpicker col-lg-8" data-live-search="true"
-                    data-style="btn-light no-tt"
-                    title="License">
+            <select name="license" id = "ds-license" class="mb-2 form-select" title="License">
                 <option data-token="No License" value="No License">No License</option>
                 <option data-token="Public Domain Dedication and License (PDDL)"
                         value="Public Domain Dedication and License (PDDL)">
@@ -90,10 +88,7 @@
         @if($experiments->isNotEmpty())
             <div class="mb-3">
                 <label for="experiments">Studies</label>
-                <select name="experiments[]" class="selectpicker col-lg-8"
-                        data-style="btn-light no-tt"
-                        title="experiments"
-                        data-live-search="true" multiple>
+                <select name="experiments[]" id="ds-studies" class="form-select mb-2" title="experiments" multiple>
                     @foreach($experiments as $experiment)
                         <option data-token="{{$experiment->id}}" value="{{$experiment->id}}">
                             {{$experiment->name}}
@@ -105,10 +100,7 @@
 
         <div class="mb-3">
             <label for="communities">Communities</label>
-            <select name="communities[]" class="selectpicker col-lg-8"
-                    data-style="btn-light no-tt"
-                    title="communities"
-                    data-live-search="true" multiple>
+            <select name="communities[]" id="ds-communities" class="form-select mb-2" title="communities" multiple>
                 @foreach($communities as $community)
                     <option data-token="{{$community->id}}" value="{{$community->id}}">
                         {{$community->name}}
@@ -148,6 +140,29 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
+            new TomSelect('#ds-license', {
+                // controlInput: null,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-studies', {
+                plugins: ['dropdown_input'],
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-communities', {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
             function validate() {
                 if ($('#name').val().length > 0) {
                     setNextButtonsDisabled(false);

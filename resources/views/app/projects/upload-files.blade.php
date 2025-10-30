@@ -25,9 +25,7 @@
 
     <div class="mb-3">
         <label for="directories">Select Directory You Are Uploading To</label>
-        <select name="directory" class="selectpicker col-lg-8" id="dir-picker"
-                data-style="btn-light no-tt"
-                title="directories" data-live-search="true">
+        <select name="directory" class="" id="dir-picker" title="directories">
             @foreach($folders as $dir)
                 <option data-token="{{$dir->id}}" value="{{$dir->id}}">
                     {{$dir->path}}
@@ -41,56 +39,60 @@
 
 @push('scripts')
     <script>
-        let csrf = "{{csrf_token()}}";
-        let project = "{{$project->id}}";
-        let uppy = null;
-        $('#dir-picker').on('changed.bs.select', (e) => {
-            let r = route('projects.files.upload', {
-                project: project,
-                file: e.target.value,
-            });
-
-            if (uppy !== null) {
-                uppy.close();
-            }
-
-            uppy = new Uppy({
-                restrictions: {
-                    maxFileSize: 750 * 1024 * 1024
+        $(document).ready(() => {
+            let csrf = "{{csrf_token()}}";
+            let project = "{{$project->id}}";
+            let uppy = null;
+            new TomSelect("#dir-picker", {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
                 },
-                onBeforeFileAdded: (currentFile, files) => {
-                    if (currentFile.data.webkitRelativePath === "") {
-                        return currentFile;
+                onChange: function (f) {
+                    let r = route('projects.files.upload', {
+                        project: project,
+                        file: f,
+                    });
+
+                    if (uppy !== null) {
+                        uppy.close();
                     }
 
-                    const modifiedFile = {
-                        ...currentFile,
-                    };
+                    uppy = new Uppy({
+                        restrictions: {
+                            maxFileSize: 750 * 1024 * 1024
+                        },
+                        onBeforeFileAdded: (currentFile, files) => {
+                            if (currentFile.data.webkitRelativePath === "") {
+                                return currentFile;
+                            }
 
-                    modifiedFile.meta.name = currentFile.data.webkitRelativePath;
+                            const modifiedFile = {
+                                ...currentFile,
+                            };
 
-                    return modifiedFile;
-                }
-            }).use(UppyDashboard, {
-                trigger: '#file-upload',
-                inline: true,
-                showProgressDetails: true,
-                proudlyDisplayPoweredByUppy: false,
-                fileManagerSelectionType: "both",
-            }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
+                            modifiedFile.meta.name = currentFile.data.webkitRelativePath;
 
-            uppy.on('file-added', () => {
-                uppy.setMeta({_token: csrf});
-                if (f.data.webkitRelativePath === "") {
-                    uppy.setFileMeta(f.id, {"relativePath": ""});
-                } else {
-                    uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+                            return modifiedFile;
+                        }
+                    }).use(UppyDashboard, {
+                        trigger: '#file-upload',
+                        inline: true,
+                        showProgressDetails: true,
+                        proudlyDisplayPoweredByUppy: false,
+                        fileManagerSelectionType: "both",
+                    }).use(UppyXHRUpload, {endpoint: r, formData: true, limit: 1});
+
+                    uppy.on('file-added', () => {
+                        uppy.setMeta({_token: csrf});
+                        if (f.data.webkitRelativePath === "") {
+                            uppy.setFileMeta(f.id, {"relativePath": ""});
+                        } else {
+                            uppy.setFileMeta(f.id, {"relativePath": f.data.webkitRelativePath});
+                        }
+                    });
                 }
             });
-
-            {{--uppy.on('complete', (result) => {--}}
-            {{--    setTimeout(() => window.location.replace("{{route('projects.experiments.create', [$project])}}"), 1000);--}}
-            {{--});--}}
         });
     </script>
 @endpush
