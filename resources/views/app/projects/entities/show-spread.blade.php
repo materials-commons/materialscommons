@@ -74,8 +74,7 @@
                 @endif
             @endif
 
-            <a class="action-link ms-4" href="#"
-               onclick="window.location.replace('{{route($groupRoute, [$project, $entity])}}')">
+            <a class="action-link ms-4" href="{{route($groupRoute, [$project, $entity])}}">
                 <i class="fas fa-object-group me-2"></i>Group By Process Type
             </a>
         </div>
