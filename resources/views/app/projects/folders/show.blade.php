@@ -72,7 +72,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <div class="float-end">
+                    <div class="float-end mt-3">
                         <a href="{{route('projects.folders.show', [$project, $directory])}}"
                            class="btn btn-info me-3">
                             Done
@@ -89,6 +89,8 @@
                         </a>
                     </div>
                 </div>
+                <br/>
+                <br/>
                 <br/>
             @endif
 
