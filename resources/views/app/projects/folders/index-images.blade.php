@@ -11,7 +11,7 @@
         <x-slot name="header">
             {{$folder->path}}
             <div class="float-end">
-                <a href="{{route('projects.folders.show', [$project, $folder, 'destproj' => $destProj->id, 'destdir' => $destDir, 'arg' => $arg])}}"
+                <a href="{{route('projects.folders.show', [$project, $folder, 'destproj' => $destProj, 'destdir' => $destDir, 'arg' => $arg])}}"
                    class="action-link">
                     Done
                 </a>
