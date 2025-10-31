@@ -9,7 +9,7 @@
 <br/>
 <br/>
 <table id="mcfs-index" class="table table-hover" style="width:100%">
-    <thead>
+    <thead class="table-light">
     <tr>
         <th>Transfer Request</th>
         <th>Project</th>

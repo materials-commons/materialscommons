@@ -69,9 +69,8 @@
                 @auth
                     <div class="d-flex flex-column align-items-center">
                         <div class="mb-3 w-100">
-                            <select class="selectpicker w-100" id="select-project" data-live-search="true"
-                                    data-style="btn-light no-tt"
-                                    title="Select Project For Pictures">
+                            <select class="form-select" id="select-project" title="Select Project For Pictures">
+                                <option value="">Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{$project->id}}">{{$project->name}}</option>
                                 @endforeach
