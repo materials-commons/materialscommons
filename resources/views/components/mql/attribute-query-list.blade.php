@@ -11,7 +11,7 @@
                        hx-get="{{route($detailsRouteName, [$project, $attr->name])}}">{{$attr->name}}</a>
                 </div>
                 <div class="row ms-1">
-                    <select class="selectpicker col-6"
+                    <select class="form-select"
                             name="{{$formVarName}}[{{$loop->index}}][operator]"
                             value="{{old($formVarName)[$loop->index]['operator']}}">
                         <option>Select</option>

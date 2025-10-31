@@ -72,7 +72,7 @@
                            hx-trigger="click">
                 </td>
             @endif
-            <td>{{$activity->name}}</td>
+            <td class="col-sm-8">{{$activity->name}}</td>
         </tr>
     @endforeach
     </tbody>

@@ -13,9 +13,8 @@
             <form class="col-12">
                 <div class="mb-3">
                     <label for="projects">Projects</label>
-                    <select name="project" class="selectpicker col-lg-8" title="projects"
-                            data-style="btn-light no-tt"
-                            data-live-search="true">
+                    <select name="project" class="form-select" title="projects">
+                        <option value="">Select Project</option>
                         @foreach($projects as $project)
                             <option data-token="{{$project->id}}" value="{{$project->id}}">
                                 {{$project->name}}

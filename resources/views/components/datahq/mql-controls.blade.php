@@ -23,8 +23,7 @@
             </div>
 
             <div class="row col-12">
-                <select name="what" class="selectpicker mt-4" title="Load Saved Filter"
-                        data-style="btn-light no-tt">
+                <select name="what" class="form-select mt-4" title="Load Saved Filter">
                     <option value="proj">Annealed Samples</option>
                     <option value="proj">Stress vs Strain</option>
                 </select>

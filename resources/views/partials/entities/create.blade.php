@@ -22,11 +22,9 @@
     @isset($experiments)
         <div class="mb-3">
             <label for="experiments">Studies</label>
-            <select name="experiment_id" class="selectpicker col-lg-8"
-                    data-style="btn-light no-tt"
-                    title="experiments"
-                    data-live-search="true">
+            <select name="experiment_id" class="form-select" title="experiments">
                 @foreach($experiments as $experiment)
+                    <option value="">Select a study</option>
                     <option data-token="{{$experiment->id}}" value="{{$experiment->id}}">
                         {{$experiment->name}}
                     </option>
