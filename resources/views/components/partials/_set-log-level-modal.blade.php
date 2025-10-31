@@ -12,9 +12,8 @@
                     @csrf
                     <div class="mb-3">
                         <label for="level">Select Logging Level</label>
-                        <select name="level" class="selectpicker" title="level"
-                                data-style="btn-light no-tt">
-                            <option value=""></option>
+                        <select id="log-level" name="level" class="form-select" title="level">
+                            <option value="">Select Logging Level</option>
                             <option value="debug">DEBUG</option>
                             <option value="info">INFO</option>
                             <option value="warn">WARN</option>
@@ -33,4 +32,16 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                new TomSelect("#log-level", {
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    },
+                });
+            });
+        </script>
+    @endpush
 </div>
