@@ -25,11 +25,7 @@
         @if($sheets->count() !== 0)
             <div class="mt-3">
                 <label for="sheet_id">Or use existing sheet</label>
-                <select name="sheet_id" class="selectpicker w-100"
-                        data-live-search="true"
-                        data-width="100%"
-                        data-style="btn-light no-tt"
-                        title="Select Google Sheet">
+                <select name="sheet_id" class="form-select" title="Select Google Sheet">
                     <option value=""></option>
                     @foreach($sheets as $s)
                         <option data-tokens="{{$s->id}}"

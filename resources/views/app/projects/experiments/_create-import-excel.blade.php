@@ -6,11 +6,7 @@
         <hr/>
         <div class="mb-3">
             <label for="file_id">Select spreadsheet</label>
-            <select name="file_id" class="selectpicker w-100"
-                    data-live-search="true"
-                    data-width="100%"
-                    data-style="btn-light no-tt"
-                    title="Select Spreadsheet">
+            <select name="file_id" class="form-select" title="Select Spreadsheet">
                 <option value=""></option>
                 @foreach($excelFiles as $f)
                     <option data-tokens="{{$f->id}}"

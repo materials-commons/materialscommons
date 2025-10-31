@@ -48,12 +48,12 @@
     @include('common.errors')
 @endsection
 
-@push('styles')
-    <style>
-        .bootstrap-select.show .dropdown-menu {
-            max-width: 100%;
-            width: 100%;
-        }
+{{--@push('styles')--}}
+{{--    <style>--}}
+{{--        .bootstrap-select.show .dropdown-menu {--}}
+{{--            max-width: 100%;--}}
+{{--            width: 100%;--}}
+{{--        }--}}
 
-    </style>
-@endpush
+{{--    </style>--}}
+{{--@endpush--}}

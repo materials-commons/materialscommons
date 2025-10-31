@@ -33,13 +33,12 @@
     @else
         <a class="action-link float-end"
            href="{{route('projects.experiments.show-reload', [$project, $experiment])}}">
-            <i class="fas fa-sync-alt me-2"></i>Reload Study
+            <i class="fas fa-sync-alt me-2 ms-3"></i>Reload Study
         </a>
     @endif
     <div class="col col-lg-4 float-end">
-        <select id="switch-experiments" class="selectpicker col-lg-10 mc-select"
-                data-live-search="true" data-style="btn-light no-tt"
-                title="Switch To Study">
+        <select id="switch-experiments" class="form-select" title="Switch To Study">
+            <option value="">Switch To Study</option>
             @foreach($project->experiments as $entry)
                 @if ($entry->name != $experiment->name)
                     <option data-tokens="{{$entry->id}}" value="{{$entry->id}}">{{$entry->name}}</option>
@@ -74,12 +73,19 @@
     @push('scripts')
         <script>
             $(document).ready(() => {
-                $('#switch-experiments').on('change', () => {
-                    let selected = $('.selectpicker option:selected').val();
-                    window.location.href = route('projects.experiments.show', {
-                        project: "{{$project->id}}",
-                        experiment: selected
-                    });
+                new TomSelect("#switch-experiments", {
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    },
+                    onChange: function (selected) {
+                        if (selected) {
+                            window.location.href = route('projects.experiments.show', {
+                                project: "{{$project->id}}",
+                                experiment: selected
+                            });
+                        }
+                    }
                 });
             });
         </script>
