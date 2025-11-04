@@ -1,9 +1,9 @@
 <div class="health-report">
-    <div class="card">
+    <div>
         <x-projects.health-reports._header :health-status="$getHealthStatus()"/>
 
-        <div class="card-body background-white">
-            <div class="project-info mb-4">
+        <div class="background-whitex">
+            <div class="project-info mb-4 mt-3">
                 <h5><i class="fas fa-project-diagram"></i> {{ $healthReport->project->name }}</h5>
                 <small class="text-muted">Project ID: {{ $healthReport->project->id }}</small>
             </div>
