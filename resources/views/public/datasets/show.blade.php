@@ -9,10 +9,8 @@
 @section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $dataset))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Dataset: {{$dataset->name}}
-            <div class="dropdown float-end me-4">
+            <h3 class="text-center">Dataset: {{$dataset->name}}</h3>
+            <div class="dropdown float-end me-5">
                 @if(!blank($dataset->doi))
                     <a class="action-link me-3 cursor-pointer" data-bs-toggle="modal" href="#cite-dataset-modal"><i
                             class="fas fa-quote-left me-1"></i>Cite Dataset</a>
@@ -40,7 +38,7 @@
                         @endforeach
                     </div>
                     @if($hasNotificationsForDataset)
-                        <a class="action-link ms-3"
+                        <a class="action-link ms-4"
                            href="#"
                            id="notification"
                            data-bs-toggle="tooltip"
@@ -51,7 +49,7 @@
                             <i class='fa-fw fas fa-bell yellow-4'></i>
                         </a>
                     @else
-                        <a class="action-link ms-3"
+                        <a class="action-link ms-4"
                            href="#"
                            id="notification"
                            data-bs-toggle="tooltip"
@@ -79,9 +77,8 @@
                     {{--                @endif--}}
                 @endauth
             </div>
-        @endslot
+            <br/>
 
-        @slot('body')
             @include('public.datasets.tabs.tabs')
 
             <br/>
@@ -104,9 +101,6 @@
                     @include('public.datasets.tabs.comments-tab')
                 @endif
             </x-card-container>
-
-        @endslot
-    @endcomponent
 
     @include("public.datasets.cite-dataset-modal")
 

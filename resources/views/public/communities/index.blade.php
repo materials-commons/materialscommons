@@ -7,16 +7,8 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Data Communities
-        @endslot
+    <h3 class="text-center">Data Communities</h3>
 
-        @slot('body')
-            <x-table-container>
-                @include('public.communities._communities_table')
-            </x-table-container>
-        @endslot
-    @endcomponent
+    @include('public.communities._communities_table')
 @stop
 
