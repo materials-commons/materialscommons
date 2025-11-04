@@ -7,12 +7,8 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Globus Upload for project {{$project->name}}
-        @endslot
+            <h3 class="text-center">Globus Upload for project {{$project->name}}</h3>
 
-        @slot('body')
             <form>
                 <div class="mb-3">
                     <label for="name">Name</label>
@@ -31,6 +27,4 @@
                     <a href="{{route('projects.globus.uploads.index', [$project])}}" class="btn btn-success">Done</a>
                 </div>
             </form>
-        @endslot
-    @endcomponent
 @endsection
