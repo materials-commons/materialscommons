@@ -36,6 +36,8 @@
             <i class="fas fa-sync-alt me-2 ms-3"></i>Reload Study
         </a>
     @endif
+    <br/>
+    <br/>
     <div class="col col-lg-4 float-end">
         <select id="switch-experiments" class="form-select" title="Switch To Study">
             <option value="">Switch To Study</option>
