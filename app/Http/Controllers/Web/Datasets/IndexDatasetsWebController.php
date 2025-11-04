@@ -12,6 +12,9 @@ class IndexDatasetsWebController extends Controller
     public function __invoke(Request $request, Project $project)
     {
         $datasets = Dataset::with('tags')->where('project_id', $project->id)->get();
+        flash("Datasets for project {$project->name} loaded")->success();
+        flash("Datasets for project {$project->name} loaded")->error();
+        flash("Datasets for project {$project->name} loaded")->warning();
         return view('app.projects.datasets.index', compact('project', 'datasets'));
     }
 }

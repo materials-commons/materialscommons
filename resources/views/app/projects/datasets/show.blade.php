@@ -9,8 +9,21 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.datasets.show.overview', $project, $dataset))
 
 @section('content')
+    @if(isset($dataset->cleanup_started_at))
+        <div class="alert alert-dismissible alert-danger" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
+            Dataset cannot be published - It is still in the process of being unpublished
+            (Unpublish started {{$dataset->cleanup_started_at->diffForHumans()}}).
+        </div>
+    @elseif(isset($dataset->publish_started_at))
+        <div class="alert alert-dismissible alert-danger" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
+            Dataset is being published. It cannot be unpublished while this happening.
+            (Publish started {{$dataset->publish_started_at->diffForHumans()}}).
+        </div>
+    @endif
 
-    Dataset: {{$dataset->name}}
+    <h3 class="text-center">Dataset: {{$dataset->name}}</h3>
     <a class="float-end action-link"
        href="{{$editRoute}}">
         <i class="fas fa-edit me-2"></i>Edit
@@ -61,23 +74,16 @@
         </div>
     </div>
 
-    @if(isset($dataset->cleanup_started_at))
-        <div class="msg msg-danger">
-            Dataset cannot be published - It is still in the process of being unpublished
-            (Unpublish started {{$dataset->cleanup_started_at->diffForHumans()}}).
-        </div>
-    @elseif(isset($dataset->publish_started_at))
-        <div class="msg msg-danger">
-            Dataset is being published. It cannot be unpublished while this happening.
-            (Publish started {{$dataset->publish_started_at->diffForHumans()}}).
-        </div>
-    @endif
+    <br/>
+    <br/>
+
     @include('app.projects.datasets._dataset-status', [
         'defaultRoute' => route('projects.datasets.show.overview', [$project, $dataset]),
         'filesRoute' => route('projects.datasets.show.files', [$project, $dataset]),
         'workflowsRoute' => route('projects.datasets.show.workflows', [$project, $dataset]),
         'samplesRoute' => route('projects.datasets.show.entities', [$project, $dataset]),
     ])
+    <br>
     <br>
     @include('app.projects.datasets._show-tabs')
 @stop

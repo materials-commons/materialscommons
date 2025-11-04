@@ -1,5 +1,6 @@
 <div>
     <h5 class="card-title">All Projects</h5>
+
     <hr>
     <br/>
     <table id="projects" class="table table-hover" style="width:100%">
