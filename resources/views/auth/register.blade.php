@@ -7,9 +7,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"><h5>{{ __('Register') }}</h5></div>
-
-                    <div class="card-body">
+                    <div class="card-body inner-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="card-tilte mb-0">{{ __('Register') }}</h4>
+                        </div>
+                        <hr class="border border-primary border-1 opacity-75 mb-4">
                         <form method="POST"
                               action="@if (Request::routeIs('register-for-upload')) {{route('register-for-upload')}} @else {{ route('register') }} @endif">
                             @csrf
