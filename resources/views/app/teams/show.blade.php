@@ -7,30 +7,24 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Team: {{$team->name}}
-        @endslot
+    <h3 class="text-center">Team: {{$team->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <x-show-standard-details :item="$team"/>
+    <x-show-standard-details :item="$team"/>
 
-            <hr>
-            <br>
+    <hr>
+    <br>
 
-            @include('app.teams.tabs.tabs')
+    @include('app.teams.tabs.tabs')
 
-            <br>
+    <br>
 
-            @if (Request::routeIs('teams.show'))
-                @include('app.teams.tabs.projects')
-            @elseif(Request::routeIs('teams.members.show'))
-                @include('app.teams.tabs.members')
-            @elseif (Request::routeIs('teams.admins.show'))
-                @include('app.teams.tabs.admins')
-            @endif
-
-        @endslot
-    @endcomponent
+    @if (Request::routeIs('teams.show'))
+        @include('app.teams.tabs.projects')
+    @elseif(Request::routeIs('teams.members.show'))
+        @include('app.teams.tabs.members')
+    @elseif (Request::routeIs('teams.admins.show'))
+        @include('app.teams.tabs.admins')
+    @endif
 @stop
 
