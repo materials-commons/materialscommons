@@ -7,18 +7,13 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Project
-        @endslot
+    <h3 class="text-center">Create Project</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials._create_project', [
-                'createProjectRoute' => route('projects.store'),
-                'cancelRoute' => route('projects.index')
-            ])
-        @endslot
-    @endcomponent
+    @include('partials._create_project', [
+        'createProjectRoute' => route('projects.store'),
+        'cancelRoute' => route('projects.index')
+    ])
 
     @include('common.errors')
 @endsection

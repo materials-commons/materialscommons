@@ -7,7 +7,6 @@
 @stop
 
 @section('content')
-
     <h3>Mark Globus upload done for {{$project->name}}</h3>
     <form method="post" action="{{route('projects.globus.uploads.mark_done', [$project, $globusUpload])}}"
           id="complete-upload">

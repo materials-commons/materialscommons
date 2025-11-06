@@ -9,21 +9,16 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.workflows.index', $project))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Workflows for project: {{$project->name}}
-        @endslot
+    <h3 class="text-center">Workflows for project: {{$project->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <div class="float-end me-2">
-                <a href="{{route('projects.workflows.create', [$project])}}" class="action-link">
-                    <i class="fas fa-fw fa-plus"></i> New Workflow
-                </a>
-            </div>
-            @include('partials.workflows.index', [
-                'workflows' => $workflows,
-                'editProjectWorkflowRoute' => 'projects.workflows.edit',
-            ])
-        @endslot
-    @endcomponent
+    <div class="float-end me-2">
+        <a href="{{route('projects.workflows.create', [$project])}}" class="action-link">
+            <i class="fas fa-fw fa-plus"></i> New Workflow
+        </a>
+    </div>
+    @include('partials.workflows.index', [
+        'workflows' => $workflows,
+        'editProjectWorkflowRoute' => 'projects.workflows.edit',
+    ])
 @stop

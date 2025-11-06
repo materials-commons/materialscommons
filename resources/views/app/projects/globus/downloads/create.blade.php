@@ -7,12 +7,9 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Globus Download for project {{$project->name}}
-        @endslot
+            <h3 class="text-center">Create Globus Download for project {{$project->name}}</h3>
+            <br/>
 
-        @slot('body')
             <form method="post" action="{{route('projects.globus.downloads.store', [$project])}}"
                   id="download-create">
                 @csrf
