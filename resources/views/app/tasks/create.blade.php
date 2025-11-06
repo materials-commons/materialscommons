@@ -7,35 +7,30 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Task
-        @endslot
+    <h3 class="text-center">Create Task</h3>
+    <br/>
 
-        @slot('body')
-            <form method="post" action="{{route('tasks.store')}}" id="task-create">
-                @csrf
-                <div class="mb-3">
-                    <label for="name">Name</label>
-                    <input class="form-control" id="name" name="name" type="text" value="" placeholder="Name...">
-                </div>
-                <div class="mb-3">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" type="text"
-                              placeholder="Description..."></textarea>
-                </div>
-                <div class="float-end">
-                    <a href="{{route('tasks.index')}}" class="action-link danger me-3">
-                        Cancel
-                    </a>
+    <form method="post" action="{{route('tasks.store')}}" id="task-create">
+        @csrf
+        <div class="mb-3">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" name="name" type="text" value="" placeholder="Name...">
+        </div>
+        <div class="mb-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" type="text"
+                      placeholder="Description..."></textarea>
+        </div>
+        <div class="float-end">
+            <a href="{{route('tasks.index')}}" class="action-link danger me-3">
+                Cancel
+            </a>
 
-                    <a class="action-link" href="#" onclick="document.getElementById('task-create').submit()">
-                        Create
-                    </a>
-                </div>
-            </form>
-        @endslot
-    @endcomponent
+            <a class="action-link" href="#" onclick="document.getElementById('task-create').submit()">
+                Create
+            </a>
+        </div>
+    </form>
 
     @include('common.errors')
 @endsection

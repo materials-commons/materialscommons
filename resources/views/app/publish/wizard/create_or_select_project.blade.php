@@ -7,31 +7,26 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Dataset Upload Wizard
-        @endslot
+    <h3 class="text-center">Dataset Upload Wizard</h3>
+    <br/>
 
-        @slot('body')
-            <div class="col-10">
-                <form class="mb-3">
-                    <p>
-                        Materials Commons stores all data in projects. You can choose to create a new project, or
-                        use
-                        an existing one.
-                    </p>
-                    <div>
-                        <a href="{{route('public.publish.wizard.create_project')}}"
-                           class="btn btn-primary me-3">
-                            Create Project
-                        </a>
+    <div class="col-10">
+        <form class="mb-3">
+            <p>
+                Materials Commons stores all data in projects. You can choose to create a new project, or
+                use
+                an existing one.
+            </p>
+            <div>
+                <a href="{{route('public.publish.wizard.create_project')}}"
+                   class="btn btn-primary me-3">
+                    Create Project
+                </a>
 
-                        <a class="btn btn-info" href="{{route('public.publish.wizard.select_project')}}">
-                            Select Project
-                        </a>
-                    </div>
-                </form>
+                <a class="btn btn-info" href="{{route('public.publish.wizard.select_project')}}">
+                    Select Project
+                </a>
             </div>
-        @endslot
-    @endcomponent
+        </form>
+    </div>
 @endsection
