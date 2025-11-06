@@ -9,98 +9,97 @@
 @section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $dataset))
 
 @section('content')
-            <h3 class="text-center">Dataset: {{$dataset->name}}</h3>
-            <div class="dropdown float-end me-5">
-                @if(!blank($dataset->doi))
-                    <a class="action-link me-3 cursor-pointer" data-bs-toggle="modal" href="#cite-dataset-modal"><i
-                            class="fas fa-quote-left me-1"></i>Cite Dataset</a>
-                @endif
-                @auth
-                    {{--                @if($dataset->canEdit())--}}
-                    {{--                    <a class="action-link float-end me-4"--}}
-                    {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
-                    {{--                        <i class="fas fa-edit me-2"></i>Edit--}}
-                    {{--                    </a>--}}
-                    {{--                @endif--}}
+    <h3 class="text-center">Dataset: {{$dataset->name}}</h3>
+    <br/>
+    <div class="dropdown float-end me-5">
+        @if(!blank($dataset->doi))
+            <a class="action-link me-3 cursor-pointer" data-bs-toggle="modal" href="#cite-dataset-modal"><i
+                    class="fas fa-quote-left me-1"></i>Cite Dataset</a>
+        @endif
+        @auth
+            {{--                @if($dataset->canEdit())--}}
+            {{--                    <a class="action-link float-end me-4"--}}
+            {{--                       href="{{route('projects.datasets.edit', [$dataset->project_id, $dataset->id, 'public' => true])}}">--}}
+            {{--                        <i class="fas fa-edit me-2"></i>Edit--}}
+            {{--                    </a>--}}
+            {{--                @endif--}}
 
-                    <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-bs-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-file-import me-2"></i>Import Into Project
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="projectsDropdown">
-                        @foreach($userProjects as $project)
-                            @if($project->owner_id == auth()->id() && $project->id != $dataset->project_id)
-                                <a class="dropdown-item td-none"
-                                   href="{{route('public.datasets.import-into-project', [$dataset, $project])}}">
-                                    {{$project->name}}
-                                </a>
-                            @endif
-                        @endforeach
-                    </div>
-                    @if($hasNotificationsForDataset)
-                        <a class="action-link ms-4"
-                           href="#"
-                           id="notification"
-                           data-bs-toggle="tooltip"
-                           title="Stop notifications on dataset"
-                           hx-get="{{route('public.datasets.notifications.unmark-for-notification', [$dataset])}}"
-                           hx-target="#notification"
-                           hx-swap="outerHTML">
-                            <i class='fa-fw fas fa-bell yellow-4'></i>
-                        </a>
-                    @else
-                        <a class="action-link ms-4"
-                           href="#"
-                           id="notification"
-                           data-bs-toggle="tooltip"
-                           title="Get notified when dataset is updated"
-                           hx-get="{{route('public.datasets.notifications.mark-for-notification', [$dataset])}}"
-                           hx-target="#notification"
-                           hx-swap="outerHTML">
-                            <i class="fas fa-fw fa-bell-slash"></i>
+            <a class="action-link dropdown-toggle" href="#" id="projectsDropdown" data-bs-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-import me-2"></i>Import Into Project
+            </a>
+            <div class="dropdown-menu" aria-labelledby="projectsDropdown">
+                @foreach($userProjects as $project)
+                    @if($project->owner_id == auth()->id() && $project->id != $dataset->project_id)
+                        <a class="dropdown-item td-none"
+                           href="{{route('public.datasets.import-into-project', [$dataset, $project])}}">
+                            {{$project->name}}
                         </a>
                     @endif
-                    {{--                @if(auth()->user()->hasCommunities())--}}
-                    {{--                    <div class="dropdown float-end me-4">--}}
-                    {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
-                    {{--                           href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                    {{--                            <i class="fas fa-plus me-2"></i>Add To Community--}}
-                    {{--                        </a>--}}
-                    {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
-                    {{--                            @foreach(auth()->user()->communities as $community)--}}
-                    {{--                                @if(!$dataset->isInCommunity($community->id))--}}
-                    {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
-                    {{--                                @endif--}}
-                    {{--                            @endforeach--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
-                    {{--                @endif--}}
-                @endauth
+                @endforeach
             </div>
-            <br/>
+            @if($hasNotificationsForDataset)
+                <a class="action-link ms-4"
+                   href="#"
+                   id="notification"
+                   data-bs-toggle="tooltip"
+                   title="Stop notifications on dataset"
+                   hx-get="{{route('public.datasets.notifications.unmark-for-notification', [$dataset])}}"
+                   hx-target="#notification"
+                   hx-swap="outerHTML">
+                    <i class='fa-fw fas fa-bell yellow-4'></i>
+                </a>
+            @else
+                <a class="action-link ms-4"
+                   href="#"
+                   id="notification"
+                   data-bs-toggle="tooltip"
+                   title="Get notified when dataset is updated"
+                   hx-get="{{route('public.datasets.notifications.mark-for-notification', [$dataset])}}"
+                   hx-target="#notification"
+                   hx-swap="outerHTML">
+                    <i class="fas fa-fw fa-bell-slash"></i>
+                </a>
+            @endif
+            {{--                @if(auth()->user()->hasCommunities())--}}
+            {{--                    <div class="dropdown float-end me-4">--}}
+            {{--                        <a class="action-link dropdown-toggle" id="communitiesDropdown"--}}
+            {{--                           href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+            {{--                            <i class="fas fa-plus me-2"></i>Add To Community--}}
+            {{--                        </a>--}}
+            {{--                        <div class="dropdown-menu" aria-labelledby="communitiesDropdown">--}}
+            {{--                            @foreach(auth()->user()->communities as $community)--}}
+            {{--                                @if(!$dataset->isInCommunity($community->id))--}}
+            {{--                                    <a class="dropdown-item td-none" href="#">{{$community->name}}</a>--}}
+            {{--                                @endif--}}
+            {{--                            @endforeach--}}
+            {{--                        </div>--}}
+            {{--                    </div>--}}
+            {{--                @endif--}}
+        @endauth
+    </div>
+    <br/>
 
-            @include('public.datasets.tabs.tabs')
+    @include('public.datasets.tabs.tabs')
 
-            <br/>
-            <x-card-container>
-                @if (Request::routeIs('public.datasets.overview*'))
-                    @include('public.datasets.tabs.overview-tab')
-                @elseif (Request::routeIs('public.datasets.workflows*'))
-                    @include('public.datasets.tabs.workflows-tab')
-                @elseif (Request::routeIs('public.datasets.entities*'))
-                    @include('public.datasets.tabs.entities-tab')
-                    {{--            @elseif (Request::routeIs('public.datasets.activities*'))--}}
-                    {{--                @include('public.datasets.tabs.activities-tab')--}}
-                @elseif (Request::routeIs('public.datasets.files*'))
-                    @include('public.datasets.tabs.files-tab')
-                @elseif(Request::routeIs('public.datasets.folders*'))
-                    @include('public.datasets.tabs.folders-tab')
-                @elseif(Request::routeIs('public.datasets.communities.*'))
-                    @include('public.datasets.tabs.communities')
-                @elseif (Request::routeIs('public.datasets.comments*'))
-                    @include('public.datasets.tabs.comments-tab')
-                @endif
-            </x-card-container>
+    <br/>
+    @if (Request::routeIs('public.datasets.overview*'))
+        @include('public.datasets.tabs.overview-tab')
+    @elseif (Request::routeIs('public.datasets.workflows*'))
+        @include('public.datasets.tabs.workflows-tab')
+    @elseif (Request::routeIs('public.datasets.entities*'))
+        @include('public.datasets.tabs.entities-tab')
+        {{--            @elseif (Request::routeIs('public.datasets.activities*'))--}}
+        {{--                @include('public.datasets.tabs.activities-tab')--}}
+    @elseif (Request::routeIs('public.datasets.files*'))
+        @include('public.datasets.tabs.files-tab')
+    @elseif(Request::routeIs('public.datasets.folders*'))
+        @include('public.datasets.tabs.folders-tab')
+    @elseif(Request::routeIs('public.datasets.communities.*'))
+        @include('public.datasets.tabs.communities')
+    @elseif (Request::routeIs('public.datasets.comments*'))
+        @include('public.datasets.tabs.comments-tab')
+    @endif
 
     @include("public.datasets.cite-dataset-modal")
 

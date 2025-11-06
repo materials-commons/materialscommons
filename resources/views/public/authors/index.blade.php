@@ -7,34 +7,27 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Published Authors
-        @endslot
 
-        @slot('body')
-            <x-table-container>
-                <table id="authors" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Author</th>
-                        <th># Datasets</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($authors as $author => $count)
-                        <tr>
-                            <td>
-                                <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
-                            </td>
-                            <td>{{$count}}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </x-table-container>
-        @endslot
-    @endcomponent
+    <h3 class="text-center">Published Authors</h3>
+    <br/>
+    <table id="authors" class="table table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>Author</th>
+            <th># Datasets</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($authors as $author => $count)
+            <tr>
+                <td>
+                    <a href="{{route('public.authors.search', ['search' => $author])}}">{{$author}}</a>
+                </td>
+                <td>{{$count}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
     @push('scripts')
         <script>
