@@ -1,4 +1,4 @@
-<div class="card" style="border-color: #b3c2d9">
+<div class="card h-100" style="border-color: #b3c2d9">
     <div class="card-body inner-card">
         <h5 class="card-title"><strong>Files</strong></h5>
         <hr/>
