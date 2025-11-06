@@ -7,68 +7,63 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Datasets for Tag: {{$tag}}
-        @endslot
+    <h3 class="text-center">Datasets for Tag: {{$tag}}</h3>
+    <br/>
 
-        @slot('body')
-            <h3>Dataset with tag in community: {{$community->name}}</h3>
-            <br/>
-            <table id="tag-matches-in-community" class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Dataset</th>
-                    <th>Author</th>
-                    <th>Views</th>
-                    <th>Downloads</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($datasetsFromCommunity as $ds)
-                    <tr>
-                        <td>
-                            <a href="{{route('public.datasets.show', [$ds])}}">{{$ds->name}}</a>
-                        </td>
-                        <td>
-                            <a href="{{route('public.authors.search', ['search' => $ds->owner->name])}}">{{$ds->owner->name}}</a>
-                        </td>
-                        <td>{{$ds->views_count}}</td>
-                        <td>{{$ds->downloads_count}}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <br/>
-            <br/>
-            <h3>Dataset with tag not in community: {{$community->name}}</h3>
-            <br/>
-            <table id="tag-matches-not-in-community" class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Dataset</th>
-                    <th>Author</th>
-                    <th>Views</th>
-                    <th>Downloads</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($datasetsNotFromCommunity as $ds)
-                    <tr>
-                        <td>
-                            <a href="{{route('public.datasets.show', [$ds])}}">{{$ds->name}}</a>
-                        </td>
-                        <td>
-                            <a href="{{route('public.authors.search', ['search' => $ds->owner->name])}}">{{$ds->owner->name}}</a>
-                        </td>
-                        <td>{{$ds->views_count}}</td>
-                        <td>{{$ds->downloads_count}}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        @endslot
-    @endcomponent
+    <h3>Dataset with tag in community: {{$community->name}}</h3>
+    <br/>
+    <table id="tag-matches-in-community" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Dataset</th>
+            <th>Author</th>
+            <th>Views</th>
+            <th>Downloads</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($datasetsFromCommunity as $ds)
+            <tr>
+                <td>
+                    <a href="{{route('public.datasets.show', [$ds])}}">{{$ds->name}}</a>
+                </td>
+                <td>
+                    <a href="{{route('public.authors.search', ['search' => $ds->owner->name])}}">{{$ds->owner->name}}</a>
+                </td>
+                <td>{{$ds->views_count}}</td>
+                <td>{{$ds->downloads_count}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+    <h3>Dataset with tag not in community: {{$community->name}}</h3>
+    <br/>
+    <table id="tag-matches-not-in-community" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Dataset</th>
+            <th>Author</th>
+            <th>Views</th>
+            <th>Downloads</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($datasetsNotFromCommunity as $ds)
+            <tr>
+                <td>
+                    <a href="{{route('public.datasets.show', [$ds])}}">{{$ds->name}}</a>
+                </td>
+                <td>
+                    <a href="{{route('public.authors.search', ['search' => $ds->owner->name])}}">{{$ds->owner->name}}</a>
+                </td>
+                <td>{{$ds->views_count}}</td>
+                <td>{{$ds->downloads_count}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @stop
 
 @push('scripts')
