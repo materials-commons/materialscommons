@@ -7,46 +7,41 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Rename File: {{$file->name}}
-        @endslot
+    <h3 class="text-center">Rename File: {{$file->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <form method="post" action="{{route('projects.files.rename.update', [$project, $file])}}"
-                  id="rename-file">
-                @csrf
-                @method('put')
+    <form method="post" action="{{route('projects.files.rename.update', [$project, $file])}}"
+          id="rename-file">
+        @csrf
+        @method('put')
 
-                <div class="mb-3">
-                    <label for="name">Name</label>
-                    <input class="form-control" id="name" value="{{$file->name}}" name="name">
-                </div>
+        <div class="mb-3">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" value="{{$file->name}}" name="name">
+        </div>
 
-                @if($file->mime_type == "url")
-                    <label for="url">URL</label>
-                    <input class="form-control" id="url" value="{{$file->url}}" name="url">
-                @endif
+        @if($file->mime_type == "url")
+            <label for="url">URL</label>
+            <input class="form-control" id="url" value="{{$file->url}}" name="url">
+        @endif
 
-                <input hidden id="project_id" name="project_id" value="{{$project->id}}">
+        <input hidden id="project_id" name="project_id" value="{{$project->id}}">
 
-                <div class="float-end">
-                    @if($file->mime_type == "url")
-                        <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link me-3">
-                            Cancel
-                        </a>
-                    @else
-                        <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link me-3">
-                            Cancel
-                        </a>
-                    @endif
-                    <a class="action-link" onclick="document.getElementById('rename-file').submit()" href="#">
-                        Rename
-                    </a>
-                </div>
-            </form>
-        @endslot
-    @endcomponent
+        <div class="float-end">
+            @if($file->mime_type == "url")
+                <a href="{{route('projects.folders.show', [$project, $file->directory_id])}}" class="action-link me-3">
+                    Cancel
+                </a>
+            @else
+                <a href="{{route('projects.files.show', [$project, $file])}}" class="action-link me-3">
+                    Cancel
+                </a>
+            @endif
+            <a class="action-link" onclick="document.getElementById('rename-file').submit()" href="#">
+                Rename
+            </a>
+        </div>
+    </form>
 
     @include('common.errors')
 @endsection
