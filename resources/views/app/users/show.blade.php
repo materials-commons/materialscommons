@@ -7,13 +7,8 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Show User {{$user->name}}
-        @endslot
+    <h3 class="text-center">User {{$user->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.show_user')
-        @endslot
-    @endcomponent
+    @include('partials.show_user')
 @stop

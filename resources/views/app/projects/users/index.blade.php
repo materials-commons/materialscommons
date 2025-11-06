@@ -7,75 +7,70 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Project Members
-            @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()) || auth()->user()->is_admin)
-                <a class="action-link float-end"
-                   href="{{route('projects.users.edit', [$project])}}">
-                    <i class="fas fa-plus me-2"></i>Add Users
-                </a>
-            @endif
-        @endslot
+    <h3 class="text-center">Project Members</h3>
+    @if($project->owner->id === auth()->id() || $project->team->admins->contains('id', auth()->id()) || auth()->user()->is_admin)
+        <a class="action-link float-end"
+           href="{{route('projects.users.edit', [$project])}}">
+            <i class="fas fa-plus me-2"></i>Add Users
+        </a>
+    @endif
+    <br/>
+    <br/>
 
-        @slot('body')
-            <h4>Project Members</h4>
-            <table id="users" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Affiliations</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($project->team->members->merge($project->team->admins) as $member)
-                    <tr>
-                        <td>
-                            <a href="{{route('projects.users.show', [$project, $member])}}">
-                                {{$member->name}}
-                            </a>
-                        </td>
-                        <td>{{$member->email}}</td>
-                        <td>{{$member->affiliations}}</td>
-                        <td>{{$member->description}}</td>
-                        <td>
-                            @if ($project->owner_id === $member->id)
-                                Owner
+    <table id="users" class="table table-hover" style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Affiliations</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($project->team->members->merge($project->team->admins) as $member)
+            <tr>
+                <td>
+                    <a href="{{route('projects.users.show', [$project, $member])}}">
+                        {{$member->name}}
+                    </a>
+                </td>
+                <td>{{$member->email}}</td>
+                <td>{{$member->affiliations}}</td>
+                <td>{{$member->description}}</td>
+                <td>
+                    @if ($project->owner_id === $member->id)
+                        Owner
+                    @else
+                        {{$project->team->members->contains('id', $member->id) ? 'Member' : 'Admin'}}
+                    @endif
+                </td>
+                <td>
+                    @if($project->owner_id != $member->id)
+                        @if(auth()->id() == $project->owner_id || $project->team->admins->contains('id', auth()->id()))
+                            @if($project->team->members->contains('id', $member->id))
+                                <a href="{{route('projects.users.remove', [$project, $member])}}">
+                                    <i class="fa fas fa-trash"></i></a>
+                                <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
+                                   class="ms-4">
+                                    <i class="fa fas fa-fw fa-edit"></i>Make Admin
+                                </a>
                             @else
-                                {{$project->team->members->contains('id', $member->id) ? 'Member' : 'Admin'}}
+                                <a href="{{route('projects.admins.remove', [$project, $member])}}">
+                                    <i class="fa fas fa-trash"></i></a>
+                                <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
+                                   class="ms-4">
+                                    <i class="fa fas fa-fw fa-edit"></i>Make Member
+                                </a>
                             @endif
-                        </td>
-                        <td>
-                            @if($project->owner_id != $member->id)
-                                @if(auth()->id() == $project->owner_id || $project->team->admins->contains('id', auth()->id()))
-                                    @if($project->team->members->contains('id', $member->id))
-                                        <a href="{{route('projects.users.remove', [$project, $member])}}">
-                                            <i class="fa fas fa-trash"></i></a>
-                                        <a href="{{route('projects.users.change-to-admin', [$project, $member])}}"
-                                           class="ms-4">
-                                            <i class="fa fas fa-fw fa-edit"></i>Make Admin
-                                        </a>
-                                    @else
-                                        <a href="{{route('projects.admins.remove', [$project, $member])}}">
-                                            <i class="fa fas fa-trash"></i></a>
-                                        <a href="{{route('projects.users.change-to-member', [$project, $member])}}"
-                                           class="ms-4">
-                                            <i class="fa fas fa-fw fa-edit"></i>Make Member
-                                        </a>
-                                    @endif
-                                @endif
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        @endslot
-    @endcomponent
+                        @endif
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
 
     @push('scripts')
