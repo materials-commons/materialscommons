@@ -1,4 +1,5 @@
-<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10x bg-whitex sidebar" id="project-sidebar" style="background-color: #f5f5f5">
+<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10x bg-whitex sidebar" id="project-sidebar"
+     style="background-color: #f5f5f5">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-1 mb-3">
             <li class="nav-item">
@@ -20,6 +21,11 @@
                    data-toggle="tooltip" title="View details about your project."
                    href="{{route('projects.show', ['project' => $project->id])}}">
                     {{$project->name}}
+                    {{--                    <span class="position-relative d-inline-block pe-3">--}}
+                    {{--                            {{$project->name}}--}}
+                    {{--                            <span class="position-absolute top-0 start-100 translate-middle bg-green-5 rounded-circle"--}}
+                    {{--                                  style="width: .5rem; height: .5rem; transform: translate(-25%, -25%) !important; box-shadow: none; outline: none;"></span>--}}
+                    {{--                        </span>--}}
                 </a>
             </li>
 
@@ -110,14 +116,14 @@
                 </a>
             </li>
 
-{{--            @if(isInBeta('charts'))--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.charts.create')}}"--}}
-{{--                       href="{{route('projects.charts.create', [$project])}}">--}}
-{{--                        <i class="fa-fw fas fa-chart-bar me-2"></i> Charts--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            @endif--}}
+            {{--            @if(isInBeta('charts'))--}}
+            {{--                <li class="nav-item">--}}
+            {{--                    <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.charts.create')}}"--}}
+            {{--                       href="{{route('projects.charts.create', [$project])}}">--}}
+            {{--                        <i class="fa-fw fas fa-chart-bar me-2"></i> Charts--}}
+            {{--                    </a>--}}
+            {{--                </li>--}}
+            {{--            @endif--}}
 
             <li class="nav-item mt-3">
                 <span class="ms-3 fs-11"><i class="fas fa-tools me-2"></i>Actions</span>
@@ -143,7 +149,6 @@
                     Publish Data
                 </a>
             </li>
-
 
 
             <li class="nav-item mt-3">
@@ -190,15 +195,15 @@
                     </a>
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.triggers')}}"--}}
-{{--                       data-toggle="tooltip"--}}
-{{--                       title="View and create triggers that run scripts for specified events"--}}
-{{--                       href="{{route('projects.triggers.index', [$project])}}">--}}
-{{--                        <i class="fa-fw fas fa-bolt me-2 "></i>--}}
-{{--                        Triggers--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.triggers')}}"--}}
+                {{--                       data-toggle="tooltip"--}}
+                {{--                       title="View and create triggers that run scripts for specified events"--}}
+                {{--                       href="{{route('projects.triggers.index', [$project])}}">--}}
+                {{--                        <i class="fa-fw fas fa-bolt me-2 "></i>--}}
+                {{--                        Triggers--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
             @endif
         </ul>
     </div>
