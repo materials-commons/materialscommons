@@ -10,6 +10,54 @@
     <div class="bg-white p-4 overflow-auto" style="width: 30%;">
         <h2 class="fs-4 fw-semibold mb-4 text-dark">Network Controls</h2>
 
+        <!-- Display Feature Toggles -->
+        <div class="mb-5 pb-4 border-bottom">
+            <h3 class="fs-5 fw-medium mb-3 text-secondary">Display Features</h3>
+
+            <div class="row g-2">
+                <!-- Show Edges Toggle -->
+                <div class="col-6">
+                    <label class="form-label small mb-1">Show Edges</label>
+                    <select id="toggle-edges" class="form-select form-select-sm" onchange="updateNetworkDisplay()">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <!-- Show Edge Color Toggle -->
+                <div class="col-6">
+                    <label class="form-label small mb-1">Show Edge Color</label>
+                    <select id="toggle-edge-color" class="form-select form-select-sm" onchange="updateNetworkDisplay()">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <!-- Show Node Size Toggle -->
+                <div class="col-6">
+                    <label class="form-label small mb-1">Show Node Size</label>
+                    <select id="toggle-node-size" class="form-select form-select-sm" onchange="updateNetworkDisplay()">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <!-- Show Node Color Toggle -->
+                <div class="col-6">
+                    <label class="form-label small mb-1">Show Node Color</label>
+                    <select id="toggle-node-color" class="form-select form-select-sm" onchange="updateNetworkDisplay()">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Apply Changes Button -->
+            <button onclick="applyDisplayChanges()" class="btn btn-sm btn-success w-100 mt-3">
+                Apply Display Changes
+            </button>
+        </div>
+
         <!-- Node Color Controls -->
         <div class="mb-5 pb-4 border-bottom">
             <h3 class="fs-5 fw-medium mb-3 text-secondary">Node Color by Value Range</h3>
@@ -167,6 +215,53 @@
     let nodeColorRangeCount = 0;
     let edgeColorRangeCount = 0;
     let nodeSizeRangeCount = 0;
+
+    // Display settings state
+    let displaySettings = {
+        showEdges: true,
+        showEdgeColor: true,
+        showNodeSize: true,
+        showNodeColor: true
+    };
+
+    // Display Feature Toggle Functions
+    function updateNetworkDisplay() {
+        // This function is called on each dropdown change for real-time feedback
+        displaySettings.showEdges = document.getElementById('toggle-edges').value === 'true';
+        displaySettings.showEdgeColor = document.getElementById('toggle-edge-color').value === 'true';
+        displaySettings.showNodeSize = document.getElementById('toggle-node-size').value === 'true';
+        displaySettings.showNodeColor = document.getElementById('toggle-node-color').value === 'true';
+
+        console.log('Display settings updated:', displaySettings);
+    }
+
+    function applyDisplayChanges() {
+        // Update display settings
+        updateNetworkDisplay();
+
+        // Apply the changes to the network visualization
+        // This is where you would update your vis.js network
+        console.log('Applying display changes:', displaySettings);
+
+        // Placeholder for actual network update
+        // Example:
+        // if (networkInstance) {
+        //     updateNetworkVisualization(networkInstance, displaySettings);
+        // }
+
+        // Show a feedback message
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Applied!';
+        button.classList.remove('btn-success');
+        button.classList.add('btn-secondary');
+
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('btn-secondary');
+            button.classList.add('btn-success');
+        }, 1000);
+    }
 
     function addNodeColorRange() {
         const container = document.getElementById('node-color-ranges');
@@ -326,17 +421,21 @@
         }
 
         console.log('Loading network data with mappings:', columnMappings);
+        console.log('Current display settings:', displaySettings);
 
         // Placeholder for actual network data loading
         // You'll implement the actual vis.js network rendering here
         // Example:
         // fetchNetworkData(fileId, columnMappings).then(data => {
-        //     renderNetwork(data);
+        //     renderNetwork(data, displaySettings);
         // });
     }
 
     // Initialize file list on page load
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize display settings from dropdowns
+        updateNetworkDisplay();
+
         // Fetch available files and populate the dropdown
         // This is a placeholder - implement your actual API call
         fetchAvailableFiles().then(files => {
