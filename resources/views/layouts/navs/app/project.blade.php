@@ -13,7 +13,7 @@
             </li>
 
             <li class="nav-item mt-3">
-                <span class="ms-3 fs-11"><i class="fas fa-project-diagram me-2"></i>Current Project</span>
+                <span class="ms-3 fs-11"><i class="fas fa-stream me-2"></i>Current Project</span>
             </li>
 
             <li class="nav-item">
@@ -139,6 +139,14 @@
                         Explore Data
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.datahq.charts')}}"
+                       data-toggle="tooltip" title="Create charts from your data."
+                       href="{{route('projects.datahq.networkhq', [$project])}}">
+                        <i class="fa-fw fas fa-project-diagram me-2"></i>
+                        Load Network Data
+                    </a>
             @endif
 
             <li class="nav-item">
