@@ -3,7 +3,7 @@
 
 <div class="d-flex" style="height: 100vh;">
     <!-- Network Visualization Area (Left - 70%) -->
-    <div class="bg-light border-end p-4" style="width: 70%;">
+    <div class="bg-light border-end p-4 rounded" style="width: 70%;">
         <div id="network-container" class="w-100 h-100 bg-white rounded shadow-sm border"></div>
     </div>
 
