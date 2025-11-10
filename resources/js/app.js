@@ -27,6 +27,10 @@ import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
 import XHR from '@uppy/xhr-upload';
 
+import {Network} from 'vis-network';
+window.Network = Network;
+import 'vis-network/styles/vis-network.css';
+
 window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;
 window.UppyXHRUpload = XHR;
