@@ -322,6 +322,13 @@
                 dragView: true,
                 zoomView: true
             },
+            nodes: {
+                shape: 'dot',
+                scaling: {
+                    min: 10,
+                    max: 150
+                }
+            },
             edges: {
                 smooth: {
                     type: 'continuous'
@@ -353,27 +360,53 @@
             })));
         }
 
-        // Reset to defaults if toggles are off
+        // Handle node color toggle
         if (!displaySettings.showNodeColor) {
+            // Reset to default color
             nodes.update(networkData.nodes.map(node => ({
                 id: node.id,
                 color: '#97C2FC'
             })));
+        } else {
+            // Reapply node color ranges if they exist
+            const nodeColorRanges = document.getElementById('node-color-ranges');
+            if (nodeColorRanges.children.length > 0) {
+                applyNodeColorRanges();
+            }
         }
 
+        // Handle node size toggle
         if (!displaySettings.showNodeSize) {
+            // Reset to default size
             nodes.update(networkData.nodes.map(node => ({
                 id: node.id,
                 size: 25
             })));
+        } else {
+            // Reapply node size ranges if they exist
+            const nodeSizeRanges = document.getElementById('node-size-ranges');
+            if (nodeSizeRanges.children.length > 0) {
+                applyNodeSizeRanges();
+            }
         }
 
+        // Handle edge color toggle
         if (!displaySettings.showEdgeColor) {
+            // Reset to default color
             edges.update(networkData.edges.map(edge => ({
                 id: `${edge.from}-${edge.to}`,
                 color: '#848484'
             })));
+        } else {
+            // Reapply edge color ranges if they exist
+            const edgeColorRanges = document.getElementById('edge-color-ranges');
+            if (edgeColorRanges.children.length > 0) {
+                applyEdgeColorRanges();
+            }
         }
+
+        // Force network redraw
+        network.redraw();
 
         console.log('Display settings applied:', displaySettings);
     }
@@ -563,6 +596,7 @@
             for (const range of sizeRanges) {
                 if (value >= range.min && value <= range.max) {
                     size = range.size;
+                    console.log(`setting node ${node.id} to size ${size}`);
                     break;
                 }
             }
