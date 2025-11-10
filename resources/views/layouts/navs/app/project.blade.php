@@ -13,7 +13,7 @@
             </li>
 
             <li class="nav-item mt-3">
-                <span class="ms-3 fs-11"><i class="fas fa-stream me-2"></i>Current Project</span>
+                <span class="ms-3 fs-11"><i class="fas fa-bars me-2"></i>Current Project</span>
             </li>
 
             <li class="nav-item">
