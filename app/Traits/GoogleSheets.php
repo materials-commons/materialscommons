@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Process;
 use function blank;
 use function dirname;
 use function parse_url;
@@ -54,5 +56,20 @@ trait GoogleSheets
         }
 
         return "https://docs.google.com/spreadsheets/d/{$id}/edit?usp=sharing";
+    }
+
+    private function downloadGoogleSheet($sheetUrl): string
+    {
+        $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
+        $filename = uniqid().'.xlsx';
+        @Storage::disk('mcfs')->makeDirectory('__sheets');
+        $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
+
+        // Since this is an url we need to download it.
+        $command = "curl -o \"{$filePath}\" -L {$sheetUrl}/export?format=xlsx";
+        $process = Process::fromShellCommandline($command);
+        $process->run();
+
+        return $filePath;
     }
 }

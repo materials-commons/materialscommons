@@ -1,3 +1,4 @@
+@props(['project'])
 <!-- Include vis.js from CDN if not already included in your layout -->
 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
@@ -130,92 +131,7 @@
         </div>
 
         <!-- Data Source Configuration -->
-        <div class="mb-4">
-            <h2 class="fs-4 fw-semibold mb-4 text-dark">Data Source Configuration</h2>
-
-            <!-- File Selection -->
-            <div class="mb-3">
-                <label class="form-label fw-medium">Select Data File</label>
-                <select id="data-file" class="form-select" onchange="loadFileColumns()">
-                    <option value="">-- Choose a file --</option>
-                    <!-- File options will be populated dynamically -->
-                </select>
-            </div>
-
-            <!-- Column Mappings -->
-            <div id="column-mappings" style="display: none;">
-                <h3 class="fs-6 fw-medium mb-3 text-secondary">Column Mappings</h3>
-
-                <!-- Node ID Column -->
-                <div class="mb-3">
-                    <label class="form-label">Node ID Column</label>
-                    <select id="col-node-id" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Node X Position Column -->
-                <div class="mb-3">
-                    <label class="form-label">Node X Position Column</label>
-                    <select id="col-node-x" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Node Y Position Column -->
-                <div class="mb-3">
-                    <label class="form-label">Node Y Position Column</label>
-                    <select id="col-node-y" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Node 1 Column (Edge Start) -->
-                <div class="mb-3">
-                    <label class="form-label">Node 1 Column (Edge Start)</label>
-                    <select id="col-node-1" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Node 2 Column (Edge End) -->
-                <div class="mb-3">
-                    <label class="form-label">Node 2 Column (Edge End)</label>
-                    <select id="col-node-2" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Attribute for Node Size -->
-                <div class="mb-3">
-                    <label class="form-label">Attribute for Node Size</label>
-                    <select id="col-node-size-attr" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Attribute for Node Color -->
-                <div class="mb-3">
-                    <label class="form-label">Attribute for Node Color</label>
-                    <select id="col-node-color-attr" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Attribute for Edge Color -->
-                <div class="mb-3">
-                    <label class="form-label">Attribute for Edge Color</label>
-                    <select id="col-edge-color-attr" class="form-select form-select-sm">
-                        <option value="">-- Select column --</option>
-                    </select>
-                </div>
-
-                <!-- Load Data Button -->
-                <button onclick="loadNetworkData()" class="btn btn-success w-100 mt-3">
-                    Load Network Data
-                </button>
-            </div>
-        </div>
+        <livewire:datahq.networkhq.data-source :project="$project"/>
     </div>
 </div>
 
@@ -275,15 +191,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         initializeNetwork();
         // Fetch available files and populate the dropdown
-        fetchAvailableFiles().then(files => {
-            const fileSelect = document.getElementById('data-file');
-            files.forEach(file => {
-                const option = document.createElement('option');
-                option.value = file.id;
-                option.textContent = file.name;
-                fileSelect.appendChild(option);
-            });
-        });
+        // fetchAvailableFiles().then(files => {
+        //     const fileSelect = document.getElementById('data-file');
+        //     files.forEach(file => {
+        //         const option = document.createElement('option');
+        //         option.value = file.id;
+        //         option.textContent = file.name;
+        //         fileSelect.appendChild(option);
+        //     });
+        // });
     });
 
     function initializeNetwork() {
@@ -692,13 +608,13 @@
         alert('Column mappings configured! This would load data from your selected file.\n\nFor now, the hardcoded network is displayed.');
     }
 
-    function fetchAvailableFiles() {
-        // Placeholder - implement your actual API call here
-        // For now, return sample files
-        return Promise.resolve([
-            { id: '1', name: 'network_data_1.csv' },
-            { id: '2', name: 'network_data_2.csv' },
-            { id: '3', name: 'graph_connections.xlsx' }
-        ]);
-    }
+    // function fetchAvailableFiles() {
+    //     // Placeholder - implement your actual API call here
+    //     // For now, return sample files
+    //     return Promise.resolve([
+    //         { id: '1', name: 'network_data_1.csv' },
+    //         { id: '2', name: 'network_data_2.csv' },
+    //         { id: '3', name: 'graph_connections.xlsx' }
+    //     ]);
+    // }
 </script>

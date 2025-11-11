@@ -9,5 +9,5 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    <x-datahq.network-visualization/>
+    <x-datahq.network-visualization :project="$project"/>
 @stop
