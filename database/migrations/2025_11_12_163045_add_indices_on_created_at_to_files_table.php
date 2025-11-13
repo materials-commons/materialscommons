@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->string('created_ym', 7)->storedAs("DATE_FORMAT(created_at, '%Y-%m')")->index();
-            $table->index('created_at');
-            $table->index(['project_id', 'created_at']);
+//            $table->string('created_ym', 7)->storedAs("DATE_FORMAT(created_at, '%Y-%m')")->index();
+//            $table->index('created_at');
+//            $table->index(['project_id', 'created_at']);
         });
     }
 
