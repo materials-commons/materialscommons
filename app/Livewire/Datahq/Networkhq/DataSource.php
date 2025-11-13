@@ -104,7 +104,7 @@ class DataSource extends Component
         // $sheet can be a name (string) or index (int, 0-based)
         $ws = is_int($sheet) ? $spreadsheet->getSheet($sheet) : $spreadsheet->getSheetByName($sheet);
         if (!$ws) {
-            return [];
+            return collect([]);
         }
 
         $highestCol = $ws->getHighestDataColumn();        // e.g. 'F'
