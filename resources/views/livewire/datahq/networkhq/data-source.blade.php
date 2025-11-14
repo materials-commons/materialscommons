@@ -125,7 +125,7 @@
             </div>
 
             <!-- Load Data Button -->
-            <button onclick="loadNetworkData()" class="btn btn-success w-100 mt-3">
+            <button wire:click.prevent="loadNetworkData()" class="btn btn-success w-100 mt-3">
                 Load Network Data
             </button>
         </div>

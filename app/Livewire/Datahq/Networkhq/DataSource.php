@@ -8,6 +8,7 @@ use App\Models\Sheet;
 use App\Services\FileServices\FilePathService;
 use App\Traits\GoogleSheets;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -64,6 +65,27 @@ class DataSource extends Component
             $path = $this->downloadGoogleSheet($sheet->url);
             $this->columns = $this->getSheetColumnNames($path, $this->selectedSubsheet);
         }
+    }
+
+    private function getSheetPath($id, $type)
+    {
+        if ($type === "f") {
+            $f = File::findOrFail($id);
+            return app(FilePathService::class)->getMcfsPath($f);
+        } else {
+            $filename = "{$id}.xlsx";
+            if (Storage::disk('mcfs')->exists('__sheets/'.$filename)) {
+                return Storage::disk('mcfs')->path('__sheets/'.$filename);
+            } else {
+               $sheet = Sheet::findOrFail($id);
+            }
+        }
+    }
+
+    public function loadNetworkData(): void
+    {
+        ray("loadNetworkData called");
+        $this->dispatch('network-data-loaded', data: []);
     }
 
     public function render()

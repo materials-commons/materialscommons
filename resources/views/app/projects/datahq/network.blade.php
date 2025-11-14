@@ -9,5 +9,8 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    <x-datahq.network-visualization :project="$project"/>
+    {{--    <x-datahq.network-visualization :project="$project"/>--}}
+    <div>
+        <livewire:datahq.networkhq.index :project="$project"/>
+    </div>
 @stop
