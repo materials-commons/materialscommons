@@ -60,8 +60,16 @@ trait GoogleSheets
 
     private function downloadGoogleSheet($sheetUrl): string
     {
-        $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
         $filename = uniqid().'.xlsx';
+        return $this->downloadGoogleSheetToNamedFile($sheetUrl, $filename);
+    }
+
+    private function downloadGoogleSheetToNamedFile($sheetUrl, $filename): string
+    {
+        if (Storage::disk('mcfs')->exists('__sheets/'.$filename)) {
+            return Storage::disk('mcfs')->path('__sheets/'.$filename);
+        }
+        $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
         @Storage::disk('mcfs')->makeDirectory('__sheets');
         $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
 
@@ -69,7 +77,6 @@ trait GoogleSheets
         $command = "curl -o \"{$filePath}\" -L {$sheetUrl}/export?format=xlsx";
         $process = Process::fromShellCommandline($command);
         $process->run();
-
         return $filePath;
     }
 }
