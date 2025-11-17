@@ -39,7 +39,7 @@
             <!-- Node ID Column -->
             <div class="mb-3">
                 <label class="form-label">Node ID Column</label>
-                <select id="col-node-id" class="form-select form-select-sm">
+                <select wire:model="nodeIdColumn" id="col-node-id" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -50,7 +50,7 @@
             <!-- Node X Position Column -->
             <div class="mb-3">
                 <label class="form-label">Node X Position Column</label>
-                <select id="col-node-x" class="form-select form-select-sm">
+                <select wire:model="nodeXColumn" id="col-node-x" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -61,7 +61,7 @@
             <!-- Node Y Position Column -->
             <div class="mb-3">
                 <label class="form-label">Node Y Position Column</label>
-                <select id="col-node-y" class="form-select form-select-sm">
+                <select wire:model="nodeYColumn" id="col-node-y" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -72,7 +72,7 @@
             <!-- Node 1 Column (Edge Start) -->
             <div class="mb-3">
                 <label class="form-label">Node 1 Column (Edge Start)</label>
-                <select id="col-node-1" class="form-select form-select-sm">
+                <select wire:mode="edgeStartColumn" id="col-node-1" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -83,7 +83,7 @@
             <!-- Node 2 Column (Edge End) -->
             <div class="mb-3">
                 <label class="form-label">Node 2 Column (Edge End)</label>
-                <select id="col-node-2" class="form-select form-select-sm">
+                <select wire:model="edgeEndColumn" id="col-node-2" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -94,7 +94,7 @@
             <!-- Attribute for Node Size -->
             <div class="mb-3">
                 <label class="form-label">Attribute for Node Size</label>
-                <select id="col-node-size-attr" class="form-select form-select-sm">
+                <select wire:model="nodeSizeColumn" id="col-node-size-attr" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -105,7 +105,7 @@
             <!-- Attribute for Node Color -->
             <div class="mb-3">
                 <label class="form-label">Attribute for Node Color</label>
-                <select id="col-node-color-attr" class="form-select form-select-sm">
+                <select wire:model="nodeColorColumn" id="col-node-color-attr" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>
@@ -116,7 +116,7 @@
             <!-- Attribute for Edge Color -->
             <div class="mb-3">
                 <label class="form-label">Attribute for Edge Color</label>
-                <select id="col-edge-color-attr" class="form-select form-select-sm">
+                <select wire:model="edgeColorColumn" id="col-edge-color-attr" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>

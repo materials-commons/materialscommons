@@ -142,14 +142,9 @@
         document.addEventListener('livewire:initialized', () => {
             console.log('livewire:initialized');
             Livewire.on('network-data-loaded', (event) => {
-                console.log('network-data-loaded');
-                callme();
+                console.log('network-data-loaded', event.data);
             });
         });
-
-        function callme() {
-            console.log('callme called');
-        }
 
         let nodeColorRangeCount = 0;
         let edgeColorRangeCount = 0;
