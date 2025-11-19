@@ -173,6 +173,8 @@
                 const nodeColorAttributeValues = event.data.nodeColorAttributeValues;
                 const nodeSizeAttributeValues = event.data.nodeSizeAttributeValues;
                 const positionScale = 3;
+                const nodeColorValuesMinMax = findMinMax(nodeColorAttributeValues);
+                const nodeSizeValuesMinMax = findMinMaxWithPercentiles(nodeSizeAttributeValues);
                 for (let i = 0; i < nodeIdValues.length; i++) {
                     nodes.push({
                         id: nodeIdValues[i],
@@ -180,14 +182,17 @@
                         y: nodePositions[i][1] * positionScale,
                         nc_value: nodeColorAttributeValues[i],
                         size_value: nodeSizeAttributeValues[i],
-                        color: '#97c2fc',
-                        size: 25,
+                        // color: '#97c2fc',
+                        color: valueToHeatmapColor(nodeColorAttributeValues[i], nodeColorValuesMinMax.min, nodeColorValuesMinMax.max),
+                        // size: 25,
+                        size: mapValueToRange(nodeSizeAttributeValues[i], nodeSizeValuesMinMax.min, nodeSizeValuesMinMax.max, 10, 50),
                         font: {size: 14},
                         title: `Node ID: ${nodeIdValues[i]}, ${ncAttrName}: ${nodeColorAttributeValues[i]}, ${nsAttrName}: ${nodeSizeAttributeValues[i]}`,
                     });
                 }
 
                 const edgeColorAttributeValues = event.data.edgeColorAttributeValues;
+                const edgeColorValuesMinMax = findMinMax(edgeColorAttributeValues);
                 for (let i = 0; i < event.data.edges.length; i++) {
                     const nodeId1 = event.data.edges[i][0];
                     const nodeId2 = event.data.edges[i][1];
@@ -196,7 +201,8 @@
                         from: nodeId1,
                         to: nodeId2,
                         ec_value: edgeColorAttributeValues[i],
-                        color: '#ededed',
+                        // color: '#ededed',
+                        color: valueToHeatmapColor(edgeColorAttributeValues[i], edgeColorValuesMinMax.min, edgeColorValuesMinMax.max),
                         width: 20,
                         title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${edgeColorAttributeValues[i]}`,
                     });
@@ -237,7 +243,9 @@
                     },
                     edges: {
                         smooth: {
-                            type: 'continuous'
+                            type: "continuous",
+                            forceDirection: "none",
+                            roundness: 1
                         }
                     }
                 };
@@ -255,6 +263,121 @@
             showNodeSize: true,
             showNodeColor: true
         };
+
+        function findMinMax(array) {
+            if (array.length === 0) {
+                return { min: null, max: null };
+            }
+
+            let min = array[0];
+            let max = array[0];
+
+            for (let i = 1; i < array.length; i++) {
+                if (array[i] < min) min = array[i];
+                if (array[i] > max) max = array[i];
+            }
+
+            return { min, max };
+        }
+
+        /**
+         * Finds min/max using percentiles to exclude outliers
+         * @param {number[]} array - Array of numbers
+         * @param {number} lowerPercentile - Lower percentile (e.g., 0.05 for 5th percentile)
+         * @param {number} upperPercentile - Upper percentile (e.g., 0.95 for 95th percentile)
+         *
+        */
+        function findMinMaxWithPercentiles(array, lowerPercentile = 0.05, upperPercentile = 0.95) {
+            if (array.length === 0) {
+                return { min: null, max: null };
+            }
+
+            const sorted = [...array].sort((a, b) => a - b);
+            const lowerIndex = Math.floor(sorted.length * lowerPercentile);
+            const upperIndex = Math.floor(sorted.length * upperPercentile);
+
+            return {
+                min: sorted[lowerIndex],
+                max: sorted[upperIndex]
+            };
+        }
+
+        /**
+         * Maps a value to a color using a multi-stop gradient
+         * @param {number} value - The value to map
+         * @param {number} minValue - Minimum value of range
+         * @param {number} maxValue - Maximum value of range
+         * @returns {string} Color in hex format
+         */
+        function valueToHeatmapColor(value, minValue, maxValue) {
+            const normalized = (value - minValue) / (maxValue - minValue);
+
+            // Define color stops: [position (0-1), color]
+            const stops = [
+                [0.0, '#0000FF'],  // Blue
+                [0.33, '#00FFFF'], // Cyan
+                [0.66, '#FFFF00'], // Yellow
+                [1.0, '#FF0000']   // Red
+            ];
+
+            // Find the two stops to interpolate between
+            let startStop = stops[0];
+            let endStop = stops[stops.length - 1];
+
+            for (let i = 0; i < stops.length - 1; i++) {
+                if (normalized >= stops[i][0] && normalized <= stops[i + 1][0]) {
+                    startStop = stops[i];
+                    endStop = stops[i + 1];
+                    break;
+                }
+            }
+
+            // Calculate position between the two stops
+            const localNormalized = (normalized - startStop[0]) / (endStop[0] - startStop[0]);
+
+            // Interpolate
+            const start = {
+                r: parseInt(startStop[1].slice(1, 3), 16),
+                g: parseInt(startStop[1].slice(3, 5), 16),
+                b: parseInt(startStop[1].slice(5, 7), 16)
+            };
+
+            const end = {
+                r: parseInt(endStop[1].slice(1, 3), 16),
+                g: parseInt(endStop[1].slice(3, 5), 16),
+                b: parseInt(endStop[1].slice(5, 7), 16)
+            };
+
+            const r = Math.round(start.r + (end.r - start.r) * localNormalized);
+            const g = Math.round(start.g + (end.g - start.g) * localNormalized);
+            const b = Math.round(start.b + (end.b - start.b) * localNormalized);
+
+            return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        }
+
+        /**
+         * Maps a value within a range to an integer within a different range using linear interpolation
+         * @param {number} value - The value to map
+         * @param {number} min - The minimum value of the input range
+         * @param {number} max - The maximum value of the input range
+         * @param {number} starting - The minimum value of the output range
+         * @param {number} ending - The maximum value of the output range
+         * @returns {number} The mapped integer value
+         */
+        function mapValueToRange(value, min, max, starting, ending) {
+            // Clamp value to input range
+            const clampedValue = Math.max(min, Math.min(max, value));
+
+            // Normalize value to 0-1 range
+            const normalized = (clampedValue - min) / (max - min);
+
+            // Map to output range and round to integer
+            return Math.round(starting + (ending - starting) * normalized);
+        }
+
+        // Example usage:
+        // mapValueToRange(50, 0, 100, 10, 50);  // Returns 30 (halfway between 10 and 50)
+        // mapValueToRange(25, 0, 100, 0, 200);  // Returns 50 (25% of the way from 0 to 200)
 
         function applyDisplayChanges() {
             displaySettings.showEdges = document.getElementById('toggle-edges').value === 'true';
