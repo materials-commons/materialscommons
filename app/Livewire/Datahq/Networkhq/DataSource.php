@@ -75,8 +75,6 @@ class DataSource extends Component
 
     public function loadNetworkData(): void
     {
-        ray("loadNetworkData called");
-        ray("nodeIdColumn = {$this->nodeIdColumn}");
         $path = $this->getSpreadsheetPath();
         $dto = $this->loadDataIntoNetworkGraphDTO($path, $this->selectedSubsheet);
         $this->dispatch('network-data-loaded', data: $dto);
@@ -84,7 +82,6 @@ class DataSource extends Component
 
     public function render()
     {
-        ray("DataSource render called");
         $excelFiles = File::where('project_id', $this->project->id)
                           ->whereLike('name', '%.xlsx')
                           ->get();
@@ -166,6 +163,8 @@ class DataSource extends Component
             }
         }
 
+        ray("edgeStartColumn = {$this->edgeStartColumn}");
+        ray("edgeEndColumn = {$this->edgeEndColumn}");
         if (!blank($this->edgeStartColumn) && !blank($this->edgeEndColumn)) {
             $edgeStartValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeStartColumn);
             $edgeEndValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeEndColumn);

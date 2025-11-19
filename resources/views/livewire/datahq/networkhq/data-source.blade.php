@@ -72,7 +72,7 @@
             <!-- Node 1 Column (Edge Start) -->
             <div class="mb-3">
                 <label class="form-label">Node 1 Column (Edge Start)</label>
-                <select wire:mode="edgeStartColumn" id="col-node-1" class="form-select form-select-sm">
+                <select wire:model="edgeStartColumn" id="col-node-1" class="form-select form-select-sm">
                     <option value="">-- Select column --</option>
                     @foreach($columns as $column)
                         <option value="{{$column[0]}}">{{$column[1]}}</option>

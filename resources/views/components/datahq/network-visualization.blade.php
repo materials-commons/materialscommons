@@ -62,7 +62,7 @@
                 <label class="form-label fw-medium">Attribute Name</label>
                 <input type="text" id="node-color-attribute"
                        class="form-control"
-                       placeholder="e.g., temperature">
+                       placeholder="e.g., temperature" readonly>
             </div>
 
             <div id="node-color-ranges" class="mb-3">
@@ -139,55 +139,133 @@
 
     <script>
 
-        document.addEventListener('livewire:initialized', () => {
-            console.log('livewire:initialized');
-            Livewire.on('network-data-loaded', (event) => {
-                console.log('network-data-loaded', event.data);
-            });
-        });
-
         let nodeColorRangeCount = 0;
         let edgeColorRangeCount = 0;
         let nodeSizeRangeCount = 0;
         let network = null;
-        let nodes = null;
-        let edges = null;
+        let nodesDataset = null;
+        let edgesDataset = null;
+        let networkData = {};
+
+        document.addEventListener('livewire:initialized', () => {
+            console.log('livewire:initialized');
+            Livewire.on('network-data-loaded', (event) => {
+                if (!event.data) {
+                    return;
+                }
+
+                const nodeColorInput = document.getElementById('node-color-attribute');
+                nodeColorInput.value = event.data.nodeColorAttributeName;
+
+                const edgeColorInput = document.getElementById('edge-color-attribute');
+                edgeColorInput.value = event.data.edgeColorAttributeName;
+
+                const nodeSizeInput = document.getElementById('node-size-attribute');
+                nodeSizeInput.value = event.data.nodeSizeAttributeName;
+                let nodes = [];
+                let edges = [];
+                const nodeIdValues = event.data.nodeIdValues;
+                const nodePositions = event.data.nodePositions;
+                const nodeColorAttributeValues = event.data.nodeColorAttributeValues;
+                const nodeSizeAttributeValues = event.data.nodeSizeAttributeValues;
+                for (let i = 0; i < nodeIdValues.length; i++) {
+                    nodes.push({
+                        id: nodeIdValues[i],
+                        x: nodePositions[i][0],
+                        y: nodePositions[i][1],
+                        nc_value: nodeColorAttributeValues[i],
+                        size_value: nodeSizeAttributeValues[i],
+                        color: '#97c2fc',
+                        size: 25,
+                        font: {size: 14},
+                    });
+                }
+
+                const edgeColorAttributeValues = event.data.edgeColorAttributeValues;
+                for (let i = 0; i < event.data.edges.length; i++) {
+                    const nodeId1 = event.data.edges[i][0];
+                    const nodeId2 = event.data.edges[i][1];
+                    edges.push({
+                        id: `${nodeId1}-${nodeId2}`,
+                        from: nodeId1,
+                        to: nodeId2,
+                        ec_value: edgeColorAttributeValues[i],
+                        color: '#848484',
+                        width: 3
+                    });
+                }
+
+                networkData.nodes = nodes;
+                networkData.edges = edges;
+                nodesDataset = new vis.DataSet(nodes);
+                edgesDataset = new vis.DataSet(edges);
+                const data = {nodes: nodesDataset, edges: edgesDataset};
+                const options = {
+                    physics: {
+                        enabled: false
+                    },
+                    interaction: {
+                        dragNodes: true,
+                        dragView: true,
+                        zoomView: true
+                    },
+                    nodes: {
+                        shape: 'dot',
+                        scaling: {
+                            min: 10,
+                            max: 150
+                        }
+                    },
+                    edges: {
+                        smooth: {
+                            type: 'continuous'
+                        }
+                    }
+                };
+
+                const container = document.getElementById('network-container');
+                network = new vis.Network(container, data, options);
+                console.log('network-data-loaded', event.data);
+            });
+        });
+
+
 
         // Hardcoded network data
-        const networkData = {
-            nodes: [
-                {id: 1, label: 'Node 1', x: -100, y: -100, temperature: 25, size_value: 10},
-                {id: 2, label: 'Node 2', x: 100, y: -100, temperature: 45, size_value: 20},
-                {id: 3, label: 'Node 3', x: 100, y: 100, temperature: 65, size_value: 30},
-                {id: 4, label: 'Node 4', x: -100, y: 100, temperature: 85, size_value: 40},
-                {id: 5, label: 'Node 5', x: 0, y: 0, temperature: 55, size_value: 25},
-                {id: 6, label: 'Node 6', x: -200, y: 0, temperature: 35, size_value: 15},
-                {id: 7, label: 'Node 7', x: 200, y: 0, temperature: 75, size_value: 35},
-                {id: 8, label: 'Node 8', x: 0, y: -200, temperature: 50, size_value: 22},
-                {id: 9, label: 'Node 9', x: 0, y: 200, temperature: 70, size_value: 28},
-                {id: 10, label: 'Node 10', x: 150, y: 150, temperature: 90, size_value: 45}
-            ],
-            edges: [
-                {from: 1, to: 2, weight: 5},
-                {from: 2, to: 3, weight: 15},
-                {from: 3, to: 4, weight: 25},
-                {from: 4, to: 1, weight: 35},
-                {from: 5, to: 1, weight: 10},
-                {from: 5, to: 2, weight: 20},
-                {from: 5, to: 3, weight: 30},
-                {from: 5, to: 4, weight: 40},
-                {from: 6, to: 1, weight: 12},
-                {from: 6, to: 5, weight: 8},
-                {from: 7, to: 2, weight: 18},
-                {from: 7, to: 5, weight: 22},
-                {from: 8, to: 1, weight: 14},
-                {from: 8, to: 2, weight: 16},
-                {from: 9, to: 3, weight: 28},
-                {from: 9, to: 4, weight: 32},
-                {from: 10, to: 3, weight: 38},
-                {from: 10, to: 7, weight: 42}
-            ]
-        };
+        // const networkData = {
+        //     nodes: [
+        //         {id: 1, label: 'Node 1', x: -100, y: -100, nc_value: 25, size_value: 10},
+        //         {id: 2, label: 'Node 2', x: 100, y: -100, nc_value: 45, size_value: 20},
+        //         {id: 3, label: 'Node 3', x: 100, y: 100, nc_value: 65, size_value: 30},
+        //         {id: 4, label: 'Node 4', x: -100, y: 100, nc_value: 85, size_value: 40},
+        //         {id: 5, label: 'Node 5', x: 0, y: 0, nc_value: 55, size_value: 25},
+        //         {id: 6, label: 'Node 6', x: -200, y: 0, nc_value: 35, size_value: 15},
+        //         {id: 7, label: 'Node 7', x: 200, y: 0, nc_value: 75, size_value: 35},
+        //         {id: 8, label: 'Node 8', x: 0, y: -200, nc_value: 50, size_value: 22},
+        //         {id: 9, label: 'Node 9', x: 0, y: 200, nc_value: 70, size_value: 28},
+        //         {id: 10, label: 'Node 10', x: 150, y: 150, nc_value: 90, size_value: 45}
+        //     ],
+        //     edges: [
+        //         {from: 1, to: 2, ec_value: 5},
+        //         {from: 2, to: 3, ec_value: 15},
+        //         {from: 3, to: 4, ec_value: 25},
+        //         {from: 4, to: 1, ec_value: 35},
+        //         {from: 5, to: 1, ec_value: 10},
+        //         {from: 5, to: 2, ec_value: 20},
+        //         {from: 5, to: 3, ec_value: 30},
+        //         {from: 5, to: 4, ec_value: 40},
+        //         {from: 6, to: 1, ec_value: 12},
+        //         {from: 6, to: 5, ec_value: 8},
+        //         {from: 7, to: 2, ec_value: 18},
+        //         {from: 7, to: 5, ec_value: 22},
+        //         {from: 8, to: 1, ec_value: 14},
+        //         {from: 8, to: 2, ec_value: 16},
+        //         {from: 9, to: 3, ec_value: 28},
+        //         {from: 9, to: 4, ec_value: 32},
+        //         {from: 10, to: 3, ec_value: 38},
+        //         {from: 10, to: 7, ec_value: 42}
+        //     ]
+        // };
 
         // Display settings state
         let displaySettings = {
@@ -199,7 +277,7 @@
 
         // Initialize the network
         document.addEventListener('DOMContentLoaded', function () {
-            initializeNetwork();
+            // initializeNetwork();
             // Fetch available files and populate the dropdown
             // fetchAvailableFiles().then(files => {
             //     const fileSelect = document.getElementById('data-file');
@@ -221,7 +299,7 @@
                 label: node.label,
                 x: node.x,
                 y: node.y,
-                temperature: node.temperature,
+                nc_value: node.nc_value,
                 size_value: node.size_value,
                 color: '#97C2FC',
                 size: 25,
@@ -232,7 +310,7 @@
                 id: `${edge.from}-${edge.to}`,
                 from: edge.from,
                 to: edge.to,
-                weight: edge.weight,
+                ec_value: edge.ec_value,
                 color: '#848484',
                 width: 2
             })));
@@ -275,12 +353,12 @@
 
             // Update edges visibility
             if (displaySettings.showEdges) {
-                edges.update(networkData.edges.map(edge => ({
+                edgesDataset.update(networkData.edges.map(edge => ({
                     id: `${edge.from}-${edge.to}`,
                     hidden: false
                 })));
             } else {
-                edges.update(networkData.edges.map(edge => ({
+                edgesDataset.update(networkData.edges.map(edge => ({
                     id: `${edge.from}-${edge.to}`,
                     hidden: true
                 })));
@@ -289,7 +367,7 @@
             // Handle node color toggle
             if (!displaySettings.showNodeColor) {
                 // Reset to default color
-                nodes.update(networkData.nodes.map(node => ({
+                nodesDataset.update(networkData.nodes.map(node => ({
                     id: node.id,
                     color: '#97C2FC'
                 })));
@@ -304,7 +382,7 @@
             // Handle node size toggle
             if (!displaySettings.showNodeSize) {
                 // Reset to default size
-                nodes.update(networkData.nodes.map(node => ({
+                nodesDataset.update(networkData.nodes.map(node => ({
                     id: node.id,
                     size: 25
                 })));
@@ -319,7 +397,7 @@
             // Handle edge color toggle
             if (!displaySettings.showEdgeColor) {
                 // Reset to default color
-                edges.update(networkData.edges.map(edge => ({
+                edgesDataset.update(networkData.edges.map(edge => ({
                     id: `${edge.from}-${edge.to}`,
                     color: '#848484'
                 })));
@@ -438,19 +516,19 @@
                 color: range.querySelector('.range-color').value
             }));
 
-            // Apply colors to nodes based on temperature
+            // Apply colors to nodes based on nc_value
             networkData.nodes.forEach(node => {
-                const temp = node.temperature;
+                const val = node.nc_value;
                 let color = '#97C2FC'; // default
 
                 for (const range of colorRanges) {
-                    if (temp >= range.min && temp <= range.max) {
+                    if (val >= range.min && val <= range.max) {
                         color = range.color;
                         break;
                     }
                 }
 
-                nodes.update({id: node.id, color: color});
+                nodesDataset.update({id: node.id, color: color});
             });
 
             console.log('Node colors applied:', colorRanges);
@@ -476,19 +554,19 @@
                 color: range.querySelector('.range-color').value
             }));
 
-            // Apply colors to edges based on weight
+            // Apply colors to edges based on ec_value
             networkData.edges.forEach(edge => {
-                const weight = edge.weight;
+                const ec_value = edge.ec_value;
                 let color = '#848484'; // default
 
                 for (const range of colorRanges) {
-                    if (weight >= range.min && weight <= range.max) {
+                    if (ec_value >= range.min && ec_value <= range.max) {
                         color = range.color;
                         break;
                     }
                 }
 
-                edges.update({id: `${edge.from}-${edge.to}`, color: color});
+                edgesDataset.update({id: `${edge.from}-${edge.to}`, color: color});
             });
 
             console.log('Edge colors applied:', colorRanges);
@@ -527,7 +605,7 @@
                     }
                 }
 
-                nodes.update({id: node.id, size: size});
+                nodesDataset.update({id: node.id, size: size});
             });
 
             console.log('Node sizes applied:', sizeRanges);
@@ -557,7 +635,7 @@
             // For now, return sample columns
             return Promise.resolve([
                 'id', 'name', 'x_pos', 'y_pos', 'node1', 'node2',
-                'size_value', 'color_value', 'edge_weight', 'temperature'
+                'size_value', 'color_value', 'edge_weight', 'nc_value'
             ]);
         }
 
