@@ -567,6 +567,26 @@
                 color: range.querySelector('.range-color').value
             }));
 
+            /*
+            // Build array of updates
+const updates = networkData.nodes.map(node => {
+    const val = node.nc_value;
+    let color = '#97C2FC'; // default
+
+    for (const range of colorRanges) {
+        if (val >= range.min && val <= range.max) {
+            color = range.color;
+            break;
+        }
+    }
+
+    return {id: node.id, color: color};
+});
+
+// Single batch update
+nodesDataset.update(updates);
+             */
+
             // Apply colors to edges based on ec_value
             networkData.edges.forEach(edge => {
                 const ec_value = edge.ec_value;
