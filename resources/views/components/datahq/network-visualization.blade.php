@@ -168,11 +168,12 @@
                 const nodePositions = event.data.nodePositions;
                 const nodeColorAttributeValues = event.data.nodeColorAttributeValues;
                 const nodeSizeAttributeValues = event.data.nodeSizeAttributeValues;
+                const positionScale = 3;
                 for (let i = 0; i < nodeIdValues.length; i++) {
                     nodes.push({
                         id: nodeIdValues[i],
-                        x: nodePositions[i][0],
-                        y: nodePositions[i][1],
+                        x: nodePositions[i][0] * 3,
+                        y: nodePositions[i][1] * 3,
                         nc_value: nodeColorAttributeValues[i],
                         size_value: nodeSizeAttributeValues[i],
                         color: '#97c2fc',
@@ -191,7 +192,7 @@
                         to: nodeId2,
                         ec_value: edgeColorAttributeValues[i],
                         color: '#848484',
-                        width: 3
+                        width: 5
                     });
                 }
 
@@ -202,7 +203,19 @@
                 const data = {nodes: nodesDataset, edges: edgesDataset};
                 const options = {
                     physics: {
-                        enabled: false
+                        enabled: false,
+                        // stabilization: {
+                        //     enabled: true,
+                        //     iterations: 200
+                        // },
+                        // barnesHut: {
+                        //     gravitationalConstant: -8000,
+                        //     centralGravity: 0.3,
+                        //     springLength: 95,
+                        //     springConstant: 0.04,
+                        //     damping: 0.09,
+                        //     avoidOverlap: 1  // This makes nodes push away from each other
+                        // }
                     },
                     interaction: {
                         dragNodes: true,
