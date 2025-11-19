@@ -156,12 +156,16 @@
 
                 const nodeColorInput = document.getElementById('node-color-attribute');
                 nodeColorInput.value = event.data.nodeColorAttributeName;
+                const ncAttrName = event.data.nodeColorAttributeName;
 
                 const edgeColorInput = document.getElementById('edge-color-attribute');
                 edgeColorInput.value = event.data.edgeColorAttributeName;
+                const ecAttrName = event.data.edgeColorAttributeName;
 
                 const nodeSizeInput = document.getElementById('node-size-attribute');
                 nodeSizeInput.value = event.data.nodeSizeAttributeName;
+                const nsAttrName = event.data.nodeSizeAttributeName;
+
                 let nodes = [];
                 let edges = [];
                 const nodeIdValues = event.data.nodeIdValues;
@@ -172,13 +176,14 @@
                 for (let i = 0; i < nodeIdValues.length; i++) {
                     nodes.push({
                         id: nodeIdValues[i],
-                        x: nodePositions[i][0] * 3,
-                        y: nodePositions[i][1] * 3,
+                        x: nodePositions[i][0] * positionScale,
+                        y: nodePositions[i][1] * positionScale,
                         nc_value: nodeColorAttributeValues[i],
                         size_value: nodeSizeAttributeValues[i],
                         color: '#97c2fc',
                         size: 25,
                         font: {size: 14},
+                        title: `Node ID: ${nodeIdValues[i]}, ${ncAttrName}: ${nodeColorAttributeValues[i]}, ${nsAttrName}: ${nodeSizeAttributeValues[i]}`,
                     });
                 }
 
@@ -191,8 +196,9 @@
                         from: nodeId1,
                         to: nodeId2,
                         ec_value: edgeColorAttributeValues[i],
-                        color: '#848484',
-                        width: 5
+                        color: '#ededed',
+                        width: 20,
+                        title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${edgeColorAttributeValues[i]}`,
                     });
                 }
 
@@ -242,44 +248,6 @@
             });
         });
 
-
-
-        // Hardcoded network data
-        // const networkData = {
-        //     nodes: [
-        //         {id: 1, label: 'Node 1', x: -100, y: -100, nc_value: 25, size_value: 10},
-        //         {id: 2, label: 'Node 2', x: 100, y: -100, nc_value: 45, size_value: 20},
-        //         {id: 3, label: 'Node 3', x: 100, y: 100, nc_value: 65, size_value: 30},
-        //         {id: 4, label: 'Node 4', x: -100, y: 100, nc_value: 85, size_value: 40},
-        //         {id: 5, label: 'Node 5', x: 0, y: 0, nc_value: 55, size_value: 25},
-        //         {id: 6, label: 'Node 6', x: -200, y: 0, nc_value: 35, size_value: 15},
-        //         {id: 7, label: 'Node 7', x: 200, y: 0, nc_value: 75, size_value: 35},
-        //         {id: 8, label: 'Node 8', x: 0, y: -200, nc_value: 50, size_value: 22},
-        //         {id: 9, label: 'Node 9', x: 0, y: 200, nc_value: 70, size_value: 28},
-        //         {id: 10, label: 'Node 10', x: 150, y: 150, nc_value: 90, size_value: 45}
-        //     ],
-        //     edges: [
-        //         {from: 1, to: 2, ec_value: 5},
-        //         {from: 2, to: 3, ec_value: 15},
-        //         {from: 3, to: 4, ec_value: 25},
-        //         {from: 4, to: 1, ec_value: 35},
-        //         {from: 5, to: 1, ec_value: 10},
-        //         {from: 5, to: 2, ec_value: 20},
-        //         {from: 5, to: 3, ec_value: 30},
-        //         {from: 5, to: 4, ec_value: 40},
-        //         {from: 6, to: 1, ec_value: 12},
-        //         {from: 6, to: 5, ec_value: 8},
-        //         {from: 7, to: 2, ec_value: 18},
-        //         {from: 7, to: 5, ec_value: 22},
-        //         {from: 8, to: 1, ec_value: 14},
-        //         {from: 8, to: 2, ec_value: 16},
-        //         {from: 9, to: 3, ec_value: 28},
-        //         {from: 9, to: 4, ec_value: 32},
-        //         {from: 10, to: 3, ec_value: 38},
-        //         {from: 10, to: 7, ec_value: 42}
-        //     ]
-        // };
-
         // Display settings state
         let displaySettings = {
             showEdges: true,
@@ -287,78 +255,6 @@
             showNodeSize: true,
             showNodeColor: true
         };
-
-        // Initialize the network
-        document.addEventListener('DOMContentLoaded', function () {
-            // initializeNetwork();
-            // Fetch available files and populate the dropdown
-            // fetchAvailableFiles().then(files => {
-            //     const fileSelect = document.getElementById('data-file');
-            //     files.forEach(file => {
-            //         const option = document.createElement('option');
-            //         option.value = file.id;
-            //         option.textContent = file.name;
-            //         fileSelect.appendChild(option);
-            //     });
-            // });
-        });
-
-        function initializeNetwork() {
-            const container = document.getElementById('network-container');
-
-            // Create nodes and edges datasets
-            nodes = new vis.DataSet(networkData.nodes.map(node => ({
-                id: node.id,
-                label: node.label,
-                x: node.x,
-                y: node.y,
-                nc_value: node.nc_value,
-                size_value: node.size_value,
-                color: '#97C2FC',
-                size: 25,
-                font: {size: 14}
-                //title: `Node ID: ${nodeIdValues[i]}<br>Color Value: ${nodeColorAttributeValues[i]}<br>Size Value: ${nodeSizeAttributeValues[i]}`
-                // Can do the same for edges
-            })));
-
-            edges = new vis.DataSet(networkData.edges.map(edge => ({
-                id: `${edge.from}-${edge.to}`,
-                from: edge.from,
-                to: edge.to,
-                ec_value: edge.ec_value,
-                color: '#848484',
-                width: 2
-            })));
-
-            const data = {nodes, edges};
-
-            const options = {
-                physics: {
-                    enabled: false
-                },
-                interaction: {
-                    dragNodes: true,
-                    dragView: true,
-                    zoomView: true
-                },
-                nodes: {
-                    shape: 'dot',
-                    scaling: {
-                        min: 10,
-                        max: 150
-                    }
-                },
-                edges: {
-                    smooth: {
-                        type: 'continuous'
-                    }
-                }
-            };
-
-            network = new vis.Network(container, data, options);
-
-            console.log('Network initialized with', nodes.length, 'nodes and', edges.length, 'edges');
-        }
 
         function applyDisplayChanges() {
             displaySettings.showEdges = document.getElementById('toggle-edges').value === 'true';
@@ -414,7 +310,7 @@
                 // Reset to default color
                 edgesDataset.update(networkData.edges.map(edge => ({
                     id: `${edge.from}-${edge.to}`,
-                    color: '#848484'
+                    color: '#ededed'
                 })));
             } else {
                 // Reapply edge color ranges if they exist
@@ -532,7 +428,7 @@
             }));
 
             // Apply colors to nodes based on nc_value
-            networkData.nodes.forEach(node => {
+            const updates = networkData.nodes.map(node => {
                 const val = node.nc_value;
                 let color = '#97C2FC'; // default
 
@@ -543,8 +439,10 @@
                     }
                 }
 
-                nodesDataset.update({id: node.id, color: color});
+                return {id: node.id, color: color};
             });
+
+            nodesDataset.update(updates);
 
             console.log('Node colors applied:', colorRanges);
         }
@@ -569,30 +467,10 @@
                 color: range.querySelector('.range-color').value
             }));
 
-            /*
-            // Build array of updates
-const updates = networkData.nodes.map(node => {
-    const val = node.nc_value;
-    let color = '#97C2FC'; // default
-
-    for (const range of colorRanges) {
-        if (val >= range.min && val <= range.max) {
-            color = range.color;
-            break;
-        }
-    }
-
-    return {id: node.id, color: color};
-});
-
-// Single batch update
-nodesDataset.update(updates);
-             */
-
             // Apply colors to edges based on ec_value
-            networkData.edges.forEach(edge => {
+            const updates = networkData.edges.map(edge => {
                 const ec_value = edge.ec_value;
-                let color = '#848484'; // default
+                let color = '#ededed'; // default
 
                 for (const range of colorRanges) {
                     if (ec_value >= range.min && ec_value <= range.max) {
@@ -601,9 +479,10 @@ nodesDataset.update(updates);
                     }
                 }
 
-                edgesDataset.update({id: `${edge.from}-${edge.to}`, color: color});
+                return {id: `${edge.from}-${edge.to}`, color: color};
             });
 
+            edgesDataset.update(updates);
             console.log('Edge colors applied:', colorRanges);
         }
 
@@ -628,117 +507,24 @@ nodesDataset.update(updates);
             }));
 
             // Apply sizes to nodes based on size_value
-            networkData.nodes.forEach(node => {
+            const updates = networkData.nodes.map(node => {
                 const value = node.size_value;
                 let size = 25; // default
 
                 for (const range of sizeRanges) {
                     if (value >= range.min && value <= range.max) {
                         size = range.size;
-                        console.log(`setting node ${node.id} to size ${size}`);
+                        // console.log(`setting node ${node.id} to size ${size}`);
                         break;
                     }
                 }
 
-                nodesDataset.update({id: node.id, size: size});
+                return {id: node.id, size: size};
             });
+
+            nodesDataset.update(updates);
 
             console.log('Node sizes applied:', sizeRanges);
         }
-
-        // Data Source Configuration Functions
-        function loadFileColumns() {
-            const fileSelect = document.getElementById('data-file');
-            const selectedFile = fileSelect.value;
-
-            if (!selectedFile) {
-                document.getElementById('column-mappings').style.display = 'none';
-                return;
-            }
-
-            // Show the column mappings section
-            document.getElementById('column-mappings').style.display = 'block';
-
-            // Fetch columns from the selected file
-            fetchFileColumns(selectedFile).then(columns => {
-                populateColumnDropdowns(columns);
-            });
-        }
-
-        function fetchFileColumns(fileId) {
-            // Placeholder - implement your actual API call here
-            // For now, return sample columns
-            return Promise.resolve([
-                'id', 'name', 'x_pos', 'y_pos', 'node1', 'node2',
-                'size_value', 'color_value', 'edge_weight', 'nc_value'
-            ]);
-        }
-
-        function populateColumnDropdowns(columns) {
-            const dropdownIds = [
-                'col-node-id',
-                'col-node-x',
-                'col-node-y',
-                'col-node-1',
-                'col-node-2',
-                'col-node-size-attr',
-                'col-node-color-attr',
-                'col-edge-color-attr'
-            ];
-
-            dropdownIds.forEach(dropdownId => {
-                const select = document.getElementById(dropdownId);
-                // Clear existing options except the first one
-                select.innerHTML = '<option value="">-- Select column --</option>';
-
-                // Add column options
-                columns.forEach(column => {
-                    const option = document.createElement('option');
-                    option.value = column;
-                    option.textContent = column;
-                    select.appendChild(option);
-                });
-            });
-        }
-
-        function loadNetworkData() {
-            const fileId = document.getElementById('data-file').value;
-            const columnMappings = {
-                nodeId: document.getElementById('col-node-id').value,
-                nodeX: document.getElementById('col-node-x').value,
-                nodeY: document.getElementById('col-node-y').value,
-                node1: document.getElementById('col-node-1').value,
-                node2: document.getElementById('col-node-2').value,
-                nodeSizeAttr: document.getElementById('col-node-size-attr').value,
-                nodeColorAttr: document.getElementById('col-node-color-attr').value,
-                edgeColorAttr: document.getElementById('col-edge-color-attr').value
-            };
-
-            // Validate that required fields are selected
-            const requiredFields = ['nodeId', 'node1', 'node2'];
-            const missingFields = requiredFields.filter(field => !columnMappings[field]);
-
-            if (missingFields.length > 0) {
-                alert('Please select all required columns: Node ID, Node 1, and Node 2');
-                return;
-            }
-
-            console.log('Loading network data with mappings:', columnMappings);
-            console.log('Current display settings:', displaySettings);
-
-            // Placeholder for actual network data loading
-            // You'll implement the actual API call and network rendering here
-            alert('Column mappings configured! This would load data from your selected file.\n\nFor now, the hardcoded network is displayed.');
-        }
-
-        // function fetchAvailableFiles() {
-        //     // Placeholder - implement your actual API call here
-        //     // For now, return sample files
-        //     return Promise.resolve([
-        //         { id: '1', name: 'network_data_1.csv' },
-        //         { id: '2', name: 'network_data_2.csv' },
-        //         { id: '3', name: 'graph_connections.xlsx' }
-        //     ]);
-        // }
     </script>
 @endpush
