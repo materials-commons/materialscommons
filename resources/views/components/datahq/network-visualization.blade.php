@@ -317,6 +317,8 @@
                 color: '#97C2FC',
                 size: 25,
                 font: {size: 14}
+                //title: `Node ID: ${nodeIdValues[i]}<br>Color Value: ${nodeColorAttributeValues[i]}<br>Size Value: ${nodeSizeAttributeValues[i]}`
+                // Can do the same for edges
             })));
 
             edges = new vis.DataSet(networkData.edges.map(edge => ({
