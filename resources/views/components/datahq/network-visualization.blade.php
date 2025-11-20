@@ -1,9 +1,9 @@
 @props(['project'])
 <!-- Include vis.js from CDN if not already included in your layout -->
 
-<div class="d-flex" style="height: 100vh;">
+<div class="d-flex" style="height: 92vh;">
     <!-- Network Visualization Area (Left - 70%) -->
-    <div class="bg-light border-end p-4 rounded" style="width: 70%;">
+    <div class="bg-light border-end p-2 rounded" style="width: 70%;">
         <div id="network-container" class="w-100 h-100 bg-white rounded shadow-sm border"></div>
     </div>
 
@@ -63,6 +63,10 @@
                 <input type="text" id="node-color-attribute"
                        class="form-control"
                        placeholder="e.g., temperature" readonly>
+            </div>
+
+            <div id="node-color-min-max-info" class="mb-3">
+                <!-- Dynamic display of min/max range will be added here -->
             </div>
 
             <div id="node-color-ranges" class="mb-3">
@@ -146,6 +150,9 @@
         let nodesDataset = null;
         let edgesDataset = null;
         let networkData = {};
+        let nodeColorValuesMinMax = null;
+        let nodeSizeValuesMinMax = null;
+        let edgeColorValuesMinMax = null;
 
         document.addEventListener('livewire:initialized', () => {
             console.log('livewire:initialized');
@@ -173,8 +180,8 @@
                 const nodeColorAttributeValues = event.data.nodeColorAttributeValues;
                 const nodeSizeAttributeValues = event.data.nodeSizeAttributeValues;
                 const positionScale = 3;
-                const nodeColorValuesMinMax = findMinMax(nodeColorAttributeValues);
-                const nodeSizeValuesMinMax = findMinMaxWithPercentiles(nodeSizeAttributeValues);
+                nodeColorValuesMinMax = findMinMax(nodeColorAttributeValues);
+                nodeSizeValuesMinMax = findMinMaxWithPercentiles(nodeSizeAttributeValues);
                 for (let i = 0; i < nodeIdValues.length; i++) {
                     nodes.push({
                         id: nodeIdValues[i],
@@ -192,7 +199,7 @@
                 }
 
                 const edgeColorAttributeValues = event.data.edgeColorAttributeValues;
-                const edgeColorValuesMinMax = findMinMax(edgeColorAttributeValues);
+                edgeColorValuesMinMax = findMinMax(edgeColorAttributeValues);
                 for (let i = 0; i < event.data.edges.length; i++) {
                     const nodeId1 = event.data.edges[i][0];
                     const nodeId2 = event.data.edges[i][1];
@@ -264,9 +271,10 @@
             showNodeColor: true
         };
 
+        // Finds min and max values in array
         function findMinMax(array) {
             if (array.length === 0) {
-                return { min: null, max: null };
+                return {min: 0, max: 0};
             }
 
             let min = array[0];
@@ -277,19 +285,13 @@
                 if (array[i] > max) max = array[i];
             }
 
-            return { min, max };
+            return {min, max};
         }
 
-        /**
-         * Finds min/max using percentiles to exclude outliers
-         * @param {number[]} array - Array of numbers
-         * @param {number} lowerPercentile - Lower percentile (e.g., 0.05 for 5th percentile)
-         * @param {number} upperPercentile - Upper percentile (e.g., 0.95 for 95th percentile)
-         *
-        */
+        // Finds min and max using percentiles to exclude outliers
         function findMinMaxWithPercentiles(array, lowerPercentile = 0.05, upperPercentile = 0.95) {
             if (array.length === 0) {
-                return { min: null, max: null };
+                return {min: 0, max: 0};
             }
 
             const sorted = [...array].sort((a, b) => a - b);
@@ -304,10 +306,6 @@
 
         /**
          * Maps a value to a color using a multi-stop gradient
-         * @param {number} value - The value to map
-         * @param {number} minValue - Minimum value of range
-         * @param {number} maxValue - Maximum value of range
-         * @returns {string} Color in hex format
          */
         function valueToHeatmapColor(value, minValue, maxValue) {
             const normalized = (value - minValue) / (maxValue - minValue);
@@ -357,12 +355,6 @@
 
         /**
          * Maps a value within a range to an integer within a different range using linear interpolation
-         * @param {number} value - The value to map
-         * @param {number} min - The minimum value of the input range
-         * @param {number} max - The maximum value of the input range
-         * @param {number} starting - The minimum value of the output range
-         * @param {number} ending - The maximum value of the output range
-         * @returns {number} The mapped integer value
          */
         function mapValueToRange(value, min, max, starting, ending) {
             // Clamp value to input range
@@ -467,6 +459,16 @@
                     <label class="small text-muted mb-0">Color:</label>
                     <input type="color" class="form-control form-control-color range-color" style="width: 3rem; height: 2rem;" value="${getRandomColor()}">
                 </div>
+                <div class="d-flex flex-column gap-1 mt-2 pt-2 border-top">
+                    <div class="form-check">
+                        <input class="form-check-input range-filter-show" type="checkbox" name="node-color-filter" data-type="show" data-range-id="${rangeId}" onchange="handleNodeColorFilterChange('${rangeId}', 'show')">
+                        <label class="form-check-label small">Show only nodes in this range</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input range-filter-hide" type="checkbox" name="node-color-filter" data-type="hide" data-range-id="${rangeId}" onchange="handleNodeColorFilterChange('${rangeId}', 'hide')">
+                        <label class="form-check-label small">Hide nodes in this range</label>
+                   </div>
+                </div>
             </div>
         `;
             container.insertAdjacentHTML('beforeend', rangeHtml);
@@ -489,6 +491,16 @@
                 <div class="d-flex align-items-center gap-2">
                     <label class="small text-muted mb-0">Color:</label>
                     <input type="color" class="form-control form-control-color range-color" style="width: 3rem; height: 2rem;" value="${getRandomColor()}">
+                </div>
+                <div class="d-flex flex-column gap-1 mt-2 pt-2 border-top">
+                    <div class="form-check">
+                        <input class="form-check-input range-filter-show" type="checkbox" name="node-size-filter" data-type="show" data-range-id="${rangeId}" onchange="handleNodeSizeFilterChange('${rangeId}', 'show')">
+                        <label class="form-check-label small">Show only nodes in this range</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input range-filter-hide" type="checkbox" name="node-size-filter" data-type="hide" data-range-id="${rangeId}" onchange="handleNodeSizeFilterChange('${rangeId}', 'hide')">
+                        <label class="form-check-label small">Hide nodes in this range</label>
+                    </div>
                 </div>
             </div>
         `;
@@ -528,6 +540,106 @@
         function getRandomColor() {
             const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
             return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function handleNodeColorFilterChange(rangeId, filterType) {
+            const currentCheckbox = document.querySelector(`#${rangeId} .range-filter-${filterType}`);
+
+            // If this checkbox was just checked
+            if (currentCheckbox.checked) {
+                // Uncheck all other filter checkboxes in node-color-ranges
+                document.querySelectorAll('#node-color-ranges .range-filter-show, #node-color-ranges .range-filter-hide').forEach(cb => {
+                    if (cb !== currentCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+
+                // Apply the filter
+                applyNodeColorFilter(rangeId, filterType);
+            } else {
+                // If unchecked, clear the filter (show all nodes)
+                clearNodeColorFilter();
+            }
+        }
+
+        function handleNodeSizeFilterChange(rangeId, filterType) {
+            const currentCheckbox = document.querySelector(`#${rangeId} .range-filter-${filterType}`);
+
+            // If this checkbox was just checked
+            if (currentCheckbox.checked) {
+                // Uncheck all other filter checkboxes in node-size-ranges
+                document.querySelectorAll('#node-size-ranges .range-filter-show, #node-size-ranges .range-filter-hide').forEach(cb => {
+                    if (cb !== currentCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+
+                // Apply the filter
+                applyNodeSizeFilter(rangeId, filterType);
+            } else {
+                // If unchecked, clear the filter (show all nodes)
+                clearNodeSizeFilter();
+            }
+        }
+
+        function applyNodeColorFilter(rangeId, filterType) {
+            const rangeDiv = document.getElementById(rangeId);
+            const min = parseFloat(rangeDiv.querySelector('.range-min').value);
+            const max = parseFloat(rangeDiv.querySelector('.range-max').value);
+
+            const updates = networkData.nodes.map(node => {
+                const val = node.nc_value;
+                const inRange = val >= min && val <= max;
+
+                // If 'show' is checked: hide nodes NOT in range
+                // If 'hide' is checked: hide nodes IN range
+                const shouldHide = filterType === 'show' ? !inRange : inRange;
+
+                return { id: node.id, hidden: shouldHide };
+            });
+
+            nodesDataset.update(updates);
+            console.log(`Node color filter applied (${filterType}):`, { min, max });
+        }
+
+        function applyNodeSizeFilter(rangeId, filterType) {
+            const rangeDiv = document.getElementById(rangeId);
+            const min = parseFloat(rangeDiv.querySelector('.range-min').value);
+            const max = parseFloat(rangeDiv.querySelector('.range-max').value);
+
+            const updates = networkData.nodes.map(node => {
+                const val = node.size_value;
+                const inRange = val >= min && val <= max;
+
+                // If 'show' is checked: hide nodes NOT in range
+                // If 'hide' is checked: hide nodes IN range
+                const shouldHide = filterType === 'show' ? !inRange : inRange;
+
+                return { id: node.id, hidden: shouldHide };
+            });
+
+            nodesDataset.update(updates);
+            console.log(`Node size filter applied (${filterType}):`, { min, max });
+        }
+
+        function clearNodeColorFilter() {
+            // Show all nodes
+            const updates = networkData.nodes.map(node => ({
+                id: node.id,
+                hidden: false
+            }));
+            nodesDataset.update(updates);
+            console.log('Node color filter cleared - all nodes visible');
+        }
+
+        function clearNodeSizeFilter() {
+            // Show all nodes
+            const updates = networkData.nodes.map(node => ({
+                id: node.id,
+                hidden: false
+            }));
+            nodesDataset.update(updates);
+            console.log('Node size filter cleared - all nodes visible');
         }
 
         function applyNodeColorRanges() {
