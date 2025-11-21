@@ -94,6 +94,10 @@
                        placeholder="e.g., strength">
             </div>
 
+            <div id="edge-color-min-max-info" class="mb-3">
+                <!-- Dynamic display of min/max range will be added here -->
+            </div>
+
             <div id="edge-color-ranges" class="mb-3">
                 <!-- Dynamic ranges will be added here -->
             </div>
@@ -117,6 +121,10 @@
                 <input type="text" id="node-size-attribute"
                        class="form-control"
                        placeholder="e.g., importance">
+            </div>
+
+            <div id="node-size-min-max-info" class="mb-3">
+                <!-- Dynamic display of min/max range will be added here -->
             </div>
 
             <div id="node-size-ranges" class="mb-3">
@@ -182,6 +190,10 @@
                 const positionScale = 3;
                 nodeColorValuesMinMax = findMinMax(nodeColorAttributeValues);
                 nodeSizeValuesMinMax = findMinMaxWithPercentiles(nodeSizeAttributeValues);
+                const containerForNodeColorMinMax = document.getElementById('node-color-min-max-info');
+                const containerForNodeSizeMinMax = document.getElementById('node-size-min-max-info');
+                containerForNodeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${nodeColorValuesMinMax.min}, Max: ${nodeColorValuesMinMax.max}</span>`);
+                containerForNodeSizeMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${nodeSizeValuesMinMax.min}, Max: ${nodeSizeValuesMinMax.max}</span>`);
                 for (let i = 0; i < nodeIdValues.length; i++) {
                     nodes.push({
                         id: nodeIdValues[i],
@@ -200,6 +212,8 @@
 
                 const edgeColorAttributeValues = event.data.edgeColorAttributeValues;
                 edgeColorValuesMinMax = findMinMax(edgeColorAttributeValues);
+                const containerForEdgeColorMinMax = document.getElementById('edge-color-min-max-info');
+                containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${edgeColorValuesMinMax.min}, Max: ${edgeColorValuesMinMax.max}</span>`);
                 for (let i = 0; i < event.data.edges.length; i++) {
                     const nodeId1 = event.data.edges[i][0];
                     const nodeId2 = event.data.edges[i][1];
