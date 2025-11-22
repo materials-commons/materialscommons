@@ -1,7 +1,18 @@
 @props(['project'])
 <!-- Include vis.js from CDN if not already included in your layout -->
+<div id="node-context-menu"
+     style="display: none; position: absolute; z-index: 1000; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 150px;">
+    <div class="context-menu-item" onclick="hideNode()"
+         style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;">
+        Hide Node
+    </div>
+    <div class="context-menu-item" onclick="unhideAllNodes()" style="padding: 8px 12px; cursor: pointer;">
+        Unhide All Nodes
+    </div>
+</div>
 
 <div class="d-flex" style="height: 92vh;">
+
     <!-- Network Visualization Area (Left - 70%) -->
     <div class="bg-light border-end p-2 rounded" style="width: 70%;">
         <div id="network-container" class="w-100 h-100 bg-white rounded shadow-sm border"></div>
@@ -146,11 +157,21 @@
     </div>
 </div>
 
+@push('styles')
+    <style>
+        .context-menu-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
     <script>
 
+        let contextMenuNodeId = null;
+        let hiddenNodes = new Set();
         let nodeColorRangeCount = 0;
         let edgeColorRangeCount = 0;
         let nodeSizeRangeCount = 0;
@@ -273,6 +294,15 @@
 
                 const container = document.getElementById('network-container');
                 network = new vis.Network(container, data, options);
+                network.on('oncontext', function(params) {
+                    params.event.preventDefault();
+
+                    if (params.nodes.length > 0) {
+                        const nodeId = params.nodes[0];
+                        showNodeContextMenu(params.event, nodeId);
+                    }
+                });
+                document.addEventListener('click', closeNodeContextMenu);
                 console.log('network-data-loaded', event.data);
             });
         });
@@ -379,6 +409,45 @@
 
             // Map to output range and round to integer
             return Math.round(starting + (ending - starting) * normalized);
+        }
+
+        // Context menu functions
+        function showNodeContextMenu(event, nodeId) {
+            console.log('showNodeContextMenu');
+            contextMenuNodeId = nodeId;
+            const menu = document.getElementById('node-context-menu');
+            menu.style.display = 'block';
+            menu.style.left = event.pageX + 'px';
+            menu.style.top = event.pageY + 'px';
+        }
+
+        function closeNodeContextMenu() {
+            console.log('closeNodeContextMenu');
+            const menu = document.getElementById('node-context-menu');
+            menu.style.display = 'none';
+            contextMenuNodeId = null;
+        }
+
+        function hideNode() {
+            console.log('hideNode');
+            if (contextMenuNodeId !== null) {
+                hiddenNodes.add(contextMenuNodeId);
+                nodesDataset.update({id: contextMenuNodeId, hidden: true});
+                console.log('Node hidden:', contextMenuNodeId);
+            }
+            closeNodeContextMenu();
+        }
+
+        function unhideAllNodes() {
+            console.log('unhideAllNodes');
+            const updates = Array.from(hiddenNodes).map(nodeId => ({
+                id: nodeId,
+                hidden: false
+            }));
+            nodesDataset.update(updates);
+            hiddenNodes.clear();
+            console.log('All nodes unhidden');
+            closeNodeContextMenu();
         }
 
         // Example usage:
@@ -609,11 +678,11 @@
                 // If 'hide' is checked: hide nodes IN range
                 const shouldHide = filterType === 'show' ? !inRange : inRange;
 
-                return { id: node.id, hidden: shouldHide };
+                return {id: node.id, hidden: shouldHide};
             });
 
             nodesDataset.update(updates);
-            console.log(`Node color filter applied (${filterType}):`, { min, max });
+            console.log(`Node color filter applied (${filterType}):`, {min, max});
         }
 
         function applyNodeSizeFilter(rangeId, filterType) {
@@ -629,11 +698,11 @@
                 // If 'hide' is checked: hide nodes IN range
                 const shouldHide = filterType === 'show' ? !inRange : inRange;
 
-                return { id: node.id, hidden: shouldHide };
+                return {id: node.id, hidden: shouldHide};
             });
 
             nodesDataset.update(updates);
-            console.log(`Node size filter applied (${filterType}):`, { min, max });
+            console.log(`Node size filter applied (${filterType}):`, {min, max});
         }
 
         function clearNodeColorFilter() {
