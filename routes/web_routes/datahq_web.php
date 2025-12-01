@@ -14,7 +14,7 @@ Route::get('/projects/{project}/qb-attribute-details', GetAttributeDetailsForQue
      ->name('projects.datahq.qb-attribute-details');
 
 Route::get('/projects/{project}/datahq/networkhq', ShowNetworkHQWebController::class)
-    ->name('projects.datahq.networkhq');
+    ->name('projects.networkhq');
 
 // SamplesHQ (These will be removed)
 

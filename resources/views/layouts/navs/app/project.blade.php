@@ -141,9 +141,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.datahq.charts')}}"
+                    <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.networkhq')}}"
                        data-toggle="tooltip" title="Create charts from your data."
-                       href="{{route('projects.datahq.networkhq', [$project])}}">
+                       href="{{route('projects.networkhq', [$project])}}">
                         <i class="fa-fw fas fa-project-diagram me-2"></i>
                         Load Network Data
                     </a>
