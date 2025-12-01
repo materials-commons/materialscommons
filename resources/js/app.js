@@ -27,9 +27,9 @@ import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
 import XHR from '@uppy/xhr-upload';
 
-import {Network} from 'vis-network';
-window.Network = Network;
+import NetworkDataController from './network-data/NetworkDataController';
 import 'vis-network/styles/vis-network.css';
+window.NetworkDataController = NetworkDataController;
 
 window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;

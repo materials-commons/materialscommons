@@ -37,6 +37,7 @@
         "htmx.org": "^1.9.9",
         "laravel-mix-purgecss": "^6.0.0",
         "shepherd.js": "^11.2.0",
+        "vis-data": "^8.0.3",
         "vis-network": "^10.0.2",
         "xlsx": "^0.15.6"
     }
