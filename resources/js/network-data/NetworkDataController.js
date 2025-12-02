@@ -156,9 +156,7 @@ export default class NetworkDataController {
     }
 
     valueToDashesAttribute(value) {
-        console.log('valueToDashesAttribute', value);
         if (value === 'Y' || value === 'y' || value === 1) {
-            console.log('is true');
             return [4,50];
         } else {
             return false;
