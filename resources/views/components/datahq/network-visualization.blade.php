@@ -210,11 +210,11 @@
                     </div>
                     <div class="d-flex flex-column gap-1 mt-2 pt-2 border-top">
                         <div class="form-check">
-                            <input class="form-check-input range-filter-show" type="checkbox" name="node-color-filter" data-type="show" data-range-id="${rangeId}" onchange="handleNodeColorFilterChange('${rangeId}', 'show')">
+                            <input class="form-check-input range-filter-show" type="checkbox" name="node-color-filter" data-type="show" data-range-id="${rangeId}" onchange="networkDataController.handleNodeColorFilterChange('${rangeId}', 'show')">
                             <label class="form-check-label small">Show only nodes in this range</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input range-filter-hide" type="checkbox" name="node-color-filter" data-type="hide" data-range-id="${rangeId}" onchange="handleNodeColorFilterChange('${rangeId}', 'hide')">
+                            <input class="form-check-input range-filter-hide" type="checkbox" name="node-color-filter" data-type="hide" data-range-id="${rangeId}" onchange="networkDataController.handleNodeColorFilterChange('${rangeId}', 'hide')">
                             <label class="form-check-label small">Hide nodes in this range</label>
                        </div>
                     </div>
@@ -241,16 +241,6 @@
                         <label class="small text-muted mb-0">Color:</label>
                         <input type="color" class="form-control form-control-color range-color" style="width: 3rem; height: 2rem;" value="${getRandomColor()}">
                     </div>
-                    <div class="d-flex flex-column gap-1 mt-2 pt-2 border-top">
-                        <div class="form-check">
-                            <input class="form-check-input range-filter-show" type="checkbox" name="node-size-filter" data-type="show" data-range-id="${rangeId}" onchange="handleNodeSizeFilterChange('${rangeId}', 'show')">
-                            <label class="form-check-label small">Show only nodes in this range</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input range-filter-hide" type="checkbox" name="node-size-filter" data-type="hide" data-range-id="${rangeId}" onchange="handleNodeSizeFilterChange('${rangeId}', 'hide')">
-                            <label class="form-check-label small">Hide nodes in this range</label>
-                        </div>
-                    </div>
                 </div>`;
             container.insertAdjacentHTML('beforeend', rangeHtml);
         }
@@ -273,6 +263,16 @@
                     <div class="d-flex align-items-center gap-2">
                         <label class="small text-muted mb-0">Size:</label>
                         <input type="number" placeholder="px" min="1" max="100" value="${20 + nodeSizeRangeCount * 10}" class="form-control form-control-sm range-size" style="width: 5rem;">
+                    </div>
+                    <div class="d-flex flex-column gap-1 mt-2 pt-2 border-top">
+                        <div class="form-check">
+                            <input class="form-check-input range-filter-show" type="checkbox" name="node-size-filter" data-type="show" data-range-id="${rangeId}" onchange="networkDataController.handleNodeSizeFilterChange('${rangeId}', 'show')">
+                            <label class="form-check-label small">Show only nodes in this range</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input range-filter-hide" type="checkbox" name="node-size-filter" data-type="hide" data-range-id="${rangeId}" onchange="networkDataController.handleNodeSizeFilterChange('${rangeId}', 'hide')">
+                            <label class="form-check-label small">Hide nodes in this range</label>
+                        </div>
                     </div>
                 </div>`;
             container.insertAdjacentHTML('beforeend', rangeHtml);

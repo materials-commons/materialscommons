@@ -33,6 +33,7 @@ class DataSource extends Component
     public $nodeSizeColumn;
     public $nodeColorColumn;
     public $edgeColorColumn;
+    public $edgeDashedColumn;
 
     public function __construct()
     {
@@ -44,33 +45,12 @@ class DataSource extends Component
     {
         $path = $this->getSpreadsheetPath();
         $this->subsheets = $this->listExcelSheets($path);
-//        [$id, $type] = explode(":", $this->selectedSheet, 2);
-//        if ($type === "f") {
-//            $f = File::findOrFail($id);
-//            $path = app(FilePathService::class)->getMcfsPath($f);
-//            $this->subsheets = $this->listExcelSheets($path);
-//        } else {
-//            $sheet = Sheet::findOrFail($id);
-//            $path = $this->downloadGoogleSheet($sheet->url);
-//            $this->subsheets = $this->listExcelSheets($path);
-//        }
     }
 
     public function updatedSelectedSubsheet()
     {
         $path = $this->getSpreadsheetPath();
         $this->columns = $this->getSheetColumnNames($path, $this->selectedSubsheet);
-//        [$id, $type] = explode(":", $this->selectedSheet, 2);
-//        if ($type === "f") {
-//            $f = File::findOrFail($id);
-//            $path = app(FilePathService::class)->getMcfsPath($f);
-//            $this->columns = $this->getSheetColumnNames($path, $this->selectedSubsheet);
-//        } else {
-//            $sheet = Sheet::findOrFail($id);
-//            $path = $this->downloadGoogleSheetToNamedFile($sheet->url, "{$id}.xlsx");
-//            $this->columns = $this->getSheetColumnNames($path, $this->selectedSubsheet);
-//            ray("columns =", $this->columns);
-//        }
     }
 
     public function loadNetworkData(): void
@@ -163,8 +143,7 @@ class DataSource extends Component
             }
         }
 
-        ray("edgeStartColumn = {$this->edgeStartColumn}");
-        ray("edgeEndColumn = {$this->edgeEndColumn}");
+
         if (!blank($this->edgeStartColumn) && !blank($this->edgeEndColumn)) {
             $edgeStartValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeStartColumn);
             $edgeEndValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeEndColumn);
@@ -188,6 +167,11 @@ class DataSource extends Component
         if (!blank($this->edgeColorColumn)) {
             $dto->edgeColorAttributeName = $this->getColumnName($this->edgeColorColumn);
             $dto->edgeColorAttributeValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeColorColumn);
+        }
+
+        if (!blank($this->edgeDashedColumn)) {
+            $dto->edgeDashedAttributeName = $this->getColumnName($this->edgeDashedColumn);
+            $dto->edgeDashedAttributeValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeDashedColumn);
         }
 
         return $dto;

@@ -10,10 +10,16 @@ class NetworkGraphDTO implements Wireable
 
     public string $nodeColorAttributeName;
     public Collection $nodeColorAttributeValues;
+
     public string $edgeColorAttributeName;
     public Collection $edgeColorAttributeValues;
+
     public string $nodeSizeAttributeName;
     public Collection $nodeSizeAttributeValues;
+
+    public string $edgeDashedAttributeName;
+    public Collection $edgeDashedAttributeValues;
+
     public Collection $nodeIdValues;
     public Collection $nodePositions; // Each node is an array of x,y coordinates
     public Collection $edges; // Each edge is an array of two node ids
@@ -25,6 +31,8 @@ class NetworkGraphDTO implements Wireable
             'nodeColorAttributeValues' => $this->nodeColorAttributeValues,
             'edgeColorAttributeName' => $this->edgeColorAttributeName,
             'edgeColorAttributeValues' => $this->edgeColorAttributeValues,
+            'edgeDashedAttributeName' => $this->edgeDashedAttributeName,
+            'edgeDashedAttributeValues' => $this->edgeDashedAttributeValues,
             'nodeSizeAttributeName' => $this->nodeSizeAttributeName,
             'nodeSizeAttributeValues' => $this->nodeSizeAttributeValues,
             'nodeIdValues' => $this->nodeIdValues,
@@ -41,6 +49,8 @@ class NetworkGraphDTO implements Wireable
         $dto->nodeColorAttributeValues = $value['nodeColorAttributeValues'];
         $dto->edgeColorAttributeName = $value['edgeColorAttributeName'];
         $dto->edgeColorAttributeValues = $value['edgeColorAttributeValues'];
+        $dto->edgeDashedAttributeName = $value['edgeDashedAttributeName'];
+        $dto->edgeDashedAttributeValues = $value['edgeDashedAttributeValues'];
         $dto->nodeSizeAttributeName = $value['nodeSizeAttributeName'];
         $dto->nodeSizeAttributeValues = $value['nodeSizeAttributeValues'];
         $dto->nodeIdValues = $value['nodeIdValues'];

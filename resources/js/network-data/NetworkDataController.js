@@ -71,7 +71,6 @@ export default class NetworkDataController {
                 differentColors[nodeColor] = 0;
             }
             differentColors[nodeColor]++;
-            console.log('ncValue:', ncValue, 'nsValue:', nsValue, 'nodeColor:', nodeColor, 'nodeSize:', nodeSize);
             nodes.push({
                 id: nodeIdValues[i],
                 x: nodePositions[i][0] * positionScale,
@@ -86,9 +85,11 @@ export default class NetworkDataController {
         }
 
         const edgeColorAttributeValues = dataObj.edgeColorAttributeValues;
+        const edgeDashedAttributeValues = dataObj.edgeDashedAttributeValues.map(value => this.valueToDashesAttribute(value));
         this.edgeColorValuesMinMax = this.findMinMax(edgeColorAttributeValues);
         const containerForEdgeColorMinMax = document.getElementById('edge-color-min-max-info');
         if (containerForEdgeColorMinMax) containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
+        console.log('drawing edges dashes[5,5] with color, with width, with large dashes');
         for (let i = 0; i < dataObj.edges.length; i++) {
             const nodeId1 = dataObj.edges[i][0];
             const nodeId2 = dataObj.edges[i][1];
@@ -99,6 +100,8 @@ export default class NetworkDataController {
                 ec_value: edgeColorAttributeValues[i],
                 color: this.valueToHeatmapColor(edgeColorAttributeValues[i], this.edgeColorValuesMinMax.min, this.edgeColorValuesMinMax.max),
                 width: 20,
+                // dashes: [4,50],
+                dashes: edgeDashedAttributeValues[i],
                 title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${edgeColorAttributeValues[i]}`,
             });
         }
@@ -112,7 +115,7 @@ export default class NetworkDataController {
             physics: {enabled: false},
             interaction: {dragNodes: true, dragView: true, zoomView: true},
             nodes: {shape: 'dot', scaling: {min: 10, max: 150}},
-            edges: {smooth: {type: 'continuous', forceDirection: 'none', roundness: 1}}
+            edges: {smooth: {type: 'continuous', forceDirection: 'none', roundness: 1}},
         };
 
         const container = document.getElementById('network-container');
@@ -150,6 +153,16 @@ export default class NetworkDataController {
         const lowerIndex = Math.floor(sorted.length * lowerPercentile);
         const upperIndex = Math.floor(sorted.length * upperPercentile);
         return {min: sorted[lowerIndex], max: sorted[upperIndex]};
+    }
+
+    valueToDashesAttribute(value) {
+        console.log('valueToDashesAttribute', value);
+        if (value === 'Y' || value === 'y' || value === 1) {
+            console.log('is true');
+            return [4,50];
+        } else {
+            return false;
+        }
     }
 
     valueToHeatmapColor(value, minValue, maxValue) {

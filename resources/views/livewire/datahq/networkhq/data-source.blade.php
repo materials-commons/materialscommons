@@ -124,6 +124,17 @@
                 </select>
             </div>
 
+            <!-- Attribute for Dashed Edge -->
+            <div class="mb-3">
+                <label class="form-label">Attribute for Dashed Edge</label>
+                <select wire:model="edgeDashedColumn" id="col-edge-dashed-attr" class="form-select form-select-sm">
+                    <option value="">-- Select column --</option>
+                    @foreach($columns as $column)
+                        <option value="{{$column[0]}}">{{$column[1]}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <!-- Load Data Button -->
             <button wire:click.prevent="loadNetworkData()" class="btn btn-success w-100 mt-3">
                 Load Network Data
