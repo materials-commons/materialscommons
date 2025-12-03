@@ -52,11 +52,16 @@ export default class NetworkDataController {
         let edges = [];
         const nodeIdValues = dataObj.nodeIdValues;
         const nodePositions = dataObj.nodePositions;
-        const nodeColorAttributeValues = dataObj.nodeColorAttributeValues;
-        const nodeSizeAttributeValues = dataObj.nodeSizeAttributeValues;
         const positionScale = 3;
-        this.nodeColorValuesMinMax = this.findMinMax(nodeColorAttributeValues);
-        this.nodeSizeValuesMinMax = this.findMinMaxWithPercentiles(nodeSizeAttributeValues);
+
+        // This code is a bit weird, so lets explain what is going on. A user may not have selected columns for node color and node size. The findMinMax method will account
+        // for this. We need these min max values when we then map the node color and node size values to the heatmap color and node size values. Since the user may not
+        // have selected values for these columns, the map may return an empty array. While this is not ideal, it is not a big deal. We will just use the default values
+        // for the heatmap color and node size.
+        this.nodeColorValuesMinMax = this.findMinMax(dataObj.nodeColorAttributeValues);
+        this.nodeSizeValuesMinMax = this.findMinMaxWithPercentiles(dataObj.nodeSizeAttributeValues);
+        const nodeColorAttributeValues = dataObj.nodeColorAttributeValues.map((value) => this.valueToHeatmapColor(value, this.nodeColorValuesMinMax.min, this.nodeColorValuesMinMax.max));
+        const nodeSizeAttributeValues = dataObj.nodeSizeAttributeValues.map((value) => this.mapValueToRange(value, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 10, 50));
         const containerForNodeColorMinMax = document.getElementById('node-color-min-max-info');
         const containerForNodeSizeMinMax = document.getElementById('node-size-min-max-info');
         if (containerForNodeColorMinMax) {
@@ -69,10 +74,10 @@ export default class NetworkDataController {
         }
         let differentColors = {};
         for (let i = 0; i < nodeIdValues.length; i++) {
-            let ncValue = nodeColorAttributeValues[i];
-            let nsValue = nodeSizeAttributeValues[i];
-            let nodeColor = this.valueToHeatmapColor(ncValue, this.nodeColorValuesMinMax.min, this.nodeColorValuesMinMax.max);
-            let nodeSize = this.mapValueToRange(nsValue, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 10, 50);
+            let nsValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeSizeAttributeValues, i, 0);
+            let ncValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeColorAttributeValues, i, 0);
+            let nodeColor = this.safelyGetValueFromArrayWithDefault(nodeColorAttributeValues, i, '#97C2FC');
+            let nodeSize = this.safelyGetValueFromArrayWithDefault(nodeSizeAttributeValues, i, 25);
             if (!nodeColor in differentColors) {
                 differentColors[nodeColor] = 0;
             }
@@ -90,28 +95,29 @@ export default class NetworkDataController {
             });
         }
 
-        const edgeColorAttributeValues = dataObj.edgeColorAttributeValues;
+        this.edgeColorValuesMinMax = this.findMinMax(dataObj.edgeColorAttributeValues);
+        const edgeColorAttributeValues = dataObj.edgeColorAttributeValues.map(value => this.valueToHeatmapColor(value, this.edgeColorValuesMinMax.min, this.edgeColorValuesMinMax.max));
         const edgeDashedAttributeValues = dataObj.edgeDashedAttributeValues.map(value => this.valueToDashesAttribute(value));
-        this.edgeColorValuesMinMax = this.findMinMax(edgeColorAttributeValues);
         const containerForEdgeColorMinMax = document.getElementById('edge-color-min-max-info');
         if (containerForEdgeColorMinMax) {
             containerForEdgeColorMinMax.innerHTML = '';
             containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
         }
-        console.log('drawing edges dashes[5,5] with color, with width, with large dashes');
         for (let i = 0; i < dataObj.edges.length; i++) {
             const nodeId1 = dataObj.edges[i][0];
             const nodeId2 = dataObj.edges[i][1];
+            let ecValue = this.safelyGetValueFromArrayWithDefault(edgeColorAttributeValues, i, 0);
+            let edgeValue = this.safelyGetValueFromArrayWithDefault(edgeDashedAttributeValues, i, false);
             edges.push({
                 id: `${nodeId1}-${nodeId2}`,
                 from: nodeId1,
                 to: nodeId2,
-                ec_value: edgeColorAttributeValues[i],
-                color: this.valueToHeatmapColor(edgeColorAttributeValues[i], this.edgeColorValuesMinMax.min, this.edgeColorValuesMinMax.max),
+                ec_value: ecValue,
+                color: this.safelyGetValueFromArrayWithDefault(edgeColorAttributeValues, i, '#848484'),
                 width: 20,
                 // dashes: [4,50],
-                dashes: edgeDashedAttributeValues[i],
-                title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${edgeColorAttributeValues[i]}`,
+                dashes: edgeValue,
+                title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${ecValue}`,
             });
         }
 
@@ -137,12 +143,20 @@ export default class NetworkDataController {
             }
         });
         document.addEventListener('click', () => this.closeNodeContextMenu());
-        console.log('network-data-loaded (class)', dataObj);
     }
 
-    // Utility methods
+    // safelyGetValueFromArrayWithDefault checks if array is defined and has an element at the given index. If not, it returns the default value,
+    // otherwise it returns the element at the given index.
+    safelyGetValueFromArrayWithDefault(array, index, defaultValue) {
+        if (!Array.isArray(array) || array.length <= index) {
+            return defaultValue;
+        }
+
+        return array[index];
+    }
+
     findMinMax(array) {
-        if (!array || array.length === 0) {
+        if (!Array.isArray(array) || array.length === 0) {
             return {min: 0, max: 0};
         }
         let min = array[0];
@@ -166,7 +180,7 @@ export default class NetworkDataController {
 
     valueToDashesAttribute(value) {
         if (value === 'Y' || value === 'y' || value === 1) {
-            return [4,50];
+            return [4, 50];
         } else {
             return false;
         }
@@ -232,7 +246,6 @@ export default class NetworkDataController {
         if (this.contextMenuNodeId !== null) {
             this.hiddenNodes.add(this.contextMenuNodeId);
             if (this.nodesDataset) this.nodesDataset.update({id: this.contextMenuNodeId, hidden: true});
-            console.log('Node hidden:', this.contextMenuNodeId);
         }
         this.closeNodeContextMenu();
     }
@@ -241,7 +254,6 @@ export default class NetworkDataController {
         const updates = Array.from(this.hiddenNodes).map(nodeId => ({id: nodeId, hidden: false}));
         if (this.nodesDataset) this.nodesDataset.update(updates);
         this.hiddenNodes.clear();
-        console.log('All nodes unhidden');
         this.closeNodeContextMenu();
     }
 
@@ -307,7 +319,6 @@ export default class NetworkDataController {
 
             if (this.network) this.network.redraw();
         }
-        console.log('Display settings applied:', this.displaySettings);
     }
 
     resetNodeColorsToDefault() {
@@ -370,7 +381,6 @@ export default class NetworkDataController {
             return {id: node.id, hidden: shouldHide};
         });
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log(`Node color filter applied (${filterType}):`, {min, max});
     }
 
     applyNodeSizeFilter(rangeId, filterType) {
@@ -385,23 +395,19 @@ export default class NetworkDataController {
             return {id: node.id, hidden: shouldHide};
         });
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log(`Node size filter applied (${filterType}):`, {min, max});
     }
 
     clearNodeColorFilter() {
         const updates = this.networkData.nodes.map(node => ({id: node.id, hidden: false}));
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log('Node color filter cleared - all nodes visible');
     }
 
     clearNodeSizeFilter() {
         const updates = this.networkData.nodes.map(node => ({id: node.id, hidden: false}));
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log('Node size filter cleared - all nodes visible');
     }
 
     applyNodeColorRanges() {
-        console.log('Applying node color ranges...');
         if (!this.displaySettings.showNodeColor) {
             alert('Node Color display is turned off. Please enable it in Display Features.');
             return;
@@ -430,7 +436,6 @@ export default class NetworkDataController {
             return {id: node.id, color};
         });
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log('Node colors applied:', colorRanges);
     }
 
     applyEdgeColorRanges() {
@@ -462,7 +467,6 @@ export default class NetworkDataController {
             return {id: `${edge.from}-${edge.to}`, color};
         });
         if (this.edgesDataset) this.edgesDataset.update(updates);
-        console.log('Edge colors applied:', colorRanges);
     }
 
     applyNodeSizeRanges() {
@@ -494,6 +498,5 @@ export default class NetworkDataController {
             return {id: node.id, size};
         });
         if (this.nodesDataset) this.nodesDataset.update(updates);
-        console.log('Node sizes applied:', sizeRanges);
     }
 }
