@@ -59,8 +59,14 @@ export default class NetworkDataController {
         this.nodeSizeValuesMinMax = this.findMinMaxWithPercentiles(nodeSizeAttributeValues);
         const containerForNodeColorMinMax = document.getElementById('node-color-min-max-info');
         const containerForNodeSizeMinMax = document.getElementById('node-size-min-max-info');
-        if (containerForNodeColorMinMax) containerForNodeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.nodeColorValuesMinMax.min}, Max: ${this.nodeColorValuesMinMax.max}</span>`);
-        if (containerForNodeSizeMinMax) containerForNodeSizeMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.nodeSizeValuesMinMax.min}, Max: ${this.nodeSizeValuesMinMax.max}</span>`);
+        if (containerForNodeColorMinMax) {
+            containerForNodeColorMinMax.innerHTML = '';
+            containerForNodeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.nodeColorValuesMinMax.min}, Max: ${this.nodeColorValuesMinMax.max}</span>`);
+        }
+        if (containerForNodeSizeMinMax) {
+            containerForNodeSizeMinMax.innerHTML = '';
+            containerForNodeSizeMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.nodeSizeValuesMinMax.min}, Max: ${this.nodeSizeValuesMinMax.max}</span>`);
+        }
         let differentColors = {};
         for (let i = 0; i < nodeIdValues.length; i++) {
             let ncValue = nodeColorAttributeValues[i];
@@ -88,7 +94,10 @@ export default class NetworkDataController {
         const edgeDashedAttributeValues = dataObj.edgeDashedAttributeValues.map(value => this.valueToDashesAttribute(value));
         this.edgeColorValuesMinMax = this.findMinMax(edgeColorAttributeValues);
         const containerForEdgeColorMinMax = document.getElementById('edge-color-min-max-info');
-        if (containerForEdgeColorMinMax) containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
+        if (containerForEdgeColorMinMax) {
+            containerForEdgeColorMinMax.innerHTML = '';
+            containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
+        }
         console.log('drawing edges dashes[5,5] with color, with width, with large dashes');
         for (let i = 0; i < dataObj.edges.length; i++) {
             const nodeId1 = dataObj.edges[i][0];
