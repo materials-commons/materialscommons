@@ -139,7 +139,9 @@
                         Explore Data
                     </a>
                 </li>
+            @endif
 
+            @if (isInBeta('networkhq'))
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.networkhq')}}"
                        data-toggle="tooltip" title="Create charts from your data."
@@ -147,6 +149,7 @@
                         <i class="fa-fw fas fa-project-diagram me-2"></i>
                         Load Network Data
                     </a>
+                </li>
             @endif
 
             <li class="nav-item">
