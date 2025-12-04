@@ -36,7 +36,6 @@ export default class NetworkDataController {
 
     onNetworkDataLoaded(event) {
         const dataObj = event.data;
-        console.log("dataObj", dataObj);
         const nodeColorInput = document.getElementById('node-color-attribute');
         if (nodeColorInput) nodeColorInput.value = dataObj.nodeColorAttributeName;
         const ncAttrName = dataObj.nodeColorAttributeName;
@@ -79,8 +78,8 @@ export default class NetworkDataController {
         }
         let differentColors = {};
         for (let i = 0; i < nodeIdValues.length; i++) {
-            let nsValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeSizeAttributeValues, i, 0);
-            let ncValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeColorAttributeValues, i, 0);
+            let nsValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeSizeAttributeValues, i, null);
+            let ncValue = this.safelyGetValueFromArrayWithDefault(dataObj.nodeColorAttributeValues, i, null);
             let nodeColor = this.safelyGetValueFromArrayWithDefault(nodeColorAttributeValues, i, '#97C2FC');
             let nodeSize = this.safelyGetValueFromArrayWithDefault(nodeSizeAttributeValues, i, 25);
             if (!nodeColor in differentColors) {
@@ -120,12 +119,11 @@ export default class NetworkDataController {
             containerForEdgeColorMinMax.innerHTML = '';
             containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
         }
-        console.log('edges length = ', dataObj.edges.length)
         for (let i = 0; i < dataObj.edges.length; i++) {
             const nodeId1 = dataObj.edges[i][0];
             const nodeId2 = dataObj.edges[i][1];
-            let ecValue = this.safelyGetValueFromArrayWithDefault(edgeColorAttributeValues, i, 0);
-            let edgeValue = this.safelyGetValueFromArrayWithDefault(edgeDashedAttributeValues, i, false);
+            let ecValue = this.safelyGetValueFromArrayWithDefault(dataObj.edgeColorAttributeValues, i, null);
+            let edgeDashed = this.safelyGetValueFromArrayWithDefault(edgeDashedAttributeValues, i, false);
             edges.push({
                 id: `${nodeId1}-${nodeId2}`,
                 from: nodeId1,
@@ -134,7 +132,7 @@ export default class NetworkDataController {
                 color: this.safelyGetValueFromArrayWithDefault(edgeColorAttributeValues, i, '#848484'),
                 width: 20,
                 // dashes: [4,50],
-                dashes: edgeValue,
+                dashes: edgeDashed,
                 title: `Edge ID: ${nodeId1}-${nodeId2}, ${ecAttrName}: ${ecValue}`,
             });
         }
@@ -350,7 +348,7 @@ export default class NetworkDataController {
             if (!this.displaySettings.showEdgeColor) {
                 this.edgesDataset.update(this.networkData.edges.map(edge => ({
                     id: `${edge.from}-${edge.to}`,
-                    color: '#ededed'
+                    color: '#848484'
                 })));
             } else {
                 const edgeColorRanges = document.getElementById('edge-color-ranges');
@@ -366,24 +364,49 @@ export default class NetworkDataController {
     }
 
     resetNodeColorsToDefault() {
-        this.nodesDataset.update(this.networkData.nodes.map(node => ({
-            id: node.id,
-            color: this.valueToHeatmapColor(node.nc_value, this.nodeColorValuesMinMax.min, this.nodeColorValuesMinMax.max)
-        })));
+        this.nodesDataset.update(this.networkData.nodes.map(node => {
+            if (node.nc_value === null) {
+                return {
+                    id: node.id,
+                    color: '#97C2FC'
+                };
+            }
+            return {
+                id: node.id,
+                color: this.valueToHeatmapColor(node.nc_value, this.nodeColorValuesMinMax.min, this.nodeColorValuesMinMax.max)
+            }
+        }));
     }
 
     resetNodeSizesToDefault() {
-        this.nodesDataset.update(this.networkData.nodes.map(node => ({
-            id: node.id,
-            size: this.mapValueToRange(node.size_value, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 10, 50)
-        })));
+        this.nodesDataset.update(this.networkData.nodes.map(node => {
+            if (node.size_value === null) {
+                return {
+                    id: node.id,
+                    size: 25
+                };
+            }
+            return {
+                id: node.id,
+                size: this.mapValueToRange(node.size_value, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 10, 50)
+            }
+        }));
     }
 
     resetEdgeColorsToDefault() {
-        this.edgesDataset.update(this.networkData.edges.map(edge => ({
-            id: `${edge.from}-${edge.to}`,
-            color: this.valueToHeatmapColor(edge.ec_value, this.edgeColorValuesMinMax.min, this.edgeColorValuesMinMax.max)
-        })));
+        this.edgesDataset.update(this.networkData.edges.map(edge => {
+            if (edge.ec_value === null) {
+                return {
+                    id: `${edge.from}-${edge.to}`,
+                    color: '#848484'
+                };
+            }
+            let color = this.valueToHeatmapColor(edge.ec_value, this.edgeColorValuesMinMax.min, this.edgeColorValuesMinMax.max);
+            return {
+                id: `${edge.from}-${edge.to}`,
+                color: color
+            }
+        }));
     }
 
     // Filter handlers (ensure mutual exclusivity and apply filters)
