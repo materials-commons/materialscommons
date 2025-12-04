@@ -24,17 +24,31 @@ class NetworkGraphDTO implements Wireable
     public Collection $nodePositions; // Each node is an array of x,y coordinates
     public Collection $edges; // Each edge is an array of two node ids
 
+    public function __construct() {
+        $this->edges = collect();
+        $this->nodePositions = collect();
+        $this->nodeIdValues = collect();
+        $this->nodeSizeAttributeValues = collect();
+        $this->nodeColorAttributeValues = collect();
+        $this->edgeColorAttributeValues = collect();
+        $this->edgeDashedAttributeValues = collect();
+        $this->nodeSizeAttributeName = "";
+        $this->nodeColorAttributeName = "";
+        $this->edgeColorAttributeName = "";
+        $this->edgeDashedAttributeName = "";
+    }
+
     public function toLivewire()
     {
         return [
             'nodeColorAttributeName' => $this->nodeColorAttributeName,
-            'nodeColorAttributeValues' => $this->nodeColorAttributeValues,
+            'nodeColorAttributeValues' => $this->nodeColorAttributeValues ?? collect(),
             'edgeColorAttributeName' => $this->edgeColorAttributeName,
-            'edgeColorAttributeValues' => $this->edgeColorAttributeValues,
+            'edgeColorAttributeValues' => $this->edgeColorAttributeValues ?? collect(),
             'edgeDashedAttributeName' => $this->edgeDashedAttributeName,
-            'edgeDashedAttributeValues' => $this->edgeDashedAttributeValues,
+            'edgeDashedAttributeValues' => $this->edgeDashedAttributeValues ?? collect(),
             'nodeSizeAttributeName' => $this->nodeSizeAttributeName,
-            'nodeSizeAttributeValues' => $this->nodeSizeAttributeValues,
+            'nodeSizeAttributeValues' => $this->nodeSizeAttributeValues ?? collect(),
             'nodeIdValues' => $this->nodeIdValues,
             'nodePositions' => $this->nodePositions,
             'edges' => $this->edges,

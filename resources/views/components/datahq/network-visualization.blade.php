@@ -14,6 +14,12 @@
 <div class="d-flex" style="height: 92vh;">
 
     <!-- Network Visualization Area (Left - 70%) -->
+    <div id="network-loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Loading network visualization...</p>
+    </div>
     <div class="bg-light border-end p-2 rounded" style="width: 70%;">
         <div id="network-container" class="w-100 h-100 bg-white rounded shadow-sm border"></div>
     </div>

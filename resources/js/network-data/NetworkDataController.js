@@ -36,6 +36,7 @@ export default class NetworkDataController {
 
     onNetworkDataLoaded(event) {
         const dataObj = event.data;
+        console.log("dataObj", dataObj);
         const nodeColorInput = document.getElementById('node-color-attribute');
         if (nodeColorInput) nodeColorInput.value = dataObj.nodeColorAttributeName;
         const ncAttrName = dataObj.nodeColorAttributeName;
@@ -53,6 +54,10 @@ export default class NetworkDataController {
         const nodeIdValues = dataObj.nodeIdValues;
         const nodePositions = dataObj.nodePositions;
         const positionScale = 3;
+        let hasPositions = true;
+        if (!Array.isArray(nodePositions) || nodePositions.length !== nodeIdValues.length) {
+            hasPositions = false;
+        }
 
         // This code is a bit weird, so lets explain what is going on. A user may not have selected columns for node color and node size. The findMinMax method will account
         // for this. We need these min max values when we then map the node color and node size values to the heatmap color and node size values. Since the user may not
@@ -82,17 +87,29 @@ export default class NetworkDataController {
                 differentColors[nodeColor] = 0;
             }
             differentColors[nodeColor]++;
-            nodes.push({
-                id: nodeIdValues[i],
-                x: nodePositions[i][0] * positionScale,
-                y: nodePositions[i][1] * positionScale,
-                nc_value: ncValue,
-                size_value: nsValue,
-                color: nodeColor,
-                size: nodeSize,
-                font: {size: 14},
-                title: `Node ID: ${nodeIdValues[i]}, ${ncAttrName}: ${nodeColorAttributeValues[i]}, ${nsAttrName}: ${nodeSizeAttributeValues[i]}`,
-            });
+            if (hasPositions) {
+                nodes.push({
+                    id: nodeIdValues[i],
+                    x: nodePositions[i][0] * positionScale,
+                    y: nodePositions[i][1] * positionScale,
+                    nc_value: ncValue,
+                    size_value: nsValue,
+                    color: nodeColor,
+                    size: nodeSize,
+                    font: {size: 14},
+                    title: `Node ID: ${nodeIdValues[i]}, ${ncAttrName}: ${nodeColorAttributeValues[i]}, ${nsAttrName}: ${nodeSizeAttributeValues[i]}`,
+                });
+            } else {
+                nodes.push({
+                    id: nodeIdValues[i],
+                    nc_value: ncValue,
+                    size_value: nsValue,
+                    color: nodeColor,
+                    size: nodeSize,
+                    font: {size: 14},
+                    title: `Node ID: ${nodeIdValues[i]}, ${ncAttrName}: ${nodeColorAttributeValues[i]}, ${nsAttrName}: ${nodeSizeAttributeValues[i]}`,
+                });
+            }
         }
 
         this.edgeColorValuesMinMax = this.findMinMax(dataObj.edgeColorAttributeValues);
@@ -103,6 +120,7 @@ export default class NetworkDataController {
             containerForEdgeColorMinMax.innerHTML = '';
             containerForEdgeColorMinMax.insertAdjacentHTML('beforeend', `<span>Min: ${this.edgeColorValuesMinMax.min}, Max: ${this.edgeColorValuesMinMax.max}</span>`);
         }
+        console.log('edges length = ', dataObj.edges.length)
         for (let i = 0; i < dataObj.edges.length; i++) {
             const nodeId1 = dataObj.edges[i][0];
             const nodeId2 = dataObj.edges[i][1];
@@ -126,15 +144,41 @@ export default class NetworkDataController {
         this.nodesDataset = new DataSet(nodes);
         this.edgesDataset = new DataSet(edges);
         const data = {nodes: this.nodesDataset, edges: this.edgesDataset};
+        let physicsEnabled = !hasPositions;
         const options = {
-            physics: {enabled: false},
+            physics: {enabled: physicsEnabled},
             interaction: {dragNodes: true, dragView: true, zoomView: true},
             nodes: {shape: 'dot', scaling: {min: 10, max: 150}},
             edges: {smooth: {type: 'continuous', forceDirection: 'none', roundness: 1}},
         };
 
+        if (physicsEnabled) {
+            options.layout = {
+                improvedLayout: false,
+                hierarchical: false,
+            };
+            options.physics.solver = 'forceAtlas2Based';
+            options.physics.stabilization = {iterations: 1000};
+        }
+
+        const loadingIndicator = document.getElementById('network-loading-indicator');
         const container = document.getElementById('network-container');
+
+        if (physicsEnabled) {
+            loadingIndicator.style.display = 'block';
+            container.style.visibility = 'hidden';
+        }
+
         this.network = new Network(container, data, options);
+
+        if (physicsEnabled) {
+            this.network.once('stabilizationIterationsDone', () => {
+                this.network.setOptions({physics: false});
+                container.style.visibility = 'visible';
+                loadingIndicator.style.display = 'none';
+            });
+        }
+
         this.network.on('oncontext', (params) => {
             params.event.preventDefault();
             if (params.nodes.length > 0) {
