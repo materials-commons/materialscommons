@@ -63,9 +63,9 @@ export default class NetworkDataController {
         // have selected values for these columns, the map may return an empty array. While this is not ideal, it is not a big deal. We will just use the default values
         // for the heatmap color and node size.
         this.nodeColorValuesMinMax = this.findMinMax(dataObj.nodeColorAttributeValues);
-        this.nodeSizeValuesMinMax = this.findMinMaxWithPercentiles(dataObj.nodeSizeAttributeValues);
+        this.nodeSizeValuesMinMax = this.findMinMax(dataObj.nodeSizeAttributeValues);
         const nodeColorAttributeValues = dataObj.nodeColorAttributeValues.map((value) => this.valueToHeatmapColor(value, this.nodeColorValuesMinMax.min, this.nodeColorValuesMinMax.max));
-        const nodeSizeAttributeValues = dataObj.nodeSizeAttributeValues.map((value) => this.mapValueToRange(value, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 10, 50));
+        const nodeSizeAttributeValues = dataObj.nodeSizeAttributeValues.map((value) => this.mapValueToRange(value, this.nodeSizeValuesMinMax.min, this.nodeSizeValuesMinMax.max, 25, 100));
         const containerForNodeColorMinMax = document.getElementById('node-color-min-max-info');
         const containerForNodeSizeMinMax = document.getElementById('node-size-min-max-info');
         if (containerForNodeColorMinMax) {
