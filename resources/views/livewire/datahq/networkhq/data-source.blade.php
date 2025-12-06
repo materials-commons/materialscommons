@@ -5,8 +5,14 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 
+    <p class="text-small">
+        GoogleSheets are cached for performance. If you made changes to your sheet
+        <a href="#" wire:click.prevent="refreshGoogleSheets()">click here</a>
+        to have the system use the latest version.
+    </p>
+
     <!-- File Selection -->
-    <div class="mb-3">
+    <div class="mt-3 mb-3">
         <label class="form-label fw-medium">Select Data File/Google Sheet</label>
         <select wire:model.live="selectedSheet" id="data-file" class="form-select">
             <option value="">-- Choose a file/Google Sheet --</option>

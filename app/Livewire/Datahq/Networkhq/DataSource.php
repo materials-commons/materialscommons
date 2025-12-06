@@ -75,6 +75,13 @@ class DataSource extends Component
         ]);
     }
 
+    public function refreshGoogleSheets()
+    {
+        Sheet::where('project_id', $this->project->id)->get()->each(function ($sheet) {
+            $this->deleteCachedGoogleSheet($sheet->id);
+        });
+    }
+
     private function listExcelSheets($path): Collection
     {
         $reader = IOFactory::createReaderForFile($path);
@@ -137,7 +144,7 @@ class DataSource extends Component
             $nodeXValues = $this->getColumnDataFromWorksheet($ws, (int) $this->nodeXColumn);
             $nodeYValues = $this->getColumnDataFromWorksheet($ws, (int) $this->nodeYColumn);
             $dto->nodePositions = collect();
-            for($i = 0; $i < $nodeXValues->count(); $i++) {
+            for ($i = 0; $i < $nodeXValues->count(); $i++) {
                 $entry = [$nodeXValues[$i], $nodeYValues[$i]];
                 $dto->nodePositions->push($entry);
             }
@@ -148,7 +155,7 @@ class DataSource extends Component
             $edgeStartValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeStartColumn);
             $edgeEndValues = $this->getColumnDataFromWorksheet($ws, (int) $this->edgeEndColumn);
             $dto->edges = collect();
-            for($i = 0; $i < $edgeStartValues->count(); $i++) {
+            for ($i = 0; $i < $edgeStartValues->count(); $i++) {
                 $entry = [$edgeStartValues[$i], $edgeEndValues[$i]];
                 $dto->edges->push($entry);
             }
@@ -177,8 +184,9 @@ class DataSource extends Component
         return $dto;
     }
 
-    private function getColumnName($colIndex): string {
-        foreach($this->columns as $col) {
+    private function getColumnName($colIndex): string
+    {
+        foreach ($this->columns as $col) {
             if ($col[0] == $colIndex) {
                 return $col[1];
             }
@@ -212,7 +220,8 @@ class DataSource extends Component
         return collect($values);
     }
 
-    private function getSpreadsheetPath(): string{
+    private function getSpreadsheetPath(): string
+    {
         [$id, $type] = explode(":", $this->selectedSheet, 2);
         if ($type === "f") {
             $f = File::findOrFail($id);

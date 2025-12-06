@@ -79,4 +79,9 @@ trait GoogleSheets
         $process->run();
         return $filePath;
     }
+
+    private function deleteCachedGoogleSheet($id): void
+    {
+        Storage::disk('mcfs')->delete("__sheets/{$id}.xlsx");
+    }
 }
