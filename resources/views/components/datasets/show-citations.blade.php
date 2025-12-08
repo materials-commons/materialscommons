@@ -1,9 +1,9 @@
-<div class="form-group mt-2">
+<div class="mb-3 mt-2">
     <label for="citations">Citations</label>
     @if($hasCitations)
         <div class="row">
             <div class="col-6">
-                <table class="table table-sm table-hover ml-3">
+                <table class="table table-sm table-hover ms-3">
                     <thead>
                     <tr>
                         <th>Title</th>

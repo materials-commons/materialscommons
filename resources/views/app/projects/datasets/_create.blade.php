@@ -1,15 +1,15 @@
 <div x-data="datasets_create">
-    <div class="float-right">
+    <div class="float-end">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-           class="btn btn-danger mr-3">
+           class="btn btn-danger me-3">
             Cancel
         </a>
 
-        <a class="btn btn-info mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+        <a class="btn btn-info me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
             Save
         </a>
 
-        <a class="btn btn-success mr-3" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
+        <a class="btn btn-success me-3" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
             Save And Add Data
         </a>
     </div>
@@ -17,7 +17,7 @@
     <br>
     <form method="post" action="{{route('projects.datasets.store', [$project])}}" id="dataset_create">
         @csrf
-        <div class="form-group">
+        <div class="mb-3">
             <label class="required" for="name">Name</label>
             <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                    placeholder="Name...">
@@ -27,33 +27,33 @@
         <div id="authors_list"></div>
         <br>
 
-        {{--    <div class="form-group">--}}
+        {{--    <div class="mb-3">--}}
         {{--        <label for="authors">Authors and Affiliations</label>--}}
         {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
         {{--               value="{{old('authors', $authorsAndAffiliations)}}"--}}
         {{--               placeholder="Authors...">--}}
         {{--    </div>--}}
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="summary">Summary</label>
             <input class="form-control" id="summary" name="summary" type="text" value="{{old('summary')}}"
                    placeholder="Summary...">
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description" type="text"
                       value=""
                       placeholder="Description...">{{old('description')}}</textarea>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="funding">Funding</label>
             <textarea class="form-control" id="funding" name="funding"
                       type="text" placeholder="Funding...">{{old('funding')}}</textarea>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="doi">DOI</label>
             <span class="col-8">
             None
@@ -65,11 +65,9 @@
 
         <x-datasets.create-papers-list :existing="null"/>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="license">License</label>
-            <select name="license" class="selectpicker col-lg-8" data-live-search="true"
-                    data-style="btn-light no-tt"
-                    title="License">
+            <select name="license" id = "ds-license" class="mb-2 form-select" title="License">
                 <option data-token="No License" value="No License">No License</option>
                 <option data-token="Public Domain Dedication and License (PDDL)"
                         value="Public Domain Dedication and License (PDDL)">
@@ -88,12 +86,9 @@
         </div>
 
         @if($experiments->isNotEmpty())
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="experiments">Studies</label>
-                <select name="experiments[]" class="selectpicker col-lg-8"
-                        data-style="btn-light no-tt"
-                        title="experiments"
-                        data-live-search="true" multiple>
+                <select name="experiments[]" id="ds-studies" class="form-select mb-2" title="experiments" multiple>
                     @foreach($experiments as $experiment)
                         <option data-token="{{$experiment->id}}" value="{{$experiment->id}}">
                             {{$experiment->name}}
@@ -103,12 +98,9 @@
             </div>
         @endif
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="communities">Communities</label>
-            <select name="communities[]" class="selectpicker col-lg-8"
-                    data-style="btn-light no-tt"
-                    title="communities"
-                    data-live-search="true" multiple>
+            <select name="communities[]" id="ds-communities" class="form-select mb-2" title="communities" multiple>
                 @foreach($communities as $community)
                     <option data-token="{{$community->id}}" value="{{$community->id}}">
                         {{$community->name}}
@@ -117,7 +109,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="mb-3">
             <label for="tags">Tags</label>
             <input class="form-control" id="tags" name="tags" value="{{old('tags')}}">
         </div>
@@ -125,17 +117,17 @@
         <input hidden id="project_id" name="project_id" value="{{$project->id}}">
         <input type="hidden" name="action" value="" id="action"/>
 
-        <div class="float-right">
+        <div class="float-end">
             <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-               class="action-link danger mr-3">
+               class="action-link danger me-3">
                 Cancel
             </a>
 
-            <a class="action-link mr-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+            <a class="action-link me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
                 Save
             </a>
 
-            <a class="action-link mr-3" href="#" id="add-assets-button"
+            <a class="action-link me-3" href="#" id="add-assets-button"
                @click.prevent="setActionAndSubmit('assets')">
                 Save And Add Data
             </a>
@@ -148,6 +140,29 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
+            new TomSelect('#ds-license', {
+                // controlInput: null,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-studies', {
+                plugins: ['dropdown_input'],
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
+            new TomSelect('#ds-communities', {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+            });
+
             function validate() {
                 if ($('#name').val().length > 0) {
                     setNextButtonsDisabled(false);

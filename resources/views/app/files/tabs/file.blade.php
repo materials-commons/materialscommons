@@ -1,37 +1,35 @@
-<x-card-container>
-    @include('partials.files._file-header-controls', [
-        'displayRoute' => route('projects.files.display', [$project, $file]),
-        'editRoute' => route('projects.files.edit', [$project, $file]),
-    ])
-    {{--<form>--}}
-    {{--    <div class="form-group">--}}
-    {{--        <label>Tags <a href="#" class="ml-3 action-linkx">edit</a></label>--}}
-    {{--        <ul class="list-inline">--}}
-    {{--            <li class="list-inline-item mt-1">--}}
-    {{--                <a class="badge badge-success fs-11 td-none">--}}
-    {{--                    Hello--}}
+@isset($project)
+    {{--                <a class="float-end action-link" href="#">--}}
+    {{--                    <i class="fas fa-edit me-2"></i>Edit--}}
     {{--                </a>--}}
-    {{--            </li>--}}
-    {{--        </ul>--}}
-    {{--    </div>--}}
 
-    {{--    <div class="form-group">--}}
-    {{--        <label for="tags">Tags</label>--}}
-    {{--        <input class="form-control" id="tags" name="tags" value="">--}}
-    {{--    </div>--}}
-    {{--</form>--}}
-    <hr>
-    <br>
+    {{--                <a class="float-end action-link me-4" href="#">--}}
+    {{--                    <i class="fas fa-trash-alt me-2"></i>Delete--}}
+    {{--                </a>--}}
 
-    @include('partials.files._display-file', [ 'displayRoute' => route('projects.files.display', [$project, $file]) ])
-</x-card-container>
+    @if ($file->mime_type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        <a class="float-end action-link me-4"
+           href="{{route('projects.files.create-experiment', [$project, $file])}}">
+            <i class="fas fa-file-import me-2"></i>Create Study From Spreadsheet
+        </a>
+    @endif
+    <a class="action-link float-end me-4"
+       href="{{route('projects.files.download', [$project, $file])}}">
+        <i class="fas fa-download me-2"></i>Download File
+    </a>
 
-{{--@push('scripts')--}}
-{{--    <script>--}}
-{{--        $(document).ready(() => {--}}
-{{--            console.log('here');--}}
-{{--            let tagsInput = document.querySelector('#tags');--}}
-{{--            new Tagify(tagsInput);--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endpush--}}
+    <a class="action-link float-end me-4" href="{{route('projects.files.delete', [$project, $file])}}">
+        <i class="fas fa-fw fa-trash me-2"></i>Delete
+    </a>
+@endisset
+<br/>
+@include('partials.files._file-header-controls', [
+    'displayRoute' => route('projects.files.display', [$project, $file]),
+    'editRoute' => route('projects.files.edit', [$project, $file]),
+])
+
+<hr>
+<br>
+
+@include('partials.files._display-file', [ 'displayRoute' => route('projects.files.display', [$project, $file]) ])
+

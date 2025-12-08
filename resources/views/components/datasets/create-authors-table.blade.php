@@ -9,12 +9,11 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Author</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row mt-2">
+                        <div class="row mt-2">
                             <div class="col">
                                 <input class="form-control" name="author_name" type="text"
                                        placeholder="Name...(Required)"
@@ -35,7 +34,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" x-on:click="updateAuthor()">Update Author</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
                     </div>
                 </div>
             </div>
@@ -57,12 +56,12 @@
                 @foreach($dataset->ds_authors as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
                         <td>{{$author['name']}}</td>
                         <td>{{$author['affiliations']}}</td>
                         <td>{{$author['email']}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a class="action-link cursor-pointer"
                                    x-on:click.prevent="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>
@@ -77,12 +76,12 @@
                 @foreach($project->team->members->merge($project->team->admins) as $author)
                     <tr id="row-{{$loop->index}}">
                         <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical mr-2"></i></td>
+                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
                         <td>{{$author->name}}</td>
                         <td>{{$author->affiliations}}</td>
                         <td>{{$author->email}}</td>
                         <td>
-                            <div class="float-right">
+                            <div class="float-end">
                                 <a class="action-link" href="#"
                                    x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
                                     <i class="fas fa-fw fa-edit"></i></a>

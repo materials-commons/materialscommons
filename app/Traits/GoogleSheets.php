@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Process;
 use function blank;
 use function dirname;
 use function parse_url;
@@ -54,5 +56,32 @@ trait GoogleSheets
         }
 
         return "https://docs.google.com/spreadsheets/d/{$id}/edit?usp=sharing";
+    }
+
+    private function downloadGoogleSheet($sheetUrl): string
+    {
+        $filename = uniqid().'.xlsx';
+        return $this->downloadGoogleSheetToNamedFile($sheetUrl, $filename);
+    }
+
+    private function downloadGoogleSheetToNamedFile($sheetUrl, $filename): string
+    {
+        if (Storage::disk('mcfs')->exists('__sheets/'.$filename)) {
+            return Storage::disk('mcfs')->path('__sheets/'.$filename);
+        }
+        $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
+        @Storage::disk('mcfs')->makeDirectory('__sheets');
+        $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
+
+        // Since this is an url we need to download it.
+        $command = "curl -o \"{$filePath}\" -L {$sheetUrl}/export?format=xlsx";
+        $process = Process::fromShellCommandline($command);
+        $process->run();
+        return $filePath;
+    }
+
+    private function deleteCachedGoogleSheet($id): void
+    {
+        Storage::disk('mcfs')->delete("__sheets/{$id}.xlsx");
     }
 }

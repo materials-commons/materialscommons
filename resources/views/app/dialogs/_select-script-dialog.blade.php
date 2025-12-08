@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Select Script To Run</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -22,10 +21,10 @@
                                 {{$script->fullPath()}}
                             </td>
                             <td>
-                                <a class="action-link float-right mr-4"
+                                <a class="action-link float-end me-4"
                                    onclick="$('#select-script-dialog').modal('hide')"
                                    href="{{route('projects.files.run-script-with-folder-context', [$project, $directory, $script])}}">
-                                    <i class="fas fa-fw fa-play-circle mr-2"></i>Run
+                                    <i class="fas fa-fw fa-play-circle me-2"></i>Run
                                 </a>
                             </td>
                         </tr>
@@ -34,7 +33,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

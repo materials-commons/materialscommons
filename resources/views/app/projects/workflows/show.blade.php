@@ -9,13 +9,8 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.workflows.show', $project, $workflow))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Show Workflow {{$workflow->name}}
-        @endslot
+    <h3 class="text-center">Show Workflow {{$workflow->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.workflows.show')
-        @endslot
-    @endcomponent
+    @include('partials.workflows.show')
 @stop

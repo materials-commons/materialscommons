@@ -1,6 +1,6 @@
 @props(['activity', 'project', 'user', 'experiment' => null, 'header' => null])
 <div class="mt-2">
-    <h5 class="mt-3 mr-2 font-weight-bold">
+    <h5 class="mt-3 me-2 font-weight-bold">
         <a class="no-underline"
            href="{{route('projects.activities.show', [$project, $activity])}}">{{$activity->name}}</a>
         @if(!is_null($header))
@@ -10,7 +10,7 @@
     <hr/>
     @if(!blank($activity->description))
         <form>
-            <div class="form-group">
+            <div class="mb-3">
                 <textarea class="form-control" readonly>{{$activity->description}}</textarea>
             </div>
         </form>

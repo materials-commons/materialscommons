@@ -31,13 +31,13 @@
         <a class="nav-link no-underline {{setActiveNavByName('projects.health-reports.index')}}"
            href="{{route('projects.health-reports.index', [$project])}}">
             @if($project->health == 'critical')
-                <span class="text-danger"><i class="fa fa-exclamation-triangle mr-2"></i>Health Reports</span>
+                <span class="text-danger"><i class="fa fa-exclamation-triangle me-2"></i>Health Reports</span>
             @elseif($project->health == 'warning')
-                <span class="text-warning"><i class="fa fa-exclamation-circle mr-2"></i>Health Reports</span>
+                <span class="text-warning"><i class="fa fa-exclamation-circle me-2"></i>Health Reports</span>
             @elseif(is_null($project->health))
                 Health Reports
             @else
-                <span><i class="fas fa-check-circle mr-2"></i>Health Reports</span>
+                <span><i class="fas fa-check-circle me-2"></i>Health Reports</span>
             @endif
         </a>
     </li>

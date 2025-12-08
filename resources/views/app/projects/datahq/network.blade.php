@@ -9,13 +9,8 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    <x-card>
-        <x-slot:header>
-            Charts
-        </x-slot:header>
-
-        <x-slot:body>
-            <x-charts.create-chart :project="$project"/>
-        </x-slot:body>
-    </x-card>
+    {{--    <x-datahq.network-visualization :project="$project"/>--}}
+    <div>
+        <livewire:datahq.networkhq.index :project="$project"/>
+    </div>
 @stop

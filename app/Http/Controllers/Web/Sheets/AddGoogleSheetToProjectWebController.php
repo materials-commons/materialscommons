@@ -18,9 +18,9 @@ class AddGoogleSheetToProjectWebController extends Controller
      */
     public function __invoke(Request $request, GetGoogleSheetNameAction $getGoogleSheetNameAction, Project $project)
     {
-        $sheeturl = $request->input("sheeturl");
+        $sheeturl = $request->input("sheet_url");
         if (blank($sheeturl)) {
-            return redirect(route('projects.files.sheets.index', [$project]));
+            return redirect(route('projects.sheets.index', [$project]));
         }
 
         $existingSheet = Sheet::where('url', $sheeturl)
@@ -28,13 +28,13 @@ class AddGoogleSheetToProjectWebController extends Controller
                               ->first();
         if (!is_null($existingSheet)) {
             flash("Sheet with URL already added to project.")->success();
-            return redirect(route('projects.files.sheets.index', [$project]));
+            return redirect(route('projects.sheets.index', [$project]));
         }
 
         $title = $getGoogleSheetNameAction->execute($sheeturl);
         if (blank($title)) {
             flash("Unable to resolve google sheet title.")->error();
-            return redirect(route('projects.files.sheets.index', [$project]));
+            return redirect(route('projects.sheets.index', [$project]));
         }
 
         $sheet = new Sheet([
@@ -47,6 +47,6 @@ class AddGoogleSheetToProjectWebController extends Controller
         $sheet->save();
 
         flash("Google Sheet {$title} successfully added!")->success();
-        return redirect(route('projects.files.sheets.index', [$project]));
+        return redirect(route('projects.sheets.index', [$project]));
     }
 }

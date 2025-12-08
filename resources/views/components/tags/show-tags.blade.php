@@ -1,10 +1,10 @@
 @if(!blank($tags))
-    <div class="form-group">
+    <div class="mb-3">
         <label for="tags">Tags</label>
         <ul class="list-inline">
             @foreach($tags as $tag)
                 <li class="list-inline-item mt-1">
-                    <a class="badge badge-success fs-11 td-none"
+                    <a class="badge text-bg-success fs-11 td-none text-white"
                        href="#">
                         {{$tag->name}}
                     </a>

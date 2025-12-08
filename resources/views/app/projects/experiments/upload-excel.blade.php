@@ -15,11 +15,9 @@
         Please select a directory to upload your excel files to. Once you have selected a directory you will
         be able to upload files. You may change directories at any time.
     </p>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="directories">Select Directory You Are Uploading To</label>
-        <select name="directory" class="selectpicker col-lg-8" id="dir-picker"
-                data-style="btn-light no-tt"
-                title="directories" data-live-search="true">
+        <select name="directory" class="form-select" id="dir-picker" title="directories">
             @foreach($folders as $dir)
                 <option data-token="{{$dir->id}}" value="{{$dir->id}}">
                     {{$dir->path}}

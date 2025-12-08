@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-12">
             <a href="#" hx-get="{{route('projects.attributes.close-details-by-name', [$project, $name])}}"
-               class="mb-2 float-right mr-2">Close</a>
+               class="mb-2 float-end me-2">Close</a>
         </div>
     </div>
-    <div class="row ml-1">
+    <div class="row ms-1">
         <h5>Attribute: <u>{{$name}}</u></h5>
     </div>
     @if(isset($entities))
@@ -40,7 +40,7 @@
             </div>
         @endif
     @endif
-    <div class="row ml-1">
+    <div class="row ms-1">
         @if($details->isNumeric)
             Numeric Attribute -
         @else
@@ -49,7 +49,7 @@
     </div>
     @if($details->isNumeric)
         <div class="row">
-            <ul class="ml-4x">
+            <ul class="ms-4x">
                 <li>
                     Min: {{$details->min}}
                 </li>
@@ -59,11 +59,11 @@
             </ul>
         </div>
     @endif
-    <div class="row ml-1">
+    <div class="row ms-1">
         Showing {{$details->values->count()}} of {{$details->uniqueCount}} unique values -
     </div>
     <div class="row">
-        <ul class="ml-4x">
+        <ul class="ms-4x">
             @foreach($details->values as $value)
                 <li>{{$value}}</li>
             @endforeach

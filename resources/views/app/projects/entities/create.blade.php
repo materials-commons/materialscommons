@@ -7,17 +7,12 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Sample
-        @endslot
+    <h3 class="text-center">Create Sample</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.entities.create', [
-                'storeEntityRoute' => route('projects.entities.store', [$project]),
-                'cancelRoute' => route('projects.entities.index', [$project]),
-                'experiments' => $project->experiments
-            ])
-        @endslot
-    @endcomponent
+    @include('partials.entities.create', [
+        'storeEntityRoute' => route('projects.entities.store', [$project]),
+        'cancelRoute' => route('projects.entities.index', [$project]),
+        'experiments' => $project->experiments
+    ])
 @stop

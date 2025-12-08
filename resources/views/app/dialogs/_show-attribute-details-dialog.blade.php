@@ -2,8 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Attribute: <u>{{$name}}</u></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             </button>
         </div>
         <div class="modal-body">
@@ -40,7 +39,7 @@
                     </div>
                 @endif
             @endif
-            <div class="row ml-1">
+            <div class="row ms-1">
                 @if($details->isNumeric)
                     Numeric Attribute -
                 @else
@@ -49,7 +48,7 @@
             </div>
             @if($details->isNumeric)
                 <div class="row">
-                    <ul class="ml-4x">
+                    <ul class="ms-4x">
                         <li>
                             Min: {{$details->min}}
                         </li>
@@ -59,11 +58,11 @@
                     </ul>
                 </div>
             @endif
-            <div class="row ml-1">
+            <div class="row ms-1">
                 Showing {{$details->values->count()}} of {{$details->uniqueCount}} unique values -
             </div>
             <div class="row">
-                <ul class="ml-4x">
+                <ul class="ms-4x">
                     @foreach($details->values as $value)
                         <li>{{$value}}</li>
                     @endforeach

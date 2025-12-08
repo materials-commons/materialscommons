@@ -1,5 +1,5 @@
 @if(!blank($authors))
-    <div class="form-group mt-2">
+    <div class="mb-3 mt-2">
         <label for="authors">Authors</label>
         <ul class="list-inline">
             @foreach($authors as $author)

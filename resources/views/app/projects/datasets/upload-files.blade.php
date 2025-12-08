@@ -12,7 +12,7 @@
             <a href="{{route('projects.globus.uploads.index', [$project])}}">Globus Upload</a>.
         </p>
         <div class="col-8">
-            <a class="btn btn-primary float-right"
+            <a class="btn btn-primary float-end"
                href="{{route('projects.datasets.files.edit', [$project, $dataset, $directory])}}">
                 Done Uploading Files
             </a>

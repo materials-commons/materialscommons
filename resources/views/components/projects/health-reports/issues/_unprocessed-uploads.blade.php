@@ -21,7 +21,7 @@
                         <small>{{ isset($upload['created_at']) ? \Carbon\Carbon::parse($upload['created_at'])->diffForHumans() : 'N/A' }}</small>
                     </td>
                     <td>
-                        <span class="badge badge-info">{{ $upload['status'] ?? 'Pending' }}</span>
+                        <span class="badge text-bg-info">{{ $upload['status'] ?? 'Pending' }}</span>
                     </td>
                 </tr>
             @endforeach

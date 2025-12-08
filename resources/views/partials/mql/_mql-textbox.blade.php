@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="ml-4">
-                <div class="form-group">
+            <form class="ms-4">
+                <div class="mb-3">
                     <label for="mql">Current Query</label>
                     <textarea class="form-control" id="mql" placeholder="Query..."
                               rows="{{line_count($query, 2)+1}}">{{$query}}</textarea>
                 </div>
-                <a class="float-left" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
-                <div class="float-right">
+                <a class="float-start" href="#" @click="toggleShowSavedQueries()">Saved Queries</a>
+                <div class="float-end">
                     <a class="btn btn-danger"
                        href="{{route('projects.entities.index', ['project' => $project->id, 'category' => 'experimental'])}}">Reset</a>
                     @if($query == "")
@@ -22,7 +22,7 @@
                                 hx-trigger="click"
                                 hx-target="#query-text"
                                 hx-include="#mql-selection"
-                                data-toggle="modal" href="#mql-save-query-dialog">Save
+                                data-bs-toggle="modal" href="#mql-save-query-dialog">Save
                         </button>
                         <a class="btn btn-success" href="#" onclick="document.getElementById('mql-selection').submit()">
                             Run

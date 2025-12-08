@@ -9,16 +9,11 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.workflows.create', $project))--}}
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Workflow
-        @endslot
+    <h3 class="text-center">Create Workflow</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.workflows.create', [
-                'storeRoute' => route('projects.datasets.workflows.edit.store', [$project, $dataset]),
-                'cancelRoute' => route('projects.datasets.workflows.edit', [$project, $dataset]),
-            ])
-        @endslot
-    @endcomponent
+    @include('partials.workflows.create', [
+        'storeRoute' => route('projects.datasets.workflows.edit.store', [$project, $dataset]),
+        'cancelRoute' => route('projects.datasets.workflows.edit', [$project, $dataset]),
+    ])
 @stop

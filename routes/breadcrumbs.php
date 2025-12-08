@@ -27,7 +27,7 @@ Breadcrumbs::for('projects.show', function ($trail, $project) {
 
 Breadcrumbs::for('projects.experiments.index', function ($trail, $project) {
     $trail->parent('projects.show', $project);
-    $trail->push('Experiments', route('projects.experiments.index', [$project]));
+    $trail->push('Studies', route('projects.experiments.index', [$project]));
 });
 
 Breadcrumbs::for('projects.experiments.show', function ($trail, $project, $experiment) {

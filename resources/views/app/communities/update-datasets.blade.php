@@ -3,50 +3,45 @@
 @section('pageTitle', 'Add Datasets To Community')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Community: {{$community->name}}
-        @endslot
+    <h3 class="text-center">Community: {{$community->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <table id="datasets" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Selected</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($datasets as $dataset)
-                    <tr>
-                        <td>
-                            <a href="{{route('public.datasets.show', [$dataset])}}">
-                                <i class="fa-fw fas mr-2 fa-file"></i>{{$dataset->name}}
-                            </a>
-                        </td>
-                        <td>{{$dataset->summary}}</td>
-                        <td>
-                            <div class="form-group form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="{{$dataset->uuid}}"
-                                       {{$dataset->communities->contains($community->id) ? 'checked' : ''}}
-                                       onclick="updateSelection({{$dataset}}, this)">
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+    <table id="datasets" class="table table-hover" style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Selected</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($datasets as $dataset)
+            <tr>
+                <td>
+                    <a href="{{route('public.datasets.show', [$dataset])}}">
+                        <i class="fa-fw fas me-2 fa-file"></i>{{$dataset->name}}
+                    </a>
+                </td>
+                <td>{{$dataset->summary}}</td>
+                <td>
+                    <div class="mb-3 form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="{{$dataset->uuid}}"
+                               {{$dataset->communities->contains($community->id) ? 'checked' : ''}}
+                               onclick="updateSelection({{$dataset}}, this)">
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
-            <div class="float-right">
-                <a href="{{route('communities.edit', [$community])}}" class="action-link">Done</a>
-            </div>
-        @endslot
-    @endcomponent
+    <div class="float-end">
+        <a href="{{route('communities.edit', [$community])}}" class="action-link">Done</a>
+    </div>
 @stop
 
 @push('scripts')

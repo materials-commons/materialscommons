@@ -3,46 +3,41 @@
 @section('pageTitle', "Search Results")
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Search results for {{$search}}
-        @endslot
+    <h3 class="text-center">Search results for {{$search}}</h3>
+    <br/>
 
-        @slot('body')
-            <table class="table table-hover" id="dt-table">
-                <thead>
+    <table class="table table-hover" id="dt-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Summary</th>
+            <th>Project</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($searchResults->groupByType() as $type => $modelSearchResults)
+            @foreach($modelSearchResults as $searchResult)
                 <tr>
-                    <th>Name</th>
-                    <th>Summary</th>
-                    <th>Project</th>
-                    <th>Type</th>
+                    <td>
+                        <a href="{{$searchResult->url}}">{{$searchResult->title}}</a>
+                    </td>
+                    <td>{{$searchResult->searchable->summary}}</td>
+                    <td>
+                        @if($searchResult->searchable->type != 'project' && $searchResult->searchable->type != 'community')
+                            <a href="{{route('projects.show', [$searchResult->searchable->project])}}">{{$searchResult->searchable->project->name}}</a>
+                        @endif
+                    </td>
+                    <td>{{$searchResult->searchable->type}}</td>
                 </tr>
-                </thead>
-                <tbody>
-                @foreach($searchResults->groupByType() as $type => $modelSearchResults)
-                    @foreach($modelSearchResults as $searchResult)
-                        <tr>
-                            <td>
-                                <a href="{{$searchResult->url}}">{{$searchResult->title}}</a>
-                            </td>
-                            <td>{{$searchResult->searchable->summary}}</td>
-                            <td>
-                                @if($searchResult->searchable->type != 'project' && $searchResult->searchable->type != 'community')
-                                    <a href="{{route('projects.show', [$searchResult->searchable->project])}}">{{$searchResult->searchable->project->name}}</a>
-                                @endif
-                            </td>
-                            <td>{{$searchResult->searchable->type}}</td>
-                        </tr>
-                    @endforeach
-                @endforeach
-                </tbody>
-            </table>
-        @endslot
-    @endcomponent
+            @endforeach
+        @endforeach
+        </tbody>
+    </table>
 @stop
 
 @push('scripts')

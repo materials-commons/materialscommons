@@ -7,17 +7,12 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create folder in directory {{$directory->name}}
-        @endslot
+    <h3 class="text-center">Create folder in directory {{$directory->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('app.projects.folders._create', [
-                'storeDirectoryRoute' => route('projects.datasets.create-data.store-directory', [$project, $dataset]),
-                'cancelRoute' => route('projects.datasets.files.edit', [$project, $dataset, $directory])
-            ])
-            @include('common.errors')
-        @endslot
-    @endcomponent
+    @include('app.projects.folders._create', [
+        'storeDirectoryRoute' => route('projects.datasets.create-data.store-directory', [$project, $dataset]),
+        'cancelRoute' => route('projects.datasets.files.edit', [$project, $dataset, $directory])
+    ])
+    @include('common.errors')
 @stop

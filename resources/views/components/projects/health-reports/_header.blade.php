@@ -1,11 +1,11 @@
 @props(['healthStatus' => 'healthy'])
 
-<div class="card-header d-flex justify-content-between align-items-center">
+<div class="d-flex justify-content-between align-items-center">
     @php
         $statusClasses = [
-            'healthy' => 'badge-success',
-            'warning' => 'badge-warning',
-            'critical' => 'badge-danger'
+            'healthy' => 'text-bg-success',
+            'warning' => 'text-bg-warning',
+            'critical' => 'text-bg-danger'
         ];
         $statusIcons = [
             'healthy' => 'fa-check-circle',
@@ -14,16 +14,14 @@
         ];
     @endphp
 
-    <h3 class="mb-0 text-white">
+    <h3 class="mb-0">
         <i class="fas fa-heartbeat"></i>
         Project Health Report
-        <span class="ml-4 badge {{ $statusClasses[$healthStatus] }} badge-lg">
+        <span class="ms-4 badge {{ $statusClasses[$healthStatus] }} badge-lg">
             <i class="fas {{ $statusIcons[$healthStatus] }}"></i>
             {{ ucfirst($healthStatus) }}
         </span>
     </h3>
     <div class="health-status">
-
-
     </div>
 </div>

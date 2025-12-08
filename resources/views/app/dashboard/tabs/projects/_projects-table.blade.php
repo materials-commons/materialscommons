@@ -1,6 +1,7 @@
 <div>
     <h5 class="card-title">All Projects</h5>
-    <hr class="mb-6x">
+
+    <hr>
     <br/>
     <table id="projects" class="table table-hover" style="width:100%">
         <thead>
@@ -27,14 +28,14 @@
                 <td>{{$proj->owner->name}}</td>
                 <td>{{$proj->updated_at->format('M j, Y')}}</td>
                 <td>
-                    <div class="float-right">
+                    <div class="float-end">
                         @if(auth()->id() == $proj->owner_id)
-                            <a data-toggle="modal" href="#project-delete-{{$proj->id}}"
+                            <a data-bs-toggle="modal" href="#project-delete-{{$proj->id}}"
                                class="action-link">
                                 <i class="fas fa-fw fa-trash-alt"></i>
                             </a>
                             <a href="{{route('dashboard.projects.archive',[$proj])}}"
-                               data-toggle="tooltip"
+                               data-bs-toggle="tooltip"
                                title="Marks project as archived. Project will show up in the Archived Projects tab."
                                class="action-link">
                                 <i class="fas fa-fw fa-archive"></i>

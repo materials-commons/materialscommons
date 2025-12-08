@@ -8,7 +8,7 @@ require('./bootstrap');
 
 require('raphael');
 require('flowchart.js');
-require('bootstrap-select');
+// require('bootstrap-select');
 window.mcfl = require('./flowchart.js');
 window.formatters = require('./formatters');
 window.simplefl = require('./simpleflowchart');
@@ -27,6 +27,10 @@ import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
 import XHR from '@uppy/xhr-upload';
 import Tus from '@uppy/tus';
+
+import NetworkDataController from './network-data/NetworkDataController';
+import 'vis-network/styles/vis-network.css';
+window.NetworkDataController = NetworkDataController;
 
 window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;

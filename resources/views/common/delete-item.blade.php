@@ -7,23 +7,18 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Delete {{$item->name}}
-        @endslot
+    <h3 class="text-center">Delete {{$item->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <form method="post" action="{{$destroyRoute}}">
-                @csrf
-                @method('delete')
-                <div class="form-group">
-                    <p>Delete {{$item->name}}?</p>
-                </div>
-                <div class="float-right">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="button" onclick="window.history.go(-1)" class="btn btn-success">Cancel</button>
-                </div>
-            </form>
-        @endslot
-    @endcomponent
+    <form method="post" action="{{$destroyRoute}}">
+        @csrf
+        @method('delete')
+        <div class="mb-3">
+            <p>Delete {{$item->name}}?</p>
+        </div>
+        <div class="float-end">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="button" onclick="window.history.go(-1)" class="btn btn-success">Cancel</button>
+        </div>
+    </form>
 @endsection

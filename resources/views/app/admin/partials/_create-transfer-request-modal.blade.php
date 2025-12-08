@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create Transfer Request</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -12,7 +11,7 @@
                 <form id="create-transfer-request-form" method="post"
                       action="{{route('admin.dashboard.mcfs.transfer-requests.create')}}">
                     @csrf
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Find Project</label>
                         <input class="form-control" name="project_name" value=""
                                hx-get="{{route('htmx.searchers.find-project')}}"
@@ -23,7 +22,7 @@
                     </div>
                     <span id="project-indicator" class="htmx-indicator"><i class="fas fa-spinner fa-spin"></i></span>
                     <div id="matching-projects"></div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Find User</label>
                         <input class="form-control" name="user_name" value=""
                                hx-get="{{route('htmx.searchers.find-user')}}"
@@ -42,20 +41,20 @@
                         <label class="form-check-label" for="is-mc-transfer">Create As MC Transfer</label>
                     </div>
                     <br/>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Project ID</label>
                         <input class="form-control" name="project_id" value=""
                                type="text" placeholder="Project ID..." required>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Email of Owner</label>
                         <input class="form-control" name="email" value="" type="email" placeholder="Email..." required>
                     </div>
-                    <div class="float-right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <div class="float-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <a onclick="document.getElementById('create-transfer-request-form').submit()"
                            class="btn btn-primary"
-                           type="submit" data-dismiss="modal">Create Transfer Request</a>
+                           type="submit" data-bs-dismiss="modal">Create Transfer Request</a>
                     </div>
                 </form>
             </div>

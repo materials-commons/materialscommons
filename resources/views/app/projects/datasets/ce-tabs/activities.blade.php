@@ -15,7 +15,7 @@
             </td>
             <td>{{$activityExperiments($activity)}}</td>
             <td>
-                <div class="form-group form-check-inline">
+                <div class="mb-3 form-check-inline">
                     <input type="checkbox" class="form-check-input" id="{{$activity->uuid}}"
                            {{$activityInDataset($activity) ? 'checked' : ''}}
                            onclick="updateActivitySelection({{$activity}}, this)">

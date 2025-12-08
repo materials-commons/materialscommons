@@ -7,138 +7,125 @@
 @stop
 
 @section('content')
-{{--    <div class="alert alert-warning alert-dismissible d-none" role="alert">--}}
-{{--        <strong>Directory Copy Started</strong> Your directory copy will take place in the background. You can--}}
-{{--        refresh the page to see if its started.--}}
-{{--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--            <span aria-hidden="true">&times;</span>--}}
-{{--        </button>--}}
-{{--    </div>--}}
+    <h3 class="text-center">Copy Files/Directories</h3>
+    <br/>
 
-    <x-card>
-        <x-slot name="header">
-            Copy Files/Directories
-        </x-slot>
+    <div class="row">
+        <div class="col-5">
+            <h4>Project: {{$leftProject->name}}</h4>
+            <h5>Path: {{$leftDirectory->path}}</h5>
+            @if ($leftDirectory->path !== '/')
+                <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory->directory_id, $rightProject, $rightDirectory])}}"
+                   class="mb-3">
+                    <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
+                </a>
+                <br>
+                <br>
+            @endif
+            <table id="left" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Real Size</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($leftFiles as $file)
+                    <tr draggable="true">
+                        <td>
+                            {{-- For copy to we are in the left side dragging to the right, so $file is what is being copied --}}
+                            {{-- and destination is rightDirectory. Copy to url is: --}}
+                            {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
+                            @if($file->isDir())
+                                <a class="no-underline"
+                                   data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-dir'])}}"
+                                   data-copy-type="copy-dir"
+                                   href="{{route('projects.folders.show-for-copy', [$leftProject, $file, $rightProject, $rightDirectory])}}">
+                                    <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
+                                </a>
+                            @else
+                                <a class="no-underline"
+                                   data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-file'])}}"
+                                   data-copy-type="copy-file"
+                                   href="{{route('projects.files.show', [$leftProject, $file])}}">
+                                    <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
+                                </a>
+                            @endif
+                        </td>
+                        <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
+                        @if($file->isDir())
+                            <td></td>
+                        @else
+                            <td>{{$file->toHumanBytes()}}</td>
+                        @endif
+                        <td>{{$file->size}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
-        <x-slot name="body">
-            <div class="row">
-                <div class="col-5">
-                    <h4>Project: {{$leftProject->name}}</h4>
-                    <h5>Path: {{$leftDirectory->path}}</h5>
-                    @if ($leftDirectory->path !== '/')
-                        <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory->directory_id, $rightProject, $rightDirectory])}}"
-                           class="mb-3">
-                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
-                        </a>
-                        <br>
-                        <br>
-                    @endif
-                    <table id="left" class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                            <th>Real Size</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($leftFiles as $file)
-                            <tr draggable="true">
-                                <td>
-                                    {{-- For copy to we are in the left side dragging to the right, so $file is what is being copied --}}
-                                    {{-- and destination is rightDirectory. Copy to url is: --}}
-                                    {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
-                                    @if($file->isDir())
-                                        <a class="no-underline"
-                                           data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-dir'])}}"
-                                           data-copy-type="copy-dir"
-                                           href="{{route('projects.folders.show-for-copy', [$leftProject, $file, $rightProject, $rightDirectory])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
-                                        </a>
-                                    @else
-                                        <a class="no-underline"
-                                           data-copy-to="{{route('projects.folders.copy-to', [$leftProject, $file, $rightDirectory, 'copy-file'])}}"
-                                           data-copy-type="copy-file"
-                                           href="{{route('projects.files.show', [$leftProject, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
-                                        </a>
-                                    @endif
-                                </td>
-                                <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
-                                @if($file->isDir())
-                                    <td></td>
-                                @else
-                                    <td>{{$file->toHumanBytes()}}</td>
-                                @endif
-                                <td>{{$file->size}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+        <div class="col-1"></div>
 
-                <div class="col-1"></div>
+        <div class="col-5">
+            <h4>Project: {{$rightProject->name}}</h4>
+            <h5>Path: {{$rightDirectory->path}}</h5>
+            @if ($rightDirectory->path !== '/')
+                <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $rightDirectory->directory_id])}}"
+                   class="mb-3">
+                    <i class="fa-fw fas fa-arrow-alt-circle-up me-2"></i>Go up one level
+                </a>
+                <br>
+                <br>
+            @endif
 
-                <div class="col-5">
-                    <h4>Project: {{$rightProject->name}}</h4>
-                    <h5>Path: {{$rightDirectory->path}}</h5>
-                    @if ($rightDirectory->path !== '/')
-                        <a href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $rightDirectory->directory_id])}}"
-                           class="mb-3">
-                            <i class="fa-fw fas fa-arrow-alt-circle-up mr-2"></i>Go up one level
-                        </a>
-                        <br>
-                        <br>
-                    @endif
-
-                    <table id="right" class="table table-hover mt-3" stylex="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                            <th>Real Size</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($rightFiles as $file)
-                            <tr draggable="true">
-                                <td>
-                                    {{-- For copy to we are in the right side dragging to the left, so $file is what is being copied --}}
-                                    {{-- and destination is leftDirectory. Copy to url is: --}}
-                                    {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
-                                    @if($file->isDir())
-                                        <a class="no-underline"
-                                           data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-dir'])}}"
-                                           data-copy-type="copy-dir"
-                                           href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $file])}}">
-                                            <i class="fa-fw fas fa-folder mr-2"></i> {{$file->name}}
-                                        </a>
-                                    @else
-                                        <a class="no-underline"
-                                           data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-file'])}}"
-                                           data-copy-type="copy-file"
-                                           href="{{route('projects.files.show', [$rightProject, $file])}}">
-                                            <i class="fa-fw fas fa-file mr-2"></i> {{$file->name}}
-                                        </a>
-                                    @endif
-                                </td>
-                                <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
-                                @if($file->isDir())
-                                    <td></td>
-                                @else
-                                    <td>{{$file->toHumanBytes()}}</td>
-                                @endif
-                                <td>{{$file->size}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </x-slot>
-    </x-card>
+            <table id="right" class="table table-hover mt-3" stylex="width:100%">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Real Size</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($rightFiles as $file)
+                    <tr draggable="true">
+                        <td>
+                            {{-- For copy to we are in the right side dragging to the left, so $file is what is being copied --}}
+                            {{-- and destination is leftDirectory. Copy to url is: --}}
+                            {{-- '/projects/{project}/folders/what/{what}/{toFolder}/{copyType}/copy-to' --}}
+                            @if($file->isDir())
+                                <a class="no-underline"
+                                   data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-dir'])}}"
+                                   data-copy-type="copy-dir"
+                                   href="{{route('projects.folders.show-for-copy', [$leftProject, $leftDirectory, $rightProject, $file])}}">
+                                    <i class="fa-fw fas fa-folder me-2"></i> {{$file->name}}
+                                </a>
+                            @else
+                                <a class="no-underline"
+                                   data-copy-to="{{route('projects.folders.copy-to', [$rightProject, $file, $leftDirectory, 'copy-file'])}}"
+                                   data-copy-type="copy-file"
+                                   href="{{route('projects.files.show', [$rightProject, $file])}}">
+                                    <i class="fa-fw fas fa-file me-2"></i> {{$file->name}}
+                                </a>
+                            @endif
+                        </td>
+                        <td>{{$file->mimeTypeToDescriptionForDisplay($file)}}</td>
+                        @if($file->isDir())
+                            <td></td>
+                        @else
+                            <td>{{$file->toHumanBytes()}}</td>
+                        @endif
+                        <td>{{$file->size}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     @push('scripts')
         <script>
@@ -265,7 +252,7 @@
                         var srcData = e.dataTransfer.getData('text/plain');
                         let copyTo = $(srcData).attr('data-copy-to');
                         let copyType = $(srcData).attr('data-copy-type');
-                        fetch(copyTo).then(()=> {
+                        fetch(copyTo).then(() => {
                             if (copyType === "copy-file") {
                                 window.location.reload();
                             } else {

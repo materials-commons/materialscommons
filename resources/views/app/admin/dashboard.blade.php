@@ -3,21 +3,15 @@
 @section('pageTitle', 'Admin Dashboard')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
-    <x-card>
-        <x-slot:header>Admin Dashboard</x-slot:header>
-        <x-slot:body>
-            {{--            <a href="/app/log-viewer">View Laravel Logs</a>--}}
-            @include('app.admin.tabs.tabs')
-            <br/>
-            @if (Request::routeIs('admin.dashboard.mcfs.index'))
-                <x-card-container>
-                    @include('app.admin.tabs.mcfs-index')
-                </x-card-container>
-            @endif
-        </x-slot:body>
-    </x-card>
+    <h3>Admin Dashboard</h3>
+    {{--            <a href="/app/log-viewer">View Laravel Logs</a>--}}
+    @include('app.admin.tabs.tabs')
+    <br/>
+    @if (Request::routeIs('admin.dashboard.mcfs.index'))
+        @include('app.admin.tabs.mcfs-index')
+    @endif
 @stop

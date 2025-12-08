@@ -37,27 +37,41 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css"/>
+          href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.min.css"/>
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css"/>
+          href="https://cdn.datatables.net/fixedheader/4.0.4/css/fixedHeader.bootstrap5.min.css"/>
 
     <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.bootstrap4.css"/>
+          href="https://cdn.datatables.net/rowreorder/1.5.0/css/rowReorder.bootstrap5.min.css"/>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+            src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+            src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+            src="https://cdn.datatables.net/fixedheader/4.0.4/js/dataTables.fixedHeader.min.js"></script>
 
     <script type="text/javascript"
-            src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
+            src="https://cdn.datatables.net/fixedheader/4.0.4/js/fixedHeader.bootstrap5.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/rowreorder/1.5.0/js/dataTables.rowReorder.min.js"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/rowreorder/1.5.0/js/rowReorder.bootstrap5.min.js"></script>
+
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js" integrity="sha384-WF5+lGOoGjkbZWWZ4BM1wA/VJC6EbJLPKnFSIvO9Vxm7HxkN0qD5IvYmr6FVM4V/" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/5.0.5/js/dataTables.fixedColumns.js" integrity="sha384-BPFbg0oSBJMoGXcby9UBo5gWRKTu8EHqGyw2Z3ZtrNOPA0pbmjHHXP9e/zOswmse" crossorigin="anonymous"></script>
 
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
+
 
     {{--    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>--}}
 
@@ -73,17 +87,17 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-nav fixed-top p-0">
     @if(Request::routeIs('public.*'))
-        <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
-            <img class="h-8 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+        <a class="navbar-brand col-sm-3 me-0 ps-3" href="{{route('welcome')}}">
+            <img class="h-8 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
     @else
-        <a class="navbar-brand col-sm-3 mr-0" href="{{route('welcome')}}">
-            <img class="h-8 md:h-10 mr-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
+        <a class="navbar-brand col-sm-3 me-0 ps-3" href="{{route('welcome')}}">
+            <img class="h-8 md:h-10 me-2" src="{{asset('images/logo.svg')}}" alt="Materials Commons logo"/>
             Materials Commons 2.0
         </a>
     @endif
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -93,11 +107,11 @@
             @auth
                 <li class="nav-item">
                     <a class="nav-link outline-none td-none navbar-brand help-color cursor-pointer" id="app-start-tour">
-                        <i class="fa fas fa-lightbulb tour-icon mr-1"></i> Start Tour
+                        <i class="fa fas fa-lightbulb tour-icon me-1"></i> Start Tour
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                    <a class="nav-link outline-none td-none navbar-brand help-color" data-bs-toggle="modal"
                        href="#code-dialog">
                         CLI/API
                     </a>
@@ -108,7 +122,7 @@
                 {{--                   href="{{helpUrl()}}" target="_blank">--}}
                 {{--                    Help--}}
                 {{--                </a>--}}
-                <a class="nav-link outline-none td-none navbar-brand help-color" data-toggle="modal"
+                <a class="nav-link outline-none td-none navbar-brand help-color" data-bs-toggle="modal"
                    href="#help-dialog">
                     Help
                 </a>
@@ -125,11 +139,11 @@
         </ul>
         @include('partials.navbar._search')
         @auth
-            <ul class="navbar-nav pl-4 pr-4">
+            <ul class="navbar-nav ps-4 pe-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle td-none outline-none" href="#" id="navbarDropdown"
                        role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{auth()->user()->name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -140,14 +154,14 @@
                                 Sign out</a>
                         </form>
                         <a class="dropdown-item td-none" href="{{route('accounts.show')}}">
-                            <i class="fa-fw fas fa-user mr-2 mb-1"></i>Account
+                            <i class="fa-fw fas fa-user me-2 mb-1"></i>Account
                         </a>
-                        {{--                        <a class="dropdown-item td-none" data-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
+                        {{--                        <a class="dropdown-item td-none" data-bs-toggle="modal" href="#project-setup">Welcome Dialog</a>--}}
                     </div>
                 </li>
             </ul>
         @else
-            <ul class="navbar-nav pl-4 pr-4">
+            <ul class="navbar-nav ps-4 pe-4">
                 <li class="nav-item text-nowrap">
                     <a class="nav-link td-none" href="{{route('login')}}">Sign in/Register</a>
                 </li>
@@ -160,30 +174,34 @@
     <div class="row">
         @yield('nav')
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-5 pb-4" stylex="padding-right: 7rem; padding-left: 7rem">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
-                    <p class="text-white pt-2 pb-2 pl-2 fs-14" style="text-align: center">
+                    <p class="text-white pt-2 pb-2 ps-2 fs-14" style="text-align: center">
                         {{config('app.banner')}}
                     </p>
                 </div>
             @endif
 
-            <div class="mt-3">
+            <div class="mt-4">
+                {{--                <x-table-container>--}}
                 <livewire:force-livewire-load/>
                 @include('flash::message')
-                @yield('breadcrumbs')
-{{--                <div class="row">--}}
-{{--                    <div class="col-10">--}}
-{{--                    @yield('breadcrumbs')--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-2" style="padding-top: 12px">--}}
-{{--                        <div class="float-right">--}}
-{{--                            Real time stuff here--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="d-flex justify-content-center">
+                    @yield('breadcrumbs')
+                </div>
+                {{--                <div class="row">--}}
+                {{--                    <div class="col-10">--}}
+                {{--                    @yield('breadcrumbs')--}}
+                {{--                    </div>--}}
+                {{--                    <div class="col-md-2" style="padding-top: 12px">--}}
+                {{--                        <div class="float-end">--}}
+                {{--                            Real time stuff here--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
                 @yield('content')
+                {{--                </x-table-container>--}}
             </div>
         </main>
     </div>
@@ -198,7 +216,7 @@
 @include('app.dialogs._no-tour-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mms-chtml.js"></script>
 <script>
     MathJax = {
         tex: {

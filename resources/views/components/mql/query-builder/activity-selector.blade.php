@@ -1,9 +1,9 @@
 <div>
     <div class="row mb-2">
         @if($category == "computational")
-            <span class="mr-2 ml-3">In Activity:</span>
+            <span class="me-2 ms-3">In Activity:</span>
         @else
-            <span class="mr-2 ml-3">In Process:</span>
+            <span class="me-2 ms-3">In Process:</span>
         @endif
     </div>
     <select id="activities">
@@ -13,7 +13,7 @@
         @endforeach
     </select>
     {{--            <div class="row mt-2">--}}
-    {{--                <a href="#" class="btn btn-success btn-sm ml-3"><i class="fa fas fa-plus mr-2"></i>Add Process</a>--}}
+    {{--                <a href="#" class="btn btn-success btn-sm ms-3"><i class="fa fas fa-plus me-2"></i>Add Process</a>--}}
     {{--            </div>--}}
     @push('scripts')
         <script>

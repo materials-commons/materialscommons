@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb-3">
     <label for="dataset-papers">Papers</label>
     <div x-data="initPapers()">
         <a href="#" @click.prevent="addPaper()">
@@ -8,7 +8,7 @@
         <ul class="list-unstyled" id="existing-papers">
             <template x-for="paper in existing" :key="paper.id">
                 <li class="mb-4 mt-2">
-                    <div class="form-row align-items-center">
+                    <div class="row align-items-center">
                         <div class="col-5">
                             <textarea class="form-control mb-2" type="text"
                                       x-model="paper.name"
@@ -24,7 +24,7 @@
                             </textarea>
                         </div>
                     </div>
-                    <div class="form-row mt-1 align-items-center">
+                    <div class="row mt-1 align-items-center">
                         <div class="col-10">
                             <input class="form-control mb-2" type="text"
                                    x-model="paper.url"
@@ -41,7 +41,7 @@
         <ul class="list-unstyled" id="dataset-papers">
             <template x-for="paper in papers" :key="paper.id">
                 <li class="mb-4 mt-2">
-                    <div class="form-row align-items-center">
+                    <div class="row align-items-center">
                         <div class="col-5">
                             <textarea class="form-control mb-2" type="text"
                                       x-model="paper.name"
@@ -57,7 +57,7 @@
                             </textarea>
                         </div>
                     </div>
-                    <div class="form-row mt-1 align-items-center">
+                    <div class="row mt-1 align-items-center">
                         <div class="col-10">
                             <input class="form-control mb-2" type="text"
                                    x-model="paper.url"

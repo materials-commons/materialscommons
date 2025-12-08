@@ -7,7 +7,7 @@
     cannot bookmark the Globus page as Materials Commons has to perform some setup in order to give Globus access
     to your project.
 </p>
-<ul class="list-unstyled ml-4">
+<ul class="list-unstyled ms-4">
     @foreach($projects as $project)
         <li>
             <a href="{{route('projects.globus.bookmark', [$project])}}">{{$project->name}}</a>
