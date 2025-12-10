@@ -3,8 +3,6 @@
 namespace App\Http\Queries\Files;
 
 use App\Models\File;
-use App\Models\Project;
-use App\Traits\GetRequestParameterId;
 use Illuminate\Http\Request;
 
 class ProjectFileChangesQueryBuilder extends FilesQueryBuilder
