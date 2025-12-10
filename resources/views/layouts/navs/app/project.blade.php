@@ -125,6 +125,13 @@
             {{--                </li>--}}
             {{--            @endif--}}
 
+            @if(isInBeta('mc-server'))
+{{--                <li class="nav-item mt-3">--}}
+{{--                    <span class="ms-3 fs-11"><i class="fas fa-rocket me-2"></i>Desktop App</span>--}}
+{{--                </li>--}}
+                <livewire:projects.desktop-app.connected-clients :project="$project"/>
+            @endif
+
             <li class="nav-item mt-3">
                 <span class="ms-3 fs-11"><i class="fas fa-tools me-2"></i>Actions</span>
                 <span class="ms-4" id="project-sidenav-actions">{{-- Offset for tour --}}</span>

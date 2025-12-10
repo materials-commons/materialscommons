@@ -31,6 +31,6 @@ class MCFSApiService
     private static function ApiUrl(string $path): string
     {
         $apiurlBase = config('mcfs.url');
-        return "{$apiurlBase}${path}";
+        return "{$apiurlBase}{$path}";
     }
 }
