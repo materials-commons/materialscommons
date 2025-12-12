@@ -18,14 +18,18 @@ class MCDesktopAppService
         return MCDesktopClientConnection::fromArray($resp->json());
     }
 
-    public static function getActiveDesktopClientsForUserProject($userId, $projectId) {
-        return collect(
-            self::getActiveDesktopClientsForUser($userId)->filter(function ($client) use ($projectId) {
-                return $client->projectIds->contains(function ($id) use ($projectId) {
-                    return $id == $projectId;
-                });
-            })
+    public static function getActiveDesktopClientsForUserProject($userId, $projectId): Collection
+    {
+        return self::getActiveDesktopClientsForUser($userId)->filter(
+            fn($client) => MCDesktopAppService::clientIsConnectedToProject($client, $projectId)
         );
+    }
+
+    public static function clientIsConnectedToProject($client, $projectId): bool
+    {
+        return $client->projectIds->contains(function ($id) use ($projectId) {
+            return $id == $projectId;
+        });
     }
 
     private static function ApiUrl(string $path): string
