@@ -1,6 +1,5 @@
 <?php
 
-use App\Exports\EntitiesExport;
 use App\Http\Controllers\Web\Entities\CompareEntitiesWebController;
 use App\Http\Controllers\Web\Entities\CompareActivitiesWebController;
 use App\Http\Controllers\Web\Entities\CreateProjectEntityWebController;

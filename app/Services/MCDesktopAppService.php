@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Http;
 
 class MCDesktopAppService
 {
+    public static function submitTestUpload($desktopId) {
+        $resp = Http::get(self::ApiUrl("/submit-test-upload/{$desktopId}"));
+        return $resp->ok();
+    }
+
     public static function getActiveDesktopClientsForUser($userId): Collection
     {
         $resp = Http::get(self::ApiUrl("/list-clients-for-user/{$userId}"));

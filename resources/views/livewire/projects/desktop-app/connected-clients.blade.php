@@ -5,7 +5,7 @@
 
     @forelse($clients as $client)
         <li class="nav-item">
-            <a class="nav-link fs-11 ms-3" href="#">
+            <a class="nav-link fs-11 ms-3" href="{{route('projects.desktops.show', [$project, $client->clientId])}}">
                 <i class="fas fa-circle me-2 text-success"
                    style="font-size: 0.5rem; vertical-align: middle;"></i>
                 {{ $client->hostname }}
