@@ -20,16 +20,16 @@ use App\Traits\HasUUID;
  *
  * @mixin Builder
  */
-class RemoteClients extends Model
+class RemoteClient extends Model
 {
-    /** @use HasFactory<\Database\Factories\RemoteClientsFactory> */
+    /** @use HasFactory<\Database\Factories\RemoteClientFactory> */
     use HasFactory;
     use HasUUID;
 
     protected $guarded = ['id'];
 
     protected $casts = [
-        'owner_id' => 'integer',
+        'owner_id'  => 'integer',
         'last_seen' => 'datetime',
     ];
 
@@ -40,9 +40,9 @@ class RemoteClients extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function transferRequests()
+    public function remoteClientTransfers()
     {
-        return $this->belongsToMany(TransferRequest::class, 'remote_client2transfer_request');
+        return $this->hasMany(RemoteClientTransfer::class, 'remot_client_id');
     }
 
 }
