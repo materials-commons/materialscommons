@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property integer $id
  * @property string $uuid
  * @property string $state
+ * @property string $remote_path
  * @property string $transfer_type
  * @property integer $expected_size
  * @property string $expected_checksum
