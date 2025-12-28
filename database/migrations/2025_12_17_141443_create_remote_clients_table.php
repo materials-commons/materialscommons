@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('client_id')->unique();
+            $table->string('type')->nullable();
+            $table->string('version')->nullable();
+            $table->string('state')->nullable();
             $table->string('name');
             $table->string('hostname');
             $table->unsignedBigInteger('owner_id');
@@ -22,7 +25,7 @@ return new class extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
-            $table->datetime('last_seen')->nullable();
+            $table->datetime('last_seen_at')->nullable();
             $table->timestamps();
         });
     }

@@ -13,8 +13,11 @@ use App\Traits\HasUUID;
  * @property string $client_id
  * @property string $name
  * @property string $hostname
+ * @property string $state
+ * @property string $type
+ * @property string $version
  * @property integer $owner_id
- * @property mixed $last_seen
+ * @property mixed $last_seen_at
  * @property mixed $created_at
  * @property mixed $updated_at
  *
@@ -29,8 +32,8 @@ class RemoteClient extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'owner_id'  => 'integer',
-        'last_seen' => 'datetime',
+        'owner_id'     => 'integer',
+        'last_seen_at' => 'datetime',
     ];
 
     protected $table = 'remote_clients';

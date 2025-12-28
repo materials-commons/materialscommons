@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('expected_size')->nullable();
             $table->string('expected_checksum')->nullable();
             $table->string('remote_path')->nullable();
+            $table->string('transfer_id');
+            $table->integer('chunk_size')->nullable();
 
             $table->unsignedBigInteger('remote_client_id');
             $table->foreign('remote_client_id')

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * @property integer $id
  * @property string $uuid
+ * @property string $transfer_id
  * @property string $state
  * @property string $remote_path
  * @property string $transfer_type
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property integer $project_id
  * @property integer $owner_id
  * @property integer $file_id
+ * @property integer $chunk_size
  * @property mixed $last_active_at
  * @property mixed $created_at
  * @property mixed $updated_at
