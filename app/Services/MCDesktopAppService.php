@@ -15,8 +15,13 @@ class MCDesktopAppService
 
     public static function getActiveDesktopClientsForUser($userId): Collection
     {
-        $resp = Http::get(self::ApiUrl("/list-clients-for-user/{$userId}"));
-        if (!$resp->ok()) {
+        try {
+            $resp = Http::get(self::ApiUrl("/list-clients-for-user/{$userId}"));
+            if (!$resp->ok()) {
+                return collect();
+            }
+        }
+        catch (\Exception $e) {
             return collect();
         }
 
