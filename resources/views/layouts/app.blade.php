@@ -252,6 +252,25 @@
     });
     window.mc_grids = [];
 
+    const eventSource = new EventSource('/sse?api_token={{auth()->user()->api_token}}');
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log('Parsed SSE data:', data);
+        if (data.command) {
+            switch (data.command) {
+                case 'register':
+                    Livewire.dispatch('refresh-clients');
+                    break;
+                case 'unregister':
+                    Livewire.dispatch('refresh-clients');
+                    break;
+                default:
+                    console.warn('Unknown SSE command:', data.command);
+            }
+        }
+    };
+
+
 </script>
 
 @stack('scripts')
