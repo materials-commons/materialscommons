@@ -139,6 +139,14 @@
 
             @if(isInBeta('datahq'))
                 <li class="nav-item">
+                    <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.queryhq')}}"
+                       data-toggle="tooltip" title="Query your data"
+                       href="{{route('projects.queryhq.index', [$project])}}">
+                        <i class="fa-fw fas fa-filter me-2"></i>
+                        Query Data
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.datahq')}}"
                        data-toggle="tooltip" title="Explore, chart and query your data."
                        href="{{route('projects.datahq.index', [$project, 'explorer' => 'overview', 'view' => 'samples', 'context' => 'project'])}}">
