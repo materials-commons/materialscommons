@@ -10,14 +10,17 @@ class MqlQueryEditor extends Component
     public $query = '';
     public $results = [];
 
+    public function clearResults()
+    {
+        $this->results = [];
+    }
+
     public function executeQuery()
     {
         if (empty(trim($this->query))) {
             return;
         }
 
-        // Your query execution logic here
-        // Example:
         try {
             $resp = Http::post("http://localhost:8561/mql", [
                 'query' => $this->query
@@ -32,17 +35,9 @@ class MqlQueryEditor extends Component
                 $this->results[] = [
                     'query'     => $this->query,
                     'timestamp' => now()->format('Y-m-d H:i:s'),
-                    'data'      => $resp->json(),
+                    'data'      => $resp->body(),
                 ];
             }
-//            // Execute query and get results
-//            $result = [
-//                'query'     => $this->query,
-//                'timestamp' => now()->format('Y-m-d H:i:s'),
-//                'data'      => [], // Your actual query results
-//            ];
-//
-//            $this->results[] = $result;
         } catch (\Exception $e) {
             $this->results[] = [
                 'query'     => $this->query,
@@ -50,6 +45,19 @@ class MqlQueryEditor extends Component
                 'error'     => $e->getMessage(),
             ];
         }
+
+        $this->dispatch('scroll-to-bottom');
+    }
+
+    public function executeAndClearQuery()
+    {
+        $this->executeQuery();
+        $this->query = '';
+    }
+
+    public function loadQuery($query)
+    {
+        $this->query = $query;
     }
 
     public function render()
