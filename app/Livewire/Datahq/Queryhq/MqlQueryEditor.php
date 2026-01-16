@@ -22,7 +22,7 @@ class MqlQueryEditor extends Component
         }
 
         try {
-            $resp = Http::post("http://localhost:8561/mql", [
+            $resp = Http::post("http://localhost:8558/mql", [
                 'query' => $this->query
             ]);
             if ($resp->failed()) {

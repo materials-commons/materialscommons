@@ -2,6 +2,6 @@
 
 return [
     'server' => [
-        'url' => env('MC_SERVER_URL', 'http://localhost:8559'),
+        'url' => env('MC_SERVER_URL', 'http://localhost:8558'),
     ]
 ];
