@@ -63,8 +63,12 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/rowreorder/1.5.0/js/rowReorder.bootstrap5.min.js"></script>
 
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js" integrity="sha384-WF5+lGOoGjkbZWWZ4BM1wA/VJC6EbJLPKnFSIvO9Vxm7HxkN0qD5IvYmr6FVM4V/" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/5.0.5/js/dataTables.fixedColumns.js" integrity="sha384-BPFbg0oSBJMoGXcby9UBo5gWRKTu8EHqGyw2Z3ZtrNOPA0pbmjHHXP9e/zOswmse" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"
+            integrity="sha384-WF5+lGOoGjkbZWWZ4BM1wA/VJC6EbJLPKnFSIvO9Vxm7HxkN0qD5IvYmr6FVM4V/"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/5.0.5/js/dataTables.fixedColumns.js"
+            integrity="sha384-BPFbg0oSBJMoGXcby9UBo5gWRKTu8EHqGyw2Z3ZtrNOPA0pbmjHHXP9e/zOswmse"
+            crossorigin="anonymous"></script>
 
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 
@@ -174,7 +178,8 @@
     <div class="row">
         @yield('nav')
 
-        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-5 pb-4" stylex="padding-right: 7rem; padding-left: 7rem">
+        <main role="main" class="col-md-9 ms-md-auto col-lg-10 px-5 pb-4"
+              stylex="padding-right: 7rem; padding-left: 7rem">
             @if(!is_null(config('app.banner')))
                 <div class="mt-2 bg-red-5">
                     <p class="text-white pt-2 pb-2 ps-2 fs-14" style="text-align: center">
@@ -252,6 +257,7 @@
     });
     window.mc_grids = [];
 
+    @auth
     const eventSource = new EventSource('/sse?api_token={{auth()->user()->api_token}}');
     eventSource.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -269,6 +275,7 @@
             }
         }
     };
+    @endauth
 
 
 </script>
