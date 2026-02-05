@@ -146,7 +146,7 @@
                 <span class="ms-4" id="project-sidenav-actions">{{-- Offset for tour --}}</span>
             </li>
 
-            @if(isInBeta('datahq'))
+            @if(isInBeta('mql'))
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.queryhq')}}"
                        data-toggle="tooltip" title="Query your data"
@@ -155,6 +155,9 @@
                         Query Data
                     </a>
                 </li>
+            @endif
+
+            @if(isInBeta('datahq'))
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.datahq')}}"
                        data-toggle="tooltip" title="Explore, chart and query your data."
