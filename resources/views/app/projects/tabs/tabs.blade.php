@@ -13,6 +13,13 @@
         </a>
     </li>
 
+{{--    <li class="nav-item" id="project-users-tab">--}}
+{{--        <a class="nav-link no-underline {{setActiveNavByName('projects.users.index')}}"--}}
+{{--           href="{{route('projects.users.index', [$project])}}">--}}
+{{--            Project Members (3)--}}
+{{--        </a>--}}
+{{--    </li>--}}
+
     <li class="nav-item" id="project-sample-attributes-tab">
         <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
            href="{{route('projects.data-dictionary.entities', [$project])}}">

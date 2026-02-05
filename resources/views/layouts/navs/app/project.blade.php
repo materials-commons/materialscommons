@@ -29,6 +29,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-4 {{setActiveNavByName('projects.users')}}"
+                   data-toggle="tooltip" title="Control who has access to your project."
+                   href="{{route('projects.users.index', ['project' => $project->id])}}">
+                    <i class="fa-fw fas fa-users-cog me-2"></i>
+                    Project Members
+                </a>
+            </li>
+
             <li class="nav-item mt-3">
                 <span class="ms-3 fs-11"><i class="fas fa-database me-2"></i>Data</span>
                 <span class="ms-4" id="project-sidenav-data">{{-- Offset for tour --}}</span>
@@ -126,9 +135,9 @@
             {{--            @endif--}}
 
             @if(isInBeta('mc-server'))
-{{--                <li class="nav-item mt-3">--}}
-{{--                    <span class="ms-3 fs-11"><i class="fas fa-rocket me-2"></i>Desktop App</span>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item mt-3">--}}
+                {{--                    <span class="ms-3 fs-11"><i class="fas fa-rocket me-2"></i>Desktop App</span>--}}
+                {{--                </li>--}}
                 <livewire:projects.desktop-app.connected-clients :project="$project"/>
             @endif
 
@@ -196,21 +205,22 @@
                 <x-projects.show-globus2-side-nav :project="$project"/>
             @endif
 
-            <li class="nav-item mt-3">
-                <span class="ms-3 fs-11"><i class="fas fa-cogs me-2"></i>Project Management</span>
-                <span class="ms-4" id="project-sidenav-organization">{{-- Offset for tour --}}</span>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.users')}}"
-                   data-toggle="tooltip" title="Control who has access to your project."
-                   href="{{route('projects.users.index', ['project' => $project->id])}}">
-                    <i class="fa-fw fas fa-users-cog me-2"></i>
-                    Project Members
-                </a>
-            </li>
-
             @if(isInBeta('run_scripts'))
+                <li class="nav-item mt-3">
+                    <span class="ms-3 fs-11"><i class="fas fa-cogs me-2"></i>Project Management</span>
+                    <span class="ms-4" id="project-sidenav-organization">{{-- Offset for tour --}}</span>
+                </li>
+
+                {{--            <li class="nav-item">--}}
+                {{--                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.users')}}"--}}
+                {{--                   data-toggle="tooltip" title="Control who has access to your project."--}}
+                {{--                   href="{{route('projects.users.index', ['project' => $project->id])}}">--}}
+                {{--                    <i class="fa-fw fas fa-users-cog me-2"></i>--}}
+                {{--                    Project Members--}}
+                {{--                </a>--}}
+                {{--            </li>--}}
+
+
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.runs')}}"
                        data-toggle="tooltip"
