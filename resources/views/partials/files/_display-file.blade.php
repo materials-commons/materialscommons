@@ -46,7 +46,6 @@
             @break
 
         @case("pdf")
-            pdf
             <div class="ratio ratio-4x3">
                 <embed class="w-100 h-100"
                        src="{{$displayRoute}}">
