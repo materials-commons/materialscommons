@@ -46,8 +46,8 @@
             @break
 
         @case("pdf")
-            <div class="embed-responsive embed-responsive-4by3">
-                <embed class="col-xs-8 embed-responsive-item"
+            <div class="ratio ratio-4x3">
+                <embed class="w-100 h-100"
                        src="{{$displayRoute}}">
             </div>
             @break

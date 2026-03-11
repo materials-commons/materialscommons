@@ -18,11 +18,11 @@ class StoreExperimentWebController extends Controller
     {
 
         $validated = $request->validated();
-        if (!$this->onlySheetIdOrSheetUrlOrFileIdSpecified($validated)) {
-            $showOverview = $request->input('show-overview', false);
-            flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();
-            redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
-        }
+//        if (!$this->onlySheetIdOrSheetUrlOrFileIdSpecified($validated)) {
+//            $showOverview = $request->input('show-overview', false);
+//            flash("You can only specify a google sheet url, choose a known sheet, or select an excel file. You selected multiple or none of these choices")->error();
+//            redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
+//        }
 
         $sheet = null;
         if (isset($validated['sheet_url'])) {

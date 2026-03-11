@@ -71,6 +71,7 @@ trait GoogleSheets
         }
         $sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
         @Storage::disk('mcfs')->makeDirectory('__sheets');
+        @chmod(Storage::disk('mcfs')->path('__sheets'), 0777);
         $filePath = Storage::disk('mcfs')->path('__sheets/'.$filename);
 
         // Since this is an url we need to download it.
