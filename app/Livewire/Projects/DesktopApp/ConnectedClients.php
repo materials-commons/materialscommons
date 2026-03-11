@@ -14,7 +14,7 @@ class ConnectedClients extends Component
     public function render()
     {
         return view('livewire.projects.desktop-app.connected-clients', [
-            'clients' => MCDesktopAppService::getActiveDesktopClientsForUserProject(auth()->id(), $this->project->id),
+            'clients' => MCDesktopAppService::getActiveDesktopClientsForUser(auth()->id()),
         ]);
     }
 }
