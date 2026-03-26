@@ -6,7 +6,8 @@
          style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #eee;">
         Hide Node
     </div>
-    <div class="context-menu-item" onclick="networkDataController.unhideAllNodes()" style="padding: 8px 12px; cursor: pointer;">
+    <div class="context-menu-item" onclick="networkDataController.unhideAllNodes()"
+         style="padding: 8px 12px; cursor: pointer;">
         Unhide All Nodes
     </div>
 </div>
@@ -14,7 +15,8 @@
 <div class="d-flex" style="height: 92vh;">
 
     <!-- Network Visualization Area (Left - 70%) -->
-    <div id="network-loading-indicator" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <div id="network-loading-indicator"
+         style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
@@ -26,6 +28,11 @@
 
     <!-- Controls Area (Right - 30%) -->
     <div class="bg-white p-4 overflow-auto" style="width: 30%;">
+        <!-- Data Source Configuration -->
+        <livewire:datahq.networkhq.data-source :project="$project"/>
+
+        <hr/>
+
         <h2 class="fs-4 fw-semibold mb-4 text-dark">Network Controls</h2>
 
         <!-- Display Feature Toggles -->
@@ -36,7 +43,8 @@
                 <!-- Show Edges Toggle -->
                 <div class="col-6">
                     <label class="form-label small mb-1">Show Edges</label>
-                    <select id="toggle-edges" class="form-select form-select-sm" onchange="networkDataController.applyDisplayChanges()">
+                    <select id="toggle-edges" class="form-select form-select-sm"
+                            onchange="networkDataController.applyDisplayChanges()">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
@@ -45,7 +53,8 @@
                 <!-- Show Edge Color Toggle -->
                 <div class="col-6">
                     <label class="form-label small mb-1">Show Edge Color</label>
-                    <select id="toggle-edge-color" class="form-select form-select-sm" onchange="networkDataController.applyDisplayChanges()">
+                    <select id="toggle-edge-color" class="form-select form-select-sm"
+                            onchange="networkDataController.applyDisplayChanges()">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
@@ -54,7 +63,8 @@
                 <!-- Show Node Size Toggle -->
                 <div class="col-6">
                     <label class="form-label small mb-1">Show Node Size</label>
-                    <select id="toggle-node-size" class="form-select form-select-sm" onchange="networkDataController.applyDisplayChanges()">
+                    <select id="toggle-node-size" class="form-select form-select-sm"
+                            onchange="networkDataController.applyDisplayChanges()">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
@@ -63,7 +73,8 @@
                 <!-- Show Node Color Toggle -->
                 <div class="col-6">
                     <label class="form-label small mb-1">Show Node Color</label>
-                    <select id="toggle-node-color" class="form-select form-select-sm" onchange="networkDataController.applyDisplayChanges()">
+                    <select id="toggle-node-color" class="form-select form-select-sm"
+                            onchange="networkDataController.applyDisplayChanges()">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </select>
@@ -159,7 +170,7 @@
         </div>
 
         <!-- Data Source Configuration -->
-        <livewire:datahq.networkhq.data-source :project="$project"/>
+        {{--        <livewire:datahq.networkhq.data-source :project="$project"/>--}}
     </div>
 </div>
 
@@ -172,7 +183,7 @@
 @endpush
 
 @push('scripts')
-{{--    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>--}}
+    {{--    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>--}}
 
     <script>
 
