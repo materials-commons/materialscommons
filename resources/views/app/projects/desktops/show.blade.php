@@ -9,7 +9,7 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.show', $project))--}}
 
 @section('content')
-    Showing desktop spelljammer ({{$desktopId}})
+    Showing desktop {{$hostname}} ({{$desktopId}}), directory {{$dir}}
     <br/>
     <br/>
     <div class="d-flex justify-content-center gap-4">
@@ -49,93 +49,31 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                <a href="#">Aging_Test.xlsx</a>
-            </td>
-            <td>F</td>
-            <td>F</td>
-            <td>L/R</td>
-            <td>skip</td>
-            <td>local content matches remote</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">CameraPhotos</a>
-            </td>
-            <td>D</td>
-            <td>D</td>
-            <td>L/R</td>
-            <td>skip</td>
-            <td>local and remote directories exist</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">D1</a>
-            </td>
-            <td>D</td>
-            <td>D</td>
-            <td>L/R</td>
-            <td>skip</td>
-            <td>local and remote directories exist</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">Image1-As-cast Mg-2Nd-4Y-0.5Ca.tif</a>
-            </td>
-            <td>F</td>
-            <td>F</td>
-            <td>L/R</td>
-            <td>skip</td>
-            <td>local content matches remote</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">Literature</a>
-            </td>
-            <td>-</td>
-            <td>D</td>
-            <td>R</td>
-            <td><a href="#">Download</a></td>
-            <td>local directory is missing</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">MC2Upload</a>
-            </td>
-            <td>D</td>
-            <td>D</td>
-            <td>L/R</td>
-            <td>skip</td>
-            <td>local and remote directories exist</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">mcapi_error.json</a>
-            </td>
-            <td>F</td>
-            <td>F</td>
-            <td>L/R</td>
-            <td><a href="#">conflict</a></td>
-            <td>remote and local diverged</td>
-        </tr>
-
-        <tr>
-            <td>
-                <a href="#">local.txt</a>
-            </td>
-            <td>F</td>
-            <td>-</td>
-            <td>L</td>
-            <td><a href="#">upload</a></td>
-            <td>remote file is missing; preserve local file</td>
-        </tr>
+        @foreach($clientFiles as $file)
+            <tr>
+                <td>
+                    @if($file->r_type == "D")
+                        @php
+                            if ($dir == "/") {
+                                $fileDir = "{$dir}{$file->name}";
+                            } else {
+                                $fileDir = "{$dir}/{$file->name}";
+                            }
+                        @endphp
+                        <a href="{{route('projects.desktops.show', [$project, $desktopId, $hostname, 'dir' => "{$fileDir}"])}}">
+                            {{$file->name}}
+                        </a>
+                    @else
+                        {{$file->name}}
+                    @endif
+                </td>
+                <td>{{$file->l_type}}</td>
+                <td>{{$file->r_type}}</td>
+                <td>{{$file->local_remote}}</td>
+                <td>{{$file->action}}</td>
+                <td>{{$file->reason}}</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     {{--    <br/>--}}

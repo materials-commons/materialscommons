@@ -8,9 +8,26 @@ use Illuminate\Support\Facades\Http;
 
 class MCDesktopAppService
 {
-    public static function submitTestUpload($desktopId) {
+    public static function submitTestUpload($desktopId)
+    {
         $resp = Http::get(self::ApiUrl("/submit-test-upload/{$desktopId}"));
         return $resp->ok();
+    }
+
+    public static function getDesktopProjectDirListing($desktopId, $projectId, $userId, $projectPath)
+    {
+        try {
+            $resp = Http::asForm()->post(self::ApiUrl("/list-client-project-dir/{$desktopId}/{$projectId}"), [
+                'project_path' => $projectPath,
+                'user_id' => $userId,
+            ]);
+            if (!$resp->ok()) {
+                return collect();
+            }
+            return collect($resp->json()["files"])->map(fn($item) => (object) $item);
+        } catch (\Exception $e) {
+            return collect();
+        }
     }
 
     public static function getActiveDesktopClientsForUser($userId): Collection
@@ -20,8 +37,7 @@ class MCDesktopAppService
             if (!$resp->ok()) {
                 return collect();
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return collect();
         }
 
