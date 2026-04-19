@@ -42,6 +42,7 @@
     @push('scripts')
         <script>
             function initAddAuthors() {
+                console.log('initAddAuthors');
                 return {
                     author: {
                         name: '',
@@ -54,7 +55,9 @@
                     openDialog() {
                         this.clearAuthor();
                         this.authorAdded = '';
-                        $('#add-authors-dialog').modal();
+                        const el = document.getElementById('add-authors-dialog');
+                        const modal = Modal.getOrCreateInstance(el);
+                        modal.show();
                         $('#author_name').focus();
                         $('#add-authors-dialog').on('shown.bs.modal', function () {
                             setTimeout(function () {
