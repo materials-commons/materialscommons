@@ -5,9 +5,14 @@
 @endphp
 
 @if(!blank($doi))
-    <span class="ms-3 fs-10 grey-5">
-        DOI: <a href="https://doi.org/{{Illuminate\Support\Str::of($doi)->after('doi:')->trim()}}" target="_blank">
-            <i class="fa fas fa-fw fa-external-link-alt"></i> {{$doi}}
-        </a>
-    </span>
+    <div class="vr"></div>
+    <div class="px-3 py-2">
+        <div class="text-muted fw-semibold" style="font-size:.7rem; text-transform:uppercase; letter-spacing:.04em;">DOI</div>
+        <div>
+            <a href="https://doi.org/{{Illuminate\Support\Str::of($doi)->after('doi:')->trim()}}"
+               target="_blank" class="text-decoration-none">
+                <i class="fas fa-external-link-alt me-1 text-muted" style="font-size:.75rem;"></i>{{ $doi }}
+            </a>
+        </div>
+    </div>
 @endif
