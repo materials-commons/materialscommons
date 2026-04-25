@@ -1,3 +1,54 @@
+@if(isInBeta('dashboard-charts'))
+    {{-- ══ File KPI strip ═══════════════════════════════════════════════════════════ --}}
+    <div class="row g-2 mb-3">
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Size</div>
+                <div class="fw-bold text-primary" style="font-size:.95rem;">{{ $file->toHumanBytes() }}</div>
+                <div class="text-muted" style="font-size:.65rem;">on disk</div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Type</div>
+                <div class="fw-bold text-secondary" style="font-size:.85rem; word-break:break-word;">
+                    {{ $file->mimeTypeToDescriptionForDisplay($file) }}
+                </div>
+                <div class="text-muted" style="font-size:.65rem;">format</div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Samples</div>
+                <div class="fw-bold fs-5 text-primary">{{ number_format($file->entities_count) }}</div>
+                <div class="text-muted" style="font-size:.65rem;">linked</div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Processes</div>
+                <div class="fw-bold fs-5 text-info">{{ number_format($file->activities_count) }}</div>
+                <div class="text-muted" style="font-size:.65rem;">linked</div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Versions</div>
+                <div class="fw-bold fs-5 text-secondary">{{ $previousVersions->count() }}</div>
+                <div class="text-muted" style="font-size:.65rem;">total</div>
+            </div>
+        </div>
+        <div class="col-6 col-sm-2">
+            <div class="card border-0 shadow-sm h-100 text-center py-2">
+                <div class="text-muted small">Uploaded</div>
+                <div class="fw-bold text-muted" style="font-size:.75rem;">
+                    {{ $file->created_at->format('M j, Y') }}
+                </div>
+                <div class="text-muted" style="font-size:.65rem;">{{ $file->created_at->diffForHumans() }}</div>
+            </div>
+        </div>
+    </div>
+@endif
 @isset($project)
     {{--                <a class="float-end action-link" href="#">--}}
     {{--                    <i class="fas fa-edit me-2"></i>Edit--}}

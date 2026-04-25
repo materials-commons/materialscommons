@@ -65,29 +65,32 @@
 </div>
 
 @push('scripts')
-<script>
-(function () {
-    const STORAGE_KEY = 'mc_dashboard_analytics_open';
-    const panel   = document.getElementById('dashboard-analytics');
-    const chevron = document.getElementById('analytics-chevron');
-    const toggle  = document.getElementById('analytics-toggle');
+    <script>
+        (function () {
+            const STORAGE_KEY = 'mc_dashboard_analytics_open';
+            const panel = document.getElementById('dashboard-analytics');
+            const chevron = document.getElementById('analytics-chevron');
+            const toggle = document.getElementById('analytics-toggle');
 
-    // Restore saved preference before the page paints
-    if (localStorage.getItem(STORAGE_KEY) === 'true') {
-        panel.classList.add('show');
-        chevron.style.transform = 'rotate(90deg)';
-        toggle.setAttribute('aria-expanded', 'true');
-    }
+            // Restore saved preference before the page paints
+            if (localStorage.getItem(STORAGE_KEY) === 'true') {
+                panel.classList.add('show');
+                chevron.style.transform = 'rotate(90deg)';
+                toggle.setAttribute('aria-expanded', 'true');
+            }
 
-    // Keep chevron in sync and persist state whenever Bootstrap toggles the panel
-    panel.addEventListener('show.bs.collapse', () => {
-        chevron.style.transform = 'rotate(90deg)';
-        localStorage.setItem(STORAGE_KEY, 'true');
-    });
-    panel.addEventListener('hide.bs.collapse', () => {
-        chevron.style.transform = 'rotate(0deg)';
-        localStorage.setItem(STORAGE_KEY, 'false');
-    });
-})();
-</script>
+            // Keep chevron in sync and persist state whenever Bootstrap toggles the panel
+            panel.addEventListener('show.bs.collapse', () => {
+                chevron.style.transform = 'rotate(90deg)';
+                localStorage.setItem(STORAGE_KEY, 'true');
+            });
+            panel.addEventListener('hide.bs.collapse', () => {
+                chevron.style.transform = 'rotate(0deg)';
+                localStorage.setItem(STORAGE_KEY, 'false');
+            });
+            panel.addEventListener('shown.bs.collapse', () => {
+                panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+            });
+        })();
+    </script>
 @endpush

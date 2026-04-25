@@ -145,7 +145,8 @@
             data-bs-target="#proj-actions"
             aria-expanded="true"
             aria-controls="proj-actions">
-        <i class="fas fa-chevron-right fa-fw proj-chevron" style="transition:transform .2s; font-size:.75rem; transform:rotate(90deg);"></i>
+        <i class="fas fa-chevron-right fa-fw proj-chevron"
+           style="transition:transform .2s; font-size:.75rem; transform:rotate(90deg);"></i>
         <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
             Quick Actions
         </span>
@@ -269,57 +270,69 @@
      Collapse state management (localStorage, per-project)
      ══════════════════════════════════════════════════════════════════════════ --}}
 @push('scripts')
-<script>
-(function () {
-    // Generic helper: wire up a collapse panel to localStorage.
-    // defaultOpen: true = panel starts open when no preference is saved yet.
-    function wireCollapse(panelId, toggleId, storageKey, defaultOpen) {
-        const panel   = document.getElementById(panelId);
-        const toggle  = document.getElementById(toggleId);
-        if (!panel || !toggle) return;
+    <script>
+        (function () {
+            // Generic helper: wire up a collapse panel to localStorage.
+            // defaultOpen: true = panel starts open when no preference is saved yet.
+            function wireCollapse(panelId, toggleId, storageKey, defaultOpen) {
+                const panel = document.getElementById(panelId);
+                const toggle = document.getElementById(toggleId);
+                if (!panel || !toggle) return;
 
-        // Find the chevron inside this specific toggle button
-        const chevron = toggle.querySelector('.proj-chevron');
-        const open    = (v) => {
-            chevron.style.transform = 'rotate(90deg)';
-            toggle.setAttribute('aria-expanded', 'true');
-        };
-        const close   = (v) => {
-            chevron.style.transform = 'rotate(0deg)';
-            toggle.setAttribute('aria-expanded', 'false');
-        };
+                // Find the chevron inside this specific toggle button
+                const chevron = toggle.querySelector('.proj-chevron');
+                const open = (v) => {
+                    chevron.style.transform = 'rotate(90deg)';
+                    toggle.setAttribute('aria-expanded', 'true');
+                };
+                const close = (v) => {
+                    chevron.style.transform = 'rotate(0deg)';
+                    toggle.setAttribute('aria-expanded', 'false');
+                };
 
-        // Restore saved preference (or fall back to default)
-        const saved = localStorage.getItem(storageKey);
-        const shouldOpen = saved !== null ? saved === 'true' : defaultOpen;
-        if (shouldOpen) {
-            panel.classList.add('show');
-            open();
-        } else {
-            panel.classList.remove('show');
-            close();
+                // Restore saved preference (or fall back to default)
+                const saved = localStorage.getItem(storageKey);
+                const shouldOpen = saved !== null ? saved === 'true' : defaultOpen;
+                if (shouldOpen) {
+                    panel.classList.add('show');
+                    open();
+                } else {
+                    panel.classList.remove('show');
+                    close();
+                }
+
+                // Persist on Bootstrap collapse events
+                panel.addEventListener('show.bs.collapse', () => {
+                    open();
+                    localStorage.setItem(storageKey, 'true');
+                });
+                panel.addEventListener('hide.bs.collapse', () => {
+                    close();
+                    localStorage.setItem(storageKey, 'false');
+                });
+                // Plotly charts rendered inside a hidden collapse have zero pixel
+                // dimensions at init time.  Resize them once the panel is fully open.
+                panel.addEventListener('shown.bs.collapse', () => {
+                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+                });
+            }
+
+            wireCollapse('proj-analytics', 'proj-analytics-toggle', '{{$projKey}}_analytics', false);
+            wireCollapse('proj-actions', 'proj-actions-toggle', '{{$projKey}}_actions', true);
+            wireCollapse('proj-docs', 'proj-docs-toggle', '{{$projKey}}_docs', false);
+        })();
+    </script>
+
+    <style>
+        /* Subtle hover lift on the clickable KPI cards */
+        .card-hover {
+            transition: transform .15s, box-shadow .15s;
+            cursor: pointer;
         }
 
-        // Persist on Bootstrap collapse events
-        panel.addEventListener('show.bs.collapse', () => {
-            open();
-            localStorage.setItem(storageKey, 'true');
-        });
-        panel.addEventListener('hide.bs.collapse', () => {
-            close();
-            localStorage.setItem(storageKey, 'false');
-        });
-    }
-
-    wireCollapse('proj-analytics', 'proj-analytics-toggle', '{{$projKey}}_analytics', false);
-    wireCollapse('proj-actions',   'proj-actions-toggle',   '{{$projKey}}_actions',   true);
-    wireCollapse('proj-docs',      'proj-docs-toggle',      '{{$projKey}}_docs',      false);
-})();
-</script>
-
-<style>
-    /* Subtle hover lift on the clickable KPI cards */
-    .card-hover { transition: transform .15s, box-shadow .15s; cursor: pointer; }
-    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 .25rem .75rem rgba(0,0,0,.1) !important; }
-</style>
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1) !important;
+        }
+    </style>
 @endpush
