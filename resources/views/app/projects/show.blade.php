@@ -11,44 +11,60 @@
 @section('content')
     @component('app.projects.delete-project', ['project' => $project])
     @endcomponent
-            <a class="float-end action-link me-2"
-               href="{{route('projects.edit', $project->id)}}">
-                <i class="fas fa-edit me-2"></i>Edit
-            </a>
+    <a class="float-end action-link me-2"
+       href="{{route('projects.edit', $project->id)}}">
+        <i class="fas fa-edit me-2"></i>Edit
+    </a>
 
-            @if ($project->owner_id == auth()->id())
-                <a data-bs-toggle="modal" class="float-end action-link me-4"
-                   href="#project-delete-{{$project->id}}">
-                    <i class="fas fa-trash-alt me-2"></i>Delete
-                </a>
+    @if ($project->owner_id == auth()->id())
+        <a data-bs-toggle="modal" class="float-end action-link me-4"
+           href="#project-delete-{{$project->id}}">
+            <i class="fas fa-trash-alt me-2"></i>Delete
+        </a>
 
-            @endif
+    @endif
 
-            <span id="mark-project">
+    <span id="mark-project">
             @if(auth()->user()->isActiveProject($project))
-                <a hx-get="{{route('projects.unmark-as-active', [$project, 'target' => 'mark-project'])}}"
-                   hx-target="#mark-project"
-                   class="action-link float-end me-4 cursor-pointer">
+            <a hx-get="{{route('projects.unmark-as-active', [$project, 'target' => 'mark-project'])}}"
+               hx-target="#mark-project"
+               class="action-link float-end me-4 cursor-pointer">
                     <i class="fas fa-star text-warning-2 me-1"></i> Active Project
                 </a>
-            @else
-                <a hx-get="{{route('projects.mark-as-active', [$project, 'target' => 'mark-project'])}}"
-                   hx-target="#mark-project"
-                   class="action-link float-end me-4 cursor-pointer">
+        @else
+            <a hx-get="{{route('projects.mark-as-active', [$project, 'target' => 'mark-project'])}}"
+               hx-target="#mark-project"
+               class="action-link float-end me-4 cursor-pointer">
                     <i class="fas fa-star me-1"></i> Active Project
                 </a>
-            @endif
+        @endif
             </span>
-            @include('app.projects.tabs.tabs')
-            <div class="mt-2">
-                @if(Request::routeIs('projects.show'))
-                    @include('app.projects.tabs.home')
-                @elseif(Request::routeIs('projects.overview'))
-                    @include('app.projects.tabs.overview')
-                @elseif (Request::routeIs('projects.data-dictionary.entities'))
-                    @include('app.projects.tabs.entity-attributes')
-                @elseif(Request::routeIs('projects.data-dictionary.activities'))
-                    @include('app.projects.tabs.activity-attributes')
-                @endif
-            </div>
+    @include('app.projects.tabs.tabs')
+    <div class="mt-2">
+        @if(Request::routeIs('projects.show'))
+            @if(isInBeta('dashboard-charts'))
+                @include('app.projects.tabs.home-v2')
+            @else
+                @include('app.projects.tabs.home')
+            @endif
+        @elseif(Request::routeIs('projects.overview'))
+            @if(isInBeta('dashboard-charts'))
+                @include('app.projects.tabs.overview-v2')
+            @else
+                @include('app.projects.tabs.overview')
+            @endif
+        @elseif (Request::routeIs('projects.data-dictionary.entities'))
+            @if(isInBeta('dashboard-charts'))
+                @include('app.projects.tabs.entity-attributes-v2')
+            @else
+                @include('app.projects.tabs.entity-attributes')
+            @endif
+        @elseif(Request::routeIs('projects.data-dictionary.activities'))
+            @if(isInBeta('dashboard-charts'))
+                @include('app.projects.tabs.activity-attributes-v2')
+            @else
+                @include('app.projects.tabs.activity-attributes')
+            @endif
+        @endif
+    </div>
 @endsection

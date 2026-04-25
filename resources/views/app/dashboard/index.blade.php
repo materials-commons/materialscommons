@@ -18,10 +18,18 @@
     @include('app.dashboard.tabs.tabs')
     <br>
     @if (Request::routeIs('dashboard.projects.show'))
-        @include('app.dashboard.tabs.projects')
+        @if(isInBeta('dashboard-charts'))
+            @include('app.dashboard.tabs.projects-v2')
+        @else
+            @include('app.dashboard.tabs.projects')
+        @endif
     @elseif (Request::routeIs('dashboard.published-datasets.show'))
         <x-table-container>
-            @include('app.dashboard.tabs.published-datasets')
+            @if(isInBeta('dashboard-charts'))
+                @include('app.dashboard.tabs.published-datasets-v2')
+            @else
+                @include('app.dashboard.tabs.published-datasets')
+            @endif
         </x-table-container>
     @elseif (Request::routeIs('dashboard.projects.archived.index'))
         <x-table-container>
