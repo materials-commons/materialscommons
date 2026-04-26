@@ -16,7 +16,10 @@
     </h4>
 
     <h2 class="text-center">Public Datasets</h2>
-    <hr class="mb-5"/>
+    <hr class="mb-3"/>
+
+    <x-public.datasets-analytics :is-test="$isTest"/>
+
     <table id="datasets" class="table table-hover" style="width:100%">
         <thead class="table-light">
         <tr>
