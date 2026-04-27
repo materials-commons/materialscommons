@@ -24,6 +24,9 @@ use function is_null;
  * @property string name
  * @property string description
  * @property string affiliations
+ * @property string title
+ * @property string orcid
+ * @property string homepage_url
  * @property string email
  * @property mixed email_verified_at
  * @property string password
@@ -54,8 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'globus_user', 'description',
-        'api_token', 'affiliations', 'uuid', 'is_admin', 'slug',
+        'name', 'email', 'password', 'globus_user', 'description', 'title',
+        'api_token', 'affiliations', 'orcid', 'homepage_url', 'uuid', 'is_admin', 'slug',
         'settings', 'google_access_token', 'google_refresh_token',
         'google_token_type', 'google_expires_at', 'google_spreadsheet_id',
         'last_login_at',

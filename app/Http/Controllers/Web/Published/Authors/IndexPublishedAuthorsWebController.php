@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Published\Authors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -25,7 +26,7 @@ class IndexPublishedAuthorsWebController extends Controller
                     continue;
                 }
                 if (!isset($authors[$name])) {
-                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null];
+                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null];
                 }
                 $authors[$name]['count']++;
                 if ($pubDate) {
@@ -42,6 +43,14 @@ class IndexPublishedAuthorsWebController extends Controller
         $authors = collect($authors)
             ->sortKeys()
             ->toArray();
+
+        // Resolve MC accounts so the view can link to profile pages
+        $mcUsers = User::whereIn('name', array_keys($authors))->get(['id', 'name', 'slug']);
+        foreach ($mcUsers as $mcUser) {
+            if (isset($authors[$mcUser->name])) {
+                $authors[$mcUser->name]['user'] = $mcUser;
+            }
+        }
 
         return view('public.authors.index', compact('authors'));
     }

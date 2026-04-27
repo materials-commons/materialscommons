@@ -148,9 +148,16 @@
                 $isActive   = $latest && $latest >= $activeThresh;
             @endphp
             <tr>
-                <td class="text-muted small"></td>{{-- filled by DataTable rowCallback --}}
+                <td class="text-muted small rank-cell"></td>
                 <td>
-                    <a href="{{ route('public.authors.search', ['search' => $author]) }}">{{ $author }}</a>
+                    @if(!empty($data['user']))
+                        <a href="{{ route('public.authors.show', $data['user']) }}" class="fw-semibold">{{ $author }}</a>
+                        <span class="badge text-bg-light border text-muted ms-1" style="font-size:.65rem;">
+                            <i class="fas fa-check me-1 text-success"></i>MC
+                        </span>
+                    @else
+                        <a href="{{ route('public.authors.search', ['search' => $author]) }}">{{ $author }}</a>
+                    @endif
                     @if($since)
                         <div class="text-muted" style="font-size:.7rem;">
                             since {{ $since->format('Y') }}
@@ -255,9 +262,9 @@
 
         <script>
             $(document).ready(() => {
-                const table = $('#authors').DataTable({
+                $('#authors').DataTable({
                     pageLength: 100,
-                    stateSave: true,
+                    stateSave: false,
                     order: [[3, 'desc']],
                     columnDefs: [
                         {targets: [0], orderable: false, searchable: false},
@@ -267,9 +274,12 @@
                         {targets: [5], visible: false},
                         {targets: [6], orderable: false, searchable: false},
                     ],
-                    rowCallback: function (row, data, index) {
-                        const info = table.page.info();
-                        $('td:eq(0)', row).text(info.start + index + 1);
+                    drawCallback: function () {
+                        const api   = this.api();
+                        const start = api.page.info().start;
+                        api.rows({page: 'current'}).every(function (rowIdx) {
+                            $(this.node()).find('.rank-cell').text(start + rowIdx + 1);
+                        });
                     },
                 });
             });
