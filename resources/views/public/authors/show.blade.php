@@ -14,6 +14,25 @@
         $paperCount      = $profile->papers->count();
         $coauthorCount   = count($profile->coAuthors);
         $activeThresh    = now()->subYears(2);
+
+        // Pre-computed data for chart click handlers
+        $ownedDsJson = $profile->ownedDatasets->map(fn($ds) => [
+            'name'      => $ds->name,
+            'url'       => route('public.datasets.show', $ds),
+            'pub_month' => $ds->published_at?->format('Y-m'),
+            'tags'      => $ds->tags->pluck('name')->toArray(),
+        ]);
+        $allDsJson = $profile->allDatasets->map(fn($ds) => [
+            'name' => $ds->name,
+            'url'  => route('public.datasets.show', $ds),
+            'tags' => $ds->tags->pluck('name')->toArray(),
+        ]);
+        $coAuthorDsJson = collect($profile->coAuthors)->mapWithKeys(fn($data, $name) => [
+            $name => $data['datasets']->map(fn($ds) => [
+                'name' => $ds->name,
+                'url'  => route('public.datasets.show', $ds),
+            ])->values()->toArray(),
+        ]);
     @endphp
 
     {{-- ══ Profile header ══════════════════════════════════════════════════════════ --}}
@@ -473,6 +492,19 @@
 
     </div>{{-- .tab-content --}}
 
+    {{-- ══ Chart drill-down modal ═════════════════════════════════════════════════ --}}
+    <div class="modal fade" id="ds-drilldown-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title fw-semibold" id="ds-drilldown-title"></h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-3" id="ds-drilldown-body"></div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
             (function () {
@@ -568,6 +600,56 @@
                         document.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
                     });
                 });
+
+                // ── Chart drill-down data ──────────────────────────────────────────────
+                const ownedDsData    = @json($ownedDsJson);
+                const allDsData      = @json($allDsJson);
+                const coAuthorDsMap  = @json($coAuthorDsJson);
+
+                const drillModal    = new Modal(document.getElementById('ds-drilldown-modal'));
+                const drillTitle    = document.getElementById('ds-drilldown-title');
+                const drillBody     = document.getElementById('ds-drilldown-body');
+
+                function showDrilldown(title, datasets) {
+                    drillTitle.textContent = title;
+                    if (!datasets || datasets.length === 0) {
+                        drillBody.innerHTML = '<p class="text-muted mb-0">No datasets found.</p>';
+                    } else {
+                        drillBody.innerHTML = datasets.map(ds =>
+                            `<div class="py-2 border-bottom">
+                                <a href="${ds.url}" class="fw-semibold text-decoration-none">
+                                    <i class="fas fa-database me-2 text-muted" style="font-size:.8rem;"></i>${ds.name}
+                                </a>
+                            </div>`
+                        ).join('');
+                    }
+                    drillModal.show();
+                }
+
+                @if(count($profile->pubTimeline) > 1)
+                const timelineMonths = @json(array_keys($profile->pubTimeline));
+                document.getElementById('chart-author-timeline').on('plotly_click', function (data) {
+                    const month    = timelineMonths[data.points[0].pointIndex];
+                    const filtered = ownedDsData.filter(ds => ds.pub_month === month);
+                    showDrilldown('Datasets published in ' + month, filtered);
+                });
+                @endif
+
+                @if(count($profile->chartTagNames) > 0)
+                document.getElementById('chart-author-tags').on('plotly_click', function (data) {
+                    const tag      = data.points[0].y;
+                    const filtered = allDsData.filter(ds => ds.tags.includes(tag));
+                    showDrilldown('Datasets tagged "' + tag + '"', filtered);
+                });
+                @endif
+
+                @if(count($profile->chartCoauthorNames) > 0)
+                document.getElementById('chart-author-coauthors').on('plotly_click', function (data) {
+                    const name     = data.points[0].y;
+                    const datasets = coAuthorDsMap[name] || [];
+                    showDrilldown('Shared datasets with ' + name, datasets);
+                });
+                @endif
 
             })();
         </script>
