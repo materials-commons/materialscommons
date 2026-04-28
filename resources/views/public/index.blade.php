@@ -120,14 +120,16 @@
                 } else {
                     $r = route('get_all_published_datasets');
                 }
+                $authorSearch = request()->input('author', '');
             @endphp
             $(document).ready(() => {
-                $('#datasets').DataTable({
+                const authorSearch = @json($authorSearch);
+                const dtOptions = {
                     pageLength: 100,
                     serverSide: true,
                     processing: true,
                     response: true,
-                    stateSave: true,
+                    stateSave: !authorSearch,
                     ajax: "{{$r}}",
                     order: [[4, "desc"]],
                     columns: [
@@ -176,7 +178,11 @@
                             visible: false,
                         }
                     ]
-                });
+                };
+                if (authorSearch) {
+                    dtOptions.search = {search: authorSearch};
+                }
+                $('#datasets').DataTable(dtOptions);
             });
         </script>
     @endpush
