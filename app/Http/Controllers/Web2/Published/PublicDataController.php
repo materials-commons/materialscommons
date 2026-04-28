@@ -18,27 +18,28 @@ class PublicDataController extends Controller
     {
         // Check if the ?test query parameter is set. This means we only want to show
         // datasets that have been published for testing purposes.
-        $isTest    = request()->has('test');
+        $isTest = request()->has('test');
         $dateField = $isTest ? 'test_published_at' : 'published_at';
 
         $communities = Community::with('owner')->withCount('datasets')
                                 ->where('public', true)
                                 ->orderBy('name')
+                                ->where('name', '<>', 'OpenVisus')
                                 ->get();
 
         $datasetCount = Dataset::whereNotNull($dateField)->count();
 
         // Count distinct tags that appear on published datasets (excluding filtered tags)
         $tagCount = DB::table('tags')
-            ->whereExists(fn($q) => $q->select(DB::raw(1))
-                ->from('taggables')
-                ->join('datasets', fn($j) => $j
-                    ->on('datasets.id', '=', 'taggables.taggable_id')
-                    ->where('taggables.taggable_type', 'App\\Models\\Dataset'))
-                ->whereNotNull("datasets.{$dateField}")
-                ->whereColumn('tags.id', 'taggables.tag_id'))
-            ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(tags.name, '$.en')) NOT IN ('OpenVisus', 'OpenVisus-Commons-Import')")
-            ->count();
+                      ->whereExists(fn($q) => $q->select(DB::raw(1))
+                                                ->from('taggables')
+                                                ->join('datasets', fn($j) => $j
+                                                    ->on('datasets.id', '=', 'taggables.taggable_id')
+                                                    ->where('taggables.taggable_type', 'App\\Models\\Dataset'))
+                                                ->whereNotNull("datasets.{$dateField}")
+                                                ->whereColumn('tags.id', 'taggables.tag_id'))
+                      ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(tags.name, '$.en')) NOT IN ('OpenVisus', 'OpenVisus-Commons-Import')")
+                      ->count();
 
         return view('public.index', [
             'communities'  => $communities,
