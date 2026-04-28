@@ -1,38 +1,30 @@
 <div x-data="datasets_create">
-    <div class="float-end">
+    {{-- Floating action bar --}}
+    <div class="d-flex justify-content-end align-items-center gap-2 py-2 px-4"
+         style="position:fixed; bottom:0; left:0; right:0; z-index:1040;
+                background:white; border-top:1px solid #dee2e6;
+                box-shadow:0 -2px 8px rgba(0,0,0,.1);">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-           class="btn btn-danger me-3">
+           class="btn btn-sm btn-outline-secondary">
             Cancel
         </a>
-
-        <a class="btn btn-info me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
-            Save
+        <a class="btn btn-sm btn-outline-primary" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
+            <i class="fas fa-save me-1"></i> Save
         </a>
-
-        <a class="btn btn-success me-3" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
-            Save And Add Data
+        <a class="btn btn-sm btn-success" href="#" id="add-assets-button" @click.prevent="setActionAndSubmit('assets')">
+            <i class="fas fa-arrow-right me-1"></i> Save &amp; Add Files
         </a>
     </div>
-    <br>
-    <br>
-    <form method="post" action="{{route('projects.datasets.store', [$project])}}" id="dataset_create">
+
+    <form method="post" action="{{route('projects.datasets.store', [$project])}}" id="dataset_create"
+          style="padding-bottom:4rem;">
         @csrf
+
         <div class="mb-3">
             <label class="required" for="name">Name</label>
             <input class="form-control" id="name" name="name" type="text" value="{{old('name')}}"
                    placeholder="Name...">
         </div>
-
-        <x-datasets.create-authors-table :project="$project" :dataset="null"/>
-        <div id="authors_list"></div>
-        <br>
-
-        {{--    <div class="mb-3">--}}
-        {{--        <label for="authors">Authors and Affiliations</label>--}}
-        {{--        <input class="form-control" id="authors" name="authors" type="text"--}}
-        {{--               value="{{old('authors', $authorsAndAffiliations)}}"--}}
-        {{--               placeholder="Authors...">--}}
-        {{--    </div>--}}
 
         <div class="mb-3">
             <label for="summary">Summary</label>
@@ -40,10 +32,11 @@
                    placeholder="Summary...">
         </div>
 
+        <x-datasets.create-authors-table :project="$project" :dataset="null"/>
+
         <div class="mb-3">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description" type="text"
-                      value=""
                       placeholder="Description...">{{old('description')}}</textarea>
         </div>
 
@@ -56,37 +49,19 @@
         <div class="mb-3">
             <label for="doi">DOI</label>
             <span class="col-8">
-            None
-            <a href="#" @click.prevent="changeActionAndSubmit()" style="margin-left: 8px">
-                Assign DOI
-            </a>
-        </span>
+                None
+                <a href="#" @click.prevent="changeActionAndSubmit()" style="margin-left:8px;">
+                    Assign DOI
+                </a>
+            </span>
         </div>
 
         <x-datasets.create-papers-list :existing="null"/>
 
-        <div class="mb-3">
-            <label for="license">License</label>
-            <select name="license" id = "ds-license" class="mb-2 form-select" title="License">
-                <option data-token="No License" value="No License">No License</option>
-                <option data-token="Public Domain Dedication and License (PDDL)"
-                        value="Public Domain Dedication and License (PDDL)">
-                    Public Domain Dedication and License (PDDL)
-                </option>
-                <option data-token="Attribution License (ODC-By)"
-                        value="Attribution License (ODC-By)">
-                    Attribution License (ODC-By)
-                </option>
-                <option data-token="Open Database License (ODC-ODbL)"
-                        value="Open Database License (ODC-ODbL)">
-                    Open Database License (ODC-ODbL)
-                </option>
-            </select>
-            <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
-        </div>
+        <x-datasets.license-picker :current-license="old('license', 'CC BY 4.0')"/>
 
         @if($experiments->isNotEmpty())
-            <div class="mb-3">
+            <div class="mb-3 col-8">
                 <label for="experiments">Studies</label>
                 <select name="experiments[]" id="ds-studies" class="form-select mb-2" title="experiments" multiple>
                     @foreach($experiments as $experiment)
@@ -98,7 +73,7 @@
             </div>
         @endif
 
-        <div class="mb-3">
+        <div class="mb-3 col-8">
             <label for="communities">Communities</label>
             <select name="communities[]" id="ds-communities" class="form-select mb-2" title="communities" multiple>
                 @foreach($communities as $community)
@@ -116,73 +91,33 @@
 
         <input hidden id="project_id" name="project_id" value="{{$project->id}}">
         <input type="hidden" name="action" value="" id="action"/>
-
-        <div class="float-end">
-            <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-               class="action-link danger me-3">
-                Cancel
-            </a>
-
-            <a class="action-link me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
-                Save
-            </a>
-
-            <a class="action-link me-3" href="#" id="add-assets-button"
-               @click.prevent="setActionAndSubmit('assets')">
-                Save And Add Data
-            </a>
-        </div>
     </form>
 </div>
-<br>
+
 @include('common.errors')
 
 @push('scripts')
     <script>
         $(document).ready(() => {
-            new TomSelect('#ds-license', {
-                // controlInput: null,
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
-            });
-
+            @if($experiments->isNotEmpty())
             new TomSelect('#ds-studies', {
                 plugins: ['dropdown_input'],
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
+                sortField: {field: "text", direction: "asc"},
             });
+            @endif
 
             new TomSelect('#ds-communities', {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
+                sortField: {field: "text", direction: "asc"},
             });
 
             function validate() {
-                if ($('#name').val().length > 0) {
-                    setNextButtonsDisabled(false);
-                } else {
-                    setNextButtonsDisabled(true);
-                }
-            }
-
-            function setNextButtonsDisabled(disable) {
-                if (disable) {
-                    $("#save-button").prop("disabled", true).addClass("isDisabled");
-                    $("#add-assets-button").prop("disabled", true).addClass("isDisabled");
-                } else {
-                    $("#save-button").prop("disabled", false).removeClass("isDisabled");
-                    $("#add-assets-button").prop("disabled", false).removeClass("isDisabled");
-                }
+                const hasName = $('#name').val().length > 0;
+                $("#save-button").prop("disabled", !hasName).toggleClass("isDisabled", !hasName);
+                $("#add-assets-button").prop("disabled", !hasName).toggleClass("isDisabled", !hasName);
             }
 
             validate();
-            $('#name').change(validate).keypress(() => validate());
+            $('#name').on('input change', validate);
 
             let tagsInput = document.querySelector('#tags');
             new Tagify(tagsInput);
@@ -192,43 +127,7 @@
             return {
                 setActionAndSubmit(action) {
                     $('#action').val(action);
-                    let authorsListElement = document.getElementById('authors_list');
-
-                    let values = [];
-                    let authorTable = $("#authors").DataTable();
-                    authorTable.rows().data().each(row => values.push(this.createAuthorElement(row[2], row[3], row[4])));
-                    for (let i = 0; i < values.length; i++) {
-                        let author = values[i];
-                        let nameInput = document.createElement("input");
-                        nameInput.type = "hidden";
-                        nameInput.name = `ds_authors[${i}][name]`;
-                        nameInput.value = author.name;
-                        authorsListElement.appendChild(nameInput);
-
-                        let emailInput = document.createElement("input");
-                        emailInput.type = "hidden";
-                        emailInput.name = `ds_authors[${i}][email]`;
-                        emailInput.value = author.email;
-                        authorsListElement.appendChild(emailInput);
-
-                        let affiliationsInput = document.createElement("input");
-                        affiliationsInput.type = "hidden";
-                        affiliationsInput.name = `ds_authors[${i}][affiliations]`;
-                        affiliationsInput.value = author.affiliations;
-                        authorsListElement.appendChild(affiliationsInput);
-                    }
                     document.getElementById('dataset_create').submit();
-                    if (action === 'done') {
-                        window.location.href = "{{route('projects.datasets.index', ['project' => $project->id])}}";
-                    }
-                },
-
-                createAuthorElement(name, affiliations, email) {
-                    return {
-                        name: name,
-                        affiliations: affiliations,
-                        email: email,
-                    };
                 },
 
                 changeActionAndSubmit() {
@@ -238,6 +137,5 @@
                 }
             }
         });
-
     </script>
 @endpush

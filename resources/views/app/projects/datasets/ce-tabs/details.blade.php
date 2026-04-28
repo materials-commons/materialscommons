@@ -75,33 +75,7 @@
 
         <x-datasets.create-papers-list :existing="$dataset->papers"/>
 
-        <div class="mb-3 col-8">
-            <label for="license">License</label>
-            <select name="license" id="ds-license" class="mb-2 form-select"
-                    value="{{$dataset->license}}"
-                    title="License">
-                <option data-token="No License" value="No License"
-                    {{$dataset->license === "No License" ? 'selected' : ''}}>
-                    No License
-                </option>
-                <option data-token="Public Domain Dedication and License (PDDL)"
-                        value="Public Domain Dedication and License (PDDL)"
-                    {{$dataset->license === "Public Domain Dedication and License (PDDL)" ? 'selected' : ''}}>
-                    Public Domain Dedication and License (PDDL)
-                </option>
-                <option data-token="Attribution License (ODC-By)"
-                        value="Attribution License (ODC-By)"
-                    {{$dataset->license === "Attribution License (ODC-By)" ? 'selected' : ''}}>
-                    Attribution License (ODC-By)
-                </option>
-                <option data-token="Open Database License (ODC-ODbL)"
-                        value="Open Database License (ODC-ODbL)"
-                    {{$dataset->license === "Open Database License (ODC-ODbL)" ? 'selected' : ''}}>
-                    Open Database License (ODC-ODbL)
-                </option>
-            </select>
-            <a href="https://opendatacommons.org/licenses/index.html" target="_blank">License Summaries</a>
-        </div>
+        <x-datasets.license-picker :current-license="old('license', $dataset->license)"/>
 
         <div class="mb-3 col-8">
             <label for="experiments">Studies</label>
@@ -140,14 +114,6 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-
-            new TomSelect('#ds-license', {
-                // controlInput: null,
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
-            });
 
             new TomSelect('#ds-studies', {
                 plugins: ['dropdown_input'],
