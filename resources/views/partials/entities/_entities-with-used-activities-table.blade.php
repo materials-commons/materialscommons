@@ -1,6 +1,7 @@
 @if(Request::routeIs('projects.entities.*'))
     <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
 @endif
+<livewire:entities.vertical-flow-view :entities="$entities" :activities="$activities" used-activities="$usedActivities" />
 <div id="table-container" style="display: none">
     <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
         <thead class="table-light">
