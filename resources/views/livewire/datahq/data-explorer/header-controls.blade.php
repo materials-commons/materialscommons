@@ -1,4 +1,4 @@
-<div class="col-lg-10 float-right">
+<div class="col-lg-10 float-end">
     <label>Select Data For:</label>
     <select wire:model.live="selectedData" class="custom-select col-4 font-weight-bolder" title="Select Data For">
         <option value="project" @selected($selectedData == "project")>Project</option>
@@ -7,7 +7,7 @@
                 Study: {{$experiment->name}}</option>
         @endforeach
     </select>
-    <label class="ml-4">Show:</label>
+    <label class="ms-4">Show:</label>
     <select wire:model.live="selectedExplorer" class="custom-select col-4 font-weight-bolder" title="View">
         <option value="overview" @selected($selectedExplorer == "overview")>Overview</option>
         <option value="samples" @selected($selectedExplorer == "samples")>Samples Explorer</option>

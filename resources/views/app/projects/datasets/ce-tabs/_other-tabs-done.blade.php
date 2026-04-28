@@ -1,5 +1,5 @@
 <br>
-<div class="float-right">
+<div class="float-end">
     <a class="btn btn-success" href="{{route('projects.datasets.show', [$project, $dataset])}}" id="done-button">
         Done
     </a>

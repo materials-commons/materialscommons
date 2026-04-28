@@ -3,28 +3,20 @@
     <div class="mb-3 d-flex align-items-center">
         @if(count($selectedEntityIds) > 0)
             <button wire:click="viewFlow" class="btn btn-primary">
-                <i class="fas fa-sitemap mr-1"></i> View Selected Samples Flow
+                <i class="fas fa-sitemap me-1"></i> View Selected Samples Flow
             </button>
-            <span class="ml-3 text-muted">{{ count($selectedEntityIds) }} sample(s) selected</span>
+            <span class="ms-3 text-muted">{{ count($selectedEntityIds) }} sample(s) selected</span>
         @endif
     </div>
 
     {{-- Inline Vertical Flow View --}}
     @if($showFlow)
-        <div class="vertical-flow-view"
-             x-data="{ show: @entangle('showFlow') }"
-             x-show="show"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 transform -translate-y-4"
-             x-transition:enter-end="opacity-100 transform translate-y-0"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0">
+        <div class="vertical-flow-view">
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Sample Activity Flow</h5>
                 <button wire:click="closeFlow" class="btn btn-sm btn-secondary">
-                    <i class="fas fa-times mr-1"></i> Close
+                    <i class="fas fa-times me-1"></i> Close
                 </button>
             </div>
 

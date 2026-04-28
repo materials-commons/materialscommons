@@ -3,13 +3,11 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Select Project To Copy To/From</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
-                <select id="project-select" class="selectpicker col-lg-10" data-live-search="true"
-                        data-style="btn-light no-tt"
+                <select id="project-select"
                         title="Select Project To Copy To/From">
                     <option data-tokens="{{$project->id}}" value="{{$project->id}}"
                             data-root-id="{{$project->rootDir->id}}">
@@ -27,7 +25,7 @@
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Dismiss</button>
             </div>
         </div>
     </div>
@@ -36,17 +34,39 @@
 @push('scripts')
     <script>
         $(document).ready(() => {
-            $('#project-select').on('change', () => {
-                let selected = '.selectpicker option:selected';
-                let selectedProjectId = $(selected).val();
-                let selectedProjectRootDirId = $(selected).attr('data-root-id')
-                window.location.href = route('projects.folders.show-for-copy', {
-                    'leftProject': "{{$project->id}}",
-                    'leftFolder': "{{$directory->id}}",
-                    'rightProject': selectedProjectId,
-                    'rightFolder': selectedProjectRootDirId,
-                });
+            new TomSelect("#project-select",{
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+                onChange: function(selectedProjectId) {
+                    if (value) {
+                        const ts = $('#select-project')[0].tomselect;
+                        const value = ts.getValue(); // string or array
+
+                        // From option metadata (populated from data-* on <option>)
+                        const opt = ts.options[value]; // or ts.options[value[0]] for multi
+                        const selectedProjectRootDirId = opt?.rootId; // data-root-id becomes rootId
+                        window.location.href = route('projects.folders.show-for-copy', {
+                            'leftProject': "{{$project->id}}",
+                            'leftFolder': "{{$directory->id}}",
+                            'rightProject': selectedProjectId,
+                            'rightFolder': selectedProjectRootDirId,
+                        });
+                    }
+                }
             });
+            {{--$('#project-select').on('change', () => {--}}
+            {{--    let selected = '.selectpicker option:selected';--}}
+            {{--    let selectedProjectId = $(selected).val();--}}
+            {{--    let selectedProjectRootDirId = $(selected).attr('data-root-id')--}}
+            {{--    window.location.href = route('projects.folders.show-for-copy', {--}}
+            {{--        'leftProject': "{{$project->id}}",--}}
+            {{--        'leftFolder': "{{$directory->id}}",--}}
+            {{--        'rightProject': selectedProjectId,--}}
+            {{--        'rightFolder': selectedProjectRootDirId,--}}
+            {{--    });--}}
+            {{--});--}}
         });
     </script>
 @endpush

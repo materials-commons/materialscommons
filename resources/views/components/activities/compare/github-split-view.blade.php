@@ -33,8 +33,8 @@
             <div class="alert alert-info">
                 <h6>Diff Legend:</h6>
                 <ul class="mb-0 small">
-                    <li><span class="github-gutter removed d-inline-block px-2">-</span> Left side: Attributes from {{$activity1->name}}</li>
-                    <li><span class="github-gutter added d-inline-block px-2">+</span> Right side: Attributes from {{$activity2->name}}</li>
+                    <li><span class="github-gutter removed d-inline-block px-2">-</span> Left side: Attributes from {{$activity1->name}} ({{$activity1->entities->first()->name}})</li>
+                    <li><span class="github-gutter added d-inline-block px-2">+</span> Right side: Attributes from {{$activity2->name}} ({{$activity2->entities->first()->name}})</li>
                     <li>Empty cells indicate attribute doesn't exist in that activity</li>
                 </ul>
             </div>
@@ -96,6 +96,7 @@
         margin-bottom: 16px;
         font-family: 'SF Mono', Monaco, 'Cascadia Mono', 'Roboto Mono', Menlo, Consolas, monospace;
         font-size: 12px;
+        line-height: 1.1;       /* Add tighter line-height to table */
     }
 
     .github-diff-table tbody tr {
@@ -105,10 +106,10 @@
     .github-gutter {
         width: 40px;
         min-width: 40px;
-        padding: 0 10px;
+        padding: 0px 8px;       /* Much tighter - 1px vertical */
         font-family: 'SF Mono', Monaco, monospace;
         font-size: 12px;
-        line-height: 20px;
+        line-height: 1.0;       /* Tighter line-height */
         text-align: center;
         vertical-align: top;
         cursor: default;
@@ -117,8 +118,8 @@
     }
 
     .github-line {
-        padding: 0 10px;
-        line-height: 20px;
+        padding: 0px 8px;
+        line-height: 1.0;
         vertical-align: top;
         white-space: pre-wrap;
         word-break: break-word;
@@ -172,14 +173,15 @@
         background-color: #ffffff;
     }
 
-    /* Attribute name styling */
     .github-attr-name {
         font-weight: 600;
         color: #1f2328;
+        margin-right: 8px;      /* Add space between name and value */
     }
 
     .github-attr-value {
         color: #0550ae;
+        margin-left: 4px;       /* Add a bit more space from the name */
     }
 
     /* Highlight changed values within line */
@@ -187,5 +189,7 @@
         background-color: rgba(234, 74, 170, 0.15);
         padding: 2px 4px;
         border-radius: 2px;
+        display: inline-block;
+        margin-left: 4px;       /* Add margin so highlight doesn't touch the name */
     }
 </style>

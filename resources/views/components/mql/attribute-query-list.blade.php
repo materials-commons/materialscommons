@@ -1,17 +1,17 @@
-<ul class="list-unstyled ml-4">
+<ul class="list-unstyled ms-4">
     @foreach($attrs as $attr)
         <li class="col-12 mt-2">
             @if(old($formVarName) && isset(old($formVarName)[$loop->index]['name']))
                 <div class="row">
-                    <input type="checkbox" class="mr-1" name="{{$formVarName}}[{{$loop->index}}][name]"
+                    <input type="checkbox" class="me-1" name="{{$formVarName}}[{{$loop->index}}][name]"
                            value="{{$attr->name}}" checked>
                     <a href="#"
                        hx-target="#{{slugify($attr->name)}}"
                        hx-swap="innerHTML"
                        hx-get="{{route($detailsRouteName, [$project, $attr->name])}}">{{$attr->name}}</a>
                 </div>
-                <div class="row ml-1">
-                    <select class="selectpicker col-6"
+                <div class="row ms-1">
+                    <select class="form-select"
                             name="{{$formVarName}}[{{$loop->index}}][operator]"
                             value="{{old($formVarName)[$loop->index]['operator']}}">
                         <option>Select</option>
@@ -44,7 +44,7 @@
                 </div>
             @else
                 <div class="row">
-                    <input type="checkbox" class="mr-1" name="{{$formVarName}}[{{$loop->index}}][name]"
+                    <input type="checkbox" class="me-1" name="{{$formVarName}}[{{$loop->index}}][name]"
                            value="{{$attr->name}}"
                            hx-post="{{route('projects.entities.mql.show', $project)}}"
                            hx-include="#mql-selection"
@@ -57,7 +57,7 @@
                         {{$attr->name}}
                     </a>
                 </div>
-                <div class="row ml-1">
+                <div class="row ms-1">
                     <select id="select-{{$loop->index}}"
                             class="selectpicker col-6"
                             name="{{$formVarName}}[{{$loop->index}}][operator]" value=""
@@ -83,7 +83,7 @@
                            hx-trigger="keyup changed delay:500ms">
                 </div>
             @endif
-            <div id="{{slugify($attr->name)}}" class="row ml-4 mt-2"></div>
+            <div id="{{slugify($attr->name)}}" class="row ms-4 mt-2"></div>
         </li>
     @endforeach
 

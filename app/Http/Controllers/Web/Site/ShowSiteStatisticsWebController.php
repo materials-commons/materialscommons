@@ -73,6 +73,11 @@ class ShowSiteStatisticsWebController extends Controller
                ->where("created_at", ">=", $start)
                ->where("created_at", "<=", $end)
                ->groupByRaw("YEAR(created_at), MONTH(created_at)");
+//        $selectRaw = "created_ym as ym, COUNT(id) as aggregate";
+//        $q = DB::table('files')
+//               ->selectRaw($selectRaw)
+//               ->whereBetween('created_at', [$start, $end])
+//               ->groupBy('created_ym');
         return $this->createChartFromQuery($start,
             $q,
             "FilesUploadedChart",

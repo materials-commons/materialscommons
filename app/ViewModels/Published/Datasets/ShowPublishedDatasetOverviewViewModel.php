@@ -21,6 +21,8 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
 
     private $userProjects;
 
+    private $authorUsers;
+
     public function withDataset(Dataset $dataset)
     {
         $this->dataset = $dataset;
@@ -63,6 +65,17 @@ class ShowPublishedDatasetOverviewViewModel extends ViewModel
     public function userProjects()
     {
         return $this->userProjects;
+    }
+
+    public function withAuthorUsers($authorUsers)
+    {
+        $this->authorUsers = $authorUsers;
+        return $this;
+    }
+
+    public function authorUsers()
+    {
+        return $this->authorUsers ?? collect();
     }
 
     public function hasNotificationsForDataset(): bool

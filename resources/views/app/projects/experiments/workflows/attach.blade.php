@@ -9,43 +9,37 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.experiments.workflows.edit', $project, $experiment, $workflow))--}}
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Attach Workflows To Study {{$experiment->name}}
-        @endslot
+    <h3 class="text-center">Attach Workflows To Study {{$experiment->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <table id="workflows" class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Selected</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($project->workflows as $workflow)
-                    <tr>
-                        <td>
-                            {{$workflow->name}}
-                        </td>
-                        <td>
-                            <div class="form-group form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
-                                       {{$workflowInExperiment($workflow) ? 'checked' : ''}}
-                                       onclick="updateWorkflowSelection({{$workflow}}, this)">
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <br>
-            <div class="float-right mr-2">
-                <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
-            </div>
-
-        @endslot
-    @endcomponent
+    <table id="workflows" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Selected</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($project->workflows as $workflow)
+            <tr>
+                <td>
+                    {{$workflow->name}}
+                </td>
+                <td>
+                    <div class="mb-3 form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
+                               {{$workflowInExperiment($workflow) ? 'checked' : ''}}
+                               onclick="updateWorkflowSelection({{$workflow}}, this)">
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    <br>
+    <div class="float-end me-2">
+        <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
+    </div>
 @stop
 
 @push('scripts')

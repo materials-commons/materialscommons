@@ -1,17 +1,17 @@
 <x-card-container>
     <x-show-standard-details :item="$project">
-        <a class="ml-3 fs-10" href="{{route('projects.users.index', [$project])}}">
+        <a class="ms-3 fs-10" href="{{route('projects.users.index', [$project])}}">
             {{$project->team->members->count()}} @choice("Member|Members", $project->team->members->count())
         </a>
-        <a class="ml-3 fs-10" href="{{route('projects.users.index', [$project])}}">
+        <a class="ms-3 fs-10" href="{{route('projects.users.index', [$project])}}">
             {{$project->team->admins->count()}} @choice("Admin|Admins", $project->team->admins->count())
         </a>
-        <span class="ml-3 fs-10 grey-5">Size: {{formatBytes($project->size)}}</span>
-        <span class="ml-3 fs-10 grey-5">Slug: {{$project->slug}}</span>
+        <span class="ms-3 fs-10 grey-5">Size: {{formatBytes($project->size)}}</span>
+        <span class="ms-3 fs-10 grey-5">Slug: {{$project->slug}}</span>
     </x-show-standard-details>
 
     <form>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="counts">Counts</label>
             <ul class="list-inline">
                 <li class="list-inline-item mt-1">
@@ -38,6 +38,7 @@
         </div>
     </form>
     @include('partials.overview._overview')
-
-    <x-display-markdown-file :file="$readme"></x-display-markdown-file>
 </x-card-container>
+
+<x-display-markdown-file :file="$readme"></x-display-markdown-file>
+

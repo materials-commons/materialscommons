@@ -4,12 +4,13 @@
     </h5>
     @isset($activity->description)
         <form>
-            <div class="form-group">
+            <div class="mb-3">
                 <textarea class="form-control" readonly>{{$activity->description}}</textarea>
             </div>
         </form>
     @endisset
     @include('partials.activities._activity-attributes', ['activity' => $activity])
+    @include('partials.activities._activity-type-attributes', ['attributes' => $attributes])
     <h6>Measurements</h6>
     @include('partials.activities._activity-measurements', ['activity' => $activity])
     <h6>Files</h6>

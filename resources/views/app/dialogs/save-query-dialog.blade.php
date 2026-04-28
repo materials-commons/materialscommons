@@ -3,30 +3,29 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Save Query</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body" style="height: 500px">
                 <h4>Save Query</h4>
                 <form id="mql-save">
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Query</label>
                         <textarea class="form-control" name="query_text" id="query-text">{{$query}}</textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Name</label>
                         <input class="form-control" name="name" value="" type="text"
                                placeholder="Name..." required>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Description</label>
                         <textarea class="form-control" name="description" type="text"
                                   placeholder="Description..." required></textarea>
                     </div>
-                    <div class="float-right">
-                        <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
-                        <a class="btn btn-primary" data-dismiss="modal"
+                    <div class="float-end">
+                        <a class="btn btn-danger" href="#" data-bs-dismiss="modal">Cancel</a>
+                        <a class="btn btn-primary" data-bs-dismiss="modal"
                            hx-post="{{route('projects.mql.store', $project)}}" hx-include="#mql-selection">
                             Save
                         </a>

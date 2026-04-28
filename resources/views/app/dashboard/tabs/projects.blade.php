@@ -1,5 +1,5 @@
 {{--<a class="btn btn-success" href="{{route('projects.create')}}">--}}
-{{--    <i class="fas fa-plus mr-2"></i>Create Project--}}
+{{--    <i class="fas fa-plus me-2"></i>Create Project--}}
 {{--</a>--}}
 {{--@if(auth()->id() == 65 || auth()->id() == 130)--}}
 {{--    <a href="{{route('dashboards.webdav.reset-state')}}" class="btn btn-success">Reset Webdav State</a>--}}

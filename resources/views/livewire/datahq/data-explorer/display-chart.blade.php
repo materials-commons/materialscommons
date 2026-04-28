@@ -5,29 +5,29 @@
             <h5>Not Implemented Yet</h5>
         </x-slot:body>
     </x-modal>
-    <div class="form-group">
-        <label class="ml-4">Chart Controls:</label>
+    <div class="mb-3">
+        <label class="ms-4">Chart Controls:</label>
         <div class="btn-group" role="group">
-            <a class="action-link ml-3 cursor-pointer"
+            <a class="action-link ms-3 cursor-pointer"
                @click.prevent="toggleShowChartDataControls()">
-                <i class="fa fas fa-plus mr-2"></i>Add Data
+                <i class="fa fas fa-plus me-2"></i>Add Data
             </a>
-            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
-                <i class="fa fas fa-eye mr-2"></i>View Data
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
+                <i class="fa fas fa-eye me-2"></i>View Data
             </a>
-            {{--            <a class="action-link ml-4 cursor-pointer" @click.prevent="downloadChartData()">--}}
-            <a class="action-link ml-4 cursor-pointer" href="#sv-not-implemented" data-toggle="modal">
-                <i class="fa fas fa-download mr-2"></i>Download Chart Data
+            {{--            <a class="action-link ms-4 cursor-pointer" @click.prevent="downloadChartData()">--}}
+            <a class="action-link ms-4 cursor-pointer" href="#sv-not-implemented" data-bs-toggle="modal">
+                <i class="fa fas fa-download me-2"></i>Download Chart Data
             </a>
-            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
-                <i class="fa fas fa-trash mr-2"></i>Delete Data
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
+                <i class="fa fas fa-trash me-2"></i>Delete Data
             </a>
-            <a class="action-link ml-4" href="#sv-not-implemented" data-toggle="modal">
-                <i class="fa fas fa-save mr-2"></i>Save Chart
+            <a class="action-link ms-4" href="#sv-not-implemented" data-bs-toggle="modal">
+                <i class="fa fas fa-save me-2"></i>Save Chart
             </a>
-            {{--            <a class="action-link ml-4 cursor-pointer"--}}
+            {{--            <a class="action-link ms-4 cursor-pointer"--}}
             {{--               @click.prevent="drawChart()">--}}
-            {{--                <i class="fa fas fa-redo mr-2"></i>Redraw--}}
+            {{--                <i class="fa fas fa-redo me-2"></i>Redraw--}}
             {{--            </a>--}}
         </div>
     </div>
@@ -47,7 +47,7 @@
                                                      :sample-attributes="$sampleAttributes"/>
     </div>
     <div class="row">
-        <form class="ml-5">
+        <form class="ms-5">
             <div class="row">
                 <div class="col">
                     <input type="text" id="chart-title" class="form-control" placeholder="Chart Title..."/>

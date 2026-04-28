@@ -1,7 +1,9 @@
 
 // Body
 //$body-bg: #fff;
-$body-bg: #f8f9fb;
+//$body-bg: #f8f9fb;
+//$body-bg: #e4eaf5;
+$body-bg: #ffffff;
 
 // Typography
 $font-family-sans-serif: "Nunito", sans-serif;
@@ -114,6 +116,9 @@ $primary: $blue-4;
 $success: #4299e1;
 $danger: #e53e3e;
 $warning: $yellow-4;
+$info: $green-4;
+
+$btn-color: #ffffff;
 
 //$card-border-color: $grey-8;
 
@@ -133,3 +138,5 @@ $warning: $yellow-4;
 $card-border-color: #2b6bb1;
 //$card-border-color: #ffffff;
 $card-cap-bg: #2b6bb1;
+
+$table-border-color: $grey-8;

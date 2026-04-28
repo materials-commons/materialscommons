@@ -33,7 +33,7 @@ class IndexEntitiesWebController extends Controller
         $activities = $this->getProjectActivityNamesForEntities($project->id, $entities);
         $usedActivities = $createUsedActivities->execute($activities, $entities);
 
-        return view('app.projects.entities.index', [
+        return view('app.projects.entities.index-v2', [
             'showExperiment' => true,
             'category'       => $category,
             'project'        => $project,

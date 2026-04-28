@@ -3,7 +3,7 @@
     @if($otherActive->count() != 0)
         <ul class="list-unstyled">
             @foreach($otherActive as $activeTransfer)
-                <li class="ml-4">
+                <li class="ms-4">
                     {{$activeTransfer->owner->name}} started transferring
                     files {{$activeTransfer->created_at->diffForHumans()}}
                     ({{$activeTransfer->globus_request_files_count}} @choice('file|files', $activeTransfer->globus_request_files_count)

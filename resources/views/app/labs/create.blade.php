@@ -3,17 +3,11 @@
 @section('pageTitle', 'Create Lab')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Lab
-        @endslot
-
-        @slot('body')
-        @endslot
-    @endcomponent
+    <h3 class="text-center">Create Lab</h3>
+    <br/>
     @include('common.errors')
 @stop

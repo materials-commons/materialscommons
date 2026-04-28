@@ -1,6 +1,6 @@
 <h4>Project Members</h4>
 <br>
-<a href="#" class="action-link float-right">
+<a href="#" class="action-link float-end">
     <i class="fas fa-fw fa-plus"></i> Add Member
 </a>
 <table id="team-members" class="table table-hover" style="width:100%">

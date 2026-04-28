@@ -9,12 +9,8 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.datasets.edit', $project, $dataset))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
             Edit Dataset: {{$dataset->name}}
-        @endslot
 
-        @slot('body')
             @include('app.projects.datasets._dataset-status', [
                 'defaultRoute' => route('projects.datasets.edit', [$project, $dataset, 'public' => $isPublic]),
                 'filesRoute' => route('projects.datasets.files.edit', [$project, $dataset, 'public' => $isPublic]),
@@ -50,7 +46,4 @@
             @elseif (Request::routeIs('projects.datasets.workflows.edit'))
                 @include('app.projects.datasets.ce-tabs.workflows')
             @endif
-
-        @endslot
-    @endcomponent
 @stop

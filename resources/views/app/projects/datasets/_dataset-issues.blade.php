@@ -2,7 +2,7 @@
     <div x-data="initDatasetIssues">
         <a href="#" @click="showIssues=!showIssues" x-text="showIssuesLinkText()">
         </a>
-        <ul class="list-unstyled ml-3 mt-2" x-show="showIssues" style="display: none">
+        <ul class="list-unstyled ms-3 mt-2" x-show="showIssues" style="display: none">
             @if(!$dataset->hasSelectedFiles())
                 <template x-if="!dataset.hasFiles">
                     <li id="error-files">

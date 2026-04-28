@@ -25,7 +25,7 @@
                 @else
                     <tr>
                         <td>
-                            <span class="ml-3">{{$attribute->name}}</span>
+                            <span class="ms-3">{{$attribute->name}}</span>
                         </td>
                         <td>@json($value->val["value"], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)</td>
                         <td>{{$value->unit}}</td>

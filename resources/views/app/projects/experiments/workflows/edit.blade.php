@@ -9,16 +9,11 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.experiments.workflows.edit', $project, $experiment, $workflow))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Edit Workflow {{$workflow->name}}
-        @endslot
+    <h3 class="text-center">Edit Workflow {{$workflow->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.workflows.edit', [
-                'updateRoute' => route('projects.experiments.workflows.update', [$project, $experiment, $workflow]),
-                'cancelRoute' => route('projects.experiments.show', [$project, $experiment])
-            ])
-        @endslot
-    @endcomponent
+    @include('partials.workflows.edit', [
+        'updateRoute' => route('projects.experiments.workflows.update', [$project, $experiment, $workflow]),
+        'cancelRoute' => route('projects.experiments.show', [$project, $experiment])
+    ])
 @stop

@@ -1,30 +1,25 @@
-<x-table-container>
-
-    @if(Request::routeIs('projects.entities.*'))
-        <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
-    @endif
-
-    {{-- Livewire Vertical Flow View Component --}}
-    @livewire('entities.vertical-flow-view', [
-        'activities' => $activities,
-        'usedActivities' => $usedActivities,
-        'entities' => $entities
-    ])
-
+@if(Request::routeIs('projects.entities.*'))
+    <x-mql.query-builder :category="$category" :activities="$activities" :project="$project"/>
+@endif
+<livewire:entities.vertical-flow-view :entities="$entities" :activities="$activities" :used-activities="$usedActivities" />
+<div id="table-container" style="display: none">
     <table id="entities-with-used-activities" class="table table-hover mt-4" style="width: 100%">
-        <thead>
-        <th>
-            <input type="checkbox" id="selectAll" title="Select all">
-        </th>
-        <th>Name1</th>
-        <th>Name</th>
-        @if(isset($showExperiment) && $showExperiment)
-            <th>Study</th>
-        @endif
-        @foreach($activities as $activity)
-            <th>{{$activity->name}}</th>
-        @endforeach
+        <thead class="table-light">
+        <tr>
+            <th>
+                <input type="checkbox" id="selectAll" title="select all">
+            </th>
+            <th>Name1</th>
+            <th>Name</th>
+            @if(isset($showExperiment) && $showExperiment)
+                <th>Study</th>
+            @endif
+            @foreach($activities as $activity)
+                <th>{{$activity->name}}</th>
+            @endforeach
+        </tr>
         </thead>
+
         <tbody>
         @php
             if (isset($showExperiment) && $showExperiment) {
@@ -36,7 +31,7 @@
         @foreach($entities as $entity)
             <tr data-entity-id="{{$entity->id}}" data-entity-name="{{$entity->name}}">
                 <td>
-                    <input type="checkbox" class="entity-checkbox" value="{{$entity->id}}">
+                    <input type="checkbox" class="entity-checkbox" value="{{$entity->id}}" data-entity-id="{{$entity->id}}" data-entity-name="{{$entity->name}}">
                 </td>
                 <td>{{$entity->name}}</td>
                 <td>
@@ -98,7 +93,7 @@
         @endforeach
         </tbody>
     </table>
-</x-table-container>
+</div>
 
 @push('scripts')
     <script>
@@ -114,14 +109,16 @@
                     header: true,
                     headerOffset: 46,
                 },
+                fixedColumns: {
+                    start: 1
+                },
                 columnDefs: [
-                    {targets: [1, 1], visible: false},
+                    {targets: [1,1], visible: false},
                 ],
+                initComplete: function () {
+                    $('#table-container').show();
+                }
             });
-
-            // setupHavingProcess();
-            // setupHavingActivityAttribute();
-            // setupHavingEntityAttribute();
         });
 
         htmx.on('htmx:after-settle', (evt) => {

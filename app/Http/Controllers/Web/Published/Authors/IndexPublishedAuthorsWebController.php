@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Published\Authors;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dataset;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -11,31 +12,50 @@ class IndexPublishedAuthorsWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Not the most efficient way, but good enough for now.
-        $datasets = Dataset::whereNotNull('published_at')->get();
+        $datasets = Dataset::whereNotNull('published_at')->get(['ds_authors', 'published_at']);
+
         $authors = [];
         foreach ($datasets as $ds) {
             if (is_null($ds->ds_authors)) {
                 continue;
             }
+            $pubDate = $ds->published_at;
             foreach ($ds->ds_authors as $author) {
-                $author = Str::of($author['name'])->trim()->__toString();
-                if (isset($authors[$author])) {
-                    $count = $authors[$author];
-                    $count++;
-                    $authors[$author] = $count;
-                } else {
-                    $authors[$author] = 1;
+                $name = Str::of($author['name'])->trim()->__toString();
+                if ($name === '') {
+                    continue;
+                }
+                if (!isset($authors[$name])) {
+                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null, 'affiliations' => null];
+                }
+                $authors[$name]['count']++;
+                // Capture first non-empty affiliation seen in ds_authors
+                if (empty($authors[$name]['affiliations']) && !empty($author['affiliations'])) {
+                    $authors[$name]['affiliations'] = trim($author['affiliations']);
+                }
+                if ($pubDate) {
+                    if (is_null($authors[$name]['latest']) || $pubDate > $authors[$name]['latest']) {
+                        $authors[$name]['latest'] = $pubDate;
+                    }
+                    if (is_null($authors[$name]['since']) || $pubDate < $authors[$name]['since']) {
+                        $authors[$name]['since'] = $pubDate;
+                    }
                 }
             }
         }
 
         $authors = collect($authors)
-            ->filter(function ($value, $key) {
-                return $key !== '';
-            })
             ->sortKeys()
             ->toArray();
+
+        // Resolve MC accounts so the view can link to profile pages
+        $mcUsers = User::whereIn('name', array_keys($authors))->get(['id', 'name', 'slug', 'affiliations']);
+        foreach ($mcUsers as $mcUser) {
+            if (isset($authors[$mcUser->name])) {
+                $authors[$mcUser->name]['user'] = $mcUser;
+            }
+        }
+
         return view('public.authors.index', compact('authors'));
     }
 }

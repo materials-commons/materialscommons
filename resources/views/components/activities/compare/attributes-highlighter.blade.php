@@ -1,6 +1,6 @@
 @props(['attrs', 'side', 'comparerState'])
 
-<div class="row ml-2">
+<div class="row ms-2">
     @php
         $attributesCount = 0;
     @endphp
@@ -39,7 +39,7 @@
         @continue($isDifferent && $comparerState->hideDifferent)
         @continue((!$isUnique && !$isDifferent) && $comparerState->hideSame)
 
-        <div class="attribute-row row col-11 ml-1 {{$highlightClass}}">
+        <div class="attribute-row row col-11 ms-1 {{$highlightClass}}">
             <div class="col-7">{{$attribute->name}}:</div>
             <div class="col-4">
                 @if(is_array($attribute->values[0]->val["value"]))
@@ -58,6 +58,6 @@
         </div>
     @endforeach
     @if($attributesCount == 0)
-        <span class="ml-1">No Attributes</span>
+        <span class="ms-1">No Attributes</span>
     @endif
 </div>

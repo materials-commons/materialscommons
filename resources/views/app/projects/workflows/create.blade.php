@@ -9,16 +9,11 @@
 @section('breadcrumbs', Breadcrumbs::render('projects.workflows.create', $project))
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create Workflow
-        @endslot
+    <h3 class="text-center">Create Workflow</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.workflows.create', [
-                'storeRoute' => route('projects.workflows.store', [$project]),
-                'cancelRoute' => route('projects.workflows.index', [$project]),
-            ])
-        @endslot
-    @endcomponent
+    @include('partials.workflows.create', [
+        'storeRoute' => route('projects.workflows.store', [$project]),
+        'cancelRoute' => route('projects.workflows.index', [$project]),
+    ])
 @stop

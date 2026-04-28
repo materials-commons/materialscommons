@@ -3,7 +3,7 @@
 @section('pageTitle', 'Dashboard')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @if (Request::routeIs('dashboard'))
@@ -15,47 +15,49 @@
 @endif
 
 @section('content')
-    <x-card>
-        <x-slot name="header">Site Statistics</x-slot>
-        <x-slot name="body">
-            <div style="width:75%;">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-4">Site Statistics</h4>
+
+            <div style="width:75%;" class="mb-4">
                 {!! $usersChart->render() !!}
             </div>
             <br/>
             <br/>
-            <div style="width:75%">
+
+            <div style="width:75%" class="mb-4">
                 {!! $projectsChart->render() !!}
             </div>
             <br/>
             <br/>
-            <div style="width:75%">
+
+            <div style="width:75%" class="mb-4">
                 {!! $datasetsChart->render() !!}
             </div>
+            <br/>
+            <br/>
 
-            <br/>
-            <br/>
-            <div style="width:75%">
+            <div style="width:75%" class="mb-4">
                 {!! $entitiesChart->render() !!}
             </div>
+            <br/>
+            <br/>
 
-            <br/>
-            <br/>
-            <div style="width:75%">
+            <div style="width:75%" class="mb-4">
                 {!! $activitiesChart->render() !!}
             </div>
+            <br/>
+            <br/>
 
-            <br/>
-            <br/>
-            <div style="width:75%">
+            <div style="width:75%" class="mb-4">
                 {!! $attributesChart->render() !!}
             </div>
+            <br/>
+            <br/>
 
-            <br/>
-            <br/>
-            <div style="width:75%">
+            <div style="width:75%" class="mb-4">
                 {!! $filesUploadedChart->render() !!}
             </div>
-
-        </x-slot>
-    </x-card>
+        </div>
+    </div>
 @endsection

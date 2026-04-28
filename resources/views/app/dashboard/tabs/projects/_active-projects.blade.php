@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-body inner-card">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0"><i class="fas fa-star text-warning-2 mr-2"></i>Active Projects</h5>
+            <h5 class="card-title mb-0"><i class="fas fa-star text-warning-2 me-2"></i>Active Projects</h5>
             <span class="badge bg-primary fs-11" style="color:#ffffff">{{count($activeProjects)}}</span>
         </div>
         <hr/>

@@ -1,6 +1,6 @@
 <div>
     <form>
-        <div class="form-group mt-2">
+        <div class="mb-3 mt-2">
             <label>Paper</label>
             <p>{{$paper->title[0]}}</p>
         </div>

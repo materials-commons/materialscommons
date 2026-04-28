@@ -1,5 +1,5 @@
 <div x-data="initShowApi()">
-    <a href="#" class="ml-1" @click="toggleShow()">S</a>
+    <a href="#" class="ms-1" @click="toggleShow()">S</a>
     <div style="display: none" x-show="showCode">
         <pre>
             import materials_commons.api as mcapi

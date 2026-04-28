@@ -7,44 +7,39 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Edit Study: {{$experiment->name}}
-        @endslot
+    <h3 class="text-center">Edit Study: {{$experiment->name}}</h3>
+    <br/>
 
-        @slot('body')
-            <form method="post"
-                  action="{{route('projects.experiments.update', ['project' => $project, 'experiment' => $experiment])}}"
-                  id="edit-experiment">
-                @csrf
-                @method('patch')
+    <form method="post"
+          action="{{route('projects.experiments.update', ['project' => $project, 'experiment' => $experiment])}}"
+          id="edit-experiment">
+        @csrf
+        @method('patch')
 
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input class="form-control" id="name" value="{{old('name', $experiment->name)}}" name="name">
-                </div>
-                <div class="form-group">
-                    <label for="summary">Summary</label>
-                    <input class="form-control" id="summary" value="{{old('summary', $experiment->summary)}}"
-                           name="summary">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description"
-                              name="description">{{old('description', $experiment->description)}}</textarea>
-                </div>
-                <input hidden name="project_id" value="{{$project->id}}">
-                <div class="float-right">
-                    <a href="{{route('projects.show', ['project' => $project])}}" class="action-link danger mr-3">
-                        Cancel
-                    </a>
-                    <a class="action-link" onclick="document.getElementById('edit-experiment').submit()" href="#">
-                        Save
-                    </a>
-                </div>
-            </form>
-        @endslot
-    @endcomponent
+        <div class="mb-3">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" value="{{old('name', $experiment->name)}}" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="summary">Summary</label>
+            <input class="form-control" id="summary" value="{{old('summary', $experiment->summary)}}"
+                   name="summary">
+        </div>
+        <div class="mb-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description"
+                      name="description">{{old('description', $experiment->description)}}</textarea>
+        </div>
+        <input hidden name="project_id" value="{{$project->id}}">
+        <div class="float-end">
+            <a href="{{route('projects.show', ['project' => $project])}}" class="action-link danger me-3">
+                Cancel
+            </a>
+            <a class="action-link" onclick="document.getElementById('edit-experiment').submit()" href="#">
+                Save
+            </a>
+        </div>
+    </form>
 
     @include('common.errors')
 @endsection

@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="mb-3">
     <div class="row">
         <label for="authors">Authors</label>
         <div class="drag-and-drop col-12" x-data="{adding: false, removing: false}">
@@ -63,7 +63,7 @@
     <h3>Select Authors (from project and external authors)</h3>
     <ul class="list-unstyled" id="select-authors">
         <li>
-            <span class="ml-3"><i class="fa fas fa-fw fa-user"></i></span>
+            <span class="ms-3"><i class="fa fas fa-fw fa-user"></i></span>
             {{$project->owner->name}} (Owner)
             <input name="mc_authors[]" value="{{$project->owner->id}}" type="text" hidden>
         @foreach($project->team->members->merge($project->team->admins)->sortBy('name') as $author)
@@ -87,7 +87,7 @@
     {{--    </ul>--}}
 </div>
 
-<div class="form-group">
+<div class="mb-3">
     <label for="additional_authors">Additional Authors</label>
     <div class="">
         <a href="#" onclick="addAdditionalAuthor()"><i class="fa fas fa-fw fa-plus"></i>Add External Author</a>
@@ -124,7 +124,7 @@
 
         function addAdditionalAuthor() {
             $('#additional_authors').append(`<li id="${nextAdditionalAuthorId}">
-                <div class="form-row mt-2">
+                <div class="row mt-2">
                     <a href="#" onclick="removeAuthor('${nextAdditionalAuthorId}')"><i class="fa fas fa-fw fa-trash"></i></a>
                     <div class="col">
                         <input class="form-control" name="additional_authors['id_${nextAdditionalAuthorId}'][name]" type="text" placeholder="Name...(Required)"
@@ -174,7 +174,7 @@
                             <input hidden name="author_order[]" value="${email}" type="text">
                         </li>`);
             $('#select-authors').append(`<li id="ex_sel_${id}">
-                    <a class="action ml-3" href="#" onclick="removeExternalUser('${id}')">
+                    <a class="action ms-3" href="#" onclick="removeExternalUser('${id}')">
                         <i class="fa fa-fw fas fa-trash"></i>
                     </a> ${name} (External Author)`);
             $(`#${id}`).hide();

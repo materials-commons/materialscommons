@@ -21,7 +21,7 @@
                         <small>{{ isset($download['created_at']) ? \Carbon\Carbon::parse($download['created_at'])->diffForHumans() : 'N/A' }}</small>
                     </td>
                     <td>
-                        <span class="badge badge-secondary">{{ $download['status'] ?? 'Unknown' }}</span>
+                        <span class="badge text-bg-secondary">{{ $download['status'] ?? 'Unknown' }}</span>
                     </td>
                 </tr>
             @endforeach

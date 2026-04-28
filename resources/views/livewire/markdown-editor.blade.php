@@ -12,7 +12,7 @@
                         <button type="button" class="btn-close" wire:click="toggleDownloadModal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="downloadFilename">Filename</label>
                             <input type="text" class="form-control" id="downloadFilename" wire:model="downloadFilename" placeholder="Enter filename">
                             <small class="form-text text-muted">The .md extension will be added automatically if not included.</small>

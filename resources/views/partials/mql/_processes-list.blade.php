@@ -1,5 +1,5 @@
-{{--<ul class="list-unstyled ml-4">--}}
-<table class="table table-sm table-borderless ml-4">
+{{--<ul class="list-unstyled ms-4">--}}
+<table class="table table-sm table-borderless ms-4">
     <thead>
     <tr class="row">
         <th class="col-sm-1">Y</th>
@@ -72,7 +72,7 @@
                            hx-trigger="click">
                 </td>
             @endif
-            <td>{{$activity->name}}</td>
+            <td class="col-sm-8">{{$activity->name}}</td>
         </tr>
     @endforeach
     </tbody>

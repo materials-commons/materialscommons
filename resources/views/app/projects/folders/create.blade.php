@@ -7,17 +7,12 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Create folder in directory {{$directory->name}}
-        @endslot
+    <h3 class="text-center">Create folder in directory {{$directory->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('app.projects.folders._create', [
-                'storeDirectoryRoute' => route('projects.folders.store', [$project, $directory, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg]),
-                'cancelRoute' => route('projects.folders.show', [$project, $directory, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])
-            ])
-            @include('common.errors')
-        @endslot
-    @endcomponent
+    @include('app.projects.folders._create', [
+        'storeDirectoryRoute' => route('projects.folders.store', [$project, $directory, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg]),
+        'cancelRoute' => route('projects.folders.show', [$project, $directory, 'destdir' => $destDir, 'destproj' => $destProj, 'arg' => $arg])
+    ])
+    @include('common.errors')
 @stop
