@@ -38,10 +38,12 @@
                     @if(!blank($community->owner->affiliations))
                         <span class="text-muted ms-1">({{ $community->owner->affiliations }})</span>
                     @endif
+                    @auth
                     <a href="mailto:{{ $community->owner->email }}?subject={{ $community->name }}"
                        class="ms-2 text-muted" title="Email organizer">
                         <i class="fas fa-envelope"></i>
                     </a>
+                    @endauth
                 </div>
             </div>
         </div>
