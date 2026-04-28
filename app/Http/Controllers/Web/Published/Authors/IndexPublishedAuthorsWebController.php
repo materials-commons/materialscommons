@@ -26,9 +26,13 @@ class IndexPublishedAuthorsWebController extends Controller
                     continue;
                 }
                 if (!isset($authors[$name])) {
-                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null];
+                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null, 'affiliations' => null];
                 }
                 $authors[$name]['count']++;
+                // Capture first non-empty affiliation seen in ds_authors
+                if (empty($authors[$name]['affiliations']) && !empty($author['affiliations'])) {
+                    $authors[$name]['affiliations'] = trim($author['affiliations']);
+                }
                 if ($pubDate) {
                     if (is_null($authors[$name]['latest']) || $pubDate > $authors[$name]['latest']) {
                         $authors[$name]['latest'] = $pubDate;
@@ -45,7 +49,7 @@ class IndexPublishedAuthorsWebController extends Controller
             ->toArray();
 
         // Resolve MC accounts so the view can link to profile pages
-        $mcUsers = User::whereIn('name', array_keys($authors))->get(['id', 'name', 'slug']);
+        $mcUsers = User::whereIn('name', array_keys($authors))->get(['id', 'name', 'slug', 'affiliations']);
         foreach ($mcUsers as $mcUser) {
             if (isset($authors[$mcUser->name])) {
                 $authors[$mcUser->name]['user'] = $mcUser;

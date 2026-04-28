@@ -129,9 +129,9 @@
     <table id="authors" class="table table-hover align-middle">
         <thead class="table-light">
         <tr>
-            <th style="width:3rem;">#</th>
             <th>Author</th>
-            <th>Datasets</th>
+            <th>Affiliation</th>
+            <th># Datasets</th>
             <th>Count</th>{{-- hidden, sort proxy for Datasets --}}
             <th>Most Recent</th>
             <th>RecentTS</th>{{-- hidden, sort proxy for Most Recent --}}
@@ -148,7 +148,6 @@
                 $isActive   = $latest && $latest >= $activeThresh;
             @endphp
             <tr>
-                <td class="text-muted small rank-cell"></td>
                 <td>
                     @if(!empty($data['user']))
                         <a href="{{ route('public.authors.show', $data['user']) }}" class="fw-semibold">{{ $author }}</a>
@@ -163,6 +162,9 @@
                             since {{ $since->format('Y') }}
                         </div>
                     @endif
+                </td>
+                <td class="text-muted small">
+                    {{ !empty($data['user']->affiliations) ? $data['user']->affiliations : ($data['affiliations'] ?? '—') }}
                 </td>
                 <td>
                     <div class="d-flex align-items-center gap-2">
@@ -262,25 +264,18 @@
 
         <script>
             $(document).ready(() => {
+                // cols: 0:Author 1:Affiliation 2:#Datasets(badge+bar) 3:Count(hidden) 4:Most Recent 5:RecentTS(hidden) 6:Active
                 $('#authors').DataTable({
                     pageLength: 100,
                     stateSave: false,
-                    order: [[3, 'desc']],
+                    order: [[0, 'asc']],
                     columnDefs: [
-                        {targets: [0], orderable: false, searchable: false},
                         {targets: [2], orderData: [3]},
                         {targets: [3], visible: false},
                         {targets: [4], orderData: [5]},
                         {targets: [5], visible: false},
                         {targets: [6], orderable: false, searchable: false},
                     ],
-                    drawCallback: function () {
-                        const api   = this.api();
-                        const start = api.page.info().start;
-                        api.rows({page: 'current'}).every(function (rowIdx) {
-                            $(this.node()).find('.rank-cell').text(start + rowIdx + 1);
-                        });
-                    },
                 });
             });
         </script>

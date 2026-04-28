@@ -33,6 +33,23 @@
                 'url'  => route('public.datasets.show', $ds),
             ])->values()->toArray(),
         ]);
+
+        // Top viewed / downloaded across all datasets (owned + included), max 15
+        $topViewed = $profile->allDatasets
+            ->filter(fn($ds) => $ds->views_count > 0)
+            ->sortByDesc('views_count')
+            ->take(15);
+        $topViewedNames  = $topViewed->map(fn($ds) => mb_strlen($ds->name) > 32 ? mb_substr($ds->name, 0, 30).'…' : $ds->name)->values()->toArray();
+        $topViewedCounts = $topViewed->pluck('views_count')->values()->toArray();
+        $topViewedUrls   = $topViewed->map(fn($ds) => route('public.datasets.show', $ds))->values()->toArray();
+
+        $topDownloaded = $profile->allDatasets
+            ->filter(fn($ds) => $ds->downloads_count > 0)
+            ->sortByDesc('downloads_count')
+            ->take(15);
+        $topDownloadedNames  = $topDownloaded->map(fn($ds) => mb_strlen($ds->name) > 32 ? mb_substr($ds->name, 0, 30).'…' : $ds->name)->values()->toArray();
+        $topDownloadedCounts = $topDownloaded->pluck('downloads_count')->values()->toArray();
+        $topDownloadedUrls   = $topDownloaded->map(fn($ds) => route('public.datasets.show', $ds))->values()->toArray();
     @endphp
 
     {{-- ══ Profile header ══════════════════════════════════════════════════════════ --}}
@@ -69,9 +86,6 @@
                                 <i class="fas fa-globe me-1" style="font-size:.8rem;"></i>Homepage
                             </a>
                         @endif
-{{--                        <span class="text-muted">--}}
-{{--                        <i class="fas fa-envelope me-1" style="font-size:.8rem;"></i>{{ $user->email }}--}}
-                    </span>
                     </div>
 
                     @if(!blank($user->description))
@@ -193,6 +207,38 @@
                                 <p class="text-muted mb-1" style="font-size:.7rem;">Shared datasets count</p>
                                 <div id="chart-author-coauthors"
                                      style="height:{{ min(60 + count($profile->chartCoauthorNames) * 26, 380) }}px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Top viewed datasets --}}
+                @if(count($topViewedNames) > 0)
+                    <div class="col-12 col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-eye me-1"></i> Most Viewed Datasets
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">Owned &amp; included — click to open</p>
+                                <div id="chart-author-top-viewed"
+                                     style="height:{{ min(60 + count($topViewedNames) * 26, 420) }}px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Top downloaded datasets --}}
+                @if(count($topDownloadedNames) > 0)
+                    <div class="col-12 col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-download me-1"></i> Most Downloaded Datasets
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">Owned &amp; included — click to open</p>
+                                <div id="chart-author-top-downloaded"
+                                     style="height:{{ min(60 + count($topDownloadedNames) * 26, 420) }}px;"></div>
                             </div>
                         </div>
                     </div>
@@ -592,6 +638,50 @@
                     },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                @endif
+
+                @if(count($topViewedNames) > 0)
+                const topViewedUrls = @json($topViewedUrls);
+                Plotly.newPlot('chart-author-top-viewed', [{
+                    type: 'bar', orientation: 'h',
+                    y: @json($topViewedNames),
+                    x: @json($topViewedCounts),
+                    marker: {color: '#0dcaf0'},
+                    hovertemplate: '%{y}: %{x} views<extra></extra>',
+                    text: @json(array_map(fn($v) => number_format($v), $topViewedCounts)),
+                    textposition: 'inside', insidetextanchor: 'end',
+                    textfont: {color: 'white', size: 9},
+                }], base({
+                    margin: {t: 5, b: 30, l: 230, r: 20},
+                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                            title: {text: 'views', font: {size: 10}}},
+                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+                }), {...plotConfig, cursor: 'pointer'});
+                document.getElementById('chart-author-top-viewed').on('plotly_click', function (data) {
+                    window.location.href = topViewedUrls[data.points[0].pointIndex];
+                });
+                @endif
+
+                @if(count($topDownloadedNames) > 0)
+                const topDownloadedUrls = @json($topDownloadedUrls);
+                Plotly.newPlot('chart-author-top-downloaded', [{
+                    type: 'bar', orientation: 'h',
+                    y: @json($topDownloadedNames),
+                    x: @json($topDownloadedCounts),
+                    marker: {color: '#fd7e14'},
+                    hovertemplate: '%{y}: %{x} downloads<extra></extra>',
+                    text: @json(array_map(fn($v) => number_format($v), $topDownloadedCounts)),
+                    textposition: 'inside', insidetextanchor: 'end',
+                    textfont: {color: 'white', size: 9},
+                }], base({
+                    margin: {t: 5, b: 30, l: 230, r: 20},
+                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                            title: {text: 'downloads', font: {size: 10}}},
+                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+                }), {...plotConfig, cursor: 'pointer'});
+                document.getElementById('chart-author-top-downloaded').on('plotly_click', function (data) {
+                    window.location.href = topDownloadedUrls[data.points[0].pointIndex];
+                });
                 @endif
 
                 // Resize charts when a tab becomes visible
