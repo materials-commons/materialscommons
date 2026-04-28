@@ -39,10 +39,10 @@
                         <span class="text-muted ms-1">({{ $community->owner->affiliations }})</span>
                     @endif
                     @auth
-                    <a href="mailto:{{ $community->owner->email }}?subject={{ $community->name }}"
-                       class="ms-2 text-muted" title="Email organizer">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                        <a href="mailto:{{ $community->owner->email }}?subject={{ $community->name }}"
+                           class="ms-2 text-muted" title="Email organizer">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     @endauth
                 </div>
             </div>
@@ -105,11 +105,13 @@
                                         {{ $name }}
                                     </a>
                                     @if($mcUser)
-                                        <span class="badge text-bg-primary flex-shrink-0" style="font-size:.6rem; padding:.15em .35em;">MC</span>
+                                        <span class="badge text-bg-primary flex-shrink-0"
+                                              style="font-size:.6rem; padding:.15em .35em;">MC</span>
                                     @endif
                                 </div>
                                 @if(!blank($affiliation))
-                                    <div class="text-muted text-truncate" style="font-size:.73rem;" title="{{ $affiliation }}">
+                                    <div class="text-muted text-truncate" style="font-size:.73rem;"
+                                         title="{{ $affiliation }}">
                                         {{ $affiliation }}
                                     </div>
                                 @endif
@@ -245,8 +247,8 @@
         $(document).ready(() => {
             $('#datasets').DataTable({
                 pageLength: 25,
-                stateSave:  false,
-                order:      [[3, 'desc']],
+                stateSave: false,
+                order: [[3, 'desc']],
                 columnDefs: [
                     {targets: [1, 2], type: 'num'},
                 ],
@@ -256,16 +258,16 @@
         @if($dsCount > 1 && ($totalViews > 0 || $totalDownloads > 0))
         (function () {
             const STORAGE_KEY = 'mc_comm_ds_analytics_{{ $community->id }}';
-            const panel   = document.getElementById('comm-ds-analytics');
+            const panel = document.getElementById('comm-ds-analytics');
             const chevron = document.getElementById('comm-ds-analytics-chevron');
-            const toggle  = document.getElementById('comm-ds-analytics-toggle');
+            const toggle = document.getElementById('comm-ds-analytics-toggle');
 
             if (!panel) return;
 
             if (localStorage.getItem(STORAGE_KEY) === 'true') {
                 panel.classList.add('show');
                 if (chevron) chevron.style.transform = 'rotate(90deg)';
-                if (toggle)  toggle.setAttribute('aria-expanded', 'true');
+                if (toggle) toggle.setAttribute('aria-expanded', 'true');
             }
             panel.addEventListener('show.bs.collapse', () => {
                 if (chevron) chevron.style.transform = 'rotate(90deg)';
@@ -298,8 +300,10 @@
                 textfont: {color: 'white', size: 9},
             }], base({
                 margin: {t: 5, b: 30, l: 200, r: 20},
-                xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'views', font: {size: 10}}},
+                xaxis: {
+                    tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                    title: {text: 'views', font: {size: 10}}
+                },
                 yaxis: {autorange: 'reversed', tickfont: {size: 10}},
             }), plotConfig);
             document.getElementById('chart-comm-views').on('plotly_click', function (data) {
@@ -320,8 +324,10 @@
                 textfont: {color: 'white', size: 9},
             }], base({
                 margin: {t: 5, b: 30, l: 200, r: 20},
-                xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'downloads', font: {size: 10}}},
+                xaxis: {
+                    tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                    title: {text: 'downloads', font: {size: 10}}
+                },
                 yaxis: {autorange: 'reversed', tickfont: {size: 10}},
             }), plotConfig);
             document.getElementById('chart-comm-downloads').on('plotly_click', function (data) {
