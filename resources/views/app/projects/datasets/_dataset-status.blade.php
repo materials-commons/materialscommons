@@ -1,88 +1,75 @@
-<div class="d-flex justify-content-center w-100">
-    <ul class="steps">
-        @if(blank($dataset->description))
-            <li class="step step-error">
-                <a class="step-content" href="{{$defaultRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-exclamation fa-fw"></i></span>
-                    <span class="step-text">Overview</span>
-                </a>
-            </li>
-        @else
-            <li class="step step-success">
-                <a class="step-content" href="{{$defaultRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
-                    <span class="step-text">Overview</span>
-                </a>
-            </li>
-        @endif
+@php
+    $detailsActive   = Request::routeIs('projects.datasets.edit');
+    $filesActive     = Request::routeIs('projects.datasets.files.edit');
+    $samplesActive   = Request::routeIs('projects.datasets.samples.edit');
+    $workflowsActive = Request::routeIs('projects.datasets.workflows.edit');
+@endphp
 
-        @if($dataset->hasSelectedFiles())
-            <li class="step step-success" id="files-step">
-                <a class="step-content" href="{{$filesRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-check fa-fw" id="files-circle"></i></span>
-                    <span class="step-text">Files</span>
-                </a>
-            </li>
-        @else
-            <li class="step step-error" id="files-step">
-                <a class="step-content" href="{{$filesRoute}}">
-                            <span class="step-circle"><i class="fa fas fa-exclamation fa-fw"
-                                                         id="files-circle"></i></span>
-                    <span class="step-text">Files</span>
-                </a>
-            </li>
-        @endif
+<ul class="nav nav-tabs mb-0" role="tablist">
+    {{-- Details --}}
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center gap-2 {{ $detailsActive ? 'active' : '' }}"
+           href="{{ $defaultRoute }}">
+            @if(blank($dataset->description))
+                <i class="fas fa-exclamation-circle text-danger" style="font-size:.78rem;"></i>
+            @else
+                <i class="fas fa-check-circle text-success" style="font-size:.78rem;"></i>
+            @endif
+            Details
+        </a>
+    </li>
 
-        @if($entities->count() != 0)
-            <li class="step step-success" id="samples-step">
-                <a class="step-content" href="{{$samplesRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-check fa-fw" id="samples-circle"></i></span>
-                    <span class="step-text">Samples (Optional)</span>
-                </a>
-            </li>
-        @else
-            <li class="step" id="samples-step">
-                <a class="step-content" href="{{$samplesRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-circle fa-fw" id="samples-circle"></i></span>
-                    <span class="step-text">Samples (Optional)</span>
-                </a>
-            </li>
-        @endif
+    {{-- Files --}}
+    <li class="nav-item" id="files-step">
+        <a class="nav-link d-flex align-items-center gap-2 {{ $filesActive ? 'active' : '' }}"
+           href="{{ $filesRoute }}">
+            @if($dataset->hasSelectedFiles())
+                <i class="fas fa-check-circle text-success" id="files-circle" style="font-size:.78rem;"></i>
+            @else
+                <i class="fas fa-exclamation-circle text-danger" id="files-circle" style="font-size:.78rem;"></i>
+            @endif
+            Files
+        </a>
+    </li>
 
-        @if($dataset->workflows->count() != 0)
-            <li class="step step-success" id="workflows-step">
-                <a class="step-content" href="{{$workflowsRoute}}">
-                    <span class="step-circle"><i class="fa fas fa-check fa-fw" id="workflows-circle"></i></span>
-                    <span class="step-text">Workflow (Optional)</span>
-                </a>
-            </li>
-        @else
-            <li class="step" id="workflows-step">
-                <a class="step-content" href="{{$workflowsRoute}}">
-                            <span class="step-circle"><i class="fa fas fa-circle fa-fw"
-                                                         id="workflows-circle"></i></span>
-                    <span class="step-text">Workflow (Optional)</span>
-                </a>
-            </li>
-        @endif
+    {{-- Samples (optional) --}}
+    <li class="nav-item" id="samples-step">
+        <a class="nav-link d-flex align-items-center gap-2 {{ $samplesActive ? 'active' : '' }}"
+           href="{{ $samplesRoute }}">
+            @if($entities->count() > 0)
+                <i class="fas fa-check-circle text-success" id="samples-circle" style="font-size:.78rem;"></i>
+            @else
+                <i class="fas fa-circle text-muted" id="samples-circle" style="font-size:.78rem;"></i>
+            @endif
+            Samples
+            <span class="badge text-bg-light border" style="font-size:.6rem; font-weight:400; padding:.15em .35em;">optional</span>
+        </a>
+    </li>
 
-        @if(is_null($dataset->published_at))
-            <li class="step">
-                <div class="step-content">
-                    <span class="step-circle"><i class="fa fas fa-circle fa-fw"></i></span>
-                    <span class="step-text">Published</span>
-                </div>
-            </li>
-        @else
-            <li class="step step-success">
-                <div class="step-content">
-                    <span class="step-circle"><i class="fa fas fa-check fa-fw"></i></span>
-                    <span class="step-text">Published</span>
-                </div>
-            </li>
-        @endif
-    </ul>
-</div>
-<div class="d-flex justify-content-center w-100 mt-3">
-    @include('app.projects.datasets._dataset-issues')
-</div>
+    {{-- Workflows (optional) --}}
+    <li class="nav-item" id="workflows-step">
+        <a class="nav-link d-flex align-items-center gap-2 {{ $workflowsActive ? 'active' : '' }}"
+           href="{{ $workflowsRoute }}">
+            @if($dataset->workflows->count() > 0)
+                <i class="fas fa-check-circle text-success" id="workflows-circle" style="font-size:.78rem;"></i>
+            @else
+                <i class="fas fa-circle text-muted" id="workflows-circle" style="font-size:.78rem;"></i>
+            @endif
+            Workflows
+            <span class="badge text-bg-light border" style="font-size:.6rem; font-weight:400; padding:.15em .35em;">optional</span>
+        </a>
+    </li>
+
+    {{-- Published indicator — non-clickable, pushed to far right --}}
+    <li class="nav-item ms-auto">
+        <span class="nav-link d-flex align-items-center gap-2 pe-none text-muted" style="cursor:default;">
+            @if(!is_null($dataset->published_at))
+                <i class="fas fa-check-circle text-success" style="font-size:.78rem;"></i>
+                Published
+            @else
+                <i class="fas fa-lock-open text-muted" style="font-size:.78rem;"></i>
+                Unpublished
+            @endif
+        </span>
+    </li>
+</ul>

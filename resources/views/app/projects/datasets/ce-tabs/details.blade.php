@@ -1,26 +1,26 @@
-<br>
 <div x-data="datasetCETabsDetails">
-    <div class="float-end">
+    {{-- Floating action bar — fixed at bottom of viewport --}}
+    <div class="d-flex justify-content-end align-items-center gap-2 py-2 px-4"
+         style="position:fixed; bottom:0; left:0; right:0; z-index:1040;
+                background:white; border-top:1px solid #dee2e6;
+                box-shadow:0 -2px 8px rgba(0,0,0,.1);">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-           class="btn btn-danger me-3">
+           class="btn btn-sm btn-outline-secondary">
             Cancel
         </a>
-
-        <a class="btn btn-info me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
-            Update
+        <a class="btn btn-sm btn-outline-primary" href="#" id="save-button-top" @click.prevent="setActionAndSubmit('save')">
+            <i class="fas fa-save me-1"></i> Save
         </a>
-
-        <a class="btn btn-success" href="#" id="done-button" @click.prevent="setActionAndSubmit('done')">
-            Done
+        <a class="btn btn-sm btn-success" href="#" id="done-button-top" @click.prevent="setActionAndSubmit('done')">
+            <i class="fas fa-check me-1"></i> Save &amp; Exit
         </a>
-
         @include('app.projects.datasets.ce-tabs._done-and-publish-button')
     </div>
-    <br>
-    <br>
+
     <form method="post"
           action="{{route('projects.datasets.update', [$project, $dataset, 'public' => $isPublic])}}"
-          id="dataset_update">
+          id="dataset_update"
+          style="padding-bottom:4rem;">
         @csrf
         @method('put')
 
@@ -45,8 +45,6 @@
         {{--    </div>--}}
 
         <x-datasets.create-authors-table :project="$project" :dataset="$dataset"/>
-        <div id="authors_list"></div>
-        <br>
 
         <div class="mb-3">
             <label for="description">Description</label>
@@ -134,21 +132,6 @@
 
         <input hidden id="project_id" name="project_id" value="{{$project->id}}">
         <input type="hidden" name="action" value="" id="action"/>
-
-        <div class="float-end">
-            <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
-               class="action-link danger me-3">
-                Cancel
-            </a>
-
-            <a class="action-link me-3" href="#" id="save-button" @click.prevent="setActionAndSubmit('save')">
-                Update
-            </a>
-
-            <a class="action-link me-3" href="#" id="done-button" @click.prevent="setActionAndSubmit('done')">
-                Done
-            </a>
-        </div>
     </form>
 </div>
 
@@ -203,6 +186,28 @@
             $('#name').change(validate).keypress(() => validate());
             let tagsInput = document.querySelector('#tags');
             new Tagify(tagsInput);
+
+            // Intercept nav-tab clicks: save the form first, then let the controller redirect
+            // to the clicked tab. The controller supports actions: 'files', 'workflow', 'samples'.
+            $('.nav-tabs .nav-link').not('.active').on('click', function (e) {
+                e.preventDefault();
+                const href = $(this).attr('href') || '';
+                let action = 'save';
+                if (href.includes('/files'))     action = 'files';
+                else if (href.includes('/workflows')) action = 'workflow';
+                else if (href.includes('/samples'))   action = 'samples';
+
+                _serializeAndSubmit(action);
+            });
+
+            // Shared helper — submit the form with the given action
+            function _serializeAndSubmit(action) {
+                $('#action').val(action);
+                document.getElementById('dataset_update').submit();
+            }
+
+            // Expose to Alpine component
+            window._dsDetailsSerializeAndSubmit = _serializeAndSubmit;
         });
 
         mcutil.onAlpineInit("datasetCETabsDetails", () => {
@@ -218,14 +223,18 @@
                 setNextButtonsDisabled(disable) {
                     if (disable) {
                         $("#save-button").prop("disabled", true).addClass("isDisabled");
+                        $("#save-button-top").prop("disabled", true).addClass("isDisabled");
                         $("#done-button").prop("disabled", true).addClass("isDisabled");
+                        $("#done-button-top").prop("disabled", true).addClass("isDisabled");
                         $("#add-samples-button").prop("disabled", true).addClass("isDisabled");
                         $("#add-processes-button").prop("disabled", true).addClass("isDisabled");
                         $("#add-files-button").prop("disabled", true).addClass("isDisabled");
                         $("#add-workflow-button").prop("disabled", true).addClass("isDisabled");
                     } else {
                         $("#save-button").prop("disabled", false).removeClass("isDisabled");
+                        $("#save-button-top").prop("disabled", false).removeClass("isDisabled");
                         $("#done-button").prop("disabled", false).removeClass("isDisabled");
+                        $("#done-button-top").prop("disabled", false).removeClass("isDisabled");
                         $("#add-samples-button").prop("disabled", false).removeClass("isDisabled");
                         $("#add-processes-button").prop("disabled", false).removeClass("isDisabled");
                         $("#add-files-button").prop("disabled", false).removeClass("isDisabled");
@@ -234,45 +243,10 @@
                 },
 
                 setActionAndSubmit(action) {
-                    $('#action').val(action);
-                    let authorsListElement = document.getElementById('authors_list');
-
-                    // authorTable is defined in the include create-authors-table.blade.php
-                    let values = [];
-                    let authorTable = $("#authors").DataTable();
-                    authorTable.rows().data().each(row => values.push(this.createAuthorElement(row[2], row[3], row[4])));
-                    for (let i = 0; i < values.length; i++) {
-                        let author = values[i];
-                        let nameInput = document.createElement("input");
-                        nameInput.type = "hidden";
-                        nameInput.name = `ds_authors[${i}][name]`;
-                        nameInput.value = author.name;
-                        authorsListElement.appendChild(nameInput);
-
-                        let emailInput = document.createElement("input");
-                        emailInput.type = "hidden";
-                        emailInput.name = `ds_authors[${i}][email]`;
-                        emailInput.value = author.email;
-                        authorsListElement.appendChild(emailInput);
-
-                        let affiliationsInput = document.createElement("input");
-                        affiliationsInput.type = "hidden";
-                        affiliationsInput.name = `ds_authors[${i}][affiliations]`;
-                        affiliationsInput.value = author.affiliations;
-                        authorsListElement.appendChild(affiliationsInput);
+                    // Delegate to the shared helper defined in $(document).ready
+                    if (window._dsDetailsSerializeAndSubmit) {
+                        window._dsDetailsSerializeAndSubmit(action);
                     }
-                    document.getElementById('dataset_update').submit();
-                    if (action === 'done') {
-                        window.location.href = "{{route('projects.datasets.index', ['project' => $project->id])}}";
-                    }
-                },
-
-                createAuthorElement(name, affiliations, email) {
-                    return {
-                        name: name,
-                        affiliations: affiliations,
-                        email: email,
-                    };
                 },
 
                 changeActionAndSubmit() {

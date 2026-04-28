@@ -1,150 +1,139 @@
-<div>
-    <label>Authors</label>
-    <p>Drag and drop to re-order authors</p>
-    @include('components.datasets._add_authors_dialog')
-    <br>
-    <div x-data="initEditAuthor()">
-        <div class="modal fade" tabindex="-1" id="edit-author-dialog" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Author</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mt-2">
-                            <div class="col">
-                                <input class="form-control" name="author_name" type="text"
-                                       placeholder="Name...(Required)"
-                                       x-model="author.name" id="author_name" required>
-                            </div>
-                            <div class="col">
-                                <input class="form-control" name="author_email" type="email"
-                                       x-model="author.email" placeholder="Email...(Required)" id="author_email"
-                                       required>
-                            </div>
-                            <div class="col">
-                                <input class="form-control" name="author_affiliations"
-                                       x-model="author.affiliations" type="text" placeholder="Affiliations...(Required)"
-                                       x-on:keydown.enter="updateAuthor()"
-                                       required id="author_affiliations">
-                            </div>
+@php
+    if (old('ds_authors')) {
+        $initialAuthors = collect(old('ds_authors'))->map(fn($a) => [
+            'name'         => $a['name'] ?? '',
+            'email'        => $a['email'] ?? '',
+            'affiliations' => $a['affiliations'] ?? '',
+        ])->values()->toArray();
+    } elseif (!is_null($dataset) && is_array($dataset->ds_authors) && count($dataset->ds_authors) > 0) {
+        $initialAuthors = collect($dataset->ds_authors)->map(fn($a) => [
+            'name'         => $a['name'],
+            'email'        => $a['email'],
+            'affiliations' => $a['affiliations'],
+        ])->values()->toArray();
+    } else {
+        $initialAuthors = $project->team->members->merge($project->team->admins)->map(fn($a) => [
+            'name'         => $a->name,
+            'email'        => $a->email,
+            'affiliations' => $a->affiliations ?? '',
+        ])->values()->toArray();
+    }
+@endphp
+
+<div class="mb-3" x-data="initAuthors()">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <label class="mb-0 fw-semibold">Authors</label>
+        <button type="button" class="btn btn-sm btn-outline-primary" @click="addAuthor()">
+            <i class="fas fa-plus me-1"></i> Add Author
+        </button>
+    </div>
+
+    <div x-show="authors.length === 0"
+         class="text-muted fst-italic small py-2 px-1 border rounded bg-light text-center">
+        No authors added yet.
+    </div>
+
+    <template x-for="(author, index) in authors" :key="author._key">
+        <div class="card mb-2 border">
+            <div class="card-body py-2 px-3">
+                <div class="d-flex align-items-center gap-2">
+
+                    {{-- Order badge --}}
+                    <span class="badge rounded-pill text-bg-secondary flex-shrink-0"
+                          style="min-width:1.6rem; font-size:.7rem;"
+                          x-text="index + 1"></span>
+
+                    {{-- Fields --}}
+                    <div class="row g-2 flex-grow-1">
+                        <div class="col-md-4">
+                            <input class="form-control form-control-sm"
+                                   type="text"
+                                   x-model="author.name"
+                                   x-bind:name="`ds_authors[${index}][name]`"
+                                   placeholder="Name (Required)">
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-control-sm"
+                                   type="email"
+                                   x-model="author.email"
+                                   x-bind:name="`ds_authors[${index}][email]`"
+                                   placeholder="Email">
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control form-control-sm"
+                                   type="text"
+                                   x-model="author.affiliations"
+                                   x-bind:name="`ds_authors[${index}][affiliations]`"
+                                   placeholder="Affiliations">
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" x-on:click="updateAuthor()">Update Author</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+
+                    {{-- Move up/down --}}
+                    <div class="d-flex flex-column gap-1 flex-shrink-0">
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary py-0 px-1"
+                                :disabled="index === 0"
+                                @click="moveUp(index)"
+                                title="Move up">
+                            <i class="fas fa-chevron-up" style="font-size:.6rem;"></i>
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary py-0 px-1"
+                                :disabled="index === authors.length - 1"
+                                @click="moveDown(index)"
+                                title="Move down">
+                            <i class="fas fa-chevron-down" style="font-size:.6rem;"></i>
+                        </button>
                     </div>
+
+                    {{-- Remove --}}
+                    <button type="button"
+                            class="btn btn-sm btn-outline-danger py-0 px-2 flex-shrink-0"
+                            @click="removeAuthor(index)"
+                            title="Remove author">
+                        <i class="fas fa-trash" style="font-size:.7rem;"></i>
+                    </button>
                 </div>
             </div>
         </div>
-
-        <table id="authors" class="table table-hover" style="width: 100%">
-            <thead>
-            <tr>
-                <th>Seq.</th>
-                <th></th>
-                <th>Name</th>
-                <th>Affiliations</th>
-                <th>Email</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            @if(!is_null($dataset) && is_array($dataset->ds_authors) && sizeof($dataset->ds_authors) != 0)
-                @foreach($dataset->ds_authors as $author)
-                    <tr id="row-{{$loop->index}}">
-                        <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
-                        <td>{{$author['name']}}</td>
-                        <td>{{$author['affiliations']}}</td>
-                        <td>{{$author['email']}}</td>
-                        <td>
-                            <div class="float-end">
-                                <a class="action-link cursor-pointer"
-                                   x-on:click.prevent="openEditDialog({{$loop->index}}, '{{$author['name']}}', '{{$author['affiliations']}}', '{{$author['email']}}')">
-                                    <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link cursor-pointer"
-                                   x-on:click.prevent="deleteAuthor({{$loop->index}})"><i
-                                            class="fas fa-fw fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                @foreach($project->team->members->merge($project->team->admins) as $author)
-                    <tr id="row-{{$loop->index}}">
-                        <td>{{$loop->index}}</td>
-                        <td><i class="fas fa-fw fa-grip-vertical me-2"></i></td>
-                        <td>{{$author->name}}</td>
-                        <td>{{$author->affiliations}}</td>
-                        <td>{{$author->email}}</td>
-                        <td>
-                            <div class="float-end">
-                                <a class="action-link" href="#"
-                                   x-on:click="openEditDialog({{$loop->index}}, '{{$author->name}}', '{{$author->affiliations}}', '{{$author->email}}')">
-                                    <i class="fas fa-fw fa-edit"></i></a>
-                                <a class="action-link" href="#" x-on:click="deleteAuthor({{$loop->index}})"><i
-                                            class="fas fa-fw fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-            </tbody>
-        </table>
-    </div>
+    </template>
 </div>
 
 @push('scripts')
     <script>
-        document.addEventListener('alpine:init', () => {
-            $("#authors").DataTable({
-                pageLength: 100,
-                rowReorder: true,
-                columnDefs: [
-                    {targets: 0, visible: false}
-                ],
-                fnRowCallback: function (nRow, data) {
-                    nRow.children[0].className = "cursor-move";
-                    if (nRow.id === "" || nRow.id == null) {
-                        nRow.id = `row-${data[0]}`;
-                    }
-                }
-            });
-        });
+        function initAuthors() {
+            let _nextKey = 0;
+            const initialAuthors = @json($initialAuthors);
 
-        function initEditAuthor() {
             return {
-                author: {
-                    id: 0,
-                    name: '',
-                    affiliations: '',
-                    email: '',
+                authors: initialAuthors.map(a => ({...a, _key: _nextKey++})),
+
+                addAuthor() {
+                    this.authors.push({name: '', email: '', affiliations: '', _key: _nextKey++});
                 },
 
-                openEditDialog(row, name, affiliations, email) {
-                    this.author.id = row;
-                    this.author.name = name;
-                    this.author.affiliations = affiliations;
-                    this.author.email = email;
-                    $('#edit-author-dialog').modal();
+                removeAuthor(index) {
+                    this.authors.splice(index, 1);
                 },
 
-                updateAuthor() {
-                    let authorTable = $("#authors").DataTable();
-                    let row = authorTable.row($(`#row-${this.author.id}`)).data();
-                    authorTable.row($(`#row-${this.author.id}`)).data([row[0], row[1], this.author.name, this.author.affiliations, this.author.email, row[5]]);
-                    $('#edit-author-dialog').modal('hide');
+                moveUp(index) {
+                    if (index > 0) {
+                        const tmp = this.authors[index - 1];
+                        this.authors[index - 1] = this.authors[index];
+                        this.authors[index] = tmp;
+                        this.authors = [...this.authors];
+                    }
                 },
 
-                deleteAuthor(id) {
-                    let authorTable = $("#authors").DataTable();
-                    authorTable.row($(`#row-${id}`)).remove().draw();
+                moveDown(index) {
+                    if (index < this.authors.length - 1) {
+                        const tmp = this.authors[index + 1];
+                        this.authors[index + 1] = this.authors[index];
+                        this.authors[index] = tmp;
+                        this.authors = [...this.authors];
+                    }
                 },
             };
         }
-
     </script>
 @endpush
