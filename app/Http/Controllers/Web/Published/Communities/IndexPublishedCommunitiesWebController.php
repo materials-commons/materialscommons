@@ -13,7 +13,14 @@ class IndexPublishedCommunitiesWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $communities = Community::with('owner')
+        $communities = Community::with([
+                                    'owner',
+                                    'publishedDatasets' => fn($q) => $q
+                                        ->whereDoesntHave('tags', fn($tq) => $tq
+                                            ->where('tags.id', config('visus.import_tag_id')))
+                                        ->orderByDesc('published_at')
+                                        ->select(['datasets.id', 'datasets.name', 'datasets.published_at']),
+                                ])
                                 ->withCount([
                                     'datasets as datasets_count' => fn($q) => $q
                                         ->whereDoesntHave('tags', fn($tq) => $tq
