@@ -92,80 +92,101 @@
     </div>
 </div>
 
-@if($totalAttrs > 0)
+{{-- ── Analytics toggle header ──────────────────────────────────────────── --}}
+<div class="d-flex align-items-center mb-3">
+    <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
+            type="button"
+            id="pa-analytics-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#pa-analytics"
+            aria-expanded="false"
+            aria-controls="pa-analytics">
+        <i class="fas fa-chevron-right fa-fw"
+           id="pa-analytics-chevron"
+           style="transition: transform 0.2s; font-size:.75rem;"></i>
+        <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
+            Analytics
+        </span>
+    </button>
+    <hr class="flex-grow-1 ms-3 my-0 opacity-25">
+</div>
 
-    {{-- ── Coverage + Units row ──────────────────────────────────────────────── --}}
-    <div class="row g-3 mb-3">
+<div class="collapse mb-1" id="pa-analytics">
+    @if($totalAttrs > 0)
 
-        <div class="col-12 col-md-7">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-poll-h me-1"></i> Value Coverage per Attribute
-                    </h6>
-                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                        How many measurement values each attribute has — sorted highest first
-                        @if(count($attrRows) > 20)
-                            , showing top 20
-                        @endif
-                    </p>
-                    <div id="chart-activity-coverage"
-                         style="height:{{ min(60 + count($coverageBars) * 26, 500) }}px;"></div>
-                </div>
-            </div>
-        </div>
+        {{-- ── Coverage + Units row ──────────────────────────────────────────────── --}}
+        <div class="row g-3 mb-3">
 
-        <div class="col-12 col-md-5">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-ruler me-1"></i> Units Breakdown
-                    </h6>
-                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                        Distribution of measurement unit types across all attributes
-                    </p>
-                    <div id="chart-activity-units" style="height:240px;"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-@endif {{-- totalAttrs > 0 --}}
-{{-- ── Range chart ────────────────────────────────────────────────────────── --}}
-@if($numericCount > 0)
-    <div class="row g-3 mb-3">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-arrows-alt-h me-1"></i> Measurement Ranges (numeric attributes)
-                    </h6>
-                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                        Each bar spans min → max. Hover for exact values.
-                        Grouped by unit so axes are consistent.
-                        Up to 15 attributes shown per unit group.
-                    </p>
-                    @foreach($numericByUnit as $unit => $group)
-                        <div class="mb-2">
-                            @if($numericByUnit->count() > 1)
-                                <div class="text-muted mb-1" style="font-size:.75rem; font-weight:600;">
-                                    {{ blank($unit) ? 'No unit' : "Unit: {$unit}" }}
-                                </div>
+            <div class="col-12 col-md-7">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3 background-white">
+                        <h6 class="card-title text-muted mb-0">
+                            <i class="fas fa-poll-h me-1"></i> Value Coverage per Attribute
+                        </h6>
+                        <p class="text-muted mb-1" style="font-size:.7rem;">
+                            How many measurement values each attribute has — sorted highest first
+                            @if(count($attrRows) > 20)
+                                , showing top 20
                             @endif
-                            <div id="chart-activity-range-{{ Str::slug($unit ?: 'none') }}"
-                                 style="height:{{ min(50 + $group->count() * 28, 440) }}px;"></div>
-                        </div>
-                        <hr/>
-                    @endforeach
+                        </p>
+                        <div id="chart-activity-coverage"
+                             style="height:{{ min(60 + count($coverageBars) * 26, 500) }}px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3 background-white">
+                        <h6 class="card-title text-muted mb-0">
+                            <i class="fas fa-ruler me-1"></i> Units Breakdown
+                        </h6>
+                        <p class="text-muted mb-1" style="font-size:.7rem;">
+                            Distribution of measurement unit types across all attributes
+                        </p>
+                        <div id="chart-activity-units" style="height:240px;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    @endif {{-- totalAttrs > 0 --}}
+    {{-- ── Range chart ────────────────────────────────────────────────────────── --}}
+    @if($numericCount > 0)
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3 background-white">
+                        <h6 class="card-title text-muted mb-0">
+                            <i class="fas fa-arrows-alt-h me-1"></i> Measurement Ranges (numeric attributes)
+                        </h6>
+                        <p class="text-muted mb-1" style="font-size:.7rem;">
+                            Each bar spans min → max. Hover for exact values.
+                            Grouped by unit so axes are consistent.
+                            Up to 15 attributes shown per unit group.
+                        </p>
+                        @foreach($numericByUnit as $unit => $group)
+                            <div class="mb-2">
+                                @if($numericByUnit->count() > 1)
+                                    <div class="text-muted mb-1" style="font-size:.75rem; font-weight:600;">
+                                        {{ blank($unit) ? 'No unit' : "Unit: {$unit}" }}
+                                    </div>
+                                @endif
+                                <div id="chart-activity-range-{{ Str::slug($unit ?: 'none') }}"
+                                     style="height:{{ min(50 + $group->count() * 28, 440) }}px;"></div>
+                            </div>
+                            <hr/>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
+</div>
 
 {{-- ── Original DataTable — unchanged ────────────────────────────────────── --}}
 <div class="card border-0 shadow-sm">
-    <div class="card-body">
+    <div class="card-body background-white">
         <h6 class="text-muted mb-3">
             <i class="fas fa-table me-1"></i> All Process Attributes
         </h6>
@@ -295,7 +316,31 @@
             @endforeach
             @endif
 
+            // ── Analytics toggle (chevron + localStorage) ─────────────────────────
+            (function () {
+                const STORAGE_KEY = 'mc_pa_analytics_open';
+                const panel = document.getElementById('pa-analytics');
+                const chevron = document.getElementById('pa-analytics-chevron');
+                const toggle = document.getElementById('pa-analytics-toggle');
 
+                if (localStorage.getItem(STORAGE_KEY) === 'true') {
+                    panel.classList.add('show');
+                    chevron.style.transform = 'rotate(90deg)';
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+
+                panel.addEventListener('show.bs.collapse', () => {
+                    chevron.style.transform = 'rotate(90deg)';
+                    localStorage.setItem(STORAGE_KEY, 'true');
+                });
+                panel.addEventListener('hide.bs.collapse', () => {
+                    chevron.style.transform = 'rotate(0deg)';
+                    localStorage.setItem(STORAGE_KEY, 'false');
+                });
+                panel.addEventListener('shown.bs.collapse', () => {
+                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+                });
+            })();
 
             document.addEventListener('livewire:navigating', () => {
                 $('#activities-dd').DataTable().destroy();
