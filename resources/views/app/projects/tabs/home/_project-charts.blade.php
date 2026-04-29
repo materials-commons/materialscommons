@@ -17,7 +17,7 @@
     {{-- Chart 1: Project Composition --}}
     <div class="col-12 col-md-5">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-layer-group me-1"></i> Project Composition
                 </h6>
@@ -32,7 +32,7 @@
     {{-- Chart 2: Dataset Status --}}
     <div class="col-12 col-md-3">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-database me-1"></i> Dataset Status
                 </h6>
@@ -47,7 +47,7 @@
     {{-- Chart 3: Storage gauge --}}
     <div class="col-12 col-md-4">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-hdd me-1"></i> Storage Used
                 </h6>

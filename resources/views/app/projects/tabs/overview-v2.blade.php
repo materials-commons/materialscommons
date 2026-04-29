@@ -22,7 +22,7 @@
      Metadata strip
      ══════════════════════════════════════════════════════════════════════════ --}}
 <div class="card border-0 shadow-sm mb-4">
-    <div class="card-body py-2 px-3">
+    <div class="card-body py-2 px-3 background-white">
         <div class="d-flex flex-wrap gap-3 align-items-center" style="font-size:.82rem;">
 
             <span class="text-muted">
@@ -97,7 +97,7 @@
     @endphp
     <div class="col-12 {{ $hasProcessTypes ? 'col-md-7' : '' }}">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-file-alt me-1"></i> File Types
                     <span class="badge bg-light text-secondary ms-1">{{ number_format($ftTotal) }} files</span>
@@ -126,7 +126,7 @@
     @endphp
     <div class="col-12 {{ $hasFileTypes ? 'col-md-5' : '' }}">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-cogs me-1"></i> Process Types
                     <span class="badge bg-light text-secondary ms-1">{{ number_format($agTotal) }} total</span>

@@ -21,7 +21,7 @@
 
 {{-- ══ Community summary card ══════════════════════════════════════════════════ --}}
 <div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
+    <div class="card-body p-4 background-white">
         <div class="d-flex align-items-start gap-3 mb-3">
             <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10"
                  style="width:52px; height:52px;">
@@ -170,7 +170,7 @@
             @if($totalViews > 0)
                 <div class="col-12 col-md-6">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-eye me-1"></i> Top Viewed Datasets
                             </h6>
@@ -184,7 +184,7 @@
             @if($totalDownloads > 0)
                 <div class="col-12 col-md-6">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-download me-1"></i> Top Downloaded Datasets
                             </h6>

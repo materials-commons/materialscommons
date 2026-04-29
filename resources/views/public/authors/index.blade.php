@@ -96,7 +96,7 @@
             <div class="row g-3">
                 <div class="col-12 col-md-8">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-user me-1"></i> Most Active Authors
                             </h6>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-chart-bar me-1"></i> Contribution Distribution
                             </h6>

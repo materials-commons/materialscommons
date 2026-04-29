@@ -54,7 +54,7 @@
 
     {{-- ══ Profile header ══════════════════════════════════════════════════════════ --}}
     <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body py-3">
+        <div class="card-body py-3 background-white">
             <div class="d-flex gap-4 align-items-start">
                 {{-- Avatar placeholder --}}
                 <div
@@ -168,7 +168,7 @@
                 @if(count($profile->pubTimeline) > 1)
                     <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-calendar-alt me-1"></i> Publication Timeline
                                 </h6>
@@ -184,7 +184,7 @@
                 @if(count($profile->chartTagNames) > 0)
                     <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-tags me-1"></i> Top Tags
                                 </h6>
@@ -200,7 +200,7 @@
                 @if(count($profile->chartCoauthorNames) > 0)
                     <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-users me-1"></i> Frequent Co-authors
                                 </h6>
@@ -216,7 +216,7 @@
                 @if(count($topViewedNames) > 0)
                     <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-eye me-1"></i> Most Viewed Datasets
                                 </h6>
@@ -232,7 +232,7 @@
                 @if(count($topDownloadedNames) > 0)
                     <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-download me-1"></i> Most Downloaded Datasets
                                 </h6>

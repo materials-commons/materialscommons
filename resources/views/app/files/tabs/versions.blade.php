@@ -55,7 +55,7 @@
     {{-- ══ Size history chart ═══════════════════════════════════════════════════════ --}}
     @if($verCount > 1)
         <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-chart-bar me-1"></i> Version Size History
                 </h6>

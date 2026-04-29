@@ -103,7 +103,7 @@
                     {{-- Chart 1: Published vs Unpublished --}}
                     <div class="col-12 col-md-3">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-database me-1"></i> Publication Status
                                 </h6>
@@ -119,7 +119,7 @@
                     @if(count($tagLabels) > 0)
                         <div class="col-12 col-md-5">
                             <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 background-white">
                                     <h6 class="card-title text-muted mb-0">
                                         <i class="fas fa-tags me-1"></i> Tag Usage
                                     </h6>
@@ -140,7 +140,7 @@
                     @if(count($actMonthLabels) > 1)
                         <div class="col-12 col-md-4">
                             <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 background-white">
                                     <h6 class="card-title text-muted mb-0">
                                         <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
                                     </h6>
@@ -157,7 +157,7 @@
                     @if(count($pubMonthLabels) > 1)
                         <div class="col-12">
                             <div class="card border-0 shadow-sm">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 background-white">
                                     <h6 class="card-title text-muted mb-0">
                                         <i class="fas fa-share-square me-1"></i> Publication Timeline
                                     </h6>

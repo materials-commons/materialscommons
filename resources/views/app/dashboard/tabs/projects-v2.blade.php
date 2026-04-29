@@ -8,12 +8,9 @@
   Changes vs. original:
     • KPI stat cards replace the old "Projects Overview" card
     • Analytics section (5 Plotly charts) is collapsible — defaults closed
-      so users land directly on their projects list. Preference persisted
-      in localStorage so power users who open it keep it open.
-    • "Create New Project" CTA lives in the tabs bar (tabs-v2.blade.php)
-    • Active Projects and Recently Accessed cards are unchanged
-    • All Projects table is unchanged
-    • Layout is fully responsive (col stacking at sm/md breakpoints)
+    • Active + Recently Accessed sidebar replaced by filter tabs on the
+      All Projects table (All / Starred / Recent)
+    • Full-width table — no sidebar wasted space
     • ARIA landmarks added to card sections
 --}}
 
@@ -40,28 +37,15 @@
 </div>
 
 {{-- ── Analytics charts — collapsed by default ───────────────────────────── --}}
-<div class="collapse mb-1" id="dashboard-analytics">
+<div class="collapse mb-3" id="dashboard-analytics">
     @include('app.dashboard.tabs.projects._dashboard-charts')
 </div>
 
-{{-- ── Sidebar + All-projects table — always visible ─────────────────────── --}}
-<div class="row g-3">
-
-    {{-- Left sidebar: active + recently accessed --}}
-    <div class="col-12 col-lg-4" role="complementary" aria-label="Project shortcuts">
-        @include('app.dashboard.tabs.projects._active-projects')
-        @include('app.dashboard.tabs.projects._recently-accessed-projects')
-    </div>
-
-    {{-- Right: all projects DataTable --}}
-    <div class="col-12 col-lg-8" role="region" aria-label="All projects">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                @include('app.dashboard.tabs.projects._projects-table')
-            </div>
-        </div>
-    </div>
-
+{{-- ── Full-width projects table with filter tabs ─────────────────────────── --}}
+<div role="region" aria-label="Projects">
+    <x-table-container>
+        @include('app.dashboard.tabs.projects._projects-table')
+    </x-table-container>
 </div>
 
 @push('scripts')
@@ -72,14 +56,12 @@
             const chevron = document.getElementById('analytics-chevron');
             const toggle = document.getElementById('analytics-toggle');
 
-            // Restore saved preference before the page paints
             if (localStorage.getItem(STORAGE_KEY) === 'true') {
                 panel.classList.add('show');
                 chevron.style.transform = 'rotate(90deg)';
                 toggle.setAttribute('aria-expanded', 'true');
             }
 
-            // Keep chevron in sync and persist state whenever Bootstrap toggles the panel
             panel.addEventListener('show.bs.collapse', () => {
                 chevron.style.transform = 'rotate(90deg)';
                 localStorage.setItem(STORAGE_KEY, 'true');

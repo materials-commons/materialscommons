@@ -49,7 +49,7 @@
             @if(count($pubMonthLabels) > 1)
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-calendar-alt me-1"></i> Publication Timeline
                             </h6>
@@ -66,7 +66,7 @@
             @if(count($topViewsNames) > 0)
                 <div class="col-12 col-md-6">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-eye me-1"></i> Most Viewed
                             </h6>
@@ -84,7 +84,7 @@
             @if(count($topDownloadsNames) > 0)
                 <div class="col-12 col-md-6">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-download me-1"></i> Most Downloaded
                             </h6>
@@ -102,7 +102,7 @@
             @if(count($licenseLabels) > 0)
                 <div class="col-12 col-md-5">
                     <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3">
+                        <div class="card-body p-3 background-white">
                             <h6 class="card-title text-muted mb-0">
                                 <i class="fas fa-balance-scale me-1"></i> License Distribution
                             </h6>

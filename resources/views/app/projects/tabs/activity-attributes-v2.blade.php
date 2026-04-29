@@ -99,7 +99,7 @@
 
         <div class="col-12 col-md-7">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3">
+                <div class="card-body p-3 background-white">
                     <h6 class="card-title text-muted mb-0">
                         <i class="fas fa-poll-h me-1"></i> Value Coverage per Attribute
                     </h6>
@@ -117,7 +117,7 @@
 
         <div class="col-12 col-md-5">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3">
+                <div class="card-body p-3 background-white">
                     <h6 class="card-title text-muted mb-0">
                         <i class="fas fa-ruler me-1"></i> Units Breakdown
                     </h6>
@@ -136,7 +136,7 @@
     <div class="row g-3 mb-3">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-body p-3">
+                <div class="card-body p-3 background-white">
                     <h6 class="card-title text-muted mb-0">
                         <i class="fas fa-arrows-alt-h me-1"></i> Measurement Ranges (numeric attributes)
                     </h6>

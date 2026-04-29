@@ -14,7 +14,7 @@
     {{-- Chart 1: Project Ownership --}}
     <div class="col-12 col-md-4">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-pie-chart me-1"></i> Project Ownership
                 </h6>
@@ -26,7 +26,7 @@
     {{-- Chart 2: Health Status --}}
     <div class="col-12 col-md-4">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-heartbeat me-1"></i> Project Health
                 </h6>
@@ -38,7 +38,7 @@
     {{-- Chart 3: Top Projects by File Count --}}
     <div class="col-12 col-md-4">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-bars me-1"></i> Top Projects by Files
                 </h6>
@@ -55,7 +55,7 @@
     {{-- Chart 4: Activity over time --}}
     <div class="col-12 col-md-8">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-chart-bar me-1"></i> Project Activity (last 12 months)
                 </h6>
@@ -70,7 +70,7 @@
     {{-- Chart 5: Storage treemap --}}
     <div class="col-12 col-md-4">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-3">
+            <div class="card-body p-3 background-white">
                 <h6 class="card-title text-muted mb-0">
                     <i class="fas fa-hdd me-1"></i> Storage by Project
                 </h6>

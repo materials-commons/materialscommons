@@ -40,7 +40,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-database fa-lg text-primary"></i>
@@ -57,7 +57,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.authors.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-users fa-lg text-success"></i>
@@ -76,7 +76,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.tags.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-tags fa-lg text-warning"></i>
@@ -152,7 +152,7 @@
                 @if($totalCommunities > 1)
                     <div class="col-12 col-md-7">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-layer-group me-1"></i> Datasets per Community
                                 </h6>
@@ -168,7 +168,7 @@
                 @if(count($orgNames) > 1)
                     <div class="col-12 col-md-5">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-user-tie me-1"></i> Datasets by Organizer
                                 </h6>

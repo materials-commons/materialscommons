@@ -14,7 +14,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.communities.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-layer-group fa-lg text-primary"></i>
@@ -31,7 +31,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.authors.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-users fa-lg text-success"></i>
@@ -50,7 +50,7 @@
         <div class="col-12 col-md-4">
             <a href="{{ route('public.tags.index') }}" class="text-decoration-none">
                 <div class="card border-0 h-100 shadow-sm browse-card" style="transition:box-shadow .15s;">
-                    <div class="card-body d-flex align-items-center gap-3 py-3">
+                    <div class="card-body d-flex align-items-center gap-3 py-3 background-white">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10"
                              style="width:52px; height:52px;">
                             <i class="fas fa-tags fa-lg text-warning"></i>

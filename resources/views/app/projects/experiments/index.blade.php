@@ -95,7 +95,7 @@
                     @if(count($ownerLabels) > 0)
                         <div class="col-12 col-md-5">
                             <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 background-white">
                                     <h6 class="card-title text-muted mb-0">
                                         <i class="fas fa-users me-1"></i> Studies per Contributor
                                     </h6>
@@ -112,7 +112,7 @@
                     {{-- Chart 2: Activity timeline --}}
                     <div class="col-12 col-md-7">
                         <div class="card border-0 shadow-sm h-100">
-                            <div class="card-body p-3">
+                            <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
                                     <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
                                 </h6>
