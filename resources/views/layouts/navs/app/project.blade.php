@@ -2,22 +2,23 @@
      style="background-color: #f5f5f5">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-1 mb-3">
-            <li class="nav-item">
-                <a class="nav-link fs-11 {{setActiveNav('dashboard')}}"
+            {{-- Back to dashboard --}}
+            <li class="nav-item mt-2">
+                <a class="nav-link fs-11 ms-2 text-muted"
                    data-toggle="tooltip"
-                   title="Goto to the dashboard listing all your projects, and published datasets."
+                   title="Return to your dashboard."
                    href="{{route('dashboard')}}">
-                    <i class="fa-fw fas fa-tachometer-alt me-2"></i>
+                    <i class="fa-fw fas fa-arrow-left me-2"></i>
                     Dashboard
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
+            <li class="nav-item mt-2">
                 <span class="ms-3 fs-11"><i class="fas fa-bars me-2"></i>Current Project</span>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.show')}}"
+                <a class="nav-link fs-11 ms-3 fw-semibold {{setActiveNavByName('projects.show')}}"
                    data-toggle="tooltip" title="View details about your project."
                    href="{{route('projects.show', ['project' => $project->id])}}">
                     {{$project->name}}
@@ -244,6 +245,10 @@
                 {{--                    </a>--}}
                 {{--                </li>--}}
             @endif
+
+            {{-- Resources --}}
+            @include('layouts.navs._nav-resources')
+
         </ul>
     </div>
 </nav>

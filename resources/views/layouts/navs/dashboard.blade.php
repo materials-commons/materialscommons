@@ -2,6 +2,8 @@
      style="background-color: #f5f5f5">
     <div class="sidebar-sticky">
         <ul class="nav flex-column mt-1 mb-3">
+
+            {{-- Top-level nav --}}
             <li class="nav-item mt-3">
                 <span class="ms-3 fs-11"><i class="fas fa-compass me-2"></i>Navigation</span>
             </li>
@@ -31,32 +33,79 @@
                 </li>
             @endif
 
+            {{-- Explore --}}
+            <li class="nav-item mt-3">
+                <span class="ms-3 fs-11"><i class="fas fa-globe me-2"></i>Published Datasets</span>
+            </li>
+
             <li class="nav-item">
-                <a class="nav-link fs-11 ms-3" href="{{route('public.index')}}">
-                    <i class="fa-fw fas fa-globe me-2"></i>
-                    Public Data
+                <a class="nav-link fs-11 ms-3 {{setActiveNav('public.datasets')}}"
+                   href="{{route('public.index')}}">
+                    <i class="fa-fw fas fa-database me-2"></i>
+                    Browse Datasets
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
-                    <i class="fa-fw fas fa-user me-2"></i>
-                    Account
+                <a class="nav-link fs-11 ms-3" href="{{route('public.tags.index')}}">
+                    <i class="fa-fw fas fa-tags me-2"></i>
+                    Browse by Tag
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
+                <a class="nav-link fs-11 ms-3" href="{{route('public.authors.index')}}">
+                    <i class="fa-fw fas fa-users me-2"></i>
+                    Browse Authors
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3" href="{{route('public.communities.index')}}">
+                    <i class="fa-fw fas fa-layer-group me-2"></i>
+                    Browse Communities
+                </a>
+            </li>
+
+            {{-- My Work --}}
+            <li class="nav-item mt-3">
+                <span class="ms-3 fs-11"><i class="fas fa-briefcase me-2"></i>My Work</span>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
+                    <i class="fa-fw fas fa-folder-open me-2"></i>
+                    My Projects
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNav('dashboard.published-datasets')}}"
+                   href="{{route('dashboard.published-datasets.show')}}">
+                    <i class="fa-fw fas fa-book me-2"></i>
+                    My Datasets
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNav('communities')}}"
+                   href="{{route('communities.index')}}">
                     <i class="fa-fw fas fa-city me-2"></i>
                     My Communities
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
-                <span class="ms-3 fs-11"><i class="fas fa-book me-2"></i>Documentation</span>
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNav('accounts')}}"
+                   href="{{route('accounts.show')}}">
+                    <i class="fa-fw fas fa-user me-2"></i>
+                    Account
+                </a>
             </li>
 
-            @include('layouts.navs._app-documentation')
+            {{-- Resources --}}
+            @include('layouts.navs._nav-resources')
+
         </ul>
     </div>
 </nav>
