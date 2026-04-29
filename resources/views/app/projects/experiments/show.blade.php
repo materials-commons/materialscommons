@@ -50,7 +50,9 @@
     </div>
 
     <br/>
+    <br/>
     @include('app.projects.experiments.tabs.experiment-tabs')
+    <br/>
 
     @if (Request::routeIs('projects.experiments.show*'))
         @include('app.projects.experiments.tabs.overview-tab')
