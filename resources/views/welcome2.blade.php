@@ -52,6 +52,14 @@
             width: 3.2rem;
             height: 3.2rem;
         }
+
+        /* Fix outline-light hover — Bootstrap defaults can be overridden by app.css */
+        .btn-outline-light:hover,
+        .btn-outline-light:focus {
+            color: #1e4f8a !important;
+            background-color: #ffffff !important;
+            border-color: #ffffff !important;
+        }
     </style>
 </head>
 
