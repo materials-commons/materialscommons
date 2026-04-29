@@ -1,63 +1,51 @@
 {{--<nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10 sidebar">--}}
 <nav class="col-md-2 col-sm-2 d-none d-md-block bg-grey-10x bg-whitex sidebar" style="background-color: #f5f5f5">
     <div class="sidebar-sticky">
-        <ul class="nav flex-column mt-3">
-            @auth
-                {{--                <li class="nav-item">--}}
-                {{--                    <a class="nav-link fs-11 {{setActiveNav('projects')}}" href="{{route('projects.index')}}">--}}
-                {{--                        <i class="fa-fw fas fa-layer-group me-2 "></i>--}}
-                {{--                        Projects--}}
-                {{--                    </a>--}}
-                {{--                </li>--}}
+        <ul class="nav flex-column mt-1 mb-3">
 
-                <li class="nav-item">
-                    <a class="nav-link fs-11 {{setActiveNav('dashboard')}}" href="{{route('dashboard')}}">
-                        <i class="fa-fw fas fa-tachometer-alt me-2"></i>
+            {{-- Back to dashboard (auth) or home (guest) --}}
+            @auth
+                <li class="nav-item mt-2">
+                    <a class="nav-link fs-11 ms-2 text-muted" href="{{route('dashboard')}}">
+                        <i class="fa-fw fas fa-arrow-left me-2"></i>
                         Dashboard
+                    </a>
+                </li>
+            @else
+                <li class="nav-item mt-2">
+                    <a class="nav-link fs-11 ms-2 text-muted" href="{{route('welcome')}}">
+                        <i class="fa-fw fas fa-arrow-left me-2"></i>
+                        Home
                     </a>
                 </li>
             @endauth
 
-            <li class="nav-item">
+            {{-- Publish CTA --}}
+            <li class="nav-item mt-2">
                 @auth
-                    <a class="nav-link fs-11 {{setActiveNavByName('public.publish')}}"
+                    <a class="nav-link fs-11 ms-2 {{setActiveNavByName('public.publish')}}"
                        href="{{route('public.publish.wizard.choose_create_or_select_project')}}">
                         <i class="fa-fw fas fa-file-export me-2"></i>
-                        Publish
+                        Publish Your Data
                     </a>
                 @else
-                    <a class="nav-link fs-11" href="{{route('login-for-upload')}}">
+                    <a class="nav-link fs-11 ms-2" href="{{route('login-for-upload')}}">
                         <i class="fa-fw fas fa-file-export me-2"></i>
-                        Publish
+                        Publish Your Data
                     </a>
                 @endauth
             </li>
 
+            {{-- Published Data --}}
             <li class="nav-item mt-3">
-                <span class="ms-3 fs-11">Published Data</span>
+                <span class="ms-3 fs-11"><i class="fas fa-globe me-2"></i>Published Data</span>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.datasets')}}"
                    href="{{route('public.datasets.index')}}">
-                    <i class="fa-fw fas fa-book me-2"></i>
-                    Datasets
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.communities')}}"
-                   href="{{route('public.communities.index')}}">
-                    <i class="fa-fw fas fa-users me-2"></i>
-                    Communities
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.authors')}}"
-                   href="{{route('public.authors.index')}}">
-                    <i class="fa-fw fas fa-user-friends me-2"></i>
-                    Authors
+                    <i class="fa-fw fas fa-database me-2"></i>
+                    Browse Datasets
                 </a>
             </li>
 
@@ -65,18 +53,37 @@
                 <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.tags')}}"
                    href="{{route('public.tags.index')}}">
                     <i class="fa-fw fas fa-tags me-2"></i>
-                    Tags
+                    Browse by Tag
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.authors')}}"
+                   href="{{route('public.authors.index')}}">
+                    <i class="fa-fw fas fa-users me-2"></i>
+                    Browse Authors
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3" href="{{route('public.communities.index')}}">
+                    <i class="fa-fw fas fa-city me-2"></i>
+                    Browse Communities
+                </a>
+            </li>
+
+
+
+            {{-- Special Collections --}}
             <li class="nav-item mt-3">
-                <span class="ms-3 fs-11">Special Collections</span>
+                <span class="ms-3 fs-11"><i class="fas fa-layer-group me-2"></i>Special Collections</span>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link fs-11 ms-3 {{setActiveNavByName('public.openvisus')}}"
                    href="{{route('public.openvisus.index', ['tag' => 'OpenVisus'])}}">
-                    <i class="fa-fw fas fa-cube me-2"></i> OpenVisus Datasets
+                    <i class="fa-fw fas fa-cube me-2"></i>
+                    OpenVisus Datasets
                 </a>
             </li>
 
@@ -91,25 +98,39 @@
                 </a>
             </li>
 
+            {{-- My Work (auth only) --}}
             @auth
-                    <li class="nav-item mt-3">
-                        <span class="ms-3 fs-11">My Stuff</span>
-                    </li>
+                <li class="nav-item mt-3">
+                    <span class="ms-3 fs-11"><i class="fas fa-briefcase me-2"></i>My Work</span>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ms-3 {{setActiveNav('accounts')}}" href="{{route('accounts.show')}}">
-                        <i class="fa-fw fas fa-user me-2"></i>
-                        Account
+                    <a class="nav-link fs-11 ms-3 {{setActiveNav('dashboard.published-datasets')}}"
+                       href="{{route('dashboard.published-datasets.show')}}">
+                        <i class="fa-fw fas fa-book me-2"></i>
+                        My Datasets
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fs-11 ms-3 {{setActiveNav('communities')}}" href="{{route('communities.index')}}">
+                    <a class="nav-link fs-11 ms-3 {{setActiveNav('communities')}}"
+                       href="{{route('communities.index')}}">
                         <i class="fa-fw fas fa-city me-2"></i>
                         My Communities
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ms-3 {{setActiveNav('accounts')}}"
+                       href="{{route('accounts.show')}}">
+                        <i class="fa-fw fas fa-user me-2"></i>
+                        Account
+                    </a>
+                </li>
             @endauth
+
+            {{-- Resources --}}
+            @include('layouts.navs._nav-resources')
 
         </ul>
     </div>
