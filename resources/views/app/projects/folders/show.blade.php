@@ -53,6 +53,37 @@
         ksort($monthCounts);
         $monthLabels = array_keys($monthCounts);
         $monthValues = array_values($monthCounts);
+
+        // Owner counts — one User query for all unique owner_ids
+        $ownerFileCounts = [];
+        $ownerDirCounts  = [];
+        foreach ($files as $f) {
+            $oid = $f->owner_id ?? 0;
+            if ($f->isDir()) {
+                $ownerDirCounts[$oid] = ($ownerDirCounts[$oid] ?? 0) + 1;
+            } else {
+                $ownerFileCounts[$oid] = ($ownerFileCounts[$oid] ?? 0) + 1;
+            }
+        }
+        $allOwnerIds = array_unique(array_merge(array_keys($ownerFileCounts), array_keys($ownerDirCounts)));
+        $ownerNames  = count($allOwnerIds)
+            ? \App\Models\User::whereIn('id', $allOwnerIds)->pluck('name', 'id')
+            : collect();
+        $ownerNameFileCount = [];
+        $ownerNameDirCount  = [];
+        foreach ($allOwnerIds as $oid) {
+            $name = $ownerNames->get($oid, 'Unknown');
+            $ownerNameFileCount[$name] = $ownerFileCounts[$oid] ?? 0;
+            $ownerNameDirCount[$name]  = $ownerDirCounts[$oid]  ?? 0;
+        }
+        $ownerTotals = array_combine(
+            array_keys($ownerNameFileCount),
+            array_map(fn($n) => $ownerNameFileCount[$n] + $ownerNameDirCount[$n], array_keys($ownerNameFileCount))
+        );
+        arsort($ownerTotals);
+        $ownerLabels   = array_keys($ownerTotals);
+        $ownerFileVals = array_map(fn($n) => $ownerNameFileCount[$n] ?? 0, $ownerLabels);
+        $ownerDirVals  = array_map(fn($n) => $ownerNameDirCount[$n]  ?? 0, $ownerLabels);
     @endphp
     <x-show-dir-path :project="$project" :dir="$directory"/>
     <x-projects.folders.controls :project="$project" :directory="$directory" :scripts="$scripts"
@@ -194,6 +225,26 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Chart 4: Files/Directories by creator --}}
+                @if(count($ownerLabels) > 0)
+                    <div class="row g-3 mt-0">
+                        <div class="col-12 col-md-5">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-3 background-white">
+                                    <h6 class="card-title text-muted mb-0">
+                                        <i class="fas fa-users me-1"></i> By Creator
+                                    </h6>
+                                    <p class="text-muted mb-1" style="font-size:.7rem;">
+                                        Files and directories per team member
+                                    </p>
+                                    <div id="chart-dir-owners"
+                                         style="height:{{ min(80 + count($ownerLabels) * 28, 360) }}px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         @endif
     @endif
@@ -533,6 +584,37 @@
                     yaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
                 }), plotConfig);
                 {{--                @endif--}}
+
+                @if(count($ownerLabels) > 0)
+                Plotly.newPlot('chart-dir-owners', [
+                    {
+                        type: 'bar',
+                        orientation: 'h',
+                        name: 'Files',
+                        y: @json($ownerLabels),
+                        x: @json($ownerFileVals),
+                        marker: {color: '#0d6efd'},
+                        hovertemplate: '%{y} — files: %{x:,}<extra></extra>',
+                    },
+                    {
+                        type: 'bar',
+                        orientation: 'h',
+                        name: 'Dirs',
+                        y: @json($ownerLabels),
+                        x: @json($ownerDirVals),
+                        marker: {color: '#0dcaf0'},
+                        hovertemplate: '%{y} — dirs: %{x:,}<extra></extra>',
+                    },
+                ], base({
+                    barmode: 'stack',
+                    margin: {t: 5, b: 35, l: 150, r: 20},
+                    showlegend: true,
+                    legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.18, font: {size: 10}},
+                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                            title: {text: 'count', font: {size: 10}}},
+                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+                }), plotConfig);
+                @endif
 
             })();
         </script>
