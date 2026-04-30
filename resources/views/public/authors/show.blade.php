@@ -684,9 +684,11 @@
                 });
                 @endif
 
-                // Resize charts when a tab becomes visible
+                // ── Tab persistence (save only; restore happens after DataTables init) ──
+                const TAB_KEY = 'mc_pub_author_{{ $user->id }}_tab';
                 document.querySelectorAll('[data-bs-toggle="pill"]').forEach(btn => {
-                    btn.addEventListener('shown.bs.tab', () => {
+                    btn.addEventListener('shown.bs.tab', function () {
+                        localStorage.setItem(TAB_KEY, this.getAttribute('data-bs-target'));
                         document.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
                     });
                 });
@@ -783,6 +785,13 @@
                         {targets: [2], orderable: false},
                     ],
                 });
+
+                // ── Tab restore (after DataTables are initialised) ─────────────────────
+                const savedTab = localStorage.getItem('mc_pub_author_{{ $user->id }}_tab');
+                if (savedTab) {
+                    const tabEl = document.querySelector('[data-bs-target="' + savedTab + '"]');
+                    if (tabEl) Tab.getOrCreateInstance(tabEl).show();
+                }
             });
         </script>
     @endpush
