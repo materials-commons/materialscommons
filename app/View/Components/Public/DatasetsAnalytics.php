@@ -22,6 +22,12 @@ class DatasetsAnalytics extends Component
 
     public array  $licenseLabels;
     public array  $licenseValues;
+    public array  $licenseDatasets;
+
+    public array  $topViewsUrls;
+    public array  $topDownloadsUrls;
+
+    public array  $pubMonthDatasets;
 
     public string $storageKey;
 
@@ -40,14 +46,21 @@ class DatasetsAnalytics extends Component
         $this->totalDownloads = $datasets->sum('downloads_count');
 
         // Publications per month
-        $pubMonths = [];
+        $pubMonths        = [];
+        $pubMonthDatasets = [];
         foreach ($datasets as $ds) {
-            $mk              = $ds->{$dateField}->format('Y-m');
-            $pubMonths[$mk]  = ($pubMonths[$mk] ?? 0) + 1;
+            $mk                   = $ds->{$dateField}->format('Y-m');
+            $pubMonths[$mk]       = ($pubMonths[$mk] ?? 0) + 1;
+            $pubMonthDatasets[$mk][] = [
+                'name' => $ds->name,
+                'url'  => route('public.datasets.show', $ds->id),
+            ];
         }
         ksort($pubMonths);
-        $this->pubMonthLabels = array_keys($pubMonths);
-        $this->pubMonthValues = array_values($pubMonths);
+        ksort($pubMonthDatasets);
+        $this->pubMonthLabels   = array_keys($pubMonths);
+        $this->pubMonthValues   = array_values($pubMonths);
+        $this->pubMonthDatasets = $pubMonthDatasets;
 
         // Top 10 by views
         $byViews                  = $datasets->sortByDesc('views_count')->take(10);
@@ -55,6 +68,7 @@ class DatasetsAnalytics extends Component
                                              ->map(fn($n) => mb_strlen($n) > 45 ? mb_substr($n, 0, 43) . '…' : $n)
                                              ->values()->toArray();
         $this->topViewsValues     = $byViews->pluck('views_count')->values()->toArray();
+        $this->topViewsUrls       = $byViews->map(fn($ds) => route('public.datasets.show', $ds->id))->values()->toArray();
 
         // Top 10 by downloads
         $byDownloads                  = $datasets->sortByDesc('downloads_count')->take(10);
@@ -62,16 +76,23 @@ class DatasetsAnalytics extends Component
                                                      ->map(fn($n) => mb_strlen($n) > 45 ? mb_substr($n, 0, 43) . '…' : $n)
                                                      ->values()->toArray();
         $this->topDownloadsValues     = $byDownloads->pluck('downloads_count')->values()->toArray();
+        $this->topDownloadsUrls       = $byDownloads->map(fn($ds) => route('public.datasets.show', $ds->id))->values()->toArray();
 
         // License distribution
-        $licenseCounts = [];
+        $licenseCounts   = [];
+        $licenseDatasets = [];
         foreach ($datasets as $ds) {
             $lic                  = blank($ds->license) ? 'No License' : $ds->license;
             $licenseCounts[$lic]  = ($licenseCounts[$lic] ?? 0) + 1;
+            $licenseDatasets[$lic][] = [
+                'name' => $ds->name,
+                'url'  => route('public.datasets.show', $ds->id),
+            ];
         }
         arsort($licenseCounts);
-        $this->licenseLabels = array_keys($licenseCounts);
-        $this->licenseValues = array_values($licenseCounts);
+        $this->licenseLabels   = array_keys($licenseCounts);
+        $this->licenseValues   = array_values($licenseCounts);
+        $this->licenseDatasets = $licenseDatasets;
     }
 
     public function render()

@@ -56,7 +56,7 @@
                             <p class="text-muted mb-1" style="font-size:.7rem;">
                                 Datasets published per month
                             </p>
-                            <div id="chart-pub-timeline" style="height:200px;"></div>
+                            <div id="chart-pub-timeline" style="height:200px; cursor:pointer;"></div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                                 Top {{ count($topViewsNames) }} datasets by views
                             </p>
                             <div id="chart-pub-views"
-                                 style="height:{{ min(60 + count($topViewsNames) * 30, 360) }}px;"></div>
+                                 style="height:{{ min(60 + count($topViewsNames) * 30, 360) }}px; cursor:pointer;"></div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                 Top {{ count($topDownloadsNames) }} datasets by downloads
                             </p>
                             <div id="chart-pub-downloads"
-                                 style="height:{{ min(60 + count($topDownloadsNames) * 30, 360) }}px;"></div>
+                                 style="height:{{ min(60 + count($topDownloadsNames) * 30, 360) }}px; cursor:pointer;"></div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                 How datasets are licensed
                             </p>
                             <div id="chart-pub-licenses"
-                                 style="height:{{ min(60 + count($licenseLabels) * 30, 300) }}px;"></div>
+                                 style="height:{{ min(60 + count($licenseLabels) * 30, 300) }}px; cursor:pointer;"></div>
                         </div>
                     </div>
                 </div>
@@ -119,12 +119,29 @@
         </div>
     </div>
 
+    {{-- Modal for timeline / license click details --}}
+    <div class="modal fade" id="analytics-detail-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-nav">
+                    <h5 class="modal-title help-color" id="analytics-detail-modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="analytics-detail-modal-body" style="max-height:60vh; overflow-y:auto;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
             (function () {
                 const STORAGE_KEY = '{{ $storageKey }}';
-                const panel   = document.getElementById('pub-analytics');
-                const toggle  = document.getElementById('pub-analytics-toggle');
+                const panel = document.getElementById('pub-analytics');
+                const toggle = document.getElementById('pub-analytics-toggle');
                 const chevron = document.getElementById('pub-analytics-chevron');
 
                 if (!panel) return;
@@ -132,7 +149,7 @@
                 if (localStorage.getItem(STORAGE_KEY) === 'true') {
                     panel.classList.add('show');
                     if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle)  toggle.setAttribute('aria-expanded', 'true');
+                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
                 }
                 panel.addEventListener('show.bs.collapse', () => {
                     if (chevron) chevron.style.transform = 'rotate(90deg)';
@@ -152,10 +169,41 @@
                     font: {family: 'inherit', size: 11}, showlegend: false,
                 }, extra);
 
+                function showAnalyticsModal(title, datasets) {
+                    document.getElementById('analytics-detail-modal-title').textContent = title;
+                    const body = document.getElementById('analytics-detail-modal-body');
+                    body.innerHTML = '';
+                    if (datasets.length === 0) {
+                        const p = document.createElement('p');
+                        p.className = 'text-muted';
+                        p.textContent = 'No datasets found.';
+                        body.appendChild(p);
+                    } else {
+                        const ul = document.createElement('ul');
+                        ul.className = 'list-unstyled mb-0';
+                        datasets.forEach(function (d) {
+                            const li = document.createElement('li');
+                            li.className = 'mb-1';
+                            const a = document.createElement('a');
+                            a.href = d.url;
+                            a.textContent = d.name;
+                            a.className = 'text-decoration-none';
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                        });
+                        body.appendChild(ul);
+                    }
+                    Modal.getOrCreateInstance(
+                        document.getElementById('analytics-detail-modal')
+                    ).show();
+                }
+
                 @if(count($pubMonthLabels) > 1)
+                const pubMonthLabels   = @json($pubMonthLabels);
+                const pubMonthDatasets = @json($pubMonthDatasets);
                 Plotly.newPlot('chart-pub-timeline', [{
                     type: 'bar',
-                    x:    @json($pubMonthLabels),
+                    x:    pubMonthLabels,
                     y:    @json($pubMonthValues),
                     marker: {color: '#0d6efd'},
                     hovertemplate: '%{x}: %{y} dataset(s)<extra></extra>',
@@ -164,9 +212,14 @@
                     xaxis: {tickangle: -45, tickfont: {size: 9}},
                     yaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
                 }), plotConfig);
+                document.getElementById('chart-pub-timeline').on('plotly_click', function (data) {
+                    const month = pubMonthLabels[data.points[0].pointIndex];
+                    showAnalyticsModal('Datasets published in ' + month, pubMonthDatasets[month] || []);
+                });
                 @endif
 
                 @if(count($topViewsNames) > 0)
+                const topViewsUrls = @json($topViewsUrls);
                 Plotly.newPlot('chart-pub-views', [{
                     type: 'bar', orientation: 'h',
                     y:    @json($topViewsNames),
@@ -178,13 +231,19 @@
                     textfont: {color: 'white', size: 9},
                 }], base({
                     margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                            title: {text: 'views', font: {size: 10}}},
+                    xaxis: {
+                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                        title: {text: 'views', font: {size: 10}}
+                    },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                document.getElementById('chart-pub-views').on('plotly_click', function (data) {
+                    window.location.href = topViewsUrls[data.points[0].pointIndex];
+                });
                 @endif
 
                 @if(count($topDownloadsNames) > 0)
+                const topDownloadsUrls = @json($topDownloadsUrls);
                 Plotly.newPlot('chart-pub-downloads', [{
                     type: 'bar', orientation: 'h',
                     y:    @json($topDownloadsNames),
@@ -196,13 +255,19 @@
                     textfont: {color: 'white', size: 9},
                 }], base({
                     margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                            title: {text: 'downloads', font: {size: 10}}},
+                    xaxis: {
+                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                        title: {text: 'downloads', font: {size: 10}}
+                    },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                document.getElementById('chart-pub-downloads').on('plotly_click', function (data) {
+                    window.location.href = topDownloadsUrls[data.points[0].pointIndex];
+                });
                 @endif
 
                 @if(count($licenseLabels) > 0)
+                const licenseDatasets = @json($licenseDatasets);
                 Plotly.newPlot('chart-pub-licenses', [{
                     type: 'bar', orientation: 'h',
                     y:    @json($licenseLabels),
@@ -214,10 +279,16 @@
                     textfont: {color: 'white', size: 9},
                 }], base({
                     margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                            title: {text: 'datasets', font: {size: 10}}},
+                    xaxis: {
+                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                        title: {text: 'datasets', font: {size: 10}}
+                    },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                document.getElementById('chart-pub-licenses').on('plotly_click', function (data) {
+                    const license = data.points[0].y;
+                    showAnalyticsModal('Datasets licensed under: ' + license, licenseDatasets[license] || []);
+                });
                 @endif
 
             })();
