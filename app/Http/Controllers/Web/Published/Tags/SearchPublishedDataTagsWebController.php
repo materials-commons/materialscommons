@@ -14,6 +14,9 @@ class SearchPublishedDataTagsWebController extends Controller
     public function __invoke(Request $request)
     {
         $tag      = $request->input('tag');
+        if (blank($tag)) {
+            return redirect()->route('public.tags.index');
+        }
         $datasets = Dataset::withAnyTags([$tag])
                            ->with('tags')
                            ->withCount(['views', 'downloads'])

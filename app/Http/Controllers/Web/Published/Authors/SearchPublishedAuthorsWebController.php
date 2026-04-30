@@ -12,9 +12,10 @@ class SearchPublishedAuthorsWebController extends Controller
 
     public function __invoke(Request $request, SearchPublishedDataAuthorsAction $searchedPublishedDataAuthorsAction)
     {
-        $search = $request->input('search');
-        $datasets = $searchedPublishedDataAuthorsAction($search);
-        $viewModel = new ShowAuthorsPublishedDatasetsViewModel($datasets, $search);
-        return view('public.authors.author-datasets', $viewModel);
+        return redirect(route('public.authors.index'));
+//        $search = $request->input('search');
+//        $datasets = $searchedPublishedDataAuthorsAction($search);
+//        $viewModel = new ShowAuthorsPublishedDatasetsViewModel($datasets, $search);
+//        return view('public.authors.author-datasets', $viewModel);
     }
 }
