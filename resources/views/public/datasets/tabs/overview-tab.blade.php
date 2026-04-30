@@ -17,6 +17,33 @@
             ? $activitiesGroup->pluck('count')->toArray()
             : array_column((array)$activitiesGroup, 'count');
     }
+
+    // ── Dataset Composition donut ────────────────────────────────────────────────
+    $compRaw = [
+        'Files'       => $dataset->files_count       ?? 0,
+        'Samples'     => $dataset->entities_count    ?? 0,
+        'Activities'  => $dataset->activities_count  ?? 0,
+        'Workflows'   => $dataset->workflows_count   ?? 0,
+        'Experiments' => $dataset->experiments_count ?? 0,
+    ];
+    $compFiltered = array_filter($compRaw, fn($v) => $v > 0);
+    $compLabels   = array_keys($compFiltered);
+    $compValues   = array_values($compFiltered);
+    $hasCompData  = count($compLabels) > 0;
+
+    // ── Views & Downloads timeline ───────────────────────────────────────────────
+    $viewsByMonth     = $dataset->views()
+        ->selectRaw("DATE_FORMAT(created_at,'%Y-%m') as m, count(*) as n")
+        ->groupBy('m')->orderBy('m')->pluck('n', 'm');
+    $downloadsByMonth = $dataset->downloads()
+        ->selectRaw("DATE_FORMAT(created_at,'%Y-%m') as m, count(*) as n")
+        ->groupBy('m')->orderBy('m')->pluck('n', 'm');
+    $engagementMonths = $viewsByMonth->keys()->merge($downloadsByMonth->keys())
+        ->unique()->sort()->values();
+    $engagementMonthLabels    = $engagementMonths->toArray();
+    $engagementViewValues     = $engagementMonths->map(fn($m) => (int)$viewsByMonth->get($m, 0))->values()->toArray();
+    $engagementDownloadValues = $engagementMonths->map(fn($m) => (int)$downloadsByMonth->get($m, 0))->values()->toArray();
+    $hasEngagementData        = count($engagementMonthLabels) > 0;
 @endphp
 
 {{-- ══ Dataset KPI strip — always visible ══════════════════════════════════════ --}}
@@ -70,7 +97,7 @@
 </div>
 
 {{-- ══ Analytics — collapsible ═════════════════════════════════════════════════ --}}
-@if($hasFileData || $hasActivityData)
+@if($hasFileData || $hasActivityData || $hasCompData || $hasEngagementData)
     <div class="d-flex align-items-center mb-2">
         <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
                 type="button"
@@ -123,6 +150,47 @@
                 </div>
             @endif
         </div>
+
+        {{-- Row 2: Composition + Engagement timeline --}}
+        @if($hasCompData || $hasEngagementData)
+            <div class="row g-3 mt-0">
+
+                {{-- Dataset Composition donut --}}
+                @if($hasCompData)
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-layer-group me-1"></i> Composition
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Structural breakdown of dataset contents
+                                </p>
+                                <div id="chart-ds-composition" style="height:200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Views & Downloads timeline --}}
+                @if($hasEngagementData)
+                    <div class="col-12 {{ $hasCompData ? 'col-md-8' : '' }}">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-chart-bar me-1"></i> Engagement Over Time
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Unique views and downloads per month
+                                </p>
+                                <div id="chart-ds-engagement" style="height:200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+            </div>
+        @endif
     </div>
 
     @push('scripts')
@@ -195,6 +263,55 @@
                         title: {text: 'count', font: {size: 10}}
                     },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+                }), plotConfig);
+                @endif
+
+                // ── Dataset Composition donut ─────────────────────────────────────
+                @if($hasCompData)
+                Plotly.newPlot('chart-ds-composition', [{
+                    type: 'pie',
+                    hole: 0.55,
+                    labels:    @json($compLabels),
+                    values:    @json($compValues),
+                    marker: {colors: ['#0d6efd', '#0dcaf0', '#6f42c1', '#198754', '#ffc107']},
+                    textinfo: 'value',
+                    hoverinfo: 'label+value+percent',
+                    domain: {x: [0, 1], y: [0, 1]},
+                }], base({
+                    showlegend: true,
+                    legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.15, font: {size: 10}},
+                    margin: {t: 10, b: 45, l: 5, r: 5},
+                }), plotConfig);
+                @endif
+
+                // ── Views & Downloads timeline ────────────────────────────────────
+                // Use a JS labels array + pointIndex to avoid Plotly date auto-detection
+                @if($hasEngagementData)
+                const engagementLabels = @json($engagementMonthLabels);
+                Plotly.newPlot('chart-ds-engagement', [
+                    {
+                        type: 'bar',
+                        name: 'Views',
+                        x: engagementLabels,
+                        y: @json($engagementViewValues),
+                        marker: {color: '#0d6efd'},
+                        hovertemplate: '%{x}: %{y} view(s)<extra></extra>',
+                    },
+                    {
+                        type: 'bar',
+                        name: 'Downloads',
+                        x: engagementLabels,
+                        y: @json($engagementDownloadValues),
+                        marker: {color: '#198754'},
+                        hovertemplate: '%{x}: %{y} download(s)<extra></extra>',
+                    },
+                ], base({
+                    barmode: 'group',
+                    showlegend: true,
+                    legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.22, font: {size: 10}},
+                    margin: {t: 10, b: 50, l: 30, r: 10},
+                    xaxis: {tickangle: -35, tickfont: {size: 9}},
+                    yaxis: {tickformat: 'd', dtick: 1, tickfont: {size: 9}},
                 }), plotConfig);
                 @endif
             })();
