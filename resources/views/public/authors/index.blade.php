@@ -26,14 +26,42 @@
         $chartNames   = array_map(fn($n) => mb_strlen($n) > 40 ? mb_substr($n, 0, 38) . '…' : $n, array_keys($chartAuthors));
         $chartCounts  = array_column(array_values($chartAuthors), 'count');
 
-        // Distribution
+        // Distribution: datasets grouped by author count (dataset-centric)
         $distrib = [];
-        foreach ($counts as $c) {
+        foreach ($datasetAuthorCounts as $id => $dsData) {
+            $c = $dsData['author_count'];
             $distrib[$c] = ($distrib[$c] ?? 0) + 1;
         }
         ksort($distrib);
-        $distribLabels = array_map(fn($n) => $n === 1 ? '1 dataset' : "$n datasets", array_keys($distrib));
+        $distribLabels = array_map(fn($n) => $n === 1 ? '1 author' : "$n authors", array_keys($distrib));
         $distribValues = array_values($distrib);
+
+        // Distribution chart click: author_count → [{title, url}, ...] sorted alphabetically
+        $distribDatasetsJson = [];
+        foreach ($datasetAuthorCounts as $id => $dsData) {
+            $c = $dsData['author_count'];
+            $distribDatasetsJson[$c][] = [
+                'title' => $dsData['title'],
+                'url'   => route('public.datasets.show', $id),
+            ];
+        }
+        foreach ($distribDatasetsJson as $c => &$arr) {
+            usort($arr, fn($a, $b) => strcmp($a['title'], $b['title']));
+        }
+        unset($arr);
+        $distribKeys = array_keys($distrib); // ordered author_count values matching chart bars
+
+        // Author chart click: truncated display name → URL
+        $chartAuthorUrls = [];
+        foreach ($chartAuthors as $name => $data) {
+            $truncated = mb_strlen($name) > 40 ? mb_substr($name, 0, 38) . '…' : $name;
+            if (!empty($data['user'])) {
+                $chartAuthorUrls[$truncated] = route('public.authors.show', $data['user']);
+            } else {
+                $chartAuthorUrls[$truncated] = route('public.authors.search', ['search' => $name]);
+            }
+        }
+
     @endphp
 
     <h3 class="text-center">Published Authors</h3>
@@ -50,9 +78,9 @@
         </div>
         <div class="col-6 col-sm-3">
             <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Dataset Credits</div>
+                <div class="text-muted small">Authorship Credits</div>
                 <div class="fw-bold fs-5 text-info">{{ number_format($totalDatasets) }}</div>
-                <div class="text-muted" style="font-size:.65rem;">author–dataset pairs</div>
+                <div class="text-muted" style="font-size:.65rem;">total author–dataset links</div>
             </div>
         </div>
         <div class="col-6 col-sm-3">
@@ -115,7 +143,7 @@
                                 <i class="fas fa-chart-bar me-1"></i> Contribution Distribution
                             </h6>
                             <p class="text-muted mb-1" style="font-size:.7rem;">
-                                How many authors have 1, 2, 3… datasets
+                                How many datasets have 1, 2, 3… authors — click a bar to see datasets
                             </p>
                             <div id="chart-authors-distrib" style="height:220px;"></div>
                         </div>
@@ -124,6 +152,19 @@
             </div>
         </div>
     @endif
+
+    {{-- ══ Distribution datasets modal ═══════════════════════════════════════════ --}}
+    <div class="modal fade" id="distribDatasetsModal" tabindex="-1" aria-labelledby="distribDatasetsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title mb-0" id="distribDatasetsModalLabel"></h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="distribDatasetsModalBody"></div>
+            </div>
+        </div>
+    </div>
 
     {{-- ══ Table ════════════════════════════════════════════════════════════════════ --}}
     <table id="authors" class="table table-hover align-middle">
@@ -225,12 +266,15 @@
                     font: {family: 'inherit', size: 11}, showlegend: false,
                 }, extra);
 
-                Plotly.newPlot('chart-authors-top', [{
+                const authorUrls = @json($chartAuthorUrls);
+
+                const topDiv = document.getElementById('chart-authors-top');
+                Plotly.newPlot(topDiv, [{
                     type: 'bar', orientation: 'h',
                     y:    @json($chartNames),
                     x:    @json($chartCounts),
                     marker: {color: '#0d6efd'},
-                    hovertemplate: '%{y}: %{x} dataset(s)<extra></extra>',
+                    hovertemplate: '<b>%{y}</b><br>%{x} dataset(s)<br><i style="font-size:10px;">Click to view author</i><extra></extra>',
                     text: @json(array_map(fn($v) => (string)$v, $chartCounts)),
                     textposition: 'inside', insidetextanchor: 'end',
                     textfont: {color: 'white', size: 9},
@@ -243,12 +287,21 @@
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
 
-                Plotly.newPlot('chart-authors-distrib', [{
+                topDiv.on('plotly_click', function (data) {
+                    const name = data.points[0].y;
+                    const url  = authorUrls[name];
+                    if (url) window.location.href = url;
+                });
+                topDiv.on('plotly_hover',   () => topDiv.style.cursor = 'pointer');
+                topDiv.on('plotly_unhover', () => topDiv.style.cursor = 'default');
+
+                const distribDiv = document.getElementById('chart-authors-distrib');
+                Plotly.newPlot(distribDiv, [{
                     type: 'bar',
                     x:    @json($distribLabels),
                     y:    @json($distribValues),
                     marker: {color: '#198754'},
-                    hovertemplate: '%{x}: %{y} author(s)<extra></extra>',
+                    hovertemplate: '%{x}: %{y} dataset(s) — click to view<extra></extra>',
                     text: @json(array_map(fn($v) => (string)$v, $distribValues)),
                     textposition: 'outside', textfont: {size: 9},
                 }], base({
@@ -259,6 +312,31 @@
                         title: {text: 'authors', font: {size: 10}}
                     },
                 }), plotConfig);
+
+                const distribDatasets = @json($distribDatasetsJson);
+                const distribKeys    = @json($distribKeys);
+                const distribModal   = new Modal(document.getElementById('distribDatasetsModal'));
+
+                distribDiv.on('plotly_click', function (data) {
+                    const pt       = data.points[0];
+                    const countVal = distribKeys[pt.pointIndex];
+                    const datasets = distribDatasets[countVal] || [];
+                    const label    = pt.x;
+
+                    document.getElementById('distribDatasetsModalLabel').textContent =
+                        datasets.length + ' dataset(s) have ' + label;
+
+                    let html = '<ul class="list-unstyled mb-0">';
+                    datasets.forEach(ds => {
+                        html += `<li class="mb-2"><a href="${ds.url}">${ds.title}</a></li>`;
+                    });
+                    html += '</ul>';
+
+                    document.getElementById('distribDatasetsModalBody').innerHTML = html;
+                    distribModal.show();
+                });
+                distribDiv.on('plotly_hover',   () => distribDiv.style.cursor = 'pointer');
+                distribDiv.on('plotly_unhover', () => distribDiv.style.cursor = 'default');
             })();
         </script>
 

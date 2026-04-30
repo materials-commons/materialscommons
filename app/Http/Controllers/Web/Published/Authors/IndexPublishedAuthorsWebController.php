@@ -12,7 +12,7 @@ class IndexPublishedAuthorsWebController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $datasets = Dataset::whereNotNull('published_at')->get(['ds_authors', 'published_at']);
+        $datasets = Dataset::whereNotNull('published_at')->get(['id', 'name', 'ds_authors', 'published_at']);
 
         $authors = [];
         foreach ($datasets as $ds) {
@@ -20,15 +20,17 @@ class IndexPublishedAuthorsWebController extends Controller
                 continue;
             }
             $pubDate = $ds->published_at;
+            $dsEntry = ['id' => $ds->id, 'title' => $ds->name];
             foreach ($ds->ds_authors as $author) {
                 $name = Str::of($author['name'])->trim()->__toString();
                 if ($name === '') {
                     continue;
                 }
                 if (!isset($authors[$name])) {
-                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null, 'affiliations' => null];
+                    $authors[$name] = ['count' => 0, 'latest' => null, 'since' => null, 'user' => null, 'affiliations' => null, 'datasets' => []];
                 }
                 $authors[$name]['count']++;
+                $authors[$name]['datasets'][] = $dsEntry;
                 // Capture first non-empty affiliation seen in ds_authors
                 if (empty($authors[$name]['affiliations']) && !empty($author['affiliations'])) {
                     $authors[$name]['affiliations'] = trim($author['affiliations']);
@@ -56,6 +58,18 @@ class IndexPublishedAuthorsWebController extends Controller
             }
         }
 
-        return view('public.authors.index', compact('authors'));
+        // Per-dataset author counts for the distribution chart (dataset-centric view)
+        $datasetAuthorCounts = [];
+        foreach ($datasets as $ds) {
+            if (is_null($ds->ds_authors)) {
+                continue;
+            }
+            $count = count(array_filter($ds->ds_authors, fn($a) => trim($a['name'] ?? '') !== ''));
+            if ($count > 0) {
+                $datasetAuthorCounts[$ds->id] = ['title' => $ds->name, 'author_count' => $count];
+            }
+        }
+
+        return view('public.authors.index', compact('authors', 'datasetAuthorCounts'));
     }
 }
