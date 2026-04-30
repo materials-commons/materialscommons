@@ -24,13 +24,21 @@
 
     // Chart: datasets per organizer (aggregated)
     $byOrganizer = [];
+    $orgUserMap  = [];
     foreach ($communities as $c) {
         $org = $c->owner->name ?? 'Unknown';
         $byOrganizer[$org] = ($byOrganizer[$org] ?? 0) + $c->datasets_count;
+        if ($c->owner && !isset($orgUserMap[$org])) {
+            $orgUserMap[$org] = $c->owner;
+        }
     }
     arsort($byOrganizer);
     $orgNames  = array_keys($byOrganizer);
     $orgCounts = array_values($byOrganizer);
+    $orgUrls   = array_map(
+        fn($name) => isset($orgUserMap[$name]) ? route('public.authors.show', $orgUserMap[$name]) : null,
+        $orgNames
+    );
 @endphp
 
     <h3 class="text-center mb-3">Data Communities</h3>
@@ -174,7 +182,7 @@
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">Total datasets across organised communities</p>
                                 <div id="chart-comm-organizers"
-                                     style="height:{{ min(60 + count($orgNames) * 28, 400) }}px;"></div>
+                                     style="height:{{ min(60 + count($orgNames) * 28, 400) }}px; cursor:pointer;"></div>
                             </div>
                         </div>
                     </div>
@@ -227,7 +235,7 @@
                 }, extra);
 
                 @if($totalCommunities > 1)
-                const commUrls = @json($communities->sortByDesc('datasets_count')->take(20)->map(fn($c) => route('public.communities.show', $c))->values());
+                const commUrls = @json($communities->sortByDesc('datasets_count')->take(20)->map(fn($c) => route('public.communities.datasets.index', $c))->values());
                 Plotly.newPlot('chart-comm-datasets', [{
                     type: 'bar', orientation: 'h',
                     y: @json($chartNames),
@@ -249,6 +257,7 @@
                 @endif
 
                 @if(count($orgNames) > 1)
+                const orgUrls = @json($orgUrls);
                 Plotly.newPlot('chart-comm-organizers', [{
                     type: 'bar', orientation: 'h',
                     y: @json($orgNames),
@@ -264,6 +273,10 @@
                             title: {text: 'datasets', font: {size: 10}}},
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                document.getElementById('chart-comm-organizers').on('plotly_click', function (data) {
+                    const url = orgUrls[data.points[0].pointIndex];
+                    if (url) window.location.href = url;
+                });
                 @endif
 
             })();
