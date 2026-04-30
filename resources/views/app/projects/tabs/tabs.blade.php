@@ -6,12 +6,12 @@
         </a>
     </li>
 
-    <li class="nav-item" id="project-overview-tab">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
-           href="{{route('projects.overview', [$project])}}">
-            Details
-        </a>
-    </li>
+{{--    <li class="nav-item" id="project-overview-tab">--}}
+{{--        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"--}}
+{{--           href="{{route('projects.overview', [$project])}}">--}}
+{{--            Details--}}
+{{--        </a>--}}
+{{--    </li>--}}
 
 {{--    <li class="nav-item" id="project-users-tab">--}}
 {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.users.index')}}"--}}
