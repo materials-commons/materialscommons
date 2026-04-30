@@ -30,10 +30,10 @@ class WelcomeWebController extends Controller
                                              $q->where('tags.id', config('visus.import_tag_id'));
                                          })->count();
 
-        $view = 'welcome';
-        if (isInBeta('new-front-page')) {
-            $view = 'welcome2';
-        }
+        $view = 'welcome2';
+//        if (isInBeta('new-front-page')) {
+//            $view = 'welcome2';
+//        }
 
         return view($view, [
             'publishedDatasetsCount' => $publishedDatasetsCount,
