@@ -35,8 +35,10 @@ window.Uppy = Uppy;
 window.UppyDashboard = Dashboard;
 window.UppyXHRUpload = XHR;
 
-import {Modal} from 'bootstrap';
+import {Modal, Tab} from 'bootstrap';
 window.Modal = Modal;
+window.Tab = Tab;
+
 
 import '@uppy/core/dist/style.min.css';
 import '@uppy/dashboard/dist/style.min.css';

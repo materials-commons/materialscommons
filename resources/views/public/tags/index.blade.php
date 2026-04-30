@@ -25,6 +25,7 @@
         $chartTags   = array_slice($sortedByCount, 0, 20, true);
         $chartNames  = array_map(fn($n) => mb_strlen($n) > 40 ? mb_substr($n, 0, 38) . '…' : $n, array_keys($chartTags));
         $chartCounts = array_column(array_values($chartTags), 'count');
+        $chartUrls   = array_map(fn($tag) => route('public.tags.search', ['tag' => $tag]), array_keys($chartTags));
 
         // Distribution
         $distrib = [];
@@ -104,7 +105,7 @@
                                 Top {{ count($chartNames) }} tags by number of datasets
                             </p>
                             <div id="chart-tags-top"
-                                 style="height:{{ min(60 + count($chartNames) * 28, 500) }}px;"></div>
+                                 style="height:{{ min(60 + count($chartNames) * 28, 500) }}px; cursor:pointer;"></div>
                         </div>
                     </div>
                 </div>
@@ -213,6 +214,7 @@
                     font: {family: 'inherit', size: 11}, showlegend: false,
                 }, extra);
 
+                const chartTagUrls = @json($chartUrls);
                 Plotly.newPlot('chart-tags-top', [{
                     type: 'bar', orientation: 'h',
                     y:    @json($chartNames),
@@ -225,11 +227,14 @@
                 }], base({
                     margin: {t: 5, b: 30, l: 180, r: 20},
                     xaxis: {
-                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'datasets', font: {size: 10}}
+                        type: 'log', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                        title: {text: 'datasets (log scale)', font: {size: 10}}
                     },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
+                document.getElementById('chart-tags-top').on('plotly_click', function (data) {
+                    window.location.href = chartTagUrls[data.points[0].pointIndex];
+                });
 
                 Plotly.newPlot('chart-tags-distrib', [{
                     type: 'bar',

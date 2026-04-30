@@ -22,6 +22,16 @@
         $dlNames  = $topDownloaded->map(fn($ds) => mb_strlen($ds->name) > 45 ? mb_substr($ds->name, 0, 43).'…' : $ds->name)->values()->toArray();
         $dlCounts = $topDownloaded->pluck('downloads_count')->values()->toArray();
         $dlUrls   = $topDownloaded->map(fn($ds) => route('public.datasets.show', $ds))->values()->toArray();
+
+        $timelineDatasets = [];
+        foreach ($datasets as $ds) {
+            if ($ds->published_at) {
+                $mk = $ds->published_at->format('Y-m');
+                $timelineDatasets[$mk][] = ['name' => $ds->name, 'url' => route('public.datasets.show', $ds)];
+            }
+        }
+        ksort($timelineDatasets);
+        $timelineLabels = array_keys($timeline);
     @endphp
 
     {{-- ══ Breadcrumb ══════════════════════════════════════════════════════════════ --}}
@@ -178,9 +188,9 @@
                                     <i class="fas fa-calendar-alt me-1"></i> Publication Timeline
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Datasets published over time with this tag
+                                    Datasets published over time with this tag — click a bar to see them
                                 </p>
-                                <div id="chart-tag-timeline" style="height:200px;"></div>
+                                <div id="chart-tag-timeline" style="height:200px; cursor:pointer;"></div>
                             </div>
                         </div>
                     </div>
@@ -247,6 +257,23 @@
         @endforeach
         </tbody>
     </table>
+
+    {{-- Modal for timeline click details --}}
+    <div class="modal fade" id="tag-timeline-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-nav">
+                    <h5 class="modal-title help-color" id="tag-timeline-modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="tag-timeline-modal-body" style="max-height:60vh; overflow-y:auto;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @push('scripts')
         <script>
@@ -342,9 +369,11 @@
                 @endif
 
                 @if(count($timeline) > 1)
+                const timelineLabels = @json($timelineLabels);
+                const timelineDatasets = @json($timelineDatasets);
                 Plotly.newPlot('chart-tag-timeline', [{
                     type: 'bar',
-                    x: @json(array_keys($timeline)),
+                    x: timelineLabels,
                     y: @json(array_values($timeline)),
                     marker: {color: '#6f42c1'},
                     hovertemplate: '%{x}: %{y} dataset(s)<extra></extra>',
@@ -356,6 +385,36 @@
                         title: {text: 'datasets', font: {size: 10}}
                     },
                 }), plotConfig);
+                document.getElementById('chart-tag-timeline').on('plotly_click', function (data) {
+                    const month = timelineLabels[data.points[0].pointIndex];
+                    const datasets = timelineDatasets[month] || [];
+                    document.getElementById('tag-timeline-modal-title').textContent = 'Datasets published in ' + month;
+                    const body = document.getElementById('tag-timeline-modal-body');
+                    body.innerHTML = '';
+                    if (datasets.length === 0) {
+                        const p = document.createElement('p');
+                        p.className = 'text-muted';
+                        p.textContent = 'No datasets found.';
+                        body.appendChild(p);
+                    } else {
+                        const ul = document.createElement('ul');
+                        ul.className = 'list-unstyled mb-0';
+                        datasets.forEach(function (d) {
+                            const li = document.createElement('li');
+                            li.className = 'mb-1';
+                            const a = document.createElement('a');
+                            a.href = d.url;
+                            a.textContent = d.name;
+                            a.className = 'text-decoration-none';
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                        });
+                        body.appendChild(ul);
+                    }
+                    Modal.getOrCreateInstance(
+                        document.getElementById('tag-timeline-modal')
+                    ).show();
+                });
                 @endif
             })();
             @endif
