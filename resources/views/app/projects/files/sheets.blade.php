@@ -266,7 +266,7 @@
                     textfont: {color: 'white', size: 9},
                 }], base({
                     margin: {t: 5, b: 30, l: 160, r: 20},
-                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
+                    xaxis: {type: 'log', tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
                 @endif
