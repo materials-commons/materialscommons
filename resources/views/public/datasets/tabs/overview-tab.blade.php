@@ -239,6 +239,7 @@
                 }], base({
                     margin: {t: 5, b: 30, l: 160, r: 20},
                     xaxis: {
+                        type: 'log',
                         tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
                         title: {text: 'files', font: {size: 10}}
                     },
@@ -333,6 +334,10 @@
 
     <x-datasets.show-authors :authors="$dataset->ds_authors" :author-users="$authorUsers"/>
 
+    <div class="mb-3 mt-2">
+        @include('partials.overview._overview')
+    </div>
+
     @if(!blank($dataset->description))
         <x-show-description :description="$dataset->description"/>
     @elseif (!blank($dataset->summary))
@@ -345,11 +350,10 @@
 
     <x-display-markdown-file :file="$readme"></x-display-markdown-file>
 
-    <x-datasets.show-funding :dataset="$dataset"/>
-
     <x-datasets.show-papers-list :papers="$dataset->papers"/>
 
-    @include('partials.overview._overview')
+
+    <x-datasets.show-funding :dataset="$dataset"/>
 
     <x-datasets.show-overview-files :dataset="$dataset"/>
 
