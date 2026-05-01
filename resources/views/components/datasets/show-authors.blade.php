@@ -26,7 +26,7 @@
                         @endif
                     </a>
                 @else
-                    <a href="{{ route('public.index', ['author' => $name]) }}"
+                    <a href="{{ route('public.authors.search', ['search' => $name]) }}"
                        class="border rounded px-2 py-1 text-decoration-none bg-light d-inline-flex flex-column"
                        style="line-height:1.3;"
                        title="Search datasets by {{ $name }}">
