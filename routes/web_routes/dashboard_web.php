@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebControll
 use App\Http\Controllers\Web\Dashboard\ShowMyResearchDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\UnarchiveProjectOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\UnmarkProjectAsActiveOnDashboardWebController;
+use App\Http\Controllers\Web\Dashboard\UpdateMyResearchSummaryDashboardWebController;
 use App\Http\Controllers\Web\WebDAV\ResetWebDAVStateForUserWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,9 @@ Route::get('/dashboard/data-dictionary', ShowDashboardDataDictionaryWebControlle
 
 Route::get('/dashboard/my-research', ShowMyResearchDashboardWebController::class)
      ->name('dashboard.my-research.show');
+
+Route::put('/dashboard/my-research/research-summary', UpdateMyResearchSummaryDashboardWebController::class)
+     ->name('dashboard.my-research.research-summary.update');
 
 Route::get('/dashboard/projects/{project}/mark-as-active', MarkProjectAsActiveOnDashboardWebController::class)
      ->name('dashboard.projects.mark-as-active');

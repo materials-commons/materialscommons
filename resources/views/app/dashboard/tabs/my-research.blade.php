@@ -262,31 +262,11 @@
          aria-labelledby="my-research-overview-tab">
         <div class="row g-3">
             <div class="col-12 col-lg-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-3 background-white">
-                        <h6 class="card-title text-muted">
-                            <i class="fas fa-compass me-1"></i>Research Summary
-                        </h6>
-                        <p class="text-muted mb-0">
-                            Placeholder for a private summary of your research activity, including recent projects,
-                            dataset publication progress, and important status indicators.
-                        </p>
-                    </div>
-                </div>
+                <x-dashboard.my-research.research-summary />
             </div>
 
             <div class="col-12 col-lg-6">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-3 background-white">
-                        <h6 class="card-title text-muted">
-                            <i class="fas fa-tasks me-1"></i>Recommended Actions
-                        </h6>
-                        <p class="text-muted mb-0">
-                            Placeholder for suggested next steps, such as completing metadata, assigning licenses,
-                            reviewing draft datasets, or publishing ready datasets.
-                        </p>
-                    </div>
-                </div>
+                <x-dashboard.my-research.recommended-actions />
             </div>
         </div>
     </div>
@@ -296,39 +276,13 @@
          id="tab-my-research-projects"
          role="tabpanel"
          aria-labelledby="my-research-projects-tab">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-3 background-white">
-                <h6 class="card-title text-muted">
-                    <i class="fas fa-folder-open me-1"></i>Projects
-                </h6>
-                <p class="text-muted mb-3">
-                    Placeholder for active projects, recently accessed projects, project-level dataset counts,
-                    storage usage, members, activity, and publication status.
-                </p>
-
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="width:100%">
-                        <thead class="table-light">
-                        <tr>
-                            <th>Project</th>
-                            <th>Status</th>
-                            <th>Datasets</th>
-                            <th>Members</th>
-                            <th>Last Activity</th>
-                            <th>Needs Attention</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="6" class="text-muted text-center py-4">
-                                Project overview placeholder
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.my-research.projects.overview
+            :projects="$projects ?? collect()"
+            :active-projects="$activeProjects ?? collect()"
+            :recently-accessed-projects="$recentlyAccessedProjects ?? collect()"
+            :archived-projects="$archivedProjects ?? collect()"
+            :deleted-projects="$deletedProjects ?? collect()"
+        />
     </div>
 
     {{-- ── Datasets ─────────────────────────────────────────────────────────────── --}}
