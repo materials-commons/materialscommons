@@ -63,95 +63,14 @@
 <x-dashboard.my-research.needs-attention/>
 
 {{-- ══ Analytics — collapsible placeholder ═══════════════════════════════════════════ --}}
-<div class="d-flex align-items-center mb-2">
-    <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-            type="button"
-            id="my-research-analytics-toggle"
-            data-bs-toggle="collapse"
-            data-bs-target="#my-research-analytics"
-            aria-expanded="false"
-            aria-controls="my-research-analytics">
-        <i class="fas fa-chevron-right fa-fw"
-           id="my-research-analytics-chevron"
-           style="transition:transform .2s; font-size:.75rem;"></i>
-        <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-            Analytics
-        </span>
-    </button>
-    <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-</div>
-
-<div class="collapse mb-3" id="my-research-analytics">
-    <div class="row g-3">
-        <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-chart-line me-1"></i>Dataset Activity
-                    </h6>
-                    <p class="text-muted mb-2" style="font-size:.7rem;">
-                        Placeholder for publication timeline, views, downloads, and dataset activity.
-                    </p>
-                    <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
-                         style="height:220px;">
-                        Chart placeholder
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-balance-scale me-1"></i>License Coverage
-                    </h6>
-                    <p class="text-muted mb-2" style="font-size:.7rem;">
-                        Placeholder for license distribution and datasets missing license information.
-                    </p>
-                    <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
-                         style="height:220px;">
-                        Chart placeholder
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-tags me-1"></i>Research Topics
-                    </h6>
-                    <p class="text-muted mb-2" style="font-size:.7rem;">
-                        Placeholder for tags, categories, and dataset topic coverage.
-                    </p>
-                    <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
-                         style="height:220px;">
-                        Chart placeholder
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-3 background-white">
-                    <h6 class="card-title text-muted mb-0">
-                        <i class="fas fa-users me-1"></i>Collaborators
-                    </h6>
-                    <p class="text-muted mb-2" style="font-size:.7rem;">
-                        Placeholder for frequent collaborators, co-authors, and project members.
-                    </p>
-                    <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
-                         style="height:220px;">
-                        Chart placeholder
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<x-dashboard.my-research.analytics.overview
+    :projects="$projects ?? collect()"
+    :active-projects="$activeProjects ?? collect()"
+    :recently-accessed-projects="$recentlyAccessedProjects ?? collect()"
+    :archived-projects="$archivedProjects ?? collect()"
+    :deleted-projects="$deletedProjects ?? collect()"
+    :datasets="$datasets ?? collect()"
+/>
 
 {{-- ══ Content tabs ══════════════════════════════════════════════════════════════════ --}}
 <ul class="nav nav-pills mb-3" id="my-research-tabs" role="tablist">
@@ -503,39 +422,15 @@
 @push('scripts')
     <script>
         (function () {
-            const ANALYTICS_KEY = '{{ $analyticsKey }}';
-            const analyticsPanel = document.getElementById('my-research-analytics');
-            const analyticsToggle = document.getElementById('my-research-analytics-toggle');
-            const analyticsChevron = document.getElementById('my-research-analytics-chevron');
-
-            if (analyticsPanel) {
-                if (localStorage.getItem(ANALYTICS_KEY) === 'true') {
-                    analyticsPanel.classList.add('show');
-                    if (analyticsChevron) analyticsChevron.style.transform = 'rotate(90deg)';
-                    if (analyticsToggle) analyticsToggle.setAttribute('aria-expanded', 'true');
-                }
-
-                analyticsPanel.addEventListener('show.bs.collapse', () => {
-                    if (analyticsChevron) analyticsChevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(ANALYTICS_KEY, 'true');
-                });
-
-                analyticsPanel.addEventListener('hide.bs.collapse', () => {
-                    if (analyticsChevron) analyticsChevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(ANALYTICS_KEY, 'false');
-                });
-
-                analyticsPanel.addEventListener('shown.bs.collapse', () => {
-                    analyticsPanel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-            }
-
             const TAB_KEY = 'mc_dashboard_my_research_tab';
 
             document.querySelectorAll('#my-research-tabs [data-bs-toggle="pill"]').forEach(btn => {
                 btn.addEventListener('shown.bs.tab', function () {
                     localStorage.setItem(TAB_KEY, this.getAttribute('data-bs-target'));
-                    document.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+
+                    if (window.Plotly) {
+                        document.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+                    }
                 });
             });
 
