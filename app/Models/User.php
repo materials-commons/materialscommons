@@ -309,10 +309,11 @@ class User extends Authenticatable implements MustVerifyEmail
             // If the project isn't already active then add it
             $settings["projects"]["{$projectSetting}"]["id_{$projectId}"] = $value;
             $this->update(["settings" => $settings]);
-        } else {
+        }
+        // else {
             // if we are here then this project setting was already set and $alwaysSet was false,
             // so there is nothing to do.
-        }
+        // }
     }
 
     function removeFromProjectSetting($projectSetting, $projectId)
