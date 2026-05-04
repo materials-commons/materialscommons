@@ -3,6 +3,7 @@
 namespace App\View\Components\Dashboard\MyResearch;
 
 use App\Models\Dataset;
+use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -287,7 +288,7 @@ class NeedsAttention extends Component
         }
 
         $projects = (clone $query)
-            ->with('files')
+            ->with('rootDir')
             ->orderBy('name')
             ->limit($this->detailsLimit)
             ->get();
@@ -350,6 +351,9 @@ class NeedsAttention extends Component
     private function datasetIdsUserIsPartOf(): Collection
     {
         $ownedDatasetIds = Dataset::where('owner_id', $this->user->id)
+                                  ->whereDoesntHave('tags', function ($q) {
+                                      $q->where('tags.id', config('visus.import_tag_id'));
+                                  })
                                   ->pluck('id');
 
         $linkedDatasetIds = $this->user
@@ -399,6 +403,7 @@ class NeedsAttention extends Component
 
     private function projectReadmeDescriptionDetails(Collection $projects): array
     {
+        // TODO: This is inefficient since it makes a separate query for each project.
         return $projects
             ->map(function (Project $project) {
                 $issues = [];
@@ -406,14 +411,13 @@ class NeedsAttention extends Component
                 if (blank($project->description)) {
                     $issues[] = 'Missing description';
                 }
+                $readme = File::where('name', "readme.md")
+                              ->where("project_id", $project->id)
+                              ->where("directory_id", $project->rootDir->id)
+                              ->active()
+                              ->first();
 
-                $hasReadme = $project->files
-                    ->contains(fn($file) => strtolower($file->name) === 'readme.md'
-                        && $file->current
-                        && is_null($file->dataset_id)
-                        && is_null($file->deleted_at));
-
-                if (!$hasReadme) {
+                if (is_null($readme)) {
                     $issues[] = 'Missing README';
                 }
 

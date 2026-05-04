@@ -62,7 +62,6 @@
 {{-- ══ Needs attention placeholder ═══════════════════════════════════════════════════ --}}
 <x-dashboard.my-research.needs-attention/>
 
-
 {{-- ══ Analytics — collapsible placeholder ═══════════════════════════════════════════ --}}
 <div class="d-flex align-items-center mb-2">
     <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
