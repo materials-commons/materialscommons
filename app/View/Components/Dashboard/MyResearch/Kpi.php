@@ -44,11 +44,17 @@ class Kpi extends Component
                                         ->whereNotNull('archived_at')
                                         ->count();
 
-        $ownedDatasetsQuery = Dataset::where('owner_id', $this->user->id);
+        $ownedDatasetsQuery = Dataset::where('owner_id', $this->user->id)
+                                     ->whereDoesntHave('tags', function ($q) {
+                                         $q->where('tags.id', config('visus.import_tag_id'));
+                                     });
 
-        $publishedDatasetsCount = (clone $ownedDatasetsQuery)
-            ->whereNotNull('published_at')
-            ->count();
+//        $publishedDatasetsCount = (clone $ownedDatasetsQuery)
+//            ->whereNotNull('published_at')
+//            ->whereDoesntHave('tags', function ($q) {
+//                $q->where('tags.id', config('visus.import_tag_id'));
+//            })
+//            ->count();
 
         $draftDatasetsCount = (clone $ownedDatasetsQuery)
             ->whereNull('published_at')
@@ -58,6 +64,7 @@ class Kpi extends Component
             ->whereNotNull('published_at')
             ->withCount(['views', 'downloads'])
             ->get();
+        $publishedDatasetsCount = $publishedDatasets->count();
 
         $missingLicensesCount = (clone $ownedDatasetsQuery)
             ->where(function ($query) {
