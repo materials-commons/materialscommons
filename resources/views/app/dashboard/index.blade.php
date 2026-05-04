@@ -23,6 +23,10 @@
         @else
             @include('app.dashboard.tabs.projects')
         @endif
+    @elseif(Request::routeIs('dashboard.my-research.show'))
+        <x-table-container>
+            @include('app.dashboard.tabs.my-research')
+        </x-table-container>
     @elseif (Request::routeIs('dashboard.published-datasets.show'))
         <x-table-container>
             @if(isInBeta('dashboard-charts'))

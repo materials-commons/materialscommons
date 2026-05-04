@@ -5,6 +5,14 @@
             Projects ({{$projectsCount}})
         </a>
     </li>
+
+    <li class="nav-item" id="dashboard-my-research-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('dashboard.my-research.show')}}"
+           href="{{route('dashboard.my-research.show')}}">
+            My Research
+        </a>
+    </li>
+
     <li class="nav-item" id="dashboard-published-datasets-tab">
         <a class="nav-link no-underline {{setActiveNavByName('dashboard.published-datasets.show')}}"
            href="{{route('dashboard.published-datasets.show')}}">
