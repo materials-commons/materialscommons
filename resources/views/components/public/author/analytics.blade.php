@@ -33,9 +33,16 @@
 
     $topDownloadedCounts = $topDownloaded->pluck('downloads_count')->values()->toArray();
     $topDownloadedUrls = $topDownloaded->map(fn($ds) => route('public.datasets.show', $ds))->values()->toArray();
+
+    $chartCount = 0;
+    $chartCount += count($profile->pubTimeline) > 1 ? 1 : 0;
+    $chartCount += count($profile->chartTagNames) > 0 ? 1 : 0;
+    $chartCount += count($profile->chartCoauthorNames) > 0 ? 1 : 0;
+    $chartCount += count($topViewedNames) > 0 ? 1 : 0;
+    $chartCount += count($topDownloadedNames) > 0 ? 1 : 0;
 @endphp
 
-@if($ownedCount + $includedCount > 0)
+@if($ownedCount + $includedCount > 0 && $chartCount > 0)
     <div class="d-flex align-items-center mb-2">
         <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
                 type="button"
@@ -50,6 +57,10 @@
 
             <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
                 Analytics
+            </span>
+
+            <span class="badge text-bg-light border text-muted">
+                {{ number_format($chartCount) }} chart{{ $chartCount === 1 ? '' : 's' }}
             </span>
         </button>
 
