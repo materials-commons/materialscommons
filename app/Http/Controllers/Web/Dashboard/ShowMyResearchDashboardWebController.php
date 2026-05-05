@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Community;
 use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\User;
@@ -29,6 +30,7 @@ class ShowMyResearchDashboardWebController extends Controller
         $deletedProjects = Project::getDeletedForUser(auth()->id());
         $datasets = $this->geUserDatasets(auth()->user(), $projects);
         $listedInDatasets = $this->getDatasetsUserIsListedIn(auth()->user(), $datasets);
+        $communities = $this->getUserCommunities(auth()->user(), $datasets, $listedInDatasets);
 
         return view('app.dashboard.index', [
             'publishedDatasetsCount'   => $datasets->filter(fn($dataset) => $dataset->published_at !== null)->count(),
@@ -42,6 +44,7 @@ class ShowMyResearchDashboardWebController extends Controller
             'deletedProjects'          => $deletedProjects,
             'datasets'                 => $datasets,
             'listedInDatasets'         => $listedInDatasets,
+            'communities'              => $communities,
         ]);
     }
 
@@ -71,6 +74,35 @@ class ShowMyResearchDashboardWebController extends Controller
         return $ownedDatasets;
     }
 
+    private function getUserCommunities(User $user, $datasets, $listedInDatasets)
+    {
+        $communityIdsFromDatasets = collect($datasets)
+            ->merge(collect($listedInDatasets))
+            ->flatMap(fn($dataset) => collect($dataset->publishedCommunities ?? collect())->pluck('id'))
+            ->filter();
+
+        return Community::query()
+                        ->with([
+                            'owner',
+                            'links',
+                            'files',
+                            'publishedDatasets' => function ($query) {
+                                $query->with(['owner', 'project', 'tags'])
+                                      ->withCount(['views', 'downloads'])
+                                      ->orderByDesc('published_at');
+                            },
+                        ])
+                        ->where(function ($query) use ($user, $communityIdsFromDatasets) {
+                            $query->where('owner_id', $user->id)
+                                  ->when($communityIdsFromDatasets->isNotEmpty(),
+                                      function ($query) use ($communityIdsFromDatasets) {
+                                          $query->orWhereIn('id', $communityIdsFromDatasets->unique()->values());
+                                      });
+                        })
+                        ->orderBy('name')
+                        ->get();
+    }
+
     private function getDatasetsUserIsListedIn(User $user, $datasets)
     {
         $existingDatasetIds = $datasets->pluck('id');
@@ -83,7 +115,7 @@ class ShowMyResearchDashboardWebController extends Controller
                       ->when($existingDatasetIds->isNotEmpty(), function ($query) use ($existingDatasetIds) {
                           $query->whereNotIn('id', $existingDatasetIds);
                       })
-                      ->whereRaw('ds_authors COLLATE utf8mb4_general_ci like ?', ['%"name":"' . $user->name . '"%'])
+                      ->whereRaw('ds_authors COLLATE utf8mb4_general_ci like ?', ['%"name":"'.$user->name.'"%'])
                       ->whereDoesntHave('tags', function ($q) {
                           $q->where('tags.id', config('visus.import_tag_id'));
                       })

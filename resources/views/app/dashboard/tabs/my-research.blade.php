@@ -14,6 +14,8 @@
         ->unique()
         ->count();
 
+    $communitiesCount = collect($communities ?? collect())->count();
+
     $datasetCollaboratorCount = collect($datasets ?? collect())
         ->flatMap(fn($dataset) => collect($dataset->ds_authors ?? collect()))
         ->pluck('name')
@@ -204,6 +206,20 @@
         </button>
     </li>
 
+    <li class="nav-item" role="presentation">
+        <button class="nav-link"
+                id="my-research-communities-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#tab-my-research-communities"
+                type="button"
+                role="tab"
+                aria-controls="tab-my-research-communities"
+                aria-selected="false">
+            <i class="fas fa-layer-group me-1"></i>Communities
+            <span class="badge text-bg-primary ms-1">{{ $communitiesCount }}</span>
+        </button>
+    </li>
+
 {{--    <li class="nav-item" role="presentation">--}}
 {{--        <button class="nav-link"--}}
 {{--                id="my-research-metadata-tab"--}}
@@ -296,6 +312,17 @@
          role="tabpanel"
          aria-labelledby="my-research-tags-tab">
         <x-dashboard.my-research.tags.overview
+            :datasets="$datasets ?? collect()"
+            :listed-in-datasets="$listedInDatasets ?? collect()"/>
+    </div>
+
+    {{-- ── Communities ─────────────────────────────────────────────────────────── --}}
+    <div class="tab-pane fade"
+         id="tab-my-research-communities"
+         role="tabpanel"
+         aria-labelledby="my-research-communities-tab">
+        <x-dashboard.my-research.communities.overview
+            :communities="$communities ?? collect()"
             :datasets="$datasets ?? collect()"
             :listed-in-datasets="$listedInDatasets ?? collect()"/>
     </div>
