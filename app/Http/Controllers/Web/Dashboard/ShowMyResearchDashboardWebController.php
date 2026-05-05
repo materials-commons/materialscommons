@@ -28,6 +28,7 @@ class ShowMyResearchDashboardWebController extends Controller
         $archivedProjects = $this->getUserArchivedProjects(auth()->id());
         $deletedProjects = Project::getDeletedForUser(auth()->id());
         $datasets = $this->geUserDatasets(auth()->user(), $projects);
+        $listedInDatasets = $this->getDatasetsUserIsListedIn(auth()->user(), $datasets);
 
         return view('app.dashboard.index', [
             'publishedDatasetsCount'   => $datasets->filter(fn($dataset) => $dataset->published_at !== null)->count(),
@@ -40,6 +41,7 @@ class ShowMyResearchDashboardWebController extends Controller
             'archivedProjects'         => $archivedProjects,
             'deletedProjects'          => $deletedProjects,
             'datasets'                 => $datasets,
+            'listedInDatasets'         => $listedInDatasets,
         ]);
     }
 
@@ -67,6 +69,26 @@ class ShowMyResearchDashboardWebController extends Controller
 //                                 ->get();
 
         return $ownedDatasets;
+    }
+
+    private function getDatasetsUserIsListedIn(User $user, $datasets)
+    {
+        $existingDatasetIds = $datasets->pluck('id');
+
+        return Dataset::query()
+                      ->with(['owner', 'project', 'tags'])
+                      ->withCount(['views', 'downloads'])
+                      ->whereNotNull('published_at')
+                      ->where('owner_id', '!=', $user->id)
+                      ->when($existingDatasetIds->isNotEmpty(), function ($query) use ($existingDatasetIds) {
+                          $query->whereNotIn('id', $existingDatasetIds);
+                      })
+                      ->whereRaw('ds_authors COLLATE utf8mb4_general_ci like ?', ['%"name":"' . $user->name . '"%'])
+                      ->whereDoesntHave('tags', function ($q) {
+                          $q->where('tags.id', config('visus.import_tag_id'));
+                      })
+                      ->orderByDesc('published_at')
+                      ->get();
     }
 
     private function getActiveProjects(User $user, $projects)
