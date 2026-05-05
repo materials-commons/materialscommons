@@ -6,19 +6,28 @@
         </a>
     </li>
 
-{{--    <li class="nav-item" id="project-overview-tab">--}}
-{{--        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"--}}
-{{--           href="{{route('projects.overview', [$project])}}">--}}
-{{--            Details--}}
-{{--        </a>--}}
-{{--    </li>--}}
+    @if(isInBeta('dashboard-charts'))
+        <li class="nav-item" id="project-research-overview-tab">
+            <a class="nav-link no-underline {{setActiveNavByName('projects.research-overview')}}"
+               href="{{route('projects.research-overview', [$project])}}">
+                Project Research Overview
+            </a>
+        </li>
+    @endif
 
-{{--    <li class="nav-item" id="project-users-tab">--}}
-{{--        <a class="nav-link no-underline {{setActiveNavByName('projects.users.index')}}"--}}
-{{--           href="{{route('projects.users.index', [$project])}}">--}}
-{{--            Project Members (3)--}}
-{{--        </a>--}}
-{{--    </li>--}}
+    {{--    <li class="nav-item" id="project-overview-tab">--}}
+    {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"--}}
+    {{--           href="{{route('projects.overview', [$project])}}">--}}
+    {{--            Details--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
+
+    {{--    <li class="nav-item" id="project-users-tab">--}}
+    {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.users.index')}}"--}}
+    {{--           href="{{route('projects.users.index', [$project])}}">--}}
+    {{--            Project Members (3)--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 
     <li class="nav-item" id="project-sample-attributes-tab">
         <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"

@@ -53,6 +53,8 @@
             @else
                 @include('app.projects.tabs.overview')
             @endif
+        @elseif(Request::routeIs('projects.research-overview'))
+            @include('app.projects.tabs.research-overview')
         @elseif (Request::routeIs('projects.data-dictionary.entities'))
             @if(isInBeta('dashboard-charts'))
                 @include('app.projects.tabs.entity-attributes-v2')

@@ -35,6 +35,7 @@ use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectOverviewWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectResearchOverviewWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -77,6 +78,9 @@ Route::get('/projects/{project}', ShowProjectWebController::class)
 
 Route::get('/projects/{project}/overview', ShowProjectOverviewWebController::class)
      ->name('projects.overview');
+
+Route::get('/projects/{project}/research-overview', ShowProjectResearchOverviewWebController::class)
+     ->name('projects.research-overview');
 
 //
 
@@ -219,7 +223,7 @@ Route::post('/projects/{project}/search', SearchProjectWebController::class)
      ->name('projects.search');
 
 Route::get('/projects/{project}/search/htmx', SearchProjectWebController::class)
-    ->name('projects.search.htmx');
+     ->name('projects.search.htmx');
 
 // Project Globus Bookmark
 Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWebController::class)
