@@ -7,6 +7,13 @@
         ->unique('id')
         ->count();
 
+    $tagCount = collect($datasets ?? collect())
+        ->merge(collect($listedInDatasets ?? collect()))
+        ->flatMap(fn($dataset) => collect($dataset->tags ?? collect())->pluck('name'))
+        ->filter()
+        ->unique()
+        ->count();
+
     $datasetCollaboratorCount = collect($datasets ?? collect())
         ->flatMap(fn($dataset) => collect($dataset->ds_authors ?? collect()))
         ->pluck('name')
@@ -185,17 +192,31 @@
 
     <li class="nav-item" role="presentation">
         <button class="nav-link"
-                id="my-research-metadata-tab"
+                id="my-research-tags-tab"
                 data-bs-toggle="pill"
-                data-bs-target="#tab-my-research-metadata"
+                data-bs-target="#tab-my-research-tags"
                 type="button"
                 role="tab"
-                aria-controls="tab-my-research-metadata"
+                aria-controls="tab-my-research-tags"
                 aria-selected="false">
-            <i class="fas fa-clipboard-check me-1"></i>Metadata
-            <span class="badge text-bg-success ms-1">—</span>
+            <i class="fas fa-tags me-1"></i>Tags
+            <span class="badge text-bg-success ms-1">{{ $tagCount }}</span>
         </button>
     </li>
+
+{{--    <li class="nav-item" role="presentation">--}}
+{{--        <button class="nav-link"--}}
+{{--                id="my-research-metadata-tab"--}}
+{{--                data-bs-toggle="pill"--}}
+{{--                data-bs-target="#tab-my-research-metadata"--}}
+{{--                type="button"--}}
+{{--                role="tab"--}}
+{{--                aria-controls="tab-my-research-metadata"--}}
+{{--                aria-selected="false">--}}
+{{--            <i class="fas fa-clipboard-check me-1"></i>Metadata--}}
+{{--            <span class="badge text-bg-success ms-1">—</span>--}}
+{{--        </button>--}}
+{{--    </li>--}}
 </ul>
 
 <div class="tab-content" id="my-research-tabs-content">
@@ -267,6 +288,16 @@
         <x-dashboard.my-research.collaborators.overview
             :datasets="$datasets ?? collect()"
             :projects="$projects ?? collect()"/>
+    </div>
+
+    {{-- ── Tags ────────────────────────────────────────────────────────────────── --}}
+    <div class="tab-pane fade"
+         id="tab-my-research-tags"
+         role="tabpanel"
+         aria-labelledby="my-research-tags-tab">
+        <x-dashboard.my-research.tags.overview
+            :datasets="$datasets ?? collect()"
+            :listed-in-datasets="$listedInDatasets ?? collect()"/>
     </div>
 
     {{-- ── Metadata ────────────────────────────────────────────────────────────── --}}
