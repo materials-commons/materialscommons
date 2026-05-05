@@ -1,10 +1,32 @@
 @php
     $user = auth()->user();
     $analyticsKey = 'mc_dashboard_my_research_analytics';
+
     $papersCount = collect($datasets ?? collect())
         ->flatMap(fn($dataset) => collect($dataset->papers ?? collect()))
         ->unique('id')
         ->count();
+
+    $datasetCollaboratorCount = collect($datasets ?? collect())
+        ->flatMap(fn($dataset) => collect($dataset->ds_authors ?? collect()))
+        ->pluck('name')
+        ->filter()
+        ->reject(fn($name) => strcasecmp(trim($name), (string) $user->name) === 0)
+        ->map(fn($name) => mb_strtolower(trim($name)))
+        ->unique()
+        ->count();
+
+    $projectCollaboratorCount = collect($projects ?? collect())
+        ->flatMap(function ($project) use ($user) {
+            return collect($project->team?->members ?? collect())
+                ->merge(collect($project->team?->admins ?? collect()))
+                ->filter(fn($member) => (int) ($member->id ?? 0) !== (int) $user->id)
+                ->map(fn($member) => 'user:' . $member->id);
+        })
+        ->unique()
+        ->count();
+
+    $collaboratorsCount = $datasetCollaboratorCount + $projectCollaboratorCount;
 @endphp
 
 {{-- ══ Private profile / research header ═════════════════════════════════════════════ --}}
@@ -157,7 +179,7 @@
                 aria-controls="tab-my-research-collaborators"
                 aria-selected="false">
             <i class="fas fa-users me-1"></i>Collaborators
-            <span class="badge text-bg-warning ms-1">—</span>
+            <span class="badge text-bg-warning ms-1">{{$collaboratorsCount}}</span>
         </button>
     </li>
 
@@ -242,38 +264,9 @@
          id="tab-my-research-collaborators"
          role="tabpanel"
          aria-labelledby="my-research-collaborators-tab">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-3 background-white">
-                <h6 class="card-title text-muted">
-                    <i class="fas fa-users me-1"></i>Collaborators
-                </h6>
-                <p class="text-muted mb-3">
-                    Placeholder for project collaborators, dataset co-authors, frequent collaborators,
-                    team members, and access roles.
-                </p>
-
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="width:100%">
-                        <thead class="table-light">
-                        <tr>
-                            <th>Collaborator</th>
-                            <th>Relationship</th>
-                            <th>Projects</th>
-                            <th>Datasets</th>
-                            <th>Role / Access</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="5" class="text-muted text-center py-4">
-                                Collaborator overview placeholder
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.my-research.collaborators.overview
+            :datasets="$datasets ?? collect()"
+            :projects="$projects ?? collect()"/>
     </div>
 
     {{-- ── Metadata ────────────────────────────────────────────────────────────── --}}
