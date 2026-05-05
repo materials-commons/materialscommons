@@ -1,6 +1,10 @@
 @php
     $user = auth()->user();
     $analyticsKey = 'mc_dashboard_my_research_analytics';
+    $papersCount = collect($datasets ?? collect())
+        ->flatMap(fn($dataset) => collect($dataset->papers ?? collect()))
+        ->unique('id')
+        ->count();
 @endphp
 
 {{-- ══ Private profile / research header ═════════════════════════════════════════════ --}}
@@ -138,8 +142,8 @@
                 role="tab"
                 aria-controls="tab-my-research-publications"
                 aria-selected="false">
-            <i class="fas fa-file-alt me-1"></i>Publications
-            <span class="badge text-bg-secondary ms-1">—</span>
+            <i class="fas fa-file-alt me-1"></i>Papers
+            <span class="badge text-bg-secondary ms-1">{{$papersCount}}</span>
         </button>
     </li>
 
@@ -221,57 +225,6 @@
         <x-dashboard.my-research.licenses.overview
             :datasets="$datasets ?? collect()"
             :projects="$projects ?? collect()"/>
-{{--        <div class="row g-3">--}}
-{{--            <div class="col-12 col-lg-5">--}}
-{{--                <div class="card border-0 shadow-sm h-100">--}}
-{{--                    <div class="card-body p-3 background-white">--}}
-{{--                        <h6 class="card-title text-muted">--}}
-{{--                            <i class="fas fa-chart-pie me-1"></i>License Distribution--}}
-{{--                        </h6>--}}
-{{--                        <p class="text-muted mb-2">--}}
-{{--                            Placeholder for license breakdown across published and draft datasets.--}}
-{{--                        </p>--}}
-{{--                        <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"--}}
-{{--                             style="height:220px;">--}}
-{{--                            Chart placeholder--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="col-12 col-lg-7">--}}
-{{--                <div class="card border-0 shadow-sm h-100">--}}
-{{--                    <div class="card-body p-3 background-white">--}}
-{{--                        <h6 class="card-title text-muted">--}}
-{{--                            <i class="fas fa-exclamation-triangle me-1"></i>License Issues--}}
-{{--                        </h6>--}}
-{{--                        <p class="text-muted mb-3">--}}
-{{--                            Placeholder for datasets missing licenses, using custom licenses, or needing review.--}}
-{{--                        </p>--}}
-
-{{--                        <div class="table-responsive">--}}
-{{--                            <table class="table table-hover align-middle mb-0" style="width:100%">--}}
-{{--                                <thead class="table-light">--}}
-{{--                                <tr>--}}
-{{--                                    <th>Dataset</th>--}}
-{{--                                    <th>Status</th>--}}
-{{--                                    <th>Current License</th>--}}
-{{--                                    <th>Issue</th>--}}
-{{--                                </tr>--}}
-{{--                                </thead>--}}
-{{--                                <tbody>--}}
-{{--                                <tr>--}}
-{{--                                    <td colspan="4" class="text-muted text-center py-4">--}}
-{{--                                        License issue placeholder--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                                </tbody>--}}
-{{--                            </table>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 
     {{-- ── Publications ────────────────────────────────────────────────────────── --}}
@@ -279,37 +232,9 @@
          id="tab-my-research-publications"
          role="tabpanel"
          aria-labelledby="my-research-publications-tab">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-3 background-white">
-                <h6 class="card-title text-muted">
-                    <i class="fas fa-file-alt me-1"></i>Publications
-                </h6>
-                <p class="text-muted mb-3">
-                    Placeholder for papers, DOI coverage, datasets linked to papers, datasets missing citations,
-                    and publication-readiness indicators.
-                </p>
-
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="width:100%">
-                        <thead class="table-light">
-                        <tr>
-                            <th>Publication</th>
-                            <th>DOI</th>
-                            <th>Linked Datasets</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="4" class="text-muted text-center py-4">
-                                Publication overview placeholder
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.my-research.papers.overview
+            :datasets="$datasets ?? collect()"
+            :projects="$projects ?? collect()"/>
     </div>
 
     {{-- ── Collaborators ───────────────────────────────────────────────────────── --}}

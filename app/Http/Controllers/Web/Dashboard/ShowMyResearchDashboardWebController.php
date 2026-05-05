@@ -48,7 +48,7 @@ class ShowMyResearchDashboardWebController extends Controller
         $projectIds = $projects->pluck('id');
 
         $ownedDatasets = Dataset::query()
-                                ->with(['project'])
+                                ->with(['project', 'papers.owner'])
                                 ->withCount(['views', 'downloads', 'comments'])
                                 ->withCounts()
                                 ->where(function ($query) use ($user, $projectIds) {
