@@ -97,7 +97,7 @@
                 aria-controls="tab-my-research-projects"
                 aria-selected="false">
             <i class="fas fa-folder-open me-1"></i>Projects
-            <span class="badge text-bg-primary ms-1">—</span>
+            <span class="badge text-bg-primary ms-1">{{$projectsCount}}</span>
         </button>
     </li>
 
@@ -111,7 +111,7 @@
                 aria-controls="tab-my-research-datasets"
                 aria-selected="false">
             <i class="fas fa-database me-1"></i>Datasets
-            <span class="badge text-bg-info ms-1">—</span>
+            <span class="badge text-bg-info ms-1">{{ $datasets->count() }}</span>
         </button>
     </li>
 
@@ -125,7 +125,7 @@
                 aria-controls="tab-my-research-licenses"
                 aria-selected="false">
             <i class="fas fa-balance-scale me-1"></i>Licenses
-            <span class="badge text-bg-danger ms-1">—</span>
+{{--            <span class="badge text-bg-danger ms-1">—</span>--}}
         </button>
     </li>
 
@@ -208,40 +208,9 @@
          id="tab-my-research-datasets"
          role="tabpanel"
          aria-labelledby="my-research-datasets-tab">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-3 background-white">
-                <h6 class="card-title text-muted">
-                    <i class="fas fa-database me-1"></i>Datasets
-                </h6>
-                <p class="text-muted mb-3">
-                    Placeholder for published datasets, draft datasets, private datasets, datasets where you are
-                    listed as an author, and dataset performance metrics.
-                </p>
-
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="width:100%">
-                        <thead class="table-light">
-                        <tr>
-                            <th>Dataset</th>
-                            <th>Project</th>
-                            <th>Status</th>
-                            <th>License</th>
-                            <th>Views</th>
-                            <th>Downloads</th>
-                            <th>Updated</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td colspan="7" class="text-muted text-center py-4">
-                                Dataset overview placeholder
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.my-research.datasets.overview
+            :datasets="$datasets ?? collect()"
+            :projects="$projects ?? collect()"/>
     </div>
 
     {{-- ── Licenses ─────────────────────────────────────────────────────────────── --}}
@@ -249,57 +218,60 @@
          id="tab-my-research-licenses"
          role="tabpanel"
          aria-labelledby="my-research-licenses-tab">
-        <div class="row g-3">
-            <div class="col-12 col-lg-5">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-3 background-white">
-                        <h6 class="card-title text-muted">
-                            <i class="fas fa-chart-pie me-1"></i>License Distribution
-                        </h6>
-                        <p class="text-muted mb-2">
-                            Placeholder for license breakdown across published and draft datasets.
-                        </p>
-                        <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"
-                             style="height:220px;">
-                            Chart placeholder
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <x-dashboard.my-research.licenses.overview
+            :datasets="$datasets ?? collect()"
+            :projects="$projects ?? collect()"/>
+{{--        <div class="row g-3">--}}
+{{--            <div class="col-12 col-lg-5">--}}
+{{--                <div class="card border-0 shadow-sm h-100">--}}
+{{--                    <div class="card-body p-3 background-white">--}}
+{{--                        <h6 class="card-title text-muted">--}}
+{{--                            <i class="fas fa-chart-pie me-1"></i>License Distribution--}}
+{{--                        </h6>--}}
+{{--                        <p class="text-muted mb-2">--}}
+{{--                            Placeholder for license breakdown across published and draft datasets.--}}
+{{--                        </p>--}}
+{{--                        <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted"--}}
+{{--                             style="height:220px;">--}}
+{{--                            Chart placeholder--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="col-12 col-lg-7">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body p-3 background-white">
-                        <h6 class="card-title text-muted">
-                            <i class="fas fa-exclamation-triangle me-1"></i>License Issues
-                        </h6>
-                        <p class="text-muted mb-3">
-                            Placeholder for datasets missing licenses, using custom licenses, or needing review.
-                        </p>
+{{--            <div class="col-12 col-lg-7">--}}
+{{--                <div class="card border-0 shadow-sm h-100">--}}
+{{--                    <div class="card-body p-3 background-white">--}}
+{{--                        <h6 class="card-title text-muted">--}}
+{{--                            <i class="fas fa-exclamation-triangle me-1"></i>License Issues--}}
+{{--                        </h6>--}}
+{{--                        <p class="text-muted mb-3">--}}
+{{--                            Placeholder for datasets missing licenses, using custom licenses, or needing review.--}}
+{{--                        </p>--}}
 
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0" style="width:100%">
-                                <thead class="table-light">
-                                <tr>
-                                    <th>Dataset</th>
-                                    <th>Status</th>
-                                    <th>Current License</th>
-                                    <th>Issue</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-muted text-center py-4">
-                                        License issue placeholder
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--                        <div class="table-responsive">--}}
+{{--                            <table class="table table-hover align-middle mb-0" style="width:100%">--}}
+{{--                                <thead class="table-light">--}}
+{{--                                <tr>--}}
+{{--                                    <th>Dataset</th>--}}
+{{--                                    <th>Status</th>--}}
+{{--                                    <th>Current License</th>--}}
+{{--                                    <th>Issue</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                <tr>--}}
+{{--                                    <td colspan="4" class="text-muted text-center py-4">--}}
+{{--                                        License issue placeholder--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 
     {{-- ── Publications ────────────────────────────────────────────────────────── --}}
