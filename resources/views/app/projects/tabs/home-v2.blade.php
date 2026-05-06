@@ -168,10 +168,10 @@
      2. CHAT — collapsible, default CLOSED
      ══════════════════════════════════════════════════════════════════════════ --}}
 @if (isInBeta('ai-chat'))
-    @include('app.projects.tabs._ai-chat')
     @include('app.projects.tabs._ai-semantic')
     @include('app.projects.tabs._ai-extraction')
     @include('app.projects.tabs._ai-transformation')
+    @include('app.projects.tabs._ai-chat')
 @endif
 
 {{-- ══════════════════════════════════════════════════════════════════════════
