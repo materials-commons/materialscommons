@@ -89,17 +89,17 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-column gap-2 flex-shrink-0" style="min-width:220px;">
-                    <button type="button"
-                            class="btn btn-primary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#ds-download-zip">
+                <div class="d-flex flex-column gap-2 flex-shrink-0" style="min-width:260px; max-width:340px;">
+                    <div class="text-muted text-uppercase fw-semibold"
+                         style="font-size:.7rem; letter-spacing:.04em;">
                         <i class="fas fa-download me-1"></i>
-                        Download Dataset
-                    </button>
+                        Dataset Access
+                    </div>
+
+                    <x-datasets.show-download-links :dataset="$dataset"/>
 
                     @if(!blank($dataset->doi))
-                        <a class="btn btn-outline-primary btn-sm"
+                        <a class="btn btn-outline-primary btn-sm w-100 d-flex align-items-center justify-content-center"
                            data-bs-toggle="modal"
                            href="#cite-dataset-modal">
                             <i class="fas fa-quote-right me-1"></i>
@@ -110,7 +110,7 @@
                     @auth
                         @if(collect($userProjects)->isNotEmpty())
                             <div class="dropdown">
-                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100"
+                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100 d-flex align-items-center justify-content-center"
                                         type="button"
                                         id="projectsDropdown"
                                         data-bs-toggle="dropdown"
@@ -133,7 +133,7 @@
                         @endif
 
                         @if($hasNotificationsForDataset)
-                            <a class="btn btn-outline-secondary btn-sm"
+                            <a class="btn btn-outline-secondary btn-sm w-100 d-flex align-items-center justify-content-center"
                                href="#"
                                id="notification"
                                data-bs-toggle="tooltip"
@@ -145,7 +145,7 @@
                                 Notifications on
                             </a>
                         @else
-                            <a class="btn btn-outline-secondary btn-sm"
+                            <a class="btn btn-outline-secondary btn-sm w-100 d-flex align-items-center justify-content-center"
                                href="#"
                                id="notification"
                                data-bs-toggle="tooltip"
