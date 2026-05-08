@@ -25,8 +25,7 @@
 
         @if(!blank($summary))
             <div class="text-muted mb-3" style="line-height:1.65;">
-                {!! nl2br(e($summary)) !!}
-            </div>
+                <x-markdown>{!!$summary!!}</x-markdown>
         @else
             <p class="text-muted mb-3" style="line-height:1.65;">
                 No summary has been provided for this dataset.
