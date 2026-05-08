@@ -1,9 +1,8 @@
-@if(!blank($papers))
-    <div class="mb-4">
-        <div class="fw-semibold text-muted text-uppercase mb-2" style="font-size:.72rem; letter-spacing:.04em;">
-            <i class="fas fa-book-open me-1"></i>Related Papers
-        </div>
-
+<div class="mb-4">
+    <div class="fw-semibold text-muted text-uppercase mb-2" style="font-size:.72rem; letter-spacing:.04em;">
+        <i class="fas fa-book-open me-1"></i>Related Papers
+    </div>
+    @if(!blank($papers))
         <div class="d-flex flex-column gap-2">
             @foreach($papers as $paper)
                 <div class="border rounded p-3 bg-light">
@@ -56,5 +55,8 @@
                 </div>
             @endforeach
         </div>
-    </div>
-@endif
+    @else
+        <div class="border rounded bg-light px-3 py-2" style="font-size:.92rem; line-height:1.6;">No papers for this dataset</div>
+    @endif
+</div>
+

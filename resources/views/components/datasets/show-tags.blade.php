@@ -1,6 +1,6 @@
-@if(!blank($tags))
-    <div class="mb-3">
-        <label for="tags">Tags</label>
+<div class="mb-3">
+    <label for="tags">Tags</label>
+    @if(!blank($tags))
         <ul class="list-inline">
             @foreach($tags as $tag)
                 <li class="list-inline-item mt-1">
@@ -11,5 +11,8 @@
                 </li>
             @endforeach
         </ul>
-    </div>
-@endif
+    @else
+        <div class="border rounded bg-light px-3 py-2" style="font-size:.92rem; line-height:1.6;">No tags for this dataset</div>
+    @endif
+</div>
+
