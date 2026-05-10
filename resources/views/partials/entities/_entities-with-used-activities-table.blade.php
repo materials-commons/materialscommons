@@ -107,6 +107,12 @@
             <tr data-entity="{{ $entityJson }}">
                 <td>{{ $entity->name }}</td>
                 <td>
+                    <button type="button"
+                            class="btn btn-link btn-sm p-0 me-2 entity-sidebar-toggle"
+                            title="View summary for {{ $entity->name }}"
+                            aria-label="View summary for {{ $entity->name }}">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
                     @if(isset($experiment))
                         @if($category == "experimental")
                             <a href="{{route('projects.experiments.entities.by-name.spread', [$project, $experiment, "name" => urlencode($entity->name), 'fromExperiment' => $fromExperiment])}}">{{$entity->name}}</a>
@@ -205,8 +211,10 @@
                 </div>`;
             }
 
-            $('#entities-with-used-activities tbody').on('click', 'tr', function () {
-                const originalRow = dt.row(this).node();
+            $('#entities-with-used-activities tbody').on('click', '.entity-sidebar-toggle', function () {
+                event.preventDefault();
+                event.stopPropagation();
+                const originalRow = dt.row($(this).closest('tr')).node();
 
                 // Same row clicked while open → close
                 if (sidebar.style.display === 'block' && originalRow === _activeRowNode) {
