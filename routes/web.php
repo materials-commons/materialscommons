@@ -102,6 +102,17 @@ Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
     ->where('doi', '.*')
     ->name('datasets.show-by-doi');
 
+Route::prefix('prototype')->group(function () {
+    Route::view('/experiment-import/create', 'prototype.experiment-import.create')
+         ->name('prototype.experiment-import.create');
+
+    Route::view('/experiment-import/update', 'prototype.experiment-import.update')
+         ->name('prototype.experiment-import.update');
+
+    Route::view('/experiment-import/status', 'prototype.experiment-import.status')
+         ->name('prototype.experiment-import.status');
+});
+
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
