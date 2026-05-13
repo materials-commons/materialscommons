@@ -6,7 +6,8 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Repat\LaravelJobs\Job;
+
+//use Repat\LaravelJobs\Job;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -40,8 +41,8 @@ class Experiment extends Model implements Searchable
     protected $casts = [
         'project_id'          => 'integer',
         'owner_id'            => 'integer',
-        'job_id'   => 'integer',
-        'sheet_id' => 'integer',
+        'job_id'              => 'integer',
+        'sheet_id'            => 'integer',
         'loading'             => 'boolean',
         'loading_started_at'  => 'datetime',
         'loading_finished_at' => 'datetime',
@@ -62,10 +63,10 @@ class Experiment extends Model implements Searchable
         return $this->morphToMany(Workflow::class, 'item', 'item2workflow');
     }
 
-    public function job()
-    {
-        return $this->belongsTo(Job::class, 'job_id');
-    }
+//    public function job()
+//    {
+//        return $this->belongsTo(Job::class, 'job_id');
+//    }
 
     public function sheet()
     {
@@ -112,6 +113,39 @@ class Experiment extends Model implements Searchable
     public function etlruns()
     {
         return $this->morphMany(EtlRun::class, 'etlable')->orderBy('created_at', 'desc');
+    }
+
+    public function latestEtlRun()
+    {
+        return $this->morphOne(EtlRun::class, 'etlable')->latestOfMany();
+    }
+
+    public function activeEtlRuns()
+    {
+        return $this->morphMany(EtlRun::class, 'etlable')
+                    ->whereIn('status', [
+                        'queued',
+                        'reading',
+                        'parsing',
+                        'validating',
+                        'processing',
+                        'finalizing',
+                    ])
+                    ->orderBy('created_at', 'desc');
+    }
+
+    public function latestActiveEtlRun()
+    {
+        return $this->morphOne(EtlRun::class, 'etlable')
+                    ->whereIn('status', [
+                        'queued',
+                        'reading',
+                        'parsing',
+                        'validating',
+                        'processing',
+                        'finalizing',
+                    ])
+                    ->latestOfMany();
     }
 
     public static function laratablesCustomAction($experiment)
