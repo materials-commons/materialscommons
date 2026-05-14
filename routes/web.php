@@ -94,13 +94,13 @@ Route::get('preview-mc-email', function () {
 });
 
 Route::get('/preview-spreadsheet-email', function () {
-    return new SpreadsheetLoadFinishedMail(File::findOrFail(2), Project::findOrFail(1), Experiment::findOrFail(2),
-        EtlRun::findOrFail(1));
+    return new SpreadsheetLoadFinishedMail(File::findOrFail(2), null,
+        Project::findOrFail(1), Experiment::findOrFail(2), EtlRun::findOrFail(1));
 });
 
 Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
-    ->where('doi', '.*')
-    ->name('datasets.show-by-doi');
+     ->where('doi', '.*')
+     ->name('datasets.show-by-doi');
 
 Route::prefix('prototype')->group(function () {
     Route::view('/experiment-import/create', 'prototype.experiment-import.create')
