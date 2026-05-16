@@ -284,9 +284,6 @@
                         case 'upload_cancelled':
                         case 'upload_snapshot':
                             window.mcUploadStatusStore?.handleEvent(data);
-                            window.dispatchEvent(new CustomEvent('mc-upload-event', {
-                                detail: data,
-                            }));
                             break;
                         default:
                             console.warn('Unknown SSE command:', data.command);
