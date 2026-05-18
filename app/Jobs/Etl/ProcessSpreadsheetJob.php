@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
+use Throwable;
 use function uniqid;
 
 class ProcessSpreadsheetJob implements ShouldQueue
@@ -46,42 +47,86 @@ class ProcessSpreadsheetJob implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws Throwable
      */
     public function handle()
     {
         ini_set("memory_limit", "4096M");
-        if (!blank($this->sheetUrl)) {
-            $fileName = $this->downloadSheetAndReturnFileName();
-            $filePath = $this->getPathToSheet($fileName);
-            $file = null;
-            $etlState = new EtlState($this->userId, null);
-        } else {
-            $fileName = "";
-            $file = File::find($this->fileId);
-            $uuidPath = $this->getFilePathForFile($file);
-            $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
-            $etlState = new EtlState($this->userId, $file->id);
-        }
 
+        $fileName = "";
+        $file = null;
         $experiment = Experiment::findOrFail($this->experimentId);
-        $experiment->etlruns()->save($etlState->etlRun);
-        $experiment->update([
-            'loading_started_at' => Carbon::now(),
-            'job_id'             => $this->job->getJobId(),
-        ]);
-        $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
-        $importer->execute($filePath);
-        $experiment->update([
-            'loading_finished_at' => Carbon::now(),
-            'job_id'              => null,
-        ]);
-        Mail::to(User::findOrFail($this->userId))
-            ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId),
-                $experiment,
-                $etlState->etlRun));
-        if (!is_null($this->sheetUrl)) {
-            // need to delete the temporary file.
-            Storage::disk('mcfs')->delete('__sheets/'.$fileName);
+        $etlState = null;
+
+        try {
+            if (!blank($this->sheetUrl)) {
+                $etlState = new EtlState($this->userId, null);
+                $etlState->setSource('google_sheet', "Google Sheet", $this->sheetUrl);
+            } else {
+                $file = File::findOrFail($this->fileId);
+                $etlState = new EtlState($this->userId, $file->id);
+                $etlState->setSource('spreadsheet', $file->name, $file->fullPath());
+            }
+
+            $experiment->etlruns()->save($etlState->etlRun);
+
+            $etlState->completeStep('queued', 'Worker picked up import job.');
+            $etlState->progress(3, 'Worker picked up import job.');
+
+            $experiment->update([
+                'loading_started_at' => Carbon::now(),
+                'job_id'             => $this->job->getJobId(),
+            ]);
+
+            $etlState->startStep('read_spreadsheet', 'Preparing spreadsheet source.');
+
+            if (!blank($this->sheetUrl)) {
+                $etlState->progress(5, 'Downloading Google Sheet.');
+                $fileName = $this->downloadSheetAndReturnFileName();
+                $filePath = $this->getPathToSheet($fileName);
+                $etlState->progress(12, 'Google Sheet downloaded.');
+            } else {
+                $etlState->progress(5, 'Locating spreadsheet file.');
+                $uuidPath = $this->getFilePathForFile($file);
+                $filePath = Storage::disk('mcfs')->path("{$uuidPath}");
+                $etlState->progress(12, 'Spreadsheet file located.');
+            }
+
+            $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
+            $importer->execute($filePath);
+            $etlState->startStep('finalize', 'Finalizing import.');
+            $etlState->progress(95, 'Finalizing import.');
+
+            $experiment->update([
+                'loading_finished_at' => Carbon::now(),
+                'job_id'              => null,
+            ]);
+
+            $etlState->done();
+
+            Mail::to(User::findOrFail($this->userId))
+                ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId),
+                    $experiment,
+                    $etlState->etlRun));
+            if (!is_null($this->sheetUrl)) {
+                // need to delete the temporary file.
+                Storage::disk('mcfs')->delete('__sheets/'.$fileName);
+            }
+        } catch(Throwable $e) {
+            if (!is_null($etlState)) {
+                $etlState->failed($e->getMessage());
+            }
+
+            $experiment->update([
+                'loading_finished_at' => Carbon::now(),
+                'job_id'              => null,
+            ]);
+
+            throw $e;
+        } finally {
+            if (!blank($this->sheetUrl) && !blank($fileName)) {
+                Storage::disk('mcfs')->delete('__sheets/'.$fileName);
+            }
         }
     }
 
