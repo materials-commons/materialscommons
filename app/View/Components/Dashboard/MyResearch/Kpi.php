@@ -63,9 +63,6 @@ class Kpi extends Component
 
         $publishedDatasets = (clone $ownedDatasetsQuery)
             ->whereNotNull('published_at')
-            ->whereDoesntHave('tags', function ($q) {
-                $q->where('tags.id', config('visus.import_tag_id'));
-            })
             ->withCount(['views', 'downloads'])
             ->get();
         $publishedDatasetsCount = $publishedDatasets->count();

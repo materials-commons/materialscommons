@@ -17,7 +17,7 @@
     $needsMetadata = collect($needsMetadata);
     $publicEngagementDatasets = collect($publicEngagementDatasets);
 
-    $totalViews = $datasets->sum(fn($dataset) => (int) ($dataset->views_count ?? 0));
+    $totalViews = $publishedDatasets->sum('views_count');
     $totalDownloads = $datasets->sum(fn($dataset) => (int) ($dataset->downloads_count ?? 0));
     $publishedWithNoEngagement = $publishedDatasets->filter(function ($dataset) {
         return (int) ($dataset->views_count ?? 0) === 0
