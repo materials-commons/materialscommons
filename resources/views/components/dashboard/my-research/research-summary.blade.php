@@ -17,7 +17,7 @@
 
         @if($hasSummary)
             <div class="text-muted" style="font-size:.9rem; white-space:pre-line;">
-                {{ $user->research_summary }}
+                <x-markdown>{!!$user->research_summary!!}</x-markdown>
             </div>
         @else
             <div class="border rounded bg-light p-3">
@@ -72,7 +72,7 @@
                 @enderror
 
                 <div class="form-text">
-                    This summary is private and shown on your My Research dashboard.
+                    This summary is private and shown on your My Research dashboard. Supports Markdown formatting.
                 </div>
             </div>
 
