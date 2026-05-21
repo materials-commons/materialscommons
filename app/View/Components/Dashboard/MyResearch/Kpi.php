@@ -12,6 +12,10 @@ use Illuminate\View\View;
 
 class Kpi extends Component
 {
+    public $projects;
+    public Collection $archivedProjects;
+    public Collection $datasets;
+
     public string $projectsCount;
     public string $datasetsCount;
     public string $viewsCount;
@@ -28,21 +32,18 @@ class Kpi extends Component
 
     private User $user;
 
-    public function __construct()
+    public function __construct($projects, $archivedProjects, $datasets)
     {
         $this->user = auth()->user();
+        $this->projects = $projects;
+        $this->archivedProjects = $archivedProjects;
+        $this->datasets = $datasets;
 
         $projectIds = $this->projectIds();
 
-        $activeProjectsCount = Project::whereIn('id', $projectIds)
-                                      ->whereNull('deleted_at')
-                                      ->whereNull('archived_at')
-                                      ->count();
+        $activeProjectsCount = $this->projects->count();
 
-        $archivedProjectsCount = Project::whereIn('id', $projectIds)
-                                        ->whereNull('deleted_at')
-                                        ->whereNotNull('archived_at')
-                                        ->count();
+        $archivedProjectsCount = $this->archivedProjects->count();
 
         $ownedDatasetsQuery = Dataset::where('owner_id', $this->user->id)
                                      ->whereDoesntHave('tags', function ($q) {
@@ -62,6 +63,9 @@ class Kpi extends Component
 
         $publishedDatasets = (clone $ownedDatasetsQuery)
             ->whereNotNull('published_at')
+            ->whereDoesntHave('tags', function ($q) {
+                $q->where('tags.id', config('visus.import_tag_id'));
+            })
             ->withCount(['views', 'downloads'])
             ->get();
         $publishedDatasetsCount = $publishedDatasets->count();
