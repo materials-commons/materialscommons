@@ -203,6 +203,8 @@
                 </a>
             </li>
 
+            <x-projects.uploads.status.index :project="$project"/>
+
             <x-projects.show-old-globus-side-nav :project="$project" :user="auth()->user()"/>
 
             @if(isInBeta("globusng2"))

@@ -92,7 +92,7 @@
 </div>
 
 {{-- ══ KPI strip — placeholders for now ══════════════════════════════════════════════ --}}
-<x-dashboard.my-research.kpi/>
+<x-dashboard.my-research.kpi :projects="$projects" :archived-projects="$archivedProjects" :datasets="$datasets"/>
 
 {{-- ══ Needs attention placeholder ═══════════════════════════════════════════════════ --}}
 <x-dashboard.my-research.needs-attention/>
