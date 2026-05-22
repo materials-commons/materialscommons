@@ -23,8 +23,16 @@ class EtlState
     /** @var \App\Models\EtlRun */
     public $etlRun;
 
-    public function __construct($ownerId, $fileId = null)
+    public function __construct($ownerId = null, $fileId = null, ?EtlRun $etlRun = null)
     {
+        // If we are being passed an existing etlRun then use it.
+        if (!is_null($etlRun)) {
+            $this->etlRun = $etlRun;
+            $this->initializeSteps();
+            return;
+        }
+
+        // Create a new etlRun
         $this->etlRun = EtlRun::make([
             'owner_id'                    => $ownerId,
             'status'                      => EtlRunStatus::Queued,
@@ -63,6 +71,18 @@ class EtlState
 
         $this->initializeSteps();
         $this->logInfo('Import queued.');
+    }
+
+    // Retrieve an existing etlRun by id and initialize EtlState with it
+    public static function fromRunId(int $etlRunId): self
+    {
+        return new self(etlRun: EtlRun::find($etlRunId));
+    }
+
+    // Initialize EtlState with an existing EtlRun
+    public static function fromRun(EtlRun $etlRun): self
+    {
+        return new self(etlRun: $etlRun);
     }
 
     public function initializeSteps(): void
@@ -429,7 +449,7 @@ class EtlState
 
     public function addProcessResultEntity(
         EtlRunProcessResult $processResult,
-        string $sampleName,
+        string $entityName,
         ?Entity $entity = null,
         ?int $rowNumber = null,
         string $role = 'output',
@@ -438,7 +458,7 @@ class EtlState
         $resultEntity = EtlRunProcessResultEntity::query()->create([
             'etl_run_process_result_id' => $processResult->id,
             'entity_id'                 => $entity?->id,
-            'sample_name'               => $sampleName,
+            'entity_name'               => $entityName,
             'row_number'                => $rowNumber,
             'role'                      => $role,
             'status'                    => $status,

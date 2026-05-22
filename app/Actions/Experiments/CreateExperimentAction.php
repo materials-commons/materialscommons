@@ -4,6 +4,7 @@ namespace App\Actions\Experiments;
 
 use App\Enums\ExperimentStatus;
 use App\Helpers\PathHelpers;
+use App\Imports\Etl\EtlState;
 use App\Jobs\Etl\ProcessSpreadsheetJob;
 use App\Models\Experiment;
 use App\Models\File;
@@ -36,18 +37,32 @@ class CreateExperimentAction
         $experiment->refresh();
 
         $fileId = null;
+        $sheetUrl = null;
+        $file = null;
         if (array_key_exists('file_id', $data) && $data['file_id'] !== null) {
             $fileId = $data['file_id'];
-        }
-
-        $sheetUrl = null;
-        if (array_key_exists('sheet_url', $data) && $data['sheet_url'] !== null) {
+            $file = File::with('directory')->find($fileId);
+        } elseif (array_key_exists('sheet_url', $data) && $data['sheet_url'] !== null) {
             $sheetUrl = $data['sheet_url'];
         }
 
         if (!is_null($fileId) || !is_null($sheetUrl)) {
-            $ps = new ProcessSpreadsheetJob($data['project_id'], $experiment->id, auth()->id(), $fileId, $sheetUrl);
+            $etlState = new EtlState(auth()->id(), $fileId);
+            $experiment->etlruns()->save($etlState->etlRun);
+
+            if (!is_null($fileId)) {
+                $etlState->setSource(
+                    'spreadsheet',
+                    $file?->name,
+                    $file?->fullPath()
+                );
+            } else {
+                $etlState->setSource('google_sheet', 'Google Sheet', $sheetUrl);
+            }
+
+            $ps = new ProcessSpreadsheetJob($data['project_id'], $experiment->id, auth()->id(), $fileId, $sheetUrl, $etlState->etlRun->id);
             dispatch($ps)->onQueue('globus');
+            $experiment->setRelation('queuedEtlRun', $etlState->etlRun);
         }
 
         return $experiment;

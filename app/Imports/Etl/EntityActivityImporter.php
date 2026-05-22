@@ -5,6 +5,7 @@ namespace App\Imports\Etl;
 use App\Actions\Activities\CreateActivityAction;
 use App\Actions\Entities\CreateEntityAction;
 use App\Actions\Etl\GetFileByPathAction;
+use App\Enums\Etl\EtlRunProcessResultStatus;
 use App\Enums\ExperimentStatus;
 use App\Helpers\PathHelpers;
 use App\Models\Activity;
@@ -12,6 +13,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Entity;
 use App\Models\EntityState;
+use App\Models\EtlRunProcessResult;
 use App\Models\Experiment;
 use App\Models\File;
 use Illuminate\Support\Carbon;
@@ -47,6 +49,10 @@ class EntityActivityImporter
     private int $currentSheetPosition;
     private EtlState $etlState;
     private Carbon $now;
+
+    private ?EtlRunProcessResult $currentProcessResult = null;
+    private int $totalProcessWorksheets = 0;
+    private int $processedProcessWorksheets = 0;
 
     // Category is reset between each sheet. The category determines whether we are
     // processing computational or experimental data.
@@ -89,9 +95,26 @@ class EntityActivityImporter
         if (!is_null($this->experimentId)) {
             $this->experiment = Experiment::findOrFail($this->experimentId);
         }
+        $this->etlState->startStep('parse_worksheets', 'Loading spreadsheet workbook.');
+        $this->etlState->progress(18, 'Loading spreadsheet workbook.');
         $spreadsheet = $this->loadSpreadsheet($spreadsheetPath);
+        $this->etlState->progress(25, 'Spreadsheet workbook loaded.');
+
         $this->loadGlobalSettingsIfExists($spreadsheet);
+
+        $this->etlState->completeStep('parse_worksheets', 'Spreadsheet worksheets parsed.');
+        $this->etlState->progress(30, 'Spreadsheet worksheets parsed.');
+
+        $this->etlState->startStep('validate', 'Validating spreadsheet structure.');
+        $this->validateSpreadsheet($spreadsheet);
+        $this->etlState->completeStep('validate', 'Spreadsheet validation completed.');
+        $this->etlState->progress(40, 'Spreadsheet validation completed.');
+
+        $this->etlState->startStep('process_worksheets', 'Processing worksheets.');
         $this->processWorksheets($spreadsheet);
+        $this->etlState->completeStep('process_worksheets', 'All worksheets processed.');
+
+
         $this->afterImport();
     }
 
@@ -109,14 +132,69 @@ class EntityActivityImporter
         if (is_null($worksheet)) {
             return;
         }
+
+        $this->etlState->validationInfo(
+            title: 'Global settings worksheet found',
+            message: 'The mc constants worksheet was found and loaded.',
+            worksheetName: self::GLOBAL_WORKSHEET_NAME,
+            code: 'global_settings_found',
+        );
+
         $this->globalSettings->loadGlobalWorksheet($worksheet);
+    }
+
+    private function validateSpreadsheet(Spreadsheet $spreadsheet): void
+    {
+        $processableWorksheets = $this->processableWorksheets($spreadsheet);
+
+        if ($processableWorksheets->isEmpty()) {
+            $this->etlState->validationError(
+                title: 'No process worksheets found',
+                message: 'The spreadsheet does not contain any worksheets that can be imported.',
+                code: 'no_process_worksheets',
+            );
+
+            return;
+        }
+
+        $this->etlState->validationInfo(
+            title: 'Process worksheets found',
+            message: "Found {$processableWorksheets->count()} worksheet(s) to process.",
+            code: 'process_worksheets_found',
+            context: [
+                'worksheet_count' => $processableWorksheets->count(),
+                'worksheets'      => $processableWorksheets->map(fn (Worksheet $worksheet) => $worksheet->getTitle())->values()->all(),
+            ],
+        );
+
+        foreach ($spreadsheet->getAllSheets() as $worksheet) {
+            if ($worksheet->getTitle() === self::GLOBAL_WORKSHEET_NAME) {
+                continue;
+            }
+
+            if ($this->ignoreWorksheet($worksheet)) {
+                $this->etlState->validationInfo(
+                    title: 'Worksheet ignored',
+                    message: "Worksheet {$worksheet->getTitle()} is marked as ignored and will not be imported.",
+                    worksheetName: $worksheet->getTitle(),
+                    code: 'worksheet_ignored',
+                );
+            }
+        }
     }
 
     private function processWorksheets(Spreadsheet $spreadsheet)
     {
         $this->currentSheetPosition = 1;
         $worksheets = $spreadsheet->getAllSheets();
+        $processableWorksheets = $this->processableWorksheets($spreadsheet);
+
+        $this->totalProcessWorksheets = max(1, $processableWorksheets->count());
+        $this->processedProcessWorksheets = 0;
+
         $this->etlState->etlRun->n_sheets = sizeof($worksheets);
+        $this->etlState->etlRun->save();
+
         foreach ($worksheets as $worksheet) {
             if ($worksheet->getTitle() == self::GLOBAL_WORKSHEET_NAME) {
                 // Skip processing the global worksheet as the sheet has already been processed
@@ -128,6 +206,11 @@ class EntityActivityImporter
 
             if ($this->ignoreWorksheet($worksheet)) {
                 continue;
+            }
+
+            if ($this->etlState->cancellationRequested()) {
+                $this->etlState->cancel('Import cancelled before processing worksheet '.$worksheet->getTitle().'.');
+                return;
             }
 
             if ($this->isExperimentWorksheet($worksheet)) {
@@ -142,11 +225,93 @@ class EntityActivityImporter
 
             $this->overrideCategoryIfGlobalFlagSet();
 
+            $title = $worksheet->getTitle();
+
+            $this->currentProcessResult = $this->etlState->startProcessResult(
+                worksheetName: $title,
+                processName: $title,
+                category: $this->category,
+                message: "Processing worksheet {$title}.",
+            );
+
+            $this->etlState->progress(
+                $this->worksheetProgressPercent(),
+                "Processing worksheet {$title}."
+            );
+
             $this->processEntityWorksheet($worksheet);
+
+            $this->finishCurrentProcessResult();
+
+            $this->etlState->etlRun->n_sheets_processed++;
+            $this->etlState->etlRun->save();
+
+            $this->processedProcessWorksheets++;
+            $this->currentSheetPosition++;
+
+            $this->etlState->progress(
+                $this->worksheetProgressPercent(),
+                "Finished worksheet {$title}."
+            );
 
             $this->etlState->etlRun->n_sheets_processed++;
             $this->currentSheetPosition++;
         }
+    }
+
+    private function processableWorksheets(Spreadsheet $spreadsheet): Collection
+    {
+        return collect($spreadsheet->getAllSheets())
+            ->reject(fn (Worksheet $worksheet) => $worksheet->getTitle() === self::GLOBAL_WORKSHEET_NAME)
+            ->reject(fn (Worksheet $worksheet) => $this->ignoreWorksheet($worksheet))
+            ->values();
+    }
+
+    private function worksheetProgressPercent(): int
+    {
+        $base = 40;
+        $weight = 50;
+
+        if ($this->totalProcessWorksheets <= 0) {
+            return $base;
+        }
+
+        return $base + (int) floor(($this->processedProcessWorksheets / $this->totalProcessWorksheets) * $weight);
+    }
+
+    private function finishCurrentProcessResult(): void
+    {
+        if (is_null($this->currentProcessResult)) {
+            return;
+        }
+
+        $entityAttributeCount = $this->currentSheetRows
+            ->sum(fn (RowTracker $row) => $row->entityAttributes->count());
+
+        $activityAttributeCount = $this->currentSheetRows
+            ->sum(fn (RowTracker $row) => $row->activityAttributes->count());
+
+        $fileCount = $this->currentSheetRows
+            ->sum(fn (RowTracker $row) => $row->fileAttributes->count());
+
+        $activityCount = $this->currentSheetRows
+            ->map(fn (RowTracker $row) => $row->activityAttributesHash)
+            ->unique()
+            ->count();
+
+        $this->etlState->finishProcessResult(
+            processResult: $this->currentProcessResult,
+            status: EtlRunProcessResultStatus::Created,
+            message: "Finished worksheet {$this->currentProcessResult->worksheet_name}.",
+            counts: [
+                'sample_count'    => $this->currentSheetRows->count(),
+                'activity_count'  => $activityCount,
+                'attribute_count' => $entityAttributeCount + $activityAttributeCount,
+                'file_count'      => $fileCount,
+            ],
+        );
+
+        $this->currentProcessResult = null;
     }
 
     /*
@@ -399,8 +564,11 @@ class EntityActivityImporter
     {
         // All sheets processed and loaded, now build relationships
         // from parent column.
+        $this->etlState->progress(90, 'Creating process relationships.');
+        $this->etlState->logInfo('Creating process relationships.');
         $this->createActivityRelationships();
-        $this->etlState->done();
+        $this->etlState->progress(92, 'Process relationships created.');
+//        $this->etlState->done();
     }
 
     private function onRow(Row $row)
@@ -460,6 +628,7 @@ class EntityActivityImporter
             'experiment_id' => $this->experimentId,
         ], $this->userId);
         $this->etlState->logProgress("   Adding sample: {$entity->name}");
+        $this->trackProcessResultEntity($row, $entity, 'created');
         $this->entityTracker->addEntity($entity);
         $this->etlState->etlRun->n_entities++;
 
@@ -692,6 +861,7 @@ class EntityActivityImporter
         // 2. Add all entity attributes to that entity state
         // 3. Create the new activity and associate it with that entity/entity state.
         $entity = $this->entityTracker->getEntity($row->entityOrActivityName);
+        $this->trackProcessResultEntity($row, $entity, 'updated');
         $state = EntityState::create([
             'owner_id'  => $this->userId,
             'entity_id' => $entity->id,
@@ -702,6 +872,22 @@ class EntityActivityImporter
         $activity = $this->addNewActivity($entity, $state, $row);
         $this->activityTracker->addActivity($row->activityAttributesHash, $activity);
         $this->addFilesToActivityAndEntity($row->fileAttributes, $entity, $activity);
+    }
+
+    private function trackProcessResultEntity(RowTracker $row, Entity $entity, string $status): void
+    {
+        if (is_null($this->currentProcessResult)) {
+            return;
+        }
+
+        $this->etlState->addProcessResultEntity(
+            processResult: $this->currentProcessResult,
+            entityName: $row->entityOrActivityName,
+            entity: $entity,
+            rowNumber: $row->rowNumber,
+            role: 'output',
+            status: $status,
+        );
     }
 
     private function addCalculation(RowTracker $rowTracker)

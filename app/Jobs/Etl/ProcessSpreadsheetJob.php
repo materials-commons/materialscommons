@@ -33,14 +33,16 @@ class ProcessSpreadsheetJob implements ShouldQueue
     private $userId;
     private $fileId;
     private $sheetUrl;
+    private $etlRunId;
 
-    public function __construct($projectId, $experimentId, $userId, $fileId, $sheetUrl)
+    public function __construct($projectId, $experimentId, $userId, $fileId, $sheetUrl, $etlRunId)
     {
         $this->projectId = $projectId;
         $this->experimentId = $experimentId;
         $this->userId = $userId;
         $this->fileId = $fileId;
         $this->sheetUrl = $this->cleanupGoogleSheetUrl($sheetUrl);
+        $this->etlRunId = $etlRunId;
     }
 
     /**
@@ -56,19 +58,17 @@ class ProcessSpreadsheetJob implements ShouldQueue
         $fileName = "";
         $file = null;
         $experiment = Experiment::findOrFail($this->experimentId);
-        $etlState = null;
+        $etlState = EtlState::fromRunId($this->etlRunId);
 
         try {
             if (!blank($this->sheetUrl)) {
-                $etlState = new EtlState($this->userId, null);
                 $etlState->setSource('google_sheet', "Google Sheet", $this->sheetUrl);
             } else {
                 $file = File::findOrFail($this->fileId);
-                $etlState = new EtlState($this->userId, $file->id);
                 $etlState->setSource('spreadsheet', $file->name, $file->fullPath());
             }
 
-            $experiment->etlruns()->save($etlState->etlRun);
+//            $experiment->etlruns()->save($etlState->etlRun);
 
             $etlState->completeStep('queued', 'Worker picked up import job.');
             $etlState->progress(3, 'Worker picked up import job.');
@@ -92,6 +92,8 @@ class ProcessSpreadsheetJob implements ShouldQueue
                 $etlState->progress(12, 'Spreadsheet file located.');
             }
 
+            $etlState->completeStep('read_spreadsheet', 'Spreadsheet source is ready.');
+            $etlState->progress(15, 'Spreadsheet source is ready.');
             $importer = new EntityActivityImporter($this->projectId, $this->experimentId, $this->userId, $etlState);
             $importer->execute($filePath);
             $etlState->startStep('finalize', 'Finalizing import.');
