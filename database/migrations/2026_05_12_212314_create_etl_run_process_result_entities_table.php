@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('etl_run_process_result_id')
-                  ->constrained('etl_run_process_results')
+                  ->constrained(
+                      table: 'etl_run_process_results',
+                      indexName: 'etl_rpr_entities_result_fk'
+                  )
                   ->cascadeOnDelete();
 
             $table->foreignId('entity_id')
@@ -31,8 +34,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->index(['etl_run_process_result_id', 'entity_name']);
-            $table->index(['entity_id']);
+            $table->index(['etl_run_process_result_id', 'entity_name'], 'etl_rpr_entities_result_name_idx');
+            $table->index(['entity_id'], 'etl_rpr_entities_entity_idx');
         });
     }
 
