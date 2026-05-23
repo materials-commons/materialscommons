@@ -67,6 +67,7 @@
                     :process-results="$etlRun->processResults"
                     :validation-messages="$etlRun->validationMessages"
                     :log-entries="$etlRun->logEntries"
+                    :active-tab="$tab"
                 />
             </div>
         </div>

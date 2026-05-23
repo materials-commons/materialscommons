@@ -20,8 +20,8 @@ use function route;
 
 class ReloadExperimentWebController extends Controller
 {
-    public function __invoke(Request    $request, ReloadExperimentAction $reloadExperimentAction, Project $project,
-                             Experiment $experiment)
+    public function __invoke(Request $request, ReloadExperimentAction $reloadExperimentAction, Project $project,
+        Experiment $experiment)
     {
         $validated = $request->validate([
             'file_id'   => 'nullable|string',
@@ -71,11 +71,14 @@ class ReloadExperimentWebController extends Controller
             }
         }
 
-        if ($reloadExperimentAction->execute($project, $experiment, $fileId, $sheetUrl, auth()->id())) {
+        $queuedEtlRun = $reloadExperimentAction->execute($project, $experiment, $fileId, $sheetUrl, auth()->id());
+        if (!is_null($queuedEtlRun)) {
             flash("Reloading experiment {$experiment->name} in background.")->success();
-        } else {
-            flash("Failed reloading, no changes made to experiment.")->error();
+
+            return redirect(route('projects.experiments.etl_run.status', [$project, $experiment, $queuedEtlRun]));
         }
+
+        flash("Failed reloading, no changes made to experiment.")->error();
 
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }

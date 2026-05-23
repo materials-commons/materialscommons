@@ -110,10 +110,6 @@ class ProcessSpreadsheetJob implements ShouldQueue
                 ->send(new SpreadsheetLoadFinishedMail($file, $this->sheetUrl, Project::findOrFail($this->projectId),
                     $experiment,
                     $etlState->etlRun));
-            if (!is_null($this->sheetUrl)) {
-                // need to delete the temporary file.
-                Storage::disk('mcfs')->delete('__sheets/'.$fileName);
-            }
         } catch(Throwable $e) {
             if (!is_null($etlState)) {
                 $etlState->failed($e->getMessage());

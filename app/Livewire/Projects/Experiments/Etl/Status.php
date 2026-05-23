@@ -14,6 +14,11 @@ class Status extends Component
     public Project $project;
     public Experiment $experiment;
     public EtlRun $etlRun;
+    public string $tab = 'process-results';
+
+    protected $queryString = [
+        'tab' => ['except' => 'process-results'],
+    ];
 
     public function mount(Project $project, Experiment $experiment, EtlRun $etlRun): void
     {
@@ -47,6 +52,15 @@ class Status extends Component
                                   'logEntries',
                               ])
                               ->findOrFail($this->etlRun->id);
+    }
+
+    public function setTab(string $tab): void
+    {
+        if (!in_array($tab, ['process-results', 'validation', 'log'], true)) {
+            return;
+        }
+
+        $this->tab = $tab;
     }
 
     public function getShouldPollProperty(): bool

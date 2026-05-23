@@ -5,6 +5,7 @@
     'processResults' => collect(),
     'validationMessages' => collect(),
     'logEntries' => collect(),
+    'activeTab' => 'process-results',
 ])
 
 <div class="card shadow-sm border-0" style="border-radius:.85rem;">
@@ -30,12 +31,9 @@
     <div class="card-body">
         <ul class="nav nav-tabs" id="etl-result-tabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active"
-                        id="process-results-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#process-results"
+                <button class="nav-link {{ $activeTab === 'process-results' ? 'active' : '' }}"
                         type="button"
-                        role="tab">
+                        wire:click="setTab('process-results')">
                     <i class="fas fa-project-diagram me-1"></i>
                     Process Results
                     <span class="badge text-bg-secondary ms-1">{{ $processResults->count() }}</span>
@@ -43,12 +41,9 @@
             </li>
 
             <li class="nav-item" role="presentation">
-                <button class="nav-link"
-                        id="validation-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#validation"
+                <button class="nav-link {{ $activeTab === 'validation' ? 'active' : '' }}"
                         type="button"
-                        role="tab">
+                        wire:click="setTab('validation')">
                     <i class="fas fa-clipboard-check me-1"></i>
                     Validation
                     <span class="badge text-bg-warning ms-1">
@@ -58,30 +53,23 @@
             </li>
 
             <li class="nav-item" role="presentation">
-                <button class="nav-link"
-                        id="log-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#log"
+                <button class="nav-link {{ $activeTab === 'log' ? 'active' : '' }}"
                         type="button"
-                        role="tab">
+                        wire:click="setTab('log')">
                     <i class="fas fa-terminal me-1"></i>
                     Log
                 </button>
             </li>
         </ul>
 
-        <div class="tab-content pt-3">
-            <div class="tab-pane fade show active" id="process-results" role="tabpanel">
+        <div class="pt-3">
+            @if($activeTab === 'process-results')
                 <x-projects.experiments.etl.process-results-table :process-results="$processResults" />
-            </div>
-
-            <div class="tab-pane fade" id="validation" role="tabpanel">
+            @elseif($activeTab === 'validation')
                 <x-projects.experiments.etl.validation-messages :validation-messages="$validationMessages" />
-            </div>
-
-            <div class="tab-pane fade" id="log" role="tabpanel">
+            @elseif($activeTab === 'log')
                 <x-projects.experiments.etl.log-entries :log-entries="$logEntries" />
-            </div>
+            @endif
         </div>
     </div>
 </div>
