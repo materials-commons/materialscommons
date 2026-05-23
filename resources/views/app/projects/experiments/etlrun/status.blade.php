@@ -9,4 +9,9 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.experiments.index', $project))--}}
 
 @section('content')
+    <livewire:projects.experiments.etl.status
+        :project="$project"
+        :experiment="$experiment"
+        :etl-run="$etlRun"
+    />
 @stop

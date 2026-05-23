@@ -52,15 +52,15 @@ class StoreExperimentWebController extends Controller
             return redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
         }
 
-        // Once the ETL run status route exists, this becomes:
-        //
-        // if (!is_null($queuedEtlRun)) {
-        //     return redirect(route('projects.experiments.etl-runs.status', [
-        //         $project,
-        //         $experiment,
-        //         $queuedEtlRun,
-        //     ]));
-        // }
+        $queuedEtlRun = $experiment->getRelation('queuedEtlRun');
+         if (!is_null($queuedEtlRun)) {
+             return redirect(route('projects.experiments.etl_run.status', [
+                 $project,
+                 $experiment,
+                 $queuedEtlRun,
+             ]));
+         }
+
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 
