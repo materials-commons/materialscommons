@@ -1,6 +1,6 @@
 <h4>Projects In Team</h4>
 <br>
-<a href="#" class="action-link float-right">
+<a href="#" class="action-link float-end">
     <i class="fas fa-fw fa-plus"></i> Add Project
 </a>
 <table id="team-projects" class="table table-hover" style="width:100%">

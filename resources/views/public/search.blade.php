@@ -7,13 +7,8 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Search results for {{$search}}
-        @endslot
+    <h3 class="text-center">Search results for {{$search}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.search')
-        @endslot
-    @endcomponent
+    @include('partials.search')
 @stop

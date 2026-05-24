@@ -15,25 +15,20 @@
         The Virtual Machines below give you an easy way to access many of PRISMS Centers software packages.
     </h4>
     <br>
-    @component('components.card')
-        @slot('header')
-            Virtual Machines
-        @endslot
+    <h3 class="text-center">Virtual Machines</h3>
+    <br/>
 
-        @slot('body')
-            <table id="datasets" class="table table-hover" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Downloads</th>
-                    <th>Published</th>
-                    <th>Summary</th>
-                    <th>Authors</th>
-                </tr>
-                </thead>
-            </table>
-        @endslot
-    @endcomponent
+    <table id="datasets" class="table table-hover" style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Downloads</th>
+            <th>Published</th>
+            <th>Summary</th>
+            <th>Authors</th>
+        </tr>
+        </thead>
+    </table>
 
     @push('scripts')
         <script>

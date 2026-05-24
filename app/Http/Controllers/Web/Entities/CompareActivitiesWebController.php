@@ -72,16 +72,27 @@ class CompareActivitiesWebController extends Controller
         // Attributes only in activity2
         $state->activity2OnlyAttributes = $attributes2ByName->keys()->diff($attributes1ByName->keys());
 
-        // Attributes with different values
+        // Attributes with different values and same values
         foreach ($commonAttributes as $attributeName) {
             $attr1 = $attributes1ByName[$attributeName];
             $attr2 = $attributes2ByName[$attributeName];
 
             $value1 = $attr1->values[0]->val["value"] ?? null;
             $value2 = $attr2->values[0]->val["value"] ?? null;
+            $unit1 = $attr1->values[0]->unit ?? "";
+            $unit2 = $attr2->values[0]->unit ?? "";
 
             if ($value1 != $value2) {
                 $state->differentValueAttributes->push($attributeName);
+                $state->changedAttributeValues->put($attributeName, [
+                    'old' => ['value' => $value1, 'unit' => $unit1],
+                    'new' => ['value' => $value2, 'unit' => $unit2],
+                ]);
+            } else {
+                $state->sameAttributes->put($attributeName, [
+                    'value' => $value1,
+                    'unit' => $unit1,
+                ]);
             }
         }
 

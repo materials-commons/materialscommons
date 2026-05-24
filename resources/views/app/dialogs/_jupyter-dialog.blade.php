@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Jupyter Notebooks</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body" style="height: 350px">
@@ -41,7 +40,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
             </div>
         </div>
     </div>

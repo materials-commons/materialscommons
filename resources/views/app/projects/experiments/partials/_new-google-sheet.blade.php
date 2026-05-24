@@ -1,4 +1,4 @@
-{{--<div class="form-group">--}}
+{{--<div class="mb-3">--}}
 <label for="url-id">Enter New Google Sheet</label>
 <input class="form-control"
        hx-get="{{route('projects.files.sheets.resolve-google-sheet', [$project])}}"

@@ -1,4 +1,4 @@
-<div class="card" style="border-color: #b3c2d9">
+<div class="card h-100" style="border-color: #b3c2d9">
     <div class="card-body inner-card">
         <h5 class="card-title"><strong>Datasets and Communities</strong></h5>
         <hr/>
@@ -8,22 +8,22 @@
         </p>
 
         <div class="mt-4">
-            <h6 class="mb-3"><i class="fas fa-lightbulb mr-2"></i>Key Features</h6>
+            <h6 class="mb-3"><i class="fas fa-lightbulb me-2"></i>Key Features</h6>
             <ul class="list-unstyled features-list">
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     DOI assignment for citation and tracking
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Public access with flexible download options
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Import and reuse published datasets
                 </li>
                 <li class="mb-2">
-                    <i class="fas fa-check-circle text-success mr-2"></i>
+                    <i class="fas fa-check-circle text-success me-2"></i>
                     Community-based research organization
                 </li>
             </ul>
@@ -33,12 +33,12 @@
             <h6 class="mb-3">Quick Actions</h6>
             <div class="d-flex flex-wrap gap-2">
                 <a href="{{route('projects.datasets.index', [$project])}}"
-                   class="btn btn-outline-primary btn-sm mr-2 mb-2">
-                    <i class="fas fa-database mr-1"></i> View Datasets
+                   class="btn btn-outline-primary btn-sm me-2 mb-2">
+                    <i class="fas fa-database me-1"></i> View Datasets
                 </a>
                 <a href="{{route('projects.datasets.create', [$project])}}"
-                   class="btn btn-outline-primary btn-sm mr-2 mb-2">
-                    <i class="fas fa-plus mr-1"></i> Create Dataset
+                   class="btn btn-outline-primary btn-sm me-2 mb-2">
+                    <i class="fas fa-plus me-1"></i> Create Dataset
                 </a>
             </div>
         </div>
@@ -50,12 +50,12 @@
                     <h6 class="text-muted mb-2">Dataset Management</h6>
                     <p class="small mb-2">Create and manage research datasets</p>
                     <div class="d-flex flex-wrap">
-                        <a href="{{route('public.index')}}" class="text-primary mr-3">
-                            Browse Published Datasets <i class="fas fa-arrow-right ml-1"></i>
+                        <a href="{{route('public.index')}}" class="text-primary me-3">
+                            Browse Published Datasets <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                         <a href="https://materialscommons.org/mcdocs2/documentation/publishing.html"
                            target="_blank" class="text-primary">
-                            Publishing Guide <i class="fas fa-external-link-alt ml-1"></i>
+                            Publishing Guide <i class="fas fa-external-link-alt ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -64,15 +64,15 @@
                     <h6 class="text-muted mb-2">Research Communities</h6>
                     <p class="small mb-2">Connect with researchers in your field</p>
                     <div class="d-flex flex-wrap">
-                        <a href="{{route('communities.index')}}" class="text-primary mr-3">
-                            Explore Communities <i class="fas fa-arrow-right ml-1"></i>
+                        <a href="{{route('communities.index')}}" class="text-primary me-3">
+                            Explore Communities <i class="fas fa-arrow-right ms-1"></i>
                         </a>
-                        <a href="{{route('communities.create')}}" class="text-primary mr-3">
-                            Create Community <i class="fas fa-plus ml-1"></i>
+                        <a href="{{route('communities.create')}}" class="text-primary me-3">
+                            Create Community <i class="fas fa-plus ms-1"></i>
                         </a>
                         <a href="https://materialscommons.org/docs/docs/communities/"
                            target="_blank" class="text-primary">
-                            Communities Guide <i class="fas fa-external-link-alt ml-1"></i>
+                            Communities Guide <i class="fas fa-external-link-alt ms-1"></i>
                         </a>
                     </div>
                 </div>

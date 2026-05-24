@@ -9,136 +9,126 @@
 
 @section('content')
     <div x-data="initFilterProcesses">
-        <x-card>
-            <x-slot name='header'>
-                Compare sample {{$entity1->name}} to {{$entity2->name}}
-                <a class="action-link float-right" href="#" @click="showFilter = !showFilter">
-                    <i class="fas fa-filter mr-2"></i>Filter Processes
+        {{-- Title and Filter Row --}}
+        <div class="row mb-3">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <h4>Compare sample <strongx>{{$entity1->name}}</strongx> to <strongx>{{$entity2->name}}</strongx></h4>
+                <a class="action-link text-nowrap" href="#" @click="showFilter = !showFilter">
+                    <i class="fas fa-filter me-2"></i>Filter Processes
                 </a>
-            </x-slot>
+            </div>
+        </div>
 
-            <x-slot name='body'>
-                <button class="btn btn-primary mb-4" @click="compareActivities">Compare Activities</button>
-                {{--                <form action="{{route('projects.activities.compare', [$project])}}" method="POST" class="mb-4">--}}
-                {{--                    @csrf--}}
-                {{--                    <div class="row mb-3">--}}
-                {{--                        <div class="col-5">--}}
-                {{--                            <h5>Select an activity from {{$entity1->name}}</h5>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="col-5">--}}
-                {{--                            <h5>Select an activity from {{$entity2->name}}</h5>--}}
-                {{--                        </div>--}}
-                {{--                        <div class="col-2">--}}
-                {{--                            <button type="submit" class="btn btn-primary">Compare Activities</button>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </form>--}}
+        {{-- Compare Button Row --}}
+        <div class="row mb-3">
+            <div class="col-12">
+                <button class="btn btn-primary" @click="compareActivities">Compare Activities</button>
+            </div>
+        </div>
 
-                <div style="display: none" x-show="showFilter">
-                    <h4>Select/Deselect processes to show <a href="#" class="ml-1"
-                                                             @click="showFilter = false">(Hide)</a></h4>
-                    <div class="row mb-2 mt-3">
-                        <div class="col-6">
-                            <div class="col-12 mb-3">
-                                <a href="#" @click="selectAllSample1()">Select All</a>
-                                <a href="#" class="ml-3" @click="deselectAllSample1()">Deselect All</a>
-                            </div>
-                            <ul class="list-unstyled">
-                                @foreach($entity1Activities as $e1activity)
-                                    <li>
-                                        <input type="checkbox" value="{{$e1activity->uuid}}"
-                                               @click="toggleSample1Process($event)"
-                                               x-bind:checked="sample1Processes['{{$e1activity->uuid}}']">
-                                        <label>{{$e1activity->name}}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <div class="col-12 mb-3">
-                                <a href="#" @click="selectAllSample2()">Select All</a>
-                                <a href="#" class="ml-3" @click="deselectAllSample2()">Deselect All</a>
-                            </div>
-                            <ul class="list-unstyled">
-                                @foreach($entity2Activities as $e2activity)
-                                    <li>
-                                        <input type="checkbox" value="{{$e2activity->uuid}}"
-                                               @click="toggleSample2Process($event)"
-                                               x-bind:checked="sample2Processes['{{$e2activity->uuid}}']">
-                                        <label>{{$e2activity->name}}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+        {{-- Filter Section --}}
+        <div style="display: none" x-show="showFilter">
+            <h4>Select/Deselect processes to show <a href="#" class="ms-1"
+                                                     @click="showFilter = false">(Hide)</a></h4>
+            <div class="row mb-3">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <a href="#" @click="selectAllSample1()">Select All</a>
+                        <a href="#" class="ms-3" @click="deselectAllSample1()">Deselect All</a>
                     </div>
+                    <ul class="list-unstyled">
+                        @foreach($entity1Activities as $e1activity)
+                            <li>
+                                <input type="checkbox" value="{{$e1activity->uuid}}"
+                                       @click="toggleSample1Process($event)"
+                                       x-bind:checked="sample1Processes['{{$e1activity->uuid}}']">
+                                <label>{{$e1activity->name}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <x-card>
-                            <x-slot name="header">
-                                <h5>{{$entity1->name}}</h5>
-                            </x-slot>
-                            <x-slot name="body">
-                                <x-show-standard-details :item="$entity1"/>
-                                <div class="row">
-                                    @foreach($entity1Activities as $e1activity)
-                                        <div class="col-12 mt-2 ml-2 white-box"
-                                             x-show="sample1Processes['{{$e1activity->uuid}}']">
-
-                                            <x-activities.activities-card :activity="$e1activity"
-                                                                          :user="$user"
-                                                                          :experiment="$entity1->experiments->first()"
-                                                                          :project="$project">
-                                                <x-slot:header>
-                                                    <div class="d-flex float-right">
-                                                        <input type="radio" name="activity1_id"
-                                                               value="{{$e1activity->id}}"
-                                                               x-model="activity1Id"
-                                                               class="mr-2">
-                                                        <label class="mb-0">Select for comparison</label>
-                                                    </div>
-                                                </x-slot:header>
-                                            </x-activities.activities-card>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </x-slot>
-                        </x-card>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <a href="#" @click="selectAllSample2()">Select All</a>
+                        <a href="#" class="ms-3" @click="deselectAllSample2()">Deselect All</a>
                     </div>
-                    <div class="col-6">
-                        <x-card>
-                            <x-slot name="header">
-                                <h5>{{$entity2->name}}</h5>
-                            </x-slot>
-                            <x-slot name="body">
-                                <x-show-standard-details :item="$entity2"/>
-                                <div class="row mb-2">
-                                    @foreach($entity2Activities as $e2activity)
-                                        <div class="col-12 mt-2 ml-2 white-box"
-                                             x-show="sample2Processes['{{$e2activity->uuid}}']">
-                                            <x-activities.activities-card :activity="$e2activity"
-                                                                          :user="$user"
-                                                                          :experiment="$entity2->experiments->first()"
-                                                                          :project="$project">
-                                                <x-slot:header>
-                                                    <div class="d-flex float-right">
-                                                        <input type="radio" name="activity2_id"
-                                                               x-model="activity2Id"
-                                                               value="{{$e2activity->id}}"
-                                                               class="mr-2">
-                                                        <label class="mb-0">Select for comparison</label>
-                                                    </div>
-                                                </x-slot:header>
-                                            </x-activities.activities-card>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </x-slot>
-                        </x-card>
-                    </div>
+                    <ul class="list-unstyled">
+                        @foreach($entity2Activities as $e2activity)
+                            <li>
+                                <input type="checkbox" value="{{$e2activity->uuid}}"
+                                       @click="toggleSample2Process($event)"
+                                       x-bind:checked="sample2Processes['{{$e2activity->uuid}}']">
+                                <label>{{$e2activity->name}}</label>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-            </x-slot>
-        </x-card>
+            </div>
+        </div>
+
+        {{-- Entity Names and Details Row --}}
+        <div class="row mb-3">
+            <div class="col-lg-6">
+                <h5><strong>{{$entity1->name}}</strong></h5>
+                <x-show-standard-details :item="$entity1"/>
+            </div>
+            <div class="col-lg-6">
+                <h5><strong>{{$entity2->name}}</strong></h5>
+                <x-show-standard-details :item="$entity2"/>
+            </div>
+        </div>
+
+        {{-- Activity Cards Row --}}
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    @foreach($entity1Activities as $e1activity)
+                        <div class="col-12" x-show="sample1Processes['{{$e1activity->uuid}}']">
+                            <div class="white-box h-100">
+                                <x-activities.activities-card :activity="$e1activity"
+                                                              :user="$user"
+                                                              :experiment="$entity1->experiments->first()"
+                                                              :project="$project">
+                                    <x-slot:header>
+                                        <div class="d-flex float-end">
+                                            <input type="radio" name="activity1_id"
+                                                   value="{{$e1activity->id}}"
+                                                   x-model="activity1Id"
+                                                   class="me-2">
+                                            <label class="mb-0">Select for comparison</label>
+                                        </div>
+                                    </x-slot:header>
+                                </x-activities.activities-card>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    @foreach($entity2Activities as $e2activity)
+                        <div class="col-12" x-show="sample2Processes['{{$e2activity->uuid}}']">
+                            <div class="white-box h-100">
+                                <x-activities.activities-card :activity="$e2activity"
+                                                              :user="$user"
+                                                              :experiment="$entity2->experiments->first()"
+                                                              :project="$project">
+                                    <x-slot:header>
+                                        <div class="d-flex float-end">
+                                            <input type="radio" name="activity2_id"
+                                                   x-model="activity2Id"
+                                                   value="{{$e2activity->id}}"
+                                                   class="me-2">
+                                            <label class="mb-0">Select for comparison</label>
+                                        </div>
+                                    </x-slot:header>
+                                </x-activities.activities-card>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

@@ -1,6 +1,6 @@
 <div class="col-sm">
     <h4>In Process</h4>
-    <table class="table table-sm table-borderless ml-4">
+    <table class="table table-sm table-borderless ms-4">
         <thead>
         <tr class="row">
             <th class="col-sm-1">Y</th>

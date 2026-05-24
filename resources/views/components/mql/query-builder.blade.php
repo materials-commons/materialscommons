@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="row mt-2 mb-4" x-data="mqlQueryBuilder">
-            <a @click.prevent="toggleAttributesTable()" class="btn btn-info btn-sm ml-3"><i
-                        class="fa fas fa-list mr-2"></i>Show/Hide
+            <a @click.prevent="toggleAttributesTable()" class="btn btn-info btn-sm ms-3"><i
+                        class="fa fas fa-list me-2"></i>Show/Hide
                 All Attributes</a>
         </div>
     @endif

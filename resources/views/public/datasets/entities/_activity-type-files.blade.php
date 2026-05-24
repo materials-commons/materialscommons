@@ -1,7 +1,7 @@
 <ul class="list-unstyled mb-2">
     @foreach($files as $file)
         @if($loop->iteration < 12)
-            <li class="mt-2 ml-3">
+            <li class="mt-2 ms-3">
                 <a href="{{route('public.datasets.files.show', [$dataset, $file->fid])}}"
                    class="fs-10">{{$file->fname}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
@@ -20,7 +20,7 @@
                 @endif
             </li>
         @else
-            <li class="{{Illuminate\Support\Str::slug($activityType->name)}} mt-2 ml-3" hidden>
+            <li class="{{Illuminate\Support\Str::slug($activityType->name)}} mt-2 ms-3" hidden>
                 <a href="{{route('public.datasets.files.show', [$dataset, $file->fid])}}">{{$file->fname}}</a>
                 @if(in_array($file->mime_type, ["image/gif", "image/jpeg", "image/png", "image/tiff", "image/x-ms-bmp","image/bmp"]))
                     <div class="container">

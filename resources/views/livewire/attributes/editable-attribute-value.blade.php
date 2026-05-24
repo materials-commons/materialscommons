@@ -1,4 +1,4 @@
-<div class="attribute-row row col-11 ml-1 editable-item">
+<div class="attribute-row row col-11 ms-1 editable-item">
     <div class="col-7">{{$attribute->name}}:</div>
     @if($isEditing)
         <div class="col-5">
@@ -6,7 +6,7 @@
                 <input class="form-control"
                        wire:model="value"
                        wire:keydown.escape="$set('isEditing', false)"/>
-                <i class="fas fa-download edit-icon text-muted ml-2" style="cursor: pointer;" wire:click="save"></i>
+                <i class="fas fa-download edit-icon text-muted ms-2" style="cursor: pointer;" wire:click="save"></i>
             </form>
         </div>
     @else
@@ -26,7 +26,7 @@
                         @endif
                     </span>
             @if($user->hasGoogleToken() && !blank($googleSheetId))
-                <i class="fas fa-edit edit-icon text-muted ml-2" style="cursor: pointer; opacity: 0.6;"
+                <i class="fas fa-edit edit-icon text-muted ms-2" style="cursor: pointer; opacity: 0.6;"
                    wire:click="edit"></i>
             @endif
         </div>
@@ -35,7 +35,7 @@
                 <div class="alert alert-warning alert-dismissible d-flex justify-content-between align-items-center"
                      role="alert">
                     <div class="d-flex align-items-center">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <i class="fas fa-exclamation-triangle me-2"></i>
                         <span>Failed to update Google Sheets. The value was not saved.</span>
                     </div>
                     <button type="button"
@@ -53,7 +53,7 @@
                 <div class="alert alert-info alert-dismissible d-flex justify-content-between align-items-center"
                      role="alert">
                     <div class="d-flex align-items-center">
-                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <i class="fas fa-exclamation-triangle me-2"></i>
                         <span>Cannot change value of cells that contain a formula.</span>
                     </div>
                     <button type="button"

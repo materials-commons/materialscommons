@@ -9,17 +9,12 @@
 {{--@section('breadcrumbs', Breadcrumbs::render('projects.experiments.workflows.edit', $project, $experiment, $workflow))--}}
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Edit Workflow {{$workflow->name}}
-        @endslot
+    <h3 class="text-center">Edit Workflow {{$workflow->name}}</h3>
+    <br/>
 
-        @slot('body')
-            @include('partials.workflows.edit', [
-                'updateMethod' => 'put',
-                'updateRoute' => route('projects.datasets.workflows.edit.update', [$project, $dataset, $workflow]),
-                'cancelRoute' => route('projects.datasets.workflows.edit', [$project, $dataset])
-            ])
-        @endslot
-    @endcomponent
+    @include('partials.workflows.edit', [
+        'updateMethod' => 'put',
+        'updateRoute' => route('projects.datasets.workflows.edit.update', [$project, $dataset, $workflow]),
+        'cancelRoute' => route('projects.datasets.workflows.edit', [$project, $dataset])
+    ])
 @stop

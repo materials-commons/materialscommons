@@ -3,16 +3,10 @@
 @section('pageTitle', 'Settings')
 
 @section('nav')
-    @include('layouts.navs.app')
+    @include('layouts.navs.dashboard')
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Settings
-        @endslot
-
-        @slot('body')
-        @endslot
-    @endcomponent
+    <h3 class="text-center">Settings</h3>
+    <br/>
 @stop

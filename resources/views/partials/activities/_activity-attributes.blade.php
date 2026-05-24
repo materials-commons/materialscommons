@@ -2,7 +2,7 @@
     $attributesCount = 0;
 //    $isEditing = true;
 @endphp
-<div class="row ml-2">
+<div class="row ms-2">
     @foreach($activity->attributes as $attribute)
         @php
             $attributesCount++;
@@ -14,6 +14,6 @@
                                                       :key="$attribute->id"/>
     @endforeach
     @if($attributesCount == 0)
-        <span class="ml-1">No Attributes</span>
+        <span class="ms-1">No Attributes</span>
     @endif
 </div>

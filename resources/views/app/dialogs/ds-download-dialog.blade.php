@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title">Download Dataset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="help-color">&times;</span>
                 </button>
             </div>
@@ -15,7 +15,7 @@
                     let you know if the dataset has changed.
                 </p>
                 <div class="mt-4">
-                    <a class="btn btn-danger" href="#" data-dismiss="modal">Cancel</a>
+                    <a class="btn btn-danger" href="#" data-bs-dismiss="modal">Cancel</a>
                     <a class="btn btn-warning" href="#">Download</a>
                     <a class="btn btn-success" href="{{$createAccountRoute}}">
                         Create Account And Download

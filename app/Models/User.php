@@ -23,7 +23,11 @@ use function is_null;
  * @property string uuid
  * @property string name
  * @property string description
+ * @property string research_summary
  * @property string affiliations
+ * @property string title
+ * @property string orcid
+ * @property string homepage_url
  * @property string email
  * @property mixed email_verified_at
  * @property string password
@@ -54,8 +58,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'globus_user', 'description',
-        'api_token', 'affiliations', 'uuid', 'is_admin', 'slug',
+        'name', 'email', 'password', 'globus_user', 'description', 'research_summary','title',
+        'api_token', 'affiliations', 'orcid', 'homepage_url', 'uuid', 'is_admin', 'slug',
         'settings', 'google_access_token', 'google_refresh_token',
         'google_token_type', 'google_expires_at', 'google_spreadsheet_id',
         'last_login_at',
@@ -305,10 +309,11 @@ class User extends Authenticatable implements MustVerifyEmail
             // If the project isn't already active then add it
             $settings["projects"]["{$projectSetting}"]["id_{$projectId}"] = $value;
             $this->update(["settings" => $settings]);
-        } else {
+        }
+        // else {
             // if we are here then this project setting was already set and $alwaysSet was false,
             // so there is nothing to do.
-        }
+        // }
     }
 
     function removeFromProjectSetting($projectSetting, $projectId)

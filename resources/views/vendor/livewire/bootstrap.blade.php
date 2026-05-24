@@ -64,12 +64,12 @@
                     <ul class="pagination">
                         {{-- Previous Page Link --}}
                         @if ($paginator->onFirstPage())
-                            <li class="page-item disabled mr-2" aria-disabled="true"
+                            <li class="page-item disabled me-2" aria-disabled="true"
                                 aria-label="@lang('pagination.previous')">
                                 <span class="page-link" aria-hidden="true">Prev</span>
                             </li>
                         @else
-                            <li class="page-item mr-2">
+                            <li class="page-item me-2">
                                 <button type="button"
                                         dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
                                         class="page-link" wire:click="previousPage('{{ $paginator->getPageName() }}')"

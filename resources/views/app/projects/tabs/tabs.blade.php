@@ -6,12 +6,28 @@
         </a>
     </li>
 
-    <li class="nav-item" id="project-overview-tab">
-        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"
-           href="{{route('projects.overview', [$project])}}">
-            Details
-        </a>
-    </li>
+    @if(isInBeta('dashboard-charts'))
+        <li class="nav-item" id="project-research-overview-tab">
+            <a class="nav-link no-underline {{setActiveNavByName('projects.research-overview')}}"
+               href="{{route('projects.research-overview', [$project])}}">
+                Project Research Overview
+            </a>
+        </li>
+    @endif
+
+    {{--    <li class="nav-item" id="project-overview-tab">--}}
+    {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"--}}
+    {{--           href="{{route('projects.overview', [$project])}}">--}}
+    {{--            Details--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
+
+    {{--    <li class="nav-item" id="project-users-tab">--}}
+    {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.users.index')}}"--}}
+    {{--           href="{{route('projects.users.index', [$project])}}">--}}
+    {{--            Project Members (3)--}}
+    {{--        </a>--}}
+    {{--    </li>--}}
 
     <li class="nav-item" id="project-sample-attributes-tab">
         <a class="nav-link no-underline {{setActiveNavByName('projects.data-dictionary.entities')}}"
@@ -31,13 +47,13 @@
         <a class="nav-link no-underline {{setActiveNavByName('projects.health-reports.index')}}"
            href="{{route('projects.health-reports.index', [$project])}}">
             @if($project->health == 'critical')
-                <span class="text-danger"><i class="fa fa-exclamation-triangle mr-2"></i>Health Reports</span>
+                <span class="text-danger"><i class="fa fa-exclamation-triangle me-2"></i>Health Reports</span>
             @elseif($project->health == 'warning')
-                <span class="text-warning"><i class="fa fa-exclamation-circle mr-2"></i>Health Reports</span>
+                <span class="text-warning"><i class="fa fa-exclamation-circle me-2"></i>Health Reports</span>
             @elseif(is_null($project->health))
                 Health Reports
             @else
-                <span><i class="fas fa-check-circle mr-2"></i>Health Reports</span>
+                <span><i class="fas fa-check-circle me-2"></i>Health Reports</span>
             @endif
         </a>
     </li>

@@ -1,7 +1,7 @@
-<div class="row mr-2 ml-1">
+<div class="row me-2 ms-1">
     {{-- Google Sheets Option --}}
     <div class="col-12 white-box">
-        <h5 class="text-centerx mt-3 mr-2 font-weight-bold">
+        <h5 class="text-centerx mt-3 me-2 font-weight-bold">
             <i class="fab fa-google me-2"></i> Google Sheets
         </h5>
         <hr>
@@ -25,11 +25,7 @@
         @if($sheets->count() !== 0)
             <div class="mt-3">
                 <label for="sheet_id">Or use existing sheet</label>
-                <select name="sheet_id" class="selectpicker w-100"
-                        data-live-search="true"
-                        data-width="100%"
-                        data-style="btn-light no-tt"
-                        title="Select Google Sheet">
+                <select name="sheet_id" class="form-select" title="Select Google Sheet">
                     <option value=""></option>
                     @foreach($sheets as $s)
                         <option data-tokens="{{$s->id}}"

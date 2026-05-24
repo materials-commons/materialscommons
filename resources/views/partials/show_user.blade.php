@@ -1,14 +1,14 @@
 <form>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="name">Name</label>
         <input class="form-control" id="name" value="{{$user->name}}" readonly>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label for="affiliations">Affiliations</label>
         <textarea class="form-control" id="affiliations" readonly>{{$user->affiliations}}</textarea>
     </div>
     @if(isset($user->description))
-        <div class="form-group">
+        <div class="mb-3">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" readonly>{{$user->description}}</textarea>
         </div>

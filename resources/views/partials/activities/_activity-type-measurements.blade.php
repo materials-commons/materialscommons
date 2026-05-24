@@ -1,12 +1,12 @@
 @php
     $attributesCount = 0;
 @endphp
-<div class="row ml-2">
+<div class="row ms-2">
     @foreach($measurements as $attribute)
         @php
             $attributesCount++;
         @endphp
-        <div class="attribute-row row col-11 ml-1">
+        <div class="attribute-row row col-11 ms-1">
             <div class="col-7">{{$attribute->attr_name}}:</div>
             <div class="col-4">
                 @if(is_array($attribute->val["value"]))
@@ -42,6 +42,6 @@
         </div>
     @endforeach
     @if($attributesCount == 0)
-        <span class="ml-1">No Attributes</span>
+        <span class="ms-1">No Attributes</span>
     @endif
 </div>

@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Web\Published\Datasets;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
+use App\Models\User;
 use App\Traits\Datasets\DatasetInfo;
 use App\ViewModels\Published\Datasets\ShowPublishedDatasetOverviewViewModel;
 use Illuminate\Support\Facades\DB;
+use function blank;
+use function trim;
 
 class ShowPublishedDatasetOverviewWebController extends Controller
 {
@@ -38,7 +41,8 @@ class ShowPublishedDatasetOverviewWebController extends Controller
             ->withDsAnnotation($this->jsonLDAnnotations($this->dataset))
             ->withActivitiesGroup($this->getActivitiesGroup($datasetId))
             ->withFileTypes($this->getFileTypesGroup($this->dataset->id))
-            ->withTotalFilesSize($this->getDatasetTotalFilesSize($this->dataset->id));
+            ->withTotalFilesSize($this->getDatasetTotalFilesSize($this->dataset->id))
+            ->withAuthorUsers($this->resolveAuthorUsers($this->dataset->ds_authors ?? []));
         return view('public.datasets.show', $showPublishedDatasetOverviewViewModel);
     }
 
@@ -67,6 +71,50 @@ class ShowPublishedDatasetOverviewWebController extends Controller
         return $results[0];
     }
 
+    private function resolveAuthorUsers(array $dsAuthors): \Illuminate\Support\Collection
+    {
+        if (empty($dsAuthors)) {
+            return collect();
+        }
+
+        $emailByName = [];
+        foreach ($dsAuthors as $author) {
+            $name = trim($author['name'] ?? '');
+            if (blank($name) || isset($emailByName[$name])) {
+                continue;
+            }
+            $emailByName[$name] = blank($author['email'] ?? '') ? null : trim($author['email']);
+        }
+
+        if (empty($emailByName)) {
+            return collect();
+        }
+
+        $names = array_keys($emailByName);
+        $emails = array_values(array_filter($emailByName));
+
+        $users = User::where(function ($q) use ($names, $emails) {
+            $q->whereIn('name', $names);
+            if (!empty($emails)) {
+                $q->orWhereIn('email', $emails);
+            }
+        })->get(['id', 'name', 'slug', 'email']);
+
+        $byName = $users->keyBy('name');
+        $byEmail = $users->keyBy('email');
+
+        $lookup = collect();
+        foreach ($emailByName as $authorName => $email) {
+            if ($byName->has($authorName)) {
+                $lookup->put($authorName, $byName->get($authorName));
+            } elseif ($email && $byEmail->has($email)) {
+                $lookup->put($authorName, $byEmail->get($email));
+            }
+        }
+
+        return $lookup;
+    }
+
     private function getFileTypesGroup($datasetId)
     {
         return DB::table('dataset2file')
@@ -80,6 +128,6 @@ class ShowPublishedDatasetOverviewWebController extends Controller
                  ->flatMap(function ($item) {
                      return [$item->mime_type => $item->count];
                  })
-            ->all();
+                 ->all();
     }
 }

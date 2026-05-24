@@ -5,13 +5,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Authors</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
                     <div x-text="authorAdded"></div>
-                    <div class="form-row mt-2">
+                    <div class="row mt-2">
                         <div class="col">
                             <input class="form-control" name="author_name" type="text" placeholder="Name...(Required)"
                                    x-model="author.name" id="author_name" required>
@@ -35,7 +34,7 @@
                     <button type="button" class="btn btn-success" x-on:click="addAnother()"
                             x-bind:disabled="!allFieldsFilled()">Add Another
                     </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
                 </div>
             </div>
         </div>
@@ -43,6 +42,7 @@
     @push('scripts')
         <script>
             function initAddAuthors() {
+                console.log('initAddAuthors');
                 return {
                     author: {
                         name: '',
@@ -55,7 +55,9 @@
                     openDialog() {
                         this.clearAuthor();
                         this.authorAdded = '';
-                        $('#add-authors-dialog').modal();
+                        const el = document.getElementById('add-authors-dialog');
+                        const modal = Modal.getOrCreateInstance(el);
+                        modal.show();
                         $('#author_name').focus();
                         $('#add-authors-dialog').on('shown.bs.modal', function () {
                             setTimeout(function () {
@@ -88,9 +90,9 @@
                         let nextId = authorTable.data().length;
                         authorTable.row.add([
                             nextId,
-                            `<i class="fas fa-fw fa-grip-vertical mr-2"></i>`,
+                            `<i class="fas fa-fw fa-grip-vertical me-2"></i>`,
                             this.author.name, this.author.affiliations, this.author.email,
-                            `<div class="float-right">
+                            `<div class="float-end">
                                 <a class="action-link cursor-pointer"
                                     x-on:click.prevent="openEditDialog(${nextId}, '${this.author.name}', '${this.author.affiliations}', '${this.author.email}')">
                                     <i class="fas fa-fw fa-edit"></i></a>

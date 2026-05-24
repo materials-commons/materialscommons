@@ -13,7 +13,8 @@ class ShowDatasetDirPath extends ShowDirPath
 
     public function __construct(File $file, Dataset $dataset)
     {
-        parent::__construct($file, null);
+        $dataset->load('project');
+        parent::__construct($file, $dataset->project);
         $this->dataset = $dataset;
     }
 

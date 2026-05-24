@@ -21,17 +21,17 @@
                     <ul class="list-unstyled">
                         <li>
                             <a href="{{route('communities.waiting-approval.approve', [$community, $dataset])}}">
-                                <i class="fa fas fa-thumbs-up mr-2"></i>Approve
+                                <i class="fa fas fa-thumbs-up me-2"></i>Approve
                             </a>
                         </li>
                         <li>
                             <a href="{{route('communities.waiting-approval.reject', [$community, $dataset])}}">
-                                <i class="fa fas fa-thumbs-down mr-2"></i>Reject
+                                <i class="fa fas fa-thumbs-down me-2"></i>Reject
                             </a>
                         </li>
                         <li>
                             <a href="mailto:{{$dataset->owner->email}}?subject={{$dataset->name}}">
-                                <i class="fa fas fa-envelope mr-2"></i>Email Owner
+                                <i class="fa fas fa-envelope me-2"></i>Email Owner
                             </a>
                         </li>
                     </ul>

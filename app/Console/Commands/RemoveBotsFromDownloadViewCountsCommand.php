@@ -83,7 +83,7 @@ class RemoveBotsFromDownloadViewCountsCommand extends Command
                 $host = $this->tryGetHost($item->who);
                 if ($host !== $item->who) {
                     if ($this->isBot($host, $botsList)) {
-                        continue;
+                        $item->delete();
                     } else {
                         $count = $countsById[$item[$idName]];
                         $count++;

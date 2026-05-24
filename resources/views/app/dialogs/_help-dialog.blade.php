@@ -3,8 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-nav">
                 <h5 class="modal-title help-color">Materials Commons Help</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="help-color">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -16,11 +15,11 @@
                 @include('layouts.navs._app-documentation')
             </div>
             <div class="modal-footer">
-                <a class="btn btn-info" data-toggle="modal" data-dismiss="modal" href="#welcome-dialog">
+                <a class="btn btn-info" data-bs-toggle="modal" data-bs-dismiss="modal" href="#welcome-dialog">
                     Welcome Dialog!
                 </a>
                 <a class="btn btn-secondary" href="/mcdocs2" target="_blank">Goto Docs</a>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
             </div>
 
             @push('scripts')

@@ -7,12 +7,6 @@
 @stop
 
 @section('content')
-    @component('components.card')
-        @slot('header')
-            Public Data Projects
-        @endslot
-
-        @slot('body')
-        @endslot
-    @endcomponent
+    <h3 class="text-center">Public Data Projects</h3>
+    <br/>
 @stop

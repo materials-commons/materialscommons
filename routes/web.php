@@ -102,12 +102,25 @@ Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
     ->where('doi', '.*')
     ->name('datasets.show-by-doi');
 
+Route::prefix('prototype')->group(function () {
+    Route::view('/experiment-import/create', 'prototype.experiment-import.create')
+         ->name('prototype.experiment-import.create');
+
+    Route::view('/experiment-import/update', 'prototype.experiment-import.update')
+         ->name('prototype.experiment-import.update');
+
+    Route::view('/experiment-import/status', 'prototype.experiment-import.status')
+         ->name('prototype.experiment-import.status');
+});
+
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
 Route::get('/getAllPublishedDatasets',
     [PublicDataController::class, 'getAllPublishedDatasets'])->name('get_all_published_datasets');
 
 Route::get('/getAllPublishedTestDatasets',
     [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
+
+Route::view('/prototype/public-dataset', 'public.datasets.show-prototype');
 
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');
@@ -157,8 +170,8 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     require base_path('routes/web_routes/triggers_web.php');
     require base_path('routes/web_routes/admin_web.php');
     require base_path('routes/web_routes/datahq_web.php');
-    require base_path('routes/web_routes/charts_web.php');
     require base_path('routes/web_routes/google_sheets_web.php');
+    require base_path('routes/web_routes/desktop_web.php');
 
     Route::get('/getUsers', [UsersController::class, 'getUsers'])->name('get_users');
 

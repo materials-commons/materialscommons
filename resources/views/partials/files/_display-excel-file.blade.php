@@ -1,5 +1,6 @@
 <ul class="nav nav-pills" id="{{$file->uuid}}sheet-tabs">
 </ul>
+<br/>
 <div id="{{$file->uuid}}grid"></div>
 @push('scripts')
     <script>
