@@ -15,6 +15,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('dashboard.browse-tree')}}"
+                   data-toggle="tooltip" title="Access your project files."
+                   href="{{route('dashboard.browse-tree.show')}}">
+                    <i class="fa-fw fas fa-sitemap me-2"></i>
+                    Browse
+                </a>
+            </li>
+
             @if(auth()->user()->is_admin)
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNav('admin')}}" href="{{route('admin.dashboard')}}">

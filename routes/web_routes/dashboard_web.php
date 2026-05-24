@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Dashboard\IndexArchivedProjectsOnDashboardWebContro
 use App\Http\Controllers\Web\Dashboard\IndexTrashWebController;
 use App\Http\Controllers\Web\Dashboard\MarkProjectAsActiveOnDashboardWebController;
 use App\Http\Controllers\Web\Dashboard\RestoreProjectFromTrashWebController;
+use App\Http\Controllers\Web\Dashboard\ShowBrowseTreeWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardDataDictionaryWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardProjectsWebController;
 use App\Http\Controllers\Web\Dashboard\ShowDashboardPublishedDatasetsWebController;
@@ -17,6 +18,9 @@ use App\Http\Controllers\Web\WebDAV\ResetWebDAVStateForUserWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
+
+Route::get('/dashboard/browse-tree', ShowBrowseTreeWebController::class)
+     ->name('dashboard.browse-tree.show');
 
 Route::get('/dashboard/projects', ShowDashboardProjectsWebController::class)
      ->name('dashboard.projects.show');

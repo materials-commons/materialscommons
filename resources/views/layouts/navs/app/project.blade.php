@@ -45,6 +45,15 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.browse-tree')}}"
+                   data-toggle="tooltip" title="Access your project files."
+                   href="{{route('projects.browse-tree.show', [$project])}}">
+                    <i class="fa-fw fas fa-sitemap me-2"></i>
+                    Browse
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link fs-11 ms-3 {{setActiveNavByOneOf(['projects.folders', 'projects.files'])}}"
                    data-toggle="tooltip" title="Access your project files."
                    href="{{route('projects.folders.show', [$project, $project->rootDir])}}">

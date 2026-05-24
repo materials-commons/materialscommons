@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Projects\BrowseTree\ShowProjectBrowseTreeWebController;
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\Datatables\GetRecentlyUploadedFilesWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
@@ -61,6 +62,9 @@ Route::get('/projects/{project}/mark-as-active', MarkProjectAsActiveWebControlle
 
 Route::get('/projects/{project}/unmark-as-active', UnmarkProjectAsActiveWebController::class)
      ->name('projects.unmark-as-active');
+
+Route::get('/projects/{project}/browse-tree', ShowProjectBrowseTreeWebController::class)
+     ->name('projects.browse-tree.show');
 
 Route::get('/projects/create', CreateProjectWebController::class)
      ->name('projects.create');

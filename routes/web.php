@@ -111,6 +111,9 @@ Route::prefix('prototype')->group(function () {
 
     Route::view('/experiment-import/status', 'prototype.experiment-import.status')
          ->name('prototype.experiment-import.status');
+
+    Route::view('/browse-tree', 'prototype.browse-tree.index')
+         ->name('prototype.browse-tree.index');
 });
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
