@@ -112,6 +112,8 @@
                     </div>
                 </div>
 
+                <x-browse-tree.file-display-controls />
+
                 <div class="mc-sidebar-section">
                     <div class="mc-sidebar-title">Filter by type</div>
 

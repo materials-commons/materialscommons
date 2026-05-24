@@ -16,11 +16,21 @@ class BuildBrowseTreeAction
 {
     use UserProjects;
 
-    public function execute(?Project $project, User $user, string $scope, array $expandedNodeKeys = []): array
+    private const FILE_DISPLAY_LIMIT = 250;
+
+
+    public function execute(?Project $project, User $user, string $scope, array $expandedNodeKeys = [],
+        bool $alwaysShowFiles = false, array $directoriesWithVisibleFiles = []): array
     {
         if ($scope === 'project' && $project !== null) {
             return [
-                $this->projectNode($project, 'current-project', $expandedNodeKeys),
+                $this->projectNode(
+                    $project,
+                    'current-project',
+                    $expandedNodeKeys,
+                    $alwaysShowFiles,
+                    $directoriesWithVisibleFiles
+                ),
             ];
         }
 
@@ -29,13 +39,16 @@ class BuildBrowseTreeAction
                     ->map(fn(Project $userProject) => $this->projectNode(
                         $userProject,
                         "project-{$userProject->id}",
-                        $expandedNodeKeys
+                        $expandedNodeKeys,
+                        $alwaysShowFiles,
+                        $directoriesWithVisibleFiles
                     ))
                     ->values()
                     ->all();
     }
 
-    private function projectNode(Project $project, string $key, array $expandedNodeKeys): array
+    private function projectNode(Project $project, string $key, array $expandedNodeKeys, bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles): array
     {
         $isExpanded = in_array($key, $expandedNodeKeys, true);
 
@@ -54,13 +67,24 @@ class BuildBrowseTreeAction
                 $project->summary ?? '',
             ],
             'children'    => $isExpanded
-                ? $this->projectCategoryNodes($project, $key, $expandedNodeKeys)
+                ? $this->projectCategoryNodes(
+                    $project,
+                    $key,
+                    $expandedNodeKeys,
+                    $alwaysShowFiles,
+                    $directoriesWithVisibleFiles
+                )
                 : [],
         ];
     }
 
-    private function projectCategoryNodes(Project $project, string $projectKey, array $expandedNodeKeys): array
-    {
+    private function projectCategoryNodes(
+        Project $project,
+        string $projectKey,
+        array $expandedNodeKeys,
+        bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles
+    ): array {
         return [
             $this->categoryNode(
                 key: "{$projectKey}-samples",
@@ -83,7 +107,13 @@ class BuildBrowseTreeAction
                 title: 'Files',
                 icon: 'fas fa-file-alt text-secondary',
                 count: $this->filesCount($project),
-                children: fn() => $this->fileRootChildren($project, "{$projectKey}-files", $expandedNodeKeys),
+                children: fn() => $this->fileRootChildren(
+                    $project,
+                    "{$projectKey}-files",
+                    $expandedNodeKeys,
+                    $alwaysShowFiles,
+                    $directoriesWithVisibleFiles
+                ),
                 expandedNodeKeys: $expandedNodeKeys
             ),
             $this->categoryNode(
@@ -112,7 +142,8 @@ class BuildBrowseTreeAction
         int $count,
         callable $children,
         array $expandedNodeKeys
-    ): array {
+    ): array
+    {
         $isExpanded = in_array($key, $expandedNodeKeys, true);
 
         return [
@@ -315,7 +346,8 @@ class BuildBrowseTreeAction
         Project $project,
         string $key,
         array $expandedNodeKeys
-    ): array {
+    ): array
+    {
         $isExpanded = in_array($key, $expandedNodeKeys, true);
 
         return [
@@ -376,51 +408,81 @@ class BuildBrowseTreeAction
         ];
     }
 
-    private function fileRootChildren(Project $project, string $parentKey, array $expandedNodeKeys): array
-    {
-        $rootDirectories = File::query()
-                               ->active()
-                               ->directories()
-                               ->where('project_id', $project->id)
-                               ->whereNull('dataset_id')
-                               ->where(function ($query) {
-                                   $query->whereNull('directory_id')
-                                         ->orWhere('path', '/');
-                               })
-                               ->orderBy('name')
-                               ->limit(100)
-                               ->get();
+    private function fileRootChildren(
+        Project $project,
+        string $parentKey,
+        array $expandedNodeKeys,
+        bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles
+    ): array {
+        $rootDirectory = File::query()
+                             ->active()
+                             ->directories()
+                             ->where('project_id', $project->id)
+                             ->whereNull('dataset_id')
+                             ->where('path', '/')
+                             ->first();
 
-        $rootFiles = File::query()
+        $rootDirectoryId = $rootDirectory?->id;
+        $rootKey = "{$parentKey}-root";
+
+        $childDirectories = File::query()
+                                ->active()
+                                ->directories()
+                                ->where('project_id', $project->id)
+                                ->whereNull('dataset_id')
+                                ->when($rootDirectoryId !== null,
+                                    fn($query) => $query->where('directory_id', $rootDirectoryId),
+                                    fn($query) => $query->whereNull('directory_id')
+                                )
+                                ->where('path', '<>', '/')
+                                ->orderBy('name')
+                                ->limit(self::FILE_DISPLAY_LIMIT)
+                                ->get();
+
+        $fileCount = File::query()
                          ->active()
                          ->files()
                          ->where('project_id', $project->id)
                          ->whereNull('dataset_id')
-                         ->whereNull('directory_id')
-                         ->orderBy('name')
-                         ->limit(100)
-                         ->get();
+                         ->when($rootDirectoryId !== null,
+                             fn($query) => $query->where('directory_id', $rootDirectoryId),
+                             fn($query) => $query->whereNull('directory_id')
+                         )
+                         ->count();
+
+        $children = $childDirectories
+            ->map(fn(File $directory) => $this->directoryNode(
+                $directory,
+                $project,
+                "{$parentKey}-dir-{$directory->id}",
+                $expandedNodeKeys,
+                $alwaysShowFiles,
+                $directoriesWithVisibleFiles
+            ))
+            ->all();
 
         return [
-            ...$rootDirectories
-                ->map(fn(File $directory) => $this->directoryNode(
-                    $directory,
-                    $project,
-                    "{$parentKey}-dir-{$directory->id}",
-                    $expandedNodeKeys
-                ))
-                ->all(),
-            ...$rootFiles
-                ->map(fn(File $file) => $this->fileLeaf($file, $project))
-                ->all(),
+            ...$children,
+            ...$this->fileVisibilityNodes(
+                project: $project,
+                directoryId: $rootDirectoryId,
+                directoryKey: $rootKey,
+                directoryLabel: 'project root',
+                fileCount: $fileCount,
+                alwaysShowFiles: $alwaysShowFiles,
+                directoriesWithVisibleFiles: $directoriesWithVisibleFiles,
+                files: fn() => $this->rootFileLeaves($project, $rootDirectoryId),
+            ),
         ];
     }
-
     private function directoryNode(
         File $directory,
         Project $project,
         string $key,
-        array $expandedNodeKeys
+        array $expandedNodeKeys,
+        bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles
     ): array {
         $isExpanded = in_array($key, $expandedNodeKeys, true);
 
@@ -437,7 +499,14 @@ class BuildBrowseTreeAction
                 $directory->path,
             ],
             'children'    => $isExpanded
-                ? $this->directoryChildren($directory, $project, $key, $expandedNodeKeys)
+                ? $this->directoryChildren(
+                    $directory,
+                    $project,
+                    $key,
+                    $expandedNodeKeys,
+                    $alwaysShowFiles,
+                    $directoriesWithVisibleFiles
+                )
                 : [],
         ];
     }
@@ -446,7 +515,9 @@ class BuildBrowseTreeAction
         File $directory,
         Project $project,
         string $parentKey,
-        array $expandedNodeKeys
+        array $expandedNodeKeys,
+        bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles
     ): array {
         $childDirectories = File::query()
                                 ->active()
@@ -455,31 +526,144 @@ class BuildBrowseTreeAction
                                 ->whereNull('dataset_id')
                                 ->where('directory_id', $directory->id)
                                 ->orderBy('name')
-                                ->limit(100)
+                                ->limit(self::FILE_DISPLAY_LIMIT)
                                 ->get();
 
-        $childFiles = File::query()
-                          ->active()
-                          ->files()
-                          ->where('project_id', $project->id)
-                          ->whereNull('dataset_id')
-                          ->where('directory_id', $directory->id)
-                          ->orderBy('name')
-                          ->limit(100)
-                          ->get();
+        $fileCount = File::query()
+                         ->active()
+                         ->files()
+                         ->where('project_id', $project->id)
+                         ->whereNull('dataset_id')
+                         ->where('directory_id', $directory->id)
+                         ->count();
+
+        $children = $childDirectories
+            ->map(fn(File $childDirectory) => $this->directoryNode(
+                $childDirectory,
+                $project,
+                "{$parentKey}-dir-{$childDirectory->id}",
+                $expandedNodeKeys,
+                $alwaysShowFiles,
+                $directoriesWithVisibleFiles
+            ))
+            ->all();
 
         return [
-            ...$childDirectories
-                ->map(fn(File $childDirectory) => $this->directoryNode(
-                    $childDirectory,
-                    $project,
-                    "{$parentKey}-dir-{$childDirectory->id}",
-                    $expandedNodeKeys
-                ))
-                ->all(),
-            ...$childFiles
-                ->map(fn(File $file) => $this->fileLeaf($file, $project))
-                ->all(),
+            ...$children,
+            ...$this->fileVisibilityNodes(
+                project: $project,
+                directoryId: $directory->id,
+                directoryKey: $parentKey,
+                directoryLabel: $directory->name === '' ? '/' : $directory->name,
+                fileCount: $fileCount,
+                alwaysShowFiles: $alwaysShowFiles,
+                directoriesWithVisibleFiles: $directoriesWithVisibleFiles,
+                files: fn() => $this->directoryFileLeaves($project, $directory->id),
+            ),
+        ];
+    }
+
+    private function fileVisibilityNodes(
+        Project $project,
+        ?int $directoryId,
+        string $directoryKey,
+        string $directoryLabel,
+        int $fileCount,
+        bool $alwaysShowFiles,
+        array $directoriesWithVisibleFiles,
+        callable $files
+    ): array {
+        if ($fileCount === 0) {
+            return [];
+        }
+
+        $shouldShowFiles = $alwaysShowFiles || in_array($directoryKey, $directoriesWithVisibleFiles, true);
+
+        if (!$shouldShowFiles) {
+            return [
+                $this->showFilesActionNode($directoryKey, $directoryLabel, $fileCount),
+            ];
+        }
+
+        $fileNodes = $files();
+
+        $nodes = [
+            $this->hideFilesActionNode($directoryKey, $directoryLabel),
+            ...$fileNodes,
+        ];
+
+        if ($fileCount > self::FILE_DISPLAY_LIMIT) {
+            $nodes[] = $this->fileLimitMessageNode($directoryKey, $fileCount);
+        }
+
+        return $nodes;
+    }
+
+    private function rootFileLeaves(Project $project, ?int $rootDirectoryId): array
+    {
+        return File::query()
+                   ->active()
+                   ->files()
+                   ->where('project_id', $project->id)
+                   ->whereNull('dataset_id')
+                   ->when($rootDirectoryId !== null,
+                       fn($query) => $query->where('directory_id', $rootDirectoryId),
+                       fn($query) => $query->whereNull('directory_id')
+                   )
+                   ->orderBy('name')
+                   ->limit(self::FILE_DISPLAY_LIMIT)
+                   ->get()
+                   ->map(fn(File $file) => $this->fileLeaf($file, $project))
+                   ->all();
+    }
+
+    private function directoryFileLeaves(Project $project, int $directoryId): array
+    {
+        return File::query()
+                   ->active()
+                   ->files()
+                   ->where('project_id', $project->id)
+                   ->whereNull('dataset_id')
+                   ->where('directory_id', $directoryId)
+                   ->orderBy('name')
+                   ->limit(self::FILE_DISPLAY_LIMIT)
+                   ->get()
+                   ->map(fn(File $file) => $this->fileLeaf($file, $project))
+                   ->all();
+    }
+
+    private function showFilesActionNode(string $directoryKey, string $directoryLabel, int $fileCount): array
+    {
+        return [
+            'key'       => "{$directoryKey}-show-files",
+            'kind'      => 'action',
+            'type'      => 'action',
+            'title'     => "View files in {$directoryLabel} ({$fileCount})",
+            'icon'      => 'fas fa-eye text-muted',
+            'directoryKey' => $directoryKey,
+        ];
+    }
+
+    private function hideFilesActionNode(string $directoryKey, string $directoryLabel): array
+    {
+        return [
+            'key'       => "{$directoryKey}-hide-files",
+            'kind'      => 'action',
+            'type'      => 'action',
+            'title'     => "Hide files in {$directoryLabel}",
+            'icon'      => 'fas fa-eye-slash text-muted',
+            'directoryKey' => $directoryKey,
+        ];
+    }
+
+    private function fileLimitMessageNode(string $directoryKey, int $fileCount): array
+    {
+        return [
+            'key'   => "{$directoryKey}-file-limit-message",
+            'kind'  => 'message',
+            'type'  => 'message',
+            'title' => 'Showing '.self::FILE_DISPLAY_LIMIT." of {$fileCount} files. Use search or organize this folder into subfolders for easier browsing.",
+            'icon'  => 'fas fa-info-circle text-muted',
         ];
     }
 

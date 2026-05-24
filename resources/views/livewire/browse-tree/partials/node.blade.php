@@ -1,13 +1,18 @@
 @php
     $hasLoadedChildren = count($node['children'] ?? []) > 0;
     $isLazy = $node['lazy'] ?? false;
-    $hasChildren = $hasLoadedChildren || $isLazy;
+    $isFolder = ($node['kind'] ?? null) === 'folder';
+    $hasChildren = $hasLoadedChildren || $isLazy || $isFolder;
     $isExpanded = in_array($node['key'], $expandedNodeKeys, true);
     $isSelected = ($selectedItem['key'] ?? null) === $node['key'];
 @endphp
 
 <li class="mc-tree-node">
-    @if($hasChildren)
+    @if(($node['kind'] ?? null) === 'action')
+        <x-browse-tree.action-node :node="$node" />
+    @elseif(($node['kind'] ?? null) === 'message')
+        <x-browse-tree.message-node :node="$node" />
+    @elseif($hasChildren)
         <button type="button"
                 class="mc-tree-toggle"
                 wire:click="toggleNode('{{ $node['key'] }}')"
@@ -28,12 +33,21 @@
                         @include('livewire.browse-tree.partials.node', ['node' => $child])
                     @endforeach
                 </ul>
-            @else
+            @elseif($isLazy)
                 <ul class="mc-tree-children">
                     <li class="mc-tree-node">
                         <div class="mc-tree-item text-muted">
                             <i class="fas fa-spinner fa-spin"></i>
                             <span class="mc-node-label">Loading...</span>
+                        </div>
+                    </li>
+                </ul>
+            @else
+                <ul class="mc-tree-children">
+                    <li class="mc-tree-node">
+                        <div class="mc-tree-message">
+                            <i class="fas fa-info-circle text-muted"></i>
+                            <span class="mc-node-label">No items to show at this level.</span>
                         </div>
                     </li>
                 </ul>

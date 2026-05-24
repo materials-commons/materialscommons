@@ -139,7 +139,9 @@
             }
 
             .mc-tree-toggle,
-            .mc-tree-item {
+            .mc-tree-item,
+            .mc-tree-action,
+            .mc-tree-message {
                 width: 100%;
                 border: 1px solid transparent;
                 background: transparent;
@@ -154,10 +156,23 @@
             }
 
             .mc-tree-toggle:hover,
-            .mc-tree-item:hover {
+            .mc-tree-item:hover,
+            .mc-tree-action:hover {
                 background: transparent;
                 border-color: transparent;
                 color: #0d6efd;
+            }
+
+            .mc-tree-action {
+                color: #0d6efd;
+                font-size: .9rem;
+            }
+
+            .mc-tree-message {
+                color: #6c757d;
+                font-size: .86rem;
+                cursor: default;
+                align-items: flex-start;
             }
 
             .mc-tree-item.active {

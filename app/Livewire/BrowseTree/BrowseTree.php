@@ -43,9 +43,14 @@ class BrowseTree extends Component
     #[Url(as: 'tags')]
     public array $selectedTags = [];
 
+    #[Url(as: 'showFiles')]
+    public bool $alwaysShowFiles = false;
+
     public string $quickFilter = 'all';
 
     public array $expandedNodeKeys = [];
+
+    public array $directoriesWithVisibleFiles = [];
 
     public ?array $selectedItem = null;
 
@@ -201,6 +206,29 @@ class BrowseTree extends Component
         $this->expandMatchingParents();
     }
 
+    public function toggleDirectoryFiles(string $directoryKey): void
+    {
+        if (in_array($directoryKey, $this->directoriesWithVisibleFiles, true)) {
+            $this->directoriesWithVisibleFiles = array_values(array_filter(
+                $this->directoriesWithVisibleFiles,
+                fn(string $visibleDirectoryKey) => $visibleDirectoryKey !== $directoryKey
+            ));
+
+            return;
+        }
+
+        $this->directoriesWithVisibleFiles[] = $directoryKey;
+    }
+
+    public function updatedAlwaysShowFiles(): void
+    {
+        if ($this->alwaysShowFiles) {
+            return;
+        }
+
+        $this->directoriesWithVisibleFiles = [];
+    }
+
     public function updatedSearch(): void
     {
         $this->quickFilter = 'all';
@@ -244,7 +272,9 @@ class BrowseTree extends Component
             $this->project,
             auth()->user(),
             $this->scope,
-            $this->expandedNodeKeys
+            $this->expandedNodeKeys,
+            $this->alwaysShowFiles,
+            $this->directoriesWithVisibleFiles
         );
     }
 
@@ -326,6 +356,10 @@ class BrowseTree extends Component
         $leaves = [];
 
         foreach ($nodes as $node) {
+            if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
+                continue;
+            }
+
             if (empty($node['children'])) {
                 if (($node['kind'] ?? 'folder') !== 'folder') {
                     $leaves[] = $node;
@@ -362,6 +396,10 @@ class BrowseTree extends Component
 
     private function nodeMatches(array $node): bool
     {
+        if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
+            return true;
+        }
+
         if (($node['kind'] ?? 'folder') !== 'folder' && !in_array($node['type'], $this->selectedTypes, true)) {
             return false;
         }
@@ -504,6 +542,10 @@ class BrowseTree extends Component
         $count = 0;
 
         foreach ($nodes as $node) {
+            if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
+                continue;
+            }
+
             if (empty($node['children'])) {
                 $count++;
             } else {
