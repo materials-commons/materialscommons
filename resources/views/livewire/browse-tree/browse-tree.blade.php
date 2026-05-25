@@ -33,8 +33,13 @@
 
                 <div class="col-xl-2 col-lg-3 col-md-4">
                     <select class="form-select" wire:model.live="scope">
-                        @if($project !== null)
-                            <option value="project">Current project</option>
+                        @if($project !== null || $focusedProjectId !== null)
+                            <option value="project">
+                                Current project
+                                @if($project === null && $focusedProjectName !== null)
+                                    — {{ $focusedProjectName }}
+                                @endif
+                            </option>
                         @endif
                         <option value="all">All projects</option>
                     </select>

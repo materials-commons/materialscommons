@@ -16,23 +16,28 @@ class BuildBrowseTreeAction
 {
     use UserProjects;
 
-    private const FILE_DISPLAY_LIMIT = 250;
+    private const int FILE_DISPLAY_LIMIT = 250;
 
 
     public function execute(?Project $project, User $user, string $scope, array $expandedNodeKeys = [],
-        bool $alwaysShowFiles = false, array $directoriesWithVisibleFiles = []): array
+        bool $alwaysShowFiles = false, array $directoriesWithVisibleFiles = [], ?int $focusedProjectId = null): array
     {
-        if ($scope === 'project' && $project !== null) {
-            return [
-                $this->projectNode(
-                    $project,
-                    'current-project',
-                    $expandedNodeKeys,
-                    $alwaysShowFiles,
-                    $directoriesWithVisibleFiles
-                ),
-            ];
+        if ($scope === 'project') {
+            $currentProject = $project ?? $this->focusedProjectForUser($focusedProjectId, $user);
+
+            if ($currentProject !== null) {
+                return [
+                    $this->projectNode(
+                        $currentProject,
+                        'current-project',
+                        $expandedNodeKeys,
+                        $alwaysShowFiles,
+                        $directoriesWithVisibleFiles
+                    ),
+                ];
+            }
         }
+
 
         return $this->getUserProjects($user->id)
                     ->take(50)
@@ -45,6 +50,16 @@ class BuildBrowseTreeAction
                     ))
                     ->values()
                     ->all();
+    }
+
+    private function focusedProjectForUser(?int $focusedProjectId, User $user): ?Project
+    {
+        if ($focusedProjectId === null) {
+            return null;
+        }
+
+        return $this->getUserProjects($user->id)
+                    ->firstWhere('id', $focusedProjectId);
     }
 
     private function projectNode(Project $project, string $key, array $expandedNodeKeys, bool $alwaysShowFiles,

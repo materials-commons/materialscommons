@@ -16,6 +16,10 @@ class BrowseTree extends Component
 {
     public ?Project $project = null;
 
+    public ?int $focusedProjectId = null;
+
+    public ?string $focusedProjectName = null;
+
     #[Url(as: 'scope')]
     public string $scope = 'project';
 
@@ -57,6 +61,10 @@ class BrowseTree extends Component
     public function mount(?Project $project = null, string $defaultScope = 'project'): void
     {
         $this->project = $project;
+        if ($project !== null) {
+            $this->focusedProjectId = $project->id;
+            $this->focusedProjectName = $project->name;
+        }
         $this->scope = $project === null ? 'all' : $defaultScope;
 
         $this->expandedNodeKeys = $this->scope === 'all'
@@ -78,9 +86,19 @@ class BrowseTree extends Component
         ]);
     }
 
+    public function updatedScope(string $scope): void
+    {
+        $this->setScope($scope);
+    }
+
     public function setScope(string $scope): void
     {
         if (!in_array($scope, ['project', 'all'], true)) {
+            return;
+        }
+
+        if ($scope === 'project' && $this->project === null && $this->focusedProjectId === null) {
+            $this->scope = 'all';
             return;
         }
 
@@ -89,12 +107,10 @@ class BrowseTree extends Component
 
         if ($scope === 'all') {
             $this->expandedNodeKeys = [];
-        } else {
-            $this->expandedNodeKeys = array_values(array_unique([
-                ...$this->expandedNodeKeys,
-                'current-project',
-            ]));
+            return;
         }
+
+        $this->expandedNodeKeys = ['current-project'];
     }
 
     public function setQuickFilter(string $quickFilter): void
@@ -152,6 +168,10 @@ class BrowseTree extends Component
 
     public function toggleNode(string $key): void
     {
+        if (str_starts_with($key, 'project-')) {
+            $this->rememberFocusedProjectFromNodeKey($key);
+        }
+
         if (in_array($key, $this->expandedNodeKeys, true)) {
             $this->expandedNodeKeys = array_values(array_filter(
                 $this->expandedNodeKeys,
@@ -162,6 +182,26 @@ class BrowseTree extends Component
         }
 
         $this->expandedNodeKeys[] = $key;
+    }
+
+    private function rememberFocusedProjectFromNodeKey(string $key): void
+    {
+        $projectId = (int) str_replace('project-', '', $key);
+
+        if ($projectId <= 0) {
+            return;
+        }
+
+        $project = Project::query()
+                          ->select(['id', 'name'])
+                          ->find($projectId);
+
+        if ($project === null) {
+            return;
+        }
+
+        $this->focusedProjectId = $project->id;
+        $this->focusedProjectName = $project->name;
     }
 
     public function expandAll(): void
@@ -274,7 +314,8 @@ class BrowseTree extends Component
             $this->scope,
             $this->expandedNodeKeys,
             $this->alwaysShowFiles,
-            $this->directoriesWithVisibleFiles
+            $this->directoriesWithVisibleFiles,
+            $this->focusedProjectId,
         );
     }
 
