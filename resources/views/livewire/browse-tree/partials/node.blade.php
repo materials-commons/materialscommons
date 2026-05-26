@@ -1,4 +1,7 @@
 @php
+    $expandedNodeKeys = $expandedNodeKeys ?? [];
+    $selectedItem = $selectedItem ?? null;
+
     $hasLoadedChildren = count($node['children'] ?? []) > 0;
     $isLazy = $node['lazy'] ?? false;
     $isFolder = ($node['kind'] ?? null) === 'folder';
@@ -30,7 +33,11 @@
             @if($hasLoadedChildren)
                 <ul class="mc-tree-children">
                     @foreach($node['children'] as $child)
-                        @include('livewire.browse-tree.partials.node', ['node' => $child])
+                        @include('livewire.browse-tree.partials.node', [
+                            'node' => $child,
+                            'expandedNodeKeys' => $expandedNodeKeys,
+                            'selectedItem' => $selectedItem,
+                        ])
                     @endforeach
                 </ul>
             @elseif($isLazy)

@@ -3,13 +3,16 @@
 namespace App\Livewire\BrowseTree;
 
 use App\Actions\BrowseTree\BuildBrowseTreeAction;
+use App\Actions\BrowseTree\Support\BrowseTreeFilter;
+use App\Actions\BrowseTree\Support\BrowseTreeGrouper;
+use App\Actions\BrowseTree\Support\BrowseTreeMetrics;
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use function auth;
 use function in_array;
+use function str_starts_with;
 use function view;
 
 class BrowseTree extends Component
@@ -61,10 +64,12 @@ class BrowseTree extends Component
     public function mount(?Project $project = null, string $defaultScope = 'project'): void
     {
         $this->project = $project;
+
         if ($project !== null) {
             $this->focusedProjectId = $project->id;
             $this->focusedProjectName = $project->name;
         }
+
         $this->scope = $project === null ? 'all' : $defaultScope;
 
         $this->expandedNodeKeys = $this->scope === 'all'
@@ -72,17 +77,22 @@ class BrowseTree extends Component
             : ['current-project'];
     }
 
-    public function render(BuildBrowseTreeAction $buildBrowseTreeAction): View
-    {
+    public function render(
+        BuildBrowseTreeAction $buildBrowseTreeAction,
+        BrowseTreeFilter $filter,
+        BrowseTreeGrouper $grouper,
+        BrowseTreeMetrics $metrics,
+    ): View {
         $baseTree = $this->treeData($buildBrowseTreeAction);
-        $tree = $this->filteredTree($buildBrowseTreeAction);
+        $groupedTree = $this->groupBy === 'type' ? $grouper->byType($baseTree) : $baseTree;
+        $tree = $filter->filter($groupedTree, $this->filterState());
 
         return view('livewire.browse-tree.browse-tree', [
             'tree' => $tree,
-            'visibleLeafCount' => $this->countLeaves($tree),
-            'typeCounts' => $this->typeCounts($baseTree),
-            'availableTags' => $this->availableTags($baseTree),
-            'availableExperiments' => $this->availableExperiments($baseTree),
+            'visibleLeafCount' => $metrics->countLeaves($tree),
+            'typeCounts' => $metrics->typeCounts($baseTree),
+            'availableTags' => $metrics->availableTags($baseTree),
+            'availableExperiments' => $metrics->availableExperiments($baseTree),
         ]);
     }
 
@@ -184,32 +194,9 @@ class BrowseTree extends Component
         $this->expandedNodeKeys[] = $key;
     }
 
-    private function rememberFocusedProjectFromNodeKey(string $key): void
-    {
-        $projectId = (int) str_replace('project-', '', $key);
-
-        if ($projectId <= 0) {
-            return;
-        }
-
-        $project = Project::query()
-                          ->select(['id', 'name'])
-                          ->find($projectId);
-
-        if ($project === null) {
-            return;
-        }
-
-        $this->focusedProjectId = $project->id;
-        $this->focusedProjectName = $project->name;
-    }
-
     public function expandAll(): void
     {
-        // With real data, expand all can be extremely expensive.
-        // For now, expand only the current visible top-level folders.
         $buildBrowseTreeAction = app(BuildBrowseTreeAction::class);
-
         $tree = $this->treeData($buildBrowseTreeAction);
 
         $this->expandedNodeKeys = array_values(array_unique([
@@ -292,246 +279,76 @@ class BrowseTree extends Component
         $this->selectedItem = null;
 
         $buildBrowseTreeAction = app(BuildBrowseTreeAction::class);
+        $grouper = app(BrowseTreeGrouper::class);
+        $tree = $this->treeData($buildBrowseTreeAction);
+        $groupedTree = $this->groupBy === 'type' ? $grouper->byType($tree) : $tree;
 
         $this->expandedNodeKeys = array_values(array_unique([
             ...$this->expandedNodeKeys,
-            ...array_slice($this->collectFolderKeys($this->groupedTree($this->treeData($buildBrowseTreeAction))), 0, 8),
+            ...array_slice($this->collectFolderKeys($groupedTree), 0, 8),
         ]));
-    }
-
-    private function filteredTree(BuildBrowseTreeAction $buildBrowseTreeAction): array
-    {
-        return $this->filterNodes(
-            $this->groupedTree($this->treeData($buildBrowseTreeAction))
-        );
     }
 
     private function treeData(BuildBrowseTreeAction $buildBrowseTreeAction): array
     {
         return $buildBrowseTreeAction->execute(
-            $this->project,
-            auth()->user(),
-            $this->scope,
-            $this->expandedNodeKeys,
-            $this->alwaysShowFiles,
-            $this->directoriesWithVisibleFiles,
-            $this->focusedProjectId,
+            project: $this->project,
+            user: auth()->user(),
+            scope: $this->scope,
+            expandedNodeKeys: $this->expandedNodeKeys,
+            alwaysShowFiles: $this->alwaysShowFiles,
+            directoriesWithVisibleFiles: $this->directoriesWithVisibleFiles,
+            focusedProjectId: $this->focusedProjectId,
         );
     }
 
-    private function groupedTree(array $tree): array
+    private function filterState(): array
     {
-        if ($this->groupBy === 'type') {
-            return $this->groupTreeByType($tree);
-        }
-
-        return $tree;
-    }
-
-    private function groupTreeByType(array $tree): array
-    {
-        $leaves = collect($this->flattenLeaves($tree));
-
-        $typeDefinitions = [
-            'sample' => [
-                'title' => 'Samples',
-                'icon' => 'fas fa-vials text-success',
-            ],
-            'computation' => [
-                'title' => 'Computations',
-                'icon' => 'fas fa-cogs text-primary',
-            ],
-            'file' => [
-                'title' => 'Files',
-                'icon' => 'fas fa-file-alt text-secondary',
-            ],
-            'dataset' => [
-                'title' => 'Datasets',
-                'icon' => 'fas fa-database text-info',
-            ],
-            'experiment' => [
-                'title' => 'Experiments',
-                'icon' => 'fas fa-flask text-purple',
-            ],
+        return [
+            'search' => $this->search,
+            'selectedTypes' => $this->selectedTypes,
+            'dateFilter' => $this->dateFilter,
+            'experimentFilter' => $this->experimentFilter,
+            'selectedTags' => $this->selectedTags,
         ];
-
-        return collect($typeDefinitions)
-            ->map(function (array $definition, string $type) use ($leaves) {
-                $itemsOfType = $leaves->where('type', $type)->values();
-
-                $projectGroups = $itemsOfType
-                    ->groupBy(fn(array $item) => $item['project'] ?? 'No Project')
-                    ->map(function (Collection $projectItems, string $projectName) use ($type) {
-                        return [
-                            'key' => 'group-type-'.$type.'-project-'.str($projectName)->slug(),
-                            'kind' => 'folder',
-                            'type' => 'folder',
-                            'title' => $projectName,
-                            'icon' => 'fas fa-folder text-warning',
-                            'count' => $projectItems->count(),
-                            'searchTerms' => [$projectName, $type],
-                            'children' => $projectItems->values()->all(),
-                        ];
-                    })
-                    ->values()
-                    ->all();
-
-                return [
-                    'key' => 'group-type-'.$type,
-                    'kind' => 'folder',
-                    'type' => 'folder',
-                    'title' => $definition['title'],
-                    'icon' => $definition['icon'],
-                    'count' => $itemsOfType->count(),
-                    'searchTerms' => [$type, $definition['title']],
-                    'children' => $projectGroups,
-                ];
-            })
-            ->filter(fn(array $node) => count($node['children']) > 0)
-            ->values()
-            ->all();
     }
 
-    private function flattenLeaves(array $nodes): array
+    private function rememberFocusedProjectFromNodeKey(string $key): void
     {
-        $leaves = [];
+        $projectId = (int) str_replace('project-', '', $key);
 
-        foreach ($nodes as $node) {
-            if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
-                continue;
-            }
-
-            if (empty($node['children'])) {
-                if (($node['kind'] ?? 'folder') !== 'folder') {
-                    $leaves[] = $node;
-                }
-
-                continue;
-            }
-
-            $leaves = [...$leaves, ...$this->flattenLeaves($node['children'])];
+        if ($projectId <= 0) {
+            return;
         }
 
-        return $leaves;
-    }
+        $project = Project::query()
+                          ->select(['id', 'name'])
+                          ->find($projectId);
 
-    private function filterNodes(array $nodes): array
-    {
-        $filtered = [];
-
-        foreach ($nodes as $node) {
-            $children = $node['children'] ?? [];
-            $filteredChildren = $this->filterNodes($children);
-
-            $isLeaf = empty($children);
-            $matches = $this->nodeMatches($node);
-
-            if (($isLeaf && $matches) || (!$isLeaf && ($matches || count($filteredChildren) > 0))) {
-                $node['children'] = $filteredChildren;
-                $filtered[] = $node;
-            }
+        if ($project === null) {
+            return;
         }
 
-        return $filtered;
-    }
-
-    private function nodeMatches(array $node): bool
-    {
-        if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
-            return true;
-        }
-
-        if (($node['kind'] ?? 'folder') !== 'folder' && !in_array($node['type'], $this->selectedTypes, true)) {
-            return false;
-        }
-
-        if (!$this->nodeMatchesDate($node)) {
-            return false;
-        }
-
-        if (!$this->nodeMatchesExperiment($node)) {
-            return false;
-        }
-
-        if (!$this->nodeMatchesTags($node)) {
-            return false;
-        }
-
-        $search = trim(mb_strtolower($this->search));
-
-        if ($search === '') {
-            return true;
-        }
-
-        $haystack = mb_strtolower(implode(' ', [
-            $node['title'] ?? '',
-            $node['type'] ?? '',
-            $node['project'] ?? '',
-            $node['location'] ?? '',
-            $node['description'] ?? '',
-            $node['dateLabel'] ?? '',
-            $node['experiment'] ?? '',
-            implode(' ', $node['tags'] ?? []),
-            implode(' ', $node['searchTerms'] ?? []),
-        ]));
-
-        foreach (preg_split('/\s+/', $search) as $term) {
-            if ($term !== '' && !str_contains($haystack, $term)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private function nodeMatchesDate(array $node): bool
-    {
-        if ($this->dateFilter === 'any' || ($node['kind'] ?? 'folder') === 'folder') {
-            return true;
-        }
-
-        return ($node['dateBucket'] ?? null) === $this->dateFilter;
-    }
-
-    private function nodeMatchesExperiment(array $node): bool
-    {
-        if ($this->experimentFilter === 'any' || ($node['kind'] ?? 'folder') === 'folder') {
-            return true;
-        }
-
-        return ($node['experiment'] ?? null) === $this->experimentFilter;
-    }
-
-    private function nodeMatchesTags(array $node): bool
-    {
-        if (count($this->selectedTags) === 0 || ($node['kind'] ?? 'folder') === 'folder') {
-            return true;
-        }
-
-        $nodeTags = collect($node['tags'] ?? [])
-            ->map(fn(string $tag) => mb_strtolower($tag))
-            ->all();
-
-        foreach ($this->selectedTags as $selectedTag) {
-            if (!in_array(mb_strtolower($selectedTag), $nodeTags, true)) {
-                return false;
-            }
-        }
-
-        return true;
+        $this->focusedProjectId = $project->id;
+        $this->focusedProjectName = $project->name;
     }
 
     private function expandMatchingParents(): void
     {
         $buildBrowseTreeAction = app(BuildBrowseTreeAction::class);
+        $filter = app(BrowseTreeFilter::class);
+        $grouper = app(BrowseTreeGrouper::class);
+
+        $tree = $this->treeData($buildBrowseTreeAction);
+        $groupedTree = $this->groupBy === 'type' ? $grouper->byType($tree) : $tree;
         $expanded = [];
 
-        $walk = function (array $nodes, array $parents = []) use (&$walk, &$expanded): bool {
+        $walk = function (array $nodes, array $parents = []) use (&$walk, &$expanded, $filter): bool {
             $hasMatch = false;
 
             foreach ($nodes as $node) {
                 $childHasMatch = $walk($node['children'] ?? [], [...$parents, $node['key']]);
-                $nodeMatches = $this->nodeMatches($node);
+                $nodeMatches = $filter->nodeMatches($node, $this->filterState());
 
                 if ($nodeMatches || $childHasMatch) {
                     $hasMatch = true;
@@ -542,7 +359,7 @@ class BrowseTree extends Component
             return $hasMatch;
         };
 
-        $walk($this->groupedTree($this->treeData($buildBrowseTreeAction)));
+        $walk($groupedTree);
 
         $this->expandedNodeKeys = array_values(array_unique($expanded));
     }
@@ -576,65 +393,5 @@ class BrowseTree extends Component
         }
 
         return $keys;
-    }
-
-    private function countLeaves(array $nodes): int
-    {
-        $count = 0;
-
-        foreach ($nodes as $node) {
-            if (in_array(($node['kind'] ?? null), ['action', 'message'], true)) {
-                continue;
-            }
-
-            if (empty($node['children'])) {
-                $count++;
-            } else {
-                $count += $this->countLeaves($node['children']);
-            }
-        }
-
-        return $count;
-    }
-
-    private function typeCounts(array $nodes): array
-    {
-        $counts = [
-            'sample' => 0,
-            'computation' => 0,
-            'file' => 0,
-            'dataset' => 0,
-            'experiment' => 0,
-        ];
-
-        foreach ($this->flattenLeaves($nodes) as $item) {
-            if (isset($counts[$item['type']])) {
-                $counts[$item['type']]++;
-            }
-        }
-
-        return $counts;
-    }
-
-    private function availableTags(array $nodes): array
-    {
-        return collect($this->flattenLeaves($nodes))
-            ->flatMap(fn(array $node) => $node['tags'] ?? [])
-            ->filter()
-            ->unique()
-            ->sort()
-            ->values()
-            ->all();
-    }
-
-    private function availableExperiments(array $nodes): array
-    {
-        return collect($this->flattenLeaves($nodes))
-            ->pluck('experiment')
-            ->filter()
-            ->unique()
-            ->sort()
-            ->values()
-            ->all();
     }
 }
