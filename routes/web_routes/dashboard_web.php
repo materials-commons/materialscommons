@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/dashboard', '/app/dashboard/projects')->name('dashboard');
 
-Route::get('/dashboard/browse-tree', ShowBrowseTreeWebController::class)
-     ->name('dashboard.browse-tree.show');
+Route::get('/browse-tree', ShowBrowseTreeWebController::class)
+     ->name('browse-tree.show');
 
 Route::get('/dashboard/projects', ShowDashboardProjectsWebController::class)
      ->name('dashboard.projects.show');

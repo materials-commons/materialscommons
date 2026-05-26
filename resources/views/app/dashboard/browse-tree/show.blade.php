@@ -2,6 +2,10 @@
 
 @section('pageTitle', 'Browse All Research Data')
 
+@section('nav')
+    @include('layouts.navs.dashboard')
+@stop
+
 @section('content')
     <div class="container-fluid py-3">
         <x-browse-tree.page-header

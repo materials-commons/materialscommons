@@ -16,9 +16,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fs-11 ms-3 {{setActiveNavByName('dashboard.browse-tree')}}"
+                <a class="nav-link fs-11 ms-3 {{setActiveNavByExactName('browse-tree.show')}}"
                    data-toggle="tooltip" title="Access your project files."
-                   href="{{route('dashboard.browse-tree.show')}}">
+                   href="{{route('browse-tree.show')}}">
                     <i class="fa-fw fas fa-sitemap me-2"></i>
                     Browse
                 </a>
