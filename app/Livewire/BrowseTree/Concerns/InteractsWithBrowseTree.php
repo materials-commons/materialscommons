@@ -161,6 +161,11 @@ trait InteractsWithBrowseTree
         $this->persistBrowserState();
     }
 
+    public function selectNode(string $key): void
+    {
+        $this->selectItem($key);
+    }
+
     public function setSuggestedSearch(string $search): void
     {
         $this->search = $search;

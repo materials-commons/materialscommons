@@ -15,9 +15,9 @@
             <div class="fs-2 text-muted mb-2">
                 <i class="fas fa-mouse-pointer"></i>
             </div>
-            <div class="fw-semibold">Select a leaf item</div>
+            <div class="fw-semibold">Select an item</div>
             <div class="text-muted small">
-                Click a sample, computation, file, dataset, or experiment to see details and actions.
+                Click a branch, sample, computation, file, dataset, or experiment to see details and actions.
             </div>
         </div>
     @else
@@ -99,6 +99,28 @@
             </div>
 
             <div class="d-grid gap-2">
+                @if(($selectedItem['kind'] ?? null) === 'folder')
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-folder-plus me-1"></i>
+                        Create subdirectory
+                    </button>
+
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-upload me-1"></i>
+                        Upload file
+                    </button>
+
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-vial me-1"></i>
+                        Create sample
+                    </button>
+
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-user-plus me-1"></i>
+                        Add user
+                    </button>
+                @endif
+
                 @if(!blank($selectedItem['url'] ?? null))
                     <a href="{{ $selectedItem['url'] }}" class="btn btn-primary">
                         <i class="fas fa-external-link-alt me-1"></i>

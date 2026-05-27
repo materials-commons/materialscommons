@@ -16,18 +16,26 @@
     @elseif(($node['kind'] ?? null) === 'message')
         <x-browse-tree.message-node :node="$node" />
     @elseif($hasChildren)
-        <button type="button"
-                class="mc-tree-toggle"
-                wire:click="toggleNode('{{ $node['key'] }}')"
-                aria-expanded="{{ $isExpanded ? 'true' : 'false' }}">
-            <i class="fas {{ $isExpanded ? 'fa-chevron-down' : 'fa-chevron-right' }}"></i>
-            <i class="{{ $node['icon'] ?? 'fas fa-folder text-warning' }}"></i>
-            <span class="mc-node-label">{{ $node['title'] }}</span>
+        <div class="mc-tree-branch {{ $isSelected ? 'active' : '' }}">
+            <button type="button"
+                    class="mc-tree-toggle-icon"
+                    wire:click="toggleNode('{{ $node['key'] }}')"
+                    aria-expanded="{{ $isExpanded ? 'true' : 'false' }}"
+                    aria-label="{{ $isExpanded ? 'Collapse' : 'Expand' }} {{ $node['title'] }}">
+                <i class="fas {{ $isExpanded ? 'fa-chevron-down' : 'fa-chevron-right' }}"></i>
+            </button>
 
-            @isset($node['count'])
-                <span class="mc-node-count">{{ $node['count'] }}</span>
-            @endisset
-        </button>
+            <button type="button"
+                    class="mc-tree-toggle"
+                    wire:click="selectNode('{{ $node['key'] }}')">
+                <i class="{{ $node['icon'] ?? 'fas fa-folder text-warning' }}"></i>
+                <span class="mc-node-label">{{ $node['title'] }}</span>
+
+                @isset($node['count'])
+                    <span class="mc-node-count">{{ $node['count'] }}</span>
+                @endisset
+            </button>
+        </div>
 
         @if($isExpanded)
             @if($hasLoadedChildren)

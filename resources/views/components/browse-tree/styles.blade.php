@@ -138,11 +138,31 @@
                 margin: .18rem 0;
             }
 
+            .mc-tree-branch {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                border-radius: .45rem;
+            }
+
+            .mc-tree-toggle-icon {
+                flex: 0 0 auto;
+                width: 34px;
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .mc-tree-branch .mc-tree-toggle {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
             .mc-tree-toggle,
+            .mc-tree-toggle-icon,
             .mc-tree-item,
             .mc-tree-action,
             .mc-tree-message {
-                width: 100%;
                 border: 1px solid transparent;
                 background: transparent;
                 display: flex;
@@ -155,12 +175,40 @@
                 min-height: 34px;
             }
 
+            .mc-tree-toggle,
+            .mc-tree-item,
+            .mc-tree-action,
+            .mc-tree-message {
+                width: 100%;
+            }
+
             .mc-tree-toggle:hover,
+            .mc-tree-toggle-icon:hover,
             .mc-tree-item:hover,
             .mc-tree-action:hover {
                 background: transparent;
                 border-color: transparent;
                 color: #0d6efd;
+            }
+
+            .mc-tree-branch {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                border-radius: .45rem;
+            }
+
+            .mc-tree-toggle-icon {
+                flex: 0 0 auto;
+                width: 34px;
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .mc-tree-branch .mc-tree-toggle {
+                flex: 1 1 auto;
+                min-width: 0;
             }
 
             .mc-tree-action {
@@ -175,9 +223,14 @@
                 align-items: flex-start;
             }
 
-            .mc-tree-item.active {
+            .mc-tree-item.active,
+            .mc-tree-branch.active .mc-tree-toggle {
                 background: #eef5ff;
                 border-color: #b6d4fe;
+                color: #084298;
+            }
+
+            .mc-tree-branch.active .mc-tree-toggle-icon {
                 color: #084298;
             }
 
