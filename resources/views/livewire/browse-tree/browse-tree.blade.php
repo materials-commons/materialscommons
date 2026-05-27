@@ -1,6 +1,8 @@
 <div class="mc-browse-tree">
     <x-browse-tree.styles />
 
+    <x-browse-tree.persistence :persistence-key="$this->persistenceKey" />
+
     <div class="d-flex justify-content-end gap-2 mb-3">
         <button type="button" class="btn btn-outline-secondary btn-sm" wire:click="expandAll">
             <i class="fas fa-plus-square me-1"></i> Expand all
@@ -8,6 +10,10 @@
 
         <button type="button" class="btn btn-outline-secondary btn-sm" wire:click="collapseAll">
             <i class="fas fa-minus-square me-1"></i> Collapse all
+        </button>
+
+        <button type="button" class="btn btn-outline-danger btn-sm" wire:click="resetBrowserState">
+            <i class="fas fa-undo me-1"></i> Reset view
         </button>
     </div>
 
