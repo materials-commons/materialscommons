@@ -2,6 +2,36 @@
     'selectedItem',
 ])
 
+@php
+    $kind = $selectedItem['kind'] ?? null;
+    $type = $selectedItem['type'] ?? null;
+
+    $leafComponent = match ($type) {
+        'sample' => 'browse-tree.details.leaf.sample-panel',
+        'computation' => 'browse-tree.details.leaf.computation-panel',
+        'file' => 'browse-tree.details.leaf.file-panel',
+        'dataset' => 'browse-tree.details.leaf.dataset-panel',
+        'experiment' => 'browse-tree.details.leaf.experiment-panel',
+        'user' => 'browse-tree.details.leaf.user-panel',
+        default => 'browse-tree.details.leaf.file-panel',
+    };
+
+    $folderComponent = match ($type) {
+        'project' => 'browse-tree.details.folder.project-panel',
+        'samples' => 'browse-tree.details.folder.samples-panel',
+        'computations' => 'browse-tree.details.folder.computations-panel',
+        'files' => 'browse-tree.details.folder.files-panel',
+        'datasets' => 'browse-tree.details.folder.datasets-panel',
+        'users' => 'browse-tree.details.folder.users-panel',
+        'directory' => 'browse-tree.details.folder.directory-panel',
+        default => 'browse-tree.details.folder.directory-panel',
+    };
+
+    $detailComponent = $kind === 'folder'
+        ? $folderComponent
+        : $leafComponent;
+@endphp
+
 <aside class="mc-detail-panel">
     <div class="mc-panel-header">
         <div>
@@ -21,131 +51,9 @@
             </div>
         </div>
     @else
-        <div class="mc-detail-content">
-            <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
-                <div>
-                    <div class="text-muted small text-uppercase fw-semibold">
-                        {{ $selectedItem['type'] ?? 'Item' }}
-                    </div>
-
-                    <h3 class="h4 mb-1">{{ $selectedItem['title'] }}</h3>
-
-                    <div class="text-muted">{{ $selectedItem['project'] ?? '' }}</div>
-                </div>
-
-                <span class="badge text-bg-primary">
-                    {{ $selectedItem['badge'] ?? Illuminate\Support\Str::title($selectedItem['type'] ?? 'Item') }}
-                </span>
-            </div>
-
-            <div class="mc-breadcrumb-box mb-3">
-                {{ $selectedItem['location'] ?? '' }}
-            </div>
-
-            @if(($selectedItem['kind'] ?? null) === 'folder')
-                <div class="row g-2 mb-3">
-                    <div class="col-12">
-                        <div class="mc-mini-meta">
-                            <div class="text-muted small">Branch status</div>
-                            <div class="fw-semibold">
-                                {{ ($selectedItem['isExpanded'] ?? false) ? 'Expanded' : 'Collapsed' }}
-                                @if($selectedItem['isLazy'] ?? false)
-                                    <span class="text-muted fw-normal">&middot; loads on expand</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    @isset($selectedItem['childrenCount'])
-                        <div class="col-12">
-                            <div class="mc-mini-meta">
-                                <div class="text-muted small">Direct items</div>
-                                <div class="fw-semibold">{{ $selectedItem['childrenCount'] }}</div>
-                            </div>
-                        </div>
-                    @endisset
-                </div>
-            @else
-                <div class="row g-2 mb-3">
-                    @isset($selectedItem['experiment'])
-                        <div class="col-12">
-                            <div class="mc-mini-meta">
-                                <div class="text-muted small">Experiment</div>
-                                <div class="fw-semibold">{{ $selectedItem['experiment'] }}</div>
-                            </div>
-                        </div>
-                    @endisset
-
-                    @isset($selectedItem['dateLabel'])
-                        <div class="col-12">
-                            <div class="mc-mini-meta">
-                                <div class="text-muted small">Date</div>
-                                <div class="fw-semibold">{{ $selectedItem['dateLabel'] }}</div>
-                            </div>
-                        </div>
-                    @endisset
-                </div>
-            @endif
-
-            <div class="mb-3">
-                <div class="fw-semibold mb-1">Description</div>
-                <div class="text-muted">
-                    {{ $selectedItem['description'] ?? '' }}
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <div class="fw-semibold mb-2">Tags and matched terms</div>
-
-                <div class="d-flex flex-wrap gap-2">
-                    @foreach(($selectedItem['tags'] ?? []) as $tag)
-                        <span class="badge text-bg-light border">{{ $tag }}</span>
-                    @endforeach
-
-                    @if(count($selectedItem['tags'] ?? []) === 0)
-                        <span class="text-muted small">No tags available.</span>
-                    @endif
-                </div>
-            </div>
-
-            @if(($selectedItem['kind'] ?? null) !== 'folder')
-                <div class="mc-related-box mb-3">
-                    <div class="fw-semibold mb-2">Related data</div>
-
-                    <div class="mc-related-row">
-                        <i class="fas fa-vial text-success"></i>
-                        <span>2 related samples</span>
-                    </div>
-
-                    <div class="mc-related-row">
-                        <i class="fas fa-file-alt text-secondary"></i>
-                        <span>4 related files</span>
-                    </div>
-
-                    <div class="mc-related-row">
-                        <i class="fas fa-microchip text-primary"></i>
-                        <span>1 related computation</span>
-                    </div>
-                </div>
-            @endif
-
-            <div class="d-grid gap-2">
-                @if(!blank($selectedItem['url'] ?? null))
-                    <a href="{{ $selectedItem['url'] }}" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt me-1"></i>
-                        Open selected item
-                    </a>
-                @else
-                    <button type="button" class="btn btn-primary" disabled>
-                        <i class="fas fa-external-link-alt me-1"></i>
-                        Open selected item
-                    </button>
-                @endif
-
-                <button type="button" class="btn btn-outline-secondary">
-                    View containing project
-                </button>
-            </div>
-        </div>
+        <x-dynamic-component
+            :component="$detailComponent"
+            :selected-item="$selectedItem"
+        />
     @endif
 </aside>
