@@ -4,9 +4,15 @@ namespace App\Livewire\BrowseTree\Concerns;
 
 use App\Actions\BrowseTree\BuildBrowseTreeAction;
 use function auth;
+use function json_encode;
+use function md5;
 
 trait HasBrowseTreeState
 {
+    private ?array $cachedTreeData = null;
+
+    private ?string $cachedTreeDataKey = null;
+
     public function getPersistenceKeyProperty(): string
     {
         if ($this->project !== null) {
@@ -18,7 +24,13 @@ trait HasBrowseTreeState
 
     private function treeData(BuildBrowseTreeAction $buildBrowseTreeAction): array
     {
-        return $buildBrowseTreeAction->execute(
+        $cacheKey = $this->treeDataCacheKey();
+
+        if ($this->cachedTreeData !== null && $this->cachedTreeDataKey === $cacheKey) {
+            return $this->cachedTreeData;
+        }
+
+        $this->cachedTreeData = $buildBrowseTreeAction->execute(
             project: $this->project,
             user: auth()->user(),
             scope: $this->scope,
@@ -27,6 +39,28 @@ trait HasBrowseTreeState
             directoriesWithVisibleFiles: $this->directoriesWithVisibleFiles,
             focusedProjectId: $this->focusedProjectId,
         );
+
+        $this->cachedTreeDataKey = $cacheKey;
+
+        return $this->cachedTreeData;
+    }
+
+    private function treeDataCacheKey(): string
+    {
+        return md5(json_encode([
+            'projectId' => $this->project?->id,
+            'scope' => $this->scope,
+            'expandedNodeKeys' => $this->expandedNodeKeys,
+            'alwaysShowFiles' => $this->alwaysShowFiles,
+            'directoriesWithVisibleFiles' => $this->directoriesWithVisibleFiles,
+            'focusedProjectId' => $this->focusedProjectId,
+        ]));
+    }
+
+    private function forgetTreeDataCache(): void
+    {
+        $this->cachedTreeData = null;
+        $this->cachedTreeDataKey = null;
     }
 
     private function filterState(): array

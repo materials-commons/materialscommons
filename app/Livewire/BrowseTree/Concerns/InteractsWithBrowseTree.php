@@ -161,9 +161,36 @@ trait InteractsWithBrowseTree
         $this->persistBrowserState();
     }
 
-    public function selectNode(string $key): void
-    {
-        $this->selectItem($key);
+    public function selectNode(
+        string $key,
+        string $title,
+        string $type = 'folder',
+        string $kind = 'folder',
+        string $icon = 'fas fa-folder text-warning',
+        mixed $count = null,
+        bool $isLazy = false,
+        bool $isExpanded = false,
+    ): void {
+        $this->selectedItemKey = $key;
+
+        $this->selectedItem = [
+            'key' => $key,
+            'kind' => $kind,
+            'type' => $type,
+            'title' => $title,
+            'icon' => $icon,
+            'badge' => 'Folder',
+            'project' => $this->focusedProjectName ?? $this->project?->name ?? '',
+            'location' => $title,
+            'description' => $this->folderDescription($title, $count, $isLazy, $isExpanded),
+            'tags' => [],
+            'childrenCount' => $count,
+            'isExpanded' => $isExpanded,
+            'isLazy' => $isLazy,
+            'url' => null,
+        ];
+
+        $this->persistBrowserState();
     }
 
     public function setSuggestedSearch(string $search): void
@@ -256,6 +283,27 @@ trait InteractsWithBrowseTree
 
         $this->focusedProjectId = $project->id;
         $this->focusedProjectName = $project->name;
+    }
+
+    private function folderDescription(string $title, mixed $count, bool $isLazy, bool $isExpanded): string
+    {
+        $parts = [];
+
+        if ($count !== null) {
+            $parts[] = "{$count} direct item".((int) $count === 1 ? '' : 's');
+        }
+
+        if ($isLazy && !$isExpanded) {
+            $parts[] = 'Expand this branch to load its contents.';
+        } elseif ($isExpanded) {
+            $parts[] = 'This branch is currently expanded.';
+        }
+
+        if (count($parts) === 0) {
+            return "Selected folder: {$title}.";
+        }
+
+        return implode(' ', $parts);
     }
 
     private function expandMatchingParents(): void

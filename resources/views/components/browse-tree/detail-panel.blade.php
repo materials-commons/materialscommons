@@ -15,9 +15,9 @@
             <div class="fs-2 text-muted mb-2">
                 <i class="fas fa-mouse-pointer"></i>
             </div>
-            <div class="fw-semibold">Select an item</div>
+            <div class="fw-semibold">Select a leaf item</div>
             <div class="text-muted small">
-                Click a branch, sample, computation, file, dataset, or experiment to see details and actions.
+                Click a sample, computation, file, dataset, or experiment to see details and actions.
             </div>
         </div>
     @else
@@ -42,25 +42,50 @@
                 {{ $selectedItem['location'] ?? '' }}
             </div>
 
-            <div class="row g-2 mb-3">
-                @isset($selectedItem['experiment'])
+            @if(($selectedItem['kind'] ?? null) === 'folder')
+                <div class="row g-2 mb-3">
                     <div class="col-12">
                         <div class="mc-mini-meta">
-                            <div class="text-muted small">Experiment</div>
-                            <div class="fw-semibold">{{ $selectedItem['experiment'] }}</div>
+                            <div class="text-muted small">Branch status</div>
+                            <div class="fw-semibold">
+                                {{ ($selectedItem['isExpanded'] ?? false) ? 'Expanded' : 'Collapsed' }}
+                                @if($selectedItem['isLazy'] ?? false)
+                                    <span class="text-muted fw-normal">&middot; loads on expand</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                @endisset
 
-                @isset($selectedItem['dateLabel'])
-                    <div class="col-12">
-                        <div class="mc-mini-meta">
-                            <div class="text-muted small">Date</div>
-                            <div class="fw-semibold">{{ $selectedItem['dateLabel'] }}</div>
+                    @isset($selectedItem['childrenCount'])
+                        <div class="col-12">
+                            <div class="mc-mini-meta">
+                                <div class="text-muted small">Direct items</div>
+                                <div class="fw-semibold">{{ $selectedItem['childrenCount'] }}</div>
+                            </div>
                         </div>
-                    </div>
-                @endisset
-            </div>
+                    @endisset
+                </div>
+            @else
+                <div class="row g-2 mb-3">
+                    @isset($selectedItem['experiment'])
+                        <div class="col-12">
+                            <div class="mc-mini-meta">
+                                <div class="text-muted small">Experiment</div>
+                                <div class="fw-semibold">{{ $selectedItem['experiment'] }}</div>
+                            </div>
+                        </div>
+                    @endisset
+
+                    @isset($selectedItem['dateLabel'])
+                        <div class="col-12">
+                            <div class="mc-mini-meta">
+                                <div class="text-muted small">Date</div>
+                                <div class="fw-semibold">{{ $selectedItem['dateLabel'] }}</div>
+                            </div>
+                        </div>
+                    @endisset
+                </div>
+            @endif
 
             <div class="mb-3">
                 <div class="fw-semibold mb-1">Description</div>
@@ -76,51 +101,35 @@
                     @foreach(($selectedItem['tags'] ?? []) as $tag)
                         <span class="badge text-bg-light border">{{ $tag }}</span>
                     @endforeach
+
+                    @if(count($selectedItem['tags'] ?? []) === 0)
+                        <span class="text-muted small">No tags available.</span>
+                    @endif
                 </div>
             </div>
 
-            <div class="mc-related-box mb-3">
-                <div class="fw-semibold mb-2">Related data</div>
+            @if(($selectedItem['kind'] ?? null) !== 'folder')
+                <div class="mc-related-box mb-3">
+                    <div class="fw-semibold mb-2">Related data</div>
 
-                <div class="mc-related-row">
-                    <i class="fas fa-vial text-success"></i>
-                    <span>2 related samples</span>
-                </div>
+                    <div class="mc-related-row">
+                        <i class="fas fa-vial text-success"></i>
+                        <span>2 related samples</span>
+                    </div>
 
-                <div class="mc-related-row">
-                    <i class="fas fa-file-alt text-secondary"></i>
-                    <span>4 related files</span>
-                </div>
+                    <div class="mc-related-row">
+                        <i class="fas fa-file-alt text-secondary"></i>
+                        <span>4 related files</span>
+                    </div>
 
-                <div class="mc-related-row">
-                    <i class="fas fa-microchip text-primary"></i>
-                    <span>1 related computation</span>
+                    <div class="mc-related-row">
+                        <i class="fas fa-microchip text-primary"></i>
+                        <span>1 related computation</span>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="d-grid gap-2">
-                @if(($selectedItem['kind'] ?? null) === 'folder')
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-folder-plus me-1"></i>
-                        Create subdirectory
-                    </button>
-
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-upload me-1"></i>
-                        Upload file
-                    </button>
-
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-vial me-1"></i>
-                        Create sample
-                    </button>
-
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-user-plus me-1"></i>
-                        Add user
-                    </button>
-                @endif
-
                 @if(!blank($selectedItem['url'] ?? null))
                     <a href="{{ $selectedItem['url'] }}" class="btn btn-primary">
                         <i class="fas fa-external-link-alt me-1"></i>

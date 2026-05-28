@@ -8,6 +8,8 @@ use App\Actions\BrowseTree\Support\BrowseTreeNode;
 use App\DTO\BrowseTree\BrowseTreeContext;
 use App\Models\File;
 use App\Models\Project;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class FilesNodeBuilder implements BrowseTreeNodeBuilder
@@ -78,6 +80,7 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
                                 ->get();
 
         $fileCount = $this->fileCountForDirectory($project, $rootDirectoryId);
+        $childDirectoryFileCounts = $this->fileCountsForDirectories($project, $childDirectories);
 
         $children = $childDirectories
             ->map(fn(File $directory) => $this->directoryNode(
@@ -85,6 +88,7 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
                 project: $project,
                 key: "{$parentKey}-dir-{$directory->id}",
                 context: $context,
+                directFileCount: $childDirectoryFileCounts[$directory->id] ?? 0,
             ))
             ->all();
 
@@ -102,15 +106,20 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
         ];
     }
 
-    private function directoryNode(File $directory, Project $project, string $key, BrowseTreeContext $context): array
-    {
+    private function directoryNode(
+        File $directory,
+        Project $project,
+        string $key,
+        BrowseTreeContext $context,
+        ?int $directFileCount = null,
+    ): array {
         $isExpanded = $context->isExpanded($key);
 
         return BrowseTreeNode::folder(
             key: $key,
             title: $directory->name === '' ? '/' : $directory->name,
             icon: 'fas fa-folder text-warning',
-            count: $this->fileCountForDirectory($project, $directory->id),
+            count: $directFileCount ?? $this->fileCountForDirectory($project, $directory->id),
             lazy: !$isExpanded,
             children: $isExpanded
                 ? $this->directoryChildren($directory, $project, $key, $context)
@@ -139,6 +148,7 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
                                 ->get();
 
         $fileCount = $this->fileCountForDirectory($project, $directory->id);
+        $childDirectoryFileCounts = $this->fileCountsForDirectories($project, $childDirectories);
 
         $children = $childDirectories
             ->map(fn(File $childDirectory) => $this->directoryNode(
@@ -146,6 +156,7 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
                 project: $project,
                 key: "{$parentKey}-dir-{$childDirectory->id}",
                 context: $context,
+                directFileCount: $childDirectoryFileCounts[$childDirectory->id] ?? 0,
             ))
             ->all();
 
@@ -239,6 +250,27 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
                        fn($query) => $query->whereNull('directory_id')
                    )
                    ->count();
+    }
+
+    private function fileCountsForDirectories(Project $project, Collection $directories): array
+    {
+        $directoryIds = $directories->pluck('id')->filter()->values();
+
+        if ($directoryIds->isEmpty()) {
+            return [];
+        }
+
+        return File::query()
+                   ->active()
+                   ->files()
+                   ->where('project_id', $project->id)
+                   ->whereNull('dataset_id')
+                   ->whereIn('directory_id', $directoryIds)
+                   ->select('directory_id', DB::raw('count(*) as files_count'))
+                   ->groupBy('directory_id')
+                   ->pluck('files_count', 'directory_id')
+                   ->mapWithKeys(fn($count, $directoryId) => [(int) $directoryId => (int) $count])
+                   ->all();
     }
 
     private function fileLeaf(File $file, Project $project): array

@@ -2,15 +2,20 @@
     $expandedNodeKeys = $expandedNodeKeys ?? [];
     $selectedItem = $selectedItem ?? null;
 
+    $nodeKey = (string) ($node['key'] ?? (($node['kind'] ?? 'node') . '-' . ($node['type'] ?? 'unknown') . '-' . ($node['title'] ?? 'untitled')));
+    $wireKey = 'browse-tree-node-' . md5($nodeKey);
+
     $hasLoadedChildren = count($node['children'] ?? []) > 0;
     $isLazy = $node['lazy'] ?? false;
     $isFolder = ($node['kind'] ?? null) === 'folder';
     $hasChildren = $hasLoadedChildren || $isLazy || $isFolder;
     $isExpanded = in_array($node['key'], $expandedNodeKeys, true);
     $isSelected = ($selectedItem['key'] ?? null) === $node['key'];
+
+    $nodeCount = $node['count'] ?? null;
 @endphp
 
-<li class="mc-tree-node">
+<li class="mc-tree-node" wire:key="{{ $wireKey }}">
     @if(($node['kind'] ?? null) === 'action')
         <x-browse-tree.action-node :node="$node" />
     @elseif(($node['kind'] ?? null) === 'message')
@@ -27,7 +32,17 @@
 
             <button type="button"
                     class="mc-tree-toggle"
-                    wire:click="selectNode('{{ $node['key'] }}')">
+                    wire:click="selectNode(
+                        '{{ $node['key'] }}',
+                        @js($node['title'] ?? 'Untitled'),
+                        '{{ $node['type'] ?? 'folder' }}',
+                        '{{ $node['kind'] ?? 'folder' }}',
+                        @js($node['icon'] ?? 'fas fa-folder text-warning'),
+                        @js($nodeCount),
+                        @js($isLazy),
+                        @js($isExpanded)
+                    )"
+                    aria-label="{{ $node['title'] }}">
                 <i class="{{ $node['icon'] ?? 'fas fa-folder text-warning' }}"></i>
                 <span class="mc-node-label">{{ $node['title'] }}</span>
 
@@ -50,7 +65,7 @@
                 </ul>
             @elseif($isLazy)
                 <ul class="mc-tree-children">
-                    <li class="mc-tree-node">
+                    <li class="mc-tree-node" wire:key="{{ $wireKey }}-loading">
                         <div class="mc-tree-item text-muted">
                             <i class="fas fa-spinner fa-spin"></i>
                             <span class="mc-node-label">Loading...</span>
@@ -59,7 +74,7 @@
                 </ul>
             @else
                 <ul class="mc-tree-children">
-                    <li class="mc-tree-node">
+                    <li class="mc-tree-node" wire:key="{{ $wireKey }}-empty">
                         <div class="mc-tree-message">
                             <i class="fas fa-info-circle text-muted"></i>
                             <span class="mc-node-label">No items to show at this level.</span>
