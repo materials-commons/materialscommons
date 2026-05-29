@@ -13,9 +13,23 @@
     $isSelected = ($selectedItem['key'] ?? null) === $node['key'];
 
     $nodeCount = $node['count'] ?? null;
+
+    $searchableText = collect([
+        $node['title'] ?? '',
+        $node['type'] ?? '',
+        $node['kind'] ?? '',
+        $node['project'] ?? '',
+        $node['location'] ?? '',
+        $node['description'] ?? '',
+        $node['experiment'] ?? '',
+        implode(' ', $node['tags'] ?? []),
+        implode(' ', $node['searchTerms'] ?? []),
+    ])->filter()->implode(' ');
 @endphp
 
-<li class="mc-tree-node" wire:key="{{ $wireKey }}">
+<li class="mc-tree-node"
+    wire:key="{{ $wireKey }}"
+    data-search="{{ $searchableText }}">
     @if(($node['kind'] ?? null) === 'action')
         <x-browse-tree.action-node :node="$node" />
     @elseif(($node['kind'] ?? null) === 'message')
@@ -65,7 +79,9 @@
                 </ul>
             @elseif($isLazy)
                 <ul class="mc-tree-children">
-                    <li class="mc-tree-node" wire:key="{{ $wireKey }}-loading">
+                    <li class="mc-tree-node"
+                        wire:key="{{ $wireKey }}-loading"
+                        data-search="loading">
                         <div class="mc-tree-item text-muted">
                             <i class="fas fa-spinner fa-spin"></i>
                             <span class="mc-node-label">Loading...</span>
@@ -74,7 +90,9 @@
                 </ul>
             @else
                 <ul class="mc-tree-children">
-                    <li class="mc-tree-node" wire:key="{{ $wireKey }}-empty">
+                    <li class="mc-tree-node"
+                        wire:key="{{ $wireKey }}-empty"
+                        data-search="no items to show">
                         <div class="mc-tree-message">
                             <i class="fas fa-info-circle text-muted"></i>
                             <span class="mc-node-label">No items to show at this level.</span>

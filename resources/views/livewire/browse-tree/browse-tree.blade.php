@@ -2,6 +2,7 @@
     <x-browse-tree.styles />
 
     <x-browse-tree.persistence :persistence-key="$this->persistenceKey" />
+    <x-browse-tree.client-filter :persistence-key="$this->persistenceKey" />
 
     <div class="d-flex justify-content-end gap-2 mb-3">
         <button type="button" class="btn btn-outline-secondary btn-sm" wire:click="expandAll">

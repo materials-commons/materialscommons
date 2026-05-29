@@ -304,6 +304,14 @@
                 color: #7952b3;
             }
 
+            .mc-tree-filter-own-match > .mc-tree-branch .mc-node-label,
+            .mc-tree-filter-own-match > .mc-tree-item .mc-node-label,
+            .mc-tree-filter-own-match > .mc-tree-action .mc-node-label,
+            .mc-tree-filter-own-match > .mc-tree-message .mc-node-label {
+                color: #0d6efd;
+                font-weight: 600;
+            }
+
             @media (max-width: 1199.98px) {
                 .mc-browser-body {
                     grid-template-columns: 230px minmax(320px, 1fr) 340px;
