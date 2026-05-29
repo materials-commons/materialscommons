@@ -13,6 +13,10 @@
     $isSelected = ($selectedItem['key'] ?? null) === $node['key'];
 
     $nodeCount = $node['count'] ?? null;
+    $nodeTags = $node['tags'] ?? [];
+    $nodeTagsForData = implode('|', $nodeTags);
+    $nodeExperimentForData = $node['experiment'] ?? '';
+    $nodeDateBucketForData = $node['dateBucket'] ?? '';
 
     $searchableText = collect([
         $node['title'] ?? '',
@@ -21,14 +25,19 @@
         $node['project'] ?? '',
         $node['location'] ?? '',
         $node['description'] ?? '',
-        $node['experiment'] ?? '',
-        implode(' ', $node['tags'] ?? []),
+        $nodeExperimentForData,
+        implode(' ', $nodeTags),
         implode(' ', $node['searchTerms'] ?? []),
     ])->filter()->implode(' ');
 @endphp
 
 <li class="mc-tree-node"
     wire:key="{{ $wireKey }}"
+    data-node-kind="{{ $node['kind'] ?? '' }}"
+    data-node-type="{{ $node['type'] ?? '' }}"
+    data-date-bucket="{{ $nodeDateBucketForData }}"
+    data-experiment="{{ $nodeExperimentForData }}"
+    data-tags="{{ $nodeTagsForData }}"
     data-search="{{ $searchableText }}">
     @if(($node['kind'] ?? null) === 'action')
         <x-browse-tree.action-node :node="$node" />
@@ -81,6 +90,11 @@
                 <ul class="mc-tree-children">
                     <li class="mc-tree-node"
                         wire:key="{{ $wireKey }}-loading"
+                        data-node-kind="message"
+                        data-node-type="message"
+                        data-date-bucket=""
+                        data-experiment=""
+                        data-tags=""
                         data-search="loading">
                         <div class="mc-tree-item text-muted">
                             <i class="fas fa-spinner fa-spin"></i>
@@ -92,6 +106,11 @@
                 <ul class="mc-tree-children">
                     <li class="mc-tree-node"
                         wire:key="{{ $wireKey }}-empty"
+                        data-node-kind="message"
+                        data-node-type="message"
+                        data-date-bucket=""
+                        data-experiment=""
+                        data-tags=""
                         data-search="no items to show">
                         <div class="mc-tree-message">
                             <i class="fas fa-info-circle text-muted"></i>

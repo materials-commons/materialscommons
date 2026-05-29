@@ -27,13 +27,21 @@
         />
 
         <div class="mc-browser-body">
-            <x-browse-tree.sidebar
-                :quick-filter="$quickFilter"
-                :type-counts="$typeCounts"
-                :available-tags="$availableTags"
-                :available-experiments="$availableExperiments"
-                :selected-tags="$selectedTags"
-            />
+{{--            <x-browse-tree.sidebar--}}
+{{--                :quick-filter="$quickFilter"--}}
+{{--                :type-counts="$typeCounts"--}}
+{{--                :available-tags="$availableTags"--}}
+{{--                :available-experiments="$availableExperiments"--}}
+{{--                :selected-tags="$selectedTags"--}}
+{{--            />--}}
+
+            @include('livewire.browse-tree.partials.sidebar', [
+                'quickFilter' => $quickFilter,
+                'typeCounts' => $typeCounts,
+                'availableTags' => $availableTags,
+                'availableExperiments' => $availableExperiments,
+                'selectedTags' => $selectedTags,
+            ])
 
             <x-browse-tree.tree-panel
                 :tree="$tree"
