@@ -52,14 +52,16 @@ class StoreExperimentWebController extends Controller
             return redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
         }
 
-        $queuedEtlRun = $experiment->getRelation('queuedEtlRun');
-         if (!is_null($queuedEtlRun)) {
-             return redirect(route('projects.experiments.etl_run.status', [
-                 $project,
-                 $experiment,
-                 $queuedEtlRun,
-             ]));
-         }
+        if ($experiment->relationLoaded('queuedEtlRun')) {
+            $queuedEtlRun = $experiment->getRelation('queuedEtlRun');
+            if (!is_null($queuedEtlRun)) {
+                return redirect(route('projects.experiments.etl_run.status', [
+                    $project,
+                    $experiment,
+                    $queuedEtlRun,
+                ]));
+            }
+        }
 
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
