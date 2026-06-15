@@ -5,118 +5,142 @@
 @php
     $analyticsKey = 'mc_project_research_overview_analytics_' . $project->id;
 
-    $datasetsCount = (int) ($project->published_datasets_count ?? 0)
-        + (int) ($project->unpublished_datasets_count ?? 0);
+    $hasAnyChartData = collect([
+        (int) ($project->file_count ?? 0),
+        (int) ($project->directory_count ?? 0),
+        (int) ($project->experiments_count ?? 0),
+        (int) ($project->entities_count ?? 0),
+        (int) ($project->published_datasets_count ?? 0),
+        (int) ($project->unpublished_datasets_count ?? 0),
+        (int) ($project->size ?? 0),
+        (int) ($project->entityAttributesCount ?? 0),
+        (int) ($project->activityAttributesCount ?? 0),
+    ])->some(fn($value) => $value > 0);
 @endphp
 
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-3 background-white">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-            <div>
-                <h6 class="card-title text-muted mb-1">
-                    <i class="fas fa-chart-bar me-1"></i>Project Analytics
-                </h6>
-                <p class="text-muted mb-0" style="font-size:.82rem;">
-                    Visual placeholders for project composition, file types, process types, and readiness trends.
-                </p>
-            </div>
+<div class="d-flex align-items-center mb-2">
+    <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
+            type="button"
+            id="project-research-overview-analytics-toggle"
+            data-bs-toggle="collapse"
+            data-bs-target="#project-research-overview-analytics"
+            aria-expanded="false"
+            aria-controls="project-research-overview-analytics">
+        <i class="fas fa-chevron-right fa-fw"
+           id="project-research-overview-analytics-chevron"
+           style="transition:transform .2s; font-size:.75rem;"></i>
+        <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
+            Project Analytics
+        </span>
+    </button>
+    <hr class="flex-grow-1 ms-3 my-0 opacity-25">
+</div>
 
-            <div class="form-check form-switch">
-                <input class="form-check-input"
-                       type="checkbox"
-                       role="switch"
-                       id="project-research-overview-analytics-toggle"
-                       data-project-analytics-toggle
-                       data-analytics-key="{{ $analyticsKey }}"
-                       data-bs-toggle="collapse"
-                       data-bs-target="#project-research-overview-analytics"
-                       aria-controls="project-research-overview-analytics">
-                <label class="form-check-label text-muted small"
-                       for="project-research-overview-analytics-toggle">
-                    Show analytics
-                </label>
-            </div>
-        </div>
-
-        <div class="collapse" id="project-research-overview-analytics">
-            <div class="row g-3 mt-1">
-                <div class="col-12 col-xl-4">
-                    <div class="border rounded p-3 h-100 text-center">
-                        <i class="fas fa-chart-pie text-muted mb-2" style="font-size:2rem;"></i>
-                        <h6 class="text-muted">Project Composition</h6>
-                        <p class="text-muted mb-2" style="font-size:.82rem;">
-                            Files, folders, studies, samples, datasets, and collaborator composition.
-                        </p>
-                        <div class="d-flex justify-content-center flex-wrap gap-2">
-                            <span class="badge text-bg-primary">{{ number_format($project->file_count) }} files</span>
-                            <span class="badge text-bg-info">{{ number_format($project->experiments_count) }} studies</span>
-                            <span class="badge text-bg-success">{{ number_format($project->entities_count) }} samples</span>
-                            <span class="badge text-bg-secondary">{{ number_format($datasetsCount) }} datasets</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xl-4">
-                    <div class="border rounded p-3 h-100 text-center">
-                        <i class="fas fa-file-alt text-muted mb-2" style="font-size:2rem;"></i>
-                        <h6 class="text-muted">File Types</h6>
-                        <p class="text-muted mb-0" style="font-size:.82rem;">
-                            Placeholder for file extension and MIME type distribution.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-12 col-xl-4">
-                    <div class="border rounded p-3 h-100 text-center">
-                        <i class="fas fa-cogs text-muted mb-2" style="font-size:2rem;"></i>
-                        <h6 class="text-muted">Process Types</h6>
-                        <p class="text-muted mb-0" style="font-size:.82rem;">
-                            Placeholder for process/activity distribution and workflow coverage.
-                        </p>
-                    </div>
+<div class="collapse mb-4" id="project-research-overview-analytics">
+    @if(!$hasAnyChartData)
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 background-white text-center text-muted">
+                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                <div class="fw-semibold">No analytics available yet</div>
+                <div style="font-size:.85rem;">
+                    Analytics will appear after this project has files, studies, samples, datasets, or metadata.
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        <div class="row g-3">
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.project-composition :project="$project"/>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.dataset-status :project="$project"/>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.metadata-coverage :project="$project"/>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.storage :project="$project"/>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.file-types :project="$project"/>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <x-projects.research-overview.analytics.process-types :project="$project"/>
+            </div>
+        </div>
+    @endif
 </div>
 
 @push('scripts')
     <script>
         (function () {
-            const toggle = document.querySelector('[data-project-analytics-toggle]');
+            const STORAGE_KEY = @json($analyticsKey);
+            const panel = document.getElementById('project-research-overview-analytics');
+            const toggle = document.getElementById('project-research-overview-analytics-toggle');
+            const chevron = document.getElementById('project-research-overview-analytics-chevron');
 
-            if (!toggle) {
+            if (!panel) {
                 return;
             }
 
-            const analyticsKey = toggle.getAttribute('data-analytics-key');
-            const target = document.querySelector(toggle.getAttribute('data-bs-target'));
-
-            if (!target || !analyticsKey) {
-                return;
-            }
-
-            const savedState = localStorage.getItem(analyticsKey);
-            const shouldShow = savedState === 'shown';
-
-            toggle.checked = shouldShow;
-
-            if (shouldShow) {
-                bootstrap.Collapse.getOrCreateInstance(target, {toggle: false}).show();
-            }
-
-            target.addEventListener('shown.bs.collapse', function () {
-                toggle.checked = true;
-                localStorage.setItem(analyticsKey, 'shown');
-
-                if (window.Plotly) {
-                    document.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+            function renderAnalyticsCharts() {
+                if (!window.Plotly || panel.dataset.rendered === 'true') {
+                    return;
                 }
+
+                panel.dataset.rendered = 'true';
+                window.dispatchEvent(new CustomEvent('mc:project-research-overview-analytics:render'));
+            }
+
+            function resizeAnalyticsCharts() {
+                if (!window.Plotly) {
+                    return;
+                }
+
+                panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
+            }
+
+            if (localStorage.getItem(STORAGE_KEY) === 'true') {
+                panel.classList.add('show');
+
+                if (chevron) {
+                    chevron.style.transform = 'rotate(90deg)';
+                }
+
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'true');
+                }
+
+                requestAnimationFrame(() => {
+                    renderAnalyticsCharts();
+                    resizeAnalyticsCharts();
+                });
+            }
+
+            panel.addEventListener('show.bs.collapse', () => {
+                if (chevron) {
+                    chevron.style.transform = 'rotate(90deg)';
+                }
+
+                localStorage.setItem(STORAGE_KEY, 'true');
+                renderAnalyticsCharts();
             });
 
-            target.addEventListener('hidden.bs.collapse', function () {
-                toggle.checked = false;
-                localStorage.setItem(analyticsKey, 'hidden');
+            panel.addEventListener('hide.bs.collapse', () => {
+                if (chevron) {
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+
+                localStorage.setItem(STORAGE_KEY, 'false');
+            });
+
+            panel.addEventListener('shown.bs.collapse', () => {
+                resizeAnalyticsCharts();
             });
         })();
     </script>
