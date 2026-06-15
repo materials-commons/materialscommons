@@ -1,0 +1,94 @@
+@props([
+    'project',
+])
+
+@php
+    $studiesNeedingReview = \App\Models\Experiment::query()
+        ->where('project_id', $project->id)
+        ->withCount(['files', 'entities', 'activities', 'datasets'])
+        ->orderByDesc('updated_at')
+        ->get()
+        ->map(function ($study) {
+            $issues = collect();
+
+            if ((int) ($study->files_count ?? 0) === 0) {
+                $issues->push('No files');
+            }
+
+            if ((int) ($study->entities_count ?? 0) === 0) {
+                $issues->push('No samples');
+            }
+
+            if ((int) ($study->activities_count ?? 0) === 0) {
+                $issues->push('No processes');
+            }
+
+            if ((int) ($study->datasets_count ?? 0) === 0) {
+                $issues->push('No dataset link');
+            }
+
+            if (blank($study->description ?? null) && blank($study->summary ?? null)) {
+                $issues->push('No description');
+            }
+
+            $study->research_overview_issues = $issues;
+
+            return $study;
+        })
+        ->filter(fn($study) => $study->research_overview_issues->isNotEmpty())
+        ->take(8);
+@endphp
+
+<div class="card border-0 shadow-sm h-100">
+    <div class="card-body p-3 background-white">
+        <div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-3">
+            <div>
+                <h6 class="card-title text-muted mb-1">
+                    <i class="fas fa-exclamation-circle me-1"></i>Studies Needing Review
+                </h6>
+                <p class="text-muted mb-0" style="font-size:.85rem;">
+                    Studies missing files, samples, processes, descriptions, or dataset links.
+                </p>
+            </div>
+
+            <span class="badge text-bg-{{ $studiesNeedingReview->count() > 0 ? 'warning' : 'success' }}">
+                {{ number_format($studiesNeedingReview->count()) }} shown
+            </span>
+        </div>
+
+        @if($studiesNeedingReview->isEmpty())
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <div class="fw-semibold">No obvious study issues</div>
+                <div style="font-size:.85rem;">
+                    Studies have basic files, samples, processes, descriptions, and dataset links.
+                </div>
+            </div>
+        @else
+            <div class="list-group list-group-flush">
+                @foreach($studiesNeedingReview as $study)
+                    <a href="{{ route('projects.experiments.show', [$project, $study]) }}"
+                       class="list-group-item list-group-item-action px-0">
+                        <div class="d-flex align-items-start justify-content-between gap-2">
+                            <div class="min-width-0">
+                                <div class="fw-semibold text-truncate">
+                                    <i class="fas fa-flask text-muted me-1"></i>{{ $study->name }}
+                                </div>
+
+                                <div class="d-flex flex-wrap gap-1 mt-1">
+                                    @foreach($study->research_overview_issues as $issue)
+                                        <span class="badge text-bg-warning">{{ $issue }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="text-end flex-shrink-0 text-muted" style="font-size:.72rem;">
+                                {{ $study->updated_at?->diffForHumans() }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+    </div>
+</div>
