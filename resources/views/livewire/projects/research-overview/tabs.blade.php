@@ -1,10 +1,5 @@
 <div>
     @php
-        $membersCount = collect($project->team?->members ?? collect())->count();
-
-        $datasetsCount = (int) ($project->published_datasets_count ?? 0)
-            + (int) ($project->unpublished_datasets_count ?? 0);
-
         $healthLabel = match ($project->health) {
             'critical' => 'Critical',
             'warning' => 'Warning',
@@ -34,7 +29,7 @@
                     wire:click="setTab('files')"
                     class="nav-link {{ $tab === 'files' ? 'active' : '' }}">
                 <i class="fas fa-folder-open me-1"></i>Files
-                <span class="badge text-bg-primary ms-1">{{ number_format($project->file_count) }}</span>
+                <span class="badge text-bg-primary ms-1">{{ number_format($tabCounts['files'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -43,7 +38,7 @@
                     wire:click="setTab('studies')"
                     class="nav-link {{ $tab === 'studies' ? 'active' : '' }}">
                 <i class="fas fa-flask me-1"></i>Studies
-                <span class="badge text-bg-info ms-1">{{ number_format($project->experiments_count) }}</span>
+                <span class="badge text-bg-info ms-1">{{ number_format($tabCounts['studies'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -52,7 +47,7 @@
                     wire:click="setTab('datasets')"
                     class="nav-link {{ $tab === 'datasets' ? 'active' : '' }}">
                 <i class="fas fa-database me-1"></i>Datasets
-                <span class="badge text-bg-success ms-1">{{ number_format($datasetsCount) }}</span>
+                <span class="badge text-bg-success ms-1">{{ number_format($tabCounts['datasets'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -61,7 +56,7 @@
                     wire:click="setTab('samples')"
                     class="nav-link {{ $tab === 'samples' ? 'active' : '' }}">
                 <i class="fas fa-cubes me-1"></i>Samples
-                <span class="badge text-bg-secondary ms-1">{{ number_format($project->entities_count) }}</span>
+                <span class="badge text-bg-secondary ms-1">{{ number_format($tabCounts['samples'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -70,7 +65,7 @@
                     wire:click="setTab('processes')"
                     class="nav-link {{ $tab === 'processes' ? 'active' : '' }}">
                 <i class="fas fa-cogs me-1"></i>Processes
-                <span class="badge text-bg-secondary ms-1">{{ number_format($project->activityAttributesCount ?? 0) }}</span>
+                <span class="badge text-bg-secondary ms-1">{{ number_format($tabCounts['processes'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -79,9 +74,7 @@
                     wire:click="setTab('metadata')"
                     class="nav-link {{ $tab === 'metadata' ? 'active' : '' }}">
                 <i class="fas fa-clipboard-check me-1"></i>Metadata
-                <span class="badge text-bg-warning ms-1">
-                    {{ number_format(($project->entityAttributesCount ?? 0) + ($project->activityAttributesCount ?? 0)) }}
-                </span>
+                <span class="badge text-bg-warning ms-1">{{ number_format($tabCounts['metadata'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -90,7 +83,7 @@
                     wire:click="setTab('collaborators')"
                     class="nav-link {{ $tab === 'collaborators' ? 'active' : '' }}">
                 <i class="fas fa-users me-1"></i>Collaborators
-                <span class="badge text-bg-primary ms-1">{{ number_format($membersCount) }}</span>
+                <span class="badge text-bg-primary ms-1">{{ number_format($tabCounts['collaborators'] ?? 0) }}</span>
             </button>
         </li>
 
@@ -136,7 +129,10 @@
                 @break
 
             @case('datasets')
-                <x-projects.research-overview.tabs.datasets :project="$project"/>
+                <x-projects.research-overview.tabs.datasets
+                    :project="$project"
+                    :metrics="$metrics"
+                />
                 @break
 
             @case('samples')
@@ -148,7 +144,9 @@
                 @break
 
             @case('metadata')
-                <x-projects.research-overview.tabs.metadata :project="$project"/>
+                <x-projects.research-overview.tabs.metadata
+                    :project="$project"
+                />
                 @break
 
             @case('collaborators')
@@ -164,7 +162,9 @@
                 @break
 
             @default
-                <x-projects.research-overview.tabs.overview :project="$project"/>
+                <x-projects.research-overview.tabs.overview
+                    :project="$project"
+                />
         @endswitch
     </div>
 
