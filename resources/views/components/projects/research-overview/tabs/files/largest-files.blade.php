@@ -1,17 +1,10 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $largestFiles = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->whereNotNull('size')
-        ->orderByDesc('size')
-        ->limit(8)
-        ->get(['id', 'name', 'path', 'size', 'updated_at', 'mime_type']);
-
+    $largestFiles = collect($metrics['largestFiles'] ?? []);
     $largestSize = max(1, (int) ($largestFiles->first()?->size ?? 0));
 @endphp
 
@@ -45,7 +38,7 @@
                         $percent = round((((int) $file->size) / $largestSize) * 100);
                     @endphp
 
-                    <a href="{{ route('projects.files.show', [$project, $file]) }}"
+                    <a href="{{ route('projects.files.show', [$project, $file->id]) }}"
                        class="list-group-item list-group-item-action px-0">
                         <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
                             <div class="min-width-0">

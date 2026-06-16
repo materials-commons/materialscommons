@@ -1,34 +1,19 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $files = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->select(['id', 'name', 'mime_type', 'size'])
-        ->get();
-
-    $extensionCounts = $files
-        ->map(function ($file) {
-            $extension = strtolower(pathinfo((string) $file->name, PATHINFO_EXTENSION));
-
-            return blank($extension) ? 'No extension' : $extension;
-        })
-        ->countBy()
-        ->sortDesc();
+    $extensionCounts = collect($metrics['extensionCounts'] ?? []);
+    $mimeTypeCounts = collect($metrics['mimeTypeCounts'] ?? []);
+    $totalFiles = max(1, (int) ($metrics['filesCount'] ?? 0));
 
     $topExtensions = $extensionCounts->take(8);
-    $otherCount = max(0, $extensionCounts->sum() - $topExtensions->sum());
-
-    $totalFiles = max(1, $files->count());
-
-    $mimeCounts = $files
-        ->map(fn($file) => blank($file->mime_type ?? null) ? 'Unknown MIME type' : $file->mime_type)
-        ->countBy()
-        ->sortDesc()
-        ->take(5);
+    $otherCount = max(
+        0,
+        $extensionCounts->sum(fn($row) => (int) ($row->files_count ?? 0))
+            - $topExtensions->sum(fn($row) => (int) ($row->files_count ?? 0))
+    );
 @endphp
 
 <div class="card border-0 shadow-sm h-100">
@@ -44,11 +29,11 @@
             </div>
 
             <span class="badge text-bg-primary">
-                {{ number_format($files->count()) }} files
+                {{ number_format((int) ($metrics['filesCount'] ?? 0)) }} files
             </span>
         </div>
 
-        @if($files->isEmpty())
+        @if($extensionCounts->isEmpty())
             <div class="text-center text-muted py-4">
                 <i class="fas fa-file-alt fa-2x mb-2"></i>
                 <div class="fw-semibold">No files available</div>
@@ -56,15 +41,16 @@
             </div>
         @else
             <div class="mb-3">
-                @foreach($topExtensions as $extension => $count)
+                @foreach($topExtensions as $row)
                     @php
-                        $percent = round(((int) $count / $totalFiles) * 100);
+                        $count = (int) ($row->files_count ?? 0);
+                        $percent = round(($count / $totalFiles) * 100);
                     @endphp
 
                     <div class="mb-2">
                         <div class="d-flex justify-content-between gap-2 mb-1">
                             <div class="small text-muted">
-                                <i class="fas fa-file-alt me-1"></i>{{ $extension }}
+                                <i class="fas fa-file-alt me-1"></i>{{ $row->extension ?? 'Unknown' }}
                             </div>
                             <div class="small fw-semibold">
                                 {{ number_format($count) }}
@@ -94,10 +80,10 @@
             <div class="border rounded p-2 bg-light">
                 <div class="text-muted small fw-semibold mb-1">Top MIME Types</div>
 
-                @foreach($mimeCounts as $mimeType => $count)
+                @foreach($mimeTypeCounts as $row)
                     <div class="d-flex justify-content-between gap-2" style="font-size:.82rem;">
-                        <span class="text-muted text-truncate">{{ $mimeType }}</span>
-                        <span class="fw-semibold">{{ number_format($count) }}</span>
+                        <span class="text-muted text-truncate">{{ $row->mime_type ?? 'Unknown MIME type' }}</span>
+                        <span class="fw-semibold">{{ number_format((int) ($row->files_count ?? 0)) }}</span>
                     </div>
                 @endforeach
             </div>

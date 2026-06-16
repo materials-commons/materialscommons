@@ -1,42 +1,10 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $studiesNeedingReview = \App\Models\Experiment::query()
-        ->where('project_id', $project->id)
-        ->withCount(['files', 'entities', 'activities', 'datasets'])
-        ->orderByDesc('updated_at')
-        ->get()
-        ->map(function ($study) {
-            $issues = collect();
-
-            if ((int) ($study->files_count ?? 0) === 0) {
-                $issues->push('No files');
-            }
-
-            if ((int) ($study->entities_count ?? 0) === 0) {
-                $issues->push('No samples');
-            }
-
-            if ((int) ($study->activities_count ?? 0) === 0) {
-                $issues->push('No processes');
-            }
-
-            if ((int) ($study->datasets_count ?? 0) === 0) {
-                $issues->push('No dataset link');
-            }
-
-            if (blank($study->description ?? null) && blank($study->summary ?? null)) {
-                $issues->push('No description');
-            }
-
-            $study->research_overview_issues = $issues;
-
-            return $study;
-        })
-        ->filter(fn($study) => $study->research_overview_issues->isNotEmpty())
-        ->take(8);
+    $studiesNeedingReview = collect($metrics['studiesNeedingReview'] ?? [])->take(8);
 @endphp
 
 <div class="card border-0 shadow-sm h-100">
@@ -67,7 +35,7 @@
         @else
             <div class="list-group list-group-flush">
                 @foreach($studiesNeedingReview as $study)
-                    <a href="{{ route('projects.experiments.show', [$project, $study]) }}"
+                    <a href="{{ route('projects.experiments.show', [$project, $study->id]) }}"
                        class="list-group-item list-group-item-action px-0">
                         <div class="d-flex align-items-start justify-content-between gap-2">
                             <div class="min-width-0">

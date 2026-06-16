@@ -1,62 +1,16 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $rootDirectory = $project->rootDir
-        ?? \App\Models\File::query()
-            ->active()
-            ->directories()
-            ->where('project_id', $project->id)
-            ->whereNull('dataset_id')
-            ->where('path', '/')
-            ->first();
-
-    $rootDirectoryId = $rootDirectory?->id;
-
-    $fileCount = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->whereNull('dataset_id')
-        ->count();
-
-    $directoryCount = \App\Models\File::query()
-        ->active()
-        ->directories()
-        ->where('project_id', $project->id)
-        ->whereNull('dataset_id')
-        ->where('path', '<>', '/')
-        ->count();
-
-    $rootFilesCount = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->whereNull('dataset_id')
-        ->when(
-            $rootDirectoryId !== null,
-            fn($query) => $query->where('directory_id', $rootDirectoryId),
-            fn($query) => $query->whereNull('directory_id')
-        )
-        ->count();
-
-    $directoriesWithFilesCount = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->whereNull('dataset_id')
-        ->whereNotNull('directory_id')
-        ->where('directory_id', '<>', $rootDirectoryId)
-        ->distinct('directory_id')
-        ->count('directory_id');
-
-    $emptyFoldersEstimate = max(0, $directoryCount - $directoriesWithFilesCount);
-    $filesPerFolder = $directoryCount > 0 ? round($fileCount / $directoryCount, 1) : $fileCount;
-
-    $rootFilePercent = $fileCount > 0
-        ? min(100, max(0, round(($rootFilesCount / $fileCount) * 100)))
-        : 0;
+    $fileCount = (int) ($metrics['filesCount'] ?? 0);
+    $directoryCount = (int) ($metrics['foldersCount'] ?? 0);
+    $rootFilesCount = (int) ($metrics['rootFilesCount'] ?? 0);
+    $rootFilePercent = (int) ($metrics['rootFilePercent'] ?? 0);
+    $directoriesWithFilesCount = (int) ($metrics['directoriesWithFilesCount'] ?? 0);
+    $emptyFoldersEstimate = (int) ($metrics['emptyFoldersEstimate'] ?? 0);
+    $filesPerFolder = (float) ($metrics['filesPerFolder'] ?? 0);
 
     $organizationScore = 100;
 

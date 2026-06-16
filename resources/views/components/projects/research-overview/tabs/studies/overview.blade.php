@@ -1,35 +1,16 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $studies = \App\Models\Experiment::query()
-        ->where('project_id', $project->id)
-        ->withCount(['files', 'entities', 'activities', 'datasets'])
-        ->get();
-
-    $totalStudies = $studies->count();
-
-    $withFilesCount = $studies->where('files_count', '>', 0)->count();
-    $withSamplesCount = $studies->where('entities_count', '>', 0)->count();
-    $withActivitiesCount = $studies->where('activities_count', '>', 0)->count();
-    $withDatasetsCount = $studies->where('datasets_count', '>', 0)->count();
-
-    $withDescriptionCount = $studies
-        ->filter(fn($study) => filled($study->description ?? null) || filled($study->summary ?? null))
-        ->count();
-
-    $readinessChecks = collect([
-        $totalStudies > 0,
-        $withFilesCount > 0,
-        $withSamplesCount > 0,
-        $withActivitiesCount > 0,
-        $withDescriptionCount > 0,
-    ]);
-
-    $readinessPercent = $readinessChecks->count() > 0
-        ? round(($readinessChecks->filter()->count() / $readinessChecks->count()) * 100)
-        : 0;
+    $totalStudies = (int) ($metrics['totalStudies'] ?? 0);
+    $withFilesCount = (int) ($metrics['withFilesCount'] ?? 0);
+    $withSamplesCount = (int) ($metrics['withSamplesCount'] ?? 0);
+    $withActivitiesCount = (int) ($metrics['withActivitiesCount'] ?? 0);
+    $withDatasetsCount = (int) ($metrics['withDatasetsCount'] ?? 0);
+    $withDescriptionCount = (int) ($metrics['withDescriptionCount'] ?? 0);
+    $readinessPercent = (int) ($metrics['readinessPercent'] ?? 0);
 
     $readinessColor = match (true) {
         $readinessPercent >= 80 => 'success',

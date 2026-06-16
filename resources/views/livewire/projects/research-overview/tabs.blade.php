@@ -18,8 +18,6 @@
             null => 'secondary',
             default => 'success',
         };
-
-        $storageKey = 'mc_project_research_overview_tab_' . $project->id;
     @endphp
 
     <ul class="nav nav-pills mb-3" id="project-dashboard-tabs" role="tablist">
@@ -150,10 +148,7 @@
                 @break
 
             @case('metadata')
-                <x-projects.research-overview.tabs.metadata
-                    :project="$project"
-                    :readme="$readme"
-                />
+                <x-projects.research-overview.tabs.metadata :project="$project"/>
                 @break
 
             @case('collaborators')
@@ -169,61 +164,21 @@
                 @break
 
             @default
-                <x-projects.research-overview.tabs.overview
-                    :project="$project"
-                    :readme="$readme"
-                />
+                <x-projects.research-overview.tabs.overview :project="$project"/>
         @endswitch
     </div>
 
-    @script
     <script>
-        const projectResearchOverviewTabStorageKey = @js($storageKey);
+        document.addEventListener('livewire:init', function () {
+            Livewire.on('project-research-overview-tab-changed', function (event) {
+                const tab = Array.isArray(event) ? event[0]?.tab : event.tab;
 
-        const restoredProjectResearchOverviewTab = window.localStorage.getItem(projectResearchOverviewTabStorageKey);
+                if (!tab) {
+                    return;
+                }
 
-        if (restoredProjectResearchOverviewTab) {
-            $wire.restoreTab(restoredProjectResearchOverviewTab);
-        }
-
-        $wire.on('project-research-overview-tab-changed', function (event) {
-            const payload = Array.isArray(event) ? event[0] : event;
-
-            if (!payload || !payload.tab) {
-                return;
-            }
-
-            window.localStorage.setItem(projectResearchOverviewTabStorageKey, payload.tab);
-        });
-
-        document.addEventListener('click', function (event) {
-            const tabButton = event.target.closest('.js-project-dashboard-show-tab');
-
-            if (!tabButton) {
-                return;
-            }
-
-            const target = tabButton.getAttribute('data-tab-target');
-
-            const tabMap = {
-                '#tab-project-dashboard-overview': 'overview',
-                '#tab-project-dashboard-files': 'files',
-                '#tab-project-dashboard-studies': 'studies',
-                '#tab-project-dashboard-datasets': 'datasets',
-                '#tab-project-dashboard-samples': 'samples',
-                '#tab-project-dashboard-processes': 'processes',
-                '#tab-project-dashboard-metadata': 'metadata',
-                '#tab-project-dashboard-collaborators': 'collaborators',
-                '#tab-project-dashboard-health': 'health',
-                '#tab-project-dashboard-activity': 'activity',
-            };
-
-            if (!tabMap[target]) {
-                return;
-            }
-
-            $wire.setTab(tabMap[target]);
+                localStorage.setItem('mc_project_research_overview_tab_{{ $project->id }}', tab);
+            });
         });
     </script>
-    @endscript
 </div>

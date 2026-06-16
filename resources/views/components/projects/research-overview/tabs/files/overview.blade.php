@@ -1,14 +1,13 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $fileCount = (int) ($project->file_count ?? 0);
-    $directoryCount = (int) ($project->directory_count ?? 0);
-    $size = (int) ($project->size ?? 0);
-
-    $averageFileSize = $fileCount > 0 ? (int) floor($size / $fileCount) : 0;
-    $filesPerFolder = $directoryCount > 0 ? round($fileCount / $directoryCount, 1) : $fileCount;
+    $fileCount = (int) ($metrics['filesCount'] ?? 0);
+    $directoryCount = (int) ($metrics['foldersCount'] ?? 0);
+    $averageFileSize = (int) ($metrics['averageFileSize'] ?? 0);
+    $filesPerFolder = (float) ($metrics['filesPerFolder'] ?? 0);
 
     $organizationStatus = match (true) {
         $fileCount === 0 => ['label' => 'No files yet', 'color' => 'secondary'],

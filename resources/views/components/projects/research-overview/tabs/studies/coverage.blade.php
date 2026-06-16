@@ -1,53 +1,13 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $studies = \App\Models\Experiment::query()
-        ->where('project_id', $project->id)
-        ->withCount(['files', 'entities', 'activities', 'datasets'])
-        ->get();
-
-    $totalStudies = max(1, $studies->count());
-
-    $coverageItems = collect([
-        [
-            'label' => 'Files',
-            'value' => $studies->where('files_count', '>', 0)->count(),
-            'color' => 'primary',
-            'hint' => 'studies with at least one file',
-        ],
-        [
-            'label' => 'Samples',
-            'value' => $studies->where('entities_count', '>', 0)->count(),
-            'color' => 'success',
-            'hint' => 'studies with samples or computations',
-        ],
-        [
-            'label' => 'Processes',
-            'value' => $studies->where('activities_count', '>', 0)->count(),
-            'color' => 'secondary',
-            'hint' => 'studies with activities/processes',
-        ],
-        [
-            'label' => 'Datasets',
-            'value' => $studies->where('datasets_count', '>', 0)->count(),
-            'color' => 'success',
-            'hint' => 'studies linked to datasets',
-        ],
-        [
-            'label' => 'Descriptions',
-            'value' => $studies
-                ->filter(fn($study) => filled($study->description ?? null) || filled($study->summary ?? null))
-                ->count(),
-            'color' => 'warning',
-            'hint' => 'studies with narrative context',
-        ],
-    ]);
-
-    $overallCoverage = $studies->count() > 0
-        ? round($coverageItems->avg(fn($item) => ($item['value'] / $totalStudies) * 100))
-        : 0;
+    $totalStudies = (int) ($metrics['totalStudies'] ?? 0);
+    $denominator = max(1, $totalStudies);
+    $coverageItems = collect($metrics['coverageItems'] ?? []);
+    $overallCoverage = (int) ($metrics['overallCoverage'] ?? 0);
 
     $overallColor = match (true) {
         $overallCoverage >= 80 => 'success',
@@ -74,7 +34,7 @@
             </span>
         </div>
 
-        @if($studies->isEmpty())
+        @if($totalStudies === 0)
             <div class="text-center text-muted py-4">
                 <i class="fas fa-flask fa-2x mb-2"></i>
                 <div class="fw-semibold">No studies yet</div>
@@ -83,14 +43,14 @@
         @else
             @foreach($coverageItems as $item)
                 @php
-                    $percent = round(($item['value'] / $totalStudies) * 100);
+                    $percent = round(((int) $item['value'] / $denominator) * 100);
                 @endphp
 
                 <div class="mb-3">
                     <div class="d-flex justify-content-between gap-2 mb-1">
                         <div class="small text-muted">{{ $item['label'] }}</div>
                         <div class="small fw-semibold">
-                            {{ number_format($item['value']) }}
+                            {{ number_format((int) $item['value']) }}
                             <span class="text-muted fw-normal">({{ $percent }}%)</span>
                         </div>
                     </div>

@@ -15,8 +15,15 @@
 
 <x-projects.research-overview.analytics.overview :project="$project"/>
 
-<x-projects.research-overview.tabs :project="$project"/>
-
-<x-projects.research-overview.tab-content :project="$project" :readme="$readme"/>
-
-<x-projects.research-overview.tab-persistence :project="$project" :tab-key="$projectDashboardTabKey"/>
+@if(!is_null($readme))
+    <livewire:projects.research-overview.tabs
+        :project="$project"
+        :readme="$readme"
+        :key="'project-research-overview-tabs-' . $project->id"
+    />
+@else
+    <livewire:projects.research-overview.tabs
+        :project="$project"
+        :key="'project-research-overview-tabs-' . $project->id"
+    />
+@endif

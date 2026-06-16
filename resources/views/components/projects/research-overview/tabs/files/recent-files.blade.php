@@ -1,15 +1,10 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $recentFiles = \App\Models\File::query()
-        ->active()
-        ->files()
-        ->where('project_id', $project->id)
-        ->orderByDesc('updated_at')
-        ->limit(8)
-        ->get(['id', 'name', 'path', 'size', 'updated_at', 'mime_type']);
+    $recentFiles = collect($metrics['recentFiles'] ?? []);
 @endphp
 
 <div class="card border-0 shadow-sm h-100">
@@ -39,7 +34,7 @@
         @else
             <div class="list-group list-group-flush">
                 @foreach($recentFiles as $file)
-                    <a href="{{ route('projects.files.show', [$project, $file]) }}"
+                    <a href="{{ route('projects.files.show', [$project, $file->id]) }}"
                        class="list-group-item list-group-item-action px-0">
                         <div class="d-flex align-items-start justify-content-between gap-2">
                             <div class="min-width-0">
@@ -57,7 +52,7 @@
                                     {{ formatBytes((int) ($file->size ?? 0)) }}
                                 </div>
                                 <div class="text-muted" style="font-size:.72rem;">
-                                    {{ $file->updated_at?->diffForHumans() }}
+                                    {{ \Illuminate\Support\Carbon::parse($file->updated_at)->diffForHumans() }}
                                 </div>
                             </div>
                         </div>

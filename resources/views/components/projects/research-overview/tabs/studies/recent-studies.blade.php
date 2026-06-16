@@ -1,14 +1,10 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $recentStudies = \App\Models\Experiment::query()
-        ->where('project_id', $project->id)
-        ->withCount(['files', 'entities', 'activities', 'datasets'])
-        ->orderByDesc('updated_at')
-        ->limit(8)
-        ->get();
+    $recentStudies = collect($metrics['recentStudies'] ?? []);
 @endphp
 
 <div class="card border-0 shadow-sm">
@@ -52,7 +48,7 @@
                     @foreach($recentStudies as $study)
                         <tr>
                             <td>
-                                <a href="{{ route('projects.experiments.show', [$project, $study]) }}"
+                                <a href="{{ route('projects.experiments.show', [$project, $study->id]) }}"
                                    class="fw-semibold text-decoration-none">
                                     <i class="fas fa-flask text-muted me-1"></i>{{ $study->name }}
                                 </a>

@@ -1,21 +1,11 @@
 @props([
     'project',
+    'metrics' => [],
 ])
 
 @php
-    $needsReviewCount = \App\Models\Experiment::query()
-        ->where('project_id', $project->id)
-        ->withCount(['files', 'entities', 'activities'])
-        ->get()
-        ->filter(function ($study) {
-            return (int) ($study->files_count ?? 0) === 0
-                || (int) ($study->entities_count ?? 0) === 0
-                || (int) ($study->activities_count ?? 0) === 0
-                || blank($study->description ?? null);
-        })
-        ->count();
-
-    $totalStudies = (int) ($project->experiments_count ?? 0);
+    $needsReviewCount = collect($metrics['studiesNeedingReview'] ?? [])->count();
+    $totalStudies = (int) ($metrics['totalStudies'] ?? 0);
 
     $hint = $totalStudies > 0
         ? 'missing key context'
