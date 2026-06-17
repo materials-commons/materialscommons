@@ -140,7 +140,10 @@
                 @break
 
             @case('processes')
-                <x-projects.research-overview.tabs.processes :project="$project"/>
+                <x-projects.research-overview.tabs.processes
+                    :project="$project"
+                    :metrics="$metrics"
+                />
                 @break
 
             @case('metadata')

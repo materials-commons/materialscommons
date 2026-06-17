@@ -4,6 +4,7 @@ namespace App\Livewire\Projects\ResearchOverview;
 
 use App\Actions\Projects\ResearchOverview\BuildDatasetsTabMetricsAction;
 use App\Actions\Projects\ResearchOverview\BuildFilesTabMetricsAction;
+use App\Actions\Projects\ResearchOverview\BuildProcessesTabMetricsAction;
 use App\Actions\Projects\ResearchOverview\BuildStudiesTabMetricsAction;
 use App\Models\File;
 use App\Models\Project;
@@ -103,6 +104,7 @@ class Tabs extends Component
             'files' => app(BuildFilesTabMetricsAction::class)->execute($this->project),
             'studies' => app(BuildStudiesTabMetricsAction::class)->execute($this->project),
             'datasets' => app(BuildDatasetsTabMetricsAction::class)->execute($this->project),
+            'processes' => app(BuildProcessesTabMetricsAction::class)->execute($this->project),
             default => [],
         };
     }
@@ -113,7 +115,7 @@ class Tabs extends Component
 
         $counts = Project::query()
                          ->where('id', $project->id)
-                         ->withCount(['experiments', 'entities', 'publishedDatasets', 'unpublishedDatasets'])
+                         ->withCount(['experiments', 'entities', 'activities', 'publishedDatasets', 'unpublishedDatasets'])
                          ->first();
 
         $publishedDatasetsCount = (int) ($counts?->published_datasets_count ?? 0);
@@ -126,7 +128,7 @@ class Tabs extends Component
             'studies' => (int) ($counts?->experiments_count ?? 0),
             'datasets' => $publishedDatasetsCount + $unpublishedDatasetsCount,
             'samples' => (int) ($counts?->entities_count ?? 0),
-            'processes' => $activityAttributesCount,
+            'processes' => (int) ($counts?->activities_count ?? 0),
             'metadata' => $entityAttributesCount + $activityAttributesCount,
             'collaborators' => collect($project->team?->members ?? collect())->count(),
         ];
