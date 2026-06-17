@@ -69,14 +69,14 @@
             </button>
         </li>
 
-        <li class="nav-item" role="presentation">
-            <button type="button"
-                    wire:click="setTab('metadata')"
-                    class="nav-link {{ $tab === 'metadata' ? 'active' : '' }}">
-                <i class="fas fa-clipboard-check me-1"></i>Metadata
-                <span class="badge text-bg-warning ms-1">{{ number_format($tabCounts['metadata'] ?? 0) }}</span>
-            </button>
-        </li>
+{{--        <li class="nav-item" role="presentation">--}}
+{{--            <button type="button"--}}
+{{--                    wire:click="setTab('metadata')"--}}
+{{--                    class="nav-link {{ $tab === 'metadata' ? 'active' : '' }}">--}}
+{{--                <i class="fas fa-clipboard-check me-1"></i>Metadata--}}
+{{--                <span class="badge text-bg-warning ms-1">{{ number_format($tabCounts['metadata'] ?? 0) }}</span>--}}
+{{--            </button>--}}
+{{--        </li>--}}
 
         <li class="nav-item" role="presentation">
             <button type="button"
@@ -87,22 +87,22 @@
             </button>
         </li>
 
-        <li class="nav-item" role="presentation">
-            <button type="button"
-                    wire:click="setTab('health')"
-                    class="nav-link {{ $tab === 'health' ? 'active' : '' }}">
-                <i class="fas fa-heartbeat me-1"></i>Health
-                <span class="badge text-bg-{{ $healthColor }} ms-1">{{ $healthLabel }}</span>
-            </button>
-        </li>
+{{--        <li class="nav-item" role="presentation">--}}
+{{--            <button type="button"--}}
+{{--                    wire:click="setTab('health')"--}}
+{{--                    class="nav-link {{ $tab === 'health' ? 'active' : '' }}">--}}
+{{--                <i class="fas fa-heartbeat me-1"></i>Health--}}
+{{--                <span class="badge text-bg-{{ $healthColor }} ms-1">{{ $healthLabel }}</span>--}}
+{{--            </button>--}}
+{{--        </li>--}}
 
-        <li class="nav-item" role="presentation">
-            <button type="button"
-                    wire:click="setTab('activity')"
-                    class="nav-link {{ $tab === 'activity' ? 'active' : '' }}">
-                <i class="fas fa-history me-1"></i>Activity
-            </button>
-        </li>
+{{--        <li class="nav-item" role="presentation">--}}
+{{--            <button type="button"--}}
+{{--                    wire:click="setTab('activity')"--}}
+{{--                    class="nav-link {{ $tab === 'activity' ? 'active' : '' }}">--}}
+{{--                <i class="fas fa-history me-1"></i>Activity--}}
+{{--            </button>--}}
+{{--        </li>--}}
     </ul>
 
     <div wire:loading.delay class="card border-0 shadow-sm mb-3">
@@ -156,7 +156,10 @@
                 @break
 
             @case('collaborators')
-                <x-projects.research-overview.tabs.collaborators :project="$project"/>
+                <x-projects.research-overview.tabs.collaborators
+                    :project="$project"
+                    :metrics="$metrics"
+                />
                 @break
 
             @case('health')

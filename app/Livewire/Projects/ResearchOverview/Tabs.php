@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Projects\ResearchOverview;
 
+use App\Actions\Projects\ResearchOverview\BuildCollaboratorsTabMetricsAction;
 use App\Actions\Projects\ResearchOverview\BuildDatasetsTabMetricsAction;
 use App\Actions\Projects\ResearchOverview\BuildFilesTabMetricsAction;
 use App\Actions\Projects\ResearchOverview\BuildProcessesTabMetricsAction;
@@ -107,6 +108,7 @@ class Tabs extends Component
             'datasets' => app(BuildDatasetsTabMetricsAction::class)->execute($this->project),
             'processes' => app(BuildProcessesTabMetricsAction::class)->execute($this->project),
             'samples' => app(BuildSamplesTabMetricsAction::class)->execute($this->project),
+            'collaborators' => app(BuildCollaboratorsTabMetricsAction::class)->execute($this->project),
             default => [],
         };
     }
