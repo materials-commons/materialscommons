@@ -136,7 +136,10 @@
                 @break
 
             @case('samples')
-                <x-projects.research-overview.tabs.samples :project="$project"/>
+                <x-projects.research-overview.tabs.samples
+                    :project="$project"
+                    :metrics="$metrics"
+                />
                 @break
 
             @case('processes')
