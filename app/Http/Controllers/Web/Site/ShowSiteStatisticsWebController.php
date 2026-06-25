@@ -10,9 +10,11 @@ use App\Models\Entity;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
+use App\Support\CacheKeys;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use function app;
 use function collect;
@@ -64,6 +66,60 @@ class ShowSiteStatisticsWebController extends Controller
     }
 
     private function createFilesUploadedChart()
+    {
+        $chartData = Cache::get(CacheKeys::SITE_STATISTICS_FILES_UPLOADED_CHART, [
+            'start'  => Carbon::now()->startOfMonth()->format("Y-m-d"),
+            'labels' => [],
+            'counts' => [],
+        ]);
+
+        return $this->createChartFromCachedData(
+            Carbon::parse($chartData['start']),
+            $chartData['labels'],
+            $chartData['counts'],
+            "FilesUploadedChart",
+            "Files Uploaded",
+            "Monthly Files Uploaded"
+        );
+    }
+
+    private function createChartFromCachedData($start, array $labels, array $counts, $name, $label, $text)
+    {
+        $chart = app()->chartjs
+            ->name($name)
+            ->type("line")
+            ->size(["width" => 400, "height" => 200])
+            ->labels($labels)
+            ->datasets([
+                [
+                    "label"           => $label,
+                    "backgroundColor" => "rgba(38, 185, 154, 0.31)",
+                    "borderColor"     => "rgba(38, 185, 154, 0.7)",
+                    "data"            => $counts,
+                ]
+            ])
+            ->options([
+                'scales'  => [
+                    'x' => [
+                        'type' => 'time',
+                        'time' => [
+                            'unit' => 'month'
+                        ],
+                        'min'  => $start->format("Y-m-d"),
+                    ]
+                ],
+                'plugins' => [
+                    'title' => [
+                        'display' => true,
+                        'text'    => $text,
+                    ]
+                ],
+            ]);
+
+        return $chart;
+    }
+
+    private function createFilesUploadedChartOld()
     {
         $start = Carbon::parse(File::min("created_at"));
         $end = Carbon::now();
