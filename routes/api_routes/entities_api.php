@@ -51,3 +51,5 @@ Route::delete('/projects/{project}/entitites/{entity}', DeleteEntityApiControlle
 Route::get('/projects/{project}/entities/{entity}', ShowEntityApiController::class);
 
 Route::get('/projects/{project}/entities', IndexEntitiesApiController::class);
+
+Route::delete('/projects/{project}/entities/{entity}', DeleteEntityApiController::class);

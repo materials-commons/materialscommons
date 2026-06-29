@@ -24,21 +24,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth:api')->group(function () {
-    Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
-    Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);
-    Route::apiResource('/projects/{project}/actions/{action}/entity-state', ActionEntityStatesAPIController::class);
-    Route::apiResource('/projects/{project}/actions/{action}/files', ActionFilesAPIController::class);
-    Route::apiResource('/projects/{project}/actions/{action}/attributes', ActionAttributesAPIController::class);
-
-    Route::apiResource('/projects/{project}/entity-state/{entity_state}/files', EntityStateFilesAPIController::class);
-    Route::apiResource('/projects/{project}/entity-state/{entity_state}/attributes',
-        EntityStateAttributesAPIController::class);
-
-    Route::apiResource('/projects/{project}/attributes', AttributesAPIController::class);
-
-    Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
-});
+//Route::middleware('auth:api')->group(function () {
+//    Route::apiResource('/projects/{project}/entities', ProjectEntitiesAPIController::class);
+//    Route::apiResource('/projects/{project}/actions', ProjectActionsAPIController::class);
+//    Route::apiResource('/projects/{project}/actions/{action}/entity-state', ActionEntityStatesAPIController::class);
+//    Route::apiResource('/projects/{project}/actions/{action}/files', ActionFilesAPIController::class);
+//    Route::apiResource('/projects/{project}/actions/{action}/attributes', ActionAttributesAPIController::class);
+//
+//    Route::apiResource('/projects/{project}/entity-state/{entity_state}/files', EntityStateFilesAPIController::class);
+//    Route::apiResource('/projects/{project}/entity-state/{entity_state}/attributes',
+//        EntityStateAttributesAPIController::class);
+//
+//    Route::apiResource('/projects/{project}/attributes', AttributesAPIController::class);
+//
+//    Route::apiResource('/projects/{project}/values', ValuesAPIController::class);
+//});
 
 Route::group(['middleware' => 'auth:api'], function() {
     // Activities
