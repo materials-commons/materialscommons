@@ -255,6 +255,18 @@
                             <i class="fas fa-database me-2"></i>Browse Data
                         </a>
 
+{{--                        @auth--}}
+{{--                            <a href="{{ route('public.publish.wizard.choose_create_or_select_project') }}"--}}
+{{--                               class="btn btn-outline-primary px-3 px-xl-4">--}}
+{{--                                Upload and Publish Data--}}
+{{--                            </a>--}}
+{{--                        @else--}}
+{{--                            <a href="{{ route('login-for-upload') }}"--}}
+{{--                               class="btn btn-outline-primary px-3 px-xl-4">--}}
+{{--                                Upload and Publish Data--}}
+{{--                            </a>--}}
+{{--                        @endauth--}}
+
                         @auth
                             <a href="{{ route('public.publish.wizard.choose_create_or_select_project') }}"
                                class="btn btn-outline-primary px-3 px-xl-4">
