@@ -25,17 +25,18 @@ class WelcomeWebController extends Controller
                 'projects' => $projects,
             ]);
         }
-        $publishedDatasetsCount = Dataset::whereNotNull('published_at')
-                                         ->whereDoesntHave('tags', function ($q) {
-                                             $q->where('tags.id', config('visus.import_tag_id'));
-                                         })->count();
+//        $publishedDatasetsCount = Dataset::whereNotNull('published_at')
+//                                         ->whereDoesntHave('tags', function ($q) {
+//                                             $q->where('tags.id', config('visus.import_tag_id'));
+//                                         })->count();
+        $publishedDatasetsCount = Dataset::whereNotNull('published_at')->count();
 
-        $view = 'welcome3';
+//        $view = 'welcome3';
 //        if (isInBeta('new-front-page')) {
 //            $view = 'welcome2';
 //        }
 
-        return view($view, [
+        return view('welcome3', [
             'publishedDatasetsCount' => $publishedDatasetsCount,
             'projectsCount'          => Project::count(),
             'usersCount'             => User::count(),

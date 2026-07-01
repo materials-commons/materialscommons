@@ -295,7 +295,7 @@
                 <div class="mc-stats-band row g-0 justify-content-center text-white overflow-hidden">
                     <div class="col-6 col-md-3 px-4 py-3 text-center">
                         <div class="fw-bold fs-4">{{ number_format($publishedDatasetsCount) }}</div>
-                        <div class="text-white text-opacity-75 small">DOI-Citable Datasets</div>
+                        <div class="text-white text-opacity-75 small">Datasets</div>
                     </div>
                     <div class="col-6 col-md-3 px-4 py-3 text-center mc-stat-divider">
                         <div class="fw-bold fs-4">2</div>
