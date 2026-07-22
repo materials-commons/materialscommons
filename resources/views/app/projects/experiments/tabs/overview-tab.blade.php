@@ -1,140 +1,278 @@
-{{-- ── KPI strip ────────────────────────────────────────────────────────────── --}}
-<div class="row g-2 mb-3 justify-content-center">
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Samples</div>
-            <div class="fw-bold fs-5 text-primary">{{ number_format($experiment->experimental_entities_count) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">experimental</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Computations</div>
-            <div class="fw-bold fs-5 text-info">{{ number_format($experiment->computational_entities_count) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">computational</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Processes</div>
-            <div class="fw-bold fs-5 text-success">{{ number_format($experiment->activities_count) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">activities</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Workflows</div>
-            <div class="fw-bold fs-5 text-secondary">{{ number_format($experiment->workflows_count) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">defined</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Attributes</div>
-            <div
-                class="fw-bold fs-5 text-warning">{{ number_format($entityAttributesCount + $activityAttributesCount) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">
-                {{ number_format($entityAttributesCount) }} sample · {{ number_format($activityAttributesCount) }} proc
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-4 col-md-2">
-        <div class="card border-0 shadow-sm text-center py-2 background-white">
-            <div class="text-muted small">Total Size</div>
-            <div class="fw-bold fs-5 text-muted">{{ formatBytes($totalFilesSize) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">file storage</div>
-        </div>
-    </div>
-</div>
-
 @php
     $hasProcessChart = isset($activitiesGroup) && count($activitiesGroup) > 0;
     $hasFileChart    = isset($fileDescriptionTypes) && count($fileDescriptionTypes) > 0;
     $hasAnyChart     = $hasProcessChart || $hasFileChart;
 @endphp
 
-@if($hasAnyChart)
-    {{-- ── Analytics toggle ─────────────────────────────────────────────────── --}}
-    <div class="d-flex align-items-center mb-3">
-        <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                type="button"
-                id="exp-analytics-toggle"
-                data-bs-toggle="collapse"
-                data-bs-target="#exp-analytics"
-                aria-expanded="false"
-                aria-controls="exp-analytics">
-            <i class="fas fa-chevron-right fa-fw"
-               id="exp-analytics-chevron"
-               style="transition: transform 0.2s; font-size:.75rem;"></i>
-            <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-        </button>
-        <hr class="flex-grow-1 ms-3 my-0 opacity-25">
+<div class="mc-study-overview">
+    <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
+        <div>
+            <h2 class="h5 mb-1">Study Overview</h2>
+            <div class="text-muted small">
+                High-level counts, storage, import source, and study metadata.
+            </div>
+        </div>
+
+        <span class="badge text-bg-light border">
+            <i class="fas fa-flask me-1"></i>
+            Current Study
+        </span>
     </div>
 
-    {{-- ── Charts — collapsed by default ───────────────────────────────────── --}}
-    <div class="collapse mb-3" id="exp-analytics">
-        <div class="row g-3">
+    {{-- ── KPI strip ────────────────────────────────────────────────────────── --}}
+    <x-projects.kpi-strip
+        :samples="$experiment->experimental_entities_count"
+        :computations="$experiment->computational_entities_count"
+        :processes="$experiment->activities_count"
+        :workflows="$experiment->workflows_count"
+        :attribute-count="$entityAttributesCount + $activityAttributesCount"
+        :attribute-count-hint="number_format($entityAttributesCount).' sample · '.number_format($activityAttributesCount).' proc'"
+        :total-size="formatBytes($totalFilesSize)"
+        :total-size-formatted="true"
+    />
 
-            @if($hasProcessChart)
-                <div class="col-12 {{ $hasFileChart ? 'col-md-7' : '' }}">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3 background-white">
-                            <h6 class="card-title text-muted mb-0">
-                                <i class="fas fa-cogs me-1"></i> Process Types
-                            </h6>
-                            <p class="text-muted mb-1" style="font-size:.7rem;">
-                                Count of each process type used in this study
-                            </p>
-                            <div id="chart-exp-processes"
-                                 style="height:{{ min(60 + count($activitiesGroup) * 28, 420) }}px;"></div>
-                        </div>
+    {{-- ── Study details and import source ─────────────────────────────────── --}}
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-xl-7">
+            <div class="mc-study-panel h-100">
+                <div class="mc-study-panel-header">
+                    <div>
+                        <h3 class="h6 mb-1">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Study Details
+                        </h3>
+                        <div class="text-muted small">Name, summary, description, ownership, and timestamps.</div>
                     </div>
                 </div>
-            @endif
 
-            @if($hasFileChart)
-                <div class="col-12 {{ $hasProcessChart ? 'col-md-5' : '' }}">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-3 background-white">
-                            <h6 class="card-title text-muted mb-0">
-                                <i class="fas fa-file-alt me-1"></i> File Types
-                            </h6>
-                            <p class="text-muted mb-1" style="font-size:.7rem;">
-                                Distribution of file types in this study
-                            </p>
-                            <div id="chart-exp-filetypes" style="height:240px;"></div>
-                        </div>
-                    </div>
+                <div class="mc-study-panel-body">
+                    <x-show-standard-details :item="$experiment"/>
                 </div>
-            @endif
+            </div>
+        </div>
 
+        <div class="col-12 col-xl-5">
+            <div class="mc-study-panel h-100">
+                <div class="mc-study-panel-header">
+                    <div>
+                        <h3 class="h6 mb-1">
+                            <i class="fas fa-file-import me-1"></i>
+                            Current Import Source
+                        </h3>
+                        <div class="text-muted small">Where this study was last loaded from.</div>
+                    </div>
+
+                    @if(!is_null($experiment->sheet) || !is_null($experiment->loaded_file_path))
+                        <span class="badge text-bg-success">Loaded</span>
+                    @else
+                        <span class="badge text-bg-secondary">Manual</span>
+                    @endif
+                </div>
+
+                <div class="mc-study-panel-body">
+                    @if(!is_null($experiment->sheet))
+                        <dl class="row mb-0 small">
+                            <dt class="col-sm-4 text-muted">Source</dt>
+                            <dd class="col-sm-8">
+                                <i class="fab fa-google-drive text-success me-1"></i>
+                                Google Sheet
+                            </dd>
+
+                            <dt class="col-sm-4 text-muted">Sheet</dt>
+                            <dd class="col-sm-8">
+                                <a href="{{ $experiment->sheet->url }}"
+                                   target="_blank"
+                                   class="text-decoration-none">
+                                    {{ $experiment->sheet->title }}
+                                </a>
+                            </dd>
+
+                            <dt class="col-sm-4 text-muted">Status</dt>
+                            <dd class="col-sm-8 mb-0">
+                                <span class="badge text-bg-success">Loaded</span>
+                            </dd>
+                        </dl>
+                    @elseif(!is_null($experiment->loaded_file_path))
+                        <dl class="row mb-0 small">
+                            <dt class="col-sm-4 text-muted">Source</dt>
+                            <dd class="col-sm-8">
+                                <i class="fas fa-file-excel text-success me-1"></i>
+                                Project spreadsheet
+                            </dd>
+
+                            <dt class="col-sm-4 text-muted">File</dt>
+                            <dd class="col-sm-8">
+                                <a href="{{ route('projects.files.by-path', [$project, 'path' => $experiment->loaded_file_path]) }}"
+                                   class="text-decoration-none">
+                                    {{ $experiment->loaded_file_path }}
+                                </a>
+                            </dd>
+
+                            <dt class="col-sm-4 text-muted">Status</dt>
+                            <dd class="col-sm-8 mb-0">
+                                <span class="badge text-bg-success">Loaded</span>
+                            </dd>
+                        </dl>
+                    @else
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-file-import fa-2x mb-2"></i>
+                            <div class="fw-semibold">No import source recorded</div>
+                            <div style="font-size:.85rem;">
+                                This study does not have a spreadsheet or Google Sheet source recorded.
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
-@endif
 
-{{-- ── Original card — unchanged ───────────────────────────────────────────── --}}
-<x-card-container>
-    <x-show-standard-details :item="$experiment"/>
-    @if(!is_null($experiment->sheet))
-        <div class="mb-3">
-            <span class="fs-10 grey-5">Loaded from Google Sheet:
-                <a href="{{$experiment->sheet->url}}" target="_blank" class="no-underline">
-                    {{$experiment->sheet->title}}
-                </a>
-            </span>
+    <div class="mc-study-panel mb-4">
+        <div class="mc-study-panel-header">
+            <div>
+                <h3 class="h6 mb-1">
+                    <i class="fas fa-align-left me-1"></i>
+                    Overview
+                </h3>
+                <div class="text-muted small">Study overview content and description.</div>
+            </div>
         </div>
-    @elseif (!is_null($experiment->loaded_file_path))
-        <div class="mb-3">
-            <span class="fs-10 grey-5">Loaded from file:
-                <a href="{{route('projects.files.by-path', [$project, 'path' => $experiment->loaded_file_path])}}"
-                   class="no-underline">{{$experiment->loaded_file_path}}</a>
-            </span>
+
+        <div class="mc-study-panel-body">
+            @include('partials.overview._overview')
+        </div>
+    </div>
+
+    @if($hasAnyChart)
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+            <div>
+                <h2 class="h5 mb-1">Analytics</h2>
+                <div class="text-muted small">
+                    Process type and file type distributions for this study.
+                </div>
+            </div>
+
+            <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2"
+                    type="button"
+                    id="exp-analytics-toggle"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#exp-analytics"
+                    aria-expanded="false"
+                    aria-controls="exp-analytics">
+                <i class="fas fa-chevron-right fa-fw"
+                   id="exp-analytics-chevron"
+                   style="transition: transform 0.2s; font-size:.75rem;"></i>
+                <span>Show Analytics</span>
+            </button>
+        </div>
+
+        <div class="collapse mb-4" id="exp-analytics">
+            <div class="row g-4">
+                @if($hasProcessChart)
+                    <div class="col-12 {{ $hasFileChart ? 'col-xl-7' : '' }}">
+                        <div class="mc-study-panel h-100">
+                            <div class="mc-study-panel-header">
+                                <div>
+                                    <h3 class="h6 mb-1">
+                                        <i class="fas fa-cogs me-1"></i>
+                                        Process Types
+                                    </h3>
+                                    <div class="text-muted small">
+                                        Count of each process type used in this study.
+                                    </div>
+                                </div>
+
+                                <span class="badge text-bg-success">
+                                    {{ number_format(count($activitiesGroup)) }} types
+                                </span>
+                            </div>
+
+                            <div class="mc-study-panel-body">
+                                <div id="chart-exp-processes"
+                                     style="height:{{ min(60 + count($activitiesGroup) * 28, 420) }}px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if($hasFileChart)
+                    <div class="col-12 {{ $hasProcessChart ? 'col-xl-5' : '' }}">
+                        <div class="mc-study-panel h-100">
+                            <div class="mc-study-panel-header">
+                                <div>
+                                    <h3 class="h6 mb-1">
+                                        <i class="fas fa-file-alt me-1"></i>
+                                        File Types
+                                    </h3>
+                                    <div class="text-muted small">
+                                        Distribution of file types in this study.
+                                    </div>
+                                </div>
+
+                                <span class="badge text-bg-info">
+                                    {{ number_format(count($fileDescriptionTypes)) }} types
+                                </span>
+                            </div>
+
+                            <div class="mc-study-panel-body">
+                                <div id="chart-exp-filetypes" style="height:240px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     @endif
-    @include('partials.overview._overview')
-</x-card-container>
+</div>
+
+{{--@push('styles')--}}
+{{--    <style>--}}
+{{--        .mc-study-overview {--}}
+{{--            margin-bottom: 1.5rem;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel {--}}
+{{--            background: #ffffff;--}}
+{{--            border: 1px solid rgba(15, 23, 42, .08);--}}
+{{--            border-radius: .85rem;--}}
+{{--            box-shadow: 0 .35rem .9rem rgba(15, 23, 42, .05);--}}
+{{--            overflow: hidden;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel-header {--}}
+{{--            align-items: flex-start;--}}
+{{--            background: #f8fafc;--}}
+{{--            border-bottom: 1px solid rgba(15, 23, 42, .08);--}}
+{{--            display: flex;--}}
+{{--            gap: .75rem;--}}
+{{--            justify-content: space-between;--}}
+{{--            padding: .9rem 1rem;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel-body {--}}
+{{--            padding: 1rem;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel-body dl dt {--}}
+{{--            font-weight: 700;--}}
+{{--            letter-spacing: .02em;--}}
+{{--            text-transform: uppercase;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel-body dl dd {--}}
+{{--            overflow-wrap: anywhere;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel-body > .mb-3:last-child,--}}
+{{--        .mc-study-panel-body > p:last-child {--}}
+{{--            margin-bottom: 0 !important;--}}
+{{--        }--}}
+
+{{--        .mc-study-panel .background-white {--}}
+{{--            background: transparent !important;--}}
+{{--        }--}}
+{{--    </style>--}}
+{{--@endpush--}}
 
 @if($hasAnyChart)
     @push('scripts')
@@ -152,7 +290,6 @@
                 @php
                     $procNames  = collect($activitiesGroup)->pluck('name')->map(fn($n) => strlen($n) > 30 ? substr($n, 0, 28).'…' : $n)->values()->toArray();
                     $procCounts = collect($activitiesGroup)->pluck('count')->values()->toArray();
-                    // sort descending for chart
                     array_multisort($procCounts, SORT_DESC, $procNames);
                 @endphp
                 Plotly.newPlot('chart-exp-processes', [{
@@ -192,7 +329,6 @@
                 }), plotConfig);
                 @endif
 
-                // Analytics toggle — chevron + localStorage
                 const STORAGE_KEY = 'mc_exp_overview_analytics_open';
                 const panel = document.getElementById('exp-analytics');
                 const chevron = document.getElementById('exp-analytics-chevron');
@@ -203,15 +339,18 @@
                     chevron.style.transform = 'rotate(90deg)';
                     toggle.setAttribute('aria-expanded', 'true');
                 }
+
                 if (panel) {
                     panel.addEventListener('show.bs.collapse', () => {
                         chevron.style.transform = 'rotate(90deg)';
                         localStorage.setItem(STORAGE_KEY, 'true');
                     });
+
                     panel.addEventListener('hide.bs.collapse', () => {
                         chevron.style.transform = 'rotate(0deg)';
                         localStorage.setItem(STORAGE_KEY, 'false');
                     });
+
                     panel.addEventListener('shown.bs.collapse', () => {
                         panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
                     });
