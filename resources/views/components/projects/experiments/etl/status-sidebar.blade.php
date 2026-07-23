@@ -8,7 +8,7 @@
     <div class="card-header bg-white">
         <div class="d-flex align-items-start justify-content-between gap-3">
             <div>
-                <h2 class="h5 mb-1">Import Status</h2>
+                <h2 class="h5 mb-1 text-black">Import Status</h2>
                 <div class="text-muted small">
                     Started:
                     {{ $etlRun->started_at?->format('M j, Y g:i A') ?? 'Waiting for worker' }}

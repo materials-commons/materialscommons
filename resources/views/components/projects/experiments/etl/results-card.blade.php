@@ -12,7 +12,7 @@
     <div class="card-header bg-white">
         <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-2">
             <div>
-                <h2 class="h5 mb-1">Import Results</h2>
+                <h2 class="h5 mb-1 text-black">Import Results</h2>
                 <div class="text-muted small">
                     Review process results, validation messages, and the import log.
                 </div>
