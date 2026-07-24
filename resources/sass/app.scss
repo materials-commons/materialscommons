@@ -10,6 +10,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@yaireo/tagify/dist/tagify';
 
+
 @import 'sidebar';
 @import 'containers';
 @import 'cards';
@@ -18,6 +19,7 @@
 @import 'study-ui';
 
 @import 'bootstrap-steps';
+
 
 .breadcrumb {
     //--bs-breadcrumb-padding-x: .75rem;
@@ -1202,6 +1204,8 @@ kbd {
 .tour-interaction i {
     margin-right: 0.5rem;
 }
+
+@import 'base-components';
 
 
 

@@ -1,9 +1,6 @@
 <div x-data="datasets_create">
     {{-- Floating action bar --}}
-    <div class="d-flex justify-content-end align-items-center gap-2 py-2 px-4"
-         style="position:fixed; bottom:0; left:0; right:0; z-index:1040;
-                background:white; border-top:1px solid #dee2e6;
-                box-shadow:0 -2px 8px rgba(0,0,0,.1);">
+    <div class="action-bar-fixed d-flex justify-content-end align-items-center gap-2 py-2 px-4">
         <a href="{{route('projects.datasets.index', ['project' => $project->id])}}"
            class="btn btn-sm btn-outline-secondary">
             Cancel

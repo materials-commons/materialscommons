@@ -4,7 +4,7 @@
     $hasAnyChart     = $hasProcessChart || $hasFileChart;
 @endphp
 
-<div class="mc-study-overview">
+<div>
     <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
         <div>
             <h2 class="h5 mb-1">Study Overview</h2>
@@ -34,8 +34,8 @@
     {{-- ── Study details and import source ─────────────────────────────────── --}}
     <div class="row g-4 mb-4">
         <div class="col-12 col-xl-7">
-            <div class="mc-study-panel h-100">
-                <div class="mc-study-panel-header">
+            <div class="card h-100">
+                <div class="card-header">
                     <div>
                         <h3 class="h6 mb-1">
                             <i class="fas fa-info-circle me-1"></i>
@@ -45,15 +45,15 @@
                     </div>
                 </div>
 
-                <div class="mc-study-panel-body">
+                <div class="card-body">
                     <x-show-standard-details :item="$experiment"/>
                 </div>
             </div>
         </div>
 
         <div class="col-12 col-xl-5">
-            <div class="mc-study-panel h-100">
-                <div class="mc-study-panel-header">
+            <div class="card h-100">
+                <div class="card-header">
                     <div>
                         <h3 class="h6 mb-1">
                             <i class="fas fa-file-import me-1"></i>
@@ -69,7 +69,7 @@
                     @endif
                 </div>
 
-                <div class="mc-study-panel-body">
+                <div class="card-body">
                     @if(!is_null($experiment->sheet))
                         <dl class="row mb-0 small">
                             <dt class="col-sm-4 text-muted">Source</dt>
@@ -127,8 +127,8 @@
         </div>
     </div>
 
-    <div class="mc-study-panel mb-4">
-        <div class="mc-study-panel-header">
+    <div class="card mb-4">
+        <div class="card-header">
             <div>
                 <h3 class="h6 mb-1">
                     <i class="fas fa-align-left me-1"></i>
@@ -138,7 +138,7 @@
             </div>
         </div>
 
-        <div class="mc-study-panel-body">
+        <div class="card-body">
             @include('partials.overview._overview')
         </div>
     </div>
@@ -170,8 +170,8 @@
             <div class="row g-4">
                 @if($hasProcessChart)
                     <div class="col-12 {{ $hasFileChart ? 'col-xl-7' : '' }}">
-                        <div class="mc-study-panel h-100">
-                            <div class="mc-study-panel-header">
+                        <div class="card h-100">
+                            <div class="card-header">
                                 <div>
                                     <h3 class="h6 mb-1">
                                         <i class="fas fa-cogs me-1"></i>
@@ -187,7 +187,7 @@
                                 </span>
                             </div>
 
-                            <div class="mc-study-panel-body">
+                            <div class="card-body">
                                 <div id="chart-exp-processes"
                                      style="height:{{ min(60 + count($activitiesGroup) * 28, 420) }}px;"></div>
                             </div>
@@ -197,8 +197,8 @@
 
                 @if($hasFileChart)
                     <div class="col-12 {{ $hasProcessChart ? 'col-xl-5' : '' }}">
-                        <div class="mc-study-panel h-100">
-                            <div class="mc-study-panel-header">
+                        <div class="card h-100">
+                            <div class="card-header">
                                 <div>
                                     <h3 class="h6 mb-1">
                                         <i class="fas fa-file-alt me-1"></i>
@@ -214,7 +214,7 @@
                                 </span>
                             </div>
 
-                            <div class="mc-study-panel-body">
+                            <div class="card-body">
                                 <div id="chart-exp-filetypes" style="height:240px;"></div>
                             </div>
                         </div>

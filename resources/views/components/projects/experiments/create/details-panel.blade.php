@@ -2,8 +2,8 @@
     'project',
 ])
 
-<div class="mc-study-panel h-100">
-    <div class="mc-study-panel-header">
+<div class="card h-100">
+    <div class="card-header">
         <div>
             <h2 class="h5 mb-1">Study Details</h2>
             <div class="text-muted small">
@@ -14,7 +14,7 @@
         <span class="badge text-bg-primary">Required</span>
     </div>
 
-    <div class="mc-study-panel-body">
+    <div class="card-body">
         <div class="mb-3">
             <label for="name" class="form-label">Study Name</label>
             <input class="form-control"

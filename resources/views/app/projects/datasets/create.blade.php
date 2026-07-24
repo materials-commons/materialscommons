@@ -10,7 +10,7 @@
     {{-- Page header --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <div class="text-muted mb-1" style="font-size:.72rem; text-transform:uppercase; letter-spacing:.05em;">
+            <div class="eyebrow mb-1">
                 New Dataset
             </div>
             <h4 class="mb-0 fw-bold">{{ $project->name }}</h4>
@@ -25,28 +25,28 @@
     <ul class="nav nav-tabs mb-0" role="tablist">
         <li class="nav-item">
             <span class="nav-link active d-flex align-items-center gap-2" style="cursor:default;">
-                <i class="fas fa-circle text-muted" style="font-size:.78rem;"></i>
+                <i class="fas fa-circle text-muted small"></i>
                 Details
             </span>
         </li>
         <li class="nav-item">
             <span class="nav-link disabled d-flex align-items-center gap-2">
-                <i class="fas fa-circle" style="font-size:.78rem; color:#dee2e6;"></i>
+                <i class="fas fa-circle text-muted small"></i>
                 Files
             </span>
         </li>
         <li class="nav-item">
             <span class="nav-link disabled d-flex align-items-center gap-2">
-                <i class="fas fa-circle" style="font-size:.78rem; color:#dee2e6;"></i>
+                <i class="fas fa-circle text-muted small"></i>
                 Samples
-                <span class="badge text-bg-light border" style="font-size:.6rem; font-weight:400; padding:.15em .35em;">optional</span>
+                <span class="badge text-bg-light border fw-normal">optional</span>
             </span>
         </li>
         <li class="nav-item">
             <span class="nav-link disabled d-flex align-items-center gap-2">
-                <i class="fas fa-circle" style="font-size:.78rem; color:#dee2e6;"></i>
+                <i class="fas fa-circle text-muted small"></i>
                 Workflows
-                <span class="badge text-bg-light border" style="font-size:.6rem; font-weight:400; padding:.15em .35em;">optional</span>
+                <span class="badge text-bg-light border fw-normal">optional</span>
             </span>
         </li>
     </ul>

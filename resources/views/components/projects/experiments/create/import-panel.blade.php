@@ -4,8 +4,8 @@
     'sheets',
 ])
 
-<div class="mc-study-panel h-100">
-    <div class="mc-study-panel-header">
+<div class="card h-100">
+    <div class="card-header">
         <div>
             <h2 class="h5 mb-1">Import Source</h2>
             <div class="text-muted small">
@@ -16,7 +16,7 @@
         <span class="badge text-bg-light border">Optional</span>
     </div>
 
-    <div class="mc-study-panel-body">
+    <div class="card-body">
         <div class="mb-3">
             <label class="form-label">Source</label>
 

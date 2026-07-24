@@ -97,24 +97,26 @@
             @endphp
 
             <div class="{{ $columnClass }}">
-                <div class="mc-project-kpi-card h-100">
-                    <div class="mc-project-kpi-icon {{ $textColor }} {{ $iconBackground }}">
-                        <i class="{{ $kpi['icon'] }}"></i>
-                    </div>
-
-                    <div class="text-muted small">
-                        {{ $kpi['label'] }}
-                    </div>
-
-                    <div class="fw-bold fs-4 {{ $textColor }}">
-                        {{ $kpi['value'] }}
-                    </div>
-
-                    @if(filled($kpi['hint'] ?? null))
-                        <div class="text-muted" style="font-size:.72rem;">
-                            {{ $kpi['hint'] }}
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <div class="kpi-icon {{ $textColor }} {{ $iconBackground }}">
+                            <i class="{{ $kpi['icon'] }}"></i>
                         </div>
-                    @endif
+
+                        <div class="text-muted small">
+                            {{ $kpi['label'] }}
+                        </div>
+
+                        <div class="fw-bold fs-4 {{ $textColor }}">
+                            {{ $kpi['value'] }}
+                        </div>
+
+                        @if(filled($kpi['hint'] ?? null))
+                            <div class="text-muted" style="font-size:.72rem;">
+                                {{ $kpi['hint'] }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         @endforeach

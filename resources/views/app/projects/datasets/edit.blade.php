@@ -12,7 +12,7 @@
     {{-- Page header --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <div class="text-muted mb-1" style="font-size:.72rem; text-transform:uppercase; letter-spacing:.05em;">
+            <div class="eyebrow mb-1">
                 Editing Dataset
             </div>
             <h4 class="mb-0 fw-bold">{{ $dataset->name }}</h4>
