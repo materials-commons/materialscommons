@@ -225,55 +225,6 @@
     @endif
 </div>
 
-{{--@push('styles')--}}
-{{--    <style>--}}
-{{--        .mc-study-overview {--}}
-{{--            margin-bottom: 1.5rem;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel {--}}
-{{--            background: #ffffff;--}}
-{{--            border: 1px solid rgba(15, 23, 42, .08);--}}
-{{--            border-radius: .85rem;--}}
-{{--            box-shadow: 0 .35rem .9rem rgba(15, 23, 42, .05);--}}
-{{--            overflow: hidden;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel-header {--}}
-{{--            align-items: flex-start;--}}
-{{--            background: #f8fafc;--}}
-{{--            border-bottom: 1px solid rgba(15, 23, 42, .08);--}}
-{{--            display: flex;--}}
-{{--            gap: .75rem;--}}
-{{--            justify-content: space-between;--}}
-{{--            padding: .9rem 1rem;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel-body {--}}
-{{--            padding: 1rem;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel-body dl dt {--}}
-{{--            font-weight: 700;--}}
-{{--            letter-spacing: .02em;--}}
-{{--            text-transform: uppercase;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel-body dl dd {--}}
-{{--            overflow-wrap: anywhere;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel-body > .mb-3:last-child,--}}
-{{--        .mc-study-panel-body > p:last-child {--}}
-{{--            margin-bottom: 0 !important;--}}
-{{--        }--}}
-
-{{--        .mc-study-panel .background-white {--}}
-{{--            background: transparent !important;--}}
-{{--        }--}}
-{{--    </style>--}}
-{{--@endpush--}}
-
 @if($hasAnyChart)
     @push('scripts')
         <script>
