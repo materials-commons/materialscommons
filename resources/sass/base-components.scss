@@ -60,6 +60,11 @@ a:hover {
     padding: 1rem;
 }
 
+.card-body.inner-card {
+    background-color: $mc-surface !important;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, .05) !important;
+}
+
 .card-title {
     color: $grey-3;
     font-weight: 700;
@@ -171,6 +176,26 @@ label,
 
 .list-group-item {
     border-color: $mc-border-color;
+}
+
+.table {
+    color: $grey-2;
+}
+
+.table th {
+    color: $grey-2;
+    font-weight: 700;
+}
+
+.table td {
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.table .text-muted,
+.table small,
+.table .small {
+    font-weight: 500;
 }
 
 dl dt {

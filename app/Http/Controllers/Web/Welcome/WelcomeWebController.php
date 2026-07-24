@@ -36,7 +36,7 @@ class WelcomeWebController extends Controller
 //            $view = 'welcome2';
 //        }
 
-        return view('welcome', [
+        return view('welcome3', [
             'publishedDatasetsCount' => $publishedDatasetsCount,
             'projectsCount'          => Project::count(),
             'usersCount'             => User::count(),
