@@ -84,7 +84,7 @@
                 <div class="row g-3">
                     @foreach($entity1Activities as $e1activity)
                         <div class="col-12" x-show="sample1Processes['{{$e1activity->uuid}}']">
-                            <div class="white-box h-100">
+                            <div class="bg-white border rounded p-3 h-100">
                                 <x-activities.activities-card :activity="$e1activity"
                                                               :user="$user"
                                                               :experiment="$entity1->experiments->first()"
@@ -108,7 +108,7 @@
                 <div class="row g-3">
                     @foreach($entity2Activities as $e2activity)
                         <div class="col-12" x-show="sample2Processes['{{$e2activity->uuid}}']">
-                            <div class="white-box h-100">
+                            <div class="bg-white border rounded p-3 h-100">
                                 <x-activities.activities-card :activity="$e2activity"
                                                               :user="$user"
                                                               :experiment="$entity2->experiments->first()"

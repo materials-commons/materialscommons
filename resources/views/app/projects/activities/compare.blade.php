@@ -27,7 +27,7 @@
     <div>
         {{-- GitHub Split View (Default) --}}
         <div id="githubView" class="view-content" style="display: block;">
-            <div class="white-box">
+            <div class="bg-white border rounded p-3">
                 <x-activities.compare.github-split-view
                     :activity1="$activity1"
                     :activity2="$activity2"
@@ -43,7 +43,7 @@
 
         {{-- Unified Diff View --}}
         <div id="unifiedView" class="view-content" style="display: none;">
-            <div class="white-box">
+            <div class="bg-white border rounded p-3">
                 <x-activities.compare.unified-diff-view
                     :activity1="$activity1"
                     :activity2="$activity2"
