@@ -43,7 +43,7 @@
                       placeholder="Description...">{{ old('description') }}</textarea>
         </div>
 
-        <div class="mc-study-create-actions">
+        <div class="d-flex flex-wrap justify-content-end gap-3">
             <a href="{{ route('projects.show', ['project' => $project->id]) }}"
                class="btn btn-outline-secondary">
                 Cancel

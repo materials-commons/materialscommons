@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div id="study-import-none-panel" class="mc-study-soft-panel js-study-import-panel">
+        <div id="study-import-none-panel" class="bg-light border rounded p-3 js-study-import-panel">
             <div class="d-flex gap-3">
                 <div class="text-muted fs-4">
                     <i class="fas fa-clipboard"></i>
@@ -88,7 +88,7 @@
         </div>
 
         <div id="study-import-spreadsheet-panel"
-             class="mc-study-soft-panel js-study-import-panel d-none">
+             class="bg-light border rounded p-3 js-study-import-panel d-none">
             <div class="d-flex align-items-start gap-3">
                 <div class="text-success fs-4">
                     <i class="fas fa-file-excel"></i>
@@ -122,7 +122,7 @@
         </div>
 
         <div id="study-import-google-sheet-panel"
-             class="mc-study-soft-panel js-study-import-panel d-none">
+             class="bg-light border rounded p-3 js-study-import-panel d-none">
             <div class="d-flex align-items-start gap-3">
                 <div class="text-warning fs-4">
                     <i class="fab fa-google"></i>

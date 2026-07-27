@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="mc-study-page">
-        <div class="mc-study-page-heading d-flex flex-wrap align-items-start justify-content-between gap-3">
+    <div>
+        <div class="mb-3 d-flex flex-wrap align-items-start justify-content-between gap-3">
             <div>
                 <h2 class="h5 mb-1">Create Study</h2>
                 <div class="text-muted small">

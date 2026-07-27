@@ -1,4 +1,4 @@
-<div class="mc-study-soft-panel mb-4">
+<div class="bg-light border rounded p-3 mb-4">
     <div class="d-flex gap-3">
         <div class="text-primary fs-4">
             <i class="fas fa-lightbulb"></i>
