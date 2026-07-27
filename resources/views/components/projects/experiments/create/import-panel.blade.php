@@ -20,7 +20,7 @@
         <div class="mb-3">
             <label class="form-label">Source</label>
 
-            <div class="list-group mc-study-source-options">
+            <div class="list-group selectable-list">
                 <label class="list-group-item d-flex gap-3 align-items-start">
                     <input class="form-check-input mt-1 js-study-import-source"
                            type="radio"

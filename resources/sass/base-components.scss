@@ -272,3 +272,26 @@ dl dd {
     margin-right: auto;
     width: 2.35rem;
 }
+
+.list-group-item {
+    border-color: $mc-border-color;
+}
+
+.selectable-list .list-group-item {
+    border-color: $mc-border-color;
+    cursor: pointer;
+}
+
+.selectable-list .list-group-item:has(.form-check-input:checked) {
+    background: $mc-surface-muted;
+    border-color: rgba(13, 110, 253, .35);
+    box-shadow: inset 4px 0 0 $primary;
+}
+
+.selectable-list .form-check-input {
+    cursor: pointer;
+}
+
+.table {
+    color: $grey-2;
+}
