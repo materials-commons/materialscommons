@@ -65,6 +65,19 @@ a:hover {
     box-shadow: 0 2px 4px rgba(15, 23, 42, .05) !important;
 }
 
+.card-body.inner-card .card-title {
+    color: $grey-1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: .75rem;
+}
+
+.card-body.inner-card hr {
+    border-color: $grey-8;
+    margin: 1rem 0;
+}
+
+
 .card-title {
     color: $grey-3;
     font-weight: 700;
@@ -172,10 +185,6 @@ label,
 .badge {
     border-radius: 999px;
     font-weight: 700;
-}
-
-.list-group-item {
-    border-color: $mc-border-color;
 }
 
 .table {
@@ -290,8 +299,4 @@ dl dd {
 
 .selectable-list .form-check-input {
     cursor: pointer;
-}
-
-.table {
-    color: $grey-2;
 }
