@@ -1,10 +1,10 @@
-<div class="vr"></div>
-<div class="px-3 py-2">
-    <div class="text-muted fw-semibold" style="font-size:.7rem; text-transform:uppercase; letter-spacing:.04em;">License</div>
+<div class="vr d-none d-md-block"></div>
+<div class="px-3 py-2 bg-body-tertiary border rounded-3">
+    <div class="text-muted fw-semibold small text-uppercase">License</div>
     @if(!blank($dataset->license))
-        <div>
-            <a href="{{$licenseUrl()}}" target="_blank" class="text-decoration-none">
-                <i class="fas fa-external-link-alt me-1 text-muted" style="font-size:.75rem;"></i>{{ $dataset->license }}
+        <div class="fw-semibold">
+            <a href="{{$licenseUrl()}}" target="_blank" class="link-primary text-decoration-none">
+                <i class="fas fa-external-link-alt me-1 text-muted"></i>{{ $dataset->license }}
             </a>
         </div>
     @else
