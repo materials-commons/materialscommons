@@ -116,8 +116,9 @@
         <br>
     @endif
 
-    @if(isInBeta('dashboard-charts'))
-        {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+
+    {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <x-collapsible-section id="files-kpi" title="KPI" storage-key="proj_files_kpi">
         <div class="row g-2 mb-3">
             <div class="col-6 col-sm-3">
                 <div class="card border-0 shadow-sm h-100 text-center py-2">
@@ -148,106 +149,93 @@
                 </div>
             </div>
         </div>
+    </x-collapsible-section>
 
-        {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    <x-collapsible-section title="Analytics"
+                           id="dir-analytics"
+                           :resize-plotly="true"
+                           storage-key="proj_files_analytics">
         @if($fileCount > 0)
-            <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                        type="button"
-                        id="dir-analytics-toggle"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#dir-analytics"
-                        aria-expanded="false"
-                        aria-controls="dir-analytics">
-                    <i class="fas fa-chevron-right fa-fw" id="dir-analytics-chevron"
-                       style="transition:transform .2s; font-size:.75rem;"></i>
-                    <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-                </button>
-                <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-            </div>
-            <div class="collapse mb-3" id="dir-analytics">
-                <div class="row g-3">
+            <div class="row g-3">
 
-                    {{-- Chart 1: File types --}}
-                    @if(count($typeLabels) > 0)
-                        <div class="col-12 col-md-5">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-file-alt me-1"></i> File Types
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Distribution of file types in this folder
-                                        @if(count($typeCounts) > 15)
-                                            , showing top 15
-                                        @endif
-                                    </p>
-                                    <div id="chart-dir-types"
-                                         style="height:{{ min(60 + count($typeLabels) * 26, 420) }}px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Chart 2: Largest files --}}
-                    @if(count($topBySize) > 0)
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-weight me-1"></i> Largest Files
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Top {{ count($topBySize) }} files by size
-                                    </p>
-                                    <div id="chart-dir-sizes"
-                                         style="height:{{ min(60 + count($topBySize) * 26, 320) }}px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Chart 3: Upload timeline --}}
-                    {{--                @if(count($monthLabels) > 1)--}}
-                    <div class="col-12 col-md-3">
+                {{-- Chart 1: File types --}}
+                @if(count($typeLabels) > 0)
+                    <div class="col-12 col-md-5">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
-                                    <i class="fas fa-calendar-alt me-1"></i> Upload Timeline
+                                    <i class="fas fa-file-alt me-1"></i> File Types
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Files uploaded per month
+                                    Distribution of file types in this folder
+                                    @if(count($typeCounts) > 15)
+                                        , showing top 15
+                                    @endif
                                 </p>
-                                <div id="chart-dir-months" style="height:220px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Chart 4: Files/Directories by creator --}}
-                @if(count($ownerLabels) > 0)
-                    <div class="row g-3 mt-0">
-                        <div class="col-12 col-md-5">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-users me-1"></i> By Creator
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Files and directories per team member
-                                    </p>
-                                    <div id="chart-dir-owners"
-                                         style="height:{{ min(80 + count($ownerLabels) * 28, 360) }}px;"></div>
-                                </div>
+                                <div id="chart-dir-types"
+                                     style="height:{{ min(60 + count($typeLabels) * 26, 420) }}px;"></div>
                             </div>
                         </div>
                     </div>
                 @endif
+
+                {{-- Chart 2: Largest files --}}
+                @if(count($topBySize) > 0)
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-weight me-1"></i> Largest Files
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Top {{ count($topBySize) }} files by size
+                                </p>
+                                <div id="chart-dir-sizes"
+                                     style="height:{{ min(60 + count($topBySize) * 26, 320) }}px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Chart 3: Upload timeline --}}
+                {{--                @if(count($monthLabels) > 1)--}}
+                <div class="col-12 col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-3 background-white">
+                            <h6 class="card-title text-muted mb-0">
+                                <i class="fas fa-calendar-alt me-1"></i> Upload Timeline
+                            </h6>
+                            <p class="text-muted mb-1" style="font-size:.7rem;">
+                                Files uploaded per month
+                            </p>
+                            <div id="chart-dir-months" style="height:220px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            {{-- Chart 4: Files/Directories by creator --}}
+            @if(count($ownerLabels) > 0)
+                <div class="row g-3 mt-0">
+                    <div class="col-12 col-md-5">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-users me-1"></i> By Creator
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Files and directories per team member
+                                </p>
+                                <div id="chart-dir-owners"
+                                     style="height:{{ min(80 + count($ownerLabels) * 28, 360) }}px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endif
-    @endif
+    </x-collapsible-section>
     <form method="post" action="{{route('projects.folders.move.update', [$project, $directory])}}"
           id="move-copy-files">
         @csrf
@@ -495,31 +483,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $dirAnalyticsKey }}';
-                const panel = document.getElementById('dir-analytics');
-                const toggle = document.getElementById('dir-analytics-toggle');
-                const chevron = document.getElementById('dir-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',
@@ -610,8 +573,10 @@
                     margin: {t: 5, b: 35, l: 150, r: 20},
                     showlegend: true,
                     legend: {orientation: 'h', x: 0.5, xanchor: 'center', y: -0.18, font: {size: 10}},
-                    xaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                            title: {text: 'count', font: {size: 10}}},
+                    xaxis: {
+                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                        title: {text: 'count', font: {size: 10}}
+                    },
                     yaxis: {autorange: 'reversed', tickfont: {size: 10}},
                 }), plotConfig);
                 @endif
