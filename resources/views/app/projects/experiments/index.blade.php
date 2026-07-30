@@ -37,58 +37,47 @@
 
     @if(isInBeta('dashboard-charts'))
         {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
-        <div class="row g-2 mb-3">
-            <div class="col-6 col-sm-3">
-                <div class="card border-0 shadow-sm h-100 text-center py-2">
-                    <div class="text-muted small">Total Studies</div>
-                    <div class="fw-bold fs-5 text-primary">{{ number_format($totalExps) }}</div>
-                    <div class="text-muted" style="font-size:.65rem;">in this project</div>
-                </div>
-            </div>
-            <div class="col-6 col-sm-3">
-                <div class="card border-0 shadow-sm h-100 text-center py-2">
-                    <div class="text-muted small">Contributors</div>
-                    <div class="fw-bold fs-5 text-info">{{ number_format($uniqueOwners) }}</div>
-                    <div class="text-muted" style="font-size:.65rem;">unique owners</div>
-                </div>
-            </div>
-            <div class="col-6 col-sm-3">
-                <div class="card border-0 shadow-sm h-100 text-center py-2">
-                    <div class="text-muted small">Last Updated</div>
-                    <div class="fw-bold fs-5 text-success" style="font-size:1rem !important;">
-                        {{ $lastUpdated ? \Carbon\Carbon::parse($lastUpdated)->diffForHumans() : '—' }}
+        <x-collapsible-section id="kpi-strip" title="KPI" storage-key="proj_exps_kpi">
+            <div class="row g-2 mb-3">
+                <div class="col-6 col-sm-3">
+                    <div class="card border-0 shadow-sm h-100 text-center py-2">
+                        <div class="text-muted small">Total Studies</div>
+                        <div class="fw-bold fs-5 text-primary">{{ number_format($totalExps) }}</div>
+                        <div class="text-muted" style="font-size:.65rem;">in this project</div>
                     </div>
-                    <div class="text-muted" style="font-size:.65rem;">most recent activity</div>
+                </div>
+                <div class="col-6 col-sm-3">
+                    <div class="card border-0 shadow-sm h-100 text-center py-2">
+                        <div class="text-muted small">Contributors</div>
+                        <div class="fw-bold fs-5 text-info">{{ number_format($uniqueOwners) }}</div>
+                        <div class="text-muted" style="font-size:.65rem;">unique owners</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-3">
+                    <div class="card border-0 shadow-sm h-100 text-center py-2">
+                        <div class="text-muted small">Last Updated</div>
+                        <div class="fw-bold fs-5 text-success" style="font-size:1rem !important;">
+                            {{ $lastUpdated ? \Carbon\Carbon::parse($lastUpdated)->diffForHumans() : '—' }}
+                        </div>
+                        <div class="text-muted" style="font-size:.65rem;">most recent activity</div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-3">
+                    <div class="card border-0 shadow-sm h-100 text-center py-2">
+                        <div class="text-muted small">Active Months</div>
+                        <div class="fw-bold fs-5 text-warning">{{ number_format(count($actMonths)) }}</div>
+                        <div class="text-muted" style="font-size:.65rem;">months with activity</div>
+                    </div>
                 </div>
             </div>
-            <div class="col-6 col-sm-3">
-                <div class="card border-0 shadow-sm h-100 text-center py-2">
-                    <div class="text-muted small">Active Months</div>
-                    <div class="fw-bold fs-5 text-warning">{{ number_format(count($actMonths)) }}</div>
-                    <div class="text-muted" style="font-size:.65rem;">months with activity</div>
-                </div>
-            </div>
-        </div>
+        </x-collapsible-section>
 
         {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
         @if($totalExps > 0)
-            <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                        type="button"
-                        id="exp-analytics-toggle"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#exp-analytics"
-                        aria-expanded="false"
-                        aria-controls="exp-analytics">
-                    <i class="fas fa-chevron-right fa-fw" id="exp-analytics-chevron"
-                       style="transition:transform .2s; font-size:.75rem;"></i>
-                    <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-                </button>
-                <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-            </div>
-            <div class="collapse mb-3" id="exp-analytics">
+            <x-collapsible-section id="exp-analytics"
+                                   title="Analytics"
+                                   :resize-plotly="true"
+                                   storage-key="proj_exps_samples_analytics">
                 <div class="row g-3">
 
                     {{-- Chart 1: Studies per contributor --}}
@@ -125,7 +114,7 @@
                     </div>
 
                 </div>
-            </div>
+            </x-collapsible-section>
         @endif {{-- totalExps > 0 --}}
     @endif
     <div class="row">
@@ -149,30 +138,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $expAnalyticsKey }}';
-                const panel = document.getElementById('exp-analytics');
-                const toggle = document.getElementById('exp-analytics-toggle');
-                const chevron = document.getElementById('exp-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',
