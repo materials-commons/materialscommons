@@ -2,7 +2,13 @@
 
 namespace App\Console\Commands\Cache;
 
+use App\Models\Activity;
+use App\Models\Attribute;
+use App\Models\Dataset;
+use App\Models\Entity;
 use App\Models\File;
+use App\Models\Project;
+use App\Models\User;
 use App\Support\CacheKeys;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -30,23 +36,65 @@ class RefreshSiteStatisticsCachesCommand extends Command
      */
     public function handle()
     {
-        // For now there is only one cache - The site statics cache for creating
-        // the files uploaded chart. This is very expensive to compute. We might
-        // create other caches in the future. Anything to do with files can be
-        // very expensive to compute.
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_USERS_CHART,
+            User::class,
+            'Users'
+        );
 
-        $this->info("Building files uploaded chart cache...");
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_PROJECTS_CHART,
+            Project::class,
+            'Projects'
+        );
 
-        $start = Carbon::parse(File::min("created_at"));
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_DATASETS_CHART,
+            Dataset::class,
+            'Datasets'
+        );
+
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_ENTITIES_CHART,
+            Entity::class,
+            'Entities'
+        );
+
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_ACTIVITIES_CHART,
+            Activity::class,
+            'Activities'
+        );
+
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_ATTRIBUTES_CHART,
+            Attribute::class,
+            'Attributes'
+        );
+
+        $this->refreshChartCache(
+            CacheKeys::SITE_STATISTICS_FILES_UPLOADED_CHART,
+            File::class,
+            'Files uploaded'
+        );
+
+        return self::SUCCESS;
+    }
+
+    private function refreshChartCache(string $cacheKey, string $modelClass, string $chartName): void
+    {
+        $this->info("Building {$chartName} chart cache...");
+
+        $start = Carbon::parse($modelClass::min("created_at"));
         $end = Carbon::now();
 
-        $rows = DB::table("files")
-                  ->selectRaw("YEAR(created_at) as year, MONTH(created_at) as month, COUNT(id) as aggregate")
-                  ->where("created_at", ">=", $start)
-                  ->where("created_at", "<=", $end)
-                  ->groupByRaw("YEAR(created_at), MONTH(created_at)")
-                  ->orderByRaw("YEAR(created_at), MONTH(created_at)")
-                  ->get();
+        $rows = $modelClass::query()
+                           ->selectRaw("YEAR(created_at) as year, MONTH(created_at) as month, COUNT(id) as aggregate")
+                           ->where("created_at", ">=", $start)
+                           ->where("created_at", "<=", $end)
+                           ->groupByRaw("YEAR(created_at), MONTH(created_at)")
+                           ->orderByRaw("YEAR(created_at), MONTH(created_at)")
+                           ->get();
 
         $accumulator = 0;
 
@@ -62,14 +110,12 @@ class RefreshSiteStatisticsCachesCommand extends Command
             ];
         });
 
-        Cache::forever(CacheKeys::SITE_STATISTICS_FILES_UPLOADED_CHART, [
+        Cache::forever($cacheKey, [
             'start'  => $start->format("Y-m-d"),
             'labels' => $dataPerMonth->pluck("month")->toArray(),
             'counts' => $dataPerMonth->pluck("count")->toArray(),
         ]);
 
-        $this->info('Files Uploaded chart cache refreshed.');
-
-        return self::SUCCESS;
+        $this->info("{$chartName} chart cache refreshed.");
     }
 }
