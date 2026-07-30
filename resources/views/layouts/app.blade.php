@@ -225,16 +225,16 @@
     <x-projects.uploads.status.scripts/>
 @endauth
 
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mms-chtml.js"></script>
+{{--<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mms-chtml.js"></script>--}}
 <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-            fontCache: 'global'
-        }
-    };
+    // MathJax = {
+    //     tex: {
+    //         inlineMath: [['$', '$'], ['\\(', '\\)']]
+    //     },
+    //     svg: {
+    //         fontCache: 'global'
+    //     }
+    // };
     // $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     $(document).ready(() => {
         mcutil.autosizeTextareas();
