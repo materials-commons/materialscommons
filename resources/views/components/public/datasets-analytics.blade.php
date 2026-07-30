@@ -1,4 +1,5 @@
 {{-- ══ KPI strip ════════════════════════════════════════════════════════════════ --}}
+{{--<x-collapsible-section id="pub-datasets-kpi" title="KPI" storage-key="pub_datasets_kpi">--}}
 <div class="row g-2 mb-3">
     <div class="col-6 col-sm-4">
         <div class="card border-0 shadow-sm h-100 text-center py-2">
@@ -22,27 +23,14 @@
         </div>
     </div>
 </div>
+{{--</x-collapsible-section>--}}
 
 {{-- ══ Analytics — collapsible, default CLOSED ════════════════════════════════ --}}
 @if($totalDatasets > 0)
-    <div class="d-flex align-items-center mb-2">
-        <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                type="button"
-                id="pub-analytics-toggle"
-                data-bs-toggle="collapse"
-                data-bs-target="#pub-analytics"
-                aria-expanded="false"
-                aria-controls="pub-analytics">
-            <i class="fas fa-chevron-right fa-fw" id="pub-analytics-chevron"
-               style="transition:transform .2s; font-size:.75rem;"></i>
-            <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-        </button>
-        <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-    </div>
-
-    <div class="collapse mb-4" id="pub-analytics">
+    <x-collapsible-section id="pub-dataset-analytics"
+                           title="Analytics"
+                           :resize-plotly="true"
+                           storage-key="pub_datasets_analytics">
         <div class="row g-3">
 
             {{-- Publications timeline --}}
@@ -117,181 +105,158 @@
             @endif
 
         </div>
-    </div>
+    </x-collapsible-section>
+@endif
 
-    {{-- Modal for timeline / license click details --}}
-    <div class="modal fade" id="analytics-detail-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-nav">
-                    <h5 class="modal-title help-color" id="analytics-detail-modal-title"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="analytics-detail-modal-body" style="max-height:60vh; overflow-y:auto;">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+{{-- Modal for timeline / license click details --}}
+<div class="modal fade" id="analytics-detail-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-nav">
+                <h5 class="modal-title help-color" id="analytics-detail-modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="analytics-detail-modal-body" style="max-height:60vh; overflow-y:auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
-    @push('scripts')
-        <script>
-            (function () {
-                const STORAGE_KEY = '{{ $storageKey }}';
-                const panel = document.getElementById('pub-analytics');
-                const toggle = document.getElementById('pub-analytics-toggle');
-                const chevron = document.getElementById('pub-analytics-chevron');
+@push('scripts')
+    <script>
+        (function () {
+            const plotConfig = {responsive: true, displayModeBar: false};
+            const base = (extra) => Object.assign({
+                paper_bgcolor: 'transparent', plot_bgcolor: 'transparent',
+                font: {family: 'inherit', size: 11}, showlegend: false,
+            }, extra);
 
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+            function showAnalyticsModal(title, datasets) {
+                document.getElementById('analytics-detail-modal-title').textContent = title;
+                const body = document.getElementById('analytics-detail-modal-body');
+                body.innerHTML = '';
+                if (datasets.length === 0) {
+                    const p = document.createElement('p');
+                    p.className = 'text-muted';
+                    p.textContent = 'No datasets found.';
+                    body.appendChild(p);
+                } else {
+                    const ul = document.createElement('ul');
+                    ul.className = 'list-unstyled mb-0';
+                    datasets.forEach(function (d) {
+                        const li = document.createElement('li');
+                        li.className = 'mb-1';
+                        const a = document.createElement('a');
+                        a.href = d.url;
+                        a.textContent = d.name;
+                        a.className = 'text-decoration-none';
+                        li.appendChild(a);
+                        ul.appendChild(li);
+                    });
+                    body.appendChild(ul);
                 }
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
+                Modal.getOrCreateInstance(
+                    document.getElementById('analytics-detail-modal')
+                ).show();
+            }
 
-                const plotConfig = {responsive: true, displayModeBar: false};
-                const base = (extra) => Object.assign({
-                    paper_bgcolor: 'transparent', plot_bgcolor: 'transparent',
-                    font: {family: 'inherit', size: 11}, showlegend: false,
-                }, extra);
+            @if(count($pubMonthLabels) > 1)
+            const pubMonthLabels = @json($pubMonthLabels);
+            const pubMonthDatasets = @json($pubMonthDatasets);
+            Plotly.newPlot('chart-pub-timeline', [{
+                type: 'bar',
+                x: pubMonthLabels,
+                y:    @json($pubMonthValues),
+                marker: {color: '#0d6efd'},
+                hovertemplate: '%{x}: %{y} dataset(s)<extra></extra>',
+            }], base({
+                margin: {t: 10, b: 55, l: 40, r: 10},
+                xaxis: {tickangle: -45, tickfont: {size: 9}},
+                yaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
+            }), plotConfig);
+            document.getElementById('chart-pub-timeline').on('plotly_click', function (data) {
+                const month = pubMonthLabels[data.points[0].pointIndex];
+                showAnalyticsModal('Datasets published in ' + month, pubMonthDatasets[month] || []);
+            });
+            @endif
 
-                function showAnalyticsModal(title, datasets) {
-                    document.getElementById('analytics-detail-modal-title').textContent = title;
-                    const body = document.getElementById('analytics-detail-modal-body');
-                    body.innerHTML = '';
-                    if (datasets.length === 0) {
-                        const p = document.createElement('p');
-                        p.className = 'text-muted';
-                        p.textContent = 'No datasets found.';
-                        body.appendChild(p);
-                    } else {
-                        const ul = document.createElement('ul');
-                        ul.className = 'list-unstyled mb-0';
-                        datasets.forEach(function (d) {
-                            const li = document.createElement('li');
-                            li.className = 'mb-1';
-                            const a = document.createElement('a');
-                            a.href = d.url;
-                            a.textContent = d.name;
-                            a.className = 'text-decoration-none';
-                            li.appendChild(a);
-                            ul.appendChild(li);
-                        });
-                        body.appendChild(ul);
-                    }
-                    Modal.getOrCreateInstance(
-                        document.getElementById('analytics-detail-modal')
-                    ).show();
-                }
+            @if(count($topViewsNames) > 0)
+            const topViewsUrls = @json($topViewsUrls);
+            Plotly.newPlot('chart-pub-views', [{
+                type: 'bar', orientation: 'h',
+                y:    @json($topViewsNames),
+                x:    @json($topViewsValues),
+                marker: {color: '#198754'},
+                hovertemplate: '%{y}: %{x:,} views<extra></extra>',
+                text: @json(array_map(fn($v) => number_format($v), $topViewsValues)),
+                textposition: 'inside', insidetextanchor: 'end',
+                textfont: {color: 'white', size: 9},
+            }], base({
+                margin: {t: 5, b: 30, l: 200, r: 20},
+                xaxis: {
+                    tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                    title: {text: 'views', font: {size: 10}}
+                },
+                yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+            }), plotConfig);
+            document.getElementById('chart-pub-views').on('plotly_click', function (data) {
+                window.location.href = topViewsUrls[data.points[0].pointIndex];
+            });
+            @endif
 
-                @if(count($pubMonthLabels) > 1)
-                const pubMonthLabels   = @json($pubMonthLabels);
-                const pubMonthDatasets = @json($pubMonthDatasets);
-                Plotly.newPlot('chart-pub-timeline', [{
-                    type: 'bar',
-                    x:    pubMonthLabels,
-                    y:    @json($pubMonthValues),
-                    marker: {color: '#0d6efd'},
-                    hovertemplate: '%{x}: %{y} dataset(s)<extra></extra>',
-                }], base({
-                    margin: {t: 10, b: 55, l: 40, r: 10},
-                    xaxis: {tickangle: -45, tickfont: {size: 9}},
-                    yaxis: {tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6'},
-                }), plotConfig);
-                document.getElementById('chart-pub-timeline').on('plotly_click', function (data) {
-                    const month = pubMonthLabels[data.points[0].pointIndex];
-                    showAnalyticsModal('Datasets published in ' + month, pubMonthDatasets[month] || []);
-                });
-                @endif
+            @if(count($topDownloadsNames) > 0)
+            const topDownloadsUrls = @json($topDownloadsUrls);
+            Plotly.newPlot('chart-pub-downloads', [{
+                type: 'bar', orientation: 'h',
+                y:    @json($topDownloadsNames),
+                x:    @json($topDownloadsValues),
+                marker: {color: '#0dcaf0'},
+                hovertemplate: '%{y}: %{x:,} downloads<extra></extra>',
+                text: @json(array_map(fn($v) => number_format($v), $topDownloadsValues)),
+                textposition: 'inside', insidetextanchor: 'end',
+                textfont: {color: 'white', size: 9},
+            }], base({
+                margin: {t: 5, b: 30, l: 200, r: 20},
+                xaxis: {
+                    tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                    title: {text: 'downloads', font: {size: 10}}
+                },
+                yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+            }), plotConfig);
+            document.getElementById('chart-pub-downloads').on('plotly_click', function (data) {
+                window.location.href = topDownloadsUrls[data.points[0].pointIndex];
+            });
+            @endif
 
-                @if(count($topViewsNames) > 0)
-                const topViewsUrls = @json($topViewsUrls);
-                Plotly.newPlot('chart-pub-views', [{
-                    type: 'bar', orientation: 'h',
-                    y:    @json($topViewsNames),
-                    x:    @json($topViewsValues),
-                    marker: {color: '#198754'},
-                    hovertemplate: '%{y}: %{x:,} views<extra></extra>',
-                    text: @json(array_map(fn($v) => number_format($v), $topViewsValues)),
-                    textposition: 'inside', insidetextanchor: 'end',
-                    textfont: {color: 'white', size: 9},
-                }], base({
-                    margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {
-                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'views', font: {size: 10}}
-                    },
-                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
-                }), plotConfig);
-                document.getElementById('chart-pub-views').on('plotly_click', function (data) {
-                    window.location.href = topViewsUrls[data.points[0].pointIndex];
-                });
-                @endif
+            @if(count($licenseLabels) > 0)
+            const licenseDatasets = @json($licenseDatasets);
+            Plotly.newPlot('chart-pub-licenses', [{
+                type: 'bar', orientation: 'h',
+                y:    @json($licenseLabels),
+                x:    @json($licenseValues),
+                marker: {color: '#6f42c1'},
+                hovertemplate: '%{y}: %{x} dataset(s)<extra></extra>',
+                text: @json(array_map(fn($v) => (string)$v, $licenseValues)),
+                textposition: 'inside', insidetextanchor: 'end',
+                textfont: {color: 'white', size: 9},
+            }], base({
+                margin: {t: 5, b: 30, l: 200, r: 20},
+                xaxis: {
+                    tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
+                    title: {text: 'datasets', font: {size: 10}}
+                },
+                yaxis: {autorange: 'reversed', tickfont: {size: 10}},
+            }), plotConfig);
+            document.getElementById('chart-pub-licenses').on('plotly_click', function (data) {
+                const license = data.points[0].y;
+                showAnalyticsModal('Datasets licensed under: ' + license, licenseDatasets[license] || []);
+            });
+            @endif
 
-                @if(count($topDownloadsNames) > 0)
-                const topDownloadsUrls = @json($topDownloadsUrls);
-                Plotly.newPlot('chart-pub-downloads', [{
-                    type: 'bar', orientation: 'h',
-                    y:    @json($topDownloadsNames),
-                    x:    @json($topDownloadsValues),
-                    marker: {color: '#0dcaf0'},
-                    hovertemplate: '%{y}: %{x:,} downloads<extra></extra>',
-                    text: @json(array_map(fn($v) => number_format($v), $topDownloadsValues)),
-                    textposition: 'inside', insidetextanchor: 'end',
-                    textfont: {color: 'white', size: 9},
-                }], base({
-                    margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {
-                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'downloads', font: {size: 10}}
-                    },
-                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
-                }), plotConfig);
-                document.getElementById('chart-pub-downloads').on('plotly_click', function (data) {
-                    window.location.href = topDownloadsUrls[data.points[0].pointIndex];
-                });
-                @endif
+        })();
+    </script>
+@endpush
 
-                @if(count($licenseLabels) > 0)
-                const licenseDatasets = @json($licenseDatasets);
-                Plotly.newPlot('chart-pub-licenses', [{
-                    type: 'bar', orientation: 'h',
-                    y:    @json($licenseLabels),
-                    x:    @json($licenseValues),
-                    marker: {color: '#6f42c1'},
-                    hovertemplate: '%{y}: %{x} dataset(s)<extra></extra>',
-                    text: @json(array_map(fn($v) => (string)$v, $licenseValues)),
-                    textposition: 'inside', insidetextanchor: 'end',
-                    textfont: {color: 'white', size: 9},
-                }], base({
-                    margin: {t: 5, b: 30, l: 200, r: 20},
-                    xaxis: {
-                        tickformat: ',d', tickfont: {size: 9}, gridcolor: '#dee2e6',
-                        title: {text: 'datasets', font: {size: 10}}
-                    },
-                    yaxis: {autorange: 'reversed', tickfont: {size: 10}},
-                }), plotConfig);
-                document.getElementById('chart-pub-licenses').on('plotly_click', function (data) {
-                    const license = data.points[0].y;
-                    showAnalyticsModal('Datasets licensed under: ' + license, licenseDatasets[license] || []);
-                });
-                @endif
-
-            })();
-        </script>
-    @endpush
-@endif
