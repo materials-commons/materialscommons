@@ -61,57 +61,16 @@
 @endphp
 
 {{-- ── KPI strip ──────────────────────────────────────────────────────────── --}}
-<div class="row g-2 mb-3">
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Attributes</div>
-            <div class="fw-bold fs-5 text-primary">{{ number_format($totalAttrs) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">in this project</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Total Values</div>
-            <div class="fw-bold fs-5 text-info">{{ number_format($totalValues) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">across all attrs</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">With Units</div>
-            <div class="fw-bold fs-5 text-success">{{ number_format($attrsWithUnits) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">have unit labels</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Numeric Range</div>
-            <div class="fw-bold fs-5 text-warning">{{ number_format($numericCount) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">have min &amp; max</div>
-        </div>
-    </div>
-</div>
+<x-collapsible-section title="KPI" id="aa-kpi" storage-key="proj_activity_attributes_kpi">
+    @include('app.projects.tabs._activity-attributes-kpi')
+</x-collapsible-section>
 
 {{-- ── Analytics toggle header ──────────────────────────────────────────── --}}
-<div class="d-flex align-items-center mb-3">
-    <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-            type="button"
-            id="pa-analytics-toggle"
-            data-bs-toggle="collapse"
-            data-bs-target="#pa-analytics"
-            aria-expanded="false"
-            aria-controls="pa-analytics">
-        <i class="fas fa-chevron-right fa-fw"
-           id="pa-analytics-chevron"
-           style="transition: transform 0.2s; font-size:.75rem;"></i>
-        <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-            Analytics
-        </span>
-    </button>
-    <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-</div>
 
-<div class="collapse mb-1" id="pa-analytics">
+<x-collapsible-section title="Analytics"
+                       id="aa-analytics"
+                       storage-key="proj_activity_attributes_analytics"
+                       :resize-plotly="true">
     @if($totalAttrs > 0)
 
         {{-- ── Coverage + Units row ──────────────────────────────────────────────── --}}
@@ -182,7 +141,7 @@
             </div>
         </div>
     @endif
-</div>
+</x-collapsible-section>
 
 {{-- ── Original DataTable — unchanged ────────────────────────────────────── --}}
 <div class="card border-0 shadow-sm">
@@ -315,32 +274,6 @@
             }), plotConfig);
             @endforeach
             @endif
-
-            // ── Analytics toggle (chevron + localStorage) ─────────────────────────
-            (function () {
-                const STORAGE_KEY = 'mc_pa_analytics_open';
-                const panel = document.getElementById('pa-analytics');
-                const chevron = document.getElementById('pa-analytics-chevron');
-                const toggle = document.getElementById('pa-analytics-toggle');
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    chevron.style.transform = 'rotate(90deg)';
-                    toggle.setAttribute('aria-expanded', 'true');
-                }
-
-                panel.addEventListener('show.bs.collapse', () => {
-                    chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-            })();
 
             document.addEventListener('livewire:navigating', () => {
                 $('#activities-dd').DataTable().destroy();
