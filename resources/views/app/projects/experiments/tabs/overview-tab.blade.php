@@ -35,7 +35,7 @@
     <div class="row g-4 mb-4">
         <div class="col-12 col-xl-7">
             <div class="card h-100">
-                <div class="card-header">
+                <div class="card-header background-white">
                     <div>
                         <h3 class="h6 mb-1">
                             <i class="fas fa-info-circle me-1"></i>
@@ -53,7 +53,7 @@
 
         <div class="col-12 col-xl-5">
             <div class="card h-100">
-                <div class="card-header">
+                <div class="card-header background-white">
                     <div>
                         <h3 class="h6 mb-1">
                             <i class="fas fa-file-import me-1"></i>
@@ -128,7 +128,7 @@
     </div>
 
     <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header background-white">
             <div>
                 <h3 class="h6 mb-1">
                     <i class="fas fa-align-left me-1"></i>
@@ -279,33 +279,6 @@
                     showlegend: false,
                 }), plotConfig);
                 @endif
-
-                const STORAGE_KEY = 'mc_exp_overview_analytics_open';
-                const panel = document.getElementById('exp-analytics');
-                const chevron = document.getElementById('exp-analytics-chevron');
-                const toggle = document.getElementById('exp-analytics-toggle');
-
-                if (panel && localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    chevron.style.transform = 'rotate(90deg)';
-                    toggle.setAttribute('aria-expanded', 'true');
-                }
-
-                if (panel) {
-                    panel.addEventListener('show.bs.collapse', () => {
-                        chevron.style.transform = 'rotate(90deg)';
-                        localStorage.setItem(STORAGE_KEY, 'true');
-                    });
-
-                    panel.addEventListener('hide.bs.collapse', () => {
-                        chevron.style.transform = 'rotate(0deg)';
-                        localStorage.setItem(STORAGE_KEY, 'false');
-                    });
-
-                    panel.addEventListener('shown.bs.collapse', () => {
-                        panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                    });
-                }
             })();
         </script>
     @endpush
