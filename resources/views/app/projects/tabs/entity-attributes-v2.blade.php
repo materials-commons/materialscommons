@@ -1,19 +1,3 @@
-{{--
-  Prototype v2 Sample Attributes tab.
-  To try it: in show.blade.php change
-      @include('app.projects.tabs.entity-attributes')
-  to
-      @include('app.projects.tabs.entity-attributes-v2')
-
-  Adds three charts above the existing DataTable (table is unchanged):
-    1. Value Coverage — horizontal bar: how many measurement values each
-                        attribute has, sorted highest first.
-    2. Units breakdown — donut: distribution of unit types across attributes.
-    3. Measurement Ranges — floating bar (min→max) for numeric attributes.
-                            Grouped by unit so axes are apples-to-apples.
-                            Only rendered when numeric min/max data exists.
---}}
-
 @php
     // ── Pre-process attribute data once so charts and table share the same pass ──
     use Illuminate\Support\Str;
@@ -73,59 +57,15 @@
 {{-- ══════════════════════════════════════════════════════════════════════════
      KPI strip
      ══════════════════════════════════════════════════════════════════════════ --}}
-<div class="row g-2 mb-3">
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Attributes</div>
-            <div class="fw-bold fs-5 text-primary">{{ number_format($totalAttrs) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">in this project</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Total Values</div>
-            <div class="fw-bold fs-5 text-info">{{ number_format($totalValues) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">across all attrs</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">With Units</div>
-            <div class="fw-bold fs-5 text-success">{{ number_format($attrsWithUnits) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">have unit labels</div>
-        </div>
-    </div>
-    <div class="col-6 col-sm-3">
-        <div class="card border-0 shadow-sm h-100 text-center py-2">
-            <div class="text-muted small">Numeric Range</div>
-            <div class="fw-bold fs-5 text-warning">{{ number_format($numericCount) }}</div>
-            <div class="text-muted" style="font-size:.65rem;">have min &amp; max</div>
-        </div>
-    </div>
-</div>
-
-{{-- ── Analytics toggle header ──────────────────────────────────────────── --}}
-<div class="d-flex align-items-center mb-3">
-    <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-            type="button"
-            id="ea-analytics-toggle"
-            data-bs-toggle="collapse"
-            data-bs-target="#ea-analytics"
-            aria-expanded="false"
-            aria-controls="ea-analytics">
-        <i class="fas fa-chevron-right fa-fw"
-           id="ea-analytics-chevron"
-           style="transition: transform 0.2s; font-size:.75rem;"></i>
-        <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-            Analytics
-        </span>
-    </button>
-    <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-</div>
+<x-collapsible-section title="KPI" id="ea-kpi" storage-key="proj_entity_attributes_kpi">
+    @include('app.projects.tabs._entity-attributes-kpi')
+</x-collapsible-section>
 
 {{-- ── Charts — collapsed by default ──────────────────────────────────────── --}}
-<div class="collapse mb-1" id="ea-analytics">
-
+<x-collapsible-section title="Analytics"
+                       id="ea-analytics"
+                       storage-key="proj_entity_attributes_analytics"
+                       :resize-plotly="true">
     @if($totalAttrs > 0)
 
         {{-- ══════════════════════════════════════════════════════════════════════════
@@ -203,8 +143,7 @@
             </div>
         </div>
     @endif
-
-</div>{{-- /#ea-analytics --}}
+</x-collapsible-section>
 
 
 {{-- ══════════════════════════════════════════════════════════════════════════
@@ -343,34 +282,6 @@
             }), plotConfig);
             @endforeach
             @endif
-
-
-
-            // ── Analytics toggle (chevron + localStorage) ─────────────────────────
-            (function () {
-                const STORAGE_KEY = 'mc_ea_analytics_open';
-                const panel = document.getElementById('ea-analytics');
-                const chevron = document.getElementById('ea-analytics-chevron');
-                const toggle = document.getElementById('ea-analytics-toggle');
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    chevron.style.transform = 'rotate(90deg)';
-                    toggle.setAttribute('aria-expanded', 'true');
-                }
-
-                panel.addEventListener('show.bs.collapse', () => {
-                    chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-            })();
 
             // DataTable
             document.addEventListener('livewire:navigating', () => {

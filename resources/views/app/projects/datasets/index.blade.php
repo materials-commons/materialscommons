@@ -46,8 +46,8 @@
         $actMonthValues = array_values($actMonths);
     @endphp
 
-    @if(isInBeta('dashboard-charts'))
-        {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <x-collapsible-section id="proj_datasets_kpis" title="KPI" storage-key="proj_datasets_kpis">
         <div class="row g-2 mb-3">
             <div class="col-6 col-sm-3">
                 <div class="card border-0 shadow-sm h-100 text-center py-2">
@@ -78,101 +78,89 @@
                 </div>
             </div>
         </div>
+    </x-collapsible-section>
 
-        {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
-        @if($totalDatasets > 0)
-            <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                        type="button"
-                        id="ds-analytics-toggle"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#ds-analytics"
-                        aria-expanded="false"
-                        aria-controls="ds-analytics">
-                    <i class="fas fa-chevron-right fa-fw" id="ds-analytics-chevron"
-                       style="transition:transform .2s; font-size:.75rem;"></i>
-                    <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-                </button>
-                <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-            </div>
-            <div class="collapse mb-3" id="ds-analytics">
-                <div class="row g-3">
+    {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    @if($totalDatasets > 0)
+        <x-collapsible-section id="ds-analytics"
+                               title="Analytics"
+                               :resize-plotly="true"
+                               storage-key="proj_datassets_analytics">
 
-                    {{-- Chart 1: Published vs Unpublished --}}
-                    <div class="col-12 col-md-3">
+            <div class="row g-3">
+
+                {{-- Chart 1: Published vs Unpublished --}}
+                <div class="col-12 col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-3 background-white">
+                            <h6 class="card-title text-muted mb-0">
+                                <i class="fas fa-database me-1"></i> Publication Status
+                            </h6>
+                            <p class="text-muted mb-1" style="font-size:.7rem;">
+                                Published vs unpublished datasets
+                            </p>
+                            <div id="chart-ds-status" style="height:220px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Chart 2: Tags --}}
+                @if(count($tagLabels) > 0)
+                    <div class="col-12 col-md-5">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
-                                    <i class="fas fa-database me-1"></i> Publication Status
+                                    <i class="fas fa-tags me-1"></i> Tag Usage
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Published vs unpublished datasets
+                                    How many datasets use each tag
+                                    @if(count($tagCounts) > 15)
+                                        , showing top 15
+                                    @endif
                                 </p>
-                                <div id="chart-ds-status" style="height:220px;"></div>
+                                <div id="chart-ds-tags"
+                                     style="height:{{ min(60 + count($tagLabels) * 26, 420) }}px;"></div>
                             </div>
                         </div>
                     </div>
+                @endif
 
-                    {{-- Chart 2: Tags --}}
-                    @if(count($tagLabels) > 0)
-                        <div class="col-12 col-md-5">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-tags me-1"></i> Tag Usage
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        How many datasets use each tag
-                                        @if(count($tagCounts) > 15)
-                                            , showing top 15
-                                        @endif
-                                    </p>
-                                    <div id="chart-ds-tags"
-                                         style="height:{{ min(60 + count($tagLabels) * 26, 420) }}px;"></div>
-                                </div>
+                {{-- Chart 3: Activity timeline --}}
+                @if(count($actMonthLabels) > 1)
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Datasets updated per month
+                                </p>
+                                <div id="chart-ds-activity" style="height:220px;"></div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
 
-                    {{-- Chart 3: Activity timeline --}}
-                    @if(count($actMonthLabels) > 1)
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Datasets updated per month
-                                    </p>
-                                    <div id="chart-ds-activity" style="height:220px;"></div>
-                                </div>
+                {{-- Chart 4: Publication timeline --}}
+                @if(count($pubMonthLabels) > 1)
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-3 background-white">
+                                <h6 class="card-title text-muted mb-0">
+                                    <i class="fas fa-share-square me-1"></i> Publication Timeline
+                                </h6>
+                                <p class="text-muted mb-1" style="font-size:.7rem;">
+                                    Number of datasets published per month
+                                </p>
+                                <div id="chart-ds-published" style="height:180px;"></div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
 
-                    {{-- Chart 4: Publication timeline --}}
-                    @if(count($pubMonthLabels) > 1)
-                        <div class="col-12">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-share-square me-1"></i> Publication Timeline
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Number of datasets published per month
-                                    </p>
-                                    <div id="chart-ds-published" style="height:180px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                </div>
             </div>
-        @endif {{-- totalDatasets > 0 --}}
+        </x-collapsible-section>
     @endif
     <a class="action-link float-end" href="{{route('projects.datasets.create', [$project])}}">
         <i class="fas fa-plus me-2"></i>Create Dataset
@@ -258,31 +246,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $dsAnalyticsKey }}';
-                const panel = document.getElementById('ds-analytics');
-                const toggle = document.getElementById('ds-analytics-toggle');
-                const chevron = document.getElementById('ds-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',

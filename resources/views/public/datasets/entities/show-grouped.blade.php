@@ -22,7 +22,7 @@
 
     <div class="row ms-1">
         @foreach($activityTypes as $activityType)
-            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">
+            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 bg-white border rounded p-3">
                 @include('public.datasets.entities.activity-type-card', [
                     'activityType' => $activityType,
                     'files' => $filesByActivityType->get($activityType->name, []),

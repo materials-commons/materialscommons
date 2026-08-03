@@ -115,7 +115,7 @@
             <p class="text-white text-opacity-75 fw-semibold mb-2 small text-uppercase letter-spacing-1"
                style="letter-spacing:.12em;">Materials Commons 2.0</p>
             <h1 class="fw-bold display-5 mb-3">
-                The free platform for materials science research
+                The open platform for materials science research
             </h1>
             <p class="lead text-white text-opacity-75 mb-4 mx-auto" style="max-width:600px;">
                 Free project space and publishing for researchers. Track your research impact

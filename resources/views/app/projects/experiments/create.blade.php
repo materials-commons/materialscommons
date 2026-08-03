@@ -7,53 +7,47 @@
 @stop
 
 @section('content')
-    {{--            <x-card-container>--}}
-    @include('app.projects.experiments._overview')
-
-    <form method="post"
-          action="{{route('projects.experiments.store', [$project, 'show-overview' => request()->input('show-overview', false)])}}"
-          id="experiment-create">
-        @csrf
-        <div class="row">
-            {{-- Left Column --}}
-            <div class="col-lg-6 col-sm-12 col-md-6">
-                @include('app.projects.experiments._create-details')
+    <div>
+        <div class="mb-3 d-flex flex-wrap align-items-start justify-content-between gap-3">
+            <div>
+                <h2 class="h5 mb-1">Create Study</h2>
+                <div class="text-muted small">
+                    Create a new study and optionally load data from a spreadsheet or Google Sheet.
+                </div>
             </div>
 
-            {{-- Right Column --}}
-            <div class="col-lg-6 col-sm-12 col-md-6">
-                <h3>Spreadsheet Import Options</h3>
-                <p class="mb-3">
-                    Import data from a spreadsheet to automatically set up your study.
-                    <a href="/mcdocs2/guides/spreadsheets.html" target="_blank" class="ms-2">
-                        <i class="fas fa-book-open"></i> View Format
-                    </a>
-                </p>
+            <span class="badge text-bg-light border">
+                <i class="fas fa-flask me-1"></i>
+                New Study
+            </span>
+        </div>
 
-                <br/>
-                @include('app.projects.experiments._create-import-excel')
+        @include('app.projects.experiments._overview')
 
-                <div class="text-center my-3">
-                    <span class="px-3 text-muted">OR</span>
+        <x-projects.experiments.create.help-panel />
+
+        <form method="post"
+              action="{{ route('projects.experiments.store', [$project, 'show-overview' => request()->input('show-overview', false)]) }}"
+              id="experiment-create">
+            @csrf
+
+            <div class="row g-4">
+                <div class="col-12 col-xl-5">
+                    <x-projects.experiments.create.details-panel :project="$project" />
                 </div>
 
-                @include('app.projects.experiments._create-import-google-sheet')
-
+                <div class="col-12 col-xl-7">
+                    <x-projects.experiments.create.import-panel
+                        :project="$project"
+                        :excel-files="$excelFiles"
+                        :sheets="$sheets"
+                    />
+                </div>
             </div>
-        </div>
-        <input hidden id="project_id" name="project_id" value="{{$project->id}}">
-    </form>
 
+            <input hidden id="project_id" name="project_id" value="{{ $project->id }}">
+        </form>
 
-    @include('common.errors')
+        @include('common.errors')
+    </div>
 @endsection
-
-{{--@push('styles')--}}
-{{--    <style>--}}
-{{--        .bootstrap-select.show .dropdown-menu {--}}
-{{--            max-width: 100%;--}}
-{{--            width: 100%;--}}
-{{--        }--}}
-
-{{--    </style>--}}
-{{--@endpush--}}

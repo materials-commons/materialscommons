@@ -40,8 +40,19 @@
         $dirValues = array_values(array_slice($dirCounts, 0, 15, true));
     @endphp
 
-    @if(isInBeta('dashboard-charts'))
-        {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <h4>Sheets</h4>
+    <div class="float-end">
+        <a data-bs-toggle="modal" href="#add-google-sheet-modal"
+           class="btn btn-success">
+            <i class="fa fas fa-plus me-2"></i>Add Google Sheet
+        </a>
+    </div>
+    @include('app.projects.files._new-sheet-modal')
+    <br>
+    <br>
+
+    {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <x-collapsible-section title="KPI" id="files-kpi" storage-key="proj_sheets_kpi">
         <div class="row g-2 mb-3">
             <div class="col-6 col-sm-3">
                 <div class="card border-0 shadow-sm h-100 text-center py-2">
@@ -72,79 +83,56 @@
                 </div>
             </div>
         </div>
+    </x-collapsible-section>
+    {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    @if($total > 0)
+        <x-collapsible-section title="Analytics"
+                               id="sheets-analytics"
+                               :resize-plotly="true"
+                               storage-key="proj_sheets_analytics">
+            <div class="row g-3">
 
-        {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
-        @if($total > 0)
-            <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                        type="button"
-                        id="sheets-analytics-toggle"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#sheets-analytics"
-                        aria-expanded="false"
-                        aria-controls="sheets-analytics">
-                    <i class="fas fa-chevron-right fa-fw" id="sheets-analytics-chevron"
-                       style="transition:transform .2s; font-size:.75rem;"></i>
-                    <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-                </button>
-                <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-            </div>
-            <div class="collapse mb-3" id="sheets-analytics">
-                <div class="row g-3">
+                {{-- Chart 1: Type breakdown --}}
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-3 background-white">
+                            <h6 class="card-title text-muted mb-0">
+                                <i class="fas fa-table me-1"></i> Sheet Types
+                            </h6>
+                            <p class="text-muted mb-1" style="font-size:.7rem;">
+                                Breakdown by format
+                            </p>
+                            <div id="chart-sheets-types" style="height:200px;"></div>
+                        </div>
+                    </div>
+                </div>
 
-                    {{-- Chart 1: Type breakdown --}}
-                    <div class="col-12 col-md-4">
+                {{-- Chart 2: By directory --}}
+                @if(count($dirLabels) > 0)
+                    <div class="col-12 col-md-8">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
-                                    <i class="fas fa-table me-1"></i> Sheet Types
+                                    <i class="fas fa-folder-open me-1"></i> Sheets by Directory
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Breakdown by format
+                                    Which folders contain the most sheet files
+                                    @if(count($dirCounts) > 15)
+                                        , showing top 15
+                                    @endif
                                 </p>
-                                <div id="chart-sheets-types" style="height:200px;"></div>
+                                <div id="chart-sheets-dirs"
+                                     style="height:{{ min(60 + count($dirLabels) * 26, 380) }}px;"></div>
                             </div>
                         </div>
                     </div>
+                @endif
 
-                    {{-- Chart 2: By directory --}}
-                    @if(count($dirLabels) > 0)
-                        <div class="col-12 col-md-8">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-folder-open me-1"></i> Sheets by Directory
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        Which folders contain the most sheet files
-                                        @if(count($dirCounts) > 15)
-                                            , showing top 15
-                                        @endif
-                                    </p>
-                                    <div id="chart-sheets-dirs"
-                                         style="height:{{ min(60 + count($dirLabels) * 26, 380) }}px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                </div>
             </div>
-        @endif {{-- total > 0 --}}
-    @endif
-    <h4>Sheets</h4>
-    <div class="float-end">
-        <a data-bs-toggle="modal" href="#add-google-sheet-modal"
-           class="btn btn-success">
-            <i class="fa fas fa-plus me-2"></i>Add Google Sheet
-        </a>
-    </div>
-    @include('app.projects.files._new-sheet-modal')
-    <br>
-    <br>
-    <br>
+        </x-collapsible-section>
+    @endif {{-- total > 0 --}}
+
+
     <table id="sheets" class="table table-hover" style="width:100%">
         <thead class="table-light">
         <tr>
@@ -205,30 +193,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $sheetsKey }}';
-                const panel = document.getElementById('sheets-analytics');
-                const toggle = document.getElementById('sheets-analytics-toggle');
-                const chevron = document.getElementById('sheets-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',

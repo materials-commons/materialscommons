@@ -82,9 +82,9 @@
 
     <div class="row g-3">
         @foreach($activities as $activity)
-            {{--            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 white-box">--}}
+            {{--            <div class="col-lg-5 col-md-10 col-sm-10 ms-2 mt-2 mb-2 bg-white border rounded p-3">--}}
             <div class="col-lg-6 col-md-12">
-                <div class="white-box h-100">
+                <div class="bg-white border rounded p-3 h-100">
                     <x-activities.activities-card :activity="$activity"
                                                   :project="$project"
                                                   :experiment="$experiment"

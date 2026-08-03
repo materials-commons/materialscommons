@@ -323,26 +323,24 @@
 {{-- ══ Dataset metadata ═════════════════════════════════════════════════════════ --}}
 <form>
     <x-datasets.show-overview :dataset="$dataset">
-        <div class="vr"></div>
-        <div class="px-3 py-2">
-            <div class="text-muted fw-semibold"
-                 style="font-size:.7rem; text-transform:uppercase; letter-spacing:.04em;">Total Size
-            </div>
-            <div>{{ formatBytes($dataset->total_files_size) }}</div>
+        <div class="vr d-none d-md-block"></div>
+        <div class="px-3 py-2 bg-body-tertiary border rounded-3">
+            <div class="text-muted fw-semibold small text-uppercase">Total Size</div>
+            <div class="fw-semibold">{{ formatBytes($dataset->total_files_size) }}</div>
         </div>
     </x-datasets.show-overview>
 
     <x-datasets.show-authors :authors="$dataset->ds_authors" :author-users="$authorUsers"/>
-
-    <div class="mb-3 mt-2">
-        @include('partials.overview._overview')
-    </div>
 
     @if(!blank($dataset->description))
         <x-show-description :description="$dataset->description"/>
     @elseif (!blank($dataset->summary))
         <x-show-summary :summary="$dataset->summary"/>
     @endif
+
+    <div class="mb-3 mt-2">
+        @include('partials.overview._overview')
+    </div>
 
     <x-datasets.show-tags :tags="$dataset->tags"/>
 

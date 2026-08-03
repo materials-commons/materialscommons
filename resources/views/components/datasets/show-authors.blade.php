@@ -1,11 +1,11 @@
 @props(['authors', 'authorUsers' => null])
 
 @if(!blank($authors))
-    <div class="mb-3 mt-2">
-        <label class="fw-semibold text-muted small text-uppercase" style="letter-spacing:.03em;">
+    <div class="mb-4 mt-3">
+        <div class="fw-semibold text-muted small text-uppercase mb-2">
             <i class="fas fa-users me-1"></i>Authors
-        </label>
-        <div class="d-flex flex-wrap gap-2 mt-1">
+        </div>
+        <div class="d-flex flex-wrap gap-2">
             @foreach($authors as $author)
                 @php
                     $name        = $author['name'] ?? '';
@@ -14,29 +14,34 @@
                 @endphp
                 @if($mcUser)
                     <a href="{{ route('public.authors.show', $mcUser) }}"
-                       class="border rounded px-2 py-1 text-decoration-none bg-light d-inline-flex flex-column"
-                       style="line-height:1.3;">
-                        <span class="d-flex align-items-center gap-1">
-                            <i class="fas fa-user-circle text-muted" style="font-size:.8rem;"></i>
-                            <span class="fw-semibold text-dark" style="font-size:.82rem;">{{ $name }}</span>
-                            <span class="badge text-bg-primary ms-1" style="font-size:.6rem; padding:.15em .3em;">MC</span>
+                       class="card card-body border-0 shadow-sm py-2 px-3 text-decoration-none bg-body-tertiary">
+                        <span class="d-flex align-items-center gap-2">
+                            <span class="badge rounded-pill text-bg-primary">
+                                <i class="fas fa-user-check me-1"></i>MC
+                            </span>
+                            <span class="fw-semibold text-dark">{{ $name }}</span>
                         </span>
                         @if($affiliation)
-                            <span class="text-muted ms-3" style="font-size:.72rem;">{{ $affiliation }}</span>
+                            <span class="text-muted small mt-1">
+                                <i class="fas fa-building me-1"></i>{{ $affiliation }}
+                            </span>
                         @endif
                     </a>
                 @else
                     <a href="{{ route('public.authors.search', ['search' => $name]) }}"
-                       class="border rounded px-2 py-1 text-decoration-none bg-light d-inline-flex flex-column"
-                       style="line-height:1.3;"
+                       class="card card-body border shadow-sm py-2 px-3 text-decoration-none bg-white"
                        title="Search datasets by {{ $name }}">
-                        <span class="d-flex align-items-center gap-1">
-                            <i class="fas fa-user-circle text-muted" style="font-size:.8rem;"></i>
-                            <span class="text-dark" style="font-size:.82rem;">{{ $name }}</span>
-                            <i class="fas fa-search text-muted ms-1" style="font-size:.65rem;"></i>
+                        <span class="d-flex align-items-center gap-2">
+                            <span class="badge rounded-pill text-bg-light border text-muted">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="fw-semibold text-dark">{{ $name }}</span>
+                            <i class="fas fa-search text-muted small ms-auto"></i>
                         </span>
                         @if($affiliation)
-                            <span class="text-muted ms-3" style="font-size:.72rem;">{{ $affiliation }}</span>
+                            <span class="text-muted small mt-1">
+                                <i class="fas fa-building me-1"></i>{{ $affiliation }}
+                            </span>
                         @endif
                     </a>
                 @endif

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Etl\EtlRunStatus;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,7 +39,14 @@ class EtlRun extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'owner_id'                    => 'integer',
+        'owner_id' => 'integer',
+
+        'status'                      => EtlRunStatus::class,
+        'progress_percent'            => 'integer',
+        'started_at'                  => 'datetime',
+        'finished_at'                 => 'datetime',
+        'cancel_requested_at'         => 'datetime',
+        'summary'                     => 'array',
 
         // activities
         'n_activities'                => 'integer',
@@ -91,6 +99,101 @@ class EtlRun extends Model
     public function entities()
     {
         return $this->morphToMany(Entity::class, 'item', 'item2entity');
+    }
+
+    public function steps()
+    {
+        return $this->hasMany(EtlRunStep::class)->orderBy('sort_order');
+    }
+
+    public function processResults()
+    {
+        return $this->hasMany(EtlRunProcessResult::class)->orderBy('created_at');
+    }
+
+    public function validationMessages()
+    {
+        return $this->hasMany(EtlRunValidationMessage::class)->orderBy('created_at');
+    }
+
+    public function logEntries()
+    {
+        return $this->hasMany(EtlRunLogEntry::class)->orderBy('created_at');
+    }
+
+    public function latestLogEntries()
+    {
+        return $this->hasMany(EtlRunLogEntry::class)->latest();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status?->isActive() ?? false;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status?->isFinished() ?? false;
+    }
+
+    public function markRunning(EtlRunStatus $status, string $currentStep, ?string $message = null): void
+    {
+        $this->update([
+            'status'          => $status,
+            'current_step'    => $currentStep,
+            'current_message' => $message,
+            'started_at'      => $this->started_at ?? Carbon::now(),
+        ]);
+    }
+
+    public function updateProgress(int $progressPercent, ?string $message = null): void
+    {
+        $progressPercent = max(0, min(100, $progressPercent));
+
+        $data = [
+            'progress_percent' => $progressPercent,
+        ];
+
+        if (!is_null($message)) {
+            $data['current_message'] = $message;
+        }
+
+        $this->update($data);
+    }
+
+    public function markCompleted(?array $summary = null): void
+    {
+        $this->update([
+            'status'           => 'completed',
+            'progress_percent' => 100,
+            'current_step'     => 'completed',
+            'current_message'  => 'Import completed successfully.',
+            'summary'          => $summary,
+            'finished_at'      => Carbon::now(),
+        ]);
+    }
+
+    public function markFailed(string $message): void
+    {
+        $this->update([
+            'status'          => 'failed',
+            'current_step'    => 'failed',
+            'current_message' => $message,
+            'error_message'   => $message,
+            'finished_at'     => Carbon::now(),
+        ]);
+    }
+
+    public function requestCancellation(): void
+    {
+        $this->update([
+            'cancel_requested_at' => Carbon::now(),
+        ]);
+    }
+
+    public function cancellationRequested(): bool
+    {
+        return !is_null($this->cancel_requested_at);
     }
 
     public function logPath(): string

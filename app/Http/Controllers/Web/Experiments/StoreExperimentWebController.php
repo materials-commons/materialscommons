@@ -14,7 +14,7 @@ use function route;
 class StoreExperimentWebController extends Controller
 {
     public function __invoke(CreateExperimentRequest $request, CreateExperimentAction $createExperimentAction,
-                             Project                 $project)
+        Project $project)
     {
 
         $validated = $request->validated();
@@ -51,6 +51,18 @@ class StoreExperimentWebController extends Controller
             $showOverview = $request->input('show-overview', false);
             return redirect(route('projects.folders.index', [$project, 'show-overview' => $showOverview]));
         }
+
+        if ($experiment->relationLoaded('queuedEtlRun')) {
+            $queuedEtlRun = $experiment->getRelation('queuedEtlRun');
+            if (!is_null($queuedEtlRun)) {
+                return redirect(route('projects.experiments.etl_run.status', [
+                    $project,
+                    $experiment,
+                    $queuedEtlRun,
+                ]));
+            }
+        }
+
         return redirect(route('projects.experiments.show', [$project, $experiment]));
     }
 

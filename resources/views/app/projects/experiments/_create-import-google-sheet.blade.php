@@ -1,7 +1,7 @@
 <div class="row me-2 ms-1">
     {{-- Google Sheets Option --}}
-    <div class="col-12 white-box">
-        <h5 class="text-centerx mt-3 me-2 font-weight-bold">
+    <div class="col-12 bg-white border rounded p-3">
+        <h5 class="mt-3 me-2 font-weight-bold">
             <i class="fab fa-google me-2"></i> Google Sheets
         </h5>
         <hr>

@@ -14,11 +14,9 @@
         @include('app.dashboard.tabs.projects._recently-accessed-projects')
     </div>
     <div class="col-lg-8">
-        <div class="table-container">
-            <div class="card table-card">
-                <div class="card-body inner-card">
-                    @include('app.dashboard.tabs.projects._projects-table')
-                </div>
+        <div class="card">
+            <div class="card-body inner-card">
+                @include('app.dashboard.tabs.projects._projects-table')
             </div>
         </div>
     </div>
