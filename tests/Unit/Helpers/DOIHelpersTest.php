@@ -15,7 +15,7 @@ class DOIHelpersTest extends TestCase
         $this->markTestSkipped('DOI Creation skipped for now');
         $client = new Client();
         $serviceUrl = config('doi.service_url');
-        $uri = "${serviceUrl}/shoulder/doi:".config('doi.namespace');
+        $uri = "{$serviceUrl}/shoulder/doi:".config('doi.namespace');
         $body = "_target:https://materialscommons.org\n".
             "datacite.creator: Test Author\n".
             "datacite.title: Test publish 1111\n".

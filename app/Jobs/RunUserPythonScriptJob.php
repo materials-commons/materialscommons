@@ -69,12 +69,12 @@ class RunUserPythonScriptJob implements ShouldQueue
         $scriptName = $this->run->script->scriptFile->name;
         $scriptPath = PathHelpers::normalizePath("{$scriptDir}/{$scriptName}");
 
-        $dockerEnvVarsWithAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='{$mcapikey}'";
+        $dockerEnvVarsWithAPIKey = "-e INPUT_FILE='{$inputFilePath}' -e RUN_DIR='{$runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='{$mcapikey}'";
         $dockerRunCommand = "docker run --rm --user {$user}:{$user} {$dockerEnvVarsWithAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
 
-        $dockerEnvVarsWithoutAPIKey = "-e INPUT_FILE='${inputFilePath}' -e RUN_DIR='${runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='...not shown...'";
+        $dockerEnvVarsWithoutAPIKey = "-e INPUT_FILE='{$inputFilePath}' -e RUN_DIR='{$runDir}' -e WRITE_DIR='/out' -e READ_DIR='/data' -e PROJECT_ID='{$projectId}' -e MCAPIKEY='...not shown...'";
         $dockerRunCommandToLog = "docker run --rm --user {$user}:{$user} {$dockerEnvVarsWithoutAPIKey} -v {$inputPath}:/data:ro -v {$outputPath}:/out mc/mcpyimage python {$scriptPath} >> {$logPath} 2>&1";
-        Storage::disk('mcfs')->put($logPathPartial, "${dockerRunCommandToLog}\n");
+        Storage::disk('mcfs')->put($logPathPartial, "{$dockerRunCommandToLog}\n");
         Storage::disk('mcfs')->append($logPathPartial, "-------- script log starts --------\n\n");
         $this->run->update([
             'started_at' => Carbon::now(),

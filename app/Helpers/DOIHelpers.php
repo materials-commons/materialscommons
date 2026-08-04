@@ -14,7 +14,7 @@ class DOIHelpers
         $year = Carbon::now()->year;
         $DSURL = config('doi.dataset_url');
         $serviceUrl = config('doi.service_url');
-        $uri = "${serviceUrl}/shoulder/doi:".config('doi.namespace');
+        $uri = "{$serviceUrl}/shoulder/doi:".config('doi.namespace');
         $body = "_target:{$DSURL}/{$datasetId}\n".
             "datacite.creator: {$author}\n".
             "datacite.title: {$title}\n".

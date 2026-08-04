@@ -68,7 +68,7 @@ abstract class AbstractImporter
 
         $this->setup();
 
-        $dumpFilePath = "{$this->pathToDumpfiles}/${file}";
+        $dumpFilePath = "{$this->pathToDumpfiles}/{$file}";
         $startedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
         echo "\nLoading file {$dumpFilePath} started at {$startedAt}\n";
         $handle = fopen($dumpFilePath, "r");
@@ -107,7 +107,7 @@ abstract class AbstractImporter
 
             if ($count % 1000 == 0) {
                 $now = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
-                echo "\n   Processed ${count}/Loaded {$loadedCount} entries at {$now}...\n";
+                echo "\n   Processed {$count}/Loaded {$loadedCount} entries at {$now}...\n";
             }
         }
 
@@ -116,7 +116,7 @@ abstract class AbstractImporter
         $this->existing = [];
         $this->cleanup();
         $finishedAt = Carbon::now()->setTimezone('America/Detroit')->toTimeString();
-        echo "\nFinished processing {$count} entries, loaded ${loadedCount} from file {$dumpFilePath} at {$finishedAt}\n";
+        echo "\nFinished processing {$count} entries, loaded {$loadedCount} from file {$dumpFilePath} at {$finishedAt}\n";
         return true;
     }
 }

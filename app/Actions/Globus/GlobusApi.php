@@ -34,7 +34,7 @@ class GlobusApi
             $globusApi->authenticate();
         } catch (\Exception $e) {
             $msg = $e->getMessage();
-            Log::error("Failed authenticating to globus ${msg}");
+            Log::error("Failed authenticating to globus {$msg}");
         }
         return $globusApi;
     }
@@ -48,7 +48,7 @@ class GlobusApi
             $globusApi->authenticate();
         } catch (\Exception $e) {
             $msg = $e->getMessage();
-            echo "Failed authenticating to globus ${msg}\n";
+            echo "Failed authenticating to globus {$msg}\n";
         }
         return $globusApi;
     }
@@ -149,7 +149,7 @@ class GlobusApi
     public function deleteEndpointAclRule($endpointId, $accessId)
     {
         $params = $this->createParams([]);
-        $url = self::TransferManagerUrlBase."/endpoint/${endpointId}/access/{$accessId}";
+        $url = self::TransferManagerUrlBase."/endpoint/{$endpointId}/access/{$accessId}";
         $resp = $this->client->request('DELETE', $url, $params);
         if ($resp->getStatusCode() === 401) {
             $this->authenticate();

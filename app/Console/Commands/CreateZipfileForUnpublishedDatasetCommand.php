@@ -88,7 +88,7 @@ class CreateZipfileForUnpublishedDatasetCommand extends Command
 
             $uuidPath = $this->getFilePathForFile($file);
             $fullPath = Storage::disk('mcfs')->path("{$uuidPath}");
-//            echo "   Adding to zipfile ${fullPath}...\n";
+//            echo "   Adding to zipfile {$fullPath}...\n";
             $fileCount++;
             if ($fileCount % 100 == 0) {
                 echo "Added {$fileCount} files to zipfile...\n";
