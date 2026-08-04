@@ -18,6 +18,7 @@ public/css/app.css
 .env.mysql
 .env.tmp
 .phpunit.result.cache
+/.phpunit.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log

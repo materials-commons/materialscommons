@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./app</directory>
-    </include>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="vendor/autoload.php" colors="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
   <testsuites>
     <testsuite name="Unit">
       <directory suffix="Test.php">./tests/Unit</directory>
@@ -21,11 +16,18 @@
     <env name="QUEUE_CONNECTION" value="sync"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="DB_CONNECTION" value="sqlite"/>
+    <!-- Keeps the suite hermetic: without this, model factories fire the Scout
+         observer and try to index against a live Meilisearch on localhost:7700. -->
+    <env name="SCOUT_DRIVER" value="null"/>
     <env name="MCFS_DIR" value="/home/gtarcea/workspace/src/github.com/materials-commons/materialscommons/storage/app/mcfs"/>
-      <env name="SCRIPT_RUNS_OUT_DIR"
-           value="/home/gtarcea/workspace/src/github.com/materials-commons/materialscommons/storage/app/script_runs_out"/>
+    <env name="SCRIPT_RUNS_OUT_DIR" value="/home/gtarcea/workspace/src/github.com/materials-commons/materialscommons/storage/app/script_runs_out"/>
     <env name="DB_DATABASE" value=":memory:"/>
     <!--        <env name="DB_DATABASE" value="mctest"/>-->
     <env name="TELESCOPE_ENABLED" value="false"/>
   </php>
+  <source>
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+  </source>
 </phpunit>
