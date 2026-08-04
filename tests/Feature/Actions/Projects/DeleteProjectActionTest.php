@@ -6,13 +6,14 @@ use App\Actions\Projects\DeleteProjectAction;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function when_deleting_a_project_the_team_is_also_deleted()
     {
         $project = ProjectFactory::create();
@@ -24,7 +25,7 @@ class DeleteProjectActionTest extends TestCase
         $this->assertDatabaseMissing('teams', ['id' => $team->id]);
     }
 
-    /** @test */
+    #[Test]
     public function when_deleting_a_project_the_files_are_also_deleted()
     {
         $project = ProjectFactory::create();

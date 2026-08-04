@@ -3,11 +3,12 @@
 namespace Tests\Unit\Imports\Etl;
 
 use App\Imports\Etl\AttributeHeader;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AttributeHeaderTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_no_units_or_type()
     {
         $header = "temp";
@@ -35,7 +36,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_no_units_with_type()
     {
         $header = "p:temp";
@@ -57,7 +58,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_units_with_type()
     {
         $header = "p:temp(m)";
@@ -85,7 +86,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("m", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_units_with_no_type()
     {
         $header = "temp(m)";
@@ -107,7 +108,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("m", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_file_type()
     {
         $header = "file:/a/b/c";
@@ -123,7 +124,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_ignore_type()
     {
         $header = "ignore: abc";
@@ -139,7 +140,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_bad_type()
     {
         $header = "bad: abc";
@@ -149,7 +150,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_calculation()
     {
         $header = "calc:my calculations";
@@ -159,7 +160,7 @@ class AttributeHeaderTest extends TestCase
         $this->assertEquals("", $attrHeader->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_calculation_no_name()
     {
         $header = "c:";

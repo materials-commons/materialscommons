@@ -3,11 +3,12 @@
 namespace Tests\Unit\Actions\Globus;
 
 use App\Actions\Globus\GlobusApi;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class GlobusApiTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_authentication()
     {
         $ccUser = config('globus.cc_user');
@@ -19,7 +20,7 @@ class GlobusApiTest extends TestCase
         $this->assertEquals('Bearer', $resp['token_type']);
     }
 
-    /** @test */
+    #[Test]
     public function test_get_endpoint_tasks()
     {
         $endpoint = config('globus.endpoint');
@@ -29,7 +30,7 @@ class GlobusApiTest extends TestCase
         $this->assertEquals('task_list', $resp['DATA_TYPE']);
     }
 
-    /** @test */
+    #[Test]
     public function test_get_identities()
     {
         $globusApi = $this->createApiClient();

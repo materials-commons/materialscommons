@@ -8,13 +8,14 @@ use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ExperimentFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EntityTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function activityNamesForEntities_gets_all_unique_activity_names_for_entities()
     {
         $project = ProjectFactory::withExperiment()->create();

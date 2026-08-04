@@ -7,13 +7,14 @@ use App\Models\Entity;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateDatasetEntitySelectionApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_can_add_and_remove_entities_from_dataset()
     {
         $this->withoutExceptionHandling();

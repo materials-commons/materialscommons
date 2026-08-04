@@ -7,13 +7,14 @@ use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class MoveFileActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_move_a_file_to_an_empty_directory_and_update_its_attributes()
     {
         $user = User::factory()->create();
@@ -35,7 +36,7 @@ class MoveFileActionTest extends TestCase
         $this->assertTrue($movedFile->current);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_move_a_file_when_a_file_with_same_name_exists_and_mark_it_as_inactive()
     {
         $user = User::factory()->create();
@@ -56,7 +57,7 @@ class MoveFileActionTest extends TestCase
         $this->assertFalse($existingFile->current);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_move_a_file_to_a_project_where_user_has_access()
     {
         $user = User::factory()->create();

@@ -4,13 +4,14 @@ namespace Tests\Feature\Http\Controllers\Api\Datasets;
 
 use Facades\Tests\Factories\DatasetFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ShowDatasetApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_a_project_dataset()
     {
         $this->withoutExceptionHandling();
@@ -22,7 +23,7 @@ class ShowDatasetApiControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function dataset_contains_counts()
     {
         $this->withoutExceptionHandling();

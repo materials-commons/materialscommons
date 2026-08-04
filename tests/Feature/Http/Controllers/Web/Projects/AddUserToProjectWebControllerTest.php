@@ -6,13 +6,14 @@ use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AddUserToProjectWebControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function owner_of_project_can_add_users_to_project()
     {
         $this->withoutExceptionHandling();
@@ -27,7 +28,7 @@ class AddUserToProjectWebControllerTest extends TestCase
         $this->assertDatabaseHas('team2member', ['team_id' => $project->team->id, 'user_id' => $userToAdd->id]);
     }
 
-    /** @test */
+    #[Test]
     public function members_of_project_cannot_add_users_to_project()
     {
 //        $this->withoutExceptionHandling();
@@ -46,7 +47,7 @@ class AddUserToProjectWebControllerTest extends TestCase
         $this->assertDatabaseMissing('team2member', ['team_id' => $project->team->id, 'user_id' => $userToAdd->id]);
     }
 
-    /** @test */
+    #[Test]
     public function users_are_only_added_once_to_a_project()
     {
         $this->withoutExceptionHandling();

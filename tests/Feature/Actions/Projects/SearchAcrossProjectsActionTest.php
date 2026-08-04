@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Scout\EngineManager;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SearchAcrossProjectsActionTest extends TestCase
@@ -23,7 +24,7 @@ class SearchAcrossProjectsActionTest extends TestCase
         config(['scout.driver' => 'database']);
     }
 
-    /** @test */
+    #[Test]
     public function search_should_find_matching_entity_across_projects()
     {
         $this->withoutExceptionHandling();
@@ -90,7 +91,7 @@ class SearchAcrossProjectsActionTest extends TestCase
         $this->assertTrue($foundEntity2, 'Entity 2 not found in search results');
     }
 
-    /** @test */
+    #[Test]
     public function search_should_not_find_entities_in_other_users_projects()
     {
         $this->withoutExceptionHandling();

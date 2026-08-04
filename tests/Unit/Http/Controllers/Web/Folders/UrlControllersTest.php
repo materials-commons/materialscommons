@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UrlControllersTest extends TestCase
@@ -42,7 +43,7 @@ class UrlControllersTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function show_add_url_controller_returns_correct_view()
     {
         // Create a request with query parameters
@@ -69,7 +70,7 @@ class UrlControllersTest extends TestCase
         $this->assertEquals('test', $response->getData()['arg']);
     }
 
-    /** @test */
+    #[Test]
     public function store_url_controller_creates_url_file()
     {
         // Login as the user
@@ -106,7 +107,7 @@ class UrlControllersTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function store_url_controller_validates_input()
     {
         // Login as the user
@@ -127,7 +128,7 @@ class UrlControllersTest extends TestCase
         $controller->__invoke($request, $this->project, $this->folder);
     }
 
-    /** @test */
+    #[Test]
     public function store_url_controller_validates_url_format()
     {
         // Login as the user

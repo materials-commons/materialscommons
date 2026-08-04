@@ -11,13 +11,14 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ProcessFinishedGlobusUploadsActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function there_should_be_no_queued_jobs_when_only_uploads_with_projects_being_processed_are_available()
     {
         $user = User::factory()->create();
@@ -43,7 +44,7 @@ class ProcessFinishedGlobusUploadsActionTest extends TestCase
         Queue::assertNothingPushed();
     }
 
-    /** @test */
+    #[Test]
     public function only_the_upload_for_project_not_being_processed_should_be_queued()
     {
         $user = User::factory()->create();

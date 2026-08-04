@@ -9,13 +9,14 @@ use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateDatasetEntitySelectionActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_adds_an_entity_to_the_dataset_entity_selection()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -38,7 +39,7 @@ class UpdateDatasetEntitySelectionActionTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_removes_an_existing_entity_selection()
     {
         $project = ProjectFactory::withExperiment()->create();

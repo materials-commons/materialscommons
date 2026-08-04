@@ -7,13 +7,14 @@ use App\Models\Entity;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SearchProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function entity_model_is_searchable()
     {
         // Create a user and project
@@ -44,7 +45,7 @@ class SearchProjectActionTest extends TestCase
         $this->assertEquals($entity->project_id, $searchableArray['project_id']);
     }
 
-    /** @test */
+    #[Test]
     public function entity_can_be_searched_with_scout()
     {
         // Skip this test in non-local environments

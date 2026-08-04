@@ -5,13 +5,14 @@ namespace Tests\Feature\Actions\Entities;
 use App\Actions\Entities\CreateEntityAction;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateEntityActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function created_entity_has_an_entity_state()
     {
         $project = ProjectFactory::create();
@@ -25,7 +26,7 @@ class CreateEntityActionTest extends TestCase
         $this->assertDatabaseHas('entity_states', ['entity_id' => $entity->id]);
     }
 
-    /** @test */
+    #[Test]
     public function created_entity_is_associated_with_experiment()
     {
         $project = ProjectFactory::withExperiment()->create();

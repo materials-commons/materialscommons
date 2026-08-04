@@ -8,13 +8,14 @@ use App\Models\Experiment;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateActivityApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_create_an_activity()
     {
         $this->withoutExceptionHandling();
@@ -43,7 +44,7 @@ class CreateActivityApiControllerTest extends TestCase
         $this->assertDatabaseHas('activities', ['id' => $activityId, 'project_id' => $project->id]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_create_an_activity_with_attributes()
     {
         $this->withoutExceptionHandling();

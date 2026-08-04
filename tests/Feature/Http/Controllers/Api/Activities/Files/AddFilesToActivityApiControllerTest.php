@@ -7,13 +7,14 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AddFilesToActivityApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function files_can_be_added_to_an_activity()
     {
         $this->withoutExceptionHandling();

@@ -9,13 +9,14 @@ use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AddEntityFilesToDatasetTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function add_entity_files_to_dataset_command_works()
     {
         $this->markTestSkipped('AddEntityFilesToDatasetTest skipped');

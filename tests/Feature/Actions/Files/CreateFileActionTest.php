@@ -8,13 +8,14 @@ use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateFileActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_only_create_a_single_version_of_file_when_uploaded_twice()
     {
         $this->withoutExceptionHandling();
@@ -37,7 +38,7 @@ class CreateFileActionTest extends TestCase
         $this->assertEquals(1, File::where('mime_type', '<>', 'directory')->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_upload_two_files()
     {
         $this->withoutExceptionHandling();

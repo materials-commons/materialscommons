@@ -3,11 +3,12 @@
 namespace Tests\Unit\Actions\Datasets;
 
 use App\Actions\Datasets\DatasetFileSelection;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DatasetFileSelectionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_handle_include_dirs()
     {
         $selection = $this->makeSelection();
@@ -16,7 +17,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/file.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function include_dir_should_work_for_all_levels()
     {
         $selection = $this->makeSelection();
@@ -27,7 +28,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/dir2/dir3/dir4/file.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function selected_file_at_top_level_should_be_included()
     {
         $selection = $this->makeSelection();
@@ -36,7 +37,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/file1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function exclude_files_should_override_dir()
     {
         $selection = $this->makeSelection();
@@ -47,7 +48,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/not-excluded.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function exclude_dirs_should_override_dir()
     {
         $selection = $this->makeSelection();
@@ -57,7 +58,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertFalse($dsFileSelection->isIncludedFile("/dir1/dir2/exclude.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function include_file_should_override_exclude_dir()
     {
         $selection = $this->makeSelection();
@@ -67,7 +68,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/file.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function include_dir_should_override_parent_exclude_dir()
     {
         $selection = $this->makeSelection();
@@ -80,7 +81,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($dsFileSelection->isIncludedFile("/dir1/dir2/dir3/file.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function empty_selection_should_always_return_false()
     {
         $selection = $this->makeSelection();
@@ -99,7 +100,7 @@ class DatasetFileSelectionTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function file_can_be_found_in_selection()
     {
         $fs = new DatasetFileSelection([
@@ -112,7 +113,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($fs->isIncludedFile("/d1/f1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function selecting_root_selects_all_other_files()
     {
         $fs = new DatasetFileSelection(['include_dirs' => '/']);
@@ -120,7 +121,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($fs->isIncludedFile("/f1/f2/f3.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function selecting_root_and_excluding_a_subdir_excludes_files_in_subdir()
     {
         $fs = new DatasetFileSelection(['include_dirs' => '/', 'exclude_dirs' => '/f2/f3']);
@@ -129,7 +130,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($fs->isIncludedFile("/f1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function excluding_root_exludes_everything()
     {
         $fs = new DatasetFileSelection(['exclude_dirs' => '/']);
@@ -138,7 +139,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertFalse($fs->isIncludedFile("/d1/d2/f1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function excluding_root_but_including_subdir_includes_anything_under_subdir()
     {
         $fs = new DatasetFileSelection(['include_dirs' => '/d1', 'exclude_dirs' => '/']);
@@ -148,7 +149,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($fs->isIncludedFile("/d1/d2/file.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function excluding_root_but_including_file_includes_file()
     {
         $fs = new DatasetFileSelection(['include_files' => ['/f1.txt', '/f2.txt'], 'exclude_dirs' => '/']);

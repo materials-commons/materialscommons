@@ -7,6 +7,7 @@ use App\Actions\Datasets\DatasetFileSelection;
 use App\Models\File;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ExperimentFactory;
@@ -16,7 +17,7 @@ class CreateDatasetFilesTableActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_replicate_directories()
     {
         $project = ProjectFactory::withExperiment()->create();

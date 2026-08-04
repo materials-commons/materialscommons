@@ -5,13 +5,14 @@ namespace Tests\Feature\Actions\Projects;
 use App\Actions\Projects\CreateProjectAction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function created_project_is_setup_correctly()
     {
         $user = User::factory()->create();
@@ -27,7 +28,7 @@ class CreateProjectActionTest extends TestCase
         $this->assertEquals(0, sizeof($project->file_types));
     }
 
-    /** @test */
+    #[Test]
     public function project_create_should_create_a_root_directory()
     {
         $user = User::factory()->create();
@@ -43,7 +44,7 @@ class CreateProjectActionTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function project_create_should_create_a_team()
     {
         $user = User::factory()->create();

@@ -5,13 +5,14 @@ namespace Tests\Feature\Api;
 use App\Models\TourState;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TourStateControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_returns_empty_state_for_new_user()
     {
         $user = User::factory()->create();
@@ -26,7 +27,7 @@ class TourStateControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_tour_state_for_user()
     {
         $user = User::factory()->create();
@@ -52,7 +53,7 @@ class TourStateControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_specific_tour_state()
     {
         $user = User::factory()->create();
@@ -74,7 +75,7 @@ class TourStateControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_tour_state()
     {
         $user = User::factory()->create();
@@ -94,7 +95,7 @@ class TourStateControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_completes_step()
     {
         $user = User::factory()->create();
@@ -118,7 +119,7 @@ class TourStateControllerTest extends TestCase
         $this->assertTrue(in_array('step1', $tourState->completed_steps));
     }
 
-    /** @test */
+    #[Test]
     public function it_completes_tour()
     {
         $user = User::factory()->create();
@@ -136,7 +137,7 @@ class TourStateControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_resets_tour()
     {
         $user = User::factory()->create();
@@ -163,7 +164,7 @@ class TourStateControllerTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_resets_all_tours()
     {
         $user = User::factory()->create();

@@ -9,13 +9,14 @@ use App\Models\AttributeValue;
 use App\Models\EntityState;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteEntityActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function delete_removes_entity_state_attributes_and_values()
     {
         $project = ProjectFactory::create();

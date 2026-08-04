@@ -6,6 +6,7 @@ use App\Actions\Datasets\CreateDatasetInGlobusAction;
 use Facades\Tests\Factories\DatasetFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\GlobusMockUtils;
 use Tests\Utils\StorageUtils;
@@ -14,7 +15,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function published_datasets_have_files()
     {
         $dataset = DatasetFactory::create();
@@ -35,7 +36,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
         StorageUtils::clearStorage();
     }
 
-    /** @test */
+    #[Test]
     public function private_datasets_have_files()
     {
         $dataset = DatasetFactory::create();
@@ -55,7 +56,7 @@ class CreateDatasetInGlobusActionTest extends TestCase
         StorageUtils::clearStorage();
     }
 
-    /** @test */
+    #[Test]
     public function publishing_in_globus_handles_uses_uuid_correctly()
     {
         $dataset = DatasetFactory::create();

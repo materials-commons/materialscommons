@@ -5,13 +5,14 @@ namespace Tests\Feature\Http\Controllers\Api\Projects;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateProjectApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_create_a_project()
     {
         $this->withoutExceptionHandling();
@@ -24,7 +25,7 @@ class CreateProjectApiControllerTest extends TestCase
              ->assertJsonFragment(['name' => 'p1']);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_return_an_existing_project()
     {
         $this->withoutExceptionHandling();

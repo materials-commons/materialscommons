@@ -8,13 +8,14 @@ use App\Models\GlobusUploadDownload;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class IndexProjectGlobusUploadsWebControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_show_upload_request_as_uploading()
     {
         $this->markTestSkipped("Skip so we don't create an ACL");
@@ -36,7 +37,7 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
              ->assertSee('Open for Uploads/Uploading files');
     }
 
-    /** @test */
+    #[Test]
     public function globus_upload_should_show_waiting_to_process_when_marked_done()
     {
         $this->markTestSkipped("Skip so we don't create an ACL");
@@ -59,7 +60,7 @@ class IndexProjectGlobusUploadsWebControllerTest extends TestCase
              ->assertSee('Waiting to process files');
     }
 
-    /** @test */
+    #[Test]
     public function globus_upload_should_show_processing_files_message_when_processing_starts()
     {
         $this->markTestSkipped("Skip so we don't create an ACL");

@@ -7,13 +7,14 @@ use App\Models\Dataset;
 use App\Models\User;
 use Facades\Tests\Factories\DatasetFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateNotificationActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_add_a_dataset_notification_for_a_mc_user()
     {
         $user = User::factory()->create();
@@ -30,7 +31,7 @@ class CreateNotificationActionTest extends TestCase
         $this->assertEquals(1, $count);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_add_a_dataset_notification_for_a_non_mc_user()
     {
         $dataset = DatasetFactory::create();

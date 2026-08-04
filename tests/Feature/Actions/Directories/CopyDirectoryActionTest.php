@@ -7,13 +7,14 @@ use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CopyDirectoryActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_copy_a_simple_directory_to_another_directory_and_all_have_correct_attributes()
     {
         $user = User::factory()->create();
@@ -59,7 +60,7 @@ class CopyDirectoryActionTest extends TestCase
         $this->assertEquals($d1File->uuid, $copiedFile->uses_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_copy_a_deeper_directory_to_another_directory()
     {
         $user = User::factory()->create();
@@ -191,7 +192,7 @@ class CopyDirectoryActionTest extends TestCase
         $this->assertEquals($d->id, $f->directory_id);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_fail_to_copy_when_directory_with_same_name_exists()
     {
         $user = User::factory()->create();
@@ -210,7 +211,7 @@ class CopyDirectoryActionTest extends TestCase
         $this->assertFalse($copyDirAction->execute($d1, $destDir, $user));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_copy_dir_to_a_different_project_user_is_in()
     {
         $user = User::factory()->create();

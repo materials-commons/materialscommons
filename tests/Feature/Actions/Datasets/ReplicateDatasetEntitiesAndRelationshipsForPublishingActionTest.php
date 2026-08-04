@@ -16,13 +16,14 @@ use Facades\Tests\Factories\ExperimentFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_replicates_entities()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -59,7 +60,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
         $this->assertEquals(1, DB::table('entities')->whereNotNull('copied_at')->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_replicates_entities_states_and_attributes_and_values_for_states()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -100,7 +101,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
         $this->assertEquals(1, $replicatedAttribute->values()->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_replicates_activities_their_attributes_and_values_and_associates_replicates_entity_association()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -144,7 +145,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
         $this->assertEquals($entityAssociatdWithReplicatedActivity->copied_id, $entity->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_replicates_activity_and_entity_state()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -178,7 +179,7 @@ class ReplicateDatasetEntitiesAndRelationshipsForPublishingActionTest extends Te
         $this->assertEquals(1, $replicatedActivityEntityStatesCount);
     }
 
-    /** @test */
+    #[Test]
     public function replicated_entities_and_activities_are_not_deleted_when_experiment_is_deleted()
     {
         $project = ProjectFactory::withExperiment()->create();

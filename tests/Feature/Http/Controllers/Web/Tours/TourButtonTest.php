@@ -5,13 +5,14 @@ namespace Tests\Feature\Http\Controllers\Web\Tours;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TourButtonTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function help_dialog_contains_start_tour_button()
     {
         $user = User::factory()->create();
@@ -23,7 +24,7 @@ class TourButtonTest extends TestCase
         $response->assertSee('Start Tour');
     }
 
-    /** @test */
+    #[Test]
     public function dashboard_page_loads_tour_service()
     {
         $user = User::factory()->create();
@@ -35,7 +36,7 @@ class TourButtonTest extends TestCase
         $response->assertSee('window.tourService');
     }
 
-    /** @test */
+    #[Test]
     public function project_page_loads_tour_service()
     {
         $user = User::factory()->create();
@@ -48,7 +49,7 @@ class TourButtonTest extends TestCase
         $response->assertSee('window.tourService');
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_correctly_identifies_dashboard_tour()
     {
         $user = User::factory()->create();
@@ -60,7 +61,7 @@ class TourButtonTest extends TestCase
         $response->assertSee('dashboard', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_correctly_identifies_project_tour()
     {
         $user = User::factory()->create();
@@ -73,7 +74,7 @@ class TourButtonTest extends TestCase
         $response->assertSee('project', false);
     }
 
-    /** @test */
+    #[Test]
     public function start_tour_button_calls_tour_service()
     {
         $user = User::factory()->create();
