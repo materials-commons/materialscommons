@@ -187,6 +187,12 @@ return [
         'encryption' => 'default',
 
         /*
+         * After creating the zip, verify it can be opened and contains files.
+         * Recommended for critical backups but adds a small overhead.
+         */
+        'verify_backup' => false,
+
+        /*
          * The number of attempts, in case the backup command encounters an exception
          */
         'tries' => 1,
@@ -258,7 +264,24 @@ return [
              */
             'avatar_url' => '',
         ],
+
+        /*
+         * A generic webhook channel that POSTs JSON to a URL.
+         * Useful for Mattermost, Microsoft Teams, or custom integrations.
+         */
+        'webhook' => [
+            'url' => '',
+        ],
     ],
+
+    /*
+     * The log channel used for backup activity messages.
+     *
+     * Set to a channel name defined in config/logging.php to use that channel.
+     * Set to false to disable backup logging entirely.
+     * Set to null to use the default log channel.
+     */
+    'log_channel' => null,
 
     /*
      * Here you can specify which backups should be monitored.
