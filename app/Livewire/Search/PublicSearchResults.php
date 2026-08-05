@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Search;
 
-use App\Services\Search\PlaceholderSearchService;
+use App\Services\Search\MCSearchService;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -31,7 +31,7 @@ class PublicSearchResults extends Component
             return collect();
         }
 
-        return app(PlaceholderSearchService::class)
+        return app(MCSearchService::class)
             ->searchPublished($this->query, $this->type, 10);
     }
 

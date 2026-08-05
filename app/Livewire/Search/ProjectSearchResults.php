@@ -3,7 +3,7 @@
 namespace App\Livewire\Search;
 
 use App\Models\Project;
-use App\Services\Search\PlaceholderSearchService;
+use App\Services\Search\MCSearchService;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -39,7 +39,7 @@ class ProjectSearchResults extends Component
             return collect();
         }
 
-        return app(PlaceholderSearchService::class)
+        return app(MCSearchService::class)
             ->searchProject($this->project, $this->query, $this->type, 10);
     }
 

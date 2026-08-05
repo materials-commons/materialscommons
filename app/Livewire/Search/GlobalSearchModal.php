@@ -3,7 +3,7 @@
 namespace App\Livewire\Search;
 
 use App\Models\Project;
-use App\Services\Search\PlaceholderSearchService;
+use App\Services\Search\MCSearchService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -69,7 +69,7 @@ class GlobalSearchModal extends Component
             return collect();
         }
 
-        $service = app(PlaceholderSearchService::class);
+        $service = app(MCSearchService::class);
 
         return match ($this->scope) {
             'project' => $this->projectId

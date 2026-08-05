@@ -298,7 +298,7 @@ class Dataset extends Model
             'funding'      => $array['funding'] ?? '',
             'ds_authors'   => $array['ds_authors'] ?? '',
             'project_id'   => $array['project_id'],
-            'published_at' => $array['published_at'] ?? null,
+            'is_published' => (bool) $array['published_at'],
             'summary'      => $array['summary'] ?? '',
             'type'         => 'dataset',
         ];

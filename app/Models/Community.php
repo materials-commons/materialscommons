@@ -91,7 +91,7 @@ class Community extends Model
             'name'        => $array['name'],
             'owner_id'    => $array['owner_id'],
             'description' => $array['description'] ?? '',
-            'summary'     => $array['description'] ?? '',
+            'summary'     => $array['summary'] ?? '',
             'type'        => $this->getTypeAttribute(),
             'public'      => $array['public'],
         ];

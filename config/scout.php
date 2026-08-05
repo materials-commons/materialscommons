@@ -158,7 +158,7 @@ return [
                 'sortableAttributes' => ['name', 'project_id'],
             ],
             Dataset::class    => [
-                'filterableAttributes' => ['project_id', 'published_at'],
+                'filterableAttributes' => ['project_id', 'is_published'],
                 'sortableAttributes' => ['name', 'project_id'],
             ],
             Community::class  => [
