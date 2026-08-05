@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
+use App\Http\Controllers\Web\Search\ShowPublicSearchWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
 use App\Http\Controllers\Web2\HomeController;
@@ -124,6 +125,9 @@ Route::get('/getAllPublishedTestDatasets',
     [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
 
 Route::view('/prototype/public-dataset', 'public.datasets.show-prototype');
+
+Route::get('/search', ShowPublicSearchWebController::class)
+     ->name('search.public');
 
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');

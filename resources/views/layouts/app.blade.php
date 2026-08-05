@@ -221,6 +221,12 @@
 @include('app.dialogs._no-tour-dialog')
 {{--@include('app.dialogs._copy-choose-project-dialog')--}}
 
+@php
+    $currentProject = $project ?? null;
+@endphp
+
+<livewire:search.global-search-modal :project="$currentProject" />
+
 @auth
     <x-projects.uploads.status.scripts/>
 @endauth
