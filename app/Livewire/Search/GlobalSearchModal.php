@@ -54,15 +54,6 @@ class GlobalSearchModal extends Component
         }
     }
 
-    public function submit()
-    {
-        if (blank($this->query)) {
-            return null;
-        }
-
-        return $this->redirect($this->searchUrl(), navigate: true);
-    }
-
     public function getPreviewResultsProperty(): Collection
     {
         if (mb_strlen(trim($this->query)) < 2) {
@@ -104,6 +95,7 @@ class GlobalSearchModal extends Component
     {
         return view('livewire.search.global-search-modal', [
             'previewResults' => $this->previewResults,
+            'searchUrl'      => blank($this->query) ? '' : $this->searchUrl(),
         ]);
     }
 }

@@ -9,6 +9,7 @@
 
 <div class="flex-grow-1 px-3">
     <button type="button"
+            id="global-search-button"
             class="form-control form-rounded-search bg-white text-start d-flex align-items-center justify-content-between"
             style="height: 38px;"
             data-bs-toggle="modal"

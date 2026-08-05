@@ -22,7 +22,8 @@
                             aria-label="Close"></button>
                 </div>
 
-                <form wire:submit="submit">
+                <form onsubmit="submitGlobalSearchModal(event)"
+                      data-search-url="{{ $searchUrl }}">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="global-search-query" class="form-label">Search query</label>
@@ -105,7 +106,7 @@
 
                     <div class="modal-footer">
                         <div class="me-auto text-muted small">
-                            Press <kbd>Enter</kbd> to search. Press <kbd>Esc</kbd> to close.
+                            Press <kbd style="color:black">Enter</kbd> to search. Press <kbd style="color:black">Esc</kbd> to close.
                         </div>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                             Close
@@ -121,6 +122,42 @@
 
     @push('scripts')
         <script>
+            function submitGlobalSearchModal(event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const searchUrl = form.dataset.searchUrl;
+
+                if (!searchUrl) {
+                    return;
+                }
+
+                const modalElement = document.getElementById('global-search-modal');
+
+                if (modalElement && window.bootstrap) {
+                    const modal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+                    modal.hide();
+                }
+
+                document.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
+                    backdrop.remove();
+                });
+
+                document.body.classList.remove('modal-open');
+                document.body.style.removeProperty('overflow');
+                document.body.style.removeProperty('padding-right');
+
+                window.location.href = searchUrl;
+            }
+
+            function openGlobalSearchFromShortcut() {
+                const button = document.getElementById('global-search-button');
+
+                if (button) {
+                    button.click();
+                }
+            }
+
             document.addEventListener('shown.bs.modal', function (event) {
                 if (event.target.id !== 'global-search-modal') {
                     return;
@@ -144,22 +181,12 @@
 
                 if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
                     event.preventDefault();
-
-                    const modalElement = document.getElementById('global-search-modal');
-
-                    if (modalElement && window.bootstrap) {
-                        window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
-                    }
+                    openGlobalSearchFromShortcut();
                 }
 
                 if (event.key === '/') {
                     event.preventDefault();
-
-                    const modalElement = document.getElementById('global-search-modal');
-
-                    if (modalElement && window.bootstrap) {
-                        window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
-                    }
+                    openGlobalSearchFromShortcut();
                 }
             });
         </script>
