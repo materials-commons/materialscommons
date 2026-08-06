@@ -13,6 +13,8 @@ class GlobalSearchModal extends Component
 
     public string $scope = 'published';
 
+    public string $placeholder = 'Search published datasets and communities...';
+
     public string $type = 'all';
 
     public ?int $projectId = null;
@@ -34,6 +36,10 @@ class GlobalSearchModal extends Component
             } else {
                 $this->scope = 'all-projects';
             }
+        }
+
+        if ($this->scope !== 'published') {
+            $this->placeholder = 'Search files, experiments, samples, computations, datasets...';
         }
     }
 

@@ -30,7 +30,7 @@
                             <input type="text"
                                    id="global-search-query"
                                    class="form-control form-control-lg"
-                                   placeholder="Search files, experiments, samples, datasets..."
+                                   placeholder="{{$placeholder}}"
                                    wire:model.live.debounce.350ms="query"
                                    autocomplete="off">
                         </div>
