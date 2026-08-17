@@ -28,17 +28,17 @@
                 <i class="fas fa-flask me-1"></i>Review Studies
             </a>
 
-            <button type="button"
-                    class="btn btn-sm btn-outline-secondary text-start js-project-dashboard-show-tab"
-                    data-tab-target="#tab-project-dashboard-processes">
-                <i class="fas fa-cogs me-1"></i>Review Processes
-            </button>
+{{--            <button type="button"--}}
+{{--                    class="btn btn-sm btn-outline-secondary text-start js-project-dashboard-show-tab"--}}
+{{--                    data-tab-target="#tab-project-dashboard-processes">--}}
+{{--                <i class="fas fa-cogs me-1"></i>Review Processes--}}
+{{--            </button>--}}
 
-            <button type="button"
-                    class="btn btn-sm btn-outline-warning text-start js-project-dashboard-show-tab"
-                    data-tab-target="#tab-project-dashboard-metadata">
-                <i class="fas fa-clipboard-check me-1"></i>Review Metadata
-            </button>
+{{--            <button type="button"--}}
+{{--                    class="btn btn-sm btn-outline-warning text-start js-project-dashboard-show-tab"--}}
+{{--                    data-tab-target="#tab-project-dashboard-metadata">--}}
+{{--                <i class="fas fa-clipboard-check me-1"></i>Review Metadata--}}
+{{--            </button>--}}
         </div>
     </div>
 </div>

@@ -71,11 +71,11 @@
                             Add a README or project description so collaborators understand this project.
                         @endif
                     </p>
-                    <button type="button"
-                            class="btn btn-sm btn-outline-warning js-project-dashboard-show-tab"
-                            data-tab-target="#tab-project-dashboard-metadata">
-                        Review Metadata
-                    </button>
+{{--                    <button type="button"--}}
+{{--                            class="btn btn-sm btn-outline-warning js-project-dashboard-show-tab"--}}
+{{--                            data-tab-target="#tab-project-dashboard-metadata">--}}
+{{--                        Review Metadata--}}
+{{--                    </button>--}}
                 </div>
             </div>
 

@@ -85,17 +85,17 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 mt-3">
-                    <button type="button"
-                            class="btn btn-sm btn-outline-warning js-project-dashboard-show-tab"
-                            data-tab-target="#tab-project-dashboard-metadata">
-                        <i class="fas fa-clipboard-check me-1"></i>Metadata
-                    </button>
+{{--                    <button type="button"--}}
+{{--                            class="btn btn-sm btn-outline-warning js-project-dashboard-show-tab"--}}
+{{--                            data-tab-target="#tab-project-dashboard-metadata">--}}
+{{--                        <i class="fas fa-clipboard-check me-1"></i>Metadata--}}
+{{--                    </button>--}}
 
-                    <button type="button"
-                            class="btn btn-sm btn-outline-danger js-project-dashboard-show-tab"
-                            data-tab-target="#tab-project-dashboard-health">
-                        <i class="fas fa-heartbeat me-1"></i>Health
-                    </button>
+{{--                    <button type="button"--}}
+{{--                            class="btn btn-sm btn-outline-danger js-project-dashboard-show-tab"--}}
+{{--                            data-tab-target="#tab-project-dashboard-health">--}}
+{{--                        <i class="fas fa-heartbeat me-1"></i>Health--}}
+{{--                    </button>--}}
 
                     <a href="{{ route('projects.upload-files', [$project]) }}"
                        class="btn btn-sm btn-outline-primary">

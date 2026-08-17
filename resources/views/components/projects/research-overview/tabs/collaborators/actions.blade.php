@@ -23,17 +23,17 @@
                 <i class="fas fa-database me-1"></i>Review Datasets
             </a>
 
-            <button type="button"
-                    class="btn btn-sm btn-outline-warning text-start js-project-dashboard-show-tab"
-                    data-tab-target="#tab-project-dashboard-datasets">
-                <i class="fas fa-clipboard-check me-1"></i>Dataset Metadata
-            </button>
+{{--            <button type="button"--}}
+{{--                    class="btn btn-sm btn-outline-warning text-start js-project-dashboard-show-tab"--}}
+{{--                    data-tab-target="#tab-project-dashboard-datasets">--}}
+{{--                <i class="fas fa-clipboard-check me-1"></i>Dataset Metadata--}}
+{{--            </button>--}}
 
-            <button type="button"
-                    class="btn btn-sm btn-outline-secondary text-start js-project-dashboard-show-tab"
-                    data-tab-target="#tab-project-dashboard-activity">
-                <i class="fas fa-history me-1"></i>Review Activity
-            </button>
+{{--            <button type="button"--}}
+{{--                    class="btn btn-sm btn-outline-secondary text-start js-project-dashboard-show-tab"--}}
+{{--                    data-tab-target="#tab-project-dashboard-activity">--}}
+{{--                <i class="fas fa-history me-1"></i>Review Activity--}}
+{{--            </button>--}}
         </div>
     </div>
 </div>
