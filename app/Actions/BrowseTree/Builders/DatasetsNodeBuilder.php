@@ -55,6 +55,7 @@ class DatasetsNodeBuilder implements BrowseTreeNodeBuilder
     {
         return BrowseTreeNode::leaf(
             key: "dataset-{$dataset->id}",
+            id: $dataset->id,
             type: 'dataset',
             title: $dataset->name,
             icon: 'fas fa-database text-info',

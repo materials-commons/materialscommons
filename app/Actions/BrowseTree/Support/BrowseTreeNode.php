@@ -13,7 +13,8 @@ class BrowseTreeNode
         array $children = [],
         array $searchTerms = [],
         ?string $projectKey = null,
-    ): array {
+    ): array
+    {
         return [
             'key'         => $key,
             'projectKey'  => $projectKey,
@@ -30,6 +31,7 @@ class BrowseTreeNode
 
     public static function leaf(
         string $key,
+        int $id,
         string $type,
         string $title,
         string $icon,
@@ -43,9 +45,11 @@ class BrowseTreeNode
         ?string $dateLabel = null,
         ?string $url = null,
         array $searchTerms = [],
-    ): array {
+    ): array
+    {
         return [
             'key'         => $key,
+            'id'          => $id,
             'kind'        => 'leaf',
             'type'        => $type,
             'title'       => $title,
@@ -68,7 +72,8 @@ class BrowseTreeNode
         string $title,
         string $icon,
         string $directoryKey,
-    ): array {
+    ): array
+    {
         return [
             'key'          => $key,
             'kind'         => 'action',
@@ -84,7 +89,8 @@ class BrowseTreeNode
         string $key,
         string $title,
         string $icon = 'fas fa-info-circle text-muted',
-    ): array {
+    ): array
+    {
         return [
             'key'      => $key,
             'kind'     => 'message',

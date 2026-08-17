@@ -61,6 +61,7 @@ class SamplesNodeBuilder implements BrowseTreeNodeBuilder
 
         return BrowseTreeNode::leaf(
             key: "sample-{$entity->id}",
+            id: $entity->id,
             type: 'sample',
             title: $entity->name,
             icon: 'fas fa-vial text-success',

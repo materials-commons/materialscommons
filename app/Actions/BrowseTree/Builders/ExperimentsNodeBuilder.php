@@ -127,6 +127,7 @@ class ExperimentsNodeBuilder implements BrowseTreeNodeBuilder
 
         return BrowseTreeNode::leaf(
             key: "{$type}-{$entity->id}",
+            id: $entity->id,
             type: $type,
             title: $entity->name,
             icon: $isComputation ? 'fas fa-microchip text-primary' : 'fas fa-vial text-success',

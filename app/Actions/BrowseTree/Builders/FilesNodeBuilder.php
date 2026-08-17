@@ -277,6 +277,7 @@ class FilesNodeBuilder implements BrowseTreeNodeBuilder
     {
         return BrowseTreeNode::leaf(
             key: "file-{$file->id}",
+            id: $file->id,
             type: 'file',
             title: $file->name,
             icon: $this->fileIcon($file),

@@ -61,6 +61,7 @@ class ComputationsNodeBuilder implements BrowseTreeNodeBuilder
 
         return BrowseTreeNode::leaf(
             key: "computation-{$entity->id}",
+            id: $entity->id,
             type: 'computation',
             title: $entity->name,
             icon: 'fas fa-microchip text-primary',
