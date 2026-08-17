@@ -6,14 +6,12 @@
         </a>
     </li>
 
-    @if(isInBeta('dashboard-charts'))
-        <li class="nav-item" id="project-research-overview-tab">
-            <a class="nav-link no-underline {{setActiveNavByName('projects.research-overview')}}"
-               href="{{route('projects.research-overview', [$project])}}">
-                Project Overview
-            </a>
-        </li>
-    @endif
+    <li class="nav-item" id="project-research-overview-tab">
+        <a class="nav-link no-underline {{setActiveNavByName('projects.research-overview')}}"
+           href="{{route('projects.research-overview', [$project])}}">
+            Project Overview
+        </a>
+    </li>
 
     {{--    <li class="nav-item" id="project-overview-tab">--}}
     {{--        <a class="nav-link no-underline {{setActiveNavByName('projects.overview')}}"--}}

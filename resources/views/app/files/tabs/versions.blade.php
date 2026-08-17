@@ -12,60 +12,58 @@
 @endphp
 
 {{-- ══ KPI strip ════════════════════════════════════════════════════════════════ --}}
-@if(isInBeta('dashboard-charts'))
-    <div class="row g-2 mb-3">
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Total Versions</div>
-                <div class="fw-bold fs-5 text-primary">{{ number_format($verCount) }}</div>
-                <div class="text-muted" style="font-size:.65rem;">including active</div>
-            </div>
+<div class="row g-2 mb-3">
+    <div class="col-6 col-sm-3">
+        <div class="card border-0 shadow-sm h-100 text-center py-2">
+            <div class="text-muted small">Total Versions</div>
+            <div class="fw-bold fs-5 text-primary">{{ number_format($verCount) }}</div>
+            <div class="text-muted" style="font-size:.65rem;">including active</div>
         </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Active Size</div>
-                <div class="fw-bold fs-5 text-success">{{ $activeSz }}</div>
-                <div class="text-muted" style="font-size:.65rem;">current version</div>
-            </div>
+    </div>
+    <div class="col-6 col-sm-3">
+        <div class="card border-0 shadow-sm h-100 text-center py-2">
+            <div class="text-muted small">Active Size</div>
+            <div class="fw-bold fs-5 text-success">{{ $activeSz }}</div>
+            <div class="text-muted" style="font-size:.65rem;">current version</div>
         </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">First Upload</div>
-                <div class="fw-bold text-muted" style="font-size:.85rem;">
-                    {{ $sorted->first()?->created_at->format('M j, Y') ?? '—' }}
-                </div>
-                <div class="text-muted" style="font-size:.65rem;">
-                    {{ $sorted->first()?->created_at->diffForHumans() ?? '' }}
-                </div>
+    </div>
+    <div class="col-6 col-sm-3">
+        <div class="card border-0 shadow-sm h-100 text-center py-2">
+            <div class="text-muted small">First Upload</div>
+            <div class="fw-bold text-muted" style="font-size:.85rem;">
+                {{ $sorted->first()?->created_at->format('M j, Y') ?? '—' }}
             </div>
-        </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Latest Upload</div>
-                <div class="fw-bold text-muted" style="font-size:.85rem;">
-                    {{ $sorted->last()?->created_at->format('M j, Y') ?? '—' }}
-                </div>
-                <div class="text-muted" style="font-size:.65rem;">
-                    {{ $sorted->last()?->created_at->diffForHumans() ?? '' }}
-                </div>
+            <div class="text-muted" style="font-size:.65rem;">
+                {{ $sorted->first()?->created_at->diffForHumans() ?? '' }}
             </div>
         </div>
     </div>
-
-    {{-- ══ Size history chart ═══════════════════════════════════════════════════════ --}}
-    @if($verCount > 1)
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body p-3 background-white">
-                <h6 class="card-title text-muted mb-0">
-                    <i class="fas fa-chart-bar me-1"></i> Version Size History
-                </h6>
-                <p class="text-muted mb-1" style="font-size:.7rem;">
-                    Size per version — blue bar is the active version
-                </p>
-                <div id="chart-ver-sizes" style="height:180px;"></div>
+    <div class="col-6 col-sm-3">
+        <div class="card border-0 shadow-sm h-100 text-center py-2">
+            <div class="text-muted small">Latest Upload</div>
+            <div class="fw-bold text-muted" style="font-size:.85rem;">
+                {{ $sorted->last()?->created_at->format('M j, Y') ?? '—' }}
+            </div>
+            <div class="text-muted" style="font-size:.65rem;">
+                {{ $sorted->last()?->created_at->diffForHumans() ?? '' }}
             </div>
         </div>
-    @endif
+    </div>
+</div>
+
+{{-- ══ Size history chart ═══════════════════════════════════════════════════════ --}}
+@if($verCount > 1)
+    <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-3 background-white">
+            <h6 class="card-title text-muted mb-0">
+                <i class="fas fa-chart-bar me-1"></i> Version Size History
+            </h6>
+            <p class="text-muted mb-1" style="font-size:.7rem;">
+                Size per version — blue bar is the active version
+            </p>
+            <div id="chart-ver-sizes" style="height:180px;"></div>
+        </div>
+    </div>
 @endif
 
 <table id="file-versions" class="table table-hover" style="width:100%">

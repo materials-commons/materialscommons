@@ -35,88 +35,86 @@
         $lastUpdated  = $experiments->max('updated_at');
     @endphp
 
-    @if(isInBeta('dashboard-charts'))
-        {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
-        <x-collapsible-section id="kpi-strip" title="KPI" storage-key="proj_exps_kpi">
-            <div class="row g-2 mb-3">
-                <div class="col-6 col-sm-3">
-                    <div class="card border-0 shadow-sm h-100 text-center py-2">
-                        <div class="text-muted small">Total Studies</div>
-                        <div class="fw-bold fs-5 text-primary">{{ number_format($totalExps) }}</div>
-                        <div class="text-muted" style="font-size:.65rem;">in this project</div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <div class="card border-0 shadow-sm h-100 text-center py-2">
-                        <div class="text-muted small">Contributors</div>
-                        <div class="fw-bold fs-5 text-info">{{ number_format($uniqueOwners) }}</div>
-                        <div class="text-muted" style="font-size:.65rem;">unique owners</div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <div class="card border-0 shadow-sm h-100 text-center py-2">
-                        <div class="text-muted small">Last Updated</div>
-                        <div class="fw-bold fs-5 text-success" style="font-size:1rem !important;">
-                            {{ $lastUpdated ? \Carbon\Carbon::parse($lastUpdated)->diffForHumans() : '—' }}
-                        </div>
-                        <div class="text-muted" style="font-size:.65rem;">most recent activity</div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-3">
-                    <div class="card border-0 shadow-sm h-100 text-center py-2">
-                        <div class="text-muted small">Active Months</div>
-                        <div class="fw-bold fs-5 text-warning">{{ number_format(count($actMonths)) }}</div>
-                        <div class="text-muted" style="font-size:.65rem;">months with activity</div>
-                    </div>
+    {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <x-collapsible-section id="kpi-strip" title="KPI" storage-key="proj_exps_kpi">
+        <div class="row g-2 mb-3">
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Total Studies</div>
+                    <div class="fw-bold fs-5 text-primary">{{ number_format($totalExps) }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">in this project</div>
                 </div>
             </div>
-        </x-collapsible-section>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Contributors</div>
+                    <div class="fw-bold fs-5 text-info">{{ number_format($uniqueOwners) }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">unique owners</div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Last Updated</div>
+                    <div class="fw-bold fs-5 text-success" style="font-size:1rem !important;">
+                        {{ $lastUpdated ? \Carbon\Carbon::parse($lastUpdated)->diffForHumans() : '—' }}
+                    </div>
+                    <div class="text-muted" style="font-size:.65rem;">most recent activity</div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Active Months</div>
+                    <div class="fw-bold fs-5 text-warning">{{ number_format(count($actMonths)) }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">months with activity</div>
+                </div>
+            </div>
+        </div>
+    </x-collapsible-section>
 
-        {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
-        @if($totalExps > 0)
-            <x-collapsible-section id="exp-analytics"
-                                   title="Analytics"
-                                   :resize-plotly="true"
-                                   storage-key="proj_exps_samples_analytics">
-                <div class="row g-3">
+    {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    @if($totalExps > 0)
+        <x-collapsible-section id="exp-analytics"
+                               title="Analytics"
+                               :resize-plotly="true"
+                               storage-key="proj_exps_samples_analytics">
+            <div class="row g-3">
 
-                    {{-- Chart 1: Studies per contributor --}}
-                    @if(count($ownerLabels) > 0)
-                        <div class="col-12 col-md-5">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-users me-1"></i> Studies per Contributor
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        How many studies each team member owns
-                                    </p>
-                                    <div id="chart-exp-owners"
-                                         style="height:{{ min(60 + count($ownerLabels) * 30, 360) }}px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Chart 2: Activity timeline --}}
-                    <div class="col-12 col-md-7">
+                {{-- Chart 1: Studies per contributor --}}
+                @if(count($ownerLabels) > 0)
+                    <div class="col-12 col-md-5">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
-                                    <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
+                                    <i class="fas fa-users me-1"></i> Studies per Contributor
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Studies updated per month
+                                    How many studies each team member owns
                                 </p>
-                                <div id="chart-exp-activity" style="height:220px;"></div>
+                                <div id="chart-exp-owners"
+                                     style="height:{{ min(60 + count($ownerLabels) * 30, 360) }}px;"></div>
                             </div>
                         </div>
                     </div>
+                @endif
 
+                {{-- Chart 2: Activity timeline --}}
+                <div class="col-12 col-md-7">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-3 background-white">
+                            <h6 class="card-title text-muted mb-0">
+                                <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
+                            </h6>
+                            <p class="text-muted mb-1" style="font-size:.7rem;">
+                                Studies updated per month
+                            </p>
+                            <div id="chart-exp-activity" style="height:220px;"></div>
+                        </div>
+                    </div>
                 </div>
-            </x-collapsible-section>
-        @endif {{-- totalExps > 0 --}}
-    @endif
+
+            </div>
+        </x-collapsible-section>
+    @endif {{-- totalExps > 0 --}}
     <div class="row">
         <div class="col-lg-8 mb-4">
             <div class="card">
