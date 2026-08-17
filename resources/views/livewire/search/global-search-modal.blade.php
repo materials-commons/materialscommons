@@ -81,6 +81,10 @@
                             <div class="alert alert-light border mb-0">
                                 Type at least two characters to search.
                             </div>
+                        @elseif($searchError)
+                            <div class="alert alert-danger border mb-0">
+                                Search service is temporarily unavailable.
+                            </div>
                         @elseif($previewResults->isEmpty())
                             <div class="alert alert-light border mb-0">
                                 No preview results found for <strong>{{ $query }}</strong>.

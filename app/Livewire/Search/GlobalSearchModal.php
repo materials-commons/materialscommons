@@ -19,6 +19,8 @@ class GlobalSearchModal extends Component
 
     public ?int $projectId = null;
 
+    public bool $searchError = false;
+
     public ?string $projectName = null;
 
     public function mount(?Project $project = null): void
@@ -68,15 +70,21 @@ class GlobalSearchModal extends Component
 
         $service = app(MCSearchService::class);
 
-        return match ($this->scope) {
-            'project' => $this->projectId
-                ? $service->searchProject(Project::findOrFail($this->projectId), $this->query, $this->type, 3)
-                : collect(),
-            'all-projects' => auth()->check()
-                ? $service->searchAllProjects($this->query, $this->type, 3)
-                : collect(),
-            default => $service->searchPublished($this->query, $this->type, 3),
-        };
+        try {
+            $this->searchError = false;
+            return match ($this->scope) {
+                'project' => $this->projectId
+                    ? $service->searchProject(Project::findOrFail($this->projectId), $this->query, $this->type, 3)
+                    : collect(),
+                'all-projects' => auth()->check()
+                    ? $service->searchAllProjects($this->query, $this->type, 3)
+                    : collect(),
+                default => $service->searchPublished($this->query, $this->type, 3),
+            };
+        } catch (\Throwable $e) {
+            $this->searchError = true;
+            return collect();
+        }
     }
 
     public function searchUrl(): string
