@@ -117,6 +117,8 @@
             {{-- Resources --}}
             @include('layouts.navs._nav-resources')
 
+            @include('layouts.navs._app-documentation')
+
         </ul>
     </div>
 </nav>
