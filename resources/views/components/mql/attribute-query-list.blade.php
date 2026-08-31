@@ -1,5 +1,8 @@
 <ul class="list-unstyled ms-4">
     @foreach($attrs as $attr)
+        @if(blank($attr->name))
+            @continue
+        @endif
         <li class="col-12 mt-2">
             @if(old($formVarName) && isset(old($formVarName)[$loop->index]['name']))
                 <div class="row">
@@ -50,12 +53,13 @@
                            hx-include="#mql-selection"
                            hx-target="#mql-query"
                            hx-trigger="click">
-                    <a href="#"
-                       hx-target="#{{slugify($attr->name)}}"
-                       hx-swap="innerHTML"
-                       hx-get="{{route($detailsRouteName, [$project, $attr->name])}}">
-                        {{$attr->name}}
-                    </a>
+                    {{--                    <a href="#"--}}
+                    {{--                       hx-target="#{{slugify($attr->name)}}"--}}
+                    {{--                       hx-swap="innerHTML"--}}
+                    {{--                       hx-get="{{route($detailsRouteName, [$project, $attr->name])}}">--}}
+                    {{--                        {{$attr->name}}--}}
+                    {{--                    </a>--}}
+                    attr name {{$attr->name}}
                 </div>
                 <div class="row ms-1">
                     <select id="select-{{$loop->index}}"
@@ -87,14 +91,14 @@
         </li>
     @endforeach
 
-        @push('scripts')
-            <script>
-                if (typeof fireEvent === 'undefined') {
-                    function fireEvent(id) {
-                        let event = new Event('changed.bs.select');
-                        document.querySelector(id).dispatchEvent(event);
-                    }
+    @push('scripts')
+        <script>
+            if (typeof fireEvent === 'undefined') {
+                function fireEvent(id) {
+                    let event = new Event('changed.bs.select');
+                    document.querySelector(id).dispatchEvent(event);
                 }
-            </script>
-        @endpush
+            }
+        </script>
+    @endpush
 </ul>
