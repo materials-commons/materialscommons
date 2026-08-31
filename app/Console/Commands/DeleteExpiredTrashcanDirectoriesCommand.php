@@ -71,13 +71,6 @@ class DeleteExpiredTrashcanDirectoriesCommand extends Command
                 'disk'       => $file->disk,
                 'project_id' => $file->project_id,
             ]);
-            if (!blank($file->uses_uuid)) {
-                TbdFile::create([
-                    'uuid'       => $file->uses_uuid,
-                    'disk'       => $file->disk,
-                    'project_id' => $file->project_id,
-                ]);
-            }
             $file->delete();
         }
         $dir->delete();
