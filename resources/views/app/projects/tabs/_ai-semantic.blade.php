@@ -16,7 +16,7 @@
 </div>
 
 <div class="collapse mb-1" id="proj-ai-semantic-matches"
-     data-mc-collapse-key="{{$projKey}}_ai_semantic_matches">
+     data-mc-collapse-key="proj_ai_semantic_matches">
     <div class="card border-0 shadow-sm mb-3" style="border-radius:.75rem; overflow:hidden;">
         <div class="card-header d-flex align-items-center gap-2 py-2 px-3"
              style="background:linear-gradient(135deg,#0ea5e9 0%,#2563eb 100%); border:none;">

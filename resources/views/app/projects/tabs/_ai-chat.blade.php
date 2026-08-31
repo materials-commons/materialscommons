@@ -16,7 +16,7 @@
 </div>
 
 <div class="collapse mb-1" id="proj-chat"
-     data-mc-collapse-key="{{$projKey}}_chat">
+     data-mc-collapse-key="proj_ai_chat">
     <div class="card border-0 shadow-sm mb-3" style="border-radius:.75rem; overflow:hidden;">
         {{-- Chat header --}}
         <div class="card-header d-flex align-items-center gap-2 py-2 px-3"
