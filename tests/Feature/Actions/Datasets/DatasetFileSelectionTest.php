@@ -8,13 +8,14 @@ use App\Actions\Entities\CreateEntityAction;
 use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DatasetFileSelectionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_includes_files_in_entity_files()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -43,7 +44,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertTrue($fs->isIncludedFile("/d1/f1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function exclude_files_will_exclude_entity_files()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -72,7 +73,7 @@ class DatasetFileSelectionTest extends TestCase
         $this->assertFalse($fs->isIncludedFile("/d1/f1.txt"));
     }
 
-    /** @test */
+    #[Test]
     public function it_will_include_files_in_selection()
     {
         $project = ProjectFactory::withExperiment()->create();

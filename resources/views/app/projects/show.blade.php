@@ -42,31 +42,15 @@
     @include('app.projects.tabs.tabs')
     <div class="mt-2">
         @if(Request::routeIs('projects.show'))
-            @if(isInBeta('dashboard-charts'))
-                @include('app.projects.tabs.home-v2')
-            @else
-                @include('app.projects.tabs.home')
-            @endif
+            @include('app.projects.tabs.home-v2')
         @elseif(Request::routeIs('projects.overview'))
-            @if(isInBeta('dashboard-charts'))
-                @include('app.projects.tabs.overview-v2')
-            @else
-                @include('app.projects.tabs.overview')
-            @endif
+            @include('app.projects.tabs.overview-v2')
         @elseif(Request::routeIs('projects.research-overview'))
             @include('app.projects.tabs.research-overview')
         @elseif (Request::routeIs('projects.data-dictionary.entities'))
-            @if(isInBeta('dashboard-charts'))
-                @include('app.projects.tabs.entity-attributes-v2')
-            @else
-                @include('app.projects.tabs.entity-attributes')
-            @endif
+            @include('app.projects.tabs.entity-attributes-v2')
         @elseif(Request::routeIs('projects.data-dictionary.activities'))
-            @if(isInBeta('dashboard-charts'))
-                @include('app.projects.tabs.activity-attributes-v2')
-            @else
-                @include('app.projects.tabs.activity-attributes')
-            @endif
+            @include('app.projects.tabs.activity-attributes-v2')
         @endif
     </div>
 @endsection

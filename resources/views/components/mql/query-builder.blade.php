@@ -23,7 +23,7 @@
         </div>
         <div class="row mt-2 mb-4" x-data="mqlQueryBuilder">
             <a @click.prevent="toggleAttributesTable()" class="btn btn-info btn-sm ms-3"><i
-                        class="fa fas fa-list me-2"></i>Show/Hide
+                    class="fa fas fa-list me-2"></i>Show/Hide
                 All Attributes</a>
         </div>
     @endif
@@ -38,6 +38,9 @@
             </thead>
             <tbody>
             @foreach($processAttributeDetails as $attr)
+                @if(blank($attr->name))
+                    @continue
+                @endif
                 <tr>
                     <td>
                         <a href="#"
@@ -61,6 +64,9 @@
                 </tr>
             @endforeach
             @foreach($sampleAttributeDetails as $attr)
+                @if(blank($attr->name))
+                    @continue
+                @endif
                 <tr>
                     <td>
                         <a href="#"

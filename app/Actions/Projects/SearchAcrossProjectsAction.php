@@ -10,71 +10,83 @@ use App\Models\Experiment;
 use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
-use App\Models\Workflow;
-use Spatie\Searchable\ModelSearchAspect;
-use Spatie\Searchable\Search;
+use App\Traits\Projects\UserProjects;
+use Illuminate\Support\Collection;
 
 class SearchAcrossProjectsAction
 {
+    use UserProjects;
+
     public function __invoke($search, User $user)
     {
-        $projectIds = $user->projects->map(function (Project $project) {
+        // Get an array of project ids that the user has access to. Use this to limit what
+        // objects are returned in the search.
+        $projectIds = $this->getUserProjects($user->id)->map(function (Project $project) {
             return $project->id;
         })->toArray();
-        return (new Search())
-            ->registerModel(Project::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->whereIn('id', $projectIds);
-            })
-            ->registerModel(File::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('path')
-                                  ->addSearchableAttribute('mime_type')
-                                  ->addSearchableAttribute('media_type_description')
-                                  ->with('project')
-                    ->whereIn('project_id', $projectIds)
-                    ->limit(20);
-            })
-            ->registerModel(Experiment::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->with('project')
-                                  ->whereIn('project_id', $projectIds);
-            })
-            ->registerModel(Entity::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->with('project')
-                                  ->whereIn('project_id', $projectIds);
-            })
-            ->registerModel(Activity::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->with('project')
-                                  ->whereIn('project_id', $projectIds);
-            })
-            ->registerModel(Workflow::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('workflow')
-                                  ->with('project')
-                                  ->whereIn('project_id', $projectIds);
-            })
-            ->registerModel(Dataset::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->addSearchableAttribute('authors')
-                                  ->with('project')
-                                  ->whereIn('project_id', $projectIds);
-            })
-            ->registerModel(Community::class, function (ModelSearchAspect $modelSearchAspect) use ($projectIds) {
-                $modelSearchAspect->addSearchableAttribute('name')
-                                  ->addSearchableAttribute('description')
-                                  ->where('public', true);
-            })
-            ->limitAspectResults(10)
-            ->search($search);
+
+        // Search each model type with Laravel Scout
+        $projectResults = Project::search($search)
+                                 ->whereIn('id', $projectIds)
+                                 ->take(10)
+                                 ->get();
+
+        $fileResults = File::search($search)
+                           ->query(function ($query) {
+                               return $query->with(['directory', 'project']);
+                           })
+                           ->whereIn('project_id', $projectIds)
+                           ->where('dataset_id', null)
+                           ->where('deleted_at', null)
+                           ->where('current', true)
+                           ->take(20)
+                           ->get();
+
+        $experimentResults = Experiment::search($search)
+                                       ->query(function ($query) {
+                                           return $query->with(['project']);
+                                       })
+                                       ->whereIn('project_id', $projectIds)
+                                       ->take(10)
+                                       ->get();
+
+        $entityResults = Entity::search($search)
+                               ->query(function ($query) {
+                                   return $query->with(['project', 'experiments']);
+                               })
+                               ->whereIn('project_id', $projectIds)
+                               ->take(10)
+                               ->get();
+
+        $activityResults = Activity::search($search)
+                                   ->query(function ($query) {
+                                       return $query->with(['project', 'experiments']);
+                                   })
+                                   ->whereIn('project_id', $projectIds)
+                                   ->take(10)
+                                   ->get();
+
+        $datasetResults = Dataset::search($search)
+                                 ->query(function ($query) {
+                                     return $query->with(['project']);
+                                 })
+                                 ->whereIn('project_id', $projectIds)
+                                 ->take(10)
+                                 ->get();
+
+        $communityResults = Community::search($search)
+                                     ->query(function ($query) {
+                                         return $query->with(['project']);
+                                     })
+                                     ->where('public', true)
+                                     ->take(10)
+                                     ->get();
+
+        $searchResults = new Collection([
+            $projectResults, $fileResults, $experimentResults, $entityResults, $activityResults, $datasetResults,
+            $communityResults
+        ]);
+
+        return $searchResults->collapse();
     }
 }

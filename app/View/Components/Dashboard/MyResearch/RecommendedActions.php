@@ -6,6 +6,7 @@ use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Illuminate\View\View;
@@ -19,6 +20,8 @@ class RecommendedActions extends Component
     private User $user;
 
     private int $limit = 5;
+
+    private ?Collection $projectIds = null;
 
     public function __construct()
     {
@@ -119,8 +122,10 @@ class RecommendedActions extends Component
                       ->where('summary', '<>', '')
                       ->whereNotNull('ds_authors')
                       ->whereJsonLength('ds_authors', '>', 0)
-                      ->get()
-                      ->filter(fn(Dataset $dataset) => $dataset->hasSelectedFiles())
+                      ->where(function (Builder $query) {
+                          $query->whereJsonLength('file_selection->include_files', '>', 0)
+                                ->orWhereJsonLength('file_selection->include_dirs', '>', 0);
+                      })
                       ->count();
 
         if ($count === 0) {
@@ -221,32 +226,34 @@ class RecommendedActions extends Component
         ];
     }
 
-    private function datasetsUserIsPartOf()
+    private function datasetsUserIsPartOf(): Builder
     {
-        return Dataset::whereIn('id', $this->datasetIdsUserIsPartOf());
+        return Dataset::query()
+                      ->where(function (Builder $query) {
+                          $query->where('owner_id', $this->user->id)
+                                ->orWhereIn('datasets.id', $this->linkedDatasetIdsQuery());
+                      });
     }
 
-    private function datasetIdsUserIsPartOf(): Collection
+    private function linkedDatasetIdsQuery(): MorphToMany
     {
-        $ownedDatasetIds = Dataset::where('owner_id', $this->user->id)
-                                  ->pluck('id');
-
-        $linkedDatasetIds = $this->user
+        return $this->user
             ->datasets()
-            ->pluck('datasets.id');
-
-        return $ownedDatasetIds
-            ->merge($linkedDatasetIds)
-            ->unique()
-            ->values();
+            ->select('datasets.id');
     }
 
     private function projectIds(): Collection
     {
-        return $this->user
+        if (!is_null($this->projectIds)) {
+            return $this->projectIds;
+        }
+
+        $this->projectIds = $this->user
             ->projects()
             ->pluck('projects.id')
             ->unique()
             ->values();
+
+        return $this->projectIds;
     }
 }

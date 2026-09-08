@@ -15,6 +15,17 @@
                 </a>
             </li>
 
+            @if(isInBeta('browse-tree'))
+                <li class="nav-item">
+                    <a class="nav-link fs-11 ms-3 {{setActiveNavByExactName('browse-tree.show')}}"
+                       data-toggle="tooltip" title="Access your project files."
+                       href="{{route('browse-tree.show')}}">
+                        <i class="fa-fw fas fa-sitemap me-2"></i>
+                        Browse
+                    </a>
+                </li>
+            @endif
+
             @if(auth()->user()->is_admin)
                 <li class="nav-item">
                     <a class="nav-link fs-11 ms-3 {{setActiveNav('admin')}}" href="{{route('admin.dashboard')}}">
@@ -105,6 +116,8 @@
 
             {{-- Resources --}}
             @include('layouts.navs._nav-resources')
+
+            @include('layouts.navs._app-documentation')
 
         </ul>
     </div>

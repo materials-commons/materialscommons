@@ -6,6 +6,7 @@ use App\Actions\Projects\CreateProjectFilesAtLocationAction;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
@@ -13,7 +14,7 @@ class CreateProjectFilesAtLocationActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function is_creates_all_files_and_directories_in_project(): void
     {
         $project = ProjectFactory::create();

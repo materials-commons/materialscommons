@@ -4,13 +4,14 @@ namespace Tests\Feature\Http\Controllers\Web\Tours;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TourServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function tour_service_has_state_management_functions()
     {
         $user = User::factory()->create();
@@ -22,7 +23,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('tourService', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_uses_database_for_state()
     {
         $user = User::factory()->create();
@@ -36,7 +37,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('tourService', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_has_tour_definitions()
     {
         $user = User::factory()->create();
@@ -48,7 +49,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('tourService', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_has_route_mapping_function()
     {
         $user = User::factory()->create();
@@ -60,7 +61,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('getTourForRoute', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_uses_shepherd_js()
     {
         $user = User::factory()->create();
@@ -72,7 +73,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('tourService', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_has_start_tour_function()
     {
         $user = User::factory()->create();
@@ -84,7 +85,7 @@ class TourServiceTest extends TestCase
         $response->assertSee('startTour', false);
     }
 
-    /** @test */
+    #[Test]
     public function tour_service_initializes_shepherd_tour()
     {
         $user = User::factory()->create();

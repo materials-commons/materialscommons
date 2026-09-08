@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
+use App\Http\Controllers\Web\Search\ShowPublicSearchWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
 use App\Http\Controllers\Web\Welcome\WelcomeWebController;
 use App\Http\Controllers\Web2\HomeController;
@@ -94,13 +95,13 @@ Route::get('preview-mc-email', function () {
 });
 
 Route::get('/preview-spreadsheet-email', function () {
-    return new SpreadsheetLoadFinishedMail(File::findOrFail(2), Project::findOrFail(1), Experiment::findOrFail(2),
-        EtlRun::findOrFail(1));
+    return new SpreadsheetLoadFinishedMail(File::findOrFail(2), null,
+        Project::findOrFail(1), Experiment::findOrFail(2), EtlRun::findOrFail(1));
 });
 
 Route::get("/dois/{doi}", ShowDatasetByDoiWebController::class)
-    ->where('doi', '.*')
-    ->name('datasets.show-by-doi');
+     ->where('doi', '.*')
+     ->name('datasets.show-by-doi');
 
 Route::prefix('prototype')->group(function () {
     Route::view('/experiment-import/create', 'prototype.experiment-import.create')
@@ -111,6 +112,9 @@ Route::prefix('prototype')->group(function () {
 
     Route::view('/experiment-import/status', 'prototype.experiment-import.status')
          ->name('prototype.experiment-import.status');
+
+    Route::view('/browse-tree', 'prototype.browse-tree.index')
+         ->name('prototype.browse-tree.index');
 });
 
 Route::get('/public', [PublicDataController::class, 'index'])->name('public.index');
@@ -121,6 +125,9 @@ Route::get('/getAllPublishedTestDatasets',
     [PublicDataController::class, 'getAllPublishedTestDatasets'])->name('get_all_published_test_datasets');
 
 Route::view('/prototype/public-dataset', 'public.datasets.show-prototype');
+
+Route::get('/search', ShowPublicSearchWebController::class)
+     ->name('search.public');
 
 Route::prefix('public')->group(function () {
     Route::post('/search', SearchPublishedDataWebController::class)->name('public.search');

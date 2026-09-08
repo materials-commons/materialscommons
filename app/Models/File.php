@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use JsonSerializable;
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 /**
@@ -62,12 +62,13 @@ use Spatie\Searchable\SearchResult;
  *
  * Also see App\Observers\FileObserver
  */
-class File extends Model implements Searchable, JsonSerializable
+class File extends Model implements JsonSerializable
 {
     use HasUUID;
     use FileType;
     use HasFactory;
     use DeletedAt;
+    use Searchable;
 
     protected $guarded = ['id'];
 
@@ -419,6 +420,55 @@ class File extends Model implements Searchable, JsonSerializable
         }
 
         return "file";
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        // Customize the data array to include only the fields you want to search
+        return [
+            'id'                     => $array['id'],
+            'name'                   => $array['name'],
+            'description'            => $array['description'] ?? '',
+            'current'                => $array['current'],
+            'deleted_at'             => $array['deleted_at'] ?? null,
+            'dataset_id'             => $array['dataset_id'] ?? null,
+            'directory_id'           => $array['directory_id'] ?? null,
+            'path'                   => $array['path'] ?? '',
+            'mime_type'              => $array['mime_type'] ?? '',
+            'media_type_description' => $array['media_type_description'] ?? '',
+            'project_id'             => $array['project_id'],
+            'summary'                => $array['summary'] ?? '',
+            'type'                   => $array['mime_type'] === 'directory' ? 'directory' : 'file',
+        ];
+    }
+
+    /**
+     * Get the URL for the search result.
+     *
+     * @return string
+     */
+    public function getScoutUrl()
+    {
+        if (is_null($this->dataset_id)) {
+            if ($this->mime_type == 'directory') {
+                return route('projects.folders.show', [$this->project_id, $this]);
+            } else {
+                return route('projects.files.show', [$this->project_id, $this]);
+            }
+        } else {
+            if ($this->mime_type == 'directory') {
+                return route('public.datasets.folders.show', [$this->dataset_id, $this]);
+            } else {
+                return route('public.datasets.files.show', [$this->dataset_id, $this]);
+            }
+        }
     }
 
     public function getSearchResult(): SearchResult

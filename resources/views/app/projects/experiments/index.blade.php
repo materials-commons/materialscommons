@@ -35,8 +35,8 @@
         $lastUpdated  = $experiments->max('updated_at');
     @endphp
 
-    @if(isInBeta('dashboard-charts'))
-        {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    {{-- ══ KPI strip — always visible ═══════════════════════════════════════════ --}}
+    <x-collapsible-section id="kpi-strip" title="KPI" storage-key="proj_exps_kpi">
         <div class="row g-2 mb-3">
             <div class="col-6 col-sm-3">
                 <div class="card border-0 shadow-sm h-100 text-center py-2">
@@ -69,77 +69,62 @@
                 </div>
             </div>
         </div>
+    </x-collapsible-section>
 
-        {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
-        @if($totalExps > 0)
-            <div class="d-flex align-items-center mb-2">
-                <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                        type="button"
-                        id="exp-analytics-toggle"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#exp-analytics"
-                        aria-expanded="false"
-                        aria-controls="exp-analytics">
-                    <i class="fas fa-chevron-right fa-fw" id="exp-analytics-chevron"
-                       style="transition:transform .2s; font-size:.75rem;"></i>
-                    <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                Analytics
-            </span>
-                </button>
-                <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-            </div>
-            <div class="collapse mb-3" id="exp-analytics">
-                <div class="row g-3">
+    {{-- ══ Analytics — collapsible, default CLOSED ═══════════════════════════════ --}}
+    @if($totalExps > 0)
+        <x-collapsible-section id="exp-analytics"
+                               title="Analytics"
+                               :resize-plotly="true"
+                               storage-key="proj_exps_samples_analytics">
+            <div class="row g-3">
 
-                    {{-- Chart 1: Studies per contributor --}}
-                    @if(count($ownerLabels) > 0)
-                        <div class="col-12 col-md-5">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body p-3 background-white">
-                                    <h6 class="card-title text-muted mb-0">
-                                        <i class="fas fa-users me-1"></i> Studies per Contributor
-                                    </h6>
-                                    <p class="text-muted mb-1" style="font-size:.7rem;">
-                                        How many studies each team member owns
-                                    </p>
-                                    <div id="chart-exp-owners"
-                                         style="height:{{ min(60 + count($ownerLabels) * 30, 360) }}px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Chart 2: Activity timeline --}}
-                    <div class="col-12 col-md-7">
+                {{-- Chart 1: Studies per contributor --}}
+                @if(count($ownerLabels) > 0)
+                    <div class="col-12 col-md-5">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body p-3 background-white">
                                 <h6 class="card-title text-muted mb-0">
-                                    <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
+                                    <i class="fas fa-users me-1"></i> Studies per Contributor
                                 </h6>
                                 <p class="text-muted mb-1" style="font-size:.7rem;">
-                                    Studies updated per month
+                                    How many studies each team member owns
                                 </p>
-                                <div id="chart-exp-activity" style="height:220px;"></div>
+                                <div id="chart-exp-owners"
+                                     style="height:{{ min(60 + count($ownerLabels) * 30, 360) }}px;"></div>
                             </div>
                         </div>
                     </div>
+                @endif
 
+                {{-- Chart 2: Activity timeline --}}
+                <div class="col-12 col-md-7">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-3 background-white">
+                            <h6 class="card-title text-muted mb-0">
+                                <i class="fas fa-calendar-alt me-1"></i> Activity Timeline
+                            </h6>
+                            <p class="text-muted mb-1" style="font-size:.7rem;">
+                                Studies updated per month
+                            </p>
+                            <div id="chart-exp-activity" style="height:220px;"></div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-        @endif {{-- totalExps > 0 --}}
-    @endif
+        </x-collapsible-section>
+    @endif {{-- totalExps > 0 --}}
     <div class="row">
         <div class="col-lg-8 mb-4">
-            <div class="table-container">
-                <div class="card table-card">
-                    <div class="card-body inner-card">
-                        <a class="action-link float-end"
-                           href="{{route('projects.experiments.create', ['project' => $project->id])}}">
-                            <i class="fas fa-plus me-2"></i>Create Study
-                        </a>
-                        <br/>
-                        @include('app.projects.experiments._experiments-table')
-                    </div>
+            <div class="card">
+                <div class="card-body inner-card">
+                    <a class="action-link float-end"
+                       href="{{route('projects.experiments.create', ['project' => $project->id])}}">
+                        <i class="fas fa-plus me-2"></i>Create Study
+                    </a>
+                    <br/>
+                    @include('app.projects.experiments._experiments-table')
                 </div>
             </div>
         </div>
@@ -151,30 +136,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $expAnalyticsKey }}';
-                const panel = document.getElementById('exp-analytics');
-                const toggle = document.getElementById('exp-analytics-toggle');
-                const chevron = document.getElementById('exp-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',

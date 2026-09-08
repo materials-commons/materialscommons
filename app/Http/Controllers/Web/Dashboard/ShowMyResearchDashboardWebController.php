@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Traits\Projects\UserProjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use function auth;
 use function is_null;
 use function now;
@@ -76,10 +78,9 @@ class ShowMyResearchDashboardWebController extends Controller
 
     private function getUserCommunities(User $user, $datasets, $listedInDatasets)
     {
-        $communityIdsFromDatasets = collect($datasets)
-            ->merge(collect($listedInDatasets))
-            ->flatMap(fn($dataset) => collect($dataset->publishedCommunities ?? collect())->pluck('id'))
-            ->filter();
+        $communityIdsFromDatasets = $this->getPublishedCommunityIdsForDatasets(
+            $datasets->merge($listedInDatasets)->pluck('id')
+        );
 
         return Community::query()
                         ->with([
@@ -101,6 +102,26 @@ class ShowMyResearchDashboardWebController extends Controller
                         })
                         ->orderBy('name')
                         ->get();
+    }
+
+    private function getPublishedCommunityIdsForDatasets(Collection $datasetIds): Collection
+    {
+        $datasetIds = $datasetIds
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($datasetIds->isEmpty()) {
+            return collect();
+        }
+
+        return DB::table('dataset2community')
+                 ->join('communities', 'communities.id', '=', 'dataset2community.community_id')
+                 ->whereIn('dataset2community.dataset_id', $datasetIds)
+                 ->where('communities.public', true)
+                 ->distinct()
+                 ->pluck('dataset2community.community_id')
+                 ->values();
     }
 
     private function getDatasetsUserIsListedIn(User $user, $datasets)

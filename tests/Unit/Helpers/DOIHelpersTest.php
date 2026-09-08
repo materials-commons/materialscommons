@@ -4,17 +4,18 @@ namespace Tests\Unit\Helpers;
 
 use App\Helpers\DOIHelpers;
 use GuzzleHttp\Client;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DOIHelpersTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_make_doi_ez_api()
     {
         $this->markTestSkipped('DOI Creation skipped for now');
         $client = new Client();
         $serviceUrl = config('doi.service_url');
-        $uri = "${serviceUrl}/shoulder/doi:".config('doi.namespace');
+        $uri = "{$serviceUrl}/shoulder/doi:".config('doi.namespace');
         $body = "_target:https://materialscommons.org\n".
             "datacite.creator: Test Author\n".
             "datacite.title: Test publish 1111\n".
@@ -35,7 +36,7 @@ class DOIHelpersTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
+    #[Test]
     public function test_parse_out_response()
     {
         $matches = [];
@@ -53,7 +54,7 @@ class DOIHelpersTest extends TestCase
         $this->assertEquals("10.33587/mjxa-rm95", $doi);
     }
 
-    /** @test */
+    #[Test]
     public function test_mintDOI()
     {
         $this->markTestSkipped('DOI Creation skipped for now');

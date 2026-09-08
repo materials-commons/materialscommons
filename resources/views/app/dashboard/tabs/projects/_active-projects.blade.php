@@ -6,7 +6,7 @@
         </div>
         <hr/>
         @if(auth()->user()->hasActiveProjects())
-            <div class="projects-list">
+            <div class="list-group list-group-flush">
                 @foreach($activeProjects as $proj)
                     @include('app.dashboard.tabs.projects._project-card')
                 @endforeach

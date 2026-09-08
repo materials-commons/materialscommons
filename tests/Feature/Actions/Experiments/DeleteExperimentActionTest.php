@@ -11,13 +11,14 @@ use App\Models\Entity;
 use Facades\Tests\Factories\ExperimentFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteExperimentActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function deleting_an_experiment_deletes_its_entities_and_their_dependents()
     {
         $experiment = ExperimentFactory::withEntity()->create();
@@ -36,7 +37,7 @@ class DeleteExperimentActionTest extends TestCase
         $this->assertDatabaseMissing('attribute_values', ['id' => $value->id]);
     }
 
-    /** @test */
+    #[Test]
     public function deleting_an_experiment_deletes_its_activities_and_their_dependents()
     {
         $experiment = ExperimentFactory::withActivity()->create();
@@ -52,7 +53,7 @@ class DeleteExperimentActionTest extends TestCase
         $this->assertDatabaseMissing('attribute_values', ['id' => $value->id]);
     }
 
-    /** @test */
+    #[Test]
     public function deleting_an_experiment_does_not_affect_published_datasets_samples()
     {
         // Create project and experiment

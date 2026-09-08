@@ -9,13 +9,14 @@ use App\Models\Entity;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SyncActivitiesToPublishedDatasetActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_sync_the_activites_in_entities_to_the_dataset()
     {
         $this->withoutExceptionHandling();

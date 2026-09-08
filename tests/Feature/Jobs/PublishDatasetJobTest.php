@@ -11,6 +11,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
@@ -18,7 +19,7 @@ class PublishDatasetJobTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_complete_publishing_dataset()
     {
         $this->withoutExceptionHandling();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Projects\BrowseTree\ShowProjectBrowseTreeWebController;
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\Datatables\GetRecentlyUploadedFilesWebController;
 use App\Http\Controllers\Web\Projects\DeleteProjectWebController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebCont
 use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectOverviewWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectResearchOverviewWebController;
+use App\Http\Controllers\Web\Projects\ShowProjectSearchWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowUploadFilesWebController;
 use App\Http\Controllers\Web\Projects\StoreProjectWebController;
@@ -51,9 +53,10 @@ use App\Http\Controllers\Web\Projects\Users\RemoveAdminFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
 use App\Http\Controllers\Web\Visus\ShowVisusDatasetWebController;
+use App\Http\Controllers\Web\Search\ShowAllProjectsSearchWebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/projects/search-all', SearchAcrossProjectsWebController::class)
+Route::get('/projects/search-all', ShowAllProjectsSearchWebController::class)
      ->name('projects.search_all');
 
 Route::get('/projects/{project}/mark-as-active', MarkProjectAsActiveWebController::class)
@@ -61,6 +64,9 @@ Route::get('/projects/{project}/mark-as-active', MarkProjectAsActiveWebControlle
 
 Route::get('/projects/{project}/unmark-as-active', UnmarkProjectAsActiveWebController::class)
      ->name('projects.unmark-as-active');
+
+Route::get('/projects/{project}/browse-tree', ShowProjectBrowseTreeWebController::class)
+     ->name('projects.browse-tree.show');
 
 Route::get('/projects/create', CreateProjectWebController::class)
      ->name('projects.create');
@@ -219,11 +225,11 @@ Route::get('/projects/{project}/dt/recently-uploaded', GetRecentlyUploadedFilesW
 
 // Project Search
 
-Route::post('/projects/{project}/search', SearchProjectWebController::class)
+Route::get('/projects/{project}/search', ShowProjectSearchWebController::class)
      ->name('projects.search');
 
 Route::get('/projects/{project}/search/htmx', SearchProjectWebController::class)
-     ->name('projects.search.htmx');
+     ->name('projects.search.legacy');
 
 // Project Globus Bookmark
 Route::get("/projects/{project}/globus_bookmark", RedirectToProjectGlobusSiteWebController::class)

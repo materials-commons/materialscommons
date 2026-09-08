@@ -7,13 +7,14 @@ use App\Models\Dataset;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateDatasetSelectionActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_uniquely_update_include_files()
     {
         $this->withoutExceptionHandling();
@@ -48,7 +49,7 @@ class UpdateDatasetSelectionActionTest extends TestCase
         $this->assertEquals([], $dataset->file_selection["include_dirs"]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_remove_file_or_add_to_exlude_list()
     {
         $this->withoutExceptionHandling();

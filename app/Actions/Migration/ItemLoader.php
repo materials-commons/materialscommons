@@ -47,7 +47,7 @@ trait ItemLoader
     public function loadItems($file, $key, $func)
     {
         $knownItems = [];
-        $dumpfile = "{$this->pathToDumpfiles}/${file}";
+        $dumpfile = "{$this->pathToDumpfiles}/{$file}";
         $handle = fopen($dumpfile, "r");
         while (!feof($handle)) {
             $line = fgets($handle);

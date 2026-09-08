@@ -6,13 +6,14 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class FileTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_url_file()
     {
         // Create a user
@@ -55,7 +56,7 @@ class FileTest extends TestCase
         $this->assertEquals('https://example.com', $urlFile->url);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_a_url_file()
     {
         // Create a user
@@ -101,7 +102,7 @@ class FileTest extends TestCase
         $this->assertEquals('https://updated-example.com', $urlFile->url);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_identify_url_files()
     {
         // Create a user

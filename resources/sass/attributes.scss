@@ -1,5 +1,5 @@
 .editable-item:hover {
-    background-color: #f8f9fa;
+    background-color: $mc-surface-muted;
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
@@ -12,14 +12,11 @@
     cursor: pointer;
 }
 
-// Attributes in the samples card
 .attribute-row {
-    background: #f9fafb;
+    background: $mc-surface-muted;
     margin-right: 0;
-    //margin-bottom: 1px;
-    //border-radius: 4px;
     padding: 4px;
-    border: 1px solid #eff1f5;
+    border: 1px solid $mc-border-color;
 }
 
 .attribute-row:hover {

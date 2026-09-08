@@ -8,13 +8,14 @@ use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteExperimentApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function project_owner_can_delete_experiment()
     {
         $this->withoutExceptionHandling();
@@ -28,7 +29,7 @@ class DeleteExperimentApiControllerTest extends TestCase
         $this->assertDatabaseMissing('experiments', ['id' => $experiment->id, 'project_id' => $project->id]);
     }
 
-    /** @test */
+    #[Test]
     public function experiment_owner_can_delete_experiment()
     {
         $this->withoutExceptionHandling();
@@ -42,7 +43,7 @@ class DeleteExperimentApiControllerTest extends TestCase
         $this->assertDatabaseMissing('experiments', ['id' => $experiment->id, 'project_id' => $project->id]);
     }
 
-    /** @test */
+    #[Test]
     public function user_who_is_not_owner_of_experiment_or_project_cannot_delete_experiment()
     {
         $member = User::factory()->create();
@@ -55,7 +56,7 @@ class DeleteExperimentApiControllerTest extends TestCase
         $this->assertDatabaseHas('experiments', ['id' => $experiment->id, 'project_id' => $project->id]);
     }
 
-    /** @test */
+    #[Test]
     public function experiment_cannot_be_deleted_when_it_overlaps_with_published_dataset()
     {
         // Create project and experiment

@@ -9,13 +9,14 @@ use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function download_should_show_request_as_waiting_after_creation()
     {
         $this->withoutExceptionHandling();
@@ -39,7 +40,7 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
 //             ->assertDontSee('delete');
     }
 
-    /** @test */
+    #[Test]
     public function download_should_show_creating_when_status_is_loading()
     {
         $this->withoutExceptionHandling();
@@ -65,7 +66,7 @@ class IndexProjectGlobusDownloadsWebControllerTest extends TestCase
         $response->assertDontSee('Goto Globus');
     }
 
-    /** @test */
+    #[Test]
     public function download_should_show_ready_to_use_and_globus_link_when_download_ready()
     {
         $this->withoutExceptionHandling();

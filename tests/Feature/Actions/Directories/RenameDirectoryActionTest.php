@@ -7,13 +7,14 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RenameDirectoryActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_rename_the_directory_and_recursive_subdirs_including_path()
     {
         $this->withoutExceptionHandling();

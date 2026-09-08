@@ -9,13 +9,14 @@ use App\Models\GlobusUploadDownload;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class GetFinishedGlobusUploadsActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_upload_for_a_project_that_has_a_upload_being_processed_should_not_be_shown()
     {
         $user = User::factory()->create();
@@ -52,7 +53,7 @@ class GetFinishedGlobusUploadsActionTest extends TestCase
         $this->assertEquals($uploadToProcess->id, $finishedUploads[0]->id);
     }
 
-    /** @test */
+    #[Test]
     public function upload_errors_are_handled_correctly_for_selection()
     {
         $user = User::factory()->create();

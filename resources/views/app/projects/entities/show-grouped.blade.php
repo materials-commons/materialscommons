@@ -55,7 +55,7 @@
     <div class="row g-3">
         @foreach($activityTypes as $activityType)
             <div class="col-lg-6 col-md-12">
-                <div class="white-box h-100">
+                <div class="bg-white border rounded p-3 h-100">
                     @include('partials.activities.activity-type-card', [
                         'activityType' => $activityType,
                         'files' => $filesByActivityType->get($activityType->name, []),

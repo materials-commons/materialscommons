@@ -3,11 +3,12 @@
 namespace Tests\Feature\Storage;
 
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UploadUsingS3Test extends TestCase
 {
-    /** @test */
+    #[Test]
     public function test_uploading_to_b2_s3()
     {
         $this->markTestSkipped('S3 testing');
@@ -15,7 +16,7 @@ class UploadUsingS3Test extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
+    #[Test]
     public function test_getting_file_url_from_b2_s3()
     {
         $this->markTestSkipped('S3 testing');
@@ -24,7 +25,7 @@ class UploadUsingS3Test extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
+    #[Test]
     public function test_downloading_file_from_b2_s3()
     {
         $this->markTestSkipped('S3 testing');

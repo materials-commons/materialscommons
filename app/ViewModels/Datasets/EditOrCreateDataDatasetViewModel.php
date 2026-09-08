@@ -233,7 +233,7 @@ class EditOrCreateDataDatasetViewModel extends ViewModel
                 if ($piece === "") {
                     array_push($this->dirPaths, ['name' => '', 'path' => "/"]);
                 } else {
-                    $currentPath = "{$currentPath}/${piece}";
+                    $currentPath = "{$currentPath}/{$piece}";
                     array_push($this->dirPaths, ['name' => $piece, 'path' => $currentPath]);
                 }
             }

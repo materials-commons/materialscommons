@@ -7,6 +7,7 @@ use App\Actions\Activities\DeleteActivityAction;
 use App\Models\AttributeValue;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteActivityActionTest extends TestCase
@@ -14,7 +15,7 @@ class DeleteActivityActionTest extends TestCase
 
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function delete_removes_activity_attributes_and_values()
     {
         $project = ProjectFactory::create();

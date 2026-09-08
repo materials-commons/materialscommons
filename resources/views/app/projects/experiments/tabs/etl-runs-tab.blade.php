@@ -15,7 +15,10 @@
                 <tr>
                     <td>
                         <a href="{{route('projects.experiments.etl_run.show', [$project, $experiment, $etlRun])}}">
-                            View Log
+                            View Logx
+                        </a>
+                        <a class="ms-2" href="{{route('projects.experiments.etl_run.status', [$project, $experiment, $etlRun])}}">
+                            Status View
                         </a>
                     </td>
                     <td>{{$etlRun->created_at->diffForHumans()}}</td>
@@ -31,6 +34,9 @@
                     <td>
                         <a href="{{route('projects.experiments.etl_run.show', [$project, $experiment, $etlRun])}}">
                             View Log
+                        </a>
+                        <a class="ms-3" href="{{route('projects.experiments.etl_run.status', [$project, $experiment, $etlRun])}}">
+                            Status View
                         </a>
                     </td>
                     <td>{{$etlRun->created_at->diffForHumans()}}</td>

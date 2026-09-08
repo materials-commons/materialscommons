@@ -6,13 +6,14 @@ use App\Models\User;
 use App\Services\AuthService;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AuthServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_give_access_to_user_with_is_admin_set_even_when_not_in_project()
     {
         $adminUser = User::factory()->create();
@@ -28,7 +29,7 @@ class AuthServiceTest extends TestCase
         $this->assertTrue(AuthService::userCanAccessProject($adminUser, $project));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_give_access_to_project_member()
     {
         $project = ProjectFactory::create();
@@ -39,7 +40,7 @@ class AuthServiceTest extends TestCase
         $this->assertTrue(AuthService::userCanAccessProject($member, $project));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_give_access_to_project_admin()
     {
         $project = ProjectFactory::create();
@@ -50,7 +51,7 @@ class AuthServiceTest extends TestCase
         $this->assertTrue(AuthService::userCanAccessProject($admin, $project));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_deny_access_to_users_not_in_project()
     {
         $project = ProjectFactory::create();

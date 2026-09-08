@@ -39,7 +39,7 @@
     <div class="row g-4">
         <div class="col-lg-6">
             <h5 class="ms-1">{{$activity1->entities->first()->name}}</h5>
-            <div class="white-box h-100">
+            <div class="bg-white border rounded p-3 h-100">
 
                 <x-activities.compare.single-activity :project="$project"
                                                       :activity="$activity1"
@@ -52,7 +52,7 @@
         </div>
         <div class="col-lg-6">
             <h5 class="ms-1">{{$activity2->entities->first()->name}}</h5>
-            <div class="white-box h-100">
+            <div class="bg-white border rounded p-3 h-100">
 
                 <x-activities.compare.single-activity :project="$project"
                                                       :activity="$activity2"

@@ -6,13 +6,14 @@ use App\Actions\Activities\CreateActivityAction;
 use App\Models\Activity;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CreateActivityActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_creates_an_activity_in_project()
     {
         $project = ProjectFactory::create();
@@ -27,7 +28,7 @@ class CreateActivityActionTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function created_activity_is_associated_with_experiment()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -45,7 +46,7 @@ class CreateActivityActionTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function created_activity_has_given_attribute()
     {
         $project = ProjectFactory::create();

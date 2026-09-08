@@ -16,7 +16,7 @@
 </div>
 
 <div class="collapse mb-1" id="proj-ai-data-extraction"
-     data-mc-collapse-key="{{$projKey}}_ai_data_extraction">
+     data-mc-collapse-key="proj_ai_data_extraction">
     <div class="card border-0 shadow-sm mb-3" style="border-radius:.75rem; overflow:hidden;">
         <div class="card-header d-flex align-items-center gap-2 py-2 px-3"
              style="background:linear-gradient(135deg,#10b981 0%,#047857 100%); border:none;">

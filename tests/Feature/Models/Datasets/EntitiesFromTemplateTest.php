@@ -9,13 +9,14 @@ use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EntitiesFromTemplateTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_retrieves_named_entities()
     {
         $project = ProjectFactory::withExperiment()->create();
@@ -39,7 +40,7 @@ class EntitiesFromTemplateTest extends TestCase
         $this->assertCount(2, $entitiesInDataset);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_entities_with_id()
     {
         $project = ProjectFactory::create();
@@ -68,7 +69,7 @@ class EntitiesFromTemplateTest extends TestCase
         $this->assertCount(2, $entitiesInDataset);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_entities_from_name_and_id()
     {
         $project = ProjectFactory::withExperiment()->create();

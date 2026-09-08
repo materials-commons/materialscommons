@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
@@ -20,7 +21,7 @@ class GetAndSavePublishedDatasetCitationsActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function dataset_with_paper_should_create_citations_file_for_paper(): void
     {
         $this->withoutExceptionHandling();

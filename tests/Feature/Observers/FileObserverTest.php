@@ -4,13 +4,14 @@ namespace Tests\Feature\Observers;
 
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class FileObserverTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function creating_or_deleting_a_directory_updates_project_directory_count()
     {
         $project = ProjectFactory::create();
@@ -24,7 +25,7 @@ class FileObserverTest extends TestCase
         $this->assertEquals(1, $project->directory_count);
     }
 
-    /** @test */
+    #[Test]
     public function creating_or_deleting_a_file_updates_project_file_type_counts()
     {
         $project = ProjectFactory::create();
@@ -46,7 +47,7 @@ class FileObserverTest extends TestCase
         $this->assertEquals(0, sizeof($project->file_types));
     }
 
-    /** @test */
+    #[Test]
     public function changing_current_status_on_file_updates_the_project_attributes()
     {
         $project = ProjectFactory::create();
@@ -85,7 +86,7 @@ class FileObserverTest extends TestCase
         $this->assertEquals(1, $project->file_types['Text']);
     }
 
-    /** @test */
+    #[Test]
     public function updating_directory_should_not_change_project_attributes()
     {
         $project = ProjectFactory::create();

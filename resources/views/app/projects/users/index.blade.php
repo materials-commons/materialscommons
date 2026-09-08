@@ -60,60 +60,48 @@
     <br/>
 
     {{-- ══ KPI strip ═══════════════════════════════════════════════════════════════ --}}
-    <div class="row g-2 mb-3">
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Total Members</div>
-                <div class="fw-bold fs-5 text-primary">{{ $totalCount }}</div>
-                <div class="text-muted" style="font-size:.65rem;">on project</div>
-            </div>
-        </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Admins</div>
-                <div class="fw-bold fs-5 text-info">{{ $adminCount }}</div>
-                <div class="text-muted" style="font-size:.65rem;">with admin rights</div>
-            </div>
-        </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Members</div>
-                <div class="fw-bold fs-5 text-success">{{ $memberCount }}</div>
-                <div class="text-muted" style="font-size:.65rem;">regular members</div>
-            </div>
-        </div>
-        <div class="col-6 col-sm-3">
-            <div class="card border-0 shadow-sm h-100 text-center py-2">
-                <div class="text-muted small">Owner</div>
-                <div class="fw-bold text-warning"
-                     style="font-size:.85rem; line-height:1.3;">
-                    {{ mb_strlen($project->owner->name) > 18 ? mb_substr($project->owner->name, 0, 16).'…' : $project->owner->name }}
+    <x-collapsible-section id="proj-members-kpi" title="KPI" storage-key="proj_members_kpi">
+        <div class="row g-2 mb-3">
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Total Members</div>
+                    <div class="fw-bold fs-5 text-primary">{{ $totalCount }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">on project</div>
                 </div>
-                <div class="text-muted" style="font-size:.65rem;">project owner</div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Admins</div>
+                    <div class="fw-bold fs-5 text-info">{{ $adminCount }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">with admin rights</div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Members</div>
+                    <div class="fw-bold fs-5 text-success">{{ $memberCount }}</div>
+                    <div class="text-muted" style="font-size:.65rem;">regular members</div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-3">
+                <div class="card border-0 shadow-sm h-100 text-center py-2">
+                    <div class="text-muted small">Owner</div>
+                    <div class="fw-bold text-warning"
+                         style="font-size:.85rem; line-height:1.3;">
+                        {{ mb_strlen($project->owner->name) > 18 ? mb_substr($project->owner->name, 0, 16).'…' : $project->owner->name }}
+                    </div>
+                    <div class="text-muted" style="font-size:.65rem;">project owner</div>
+                </div>
             </div>
         </div>
-    </div>
+    </x-collapsible-section>
 
     {{-- ══ Analytics — collapsible ═════════════════════════════════════════════════ --}}
     @if($totalCount > 0)
-        <div class="d-flex align-items-center mb-2">
-            <button class="btn btn-link btn-sm p-0 text-decoration-none text-muted d-flex align-items-center gap-2"
-                    type="button"
-                    id="members-analytics-toggle"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#members-analytics"
-                    aria-expanded="false"
-                    aria-controls="members-analytics">
-                <i class="fas fa-chevron-right fa-fw" id="members-analytics-chevron"
-                   style="transition:transform .2s; font-size:.75rem;"></i>
-                <span class="fw-semibold" style="font-size:.85rem; letter-spacing:.03em; text-transform:uppercase;">
-                    Analytics
-                </span>
-            </button>
-            <hr class="flex-grow-1 ms-3 my-0 opacity-25">
-        </div>
-
-        <div class="collapse mb-3" id="members-analytics">
+        <x-collapsible-section id="members-analytics"
+                               title="Analytics"
+                               :resize-plotly="true"
+                               storage-key="proj_members_analytics">
             <div class="row g-3">
 
                 {{-- Chart 1: Member role donut --}}
@@ -146,7 +134,7 @@
                 </div>
 
             </div>
-        </div>
+        </x-collapsible-section>
     @endif
 
     <br/>
@@ -225,30 +213,6 @@
     @push('scripts')
         <script>
             (function () {
-                const STORAGE_KEY = '{{ $analyticsKey }}';
-                const panel = document.getElementById('members-analytics');
-                const toggle = document.getElementById('members-analytics-toggle');
-                const chevron = document.getElementById('members-analytics-chevron');
-
-                if (!panel) return;
-
-                if (localStorage.getItem(STORAGE_KEY) === 'true') {
-                    panel.classList.add('show');
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    if (toggle) toggle.setAttribute('aria-expanded', 'true');
-                }
-                panel.addEventListener('show.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(90deg)';
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                });
-                panel.addEventListener('hide.bs.collapse', () => {
-                    if (chevron) chevron.style.transform = 'rotate(0deg)';
-                    localStorage.setItem(STORAGE_KEY, 'false');
-                });
-                panel.addEventListener('shown.bs.collapse', () => {
-                    panel.querySelectorAll('.js-plotly-plot').forEach(div => Plotly.Plots.resize(div));
-                });
-
                 const plotConfig = {responsive: true, displayModeBar: false};
                 const base = (extra) => Object.assign({
                     paper_bgcolor: 'transparent',

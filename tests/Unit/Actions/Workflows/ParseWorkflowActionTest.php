@@ -3,11 +3,12 @@
 namespace Tests\Unit\Actions\Workflows;
 
 use App\Actions\Workflows\ParseWorkflowAction;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ParseWorkflowActionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_parses_with_each_item_on_separate_line()
     {
         $line = <<< 'WORKFLOW'

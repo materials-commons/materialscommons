@@ -8,6 +8,7 @@ use App\Models\User;
 use Facades\Tests\Factories\DatasetFactory;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
@@ -15,7 +16,7 @@ class ImportDatasetIntoProjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_imports_a_datasets_files()
     {
         $this->markTestSkipped();

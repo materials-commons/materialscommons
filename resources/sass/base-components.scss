@@ -1,0 +1,302 @@
+body {
+    color: $grey-2;
+    font-family: 'Inter', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    background-color: $body-bg;
+}
+
+p {
+    font-weight: 400;
+}
+
+a {
+    color: $blue-2;
+}
+
+a:hover {
+    color: $blue-4;
+}
+
+.card {
+    border: 1px solid $mc-border-color !important;
+    border-radius: $mc-radius;
+    box-shadow: $mc-shadow-sm;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: $mc-shadow;
+}
+
+.card-header {
+    align-items: flex-start;
+    background: $mc-surface-muted;
+    border-bottom: 1px solid $mc-border-color;
+    color: $grey-2;
+    display: flex;
+    gap: .75rem;
+    justify-content: space-between;
+    padding: .9rem 1rem;
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+    color: $grey-2;
+    font-weight: 700;
+    margin-bottom: .25rem;
+}
+
+.card-header .text-muted {
+    font-weight: 400;
+}
+
+.card-body {
+    background: $mc-surface;
+    padding: 1rem;
+}
+
+.card-body.inner-card {
+    background-color: $mc-surface !important;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, .05) !important;
+}
+
+.card-body.inner-card .card-title {
+    color: $grey-1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: .75rem;
+}
+
+.card-body.inner-card hr {
+    border-color: $grey-8;
+    margin: 1rem 0;
+}
+
+
+.card-title {
+    color: $grey-3;
+    font-weight: 700;
+}
+
+.card .background-white {
+    background-color: #ffffff !important;
+}
+
+.btn {
+    border-radius: .5rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-secondary,
+.btn-dark {
+    color: #ffffff !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-success:hover,
+.btn-outline-danger:hover,
+.btn-outline-warning:hover,
+.btn-outline-info:hover,
+.btn-outline-light:hover,
+.btn-outline-dark:hover {
+    color: #ffffff !important;
+}
+
+.form-control,
+.form-select {
+    border-color: rgba(100, 116, 139, .32);
+    border-radius: .5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(43, 107, 177, .55);
+    box-shadow: 0 0 0 .2rem rgba(43, 107, 177, .12);
+}
+
+textarea.form-control {
+    min-height: 8rem;
+}
+
+label,
+.form-label {
+    color: $grey-3;
+    font-weight: 700;
+}
+
+.nav-tabs {
+    border-bottom-color: $mc-border-color;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: .65rem;
+    border-top-right-radius: .65rem;
+    color: $grey-5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link:hover {
+    color: $blue-3;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: $mc-surface;
+    border-color: $mc-border-color $mc-border-color $mc-surface;
+    color: $blue-3;
+}
+
+.nav-tabs .nav-link.disabled {
+    color: $grey-7;
+}
+
+.nav-pills {
+    gap: .25rem;
+}
+
+.nav-pills .nav-link {
+    border-radius: .65rem;
+    color: $grey-5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-pills .nav-link:hover {
+    color: $blue-3;
+}
+
+.nav-pills .nav-link.active {
+    box-shadow: 0 .25rem .75rem rgba(15, 23, 42, .08);
+}
+
+.badge {
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.table {
+    color: $grey-2;
+}
+
+.table th {
+    color: $grey-2;
+    font-weight: 700;
+}
+
+.table td {
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.table .text-muted,
+.table small,
+.table .small {
+    font-weight: 500;
+}
+
+dl dt {
+    font-weight: 700;
+    letter-spacing: .02em;
+}
+
+dl dd {
+    overflow-wrap: anywhere;
+}
+
+.bg-light {
+    background-color: $mc-surface-muted !important;
+}
+
+.border {
+    border-color: $mc-border-color !important;
+}
+
+.border-start,
+.border-end,
+.border-top,
+.border-bottom {
+    border-color: $mc-border-color !important;
+}
+
+.eyebrow {
+    color: $grey-6;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.action-bar-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background: rgba(255, 255, 255, .94);
+    border-top: 1px solid $mc-border-color;
+    box-shadow: 0 -.5rem 1.5rem rgba(15, 23, 42, .1);
+}
+
+.section-divider {
+    align-items: center;
+    color: $grey-6;
+    display: flex;
+    font-size: .75rem;
+    font-weight: 700;
+    gap: .75rem;
+    letter-spacing: .08em;
+    margin: 1rem 0;
+    text-transform: uppercase;
+}
+
+.section-divider::before,
+.section-divider::after {
+    background: $mc-border-color-strong;
+    content: "";
+    flex: 1;
+    height: 1px;
+}
+
+.kpi-icon {
+    align-items: center;
+    border-radius: .75rem;
+    display: inline-flex;
+    height: 2.35rem;
+    justify-content: center;
+    margin-bottom: .65rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 2.35rem;
+}
+
+.list-group-item {
+    border-color: $mc-border-color;
+}
+
+.selectable-list .list-group-item {
+    border-color: $mc-border-color;
+    cursor: pointer;
+}
+
+.selectable-list .list-group-item:has(.form-check-input:checked) {
+    background: $mc-surface-muted;
+    border-color: rgba(13, 110, 253, .35);
+    box-shadow: inset 4px 0 0 $primary;
+}
+
+.selectable-list .form-check-input {
+    cursor: pointer;
+}

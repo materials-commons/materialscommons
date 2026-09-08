@@ -5,13 +5,14 @@ namespace Tests\Feature\Http\Controllers\Web\Projects;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RemoveUserFromProjectWebControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function project_owner_can_delete_users()
     {
         $this->withoutExceptionHandling();
@@ -28,7 +29,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
         $this->assertDatabaseMissing('team2member', ['team_id' => $project->team->id, 'user_id' => $users[1]->id]);
     }
 
-    /** @test */
+    #[Test]
     public function project_owner_cannot_remove_themself()
     {
         $user = User::factory()->create();
@@ -40,7 +41,7 @@ class RemoveUserFromProjectWebControllerTest extends TestCase
         $this->assertDatabaseHas('team2admin', ['team_id' => $project->team->id, 'user_id' => $user->id]);
     }
 
-    /** @test */
+    #[Test]
     public function project_members_cannot_delete_users()
     {
         $users = User::factory()->count(3)->create();

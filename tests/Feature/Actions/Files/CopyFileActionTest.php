@@ -7,13 +7,14 @@ use App\Models\File;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CopyFileActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_copy_a_file_to_an_empty_directory_and_have_correct_attributes()
     {
         $user = User::factory()->create();
@@ -43,7 +44,7 @@ class CopyFileActionTest extends TestCase
         $this->assertEquals($rootFile->uuid, $copiedFile->uses_uuid);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_copy_a_file_when_one_with_same_name_exists_marking_original_as_inactive()
     {
         $user = User::factory()->create();
@@ -61,7 +62,7 @@ class CopyFileActionTest extends TestCase
         $this->assertFalse($rootFile->current);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_copy_a_file_to_a_different_project_user_can_access()
     {
         $user = User::factory()->create();

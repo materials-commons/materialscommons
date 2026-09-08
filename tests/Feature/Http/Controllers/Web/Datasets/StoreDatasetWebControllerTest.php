@@ -5,13 +5,14 @@ namespace Tests\Feature\Http\Controllers\Web\Datasets;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class StoreDatasetWebControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_user_can_create_a_dataset()
     {
         $this->withoutExceptionHandling();

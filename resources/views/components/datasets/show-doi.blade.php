@@ -5,13 +5,14 @@
 @endphp
 
 @if(!blank($doi))
-    <div class="vr"></div>
-    <div class="px-3 py-2">
-        <div class="text-muted fw-semibold" style="font-size:.7rem; text-transform:uppercase; letter-spacing:.04em;">DOI</div>
-        <div>
+    <div class="vr d-none d-md-block"></div>
+    <div class="px-3 py-2 bg-body-tertiary border rounded-3">
+        <div class="text-muted fw-semibold small text-uppercase">DOI</div>
+        <div class="fw-semibold text-break">
             <a href="https://doi.org/{{Illuminate\Support\Str::of($doi)->after('doi:')->trim()}}"
-               target="_blank" class="text-decoration-none">
-                <i class="fas fa-external-link-alt me-1 text-muted" style="font-size:.75rem;"></i>{{ $doi }}
+               target="_blank"
+               class="link-primary text-decoration-none">
+                <i class="fas fa-external-link-alt me-1 text-muted"></i>{{ $doi }}
             </a>
         </div>
     </div>

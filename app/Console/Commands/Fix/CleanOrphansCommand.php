@@ -52,7 +52,7 @@ class CleanOrphansCommand extends Command
                           ->whereNotExists(function ($query) use ($table) {
                               $query->select('*')
                                     ->from($table)
-                                    ->whereColumn("${table}.id", 'attributes.attributable_id');
+                                    ->whereColumn("{$table}.id", 'attributes.attributable_id');
                           })
                           ->count();
 
@@ -62,7 +62,7 @@ class CleanOrphansCommand extends Command
                             ->whereNotExists(function ($query) use ($table) {
                                 $query->select('*')
                                       ->from($table)
-                                      ->whereColumn("${table}.id", 'attributes.attributable_id');
+                                      ->whereColumn("{$table}.id", 'attributes.attributable_id');
                             })
                             ->chunkById(10000, function ($attributes) {
                                 DB::table('attributes')->whereIn('id', $attributes->pluck('id'))->delete();

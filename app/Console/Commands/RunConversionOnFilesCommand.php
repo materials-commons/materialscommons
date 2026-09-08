@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Jobs\Files\ConvertFileJob;
 use App\Models\Conversion;
+use App\Models\File;
 use Illuminate\Console\Command;
 
 class RunConversionOnFilesCommand extends Command
@@ -44,11 +45,27 @@ class RunConversionOnFilesCommand extends Command
                                  ->limit(1000)
                                  ->cursor();
         foreach ($conversions as $conversion) {
-            if ($conversion->file->shouldBeConverted()) {
+            $successfulUpdate = $this->updateSearchIndexForFileAndVersions($conversion->file->id);
+            if ($conversion->file->shouldBeConverted() && $successfulUpdate) {
                 ConvertFileJob::dispatch($conversion->file)->onQueue('globus');
             }
-            $conversion->delete();
+            if ($successfulUpdate) {
+                $conversion->delete();
+            }
         }
         return 0;
+    }
+
+    private function updateSearchIndexForFileAndVersions($fileId): bool {
+        try {
+            $file = File::find($fileId);
+            if ($file) {
+                $file->searchable();
+                $file->previousVersions()->searchable();
+            }
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

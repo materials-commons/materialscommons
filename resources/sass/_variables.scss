@@ -120,23 +120,28 @@ $info: $green-4;
 
 $btn-color: #ffffff;
 
-//$card-border-color: $grey-8;
+// App design tokens
+$mc-surface: #ffffff;
+$mc-surface-muted: #f8fafc;
+$mc-border-color: rgba(15, 23, 42, .08);
+$mc-border-color-strong: rgba(15, 23, 42, .14);
+$mc-shadow-sm: 0 .35rem .9rem rgba(15, 23, 42, .05);
+$mc-shadow: 0 .45rem 1.2rem rgba(15, 23, 42, .07);
+$mc-radius: .85rem;
 
-// Current website
-//$card-border-color: $indigo-9;
-//$card-cap-bg: $indigo-10;
 
-// Palette 2
-//$card-border-color: hsl(205, 97%, 85%);
-//$card-cap-bg: hsl(205, 97%, 85%);
+// Bootstrap component defaults
+$card-bg: $mc-surface;
+$card-border-color: $mc-border-color;
+$card-border-radius: $mc-radius;
+$card-cap-bg: $mc-surface-muted;
+$card-cap-padding-y: .9rem;
+$card-cap-padding-x: 1rem;
+$card-spacer-y: 1rem;
+$card-spacer-x: 1rem;
 
-// Palette 8
-//$card-border-color: hsl(204, 100%, 86%);
-//$card-cap-bg: hsl(204, 100%, 86%);
-
-// Jigsaw colors
-$card-border-color: #2b6bb1;
-//$card-border-color: #ffffff;
-$card-cap-bg: #2b6bb1;
+$border-radius: .5rem;
+$border-radius-sm: .4rem;
+$border-radius-lg: .85rem;
 
 $table-border-color: $grey-8;

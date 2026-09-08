@@ -8,13 +8,14 @@ use App\Models\Project;
 use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class MoveDirectoryActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_should_move_the_directory_and_recursive_subdirs_including_updating_path()
     {
         $this->withoutExceptionHandling();
@@ -84,7 +85,7 @@ class MoveDirectoryActionTest extends TestCase
         $this->assertEquals($dir21->directory_id, $dir2->id);
     }
 
-    /** @test */
+    #[Test]
     public function test_it_should_move_files_but_versions_should_not_become_latest()
     {
         $this->withoutExceptionHandling();
@@ -179,7 +180,7 @@ class MoveDirectoryActionTest extends TestCase
         $this->assertFalse($fileOldVersion->current);
     }
 
-    /** @test */
+    #[Test]
     public function test_it_should_set_project_when_moving_to_another_project()
     {
         $this->withoutExceptionHandling();

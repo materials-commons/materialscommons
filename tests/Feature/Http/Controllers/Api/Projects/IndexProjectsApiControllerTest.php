@@ -4,13 +4,14 @@ namespace Tests\Feature\Http\Controllers\Api\Projects;
 
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class IndexProjectsApiControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_user_can_see_their_projects()
     {
         $this->withoutExceptionHandling();
@@ -22,7 +23,7 @@ class IndexProjectsApiControllerTest extends TestCase
              ->assertJsonFragment(['name' => $project->name]);
     }
 
-    /** @test */
+    #[Test]
     public function a_guest_user_cannot_see_projects()
     {
         $project = ProjectFactory::create();

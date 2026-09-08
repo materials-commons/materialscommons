@@ -16,13 +16,14 @@ use App\Models\User;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EntityActivityImportTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function test_spreadsheet_d1_headers()
     {
         $user = User::factory()->create();
@@ -90,7 +91,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("file", $headers[10]->attrType);
     }
 
-    /** @test */
+    #[Test]
     public function test_second_column_as_sample_attribute()
     {
         $this->withoutExceptionHandling();
@@ -112,7 +113,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('attributes', ['name' => 'wire composition']);
     }
 
-    /** @test */
+    #[Test]
     public function test_second_column_as_process_attribute()
     {
         $this->withoutExceptionHandling();
@@ -136,7 +137,7 @@ class EntityActivityImportTest extends TestCase
             ['name' => 'Temperature', 'attributable_type' => Activity::class]);
     }
 
-    /** @test */
+    #[Test]
     public function test_simple_import_d1()
     {
         $this->withoutExceptionHandling();
@@ -170,7 +171,7 @@ class EntityActivityImportTest extends TestCase
             ['name' => 'stress relief time', 'attributable_type' => Activity::class]);
     }
 
-    /** @test */
+    #[Test]
     public function test_simple_import_d1_formula()
     {
         $this->withoutExceptionHandling();
@@ -215,7 +216,7 @@ class EntityActivityImportTest extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function test_non_spreadsheet_named_file()
     {
         $this->withoutExceptionHandling();
@@ -249,7 +250,7 @@ class EntityActivityImportTest extends TestCase
             ['name' => 'stress relief time', 'attributable_type' => Activity::class]);
     }
 
-    /** @test */
+    #[Test]
     public function test_simple_import_of_2_entities()
     {
         $this->withoutExceptionHandling();
@@ -282,7 +283,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("°C", $attrValue->unit);
     }
 
-    /** @test */
+    #[Test]
     public function test_simple_import_2_worksheets()
     {
         $this->withoutExceptionHandling();
@@ -310,7 +311,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('activity2entity', ['activity_id' => $temActivity->id, 'entity_id' => $doubles5->id]);
     }
 
-    /** @test */
+    #[Test]
     public function test_import_same_entity_and_activity_different_activity_attributes()
     {
         $this->withoutExceptionHandling();
@@ -334,7 +335,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, Activity::count());
     }
 
-    /** @test */
+    #[Test]
     public function test_import_same_entity_and_activity_same_activity_attributes_different_entity_attribute_values()
     {
         $this->withoutExceptionHandling();
@@ -365,7 +366,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(1, AttributeValue::where('attribute_id', $wireCompAttr->id)->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_import_with_parent_2_worksheets()
     {
         $this->withoutExceptionHandling();
@@ -390,7 +391,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertDatabaseHas('activity2entity_state', ['activity_id' => $activity->id, 'direction' => 'out']);
     }
 
-    /** @test */
+    #[Test]
     public function test_single_file_associations()
     {
         $this->withoutExceptionHandling();
@@ -472,7 +473,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(4, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_directory_file_associations()
     {
         // Setup
@@ -502,7 +503,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_relative_file_associations_with_and_without_wildcards()
     {
         // Setup
@@ -528,7 +529,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, $activity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_wildcard_file_associations()
     {
         // Setup
@@ -556,7 +557,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_multiple_file_associations_in_one_cell()
     {
         // Setup
@@ -583,7 +584,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_multiple_file_wildcard_in_one_cell()
     {
         // Setup
@@ -611,7 +612,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(3, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_loading_ff_spreadsheet()
     {
         $this->withoutExceptionHandling();
@@ -630,7 +631,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /** @test */
+    #[Test]
     public function test_dates_load_properly()
     {
         $this->withoutExceptionHandling();
@@ -651,7 +652,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("03/05/20", $attrValue->val["value"]);
     }
 
-    /** @test */
+    #[Test]
     public function test_loading_spreadsheet_with_global_settings()
     {
         $this->withoutExceptionHandling();
@@ -678,7 +679,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(5, $attrValue->val["value"]);
     }
 
-    /** @test */
+    #[Test]
     public function test_loading_spreadsheet_with_global_file_settings()
     {
         $this->withoutExceptionHandling();
@@ -715,7 +716,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(1, $entity->files()->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_loading_spreadsheet_with_boolean_values()
     {
         $this->withoutExceptionHandling();
@@ -739,7 +740,7 @@ class EntityActivityImportTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function test_create_single_experiment_from_spreadsheet()
     {
         $this->withoutExceptionHandling();
@@ -754,7 +755,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(2, Attribute::where('attributable_type', Activity::class)->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_create_multiple_experiments_from_spreadsheet()
     {
         $this->withoutExceptionHandling();
@@ -774,7 +775,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(4, Attribute::where('attributable_type', Activity::class)->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_create_single_experiment_with_workflow_step()
     {
         $this->withoutExceptionHandling();
@@ -790,7 +791,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(5, Attribute::where('attributable_type', Activity::class)->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_create_multiple_experiments_with_workflow_steps()
     {
         $this->withoutExceptionHandling();
@@ -814,7 +815,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals(1, $e2->activities[1]->attributes->count());
     }
 
-    /** @test */
+    #[Test]
     public function test_import_attributes_marked_important()
     {
         $this->withoutExceptionHandling();
@@ -856,7 +857,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertNull($processAttrNotImportant->marked_important_at);
     }
 
-    /** @test */
+    #[Test]
     public function test_process_and_sample_tags()
     {
         $this->withoutExceptionHandling();
@@ -892,7 +893,7 @@ class EntityActivityImportTest extends TestCase
         $this->hasTags($entity->tags, ["heat treatment", "long"]);
     }
 
-    /** @test */
+    #[Test]
     public function test_load_single_computation()
     {
         $this->withoutExceptionHandling();
@@ -947,7 +948,7 @@ class EntityActivityImportTest extends TestCase
         $this->assertEquals("computational", $entity->category);
     }
 
-    /** @test */
+    #[Test]
     public function test_category_override_flag()
     {
         $this->withoutExceptionHandling();

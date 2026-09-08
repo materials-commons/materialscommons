@@ -20,6 +20,7 @@ use App\Services\FileServices\FileVersioningService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Scout\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,18 @@ class AppServiceProvider extends ServiceProvider
                 'query' => request()->query(),
             ]);
         });
+
+
+        Builder::macro('toSearchQuery', function () {
+            /** @var Builder $this */
+            return [
+                'index'   => $this->index,
+                'query'   => $this->query,
+                'filters' => $this->wheres,
+                'limit'   => $this->limit,
+            ];
+        });
+
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\Feature\Livewire\Mocks\EditableMarkdownMock;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -9,7 +10,7 @@ use Tests\TestCase;
 
 class EditableMarkdownTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_initializes_with_correct_state()
     {
         $content = "# Test Markdown\n\nThis is a test.";
@@ -19,7 +20,7 @@ class EditableMarkdownTest extends TestCase
             ->assertSet('isEditing', false);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_toggle_edit_mode()
     {
         $content = "# Test Content";
@@ -33,7 +34,7 @@ class EditableMarkdownTest extends TestCase
             ->assertSet('isEditing', false);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_toggle_preview()
     {
         Livewire::test(EditableMarkdownMock::class)
@@ -44,7 +45,7 @@ class EditableMarkdownTest extends TestCase
             ->assertSet('showPreview', true);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_save_edited_content()
     {
         $originalContent = "# Original Content";
@@ -65,7 +66,7 @@ class EditableMarkdownTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_can_cancel_editing()
     {
         $originalContent = "# Original Content";
@@ -83,7 +84,7 @@ class EditableMarkdownTest extends TestCase
             ->assertSet('content', $originalContent);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_use_custom_save_event_name()
     {
         $content = "# Test Content";

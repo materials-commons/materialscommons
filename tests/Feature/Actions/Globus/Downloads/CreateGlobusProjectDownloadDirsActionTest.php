@@ -11,6 +11,7 @@ use App\Models\File;
 use Facades\Tests\Factories\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Tests\Utils\StorageUtils;
 
@@ -18,7 +19,7 @@ class CreateGlobusProjectDownloadDirsActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_globus_download_request_should_be_created()
     {
         $globusApiMock = \Mockery::mock(GlobusApi::class);
