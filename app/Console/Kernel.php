@@ -96,6 +96,11 @@ class Kernel extends ConsoleKernel
                  ->runInBackground()
                  ->withoutOverlapping();
 
+        $schedule->command("mc:update-project-counts")
+                 ->daily()
+                 ->runInBackground()
+                 ->withoutOverlapping();
+
         if (config('app.env') == 'production') {
             $schedule->command('backup:clean')->daily()->at('01:00');
             $schedule->command('backup:run')->daily()->at('01:30');
