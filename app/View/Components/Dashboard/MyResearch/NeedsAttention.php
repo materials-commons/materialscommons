@@ -23,6 +23,12 @@ class NeedsAttention extends Component
 
     private int $detailsLimit = 10;
 
+    private ?Collection $attentionDatasets = null;
+
+    private ?Collection $datasetIdsUserIsPartOf = null;
+
+    private ?Collection $projectIds = null;
+
     public function __construct()
     {
         $this->user = auth()->user();
@@ -56,214 +62,144 @@ class NeedsAttention extends Component
 
     private function missingLicenseItem(): ?array
     {
-        $query = $this->datasetsUserIsPartOf()
-                      ->where(function (Builder $query) {
-                          $query->whereNull('license')
-                                ->orWhere('license', '');
-                      });
+        $datasets = $this->attentionDatasets()
+                         ->filter(fn(Dataset $dataset) => blank($dataset->license))
+                         ->sortBy('name')
+                         ->values();
 
-        $count = (clone $query)->count();
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $datasets = (clone $query)
-            ->with('project')
-            ->orderBy('name')
-            ->limit($this->detailsLimit)
-            ->get();
-
-        return [
-            'key'            => 'missing-licenses',
-            'title'          => 'Datasets missing licenses',
-            'description'    => 'Add license information so datasets are ready for publication and reuse.',
-            'count'          => $count,
-            'icon'           => 'fas fa-balance-scale',
-            'badgeClass'     => 'text-bg-danger',
-            'priority'       => 100,
-            'actionLabel'    => 'Review licenses',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Datasets missing licenses',
-            'details'        => $this->datasetDetails($datasets, 'Missing license'),
-            'remainingCount' => max($count - $datasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'missing-licenses',
+            'Datasets missing licenses',
+            'Add license information so datasets are ready for publication and reuse.',
+            'fas fa-balance-scale',
+            'text-bg-danger',
+            100,
+            'Review licenses',
+            null,
+            'Datasets missing licenses',
+            'Missing license'
+        );
     }
 
     private function missingAuthorsItem(): ?array
     {
-        $query = $this->datasetsUserIsPartOf()
-                      ->where(function (Builder $query) {
-                          $query->whereNull('ds_authors')
-                                ->orWhereJsonLength('ds_authors', 0);
-                      });
+        $datasets = $this->attentionDatasets()
+                         ->filter(fn(Dataset $dataset) => blank($dataset->ds_authors))
+                         ->sortBy('name')
+                         ->values();
 
-        $count = (clone $query)->count();
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $datasets = (clone $query)
-            ->with('project')
-            ->orderBy('name')
-            ->limit($this->detailsLimit)
-            ->get();
-
-        return [
-            'key'            => 'missing-authors',
-            'title'          => 'Datasets missing authors',
-            'description'    => 'Add dataset authors so attribution is complete before publishing or sharing.',
-            'count'          => $count,
-            'icon'           => 'fas fa-user-edit',
-            'badgeClass'     => 'text-bg-danger',
-            'priority'       => 98,
-            'actionLabel'    => 'Review authors',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Datasets missing authors',
-            'details'        => $this->datasetDetails($datasets, 'Missing authors'),
-            'remainingCount' => max($count - $datasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'missing-authors',
+            'Datasets missing authors',
+            'Add dataset authors so attribution is complete before publishing or sharing.',
+            'fas fa-user-edit',
+            'text-bg-danger',
+            98,
+            'Review authors',
+            null,
+            'Datasets missing authors',
+            'Missing authors'
+        );
     }
 
     private function missingDescriptionItem(): ?array
     {
-        $query = $this->datasetsUserIsPartOf()
-                      ->where(function (Builder $query) {
-                          $query->whereNull('description')
-                                ->orWhere('description', '')
-                                ->orWhereNull('summary')
-                                ->orWhere('summary', '');
-                      });
+        $datasets = $this->attentionDatasets()
+                         ->filter(function (Dataset $dataset) {
+                             return blank($dataset->description) || blank($dataset->summary);
+                         })
+                         ->sortBy('name')
+                         ->values();
 
-        $count = (clone $query)->count();
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $datasets = (clone $query)
-            ->with('project')
-            ->orderBy('name')
-            ->limit($this->detailsLimit)
-            ->get();
-
-        return [
-            'key'            => 'missing-descriptions',
-            'title'          => 'Datasets missing descriptions',
-            'description'    => 'Complete summaries and descriptions to improve discoverability and publication readiness.',
-            'count'          => $count,
-            'icon'           => 'fas fa-align-left',
-            'badgeClass'     => 'text-bg-warning',
-            'priority'       => 90,
-            'actionLabel'    => 'Review metadata',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Datasets missing descriptions',
-            'details'        => $this->datasetDetails($datasets, 'Missing summary or description'),
-            'remainingCount' => max($count - $datasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'missing-descriptions',
+            'Datasets missing descriptions',
+            'Complete summaries and descriptions to improve discoverability and publication readiness.',
+            'fas fa-align-left',
+            'text-bg-warning',
+            90,
+            'Review metadata',
+            null,
+            'Datasets missing descriptions',
+            'Missing summary or description'
+        );
     }
 
     private function publishedDatasetsMissingTagsItem(): ?array
     {
-        $query = $this->datasetsUserIsPartOf()
-                      ->whereNotNull('published_at')
-                      ->doesntHave('tags');
+        $datasets = $this->attentionDatasets()
+                         ->filter(function (Dataset $dataset) {
+                             return !is_null($dataset->published_at) && $dataset->tags->isEmpty();
+                         })
+                         ->sortBy('name')
+                         ->values();
 
-        $count = (clone $query)->count();
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $datasets = (clone $query)
-            ->with('project')
-            ->orderBy('name')
-            ->limit($this->detailsLimit)
-            ->get();
-
-        return [
-            'key'            => 'published-missing-tags',
-            'title'          => 'Published datasets missing tags',
-            'description'    => 'Add tags to published datasets to improve search, browsing, and discoverability.',
-            'count'          => $count,
-            'icon'           => 'fas fa-tags',
-            'badgeClass'     => 'text-bg-success',
-            'priority'       => 88,
-            'actionLabel'    => 'Review tags',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Published datasets missing tags',
-            'details'        => $this->datasetDetails($datasets, 'Published without tags'),
-            'remainingCount' => max($count - $datasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'published-missing-tags',
+            'Published datasets missing tags',
+            'Add tags to published datasets to improve search, browsing, and discoverability.',
+            'fas fa-tags',
+            'text-bg-success',
+            88,
+            'Review tags',
+            null,
+            'Published datasets missing tags',
+            'Published without tags'
+        );
     }
 
     private function draftsWithoutFilesItem(): ?array
     {
-        $datasets = $this->datasetsUserIsPartOf()
-                         ->whereNull('published_at')
-                         ->with('project')
-                         ->orderBy('name')
-                         ->get()
-                         ->filter(fn(Dataset $dataset) => !$dataset->hasSelectedFiles())
+        $datasets = $this->attentionDatasets()
+                         ->filter(function (Dataset $dataset) {
+                             return is_null($dataset->published_at) && !$this->datasetHasSelectedFiles($dataset);
+                         })
+                         ->sortBy('name')
                          ->values();
 
-        $count = $datasets->count();
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $visibleDatasets = $datasets->take($this->detailsLimit);
-
-        return [
-            'key'            => 'drafts-without-files',
-            'title'          => 'Draft datasets without selected files',
-            'description'    => 'Select files for draft datasets before publishing or sharing them.',
-            'count'          => $count,
-            'icon'           => 'fas fa-file-circle-question',
-            'badgeClass'     => 'text-bg-info',
-            'priority'       => 80,
-            'actionLabel'    => 'Review drafts',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Draft datasets without selected files',
-            'details'        => $this->datasetDetails($visibleDatasets, 'No selected files'),
-            'remainingCount' => max($count - $visibleDatasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'drafts-without-files',
+            'Draft datasets without selected files',
+            'Select files for draft datasets before publishing or sharing them.',
+            'fas fa-file-circle-question',
+            'text-bg-info',
+            80,
+            'Review drafts',
+            null,
+            'Draft datasets without selected files',
+            'No selected files'
+        );
     }
 
     private function unpublishedDatasetsOlderThanThreeMonthsItem(): ?array
     {
-        $query = $this->datasetsUserIsPartOf()
-                      ->whereNull('published_at')
-                      ->where('updated_at', '<', now()->subMonths(3));
+        $cutoff = now()->subMonths(3);
 
-        $count = (clone $query)->count();
+        $datasets = $this->attentionDatasets()
+                         ->filter(function (Dataset $dataset) use ($cutoff) {
+                             return is_null($dataset->published_at) && $dataset->updated_at < $cutoff;
+                         })
+                         ->sortBy('updated_at')
+                         ->values();
 
-        if ($count === 0) {
-            return null;
-        }
-
-        $datasets = (clone $query)
-            ->with('project')
-            ->orderBy('updated_at')
-            ->limit($this->detailsLimit)
-            ->get();
-
-        return [
-            'key'            => 'old-unpublished-datasets',
-            'title'          => 'Unpublished datasets older than 3 months',
-            'description'    => 'Review older unpublished datasets and decide whether they should be updated, published, or removed.',
-            'count'          => $count,
-            'icon'           => 'fas fa-clock',
-            'badgeClass'     => 'text-bg-secondary',
-            'priority'       => 75,
-            'actionLabel'    => 'Review unpublished datasets',
-            'actionUrl'      => null,
-            'detailsLabel'   => 'Older unpublished datasets',
-            'details'        => $this->datasetDetails($datasets, 'Last updated over 3 months ago'),
-            'remainingCount' => max($count - $datasets->count(), 0),
-        ];
+        return $this->datasetAttentionItem(
+            $datasets,
+            'old-unpublished-datasets',
+            'Unpublished datasets older than 3 months',
+            'Review older unpublished datasets and decide whether they should be updated, published, or removed.',
+            'fas fa-clock',
+            'text-bg-secondary',
+            75,
+            'Review unpublished datasets',
+            null,
+            'Older unpublished datasets',
+            'Last updated over 3 months ago'
+        );
     }
 
     private function projectsMissingReadmeOrDescriptionItem(): ?array
@@ -343,13 +279,63 @@ class NeedsAttention extends Component
         ];
     }
 
-    private function datasetsUserIsPartOf()
+    private function datasetAttentionItem(
+        Collection $datasets,
+        string $key,
+        string $title,
+        string $description,
+        string $icon,
+        string $badgeClass,
+        int $priority,
+        string $actionLabel,
+        ?string $actionUrl,
+        string $detailsLabel,
+        string $issue,
+    ): ?array {
+        $count = $datasets->count();
+
+        if ($count === 0) {
+            return null;
+        }
+
+        $visibleDatasets = $datasets->take($this->detailsLimit);
+
+        return [
+            'key'            => $key,
+            'title'          => $title,
+            'description'    => $description,
+            'count'          => $count,
+            'icon'           => $icon,
+            'badgeClass'     => $badgeClass,
+            'priority'       => $priority,
+            'actionLabel'    => $actionLabel,
+            'actionUrl'      => $actionUrl,
+            'detailsLabel'   => $detailsLabel,
+            'details'        => $this->datasetDetails($visibleDatasets, $issue),
+            'remainingCount' => max($count - $visibleDatasets->count(), 0),
+        ];
+    }
+
+    private function attentionDatasets(): Collection
     {
-        return Dataset::whereIn('id', $this->datasetIdsUserIsPartOf());
+        if (!is_null($this->attentionDatasets)) {
+            return $this->attentionDatasets;
+        }
+
+        $this->attentionDatasets = Dataset::query()
+                                          ->with(['project', 'tags'])
+                                          ->whereIn('id', $this->datasetIdsUserIsPartOf())
+                                          ->get();
+
+        return $this->attentionDatasets;
     }
 
     private function datasetIdsUserIsPartOf(): Collection
     {
+        if (!is_null($this->datasetIdsUserIsPartOf)) {
+            return $this->datasetIdsUserIsPartOf;
+        }
+
         $ownedDatasetIds = Dataset::where('owner_id', $this->user->id)
                                   ->whereDoesntHave('tags', function ($q) {
                                       $q->where('tags.id', config('visus.import_tag_id'));
@@ -360,19 +346,27 @@ class NeedsAttention extends Component
             ->datasets()
             ->pluck('datasets.id');
 
-        return $ownedDatasetIds
+        $this->datasetIdsUserIsPartOf = $ownedDatasetIds
             ->merge($linkedDatasetIds)
             ->unique()
             ->values();
+
+        return $this->datasetIdsUserIsPartOf;
     }
 
     private function projectIds(): Collection
     {
-        return $this->user
+        if (!is_null($this->projectIds)) {
+            return $this->projectIds;
+        }
+
+        $this->projectIds = $this->user
             ->projects()
             ->pluck('projects.id')
             ->unique()
             ->values();
+
+        return $this->projectIds;
     }
 
     private function datasetDetails(Collection $datasets, string $issue): array
@@ -403,21 +397,17 @@ class NeedsAttention extends Component
 
     private function projectReadmeDescriptionDetails(Collection $projects): array
     {
-        // TODO: This is inefficient since it makes a separate query for each project.
+        $readmesByProjectId = $this->projectReadmesByProjectId($projects);
+
         return $projects
-            ->map(function (Project $project) {
+            ->map(function (Project $project) use ($readmesByProjectId) {
                 $issues = [];
 
                 if (blank($project->description)) {
                     $issues[] = 'Missing description';
                 }
-                $readme = File::where('name', "readme.md")
-                              ->where("project_id", $project->id)
-                              ->where("directory_id", $project->rootDir->id)
-                              ->active()
-                              ->first();
 
-                if (is_null($readme)) {
+                if (!$readmesByProjectId->has($project->id)) {
                     $issues[] = 'Missing README';
                 }
 
@@ -430,6 +420,43 @@ class NeedsAttention extends Component
             })
             ->values()
             ->toArray();
+    }
+
+    private function projectReadmesByProjectId(Collection $projects): Collection
+    {
+        $projectIds = $projects->pluck('id')->filter()->values();
+        $rootDirIds = $projects->pluck('rootDir.id')->filter()->values();
+
+        if ($projectIds->isEmpty() || $rootDirIds->isEmpty()) {
+            return collect();
+        }
+
+        return File::query()
+                   ->whereIn('project_id', $projectIds)
+                   ->whereIn('directory_id', $rootDirIds)
+                   ->whereRaw('lower(name) = ?', ['readme.md'])
+                   ->active()
+                   ->get()
+                   ->keyBy('project_id');
+    }
+
+    private function datasetHasSelectedFiles(Dataset $dataset): bool
+    {
+        $fileSelection = $dataset->file_selection;
+
+        if (is_null($fileSelection)) {
+            return false;
+        }
+
+        if (!empty($fileSelection['include_files'] ?? [])) {
+            return true;
+        }
+
+        if (!empty($fileSelection['include_dirs'] ?? [])) {
+            return true;
+        }
+
+        return false;
     }
 
     private function datasetMeta(Dataset $dataset, string $issue): string
