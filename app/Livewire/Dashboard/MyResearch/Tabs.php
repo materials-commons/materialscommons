@@ -10,12 +10,14 @@ use App\Traits\Projects\UserProjects;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use function auth;
 use function blank;
 use function collect;
 use function config;
+use function in_array;
 use function is_null;
 use function mb_strtolower;
 use function now;
@@ -57,6 +59,14 @@ class Tabs extends Component
      * @var array<string, mixed>
      */
     public array $tabData = [];
+
+    private ?User $user = null;
+
+    private ?Collection $listedInDatasets = null;
+
+    private ?Collection $communities = null;
+
+    private ?Collection $deletedProjects = null;
 
     /**
      * @var array<int, string>
@@ -115,37 +125,34 @@ class Tabs extends Component
 
     private function loadTabCounts(): void
     {
-        $user = auth()->user();
-        $this->projects = $this->getUserProjects($user->id);
-        $projects = $this->projects;
-        $datasets = $this->getUserDatasets($user, $this->projects);
-        $this->datasets = $datasets;
-        $listedInDatasets = $this->getDatasetsUserIsListedIn($user, $datasets);
+        $user = $this->currentUser();
+        $projects = $this->userProjects();
+        $datasets = $this->userDatasets();
+        $listedInDatasets = $this->listedInDatasets();
 
         $this->projectsCount = $projects->count();
-        $this->archivedProjects = $this->getUserArchivedProjects($user->id);
-        $this->archivedCount = $this->archivedProjects->count();
+        $this->archivedCount = $this->userArchivedProjects()->count();
         $this->deletedCount = Project::getDeletedTrashCountForUser($user->id);
         $this->datasetsCount = $datasets->count();
         $this->publishedDatasetsCount = $datasets
             ->filter(fn($dataset) => $dataset->published_at !== null)
             ->count();
 
-        $this->papersCount = collect($datasets)
+        $this->papersCount = $datasets
             ->flatMap(fn($dataset) => collect($dataset->papers ?? collect()))
             ->unique('id')
             ->count();
 
-        $this->tagCount = collect($datasets)
-            ->merge(collect($listedInDatasets))
+        $this->tagCount = $datasets
+            ->merge($listedInDatasets)
             ->flatMap(fn($dataset) => collect($dataset->tags ?? collect())->pluck('name'))
             ->filter()
             ->unique()
             ->count();
 
-        $this->communitiesCount = $this->getUserCommunities($user, $datasets, $listedInDatasets)->count();
+        $this->communitiesCount = $this->userCommunities()->count();
 
-        $datasetCollaboratorCount = collect($datasets)
+        $datasetCollaboratorCount = $datasets
             ->flatMap(fn($dataset) => collect($dataset->ds_authors ?? collect()))
             ->pluck('name')
             ->filter()
@@ -154,7 +161,7 @@ class Tabs extends Component
             ->unique()
             ->count();
 
-        $projectCollaboratorCount = collect($projects)
+        $projectCollaboratorCount = $projects
             ->flatMap(function ($project) use ($user) {
                 return collect($project->team?->members ?? collect())
                     ->merge(collect($project->team?->admins ?? collect()))
@@ -169,13 +176,13 @@ class Tabs extends Component
 
     private function loadTabData(): void
     {
-        $user = auth()->user();
+        $user = $this->currentUser();
 
         $this->tabData = match ($this->tab) {
             'projects' => $this->loadProjectsTabData($user),
-            'datasets', 'licenses', 'papers', 'collaborators' => $this->loadDatasetBackedTabData($user),
-            'tags' => $this->loadTagsTabData($user),
-            'communities' => $this->loadCommunitiesTabData($user),
+            'datasets', 'licenses', 'papers', 'collaborators' => $this->loadDatasetBackedTabData(),
+            'tags' => $this->loadTagsTabData(),
+            'communities' => $this->loadCommunitiesTabData(),
             default => [],
         };
     }
@@ -185,59 +192,133 @@ class Tabs extends Component
      */
     private function loadProjectsTabData(User $user): array
     {
-        $projects = $this->getUserProjects($user->id);
+        $projects = $this->userProjects();
 
         return [
-            'projects' => $projects,
-            'activeProjects' => $this->getActiveProjects($user, $projects),
+            'projects'                 => $projects,
+            'activeProjects'           => $this->getActiveProjects($user, $projects),
             'recentlyAccessedProjects' => $this->getRecentlyAccessedProjects($user, $projects),
-            'archivedProjects' => $this->getUserArchivedProjects($user->id),
-            'deletedProjects' => Project::getDeletedForUser($user->id),
+            'archivedProjects'         => $this->userArchivedProjects(),
+            'deletedProjects'          => $this->deletedProjects(),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function loadDatasetBackedTabData(User $user): array
+    private function loadDatasetBackedTabData(): array
     {
-        $projects = $this->getUserProjects($user->id);
-        $datasets = $this->getUserDatasets($user, $projects);
-
         return [
-            'projects' => $projects,
-            'datasets' => $datasets,
+            'projects' => $this->userProjects(),
+            'datasets' => $this->userDatasets(),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function loadTagsTabData(User $user): array
+    private function loadTagsTabData(): array
     {
-        $projects = $this->getUserProjects($user->id);
-        $datasets = $this->getUserDatasets($user, $projects);
-
         return [
-            'datasets' => $datasets,
-            'listedInDatasets' => $this->getDatasetsUserIsListedIn($user, $datasets),
+            'datasets'         => $this->userDatasets(),
+            'listedInDatasets' => $this->listedInDatasets(),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function loadCommunitiesTabData(User $user): array
+    private function loadCommunitiesTabData(): array
     {
-        $projects = $this->getUserProjects($user->id);
-        $datasets = $this->getUserDatasets($user, $projects);
-        $listedInDatasets = $this->getDatasetsUserIsListedIn($user, $datasets);
-
         return [
-            'communities' => $this->getUserCommunities($user, $datasets, $listedInDatasets),
-            'datasets' => $datasets,
-            'listedInDatasets' => $listedInDatasets,
+            'communities'      => $this->userCommunities(),
+            'datasets'         => $this->userDatasets(),
+            'listedInDatasets' => $this->listedInDatasets(),
         ];
+    }
+
+    private function currentUser(): User
+    {
+        if (!is_null($this->user)) {
+            return $this->user;
+        }
+
+        $this->user = auth()->user();
+
+        return $this->user;
+    }
+
+    private function userProjects(): Collection
+    {
+        if (isset($this->projects)) {
+            return $this->projects;
+        }
+
+        $this->projects = $this->getUserProjects($this->currentUser()->id);
+
+        return $this->projects;
+    }
+
+    private function userArchivedProjects(): Collection
+    {
+        if (isset($this->archivedProjects)) {
+            return $this->archivedProjects;
+        }
+
+        $this->archivedProjects = $this->getUserArchivedProjects($this->currentUser()->id);
+
+        return $this->archivedProjects;
+    }
+
+    private function userDatasets(): Collection
+    {
+        if (isset($this->datasets)) {
+            return $this->datasets;
+        }
+
+        $this->datasets = $this->getUserDatasets($this->currentUser(), $this->userProjects());
+
+        return $this->datasets;
+    }
+
+    private function listedInDatasets(): Collection
+    {
+        if (!is_null($this->listedInDatasets)) {
+            return $this->listedInDatasets;
+        }
+
+        $this->listedInDatasets = $this->getDatasetsUserIsListedIn(
+            $this->currentUser(),
+            $this->userDatasets()
+        );
+
+        return $this->listedInDatasets;
+    }
+
+    private function userCommunities(): Collection
+    {
+        if (!is_null($this->communities)) {
+            return $this->communities;
+        }
+
+        $this->communities = $this->getUserCommunities(
+            $this->currentUser(),
+            $this->userDatasets(),
+            $this->listedInDatasets()
+        );
+
+        return $this->communities;
+    }
+
+    private function deletedProjects(): Collection
+    {
+        if (!is_null($this->deletedProjects)) {
+            return $this->deletedProjects;
+        }
+
+        $this->deletedProjects = Project::getDeletedForUser($this->currentUser()->id);
+
+        return $this->deletedProjects;
     }
 
     private function getUserDatasets(User $user, Collection $projects): Collection
@@ -260,10 +341,9 @@ class Tabs extends Component
 
     private function getUserCommunities(User $user, Collection $datasets, Collection $listedInDatasets): Collection
     {
-        $communityIdsFromDatasets = collect($datasets)
-            ->merge(collect($listedInDatasets))
-            ->flatMap(fn($dataset) => collect($dataset->publishedCommunities ?? collect())->pluck('id'))
-            ->filter();
+        $communityIdsFromDatasets = $this->getPublishedCommunityIdsForDatasets(
+            $datasets->merge($listedInDatasets)->pluck('id')
+        );
 
         return Community::query()
                         ->with([
@@ -279,11 +359,31 @@ class Tabs extends Component
                         ->where(function ($query) use ($user, $communityIdsFromDatasets) {
                             $query->where('owner_id', $user->id)
                                   ->when($communityIdsFromDatasets->isNotEmpty(), function ($query) use ($communityIdsFromDatasets) {
-                                      $query->orWhereIn('id', $communityIdsFromDatasets->unique()->values());
+                                      $query->orWhereIn('id', $communityIdsFromDatasets);
                                   });
                         })
                         ->orderBy('name')
                         ->get();
+    }
+
+    private function getPublishedCommunityIdsForDatasets(Collection $datasetIds): Collection
+    {
+        $datasetIds = $datasetIds
+            ->filter()
+            ->unique()
+            ->values();
+
+        if ($datasetIds->isEmpty()) {
+            return collect();
+        }
+
+        return DB::table('dataset2community')
+                 ->join('communities', 'communities.id', '=', 'dataset2community.community_id')
+                 ->whereIn('dataset2community.dataset_id', $datasetIds)
+                 ->where('communities.public', true)
+                 ->distinct()
+                 ->pluck('dataset2community.community_id')
+                 ->values();
     }
 
     private function getDatasetsUserIsListedIn(User $user, Collection $datasets): Collection
@@ -354,10 +454,12 @@ class Tabs extends Component
 
     public function render(): View
     {
+        $user = $this->currentUser();
+
         return view('livewire.dashboard.my-research.tabs', [
-            'user' => auth()->user(),
-            'hasAffiliation' => !blank(auth()->user()->affiliations ?? null),
-            'hasOrcid' => !blank(auth()->user()->orcid ?? null),
+            'user'           => $user,
+            'hasAffiliation' => !blank($user->affiliations ?? null),
+            'hasOrcid'       => !blank($user->orcid ?? null),
         ]);
     }
 }

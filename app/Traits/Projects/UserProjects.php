@@ -4,12 +4,15 @@ namespace App\Traits\Projects;
 
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use function array_merge;
 use function collect;
 use function is_null;
 
 trait UserProjects
 {
+    private $teamIds = null;
+    private $projectsFromTeamIds = null;
     public function getUserArchivedProjects($userId)
     {
         $teamIds = $this->getUserTeamIds($userId);
@@ -49,13 +52,18 @@ trait UserProjects
 
     public function getUserProjectsFromTeamIds($teamIds)
     {
-        return Project::with('owner', 'rootDir', 'team.members', 'team.admins')
+        if (!is_null($this->projectsFromTeamIds)) {
+            return $this->projectsFromTeamIds;
+        }
+
+        $this->projectsFromTeamIds = Project::with('owner', 'rootDir', 'team.members', 'team.admins')
             ->withCount(['samples', 'computations', 'publishedDatasets'])
                       ->whereIn('team_id', $teamIds)
                       ->whereNull('deleted_at')
             ->whereNull('archived_at')
                       ->orderBy('name')
                       ->get();
+        return $this->projectsFromTeamIds;
     }
 
     public function getUserProjectsCount($userId): int
@@ -74,6 +82,10 @@ trait UserProjects
 
     public function getUserTeamIds($userId): array
     {
+        if (!is_null($this->teamIds)) {
+            return $this->teamIds;
+        }
+
         $memberTeams = DB::table('team2member')
                          ->where('user_id', $userId)
                          ->select('team_id')
@@ -86,6 +98,7 @@ trait UserProjects
                         ->get()
                         ->pluck('team_id')
                         ->toArray();
-        return collect(array_merge($memberTeams, $adminTeams))->unique()->toArray();
+        $this->teamIds = collect(array_merge($memberTeams, $adminTeams))->unique()->toArray();
+        return $this->teamIds;
     }
 }
