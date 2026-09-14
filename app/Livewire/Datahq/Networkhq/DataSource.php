@@ -63,7 +63,10 @@ class DataSource extends Component
     public function render()
     {
         $excelFiles = File::where('project_id', $this->project->id)
-                          ->whereLike('name', '%.xlsx')
+                          ->where(function ($query) {
+                              $query->whereLike('name', '%.xlsx')
+                                    ->orWhereLike('name', '%.xls');
+                          })
                           ->get();
         $googleSheets = Sheet::where('project_id', $this->project->id)->get();
         $merged = $googleSheets->merge($excelFiles)->sortBy(function ($item) {
