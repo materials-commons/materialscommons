@@ -11,26 +11,19 @@ class GetGoogleSheetNameAction
         $url = $url."&headers=true";
         $contents = file_get_contents($url);
 
+        if (!$contents) {
+            return null;
+        }
+
         $doc = new DOMDocument();
         @$doc->loadHTML($contents);
         $meta = $doc->getElementsByTagName('meta');
-        $title = "";
-        $sawTitle = false;
 
         foreach ($meta as $element) {
-            foreach ($element->attributes as $node) {
-                if ($sawTitle) {
-                    if ($node->name == "content") {
-                        $title = $node->value;
-                        break;
-                    }
-                }
-                if ($node->name == "property" && $node->value == "og:title") {
-                    $sawTitle = true;
-                }
-            }
-            if ($sawTitle) {
-                return $title;
+            $property = $element->getAttribute("property");
+            if ($property == "og:title") {
+                $title = $element->getAttribute("content");
+                return blank($title) ? null : $title;
             }
         }
 

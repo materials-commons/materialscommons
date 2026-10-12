@@ -5,6 +5,7 @@ namespace App\Actions\GoogleSheets;
 use App\Models\Project;
 use App\Models\Sheet;
 use App\Models\User;
+use Illuminate\Validation\ValidationException;
 use Ramsey\Uuid\Uuid;
 use function auth;
 
@@ -21,6 +22,12 @@ class CreateGoogleSheetAction
 
         $getGoogleSheetNameAction = new GetGoogleSheetNameAction();
         $title = $getGoogleSheetNameAction->execute($sheetUrl);
+
+        if (blank($title)) {
+            throw ValidationException::withMessages([
+                'sheet_url' => 'Unable to resolve google sheet title.',
+            ]);
+        }
 
         $sheet = new Sheet([
             'uuid'       => Uuid::uuid4()->toString(),
