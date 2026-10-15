@@ -309,9 +309,9 @@ class Dataset extends Model
      *
      * @return string
      */
-    public function getScoutUrl()
+    public function getScoutUrl($isPublic = false)
     {
-        if (Request::routeIs('public.*')) {
+        if ($isPublic) {
             return route('public.datasets.show', [$this]);
         }
 

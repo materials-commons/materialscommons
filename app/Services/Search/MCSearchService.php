@@ -64,7 +64,7 @@ class MCSearchService
             key: 'datasets',
             label: 'Published Datasets',
             icon: 'fa-database',
-            results: $results->map(fn (Dataset $dataset) => $this->datasetResult($dataset))->all(),
+            results: $results->map(fn (Dataset $dataset) => $this->datasetResult($dataset, true))->all(),
         );
     }
 
@@ -79,7 +79,7 @@ class MCSearchService
             key: 'communities',
             label: 'Communities',
             icon: 'fa-users',
-            results: $results->map(fn (Community $community) => $this->communityResult($community))->all(),
+            results: $results->map(fn (Community $community) => $this->communityResult($community, true))->all(),
         );
     }
 
@@ -295,7 +295,7 @@ class MCSearchService
             title: $file->name,
             subtitle: $path,
             description: $file->description ?: 'File',
-            url: $this->modelUrl($file),
+            url: $file->getScoutUrl(),
             projectName: $file->project?->name,
         );
     }
@@ -307,7 +307,7 @@ class MCSearchService
             title: $experiment->name,
             subtitle: 'Experiment',
             description: $experiment->description ?? '',
-            url: $this->modelUrl($experiment),
+            url: $experiment->getScoutUrl(),
             projectName: $experiment->project?->name,
         );
     }
@@ -319,7 +319,7 @@ class MCSearchService
             title: $entity->name,
             subtitle: 'Sample',
             description: $entity->description ?? '',
-            url: $this->modelUrl($entity),
+            url: $entity->getScoutUrl(),
             projectName: $entity->project?->name,
         );
     }
@@ -331,31 +331,31 @@ class MCSearchService
             title: $activity->name,
             subtitle: 'Process',
             description: $activity->description ?? '',
-            url: $this->modelUrl($activity),
+            url: $activity->getScoutUrl(),
             projectName: $activity->project?->name,
         );
     }
 
-    private function datasetResult(Dataset $dataset): array
+    private function datasetResult(Dataset $dataset, $isPublic = false): array
     {
         return $this->result(
             type: 'dataset',
             title: $dataset->name,
             subtitle: $dataset->published_at ? 'Published dataset' : 'Dataset',
             description: $dataset->description ?? '',
-            url: $this->modelUrl($dataset),
+            url: $dataset->getScoutUrl($isPublic),
             projectName: $dataset->project?->name,
         );
     }
 
-    private function communityResult(Community $community): array
+    private function communityResult(Community $community, $isPublic = false): array
     {
         return $this->result(
             type: 'community',
             title: $community->name,
             subtitle: 'Community',
             description: $community->description ?? '',
-            url: $this->modelUrl($community),
+            url: $community->getScoutUrl($isPublic),
         );
     }
 
@@ -375,19 +375,6 @@ class MCSearchService
             'url' => $url,
             'project' => $projectName,
         ];
-    }
-
-    private function modelUrl(Model $model): string
-    {
-        if (method_exists($model, 'getScoutUrl')) {
-            return $model->getScoutUrl();
-        }
-
-        if ($model instanceof Project) {
-            return route('projects.show', [$model]);
-        }
-
-        return '#';
     }
 
     private function filePath(File $file): string
