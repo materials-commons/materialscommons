@@ -13,5 +13,7 @@ class DeleteProjectAction
             'deleted_at' => Carbon::now(),
             'name'       => "{$project->uuid}-{$project->name}"
         ]);
+        $team = $project->team;
+        $team->update(['name' => "{$team->uuid}-{$team->name}"]);
     }
 }
