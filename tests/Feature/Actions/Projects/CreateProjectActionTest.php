@@ -75,6 +75,7 @@ class CreateProjectActionTest extends TestCase
         $this->assertTrue($originalResult['created']);
 
         $deleteAction($originalProject);
+        $originalProject->refresh();
 
         $newResult = $createAction->execute(['name' => 'proj1'], $user->id);
         $newProject = $newResult['project'];
@@ -82,6 +83,7 @@ class CreateProjectActionTest extends TestCase
         $this->assertTrue($newResult['created']);
         $this->assertNotNull($newProject);
         $this->assertNotEquals($originalProject->id, $newProject->id);
+        $this->assertNotEquals($originalProject->slug, $newProject->slug);
         $this->assertEquals('proj1', $newProject->name);
         $this->assertEquals("Team for proj1", $newProject->team->name);
 
