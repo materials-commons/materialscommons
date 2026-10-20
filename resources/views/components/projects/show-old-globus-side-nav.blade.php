@@ -42,6 +42,15 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.globus.downloads.index')}}"
+           data-bs-toggle="tooltip" title="List/Create/Manage drop points for outside users to upload files to your project."
+           href="{{route('projects.globus.downloads.index', [$project])}}">
+            <i class="fa-fw fas fa-box-open me-2 mb-1 fs-11"></i>
+            Globus Drop Point
+        </a>
+    </li>
+
     {{--    @if(is_null($globusDownload))--}}
     {{--        <li class="nav-item ms-3">--}}
     {{--            <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.globus.start')}}"--}}
