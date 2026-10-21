@@ -129,6 +129,11 @@ class Project extends Model
         return $this->hasMany(Entity::class, 'project_id')->where('category', 'computational');
     }
 
+    public function globusDrops()
+    {
+        return $this->hasMany(GlobusDrop::class, 'project_id');
+    }
+
     public function activities()
     {
         return $this->hasMany(Activity::class, 'project_id');

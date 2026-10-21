@@ -38,7 +38,7 @@ return new class extends Migration
                   ->on('users')
                   ->onDelete('cascade');
 
-            $table->unsignedBigInteger('directory_id');
+            $table->unsignedBigInteger('directory_id')->nullable();
             $table->foreign('directory_id')
                   ->references('id')
                   ->on('files')

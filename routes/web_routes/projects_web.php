@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Web\Globus\Drop\CreateGlobusDropWebController;
+use App\Http\Controllers\Web\Globus\Drop\DeleteGlobusDropWebController;
+use App\Http\Controllers\Web\Globus\Drop\DestroyGlobusDropWebController;
+use App\Http\Controllers\Web\Globus\Drop\ImportGlobusDropWebController;
+use App\Http\Controllers\Web\Globus\Drop\IndexGlobusDropsWebController;
 use App\Http\Controllers\Web\Projects\BrowseTree\ShowProjectBrowseTreeWebController;
 use App\Http\Controllers\Web\Projects\CreateProjectWebController;
 use App\Http\Controllers\Web\Projects\Datatables\GetRecentlyUploadedFilesWebController;
@@ -125,6 +130,21 @@ Route::get('/projects/{project}/users/{user}/change-to-admin', ChangeUserToAdmin
 Route::get('/projects/{project}/users/{user}/change-to-member', ChangeUserToMemberWebController::class)
      ->name('projects.users.change-to-member');
 
+// Globus Drop
+Route::get('/projects/{project}/globus/drops', IndexGlobusDropsWebController::class)
+     ->name('projects.globus.drops.index');
+
+Route::get('/projects/{project}/globus/drops/create', CreateGlobusDropWebController::class)
+     ->name('projects.globus.drops.create');
+
+Route::get('/projects/{project}/globus/drops/{drop}/delete', DeleteGlobusDropWebController::class)
+     ->name('projects.globus.drops.delete');
+
+Route::delete('/projects/{project}/globus/drops/{drop}/destroy', DestroyGlobusDropWebController::class)
+     ->name('projects.globus.drops.destroy');
+
+Route::get('/projects/{project}/globus/drops/{drop}/import', ImportGlobusDropWebController::class)
+     ->name('projects.globus.drops.import');
 
 // Globus Uploads
 
@@ -242,3 +262,4 @@ Route::get('/projects/{project}/files/{file}/visus', ShowVisusDatasetWebControll
 // Markdown Editor
 Route::get('/projects/{project}/markdown-editor', 'App\Http\Controllers\Web\Projects\ShowMarkdownEditorWebController')
      ->name('projects.markdown-editor');
+
