@@ -2,7 +2,9 @@
     <div class="card-body">
         <form wire:submit.prevent="save">
             <div class="mb-3">
-                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                <label for="name" class="form-label">Name
+                    <span class="text-danger">*</span>
+                </label>
                 <input type="text"
                        id="name"
                        class="form-control @error('name') is-invalid @enderror"
@@ -15,14 +17,16 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Globus Users <span class="text-danger">*</span></label>
+                <label class="form-label">Globus Users
+                    <span class="text-danger">*</span>
+                </label>
 
                 @foreach($globusUsers as $index => $globusUser)
                     <div class="mb-2">
                         <div class="input-group">
                             <input type="email"
                                    class="form-control @error("globusUsers.{$index}") is-invalid @enderror"
-                                   wire:model.blur="globusUsers.{{ $index }}"
+                                   wire:model="globusUsers.{{ $index }}"
                                    placeholder="user@example.com"
                                    required>
 
@@ -51,6 +55,13 @@
                     </div>
                 @endforeach
 
+                <div wire:loading
+                     wire:target="globusUsers,addGlobusUser,save"
+                     class="form-text text-primary">
+                    <i class="fas fa-spinner fa-spin me-1"></i>
+                    Validating Globus identities...
+                </div>
+
                 <div class="form-text">
                     Enter Globus IDs as email addresses. Click the plus button to add another user.
                 </div>
@@ -62,8 +73,13 @@
                     Cancel
                 </a>
 
-                <button type="submit" class="btn btn-primary">
-                    Submit
+                <button type="submit"
+                        class="btn btn-primary"
+                        wire:loading.attr="disabled"
+                        wire:target="save">
+                    <span wire:loading.remove wire:target="save">Submit</span>
+                    <span wire:loading wire:target="save"><i
+                            class="fas fa-spinner fa-spin me-1"></i>Validating...</span>
                 </button>
             </div>
         </form>

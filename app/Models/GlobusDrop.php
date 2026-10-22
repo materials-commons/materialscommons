@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
+ * @property integer id
+ * @property string uuid
+ * @property string name
+ * @property string description
+ * @property string globus_acl_id
+ * @property string globus_endpoint_id
+ * @property string globus_identity_id
+ * @property string globus_path
+ * @property string globus_url
+ * @property array globus_accounts
+ * @property integer project_id
+ * @property integer owner_id
+ * @property integer directory_id
  * @mixin Builder
  */
 class GlobusDrop extends Model

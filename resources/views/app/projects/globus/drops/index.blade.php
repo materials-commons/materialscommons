@@ -33,13 +33,13 @@
             <tr>
                 <td>{{ $drop->name }}</td>
                 <td>
-                    <a href="{{ $drop->url }}" target="_blank" rel="noopener noreferrer">
-                        {{ $drop->url }}
+                    <a href="{{ $drop->globus_url }}" target="_blank" rel="noopener noreferrer">
+                        {{ $drop->globus_url }}
                     </a>
                 </td>
                 <td>
-                    @if(!empty($drop->users))
-                        {{ implode(', ', $drop->users) }}
+                    @if(!empty($drop->globus_accounts))
+                        {{ implode(', ', $drop->globus_accounts) }}
                     @else
                         <span class="text-muted">No users</span>
                     @endif

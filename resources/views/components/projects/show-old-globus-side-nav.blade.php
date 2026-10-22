@@ -8,31 +8,6 @@
         </a>
     </li>
 
-    {{--    @if(is_null($globusUpload))--}}
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.globus.start')}}"--}}
-    {{--               href="{{route('projects.globus.start', [$project])}}">--}}
-    {{--                <i class="fa-fw fas fa-play me-2"></i>--}}
-    {{--                Start--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-    {{--    @else--}}
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5" href="{{$globusUpload->globus_url}}" target="_blank">--}}
-    {{--                <i class="fa-fw fas fa-arrow-alt-circle-right me-2"></i>--}}
-    {{--                Use--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5" href="#">--}}
-    {{--                <i class="fa-fw fas fa-check me-2"></i>--}}
-    {{--                Done--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
-
-
     <li class="nav-item">
         <a class="nav-link fs-11 ms-3 {{setActiveNavByName('projects.globus.downloads.index')}}"
            data-bs-toggle="tooltip" title="Download your projects files using Globus."
@@ -50,29 +25,5 @@
             Globus Drops
         </a>
     </li>
-
-    {{--    @if(is_null($globusDownload))--}}
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5 {{setActiveNavByName('projects.globus.start')}}"--}}
-    {{--               href="{{route('projects.globus.start', [$project])}}">--}}
-    {{--                <i class="fa-fw fas fa-play me-2"></i>--}}
-    {{--                Start--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-    {{--    @else--}}
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5" href="{{$globusDownload->globus_url}}" target="_blank">--}}
-    {{--                <i class="fa-fw fas fa-arrow-alt-circle-right me-2"></i>--}}
-    {{--                Use--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-
-    {{--        <li class="nav-item ms-3">--}}
-    {{--            <a class="nav-link fs-11 ms-5" href="#">--}}
-    {{--                <i class="fa-fw fas fa-check me-2"></i>--}}
-    {{--                Done--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
 
 </div>
