@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Web\Globus\Drop\CreateGlobusDropWebController;
 use App\Http\Controllers\Web\Globus\Drop\DeleteGlobusDropWebController;
-use App\Http\Controllers\Web\Globus\Drop\DestroyGlobusDropWebController;
 use App\Http\Controllers\Web\Globus\Drop\ImportGlobusDropWebController;
 use App\Http\Controllers\Web\Globus\Drop\IndexGlobusDropsWebController;
 use App\Http\Controllers\Web\Projects\BrowseTree\ShowProjectBrowseTreeWebController;
@@ -36,7 +35,6 @@ use App\Http\Controllers\Web\Projects\Globus\Uploads\StoreGlobusUploadToProjectW
 use App\Http\Controllers\Web\Projects\Globus\Uploads\UpdateGlobusAccountForUploadsWebController;
 use App\Http\Controllers\Web\Projects\IndexProjectsWebController;
 use App\Http\Controllers\Web\Projects\MarkProjectAsActiveWebController;
-use App\Http\Controllers\Web\Projects\SearchAcrossProjectsWebController;
 use App\Http\Controllers\Web\Projects\SearchProjectWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectActivitiesDataDictionaryWebController;
 use App\Http\Controllers\Web\Projects\ShowProjectEntitiesDataDictionaryWebController;
@@ -57,8 +55,8 @@ use App\Http\Controllers\Web\Projects\Users\ModifyProjectUsersWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveAdminFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\RemoveUserFromProjectWebController;
 use App\Http\Controllers\Web\Projects\Users\ShowProjectUserWebController;
-use App\Http\Controllers\Web\Visus\ShowVisusDatasetWebController;
 use App\Http\Controllers\Web\Search\ShowAllProjectsSearchWebController;
+use App\Http\Controllers\Web\Visus\ShowVisusDatasetWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/projects/search-all', ShowAllProjectsSearchWebController::class)
@@ -139,9 +137,6 @@ Route::get('/projects/{project}/globus/drops/create', CreateGlobusDropWebControl
 
 Route::get('/projects/{project}/globus/drops/{drop}/delete', DeleteGlobusDropWebController::class)
      ->name('projects.globus.drops.delete');
-
-Route::delete('/projects/{project}/globus/drops/{drop}/destroy', DestroyGlobusDropWebController::class)
-     ->name('projects.globus.drops.destroy');
 
 Route::get('/projects/{project}/globus/drops/{drop}/import', ImportGlobusDropWebController::class)
      ->name('projects.globus.drops.import');

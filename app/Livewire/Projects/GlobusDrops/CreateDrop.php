@@ -114,8 +114,8 @@ class CreateDrop extends Component
 
     private function createDropInGlobus(GlobusDrop $drop): void
     {
-        $path = Storage::disk('mcfs')->path("__globus_uploads/drops/{$drop->uuid}/{$drop->name}");
-        $globusPath = "/__globus_uploads/drops/{$drop->uuid}/{$drop->name}/";
+        $path = Storage::disk('mcfs')->path("__globus_uploads/drops/{$drop->id}/{$drop->name}");
+        $globusPath = "/__globus_uploads/drops/{$drop->id}/{$drop->name}/";
         if (!is_dir($path)) {
             $old = umask(0);
             mkdir($path, 0777, true);
@@ -123,9 +123,10 @@ class CreateDrop extends Component
         }
 
         $drop->update([
-            'globus_path'     => $globusPath,
-            'globus_endpoint' => $this->endpointId,
-            'globus_url'      => GlobusUrl::globusUploadUrl($this->endpointId, $globusPath),
+            'globus_path'        => $globusPath,
+            'globus_endpoint_id' => $this->endpointId,
+            'globus_url'         => GlobusUrl::globusUploadUrl($this->endpointId, $globusPath),
+            'status'             => 'available',
         ]);
 
         $ownerOfDrop = $drop->owner;
@@ -157,7 +158,6 @@ class CreateDrop extends Component
     {
         $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "rw", $this->endpointId);
         $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
-        ray($resp);
         return $resp["access_id"];
     }
 

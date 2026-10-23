@@ -34,7 +34,7 @@
                 <td>{{ $drop->name }}</td>
                 <td>
                     <a href="{{ $drop->globus_url }}" target="_blank" rel="noopener noreferrer">
-                        {{ $drop->globus_url }}
+                        Goto Globus Drop
                     </a>
                 </td>
                 <td>
@@ -45,16 +45,18 @@
                     @endif
                 </td>
                 <td class="text-end">
-                    <a href="{{ route('projects.globus.drops.import', [$project, $drop]) }}"
-                       class="btn btn-sm btn-primary">
-                        <i class="fas fa-fw fa-file-import"></i> import
-                    </a>
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a href="{{ route('projects.globus.drops.import', [$project, $drop]) }}"
+                           class="btn btn-sm btn-primary flex-shrink-0">
+                            <i class="fas fa-fw fa-file-import"></i> import
+                        </a>
 
-                    <a href="{{ route('projects.globus.drops.delete', [$project, $drop]) }}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this drop site?');">
-                        <i class="fas fa-fw fa-trash-alt"></i> delete
-                    </a>
+                        <a href="{{ route('projects.globus.drops.delete', [$project, $drop]) }}"
+                           class="btn btn-sm btn-danger flex-shrink-0"
+                           onclick="return confirm('Are you sure you want to delete this drop site?');">
+                            <i class="fas fa-fw fa-trash-alt"></i> delete
+                        </a>
+                    </div>
                 </td>
             </tr>
         @endforeach

@@ -21,18 +21,21 @@ class ImportFilesIntoProjectAtLocationAction
     private User $owner;
     private string $disk;
     private string $location;
+    private string $projectLocation = "/";
 
     public function __construct()
     {
         $this->__constructFireTriggers();
     }
 
-    public function execute(Project $project, $disk, $location, User $owner, $attachTo = null)
+    public function execute(Project $project, $disk, $location, User $owner, $attachTo = null,
+        string $projectLocation = "/")
     {
         $this->project = $project;
         $this->disk = $disk;
         $this->location = $location;
         $this->owner = $owner;
+        $this->projectLocation = $projectLocation;
 
         if (!$this->importFiles($attachTo)) {
             // Did not complete importing uploaded files
@@ -54,7 +57,8 @@ class ImportFilesIntoProjectAtLocationAction
             }
 
             if ($finfo->isDir()) {
-                $this->processDir($path, $this->disk, $this->location, $this->project, $this->owner->id);
+                $this->processDir($path, $this->disk, $this->location, $this->project, $this->owner->id,
+                    $this->projectLocation);
             } else {
                 $file = $this->processFile($path,
                     $this->disk,
@@ -62,7 +66,8 @@ class ImportFilesIntoProjectAtLocationAction
                     $this->project,
                     $this->owner->id,
                     $finfo,
-                    $attachTo);
+                    $attachTo,
+                    $this->projectLocation);
                 if (is_null($file)) {
                     // processing file failed, so stop let job be processed later
                     return false;

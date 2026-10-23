@@ -2,6 +2,7 @@
 
 namespace App\Traits\Files;
 
+use App\Helpers\PathHelpers;
 use App\Models\File;
 use App\Traits\CreateDirectories;
 use Illuminate\Support\Facades\Log;
@@ -22,13 +23,9 @@ trait ImportFiles
     use FileHealth;
     use ConvertFile;
 
-    private function processDir($path, $disk, $location, $project, $ownerId): File
+    private function processDir($path, $disk, $location, $project, $ownerId, string $projectLocation = "/"): File
     {
-        $pathPart = Storage::disk($disk)->path($location);
-        $dirPath = Str::replaceFirst($pathPart, "", $path);
-        if (blank($dirPath)) {
-            $dirPath = "/";
-        }
+        $dirPath = $this->getProjectDirPath($disk, $location, $path, $projectLocation);
         $parentDir = File::where('project_id', $project->id)
                          ->active()
                          ->directories()
@@ -37,16 +34,18 @@ trait ImportFiles
         return $this->getOrCreateSingleDirectoryIfDoesNotExist($parentDir, $dirPath, $project, $ownerId);
     }
 
-    private function processFile($path, $disk, $location, $project, $ownerId, \SplFileInfo $finfo, $attachTo = null)
+    private function processFile($path, $disk, $location, $project, $ownerId, \SplFileInfo $finfo, $attachTo = null, string $projectLocation = "/")
     {
         // Find or create the directory the file is in
-        $currentDir = $this->processDir(dirname($path), $disk, $location, $project, $ownerId);
+        $currentDir = $this->processDir(dirname($path), $disk, $location, $project, $ownerId, $projectLocation);
 
         $checksum = md5_file($path);
         $file = $this->matchingFileInDir($currentDir->id, $checksum, $finfo->getFilename());
         if (!is_null($file)) {
+            ray("processing existing file {$path}");
             $f = $this->handleProcessingOfExistingFile($file, $currentDir, $path);
         } else {
+            ray("processing new file {$path}");
             $f = $this->handleProcessingOfNewFile($currentDir, $project, $ownerId, $path, $finfo);
         }
 
@@ -202,7 +201,11 @@ trait ImportFiles
                 \File::delete($from);
             }
 
-            chmod($to, 0777);
+            try {
+                chmod($to, 0777);
+            } catch (\Exception $e) {
+                Log::log('error', "Error changing permissions on file {$file->id} from {$from} to {$to}: {$e->getMessage()}");
+            }
 
         } catch (\Exception $e) {
             $msg = $e->getMessage();
@@ -218,14 +221,19 @@ trait ImportFiles
         return true;
     }
 
-    private function getProjectDirPath($disk, $location, $path): string
+    private function getProjectDirPath($disk, $location, $path, string $projectLocation = "/"): string
     {
         $pathPart = Storage::disk($disk)->path($location);
         $dirPath = Str::replaceFirst($pathPart, "", $path);
+
         if (blank($dirPath)) {
             $dirPath = "/";
         }
 
-        return $dirPath;
+        if ($projectLocation === "/" || blank($projectLocation)) {
+            return $dirPath;
+        }
+
+        return PathHelpers::normalizePath("/{$projectLocation}/{$dirPath}");
     }
 }
