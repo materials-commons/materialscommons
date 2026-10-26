@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Web\Datasets\ShowDatasetByDoiWebController;
+use App\Http\Controllers\Web\Globus\Drop\MarkDropTransferDoneWebController;
 use App\Http\Controllers\Web\Published\SearchPublishedDataWebController;
 use App\Http\Controllers\Web\Search\ShowPublicSearchWebController;
 use App\Http\Controllers\Web\Welcome\AboutWebController;
@@ -72,6 +73,10 @@ Route::get('/email/verify/{id}', [VerificationController::class, 'show'])->name(
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('/email/verification-notification/{email}',
     [VerificationController::class, 'resend'])->name('verification.resend');
+
+// This route needs to be in an unauthenticated space so that users without an account can access it
+// to make a globus drop transfer as done.
+Route::get('globus-drop/{uuid}/mark-done', MarkDropTransferDoneWebController::class)->name('globus-drop.mark-done');
 
 //Route::get('')
 

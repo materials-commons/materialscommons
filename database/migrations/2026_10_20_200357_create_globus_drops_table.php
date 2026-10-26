@@ -16,8 +16,8 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
 
             $table->string('name');
-            $table->string('description')->nullable();
             $table->string('status')->nullable();
+            $table->string('message')->nullable();
 
             $table->string('globus_acl_id')->nullable();
             $table->string('globus_endpoint_id')->nullable();

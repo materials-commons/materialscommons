@@ -24,6 +24,7 @@
         <tr>
             <th>Name</th>
             <th>URL</th>
+            <th>Status</th>
             <th>Users</th>
             <th></th>
         </tr>
@@ -37,6 +38,7 @@
                         Goto Globus Drop
                     </a>
                 </td>
+                <td><span>{{$drop->status}}</span></td>
                 <td>
                     @if(!empty($drop->globus_accounts))
                         {{ implode(', ', $drop->globus_accounts) }}

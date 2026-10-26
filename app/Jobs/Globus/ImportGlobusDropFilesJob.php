@@ -36,6 +36,7 @@ class ImportGlobusDropFilesJob implements ShouldQueue
         $owner = $this->drop->owner;
         $location = "__globus_uploads/drops/{$this->drop->id}/{$this->drop->name}";
         $importToLocation->execute($project, 'mcfs', $location, $owner, null, $this->dirPath);
+        $this->drop->update(['status' => 'imported - cleaning up']);
         //        $this->drop->delete();
 
 //        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/drops/{$this->drop->id}");
