@@ -62,8 +62,6 @@ class EntitySidebar extends Component
                 ];
             });
 
-        ray($this->uniqueActivities);
-
         $this->show = true;
     }
 

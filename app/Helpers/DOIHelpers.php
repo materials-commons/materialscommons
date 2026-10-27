@@ -64,7 +64,6 @@ class DOIHelpers
                         ]);
 
         if (!$response->successful()) {
-            ray("Error minting DOI: {$response->body()}");
             return null;
         }
 

@@ -45,7 +45,6 @@ class ReloadExperimentFromGoogleSheetApiController extends Controller
         }
 
         $createGoogleSheetAction = new CreateGoogleSheetAction();
-        ray($sheetUrl);
         $sheet = $createGoogleSheetAction->execute($sheetUrl, $experiment->project, $user);
         $experiment->update(['sheet_id' => $sheet->id, 'loaded_file_path' => null]);
         $reloadExperimentAction = new ReloadExperimentAction();

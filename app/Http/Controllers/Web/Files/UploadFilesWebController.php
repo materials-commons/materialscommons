@@ -26,8 +26,6 @@ class UploadFilesWebController extends Controller
             'relativePath' => 'nullable|string',
         ]);
 
-//        ray($request->all());
-
         $dir = File::findOrFail($directoryId);
 
         if (isset($validated['files'])) {

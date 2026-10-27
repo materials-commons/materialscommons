@@ -42,10 +42,8 @@ trait ImportFiles
         $checksum = md5_file($path);
         $file = $this->matchingFileInDir($currentDir->id, $checksum, $finfo->getFilename());
         if (!is_null($file)) {
-            ray("processing existing file {$path}");
             $f = $this->handleProcessingOfExistingFile($file, $currentDir, $path);
         } else {
-            ray("processing new file {$path}");
             $f = $this->handleProcessingOfNewFile($currentDir, $project, $ownerId, $path, $finfo);
         }
 
