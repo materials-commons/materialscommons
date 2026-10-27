@@ -61,7 +61,7 @@
             <td>{{ number_format($proj->file_count) }}</td>
             <td>{{ number_format($proj->published_datasets_count) }}</td>
             <td>{{ $proj->owner->name }}</td>
-            <td>{{ $proj->updated_at->format('M j, Y') }}</td>
+            <td data-order="{{$proj->updated_at->timestamp}}">{{ $proj->updated_at->format('M j, Y') }}</td>
             <td>
                 <div class="float-end d-flex align-items-center gap-2">
                     @if($isStarred)
