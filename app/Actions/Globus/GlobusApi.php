@@ -27,6 +27,10 @@ class GlobusApi
 
     public static function createGlobusApi()
     {
+        if (app()->bound(self::class)) {
+            return app(self::class);
+        }
+
         $ccUser = config('globus.cc_user');
         $ccPassword = config('globus.cc_token');
         $globusApi = new GlobusApi($ccUser, $ccPassword);
@@ -174,7 +178,7 @@ class GlobusApi
     public function deleteACLsOnPath($endpointId, $globusPath)
     {
         $rules = $this->getEndpointAccessRules($endpointId);
-        foreach ($rules['DATA'] as $rule) {
+        foreach ($rules['DATA'] ?? [] as $rule) {
             if ($rule['path'] == $globusPath) {
                 try {
                     $this->deleteEndpointAclRule($endpointId, $rule['id']);
