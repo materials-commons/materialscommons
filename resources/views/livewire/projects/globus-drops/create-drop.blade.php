@@ -17,6 +17,11 @@
             </div>
 
             <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" wire:model.blur="message"></textarea>
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Globus Users
                     <span class="text-danger">*</span>
                 </label>

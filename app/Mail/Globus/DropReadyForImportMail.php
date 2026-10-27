@@ -2,6 +2,7 @@
 
 namespace App\Mail\Globus;
 
+use App\Models\GlobusDrop;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,12 +15,14 @@ class DropReadyForImportMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public GlobusDrop $drop;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(GlobusDrop $drop)
     {
-        //
+        $this->drop = $drop;
     }
 
     /**
@@ -28,7 +31,7 @@ class DropReadyForImportMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Drop Ready For Import Mail',
+            subject: "Drop '{{$this->drop->name}}' Ready For Import",
         );
     }
 
@@ -38,7 +41,7 @@ class DropReadyForImportMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.globus.drops.ready-for-import',
         );
     }
 

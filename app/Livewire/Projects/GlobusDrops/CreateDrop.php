@@ -5,9 +5,11 @@ namespace App\Livewire\Projects\GlobusDrops;
 use App\Actions\Globus\EndpointAclRule;
 use App\Actions\Globus\GlobusApi;
 use App\Actions\Globus\GlobusUrl;
+use App\Mail\Globus\DropAvailableForUseMail;
 use App\Models\GlobusDrop;
 use App\Models\Project;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -19,6 +21,7 @@ class CreateDrop extends Component
     private $endpointId;
 
     public string $name = '';
+    public string $message = '';
 
     public array $globusUsers = [
         '',
@@ -34,6 +37,7 @@ class CreateDrop extends Component
     {
         return [
             'name'          => ['required', 'string', 'max:255'],
+            'message'       => ['nullable', 'string'],
             'globusUsers'   => ['required', 'array', 'min:1'],
             'globusUsers.*' => [
                 'bail', 'required', 'email', 'distinct',
@@ -100,6 +104,7 @@ class CreateDrop extends Component
 
         $drop = GlobusDrop::create([
             'name'            => $this->name,
+            'message'         => $this->message,
             'globus_accounts' => array_values($this->globusUsers),
             'project_id'      => $this->project->id,
             'owner_id'        => auth()->id(),
@@ -137,6 +142,10 @@ class CreateDrop extends Component
         foreach ($drop->globus_accounts as $globusAccount) {
             $this->setAclOnPathForUser($globusPath, $globusAccount);
         }
+
+        // Send email to all the users for the drop
+        $dropEmail = new DropAvailableForUseMail($drop);
+        Mail::to($drop->globus_accounts)->queue($dropEmail->onQueue('globus'));
     }
 
     private function setAclOnPathForUser($globusPath, $email)

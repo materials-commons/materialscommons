@@ -2,8 +2,8 @@
 
 namespace App\Mail\Globus;
 
+use App\Models\GlobusDrop;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -14,12 +14,13 @@ class DropAvailableForUseMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public GlobusDrop $drop;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(GlobusDrop $drop)
     {
-        //
+        $this->drop = $drop;
     }
 
     /**
@@ -28,7 +29,7 @@ class DropAvailableForUseMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Drop Available For Use Mail',
+            subject: "Globus Drop '{$this->drop->name}' available for uploads",
         );
     }
 
@@ -38,7 +39,7 @@ class DropAvailableForUseMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.globus.drops.available',
         );
     }
 
