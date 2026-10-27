@@ -137,6 +137,7 @@ class Entity extends Model
     public function toSearchableArray()
     {
         $array = $this->toArray();
+        $category = $array['category'] ?? null;
 
         // Customize the data array to include only the fields you want to search
         return [
@@ -146,8 +147,8 @@ class Entity extends Model
             'project_id'  => $array['project_id'],
             'dataset_id'  => $array['dataset_id'] ?? null,
             'summary'     => $array['description'] ?? '',
-            'category'    => $array['category'],
-            'type'        => $array['category'] === 'experimental' ? 'sample' : 'computation',
+            'category'    => $category,
+            'type'        => $category === 'experimental' ? 'sample' : 'computation',
         ];
     }
 

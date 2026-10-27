@@ -49,17 +49,17 @@ class SearchAcrossProjectsActionTest extends TestCase
         // Mock the Scout engine to return both entities
         $engineMock = Mockery::mock('Laravel\Scout\Engines\Engine');
 
-        // For Project model search
-        $engineMock->shouldReceive('search')->andReturn(['results' => []]);
-        $engineMock->shouldReceive('map')->andReturn(collect([]));
-        $engineMock->shouldReceive('lazyMap')->andReturn(collect([]));
-        $engineMock->shouldReceive('getTotalCount')->andReturn(0);
-
-        // For Entity model search
-        $engineMock->shouldReceive('search')->andReturn(['results' => [$entity1->toSearchableArray(), $entity2->toSearchableArray()]]);
-        $engineMock->shouldReceive('map')->andReturn(collect([$entity1, $entity2]));
-        $engineMock->shouldReceive('lazyMap')->andReturn(collect([$entity1, $entity2]));
-        $engineMock->shouldReceive('getTotalCount')->andReturn(2);
+        $engineMock->shouldReceive('get')
+                   ->times(7)
+                   ->andReturn(
+                       collect([]), // Project results
+                       collect([]), // File results
+                       collect([]), // Experiment results
+                       collect([$entity1, $entity2]), // Entity results
+                       collect([]), // Activity results
+                       collect([]), // Dataset results
+                       collect([]), // Community results
+                   );
 
         $this->app->instance(EngineManager::class, Mockery::mock(EngineManager::class, function ($mock) use ($engineMock) {
             $mock->shouldReceive('engine')->andReturn($engineMock);
@@ -76,14 +76,16 @@ class SearchAcrossProjectsActionTest extends TestCase
         $foundEntity2 = false;
 
         foreach ($results as $result) {
-            if ($result->title === $entity1->name) {
+            if ($result->id === $entity1->id) {
                 $foundEntity1 = true;
-                $this->assertEquals(route('projects.entities.show', [$project1, $entity1]), $result->url);
+                $this->assertEquals($entity1->name, $result->name);
+                $this->assertEquals($project1->id, $result->project_id);
             }
 
-            if ($result->title === $entity2->name) {
+            if ($result->id === $entity2->id) {
                 $foundEntity2 = true;
-                $this->assertEquals(route('projects.entities.show', [$project2, $entity2]), $result->url);
+                $this->assertEquals($entity2->name, $result->name);
+                $this->assertEquals($project2->id, $result->project_id);
             }
         }
 
@@ -117,17 +119,17 @@ class SearchAcrossProjectsActionTest extends TestCase
         // Mock the Scout engine to return only entity1 for user1
         $engineMock = Mockery::mock('Laravel\Scout\Engines\Engine');
 
-        // For Project model search
-        $engineMock->shouldReceive('search')->andReturn(['results' => []]);
-        $engineMock->shouldReceive('map')->andReturn(collect([]));
-        $engineMock->shouldReceive('lazyMap')->andReturn(collect([]));
-        $engineMock->shouldReceive('getTotalCount')->andReturn(0);
-
-        // For Entity model search
-        $engineMock->shouldReceive('search')->andReturn(['results' => [$entity1->toSearchableArray()]]);
-        $engineMock->shouldReceive('map')->andReturn(collect([$entity1]));
-        $engineMock->shouldReceive('lazyMap')->andReturn(collect([$entity1]));
-        $engineMock->shouldReceive('getTotalCount')->andReturn(1);
+        $engineMock->shouldReceive('get')
+                   ->times(7)
+                   ->andReturn(
+                       collect([]), // Project results
+                       collect([]), // File results
+                       collect([]), // Experiment results
+                       collect([$entity1]), // Entity results
+                       collect([]), // Activity results
+                       collect([]), // Dataset results
+                       collect([]), // Community results
+                   );
 
         $this->app->instance(EngineManager::class, Mockery::mock(EngineManager::class, function ($mock) use ($engineMock) {
             $mock->shouldReceive('engine')->andReturn($engineMock);
@@ -137,6 +139,10 @@ class SearchAcrossProjectsActionTest extends TestCase
         $results = $searchAcrossProjectsAction('Heat Treatment', $user1);
 
         // Should only find entities in user1's projects
+        // Should only find entities in user1's projects
+        $this->assertEquals(1, $results->count());
+        $this->assertTrue($results->contains(fn (Entity $entity) => $entity->id === $entity1->id));
+        $this->assertFalse($results->contains(fn (Entity $entity) => $entity->id === $entity2->id));
         $this->assertEquals(1, $results->count());
     }
 
