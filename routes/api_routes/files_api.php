@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Camera\UploadCameraPhotoApiController;
+use App\Http\Controllers\Api\Files\CopyFileApiController;
 use App\Http\Controllers\Api\Files\CreateFileApiController;
 use App\Http\Controllers\Api\Files\DeleteFileApiController;
 use App\Http\Controllers\Api\Files\DownloadFileApiController;
@@ -28,6 +29,7 @@ Route::put('/projects/{project}/files/{file}/make_active', SetAsActiveFileVersio
 Route::delete('/projects/{project}/files/{file}', DeleteFileApiController::class);
 Route::get('/projects/{project}/files/{file}', ShowFileApiController::class);
 Route::get('/projects/{project}/files/{file}/versions', ShowFileVersionsApiController::class);
+Route::post('/files/{file}/copy', CopyFileApiController::class);
 Route::post('/files/{file}/move', MoveFileApiController::class);
 Route::post('/files/{file}/rename', RenameFileApiController::class);
 Route::get('/projects/{project}/files/{file}/download', DownloadFileApiController::class);

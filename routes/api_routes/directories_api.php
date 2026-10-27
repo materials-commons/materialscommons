@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Directories\CopyDirectoryApiController;
 use App\Http\Controllers\Api\Directories\CreateDirectoryApiController;
 use App\Http\Controllers\Api\Directories\CreateDirectoryByPathApiController;
 use App\Http\Controllers\Api\Directories\DeleteDirectoryApiController;
@@ -17,6 +18,7 @@ Route::post("/directories/by-path", CreateDirectoryByPathApiController::class);
 Route::put('/directories/{directory}', UpdateDirectoryApiController::class);
 Route::delete('/projects/{project}/directories/{directory}', DeleteDirectoryApiController::class);
 Route::get('/projects/{project}/directories/{directory}', ShowDirectoryApiController::class);
+Route::post('/directories/{directory}/copy', CopyDirectoryApiController::class);
 Route::post('/directories/{directory}/move', MoveDirectoryApiController::class);
 Route::post('/directories/{directory}/rename', RenameDirectoryApiController::class);
 Route::get('/projects/{project}/directories_by_path', IndexDirectoryByPathApiController::class);

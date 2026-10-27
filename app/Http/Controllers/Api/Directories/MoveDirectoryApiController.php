@@ -26,7 +26,12 @@ class MoveDirectoryApiController extends Controller
     {
         $toDirectoryId = $request->input('to_directory_id');
         $toDir = File::findOrFail($toDirectoryId);
+        $fromDir = File::findOrFail($directoryId);
         $user = auth()->user();
+
+        if (!AuthService::userCanAccessProjectId($user, $fromDir->project_id)) {
+            abort(403);
+        }
 
         if (!AuthService::userCanAccessProjectId($user, $toDir->project_id)) {
             abort(403);

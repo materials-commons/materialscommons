@@ -17,6 +17,11 @@ class MoveFileApiController extends Controller
         $toDir = File::findOrFail($toDirectoryId);
         $f = File::withCommon()->findOrFail($fileId);
         $user = auth()->user();
+
+        if (!AuthService::userCanAccessProjectId($user, $f->project_id)) {
+            abort(403);
+        }
+
         if (!AuthService::userCanAccessProjectId($user, $toDir->project_id)) {
             abort(403);
         }
