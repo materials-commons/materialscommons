@@ -179,6 +179,9 @@ class GlobusApi
     {
         $rules = $this->getEndpointAccessRules($endpointId);
         foreach ($rules['DATA'] ?? [] as $rule) {
+            if (!isset($rule['path'])) {
+                continue;
+            }
             if ($rule['path'] == $globusPath) {
                 try {
                     $this->deleteEndpointAclRule($endpointId, $rule['id']);

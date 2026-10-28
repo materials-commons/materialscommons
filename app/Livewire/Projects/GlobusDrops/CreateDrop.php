@@ -151,15 +151,28 @@ class CreateDrop extends Component
     private function setAclOnPathForUser($globusPath, $email)
     {
         $globusUserId = $this->getGlobusIdentity($email);
-        $this->setAclOnPath($globusPath, $globusUserId);
+        if (!is_null($globusUserId)) {
+            $this->setAclOnPath($globusPath, $globusUserId);
+        }
 
         $globusUserId = $this->getGlobusIdentity($email."@accounts.google.com");
-        $this->setAclOnPath($globusPath, $globusUserId);
+        if (!is_null($globusUserId)) {
+            $this->setAclOnPath($globusPath, $globusUserId);
+        }
     }
 
     private function getGlobusIdentity($globusEmail)
     {
         $resp = $this->globusApi->getIdentities([$globusEmail]);
+        if (
+            !isset($resp['identities']) ||
+            !is_array($resp['identities']) ||
+            !isset($resp['identities'][0]) ||
+            !isset($resp['identities'][0]['id'])
+        ) {
+            return null;
+        }
+
         return $resp["identities"][0]["id"];
     }
 
@@ -167,6 +180,9 @@ class CreateDrop extends Component
     {
         $endpointAclRule = new EndpointAclRule($globusUserId, $globusPath, "rw", $this->endpointId);
         $resp = $this->globusApi->addEndpointAclRule($endpointAclRule);
+        if (!isset($resp['access_id'])) {
+            return null;
+        }
         return $resp["access_id"];
     }
 
