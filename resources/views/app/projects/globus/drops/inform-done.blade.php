@@ -1,12 +1,28 @@
 @extends('layouts.app')
 
-@section('pageTitle', "Drop not found")
+@section('pageTitle', "Transfer Marked Done")
 
 @section('content')
-    <p>
-        {{$drop->owner->name}} will be notified that you've completed transferring files
-        for this drop ({{$drop->name}}).
-        The drop will no longer be available for uploads. Click <a href="/">here</a>
-        to be taken to the Materials Commons home page.
-    </p>
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <div class="mb-3">
+                <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+            </div>
+
+            <h2 class="mb-3">Transfer marked done</h2>
+
+            <p class="lead mb-3">
+                Thank you. The transfer for <strong>{{$drop->name}}</strong> has been marked as done.
+            </p>
+
+            <p class="text-muted mb-4">
+                {{$drop->owner->name}} has been notified that the drop is ready to import.
+                The drop is no longer available for uploads.
+            </p>
+
+            <a href="/" class="btn btn-primary">
+                Return to Materials Commons
+            </a>
+        </div>
+    </div>
 @stop

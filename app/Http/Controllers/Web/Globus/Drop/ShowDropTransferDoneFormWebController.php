@@ -18,6 +18,10 @@ class ShowDropTransferDoneFormWebController extends Controller
             return view('app.projects.globus.drops.not-found');
         }
 
+        if ($drop->status !== "available") {
+            return view('app.projects.globus.drops.not-found');
+        }
+
         return view('app.projects.globus.drops.transfer-done-form', [
             'drop' => $drop,
         ]);
