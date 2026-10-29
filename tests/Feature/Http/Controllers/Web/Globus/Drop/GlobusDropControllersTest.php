@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Web\Globus\Drop;
 
 use App\Actions\Globus\GlobusApi;
+use App\Jobs\Globus\ImportGlobusDropFilesJob;
 use App\Livewire\Projects\GlobusDrops\CreateDrop;
 use App\Livewire\Projects\GlobusDrops\ImportDrop;
 use App\Mail\Globus\DropAvailableForUseMail;
@@ -246,6 +247,112 @@ class GlobusDropControllersTest extends TestCase
                 ->assertHasErrors(['drop']);
     }
 
+    public function test_import_drop_livewire_component_starts_import_and_dispatches_import_job(): void
+    {
+        Bus::fake();
+        Storage::fake('mcfs');
+
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+        $rootDirectory = $project->rootDir;
+
+        $drop = GlobusDrop::factory()->create([
+            'project_id'         => $project->id,
+            'owner_id'           => $user->id,
+            'name'               => 'Ready Drop',
+            'status'             => 'ready for import',
+            'globus_endpoint_id' => 'test-endpoint-id',
+            'globus_path'        => '/__globus_uploads/drops/1/Ready Drop/',
+        ]);
+
+        Storage::disk('mcfs')->makeDirectory("__globus_uploads/drops/{$drop->id}/{$drop->name}");
+        Storage::disk('mcfs')->put("__globus_uploads/drops/{$drop->id}/{$drop->name}/file.txt", 'file contents');
+
+        $this->mockGlobusApi();
+
+        Livewire::actingAs($user)
+                ->test(ImportDrop::class, [
+                    'project' => $project,
+                    'drop'    => $drop,
+                ])
+                ->set('destinationMode', 'existing')
+                ->set('directoryId', $rootDirectory->id)
+                ->call('import')
+                ->assertHasNoErrors()
+                ->assertRedirect(route('projects.globus.drops.index', [$project]));
+
+        $drop->refresh();
+
+        $this->assertSame('starting import', $drop->status);
+        $this->assertSame($rootDirectory->id, $drop->directory_id);
+
+        Bus::assertDispatched(ImportGlobusDropFilesJob::class, function (ImportGlobusDropFilesJob $job) use ($drop, $rootDirectory) {
+            return $job->drop->is($drop)
+                && $job->dirPath === $rootDirectory->path;
+        });
+    }
+
+    public function test_import_globus_drop_files_job_does_nothing_when_drop_status_is_not_starting_import(): void
+    {
+        Storage::fake('mcfs');
+
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+
+        $drop = GlobusDrop::factory()->create([
+            'project_id' => $project->id,
+            'owner_id'   => $user->id,
+            'name'       => 'Not Ready Drop',
+            'status'     => 'ready for import',
+        ]);
+
+        Storage::disk('mcfs')->makeDirectory("__globus_uploads/drops/{$drop->id}/{$drop->name}");
+        Storage::disk('mcfs')->put("__globus_uploads/drops/{$drop->id}/{$drop->name}/file.txt", 'file contents');
+
+        $job = new ImportGlobusDropFilesJob($drop, '/');
+        $job->handle();
+
+        $this->assertDatabaseHas('globus_drops', [
+            'id'     => $drop->id,
+            'status' => 'ready for import',
+        ]);
+
+        Storage::disk('mcfs')->assertExists("__globus_uploads/drops/{$drop->id}/{$drop->name}/file.txt");
+    }
+
+    public function test_import_globus_drop_files_job_imports_files_and_deletes_drop_when_status_is_starting_import(): void
+    {
+        Storage::fake('mcfs');
+
+        $user = User::factory()->create();
+        $project = ProjectFactory::ownedBy($user)->create();
+
+        $drop = GlobusDrop::factory()->create([
+            'project_id' => $project->id,
+            'owner_id'   => $user->id,
+            'name'       => 'Starting Import Drop',
+            'status'     => 'starting import',
+        ]);
+
+        Storage::disk('mcfs')->makeDirectory("__globus_uploads/drops/{$drop->id}/{$drop->name}");
+        Storage::disk('mcfs')->put("__globus_uploads/drops/{$drop->id}/{$drop->name}/file.txt", 'file contents');
+
+        $job = new ImportGlobusDropFilesJob($drop, '/');
+        $job->handle();
+
+        $this->assertDatabaseMissing('globus_drops', [
+            'id' => $drop->id,
+        ]);
+
+        $this->assertDatabaseHas('files', [
+            'project_id' => $project->id,
+            'owner_id'   => $user->id,
+            'name'       => 'file.txt',
+        ]);
+
+        Storage::disk('mcfs')->assertMissing("__globus_uploads/drops/{$drop->id}");
+    }
+
     public function test_delete_drop_removes_drop_and_redirects_to_index(): void
     {
         Storage::fake('mcfs');
@@ -292,7 +399,7 @@ class GlobusDropControllersTest extends TestCase
         $this->assertDatabaseHas('globus_drops', ['id' => $drop->id]);
     }
 
-    public function test_mark_drop_transfer_done_updates_status_queues_email_and_redirects_home(): void
+    public function test_mark_drop_transfer_done_updates_status_queues_email_and_shows_done_page(): void
     {
         Mail::fake();
 
@@ -308,8 +415,12 @@ class GlobusDropControllersTest extends TestCase
 
         $this->mockGlobusApi();
 
-        $this->get(route('globus-drop.mark-done', [$drop->uuid]))
-             ->assertRedirect('/');
+        $this->post(route('globus-drop.mark-done', [$drop->uuid]), [
+            'message' => 'Transfer is complete.',
+        ])
+             ->assertOk()
+             ->assertViewIs('app.projects.globus.drops.inform-done')
+             ->assertViewHas('drop', $drop);
 
         $this->assertSame('ready for import', $drop->fresh()->status);
 
@@ -318,10 +429,11 @@ class GlobusDropControllersTest extends TestCase
         });
     }
 
-    public function test_mark_drop_transfer_done_redirects_home_when_drop_uuid_is_unknown(): void
+    public function test_mark_drop_transfer_done_shows_not_found_page_when_drop_uuid_is_unknown(): void
     {
-        $this->get(route('globus-drop.mark-done', ['unknown-drop-uuid']))
-             ->assertRedirect('/');
+        $this->post(route('globus-drop.mark-done', ['unknown-drop-uuid']))
+             ->assertOk()
+             ->assertViewIs('app.projects.globus.drops.not-found');
     }
 
     private function mockGlobusApi(): void
