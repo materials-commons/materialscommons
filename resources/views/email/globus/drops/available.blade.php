@@ -16,7 +16,7 @@
 
     <p>
         To notify {{$drop->owner->name}} that the file transfer is finished click <a
-            href="{{route('globus-drop.mark-done', [$drop->uuid])}}">here</a>.
+            href="{{route('globus-drop.show-done-form', [$drop->uuid])}}">here</a>.
     </p>
 
 @endsection

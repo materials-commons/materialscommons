@@ -17,6 +17,9 @@ class MarkDropTransferDoneWebController extends Controller
      */
     public function __invoke(Request $request, $uuid)
     {
+        $validated = $request->validate([
+            'message' => 'nullable|string',
+        ]);
         $drop = GlobusDrop::where('uuid', $uuid)->first();
         if (is_null($drop)) {
             return view('app.projects.globus.drops.not-found');
@@ -36,7 +39,8 @@ class MarkDropTransferDoneWebController extends Controller
         $this->setAclOnPathForUser($globusApi, $drop->globus_path, $drop->owner->email, $drop->globus_endpoint_id);
 
         // Send email to drop owner that the drop is available for import
-        $dropEmail = new DropReadyForImportMail($drop);
+        ray($validated['message']);
+        $dropEmail = new DropReadyForImportMail($drop, $validated['message']);
         Mail::to($drop->owner->email)->queue($dropEmail->onQueue('globus'));
 
         return view('app.projects.globus.drops.inform-done', [

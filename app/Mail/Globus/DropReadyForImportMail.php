@@ -16,13 +16,15 @@ class DropReadyForImportMail extends Mailable
     use Queueable, SerializesModels;
 
     public GlobusDrop $drop;
+    public $userMessage;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(GlobusDrop $drop)
+    public function __construct(GlobusDrop $drop, $userMessage)
     {
         $this->drop = $drop;
+        $this->userMessage = $userMessage;
     }
 
     /**
