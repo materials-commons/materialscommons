@@ -33,6 +33,10 @@ class ImportGlobusDropFilesJob implements ShouldQueue
         ini_set("memory_limit", "4096M");
         $importToLocation = new ImportFilesIntoProjectAtLocationAction();
 
+        if ($this->drop->status !== 'starting import') {
+            return;
+        }
+
         // Mark as importing
         $this->drop->update(['status' => 'importing']);
 

@@ -160,7 +160,7 @@ class ImportDrop extends Component
     {
         $globusApi = GlobusApi::createGlobusApi();
         $globusApi->deleteACLsOnPath($this->drop->globus_endpoint_id, $this->drop->globus_path);
-        $this->drop->update(['status' => 'importing']);
+        $this->drop->update(['status' => 'starting import']);
         ImportGlobusDropFilesJob::dispatch($this->drop, $destinationDirectory->path)->onQueue('globus');
     }
 
