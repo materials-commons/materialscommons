@@ -49,7 +49,7 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout-get');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
-Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reload-captcha');
+//Route::get('reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reload-captcha');
 
 Route::get('login-for-upload', [LoginController::class, 'showLoginForm'])->name('login-for-upload');
 Route::post('login-for-upload', [LoginController::class, 'login'])->name('login-for-upload');
@@ -208,5 +208,5 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
 
     Route::resource('/tasks', TasksController::class);
     Route::view('/settings', 'app.settings.index')->name('settings.index');
-    Route::view('/users', 'app.users.index')->name('users.index');
+//    Route::view('/users', 'app.users.index')->name('users.index');
 });
