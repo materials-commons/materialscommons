@@ -7,6 +7,7 @@ use App\Actions\Projects\ImportFilesIntoProjectAtLocationAction;
 use App\Models\GlobusDrop;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Storage;
 
 class ImportGlobusDropFilesJob implements ShouldQueue
 {
@@ -31,14 +32,19 @@ class ImportGlobusDropFilesJob implements ShouldQueue
     {
         ini_set("memory_limit", "4096M");
         $importToLocation = new ImportFilesIntoProjectAtLocationAction();
+
+        // Mark as importing
         $this->drop->update(['status' => 'importing']);
+
+        // Start import
         $project = $this->drop->project;
         $owner = $this->drop->owner;
         $location = "__globus_uploads/drops/{$this->drop->id}/{$this->drop->name}";
         $importToLocation->execute($project, 'mcfs', $location, $owner, null, $this->dirPath);
-        $this->drop->update(['status' => 'imported - cleaning up']);
-        //        $this->drop->delete();
 
-//        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/drops/{$this->drop->id}");
+        // Clean up the directory
+        $this->drop->update(['status' => 'imported - cleaning up']);
+        Storage::disk('mcfs')->deleteDirectory("__globus_uploads/drops/{$this->drop->id}");
+        $this->drop->delete();
     }
 }
