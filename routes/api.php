@@ -1,14 +1,5 @@
 <?php /** @noinspection PhpIncludeInspection */
 
-use App\Http\Controllers\api\ProjectActionsAPIController;
-use App\Http\Controllers\api\ProjectEntitiesAPIController;
-use App\Http\Controllers\api\Projects\ActionAttributesAPIController;
-use App\Http\Controllers\api\Projects\ActionEntityStatesAPIController;
-use App\Http\Controllers\api\Projects\ActionFilesAPIController;
-use App\Http\Controllers\api\Projects\AttributesAPIController;
-use App\Http\Controllers\api\Projects\EntityStateAttributesAPIController;
-use App\Http\Controllers\api\Projects\EntityStateFilesAPIController;
-use App\Http\Controllers\api\Projects\ValuesAPIController;
 use App\Http\Controllers\Api\Users\GetApiTokenApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,7 +75,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     require base_path('routes/api_routes/tour_states_api.php');
 });
 
-Route::post('/get_apitoken', GetApiTokenApiController::class);
+Route::post('/get_apitoken', GetApiTokenApiController::class)->middleware('throttle:10,1');
 
 // Published Datasets
 require base_path('routes/api_routes/published_datasets_api.php');
