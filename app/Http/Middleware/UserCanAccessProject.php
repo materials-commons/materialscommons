@@ -115,10 +115,12 @@ class UserCanAccessProject
 
     private function canAccessPrivateProject($projectId): bool
     {
-        if ($this->userIsProjectMember($projectId, auth()->id())) {
-            return true;
+        $project = Project::find($projectId);
+
+        if (is_null($project)) {
+            return false;
         }
 
-        return $this->userIsProjectAdmin($projectId, auth()->id());
+        return $this->userCanAccessProject(auth()->id(), $project);
     }
 }
