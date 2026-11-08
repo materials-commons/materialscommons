@@ -31,13 +31,13 @@ class UserCanAccessProject
      */
     public function handle(Request $request, Closure $next)
     {
-        $projectId = $this->resolveProjectIdFromRequest();
-        if (blank($projectId)) {
+        if ($this->isPublicPath()) {
+//            abort_unless($this->isPublicProject($projectId), 404, 'No such project');
             return $next($request);
         }
 
-        if ($this->isPublicPath()) {
-            abort_unless($this->isPublicProject($projectId), 404, 'No such project');
+        $projectId = $this->resolveProjectIdFromRequest();
+        if (blank($projectId)) {
             return $next($request);
         }
 
@@ -104,13 +104,8 @@ class UserCanAccessProject
 
     private function isPublicPath(): bool
     {
-        return Str::contains(request()->url(), "/public");
-    }
-
-    private function isPublicProject($projectId): bool
-    {
-        $count = Project::where('id', $projectId)->where('is_public', true)->count();
-        return $count == 1;
+        return request()->is('public*')
+            || request()->is('api/published*');
     }
 
     private function canAccessPrivateProject($projectId): bool
