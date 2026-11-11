@@ -57,17 +57,9 @@
     <br>
     <hr>
     <br/>
-    <div x-data="apiToken">
-        <h3 class="mb-3">API Token</h3>
-        <a href="#" @click.prevent="toggleAPIToken()" id="apitokenlink">Show API Token</a>
-        <div class="mb-3" id="apitoken" style="display:none">
-            <label for="apitokeninput">API Token</label>
-            <input id="apitokeninput" value="{{$user->api_token}}" class="form-control" readonly>
-        </div>
-        <a href="{{route('accounts.api-token.regenerate')}}"
-           class="ms-5 btn btn-sm btn-outline-danger ms-2 me-2">Regenerate API Token</a>
-        <span class="text-muted">(This will invalidate any existing clients using the old token)</span>
-    </div>
+
+    <livewire:accounts.api-tokens />
+
     <br>
     <hr>
     <br/>
@@ -152,18 +144,4 @@
 
     @include('common.errors')
 
-    @push('scripts')
-        <script>
-            mcutil.onAlpineInit("apiToken", () => {
-                return {
-                    showingAPIToken: false,
-                    toggleAPIToken() {
-                        document.getElementById('apitoken').style.display = this.showingAPIToken ? "none" : "block";
-                        document.getElementById('apitokenlink').innerHTML = this.showingAPIToken ? "Show API Token" : "Hide API Token";
-                        this.showingAPIToken = !this.showingAPIToken;
-                    }
-                }
-            });
-        </script>
-    @endpush
 @stop

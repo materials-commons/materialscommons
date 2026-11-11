@@ -24,6 +24,8 @@ return new class extends Migration
                   ->onDelete('cascade');
 
             $table->timestamps();
+
+            $table->unique(['owner_id', 'name'], 'user_api_tokens_owner_id_name_unique');
         });
     }
 
