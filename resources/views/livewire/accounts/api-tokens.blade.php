@@ -45,7 +45,7 @@
                 </div>
             @endif
 
-            @if (blank($user->api_token))
+            @if (blank($defaultToken))
                 <button
                     type="button"
                     class="btn btn-primary"

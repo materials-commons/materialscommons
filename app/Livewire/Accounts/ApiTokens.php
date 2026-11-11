@@ -12,6 +12,8 @@ use Livewire\Component;
 
 class ApiTokens extends Component
 {
+    private const DEFAULT_TOKEN_NAME = 'default';
+
     public string $newTokenName = '';
 
     public ?string $plainDefaultToken = null;
@@ -21,11 +23,21 @@ class ApiTokens extends Component
      */
     public array $plainAdditionalTokens = [];
 
+    public function getDefaultTokenProperty(): ?UserApiToken
+    {
+        return auth()
+            ->user()
+            ->apiTokens()
+            ->where('name', self::DEFAULT_TOKEN_NAME)
+            ->first();
+    }
+
     public function getAdditionalTokensProperty(): Collection
     {
         return auth()
             ->user()
             ->apiTokens()
+            ->where('name', '!=', self::DEFAULT_TOKEN_NAME)
             ->orderBy('name')
             ->orderBy('created_at')
             ->get();
@@ -35,8 +47,9 @@ class ApiTokens extends Component
     {
         $token = $this->makePlainToken();
 
-        auth()->user()->update([
-            'api_token' => $token,
+        auth()->user()->apiTokens()->create([
+            'name'  => self::DEFAULT_TOKEN_NAME,
+            'token' => $token,
         ]);
 
         $this->plainDefaultToken = $token;
@@ -48,9 +61,18 @@ class ApiTokens extends Component
     {
         $token = $this->makePlainToken();
 
-        auth()->user()->update([
-            'api_token' => $token,
-        ]);
+        $defaultToken = $this->defaultToken;
+
+        if ($defaultToken) {
+            $defaultToken->update([
+                'token' => $token,
+            ]);
+        } else {
+            auth()->user()->apiTokens()->create([
+                'name'  => self::DEFAULT_TOKEN_NAME,
+                'token' => $token,
+            ]);
+        }
 
         $this->plainDefaultToken = $token;
 
@@ -64,10 +86,12 @@ class ApiTokens extends Component
                 'required',
                 'string',
                 'max:255',
+                'not_in:' . self::DEFAULT_TOKEN_NAME,
                 Rule::unique('user_api_tokens', 'name')
                     ->where('owner_id', Auth::id()),
             ],
         ], [
+            'newTokenName.not_in' => 'The name default is reserved for your default API token.',
             'newTokenName.unique' => 'You already have an API token with this name.',
         ]);
 
@@ -86,7 +110,7 @@ class ApiTokens extends Component
 
     public function regenerateAdditionalToken(int $tokenId): void
     {
-        $apiToken = $this->findTokenForCurrentUser($tokenId);
+        $apiToken = $this->findAdditionalTokenForCurrentUser($tokenId);
 
         $token = $this->makePlainToken();
 
@@ -101,7 +125,7 @@ class ApiTokens extends Component
 
     public function deleteAdditionalToken(int $tokenId): void
     {
-        $apiToken = $this->findTokenForCurrentUser($tokenId);
+        $apiToken = $this->findAdditionalTokenForCurrentUser($tokenId);
 
         unset($this->plainAdditionalTokens[$apiToken->id]);
 
@@ -110,12 +134,13 @@ class ApiTokens extends Component
         session()->flash('api-token-message', "Token '{$apiToken->name}' deleted.");
     }
 
-    private function findTokenForCurrentUser(int $tokenId): UserApiToken
+    private function findAdditionalTokenForCurrentUser(int $tokenId): UserApiToken
     {
         return auth()
             ->user()
             ->apiTokens()
             ->whereKey($tokenId)
+            ->where('name', '!=', self::DEFAULT_TOKEN_NAME)
             ->firstOrFail();
     }
 
@@ -127,8 +152,8 @@ class ApiTokens extends Component
     public function render(): View
     {
         return view('livewire.accounts.api-tokens', [
-            'user'             => auth()->user(),
-            'additionalTokens' => $this->additionalTokens,
+            'defaultToken'      => $this->defaultToken,
+            'additionalTokens'  => $this->additionalTokens,
         ]);
     }
 }

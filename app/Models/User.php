@@ -81,30 +81,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login_at'     => 'datetime',
     ];
 
-    public function setApiTokenAttribute(?string $token): void
-    {
-        if (blank($token)) {
-            $this->attributes['api_token'] = null;
-            return;
-        }
-
-        if (self::apiTokenLooksHashed($token)) {
-            $this->attributes['api_token'] = $token;
-            return;
-        }
-
-        $this->attributes['api_token'] = self::hashApiToken($token);
-    }
-
-    public static function hashApiToken(string $token): string
-    {
-        return hash('sha256', $token);
-    }
-
-    public static function apiTokenLooksHashed(string $token): bool
-    {
-        return preg_match('/^[a-f0-9]{64}$/', $token) === 1;
-    }
+//    public function setApiTokenAttribute(?string $token): void
+//    {
+//        if (blank($token)) {
+//            $this->attributes['api_token'] = null;
+//            return;
+//        }
+//
+//        if (self::apiTokenLooksHashed($token)) {
+//            $this->attributes['api_token'] = $token;
+//            return;
+//        }
+//
+//        $this->attributes['api_token'] = self::hashApiToken($token);
+//    }
+//
+//    public static function hashApiToken(string $token): string
+//    {
+//        return hash('sha256', $token);
+//    }
+//
+//    public static function apiTokenLooksHashed(string $token): bool
+//    {
+//        return preg_match('/^[a-f0-9]{64}$/', $token) === 1;
+//    }
 
     public function apiTokens()
     {
