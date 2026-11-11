@@ -19,27 +19,27 @@ use function is_array;
 use function is_null;
 
 /**
- * @property integer id
- * @property string uuid
- * @property string name
- * @property string description
- * @property string research_summary
- * @property string affiliations
- * @property string title
- * @property string orcid
- * @property string homepage_url
- * @property string email
- * @property mixed email_verified_at
- * @property string password
- * @property string globus_user
- * @property string api_token
- * @property boolean is_admin
- * @property string remember_token
- * @property mixed created_at
- * @property mixed updated_at
- * @property string slug
- * @property array settings
- * @property mixed last_login_at
+ * @property integer $id
+ * @property string $uuid
+ * @property string $name
+ * @property string $description
+ * @property string $research_summary
+ * @property string $affiliations
+ * @property string $title
+ * @property string $orcid
+ * @property string $homepage_url
+ * @property string $email
+ * @property mixed $email_verified_at
+ * @property string $password
+ * @property string $globus_user
+ * @property string $api_token
+ * @property boolean $is_admin
+ * @property string $remember_token
+ * @property mixed $created_at
+ * @property mixed $updated_at
+ * @property string $slug
+ * @property array $settings
+ * @property mixed $last_login_at
  *
  * @property mixed projects
  * @property mixed communities
@@ -71,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token',
     ];
 
     protected $casts = [
@@ -79,6 +79,36 @@ class User extends Authenticatable implements MustVerifyEmail
         'google_expires_at' => 'datetime',
         'last_login_at'     => 'datetime',
     ];
+
+    public function setApiTokenAttribute(?string $token): void
+    {
+        if (blank($token)) {
+            $this->attributes['api_token'] = null;
+            return;
+        }
+
+        if (self::apiTokenLooksHashed($token)) {
+            $this->attributes['api_token'] = $token;
+            return;
+        }
+
+        $this->attributes['api_token'] = self::hashApiToken($token);
+    }
+
+    public static function hashApiToken(string $token): string
+    {
+        return hash('sha256', $token);
+    }
+
+    public static function apiTokenLooksHashed(string $token): bool
+    {
+        return preg_match('/^[a-f0-9]{64}$/', $token) === 1;
+    }
+
+    public function apiTokens()
+    {
+        return $this->hasMany(UserApiToken::class, 'owner_id');
+    }
 
     public function projects()
     {

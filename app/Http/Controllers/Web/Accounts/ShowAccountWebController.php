@@ -10,6 +10,9 @@ class ShowAccountWebController extends Controller
     public function __invoke(Request $request)
     {
         $user = auth()->user();
-        return view('app.account.show', compact('user'));
+        return view('app.account.show', [
+            'user' => $user,
+            'token' => '',
+        ]);
     }
 }

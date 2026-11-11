@@ -14,7 +14,8 @@ class GenerateNewApiTokenWebController extends Controller
     public function __invoke(Request $request)
     {
         $user = auth()->user();
-        $user->update(['api_token' => Str::random(60)]);
+        $token = Str::random(60);
+        $user->update(['api_token' => $token]);
         return redirect(route('accounts.show'));
     }
 }
