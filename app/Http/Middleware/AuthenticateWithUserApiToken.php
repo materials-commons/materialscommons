@@ -17,10 +17,6 @@ class AuthenticateWithUserApiToken
      * Expected headers:
      *
      * Authorization: Bearer <plain-text-token>
-     * X-API-Key: <token-name>
-     *
-     * X-API-Key is optional. If it is not supplied, authentication falls back to
-     * lookup by token hash only.
      *
      * @param  Request  $request
      * @param  Closure  $next
@@ -33,11 +29,9 @@ class AuthenticateWithUserApiToken
         abort_if(blank($plainTextToken), 401, 'Missing API token');
 
         $tokenHash = UserApiToken::hashToken($plainTextToken);
-        $tokenName = $request->header('X-API-Key') ?? 'default';
 
         $query = UserApiToken::query()
                              ->with('owner')
-                             ->where('name', $tokenName)
                              ->where('token', $tokenHash);
 
         $apiToken = $query->first();
