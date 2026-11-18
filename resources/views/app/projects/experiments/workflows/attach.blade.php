@@ -6,61 +6,9 @@
     @include('layouts.navs.app.project')
 @stop
 
-{{--@section('breadcrumbs', Breadcrumbs::render('projects.experiments.workflows.edit', $project, $experiment, $workflow))--}}
-
 @section('content')
-    <h3 class="text-center">Attach Workflows To Study {{$experiment->name}}</h3>
-    <br/>
-
-    <table id="workflows" class="table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Selected</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($project->workflows as $workflow)
-            <tr>
-                <td>
-                    {{$workflow->name}}
-                </td>
-                <td>
-                    <div class="mb-3 form-check-inline">
-                        <input type="checkbox" class="form-check-input" id="{{$workflow->uuid}}"
-                               {{$workflowInExperiment($workflow) ? 'checked' : ''}}
-                               onclick="updateWorkflowSelection({{$workflow}}, this)">
-                    </div>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-    <br>
-    <div class="float-end me-2">
-        <a class="action-link" href="{{route('projects.experiments.show', [$project, $experiment])}}">Done</a>
-    </div>
+    <livewire:experiments.workflow-attachment
+        :project="$project"
+        :experiment="$experiment"
+    />
 @stop
-
-@push('scripts')
-    <script>
-        let projectId = "{{$project->id}}";
-        let apiToken = "{{$user->api_token}}";
-        let route = "{{route('api.projects.experiments.workflows.selection', [$experiment])}}";
-
-        $(document).ready(() => {
-            $('#workflows').DataTable({stateSave: true});
-        });
-
-        function updateWorkflowSelection(wf, checkbox) {
-            toggleWorkflow(wf);
-        }
-
-        function toggleWorkflow(wf) {
-            axios.put(`${route}?api_token=${apiToken}`, {
-                project_id: projectId,
-                workflow_id: wf.id,
-            });
-        }
-    </script>
-@endpush
